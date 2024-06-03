@@ -133,20 +133,20 @@
     <string name="studyoptions_congrats_finished">અભિનંદન! તમે હમણાં માટે સમાપ્ત કર્યું છે.</string>
     <string name="studyoptions_no_cards_due">હજુ સુધી કોઈ કાર્ડ બાકી નથી</string>
     <string name="sd_card_not_mounted">ઉપકરણ સંગ્રહ માઉન્ટ થયેલ નથી</string>
-    <string name="button_sync" comment="Text of the sync button">Sync</string>
+    <string name="button_sync" comment="Text of the sync button">સમન્વયન</string>
     <string name="button_upgrade" comment="Text of the sync button">સ્કોપ્ડ સ્ટોરેજ પર સ્થાનાંતરિત કરો</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">શું તમે સમન્વયન રદ કરવા માંગો છો?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">સિંક કરવાનું ચાલુ રાખો</string>
-    <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">સમન્વયન રદ કર્યું</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">રદ કરી રહ્યું છે&#8230;\nઆમાં થોડો સમય લાગી શકે છે.</string>
+    <string name="syncing_media">મીડિયા સમન્વયિત કરી રહ્યું છે</string>
     <string name="export_deck">નિકાસ ડેક</string>
     <string name="nothing">કંઈ નહીં</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">કાર્ડ પ્રકારો</string>
     <string name="card_template_editor_front">ફ્રન્ટ ટેમ્પલેટ</string>
     <string name="card_template_editor_back">પાછળનો નમૂનો</string>
-    <string name="card_template_editor_styling">Styling</string>
+    <string name="card_template_editor_styling">સ્ટાઇલીંગ</string>
     <string name="card_template_editor_menu_card_browser_appearance">કાર્ડ બ્રાઉઝર દેખાવ</string>
     <string name="card_template_editor_deck_override">ડેક ઓવરરાઇડ</string>
     <string name="card_template_editor_insert_field">ફીલ્ડ દાખલ કરો</string>
@@ -157,93 +157,93 @@
         <item quantity="other">આ %1$d કાર્ડ બનાવશે. આગળ વધીએ?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="one">“%2$s” કાર્ડનો પ્રકાર અને તેનું %1$d કાર્ડ કાઢી નાખીએ?</item>
+        <item quantity="other">\"%2$s\" કાર્ડનો પ્રકાર અને તેના %1$d કાર્ડ કાઢી નાખીએ?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="card_template_editor_would_delete_note">આ કાર્ડ પ્રકારને દૂર કરવાથી એક અથવા વધુ નોંધો કાઢી નાખવામાં આવશે. કૃપા કરીને પહેલા એક નવો કાર્ડ પ્રકાર બનાવો અને સાચવો.</string>
+    <string name="card_template_editor_save_error">કાર્ડ ટેમ્પલેટ ફેરફારો સાચવવામાં અસમર્થ: %s</string>
+    <string name="template_for_current_card_deleted">વર્તમાન કાર્ડ માટે કાર્ડનો પ્રકાર કાઢી નાખવામાં આવ્યો હતો.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">બ્રાઉઝર દેખાવ</string>
     <!-- card Info -->
     <string name="card_info_title">કાર્ડ માહિતી</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_label">AnkiDroid ડેટાબેઝ વાંચો અને લખો</string>
+    <string name="read_write_permission_description">હાલની નોંધો, કાર્ડ્સ, નોંધના પ્રકારો અને ડેકને ઍક્સેસ કરો તેમજ નવી બનાવો</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">કાર્ડ બ્રાઉઝર</string>
+    <string name="context_menu_anki_card_label">અંકી કાર્ડ</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">સંગ્રહોને જોડી શકાતા નથી.\nતમે કયો સંગ્રહ રાખવા માંગો છો?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
-    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">અંકીવેબ</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid પરના તમારા સંગ્રહને AnkiWeb ના તમારા સંગ્રહ સાથે બદલીએ?</string>
+    <string name="sync_conflict_local_confirm_new">AnkiWeb પરના તમારા સંગ્રહને AnkiDroid ના તમારા સંગ્રહ સાથે બદલીએ?</string>
+    <string name="sync_conflict_title_new">રાખવા માટે સંગ્રહ પસંદ કરો</string>
+    <string name="sync_conflict_replace_title">સંગ્રહ બદલો</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="one">%1$d કાર્ડ (0 બાકી)</item>
+        <item quantity="other">%1$d કાર્ડ્સ (0 બાકી)</item>
     </plurals>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">ફાઇલ %s પર લખી અથવા બનાવી શકાતી નથી</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"બહુવિધ ભૂલો, સૌથી તાજેતરની: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">પ્રગતિ વિના એકથી વધુ સળંગ ભૂલો, સૌથી તાજેતરની: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculating transfer size&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migration successful</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">ડેટાબેઝ ફાઇલોનું સ્થળાંતર</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">કૉપિ કરી રહ્યાં છીએ&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">સ્થાનાંતરિત મીડિયા</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">ટ્રાન્સફરના કદની ગણતરી કરી રહ્યાં છીએ&#8230;</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$s માંથી %1$s ખસેડ્યું</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">સ્થળાંતર સફળ</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        તમારો ડેટા સફળતાપૂર્વક સ્થાનાંતરિત કરવામાં આવ્યો છે.
+        AnkiDroid ફરીથી સંપૂર્ણપણે કાર્યરત છે, અને તમે સમન્વયિત કરી શકો છો.
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
+        \nનોંધ કરો કે તમારો સંગ્રહ હવે એવા ફોલ્ડરમાં સ્થિત છે જે એપ્લિકેશનને અનઇન્સ્ટોલ કરતી વખતે દૂર કરવામાં આવે છે.
+        કૃપા કરીને ખાતરી કરો કે તમારો ડેટા નિયમિતપણે સમન્વયિત અથવા બેકઅપ નિકાસ કરીને સુરક્ષિત છે.
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">સ્થળાંતર નિષ્ફળ થયું</string>
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        ડેટાબેઝ ફાઇલોની નકલ કરવામાં ભૂલ સાથે નિષ્ફળ: %1$s.
         <br><br>
-        The changes were reverted.
+        ફેરફારો પાછા ફર્યા.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        કૃપા કરીને સ્થળાંતર ફરીથી ચલાવવાનો પ્રયાસ કરો.
+        સમસ્યાને ઉકેલવા માટે, તમારે કેટલીક ડિસ્ક જગ્યા ખાલી કરવાની જરૂર પડી શકે છે,
+        અથવા દૂર કરી શકાય તેવા સ્ટોરેજને ફરીથી કનેક્ટ કરો કે જે તમારા સંગ્રહને ધરાવે છે.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">વધુ જાણો અને મદદ મેળવો</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        ભૂલ સાથે નિષ્ફળ થયા પછી મીડિયા ફાઇલોને ખસેડવાનું થોભાવવામાં આવ્યું છે: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        ફેરફારો હતા <i>નથી</i> પાછો ફર્યો
+        જ્યારે કોઈ ડેટા ગુમ ન થવો જોઈએ,
+        મીડિયા ફાઇલો જૂના અને નવા ફોલ્ડર વચ્ચે વિભાજિત થઈ શકે છે.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        કૃપા કરીને સ્થળાંતર ફરીથી ચલાવવાનો પ્રયાસ કરો.
+        સમસ્યાને ઉકેલવા માટે, તમારે કેટલીક ડિસ્ક જગ્યા ખાલી કરવાની જરૂર પડી શકે છે,
+        અથવા દૂર કરી શકાય તેવા સ્ટોરેજને ફરીથી કનેક્ટ કરો કે જે તમારા સંગ્રહને ધરાવે છે.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">વધુ જાણો અને મદદ મેળવો</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        ભૂલ સાથે નિષ્ફળ થયા પછી સ્ટોરેજ સ્થાનાંતરણ થોભાવવામાં આવ્યું છે:%1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">વધુ જાણો અને મદદ મેળવો</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">સ્થળાંતર ફરી શરૂ કરો</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">અપ્રાપ્ય સંગ્રહ</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">પ્લે સ્ટોર નીતિમાં ફેરફારને કારણે AnkiDroid અનઇન્સ્ટોલ થયા પછી અમે તમારા સંગ્રહને ઍક્સેસ કરવામાં અસમર્થ છીએ\n\nતમારો ડેટા સુરક્ષિત છે અને તેને પુનઃસ્થાપિત કરી શકાય છે. તે\n%s પર સ્થિત છે\n\nપુનઃસ્થાપિત કરવા માટે નીચેનો વિકલ્પ પસંદ કરો:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
     <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="create_new_collection">એક નવો સંગ્રહ બનાવો</string>
+    <string name="new_unsafe_collection">જો તમે AnkiDroid ને અનઇન્સ્ટોલ કરશો તો તમારા ફોનમાંથી નવો સંગ્રહ કાઢી નાખવામાં આવશે</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid ને કામ કરવા માટે કેટલીક પરવાનગીઓની જરૂર છે</string>
+    <string name="storage_access_title">સ્ટોરેજ ઍક્સેસ</string>
+    <string name="storage_access_summary">તમારા સંગ્રહને સુરક્ષિત જગ્યાએ સાચવે છે જે જો એપ્લિકેશન અનઇન્સ્ટોલ કરવામાં આવે તો કાઢી નાખવામાં આવશે નહીં</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">બધી ફાઇલો ઍક્સેસ</string>
     <string name="image_occlusion">Image Occlusion</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">એકાઉન્ટ દૂર કરો</string>
     <!-- Instant Note Editor -->

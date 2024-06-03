@@ -158,32 +158,32 @@
     <string name="software_render_summ">Mas mabilis ang hardware render pero maaring magkaroon ng mga problema, lalo na sa Android 8/8.1. Kung hindi mo makita ang ibang bahagi ng user interface sa pag-repaso ng card, subukan ang setting na ito.</string>
     <string name="safe_display" maxLength="41">Ligtas na display mode</string>
     <string name="safe_display_summ">Hindi paganahin ang lahat ng animasyon at gumamit ng mas ligtas na paraan ng paghatak ng card. Maaaring kailanganin ito ng mga e-ink na device.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">I-disable Ang Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Papayagan ang context menu na \'Pagbura ng Cloze\' tuwing gagamit ng landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Center align</string>
     <string name="vertical_centering_summ">Patayo ang nilalaman ng mga baraha</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Pagitan ng dalawang pindot (milliseconds)</string>
+    <string name="pref_double_tap_time_interval_summary">Ang ikalawang pindot sa pindutanan ng answer ay babalewalain kung hindi lilipas ang oras na tinakda dito. Iniiwasan nito ang hindi sinasadyang dalawang pindot.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Oras ng mahabang-pindot sa \'Ipakita ang Sagot\'</string>
+    <string name="pref_show_answer_long_press_time_summary">Pinakamaikling oras sa pagpindot bago irehistro ang pagpindot sa \'Ipakita ang Sagot\'</string>
     <string name="show_estimates" maxLength="41">Ipakita ang oras ng button</string>
     <string name="show_estimates_summ">Ipakita ang susunod na oras ng pagsusuri sa mga pindutan ng sagot</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_large_answer_buttons" maxLength="41">Gumamit ng Malaking Pindutan Pangsagot</string>
+    <string name="show_large_answer_buttons_summ">Gumamit ng dalawang hanay sa mga pindutan pangsagot.</string>
+    <string name="show_top_bar" maxLength="41">Ipakita ang ibabaw na bar</string>
+    <string name="show_top_bar_summ">Ipakita ang bilang ng card, watawat, at marka sa ibabaw na bar</string>
     <string name="show_progress" maxLength="41">Ipakita ang natitira</string>
     <string name="show_progress_summ">Ipakita ang natitirang bilang ng card</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Ipakita ang ETA</string>
+    <string name="show_eta_summ">Ipakita ang natitirang oras</string>
     <string name="use_current" maxLength="41">Deck para sa mga bagong card</string>
     <string name="learn_cutoff" maxLength="41">Matuto nang higit na limitasyon</string>
     <string name="time_limit" maxLength="41">Limitasyon ng oras ng Timebox</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="day_offset_with_description" maxLength="41">Simula ng susunod na araw</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d oras makalipas ang hating-gabi</item>
+        <item quantity="other">%d oras makalipas ang hating-gabi</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Panatilihin ang screen</string>
     <string name="pref_keep_screen_on_summ">Huwag paganahin ang timeout ng screen</string>
@@ -195,40 +195,40 @@
     <string name="custom_buttons_setting_if_room">Ipakita kung room</string>
     <string name="custom_buttons_setting_menu_only">Menu lamang</string>
     <string name="reset_custom_buttons" maxLength="41">I-reset sa default</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset_settings_to_default">Ibalik ang mga setting sa default</string>
     <string name="reset">Reset</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
-    <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
+    <string name="thirdparty_apps_title" maxLength="41">Third-party na mga API app</string>
+    <string name="thirdparty_apps_summary">Ipakit ang listahan ng aplikasyon na gumagamit sa API ng AnkiDroid tulad ng mga diksyunaryo, utility.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="show_deck_title" maxLength="41">Ipakita ang pamagat ng deck</string>
+    <string name="accessibility" maxLength="41">Aksesibilidad</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png" maxLength="41">I-paste ang larawan sa clipboard na PNG</string>
+    <string name="paste_as_png_summary">PIne-paste ng ng Anki ang mga larawan sa clipboard bilang JPG na file ng default upang magtipid sa disk spacee. Maaari mong gamiting ang opsyon na ito upang i-paste ang mga larawan bilang PNG.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Pindutin ang balik kalawa para bumalik/umalis</string>
+    <string name="exit_via_double_tap_back_summ">Upang maiwasan ang hindi sinasadyang pag-alis sa reviewer o sa mismong app</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Payagan lahat ng file sa pag-angkat ng media</string>
+    <string name="media_import_allow_all_files_summ">Kung hindi nakikilala ng Android ang isang media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Pasadyang pag-sync ng server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Hindi ginagamit</string>
+    <string name="custom_sync_server_help2"><![CDATA[        Bilang alternatibo sa pag-sync sa AnkiWeb,
+        maaari kang gumamamit ng sarili mong server pang-sync.
+        Kung hindi naka-set, gagamitin nito ang default na server ng AnkiWeb.
+        <a href="%s">Alamin pa</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="answer_buttons" maxLength="41">Pindutan Pangsagot</string>
     <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="note" maxLength="41">Tala</string>
+    <string name="navigation" maxLength="41">Nabigasyon</string>
     <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">Iba pa</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Piliin ang mga tag</string>
     <!-- Deck configurations -->
@@ -240,36 +240,36 @@
     <string name="deck_conf_cram_order" maxLength="41">napili ng mga kard</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards batay sa aking mga sagot sa deck na ito</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">Paganahin ang pangalawang pansala</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Tukuyin ang mga pasadyang hakbang</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Antala sa pag-preview</string>
+    <string name="deck_conf_cram_preview_delays_summ">Ang antala ay naka-segundo. 0 kung ibabalik ang card sa orihinal nito na deck.</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
-    <string name="analytics_title" maxLength="41">Share feature usage</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="analytics_dialog_title">Tulungang pabutihin pa ang AnkiDroid!</string>
+    <string name="analytics_title" maxLength="41">Ibahagi ang paggamit ng mga katangian</string>
+    <string name="analytics_summ">Maaari ka mag-ambag sa AnkiDroid sa pagtulong sa development team na makita ang mga katangiang madalas ginagamit ng mga tao</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Palitan ang mga newlines ng HTML</string>
+    <string name="note_editor_replace_newlines_summ">Sa Note Editor, palitan ang mga instansya ng &lt;br&gt; ng newlines tuwing nag-eedit ng card.</string>
+    <string name="type_in_answer_focus" maxLength="41">Tampulan ang \'i-type ang sagot\'</string>
+    <string name="type_in_answer_focus_summ">Kusa na tatampulan ang \'i-type ang sagot\' na field sa reviewer</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="open_changelog">Buksan Ang Changelog</string>
+    <string name="pref_cat_about_title" maxLength="41">Tungkol sa Amin</string>
+    <string name="contributors_title">Mga Nag-Ambag</string>
+    <string name="about_contributors_description"><![CDATA[Ito ang mga astig naming mga <a href=\"%1$s\">nag-ambag</a>. Maaari ka ring tumulong sa AnkiDroid sa pag-program, pagsalin, paghandog <a href=\"%2$s\">at iba pa</a>!]]></string>
+    <string name="license">Lisensya</string>
+    <string name="license_description"><![CDATA[Ang AnkiDroid ay inilabas sa ilalim ng <a href=\"%1$s\">GPL-3.0</a> at <a href=\"%2$s\">AGPL-3.0</a> na mga lisensya, kung saan ang mga source code nito ay mahahanap <a href=\"%3$s\">sa GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Maaari mong suportahan ang pag-develop sa AnkiDroid sa pamamagitan ng <a href=\"%1$s\">paghahandog</a>. Lubos naming ipinapasalamat ang anumang halaga.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="binding_add_gesture">Magdagdag ng gesture</string>
+    <string name="binding_replace_gesture">Palitan ang gesture</string>
+    <string name="binding_add_key">Magdagdag ng key</string>
+    <string name="binding_replace_key">Palitan ang key</string>
+    <string name="key_picker_default_press_key">Pindutin ang key</string>
+    <string name="binding_add_axis">Magdagdag ng joystick/motion controller</string>
+    <string name="axis_picker_move_joystick">Igalaw ang joystick/motion controller</string>
+    <string name="user_actions" maxLength="41">Mga aksyon ng user</string>
+    <string name="user_actions_summary" maxLength="41">Paganahin ang JavaScript sa review screen</string>
     <string name="user_action_1" maxLength="41">Aksyon ng user 1</string>
     <string name="user_action_2" maxLength="41">Aksyon ng user 2</string>
     <string name="user_action_3" maxLength="41">Aksyon ng user 3</string>
@@ -280,7 +280,7 @@
     <string name="user_action_8" maxLength="41">Aksyon ng user 8</string>
     <string name="user_action_9" maxLength="41">Aksyon ng user 9</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
+    <string name="card_side_selection_title">Pumili ng panig ng card</string>
     <string name="card_side_question">Tanong</string>
     <string name="card_side_answer">Sagot</string>
     <string name="card_side_both">Tanong &amp; Sagot</string>
@@ -289,11 +289,11 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Tanggalin ang \'%s\'</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="bindings_already_bound">Nakakabit na sa \'%s\'</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">Sinimulan ng AnkiDroid ang mas pinagaling na mekanismo sa TTS kung saan ito ay gagana sa iba\'t ibang kliyente ng Anki at mayroon itong mas maraming boses at mas pinagaling na playback ng wika! Mangyaring mag-upgrade sa lalong madaling panahon, dahil mawawal na ang setting na ito.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Mangyaring mag-upgrade sa bagong text to speech na format</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Mga opsyon pangdeveloper</string>
     <string name="dev_options_enabled_pref" maxLength="41">Paganahin ang mga opsyon pangdeveloper</string>
@@ -332,32 +332,32 @@
     <string name="pref__delete_unused_media_files__summary">Burahin ang mga imahe at ibang media na hindi nagsisimula sa _ at hindi ginagamit ng kahit anong mga tala.</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Burahin ang walang gamit na media file</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Burahin ang mga backup</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Burahin ang mga backup</string>
+    <string name="progress__deleting_backups">Binubura ang mga backup&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Burahin ang koleksyon</string>
+    <string name="pref__delete_collection__summary">Buburahin nito ang kolekyon, media, at mga backup. Hindi nito buburahin ang mga setting ng app</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Burahin ang koleksyon</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Sigurado ka ba na burahin ang iyong koleksyon, media, at mga backup?\n\nTandaan: isasara ng aksyong ito ang window.</string>
+    <string name="progress__deleting_collection">Binubura ang koleksyon&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Burahin lahat</string>
+    <string name="pref__delete_everything__summary">Burahin ang mga koleksyon, media, backup, at setting</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Burahin lahat</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Sigurado ka ba na burahin ang lahat ng iyong mga datos? Kasami dito ang iyong mga koleksyon, media, backup, at setting.\n\nTandaan: Isasara ng aksyong ito ang window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Burahin ang datos ng app</string>
+    <string name="pref__delete_app_data__summary">Burahin ang mga setting at iba pang datos sa app</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Burahin ang datos ng app</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Sigurado ka ba na burahin ang mga datos ng app? Kasama dito ang mga setting at iba pang datos ng app.\n\nTandaan: Isasara ng aksyong ito ang window.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Walang koleksyon</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Kamalian</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Kinukuha&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Kinakalkula&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Hindi umiiral ang koleksyon</string>
 </resources>

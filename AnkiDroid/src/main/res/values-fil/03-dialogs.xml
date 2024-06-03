@@ -136,11 +136,11 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="empty_cards_deleted">Ang mga kard ay tinanggal na%d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Nabigong makakuha ng permiso na gamitin ang mikropono.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_camera_permission_refused">Hindi makamit ang permiso sa kamera. Hindi pinagana ang katanginang ito.</string>
+    <string name="multimedia_editor_failed">Bigong buksan ang Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="multimedia_editor_audio_permission_denied">Hindi binigyang permiso na mag-record ng audio</string>
+    <string name="mutimedia_editor_assertion_failed">Hindi malamang kamalian ang nangyari habang pinapakita ang Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Na-upgrade ang AnkiDroid</string>
     <string name="integrity_check_startup_content">Na-upgrade na ang AnkiDroid. Ang upgrade na ito ay naglalaman ng pag-aayos sa mga posibleng problema sa database, at pinapayuhan ka namin na suriin ang database ngayon.</string>
@@ -157,8 +157,8 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="incompatible_database_version_title">Hindi Angkop Ang Bersyon ng Database</string>
     <string name="incompatible_database_version_summary">Mas abante ang database na ito kumpara sa bersyong kayang gamitin ng AnkiDroid. I-upgrade o i-downgrade ang database ng AnkiDroid upang mabuksan ito\n\nBersyon na suportado: %1$d\nBersyon ng database: %2$d\n\nAng sumusunod na mga opsyon sa pagbalik ay posibleng sapawan ang kasalukuyan mong koleksyon ng isang angkop na bersyon ng database.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Na-apply ang larawan sa background</string>
-    <string name="background_image_removed">Background image removed</string>
+    <string name="background_image_applied">Inapply ang larawan sa background</string>
+    <string name="background_image_removed">Tinanggal ang larawan sa background</string>
     <string name="no_image_selected">Walang napiling larawan</string>
     <string name="error_selecting_image">May mali sa pagpili ng larawan. Mangyari na tingnan ang gabay. %s</string>
     <string name="error_deleting_image">May mali sa pagbura ng larawan</string>
