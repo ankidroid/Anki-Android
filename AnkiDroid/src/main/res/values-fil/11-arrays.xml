@@ -56,14 +56,14 @@
     <string name="cram_deck_conf_order_decreasing_intervals">Pagpapababa ng mga agwat</string>
     <string name="cram_deck_conf_order_most_lapsed">Karamihan ay natapos na</string>
     <string name="cram_deck_conf_order_order_added">Idinagdag ang order</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
+    <string name="cram_deck_conf_order_order_due">Nakatakdang order</string>
     <string name="cram_deck_conf_order_latest_added_first">Pinakabagong inaidagdag muna</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_relative_overdueness">Kaukulang kadukado</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Gumamit ng kasalukuyang deck</string>
     <string name="add_to_deck_decide_by_note_type">Magpasya ayon sa uri ng tala</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Sundin ang system</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Banayad</string>
     <string name="day_theme_plain">Plain</string>
@@ -71,35 +71,35 @@
     <string name="night_theme_black">Itim</string>
     <string name="night_theme_dark">Madilim</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">pinakamaliit</string>
+    <string name="html_size_code_x_small">sobrang liit</string>
+    <string name="html_size_code_small">maliit</string>
+    <string name="html_size_code_medium">katamtaman</string>
+    <string name="html_size_code_large">malaki</string>
+    <string name="html_size_code_x_large">sobrang laki</string>
+    <string name="html_size_code_xx_large">pinakamalaki</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Sagot - muli</string>
+    <string name="answer_hard">Sagot - mahirap</string>
+    <string name="answer_good">Sagot - mabuti</string>
+    <string name="answer_easy">Sagot - madali</string>
     <string name="gesture_play">I-play ang media</string>
     <string name="gesture_abort_learning">Abort sa pag-aaral</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="gesture_flag_red">Maglagay ng Pulang Watawat</string>
+    <string name="gesture_flag_orange">Maglagay ng Kahel na Watawat</string>
+    <string name="gesture_flag_green">Maglagay ng Berdeng Watawat</string>
+    <string name="gesture_flag_blue">Maglagay ng Asul na Watawat</string>
+    <string name="gesture_flag_pink">Maglagay ng Rosas na Watawat</string>
+    <string name="gesture_flag_turquoise">Maglagay ng Turkesa na Watawat</string>
+    <string name="gesture_flag_purple">Maglagay ng Ube na Watawat</string>
+    <string name="gesture_flag_remove">Tanggalin ang Watawat</string>
+    <string name="gesture_page_up">Itaas ang Pahina</string>
+    <string name="gesture_page_down">Ibaba ang Pahina</string>
+    <string name="gesture_abort_sync">Iudlot Ang Pag-Aaral at Pag-Sync</string>
+    <string name="gesture_toggle_whiteboard">Paganahin ang Puting Pisara</string>
+    <string name="gesture_show_hint">Ipakita Ang Hint</string>
+    <string name="gesture_show_all_hints">Ipakita Ang Lahat ng Hint</string>
+    <string name="record_voice">I-rekord Ang Boses</string>
+    <string name="replay_voice">I-play Muli Ang Boses</string>
+    <string name="save_voice">I-save Ang Recording</string>
 </resources>

@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Zeitintervall für Doppeltippen (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Ein zweites Antippen der Antworttasten wird ignoriert, wenn diese Zeit nicht verstrichen ist. Dies verhindert versehentliches doppeltes Antippen</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Dauer des Gedrückthaltens zum Antwort zeigen</string>
+    <string name="pref_show_answer_long_press_time_summary">Die minimale Druckzeit, bevor die Schaltfläche \"Antwort anzeigen\" eine Berührung registriert.</string>
     <string name="show_estimates" maxLength="41">Wiederholungszeiten anzeigen</string>
     <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
     <string name="show_large_answer_buttons" maxLength="41">Große Antwortschaltflächen anzeigen</string>

@@ -247,5 +247,5 @@
     <string name="image_occlusion">Bildverdeckung</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Konto entfernen</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Sofortige Karte</string>
 </resources>

@@ -112,18 +112,18 @@
     <string name="menu_unmark_note">Alisin ang marka sa tala</string>
     <string name="menu_toggle_mic_tool_bar">Suriin ang pagbigkas</string>
     <string name="new_deck">Gumawa ng deck</string>
-    <string name="new_dynamic_deck">Lumikha ng na-filter na deck</string>
+    <string name="new_dynamic_deck">Gumawa ng na-filter na deck</string>
     <string name="directory_inaccessible">Hindi mapuntahan ang AnkiDroid directory</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Mangyaring bigyan muna ng pahintulot sa \'Storage\' ang AnkiDroid upang makapagpatuloy</string>
-    <string name="rebuild_filtered_deck">Iniaayos muli ang nafilter na deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Iniaayos muli ang nasala na deck&#8230;</string>
     <string name="rebuild_cram_label">Muling iayos</string>
     <string name="empty_cram_label">Walang laman</string>
     <string name="create_subdeck">Gumawa ng subdeck</string>
-    <string name="empty_filtered_deck">Inaalisan ng laman ang filtered deck&#8230;</string>
+    <string name="empty_filtered_deck">Inaalisan ng laman ang nasala na deck&#8230;</string>
     <string name="custom_study_deck_name">I-custom ang study session</string>
     <string name="custom_study_deck_exists">Baguhin muna ang pangalan ng umiiral na pasadyang deck sa pag-aaral</string>
     <string name="search_deck" comment="Deck search for selecting it">Maghanap ng Deck</string>
@@ -246,5 +246,5 @@
     <string name="image_occlusion">Oklusyon ng Imahe</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Burahin ang account</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant na card</string>
 </resources>
