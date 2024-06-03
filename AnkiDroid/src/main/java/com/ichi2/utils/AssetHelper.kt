@@ -68,7 +68,10 @@ object AssetHelper {
             "js" -> "text/javascript"
             "mjs" -> "text/javascript"
             "json" -> "application/json"
-            else -> MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: "text/plain"
+            else -> MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: TEXT_PLAIN
         }
     }
+
+    /** Used for mime type or Intent type when sharing text via other applications **/
+    const val TEXT_PLAIN = "text/plain"
 }
