@@ -403,6 +403,26 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `editing card in filtered deck retains deck`() = runTest {
+        val homeDeckId = addDeck("A")
+        val note = addNoteUsingBasicModel().updateCards { did = homeDeckId }
+        moveToDynamicDeck(note)
+
+        // ensure note is correctly setup
+        assertThat("home deck", note.firstCard().oDid, equalTo(homeDeckId))
+        assertThat("current deck", note.firstCard().did, not(equalTo(homeDeckId)))
+
+        getNoteEditorEditingExistingBasicNote(note, REVIEWER, NoteEditor::class.java).apply {
+            setField(0, "Hello")
+            saveNote()
+        }
+
+        // ensure note is correctly setup
+        assertThat("after: home deck", note.firstCard().oDid, equalTo(homeDeckId))
+        assertThat("after: current deck", note.firstCard().did, not(equalTo(homeDeckId)))
+    }
+
     private fun moveToDynamicDeck(note: Note): DeckId {
         val dyn = addDynamicDeck("All")
         col.decks.select(dyn)

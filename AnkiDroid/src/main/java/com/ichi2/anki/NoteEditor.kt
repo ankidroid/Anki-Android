@@ -984,7 +984,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Regular changes in note content
             var modified = false
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
-            if (currentEditedCard != null && currentEditedCard!!.did != deckId) {
+            if (currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
                 reloadRequired = true
                 undoableOp { setDeck(listOf(currentEditedCard!!.id), deckId) }
                 // refresh the card object to reflect the database changes from above
@@ -994,6 +994,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // then set the card ID to the new deck
                 currentEditedCard!!.did = deckId
                 modified = true
+                Timber.d("deck ID updated to '%d'", deckId)
             }
             // now load any changes to the fields from the form
             for (f in editFields!!) {
