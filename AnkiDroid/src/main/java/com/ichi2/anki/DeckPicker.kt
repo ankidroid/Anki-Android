@@ -519,9 +519,8 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, recyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
-        if (BuildConfig.DEBUG) {
-            checkWebviewVersion()
-        }
+
+        InitialActivity.checkWebviewVersion(packageManager, this)
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {
@@ -612,27 +611,6 @@ open class DeckPicker :
                 Timber.i("Editing deck description for deck '%d'", deckId)
                 showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
             }
-        }
-    }
-
-    /**
-     * Check if the current WebView version is older than the last supported version and if it is,
-     * inform the developer with a snackbar.
-     */
-    private fun checkWebviewVersion() {
-        // Doesn't need to be translated as it's debug only
-        val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
-        if (webviewPackageInfo == null) {
-            val snackbarMessage = "No Android System WebView found"
-            postSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
-            return
-        }
-
-        val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
-        if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-            val snackbarMessage =
-                "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
-            postSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
         }
     }
 
