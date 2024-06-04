@@ -27,6 +27,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType.EASE
@@ -49,6 +50,7 @@ import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasSize
 import org.hamcrest.Matchers.lessThan
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
@@ -59,6 +61,7 @@ import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
@@ -462,6 +465,35 @@ class CardBrowserViewModelTest : JvmTest() {
             toggleSuspendCards()
             assertAllSuspended("none suspended -> suspend all")
         }
+    }
+
+    @Test
+    fun `export - no selection`() = runViewModelTest(notes = 2) {
+        assertNull(getSelectionExportData(), "no export data if no selection")
+    }
+
+    @Test
+    fun `export - one card`() = runViewModelTest(notes = 2) {
+        selectRowsWithPositions(0)
+
+        val (exportType, ids) = assertNotNull(getSelectionExportData())
+
+        assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Cards))
+        assertThat(ids, hasSize(1))
+
+        assertThat(ids.single(), equalTo(cards[0].id))
+    }
+
+    @Test
+    fun `export - one note`() = runViewModelNotesTest(notes = 2) {
+        selectRowsWithPositions(0)
+
+        val (exportType, ids) = assertNotNull(getSelectionExportData())
+
+        assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Notes))
+        assertThat(ids, hasSize(1))
+
+        assertThat(ids.single(), equalTo(cards[0].card.nid))
     }
 
     private fun runViewModelNotesTest(
