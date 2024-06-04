@@ -68,7 +68,7 @@ open class Card : Cloneable {
     private var elapsedTime: Long = 0
 
     @set:VisibleForTesting
-    var id: Long = 0
+    var id: CardId = 0
     var nid: NoteId = 0
     var did: DeckId = 0
     var ord = 0
