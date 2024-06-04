@@ -483,10 +483,6 @@ open class CardBrowser :
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
     }
 
-    fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
-        viewModel.setFilterQuery(filterQuery)
-    }
-
     // Finish initializing the activity after the collection has been correctly loaded
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
