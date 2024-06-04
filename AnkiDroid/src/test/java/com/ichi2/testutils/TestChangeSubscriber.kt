@@ -18,9 +18,8 @@ package com.ichi2.testutils
 
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.undoableOp
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import timber.log.Timber
+import kotlin.test.fail
 
 /**
  * Ensures no calls to [ChangeManager.notifySubscribers] via [undoableOp]
@@ -33,7 +32,9 @@ suspend fun ensureNoOpsExecuted(block: suspend () -> Unit) {
     }
     block()
     // we should be fine to not cleanup here
-    assertThat("ChangeManager should not be called", !changes)
+    if (!changes) return
+
+    fail("ChangeManager should not be called; ${ChangeManager.subscriberCount} subscribers")
 }
 
 /**
@@ -47,6 +48,8 @@ suspend fun ensureOpsExecuted(count: Int, block: suspend () -> Unit) {
     }
     Timber.v("Listening for ChangeManager ops")
     block()
+    if (changes == count) return
+
     // we should be fine to not cleanup here, as the subscriber goes out of scope
-    assertThat("ChangeManager: expected $count calls", changes, equalTo(count))
+    fail("ChangeManager: expected $count calls; ${ChangeManager.subscriberCount} subscribers")
 }

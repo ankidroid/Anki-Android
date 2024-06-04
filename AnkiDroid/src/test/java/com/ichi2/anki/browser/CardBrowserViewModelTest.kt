@@ -34,6 +34,7 @@ import com.ichi2.anki.model.SortType.EASE
 import com.ichi2.anki.model.SortType.NO_SORTING
 import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.setFlagFilterSync
+import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
@@ -529,6 +530,7 @@ class CardBrowserViewModelTest : JvmTest() {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
         }
+        notes.ifNotZero { count -> Timber.d("added %d notes", count) }
         val viewModel = CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
             cacheDir = createTransientDirectory(),
