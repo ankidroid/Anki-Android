@@ -686,14 +686,10 @@ class CardBrowserViewModel(
         }
     }
 
-    suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
+    suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> {
         val idsToChange = queryAllSelectedCardIds()
-        return withCol {
-            setUserFlag(flag, cids = idsToChange)
-            selectedRowIds
-                .map { getCard(it) }
-                .onEach { load() }
-        }
+        withCol { setUserFlag(flag, cids = idsToChange) }
+        return idsToChange
     }
 
     /**
