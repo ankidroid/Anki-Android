@@ -526,7 +526,7 @@ class CardBrowserViewModel(
     }
 
     suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
-        if (!isInMultiSelectMode) return null
+        if (!hasSelectedAnyRows()) return null
         return when (cardsOrNotes) {
             CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedRowIds)
             NOTES -> Pair(
