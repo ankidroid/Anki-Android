@@ -105,6 +105,12 @@ open class RobolectricTest : AndroidTest {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
         throwOnShowError = true
 
+        // See the Android logging (from Timber)
+        ShadowLog.stream = System.out
+            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
+            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
+            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
+
         ChangeManager.clearSubscribers()
 
         validateRunWithAnnotationPresent()
@@ -119,12 +125,6 @@ open class RobolectricTest : AndroidTest {
         CollectionManager.setColForTests(null)
 
         maybeSetupBackend()
-
-        // See the Android logging (from Timber)
-        ShadowLog.stream = System.out
-            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
-            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
-            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
 
         Storage.setUseInMemory(useInMemoryDatabase())
 

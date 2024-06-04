@@ -328,6 +328,7 @@ class CardBrowserViewModel(
     fun manualInit() {
         require(manualInit) { "'manualInit' should be true" }
         flowOfInitCompleted.update { true }
+        Timber.d("manualInit")
     }
 
     /** Whether any rows are selected */
@@ -474,6 +475,7 @@ class CardBrowserViewModel(
         if (!hasSelectedAnyRows()) {
             return@launch
         }
+        Timber.d("toggling selected cards suspend status")
         val cardIds = queryAllSelectedCardIds()
 
         undoableOp<OpChanges> {
