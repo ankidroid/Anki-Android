@@ -17,7 +17,6 @@ package com.ichi2.widget
 import android.app.PendingIntent
 import android.app.Service
 import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
 import android.content.*
 import android.content.res.Configuration
 import android.os.IBinder
@@ -25,41 +24,30 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
-import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
-import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import kotlin.math.sqrt
 
-class AnkiDroidWidgetSmall : AppWidgetProvider() {
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        Timber.d("SmallWidget: onUpdate")
-        if (!grantedStoragePermissions(context, showToast = false)) {
-            Timber.w("Opening AnkiDroid Small widget without storage access")
-            return
-        }
+/**
+ * AnkiDroidWidgetSmall is a small-sized home screen widget for the AnkiDroid application.
+ * This widget displays the number of due cards and an estimated review time.
+ * It updates periodically and can respond to certain actions like resizing.
+ */
+
+class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
+
+    override fun performUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+        usageAnalytics: UsageAnalytics
+    ) {
+        Timber.d("SmallWidget: performUpdate")
         WidgetStatus.updateInBackground(context)
-    }
-
-    override fun onEnabled(context: Context) {
-        super.onEnabled(context)
-        Timber.d("SmallWidget: Widget enabled")
-        val preferences = context.sharedPrefs()
-        preferences.edit(commit = true) { putBoolean("widgetSmallEnabled", true) }
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
-    }
-
-    override fun onDisabled(context: Context) {
-        super.onDisabled(context)
-        Timber.d("SmallWidget: Widget disabled")
-        val preferences = context.sharedPrefs()
-        preferences.edit(commit = true) { putBoolean("widgetSmallEnabled", false) }
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -72,6 +60,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
     class UpdateService : Service() {
         /** The cached number of total due cards.  */
         private var dueCardsCount = 0
+
         fun doUpdate(context: Context) {
             AppWidgetManager.getInstance(context)
                 .updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
@@ -179,6 +168,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
     companion object {
         private var mMountReceiver: BroadcastReceiver? = null
         private var remounted = false
+
         private fun updateWidgetDimensions(context: Context, updateViews: RemoteViews, cls: Class<*>) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(ComponentName(context, cls))
