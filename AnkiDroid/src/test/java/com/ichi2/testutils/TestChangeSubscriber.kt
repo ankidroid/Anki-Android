@@ -45,6 +45,7 @@ suspend fun ensureOpsExecuted(count: Int, block: suspend () -> Unit) {
         Timber.d("ChangeManager op detected")
         changes++
     }
+    Timber.v("Listening for ChangeManager ops")
     block()
     // we should be fine to not cleanup here, as the subscriber goes out of scope
     assertThat("ChangeManager: expected $count calls", changes, equalTo(count))

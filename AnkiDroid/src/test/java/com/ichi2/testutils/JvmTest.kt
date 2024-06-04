@@ -104,7 +104,7 @@ open class JvmTest : TestClass {
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         Timber.uprootAll()
-        println("""-- executing test "${testName.methodName}"""")
+        println("""-- completed test "${testName.methodName}"""")
     }
 
     fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {

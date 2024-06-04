@@ -386,12 +386,14 @@ class CardBrowserViewModel(
 
     fun selectAll() {
         if (_selectedRows.addAll(cards.wrapped)) {
+            Timber.d("selecting all: %d item(s)", cards.wrapped.size)
             refreshSelectedRowsFlow()
         }
     }
 
     fun selectNone() {
         if (_selectedRows.isEmpty()) return
+        Timber.d("selecting none")
         _selectedRows.clear()
         refreshSelectedRowsFlow()
     }
@@ -482,6 +484,7 @@ class CardBrowserViewModel(
                 sched.suspendCards(cardIds).changes
             }
         }
+        Timber.d("finished 'toggleSuspendCards'")
     }
 
     /**
