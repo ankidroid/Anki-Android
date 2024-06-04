@@ -149,6 +149,9 @@
         <!-- AlertDialogTheme-->
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
         <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
+
+        <!--MaterialAlertDialogTheme-->
+        <item name="materialAlertDialogPrimaryColor">@color/theme_dark_primary</item>
     </style>
 
     <style name="Theme_Dark" parent="Base.Theme.Dark"/>

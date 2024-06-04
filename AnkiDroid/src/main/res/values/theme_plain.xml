@@ -69,6 +69,8 @@
         <item name="dialogBackground">@color/white</item>
         <item name="progressDialogButtonTextColor">@color/theme_plain_primary</item>
 
+        <!-- MaterialAlertDialog-->
+        <item name="materialAlertDialogPrimaryColor">@color/theme_plain_primary</item>
     </style>
 
     <style name="Theme_Light.Plain" parent="Base.Theme.Light.Plain"/>
