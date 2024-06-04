@@ -189,6 +189,7 @@ open class RobolectricTest : AndroidTest {
 
             TimeManager.reset()
         }
+        WorkManagerTestInitHelper.closeWorkDatabase()
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         println("""-- completed test "${testName.methodName}"""")
