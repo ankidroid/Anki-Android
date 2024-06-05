@@ -265,4 +265,6 @@
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
     <string name="open">Open</string>
     <string name="tap_to_cloze">Single tap text to cloze</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>
