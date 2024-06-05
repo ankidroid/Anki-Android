@@ -218,6 +218,16 @@
         <item name="checkboxStyle">@style/AlertDialogCheckBox.Style</item>
     </style>
 
+    <style name="ThemeOverlay.AnkiDroid.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="dialogCornerRadius">@dimen/m3_alert_dialog_corner_size</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/AnkiDroid.AlertDialog.Body.Text</item>
+    </style>
+
+    <style name="AnkiDroid.AlertDialog.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
+        <!-- The default style uses onSurfaceVariant, which isn't defined yet -->
+        <item name="android:textColor">?android:attr/textColor</item>
+    </style>
+
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
     </style>
