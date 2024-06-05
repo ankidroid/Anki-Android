@@ -105,6 +105,9 @@
         <!-- AlertDialogTheme-->
         <item name="alertDialogTheme">@style/AlertDialogStyle</item>
 
+        <!-- MaterialAlertDialog-->
+        <item name="materialAlertDialogPrimaryColor">@color/theme_black_primary_dark</item>
+
     </style>
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">

@@ -218,6 +218,10 @@
         <item name="checkboxStyle">@style/AlertDialogCheckBox.Style</item>
     </style>
 
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">?attr/materialAlertDialogPrimaryColor</item>
+    </style>
+
     <style name="CustomButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">?attr/progressDialogButtonTextColor</item>
     </style>
