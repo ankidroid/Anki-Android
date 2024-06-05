@@ -16,6 +16,7 @@
 
 package com.ichi2.testutils
 
+import anki.collection.OpChanges
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.undoableOp
 import timber.log.Timber
@@ -25,14 +26,13 @@ import kotlin.test.fail
  * Ensures no calls to [ChangeManager.notifySubscribers] via [undoableOp]
  */
 suspend fun ensureNoOpsExecuted(block: suspend () -> Unit) {
-    var changes = false
-    ChangeManager.subscribe { _, _ ->
-        Timber.d("ChangeManager op detected")
-        changes = true
-    }
+    val subscription = ChangeCounter()
+    ChangeManager.subscribe(subscription)
     block()
-    // we should be fine to not cleanup here
-    if (!changes) return
+    if (!subscription.hasChanges) {
+        Timber.d("ensureNoOpsExecuted: success")
+        return
+    }
 
     fail("ChangeManager should not be called; ${ChangeManager.subscriberCount} subscribers")
 }
@@ -41,15 +41,26 @@ suspend fun ensureNoOpsExecuted(block: suspend () -> Unit) {
  * Ensures no calls to [ChangeManager.notifySubscribers] via [undoableOp]
  */
 suspend fun ensureOpsExecuted(count: Int, block: suspend () -> Unit) {
-    var changes = 0
-    ChangeManager.subscribe { _, _ ->
-        Timber.d("ChangeManager op detected")
-        changes++
-    }
-    Timber.v("Listening for ChangeManager ops")
-    block()
-    if (changes == count) return
+    val subscription = ChangeCounter()
 
-    // we should be fine to not cleanup here, as the subscriber goes out of scope
+    Timber.v("Listening for ChangeManager ops")
+    ChangeManager.subscribe(subscription)
+    block()
+    if (subscription.changeCount == count) {
+        Timber.d("ensureOpsExecuted: success")
+        return
+    }
+
     fail("ChangeManager: expected $count calls; ${ChangeManager.subscriberCount} subscribers")
+}
+
+// used to ensure a strong reference to the subscription is held
+private class ChangeCounter : ChangeManager.Subscriber {
+    private var changes = 0
+    val changeCount get() = changes
+    val hasChanges get() = changes > 0
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        Timber.d("ChangeManager op detected")
+        this.changes++
+    }
 }
