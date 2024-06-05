@@ -251,8 +251,8 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Von</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Bis</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="cloze_note_required">Cloze-Notiztyp erforderlich</string>
+    <string name="cloze_not_found_message">Kein Cloze-Notiztyp gefunden. Öffnen Sie den Notiz-Editor oder versuchen Sie es erneut, nachdem Sie einen Cloze-Notiztyp hinzugefügt haben.</string>
+    <string name="open">Offen</string>
     <string name="tap_to_cloze">Single tap text to cloze</string>
 </resources>
