@@ -25,6 +25,7 @@ import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 class Config(val backend: Backend) {
@@ -67,6 +68,17 @@ class Config(val backend: Backend) {
             default
         } catch (ex: SerializationException) {
             null
+        }
+    }
+
+    @NotInLibAnki
+    fun getObject(key: String, default: JSONObject): JSONObject {
+        return try {
+            JSONObject(backend.getConfigJson(key).toStringUtf8())
+        } catch (ex: BackendNotFoundException) {
+            default
+        } catch (ex: JSONException) {
+            default
         }
     }
 }

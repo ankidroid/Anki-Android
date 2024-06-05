@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
@@ -148,4 +149,8 @@ fun FragmentActivity.setTransparentStatusBar() {
     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
         !Themes.currentTheme.isNightMode
     window.statusBarColor = Color.TRANSPARENT
+}
+
+fun FragmentActivity.setTransparentBackground() {
+    window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 }

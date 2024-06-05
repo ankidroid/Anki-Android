@@ -13,6 +13,7 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -30,7 +31,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.ext.convertToString
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
@@ -44,12 +44,10 @@ import com.ichi2.utils.title
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.apache.commons.io.FileUtils
 import timber.log.Timber
-import java.io.DataInputStream
-import java.io.DataOutputStream
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import java.nio.charset.Charset
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -215,6 +213,11 @@ class TagsDialog : AnalyticsDialogFragment {
         val dialog: AlertDialog? = dialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
     private fun radioButtonIdToCardState(id: Int) =
@@ -404,18 +407,17 @@ class TagsFile(path: String) : File(path), Parcelable {
      * @param data data for the dialog to display. Typically [Context.getCacheDir]
      */
     constructor(directory: File, data: TagsData) : this(createTempFile("tagsDialog", ".tmp", directory).path) {
-        DataOutputStream(FileOutputStream(this)).use { outputStream ->
-            // PERF: Use an alternate format
-            // https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/formats.md
-            val string = Json.encodeToString(data)
-            Timber.d("persisting tags to disk, length: %d", string.length)
-            outputStream.writeBytes(string)
-        }
+        // PERF: Use an alternate format
+        // https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/formats.md
+        val jsonEncoded = Json.encodeToString(data)
+        Timber.d("persisting tags to disk, length: %d", jsonEncoded.length)
+        FileUtils.writeStringToFile(this, jsonEncoded, Charset.forName("UTF-8"))
     }
 
-    fun getData() = DataInputStream(FileInputStream(this)).use { inputStream ->
+    fun getData(): TagsData {
         // PERF!!: This takes ~2 seconds with AnKing
-        Json.decodeFromString<TagsData>(inputStream.convertToString())
+        val jsonEncoded = FileUtils.readFileToString(this, Charset.forName("UTF-8"))
+        return Json.decodeFromString<TagsData>(jsonEncoded)
     }
 
     override fun describeContents(): Int = 0

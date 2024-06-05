@@ -232,10 +232,10 @@
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">復習間隔も同じ日数にする</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="other">この日を期日に指定</item>
+        <item quantity="other">この日を復習期日に指定</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="other">この期間の日のどれかを期日に指定（ランダム）</item>
+        <item quantity="other">この期間の日のどれかを復習期日に指定（ランダム）</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="other">日後</item>
@@ -243,4 +243,9 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">～</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">最短</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">最長</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="tap_to_cloze">Single tap text to cloze</string>
 </resources>

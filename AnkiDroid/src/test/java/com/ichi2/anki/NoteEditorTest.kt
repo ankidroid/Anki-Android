@@ -41,6 +41,7 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -79,12 +80,28 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    fun errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() {
+    fun errorSavingNoteWithNoFirstFieldDisplaysNoFirstField() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.BASIC)
             .withNoFirstField()
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_first_field))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
+    }
+
+    @Test
+    fun testErrorMessageNull() = runTest {
+        val noteEditor = getNoteEditorAdding(NoteType.BASIC)
+            .withNoFirstField()
+            .build()
+
+        noteEditor.saveNote()
+        assertThat(noteEditor.addNoteErrorMessage, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
+
+        noteEditor.setFieldValueFromUi(0, "Hello")
+
+        noteEditor.saveNote()
+        assertThat(noteEditor.addNoteErrorMessage, equalTo(null))
     }
 
 //    @Test
@@ -111,30 +128,36 @@ class NoteEditorTest : RobolectricTest() {
 //    }
 
     @Test
-    fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
+    fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.CLOZE)
             .withNoFirstField()
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(CollectionManager.TR.addingTheFirstFieldIsEmpty()))
     }
 
     @Test
-    fun errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() {
+    fun errorSavingClozeNoteWithNoClozeDeletionsDisplaysClozeError() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.CLOZE)
             .withFirstField("NoCloze")
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cloze_delations))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(
+            actualResourceId,
+            equalTo(CollectionManager.TR.addingYouHaveAClozeDeletionNote())
+        )
     }
 
     @Test
-    fun errorSavingNoteWithNoTemplatesShowsNoCardsCreated() {
+    fun errorSavingNoteWithNoTemplatesShowsNoCardsCreated() = runTest {
         val noteEditor = getNoteEditorAdding(NoteType.BACK_TO_FRONT)
             .withFirstField("front is not enough")
             .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
+        noteEditor.saveNote()
+        val actualResourceId = noteEditor.snackbarErrorText
+        assertThat(actualResourceId, equalTo(getString(R.string.note_editor_no_cards_created)))
     }
 
     @Test
@@ -401,6 +424,26 @@ class NoteEditorTest : RobolectricTest() {
         getNoteEditorAdding(NoteType.BASIC).build().also { editor ->
             assertThat("Deck ID is remembered", editor.deckId, equalTo(reversedDeckId))
         }
+    }
+
+    @Test
+    fun `editing card in filtered deck retains deck`() = runTest {
+        val homeDeckId = addDeck("A")
+        val note = addNoteUsingBasicModel().updateCards { did = homeDeckId }
+        moveToDynamicDeck(note)
+
+        // ensure note is correctly setup
+        assertThat("home deck", note.firstCard().oDid, equalTo(homeDeckId))
+        assertThat("current deck", note.firstCard().did, not(equalTo(homeDeckId)))
+
+        getNoteEditorEditingExistingBasicNote(note, REVIEWER, NoteEditor::class.java).apply {
+            setField(0, "Hello")
+            saveNote()
+        }
+
+        // ensure note is correctly setup
+        assertThat("after: home deck", note.firstCard().oDid, equalTo(homeDeckId))
+        assertThat("after: current deck", note.firstCard().did, not(equalTo(homeDeckId)))
     }
 
     private fun moveToDynamicDeck(note: Note): DeckId {

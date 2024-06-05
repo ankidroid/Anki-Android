@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Editar nota</string>
     <string name="discard">Descartar</string>
     <string name="note_editor_no_cards_created">Nenhum card criado. Por favor, preencha mais campos</string>
-    <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
-    <string name="note_editor_no_cloze_delations">Este tipo de nota deve usar Ocultar em algum termo</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum card.\nPor favor, escolha outro tipo de nota, ou clique em \'Cards\' e adicione uma substituição de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Ocultar somente funcionará em notas do tipo Ocultar.</string>
     <string name="saving_facts">Salvando nota</string>
@@ -366,7 +364,7 @@
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposicionar</string>
     <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="stop_recording">Parar</string>
+    <string name="play_recording">Reproduzir</string>
+    <string name="next_recording">Próximo</string>
 </resources>

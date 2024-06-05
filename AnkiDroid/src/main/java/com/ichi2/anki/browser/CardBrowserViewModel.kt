@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
@@ -43,6 +44,7 @@ import com.ichi2.anki.setUserFlag
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
@@ -77,18 +79,19 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.Collections
-import java.util.HashMap
 import kotlin.math.max
 import kotlin.math.min
 
 @NeedsTest("reverseDirectionFlow/sortTypeFlow are not updated on .launch { }")
+@NeedsTest("columIndex1/2 config is not not updated on init")
 @NeedsTest("13442: selected deck is not changed, as this affects the reviewer")
 @NeedsTest("search is called after launch()")
 class CardBrowserViewModel(
     private val lastDeckIdRepository: LastDeckIdRepository,
     private val cacheDir: File,
     options: CardBrowserLaunchOptions?,
-    preferences: SharedPreferencesProvider
+    preferences: SharedPreferencesProvider,
+    private val manualInit: Boolean = false
 ) : ViewModel(), SharedPreferencesProvider by preferences {
 
     // Set by the UI to determine the number of cards to preload before returning search results
@@ -273,11 +276,19 @@ class CardBrowserViewModel(
         }
 
         flowOfColumnIndex1
-            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { index ->
+                Timber.d("updating %s", DISPLAY_COLUMN_1_KEY)
+                sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) }
+            }
             .launchIn(viewModelScope)
 
         flowOfColumnIndex2
-            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
+            .ignoreValuesFromViewModelLaunch()
+            .onEach { index ->
+                Timber.d("updating %s", DISPLAY_COLUMN_2_KEY)
+                sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) }
+            }
             .launchIn(viewModelScope)
 
         performSearchFlow.onEach {
@@ -302,12 +313,22 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             withCol {
-                sortTypeFlow.update { SortType.fromCol(config, sharedPrefs()) }
+                sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
             }
             Timber.i("initCompleted")
-            flowOfInitCompleted.update { true }
+
+            if (!manualInit) {
+                flowOfInitCompleted.update { true }
+            }
         }
+    }
+
+    @VisibleForTesting
+    fun manualInit() {
+        require(manualInit) { "'manualInit' should be true" }
+        flowOfInitCompleted.update { true }
+        Timber.d("manualInit")
     }
 
     /** Whether any rows are selected */
@@ -366,12 +387,14 @@ class CardBrowserViewModel(
 
     fun selectAll() {
         if (_selectedRows.addAll(cards.wrapped)) {
+            Timber.d("selecting all: %d item(s)", cards.wrapped.size)
             refreshSelectedRowsFlow()
         }
     }
 
     fun selectNone() {
         if (_selectedRows.isEmpty()) return
+        Timber.d("selecting none")
         _selectedRows.clear()
         refreshSelectedRowsFlow()
     }
@@ -438,16 +461,24 @@ class CardBrowserViewModel(
     fun setColumn1Index(value: Int) = flowOfColumnIndex1.update { value }
 
     fun setColumn2Index(value: Int) = flowOfColumnIndex2.update { value }
-    suspend fun suspendCards() {
+
+    /**
+     * Toggles the 'suspend' state of the selected cards
+     *
+     * If all cards are suspended, unsuspend all
+     * If no cards are suspended, suspend all
+     * If there is a mix, suspend all
+     *
+     * Changes are handled by [ChangeManager]
+     */
+    fun toggleSuspendCards() = viewModelScope.launch {
         if (!hasSelectedAnyRows()) {
-            return
+            return@launch
         }
+        Timber.d("toggling selected cards suspend status")
         val cardIds = queryAllSelectedCardIds()
 
-        undoableOp {
-            // if all cards are suspended, unsuspend all
-            // if no cards are suspended, suspend all
-            // if there is a mix, suspend all
+        undoableOp<OpChanges> {
             val wantUnsuspend = cardIds.all { getCard(it).queue == Consts.QUEUE_TYPE_SUSPENDED }
             if (wantUnsuspend) {
                 sched.unsuspendCards(cardIds)
@@ -455,6 +486,7 @@ class CardBrowserViewModel(
                 sched.suspendCards(cardIds).changes
             }
         }
+        Timber.d("finished 'toggleSuspendCards'")
     }
 
     /**
@@ -499,7 +531,7 @@ class CardBrowserViewModel(
     }
 
     suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
-        if (!isInMultiSelectMode) return null
+        if (!hasSelectedAnyRows()) return null
         return when (cardsOrNotes) {
             CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedRowIds)
             NOTES -> Pair(

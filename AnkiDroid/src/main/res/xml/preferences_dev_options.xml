@@ -45,6 +45,10 @@
         android:summary="Touch here to lock the database (all threads block in-process, exception if using second process)"
         android:key="@string/pref_lock_database_key"/>
     <SwitchPreferenceCompat
+        android:title="New reviewer"
+        android:key="@string/new_reviewer_pref_key"
+        android:defaultValue="false"/>
+    <SwitchPreferenceCompat
         android:title="New congrats screen"
         android:key="@string/new_congrats_screen_pref_key"
         android:defaultValue="false"/>
@@ -57,6 +61,13 @@
         android:title="@string/reset_onboarding"
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
+    <Preference
+        android:title="@string/reset_onboarding"
+        android:summary="@string/reset_onboarding_desc"
+        android:key="@string/pref_reset_onboarding_key"/>
+    <Preference
+        android:title="@string/open_instant_editor"
+        android:key="@string/pref_open_instant_editor"/>
     <PreferenceCategory
         android:title="Create fake media"
         >

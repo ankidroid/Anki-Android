@@ -50,7 +50,7 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         )
 
         // copied from tools/localization/src/constants.ts
-        // excludes ankidroid-titles and marketdescription as these are .txt
+        // excludes marketdescription as it is .txt
         private val I18N_FILES = listOf(
             "01-core",
             "02-strings",

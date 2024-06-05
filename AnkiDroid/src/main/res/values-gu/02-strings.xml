@@ -45,38 +45,38 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Close drawer</string>
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
-    <string name="CardEditorModel">Type:</string>
-    <string name="CardEditorTags">Tags: %1$s</string>
-    <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
-    <string name="tag_name">Tag name</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
-    <string name="add_tag">Add tag</string>
-    <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="drawer_open">ડ્રોઅર ખોલો</string>
+    <string name="drawer_close">ડ્રોઅર બંધ કરો</string>
+    <string name="CardEditorCardDeck">કાર્ડ ડેક:</string>
+    <string name="CardEditorNoteDeck">તૂતક:</string>
+    <string name="CardEditorModel">પ્રકાર:</string>
+    <string name="CardEditorTags">ટૅગ્સ: %1$s</string>
+    <string name="CardEditorCards">કાર્ડ્સ: %1$s</string>
+    <string name="edit_occlusions">અવરોધો સંપાદિત કરો</string>
+    <string name="tag_name">ટૅગ નામ</string>
+    <string name="add_new_filter_tags">ટૅગ્સ ઉમેરો/ફિલ્ટર કરો</string>
+    <string name="add_tag">ટેગ ઉમેરો</string>
+    <string name="check_all_tags">બધા ટૅગ્સ ચેક/અનચેક કરો</string>
+    <string name="filter_tags">ફિલ્ટર ટૅગ્સ</string>
+    <string name="no_tags">તમે હજી સુધી કોઈ ટૅગ ઉમેર્યા નથી</string>
+    <string name="updated_version">સંસ્કરણ %s પર અપડેટ કર્યું</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_stylus">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
-    <string name="enable_whiteboard">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
-    <string name="show_whiteboard">Show whiteboard</string>
-    <string name="hide_whiteboard">Hide whiteboard</string>
-    <string name="clear_whiteboard">Clear whiteboard</string>
-    <string name="replay_audio">Replay audio</string>
-    <string name="leech_suspend_notification">Card marked as leech and suspended</string>
-    <string name="leech_notification">Card marked as leech</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="save_whiteboard">વ્હાઇટબોર્ડ સાચવો</string>
+    <string name="enable_stylus">સ્ટાઈલસ લેખન સક્ષમ કરો</string>
+    <string name="disable_stylus">સ્ટાઈલસ લેખન અક્ષમ કરો</string>
+    <string name="enable_whiteboard">વ્હાઇટબોર્ડને સક્ષમ કરો</string>
+    <string name="disable_whiteboard">વ્હાઇટબોર્ડને અક્ષમ કરો</string>
+    <string name="show_whiteboard">વ્હાઇટબોર્ડ બતાવો</string>
+    <string name="hide_whiteboard">વ્હાઇટબોર્ડ છુપાવો</string>
+    <string name="clear_whiteboard">વ્હાઇટબોર્ડ સાફ કરો</string>
+    <string name="replay_audio">ફરીથી ઑડિયો વગાડો</string>
+    <string name="leech_suspend_notification">જળો તરીકે ચિહ્નિત અને સસ્પેન્ડેડ કાર્ડ</string>
+    <string name="leech_notification">લીચ તરીકે ચિહ્નિત થયેલ કાર્ડ</string>
+    <string name="webview_crash_unknown">અજાણી ભૂલ</string>
+    <string name="webview_crash_unknwon_detailed">આ WebView માં આંતરિક ભૂલને કારણે થયું હતું</string>
+    <string name="webview_crash_oom">મેમરી બહાર</string>
+    <string name="webview_crash_oom_details">વેબવ્યુ સિસ્ટમ દ્વારા સમાપ્ત કરવામાં આવ્યું હતું. આ સામાન્ય રીતે થાય છે જ્યારે એપ્લિકેશનની મેમરી સમાપ્ત થઈ જાય છે, મોટાભાગે મોટા ફોન્ટ્સ અથવા મીડિયાને કારણે.</string>
+    <string name="webview_crash_nonfatal">WebView રેન્ડરર ક્રેશ થયું. કારણ: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
@@ -86,11 +86,11 @@
         <item>Sort field</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Answer</item>
-        <item>Card</item>
-        <item>Deck</item>
-        <item>Note</item>
-        <item>Question</item>
+        <item>જવાબ આપો</item>
+        <item>કાર્ડ</item>
+        <item>તૂતક</item>
+        <item>નૉૅધ</item>
+        <item>પ્રશ્ન</item>
         <item>Tags</item>
         <item>Lapses</item>
         <item>Reviews</item>
@@ -114,18 +114,16 @@
     <string name="cardeditor_title_edit_card">Edit note</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
     <string name="save">Save</string>
     <string name="close">Close</string>
-    <string name="select">Select</string>
-    <string name="field_remapping">%1$s (from “%2$s”)</string>
+    <string name="select">પસંદ કરો</string>
+    <string name="field_remapping">%1$s (“%2$s”માંથી)</string>
     <string name="confirm_map_cards_to_nothing">Any cards mapped to nothing will be deleted. If a note has no remaining cards, it will be lost. Are you sure you want to continue?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">કોઈ નોંધ પ્રકાર મળ્યો નથી</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">

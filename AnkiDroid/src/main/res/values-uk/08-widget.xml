@@ -54,10 +54,10 @@
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Малий AnkiDroid</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d карток в черзі</item>
-        <item quantity="few">%d карти в черзі</item>
-        <item quantity="many">%d карт в черзі</item>
-        <item quantity="other">%d карт в черзі</item>
+        <item quantity="one">%d картка в черзі</item>
+        <item quantity="few">%d картки в черзі</item>
+        <item quantity="many">%d карток в черзі</item>
+        <item quantity="other">%d карток в черзі</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="one">Залишилася %d хвилина</item>

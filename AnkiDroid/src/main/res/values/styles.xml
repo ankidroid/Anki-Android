@@ -29,6 +29,11 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
+    <style name="AnswerButton" parent="Widget.Material3.Button">
+        <item name="android:padding">0dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
     <!--  Material Design-style persistent footer button -->
     <style name="FooterButtonBase">
         <item name="android:layout_height">48dp</item>
@@ -223,6 +228,14 @@
 
     <style name="CardView.PreviewerStyle" parent="Widget.Material3.CardView.Elevated">
         <item name="android:elevation">0.8dp</item>
+    </style>
+
+    <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
 </resources>

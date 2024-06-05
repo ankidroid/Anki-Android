@@ -34,10 +34,14 @@ import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestName
+import org.robolectric.junit.rules.TimeoutRule
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
 open class JvmTest : TestClass {
+    @get:Rule
+    val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
+
     @get:Rule
     val testName = TestName()
 
@@ -61,10 +65,6 @@ open class JvmTest : TestClass {
         println("""-- executing test "${testName.methodName}"""")
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
 
-        ChangeManager.clearSubscribers()
-
-        maybeSetupBackend()
-
         plant(object : Timber.DebugTree() {
             @SuppressLint("PrintStackTraceUsage")
             override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
@@ -77,6 +77,10 @@ open class JvmTest : TestClass {
                 t?.printStackTrace()
             }
         })
+
+        ChangeManager.clearSubscribers()
+
+        maybeSetupBackend()
 
         Storage.setUseInMemory(true)
     }
@@ -100,7 +104,7 @@ open class JvmTest : TestClass {
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         Timber.uprootAll()
-        println("""-- executing test "${testName.methodName}"""")
+        println("""-- completed test "${testName.methodName}"""")
     }
 
     fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {

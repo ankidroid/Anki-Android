@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">ନୋଟ୍ ସମ୍ପାଦନା</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">କୌଣସି ପତ୍ର ସୃଷ୍ଟି ହୋଇନାହିଁ। ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
-    <string name="note_editor_no_first_field">ପ୍ରଥମ କ୍ଷେତ୍ର ଖାଲି ଅଛି</string>
-    <string name="note_editor_no_cloze_delations">ଏହି ନୋଟ ପ୍ରକାରରେ କ୍ଲୋଜ ବିଲୋପ ରହିବା ନିହାତି ଆବଶ୍ୟକ</string>
     <string name="note_editor_no_cards_created_all_fields">ଚଳିତ ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କଲା ନାହିଁ।\nଦୟାକରି ଅନ୍ୟ କୌଣସି ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ କିମ୍ବା ‘ପତ୍ର’ କ୍ଲିକ୍ କରି ଗୋଟେ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ବିଲୋପ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
     <string name="saving_facts">ନୋଟ୍ ସଂରକ୍ଷିତ କରାଯାଉଛି </string>

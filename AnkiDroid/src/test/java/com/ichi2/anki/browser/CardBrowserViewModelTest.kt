@@ -17,6 +17,8 @@
 package com.ichi2.anki.browser
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.TurbineTestContext
+import app.cash.turbine.test
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager
@@ -25,19 +27,33 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
+import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.flagCardForNote
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.SortType.EASE
+import com.ichi2.anki.model.SortType.NO_SORTING
+import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.setFlagFilterSync
+import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
+import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Note
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.JvmTest
+import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.ensureNoOpsExecuted
+import com.ichi2.testutils.ensureOpsExecuted
 import com.ichi2.testutils.mockIt
 import kotlinx.coroutines.flow.first
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.lessThan
+import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,6 +62,7 @@ import java.io.File
 import kotlin.io.path.createTempDirectory
 import kotlin.io.path.pathString
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserViewModelTest : JvmTest() {
@@ -206,16 +223,325 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
-    private fun runViewModelTest(notes: Int = 0, testBody: suspend CardBrowserViewModel.() -> Unit) = runTest {
+    @Test
+    fun `sort order from notes is selected - 16514`() {
+        col.config.set("sortType", "noteCrt")
+        col.config.set("noteSortType", "_field_Frequency")
+        with(col) { CardsOrNotes.NOTES.saveToCollection() }
+
+        runViewModelTest(notes = 1) {
+            assertThat("1 row returned", rowCount, equalTo(1))
+        }
+    }
+
+    fun `selected rows are refreshed`() = runViewModelTest(notes = 2) {
+        flowOfSelectedRows.test {
+            // initially, flowOfSelectedRows should not have emitted anything
+            expectNoEvents()
+
+            selectAll()
+            assertThat("initial selection", awaitItem().size, equalTo(2))
+
+            selectNone()
+            assertThat("deselected all", awaitItem().size, equalTo(0))
+
+            toggleRowSelectionAtPosition(0)
+            assertThat("selected row", awaitItem().size, equalTo(1))
+
+            toggleRowSelectionAtPosition(0)
+            assertThat("deselected rows", awaitItem().size, equalTo(0))
+
+            selectRowAtPosition(0)
+            assertThat("select rows explicitly", awaitItem().size, equalTo(1))
+
+            selectRowAtPosition(0)
+            expectNoEvents()
+
+            selectRowsBetweenPositions(0, 1)
+            assertThat("select rows between positions", awaitItem().size, equalTo(2))
+
+            selectRowsBetweenPositions(0, 1)
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `selected card and note ids`() {
+        val notes = List(2) { addNoteUsingBasicAndReversedModel() }
+
+        val nids = notes.map { it.id }.toTypedArray()
+        val cids = notes.flatMap { it.cids() }.toTypedArray()
+
+        runViewModelTest {
+            setCardsOrNotes(CardsOrNotes.CARDS).join()
+            selectAll()
+            assertThat("cards: rowCount", rowCount, equalTo(4))
+            assertThat("cards: cids", queryAllSelectedCardIds(), containsInAnyOrder(*cids))
+            assertThat("cards: nids", queryAllSelectedNoteIds(), containsInAnyOrder(*nids))
+
+            selectNone()
+
+            setCardsOrNotes(CardsOrNotes.NOTES).join()
+            selectAll()
+            assertThat("notes: rowCount", rowCount, equalTo(2))
+            assertThat("notes: cids", queryAllSelectedCardIds(), containsInAnyOrder(*cids))
+            assertThat("notes: nids", queryAllSelectedNoteIds(), containsInAnyOrder(*nids))
+        }
+    }
+
+    @Test
+    fun `changing column index 1`() = runViewModelTest {
+        flowOfColumnIndex1.test {
+            ignoreEventsDuringViewModelInit()
+
+            assertThat("default column1Index value", column1Index, equalTo(0))
+
+            setColumn1Index(1)
+
+            assertThat("flowOfColumnIndex1", awaitItem(), equalTo(1))
+            assertThat("column1Index", column1Index, equalTo(1))
+
+            // expect no change if the value is selected again
+            setColumn1Index(1)
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `changing column index 2`() = runViewModelTest {
+        flowOfColumnIndex2.test {
+            ignoreEventsDuringViewModelInit()
+
+            assertThat("default column2Index value", column2Index, equalTo(0))
+
+            setColumn2Index(1)
+
+            assertThat("flowOfColumnIndex2", awaitItem(), equalTo(1))
+            assertThat("column2Index", column2Index, equalTo(1))
+
+            // expect no change if the value is selected again
+            setColumn2Index(1)
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `change card order to NO_SORTING is a no-op if done twice`() = runViewModelTest {
+        flowOfSearchState.test {
+            ignoreEventsDuringViewModelInit()
+            assertThat("initial order", order, equalTo(SORT_FIELD))
+            assertThat("initial direction", !orderAsc)
+
+            // changing the order performs a search & changes order
+            changeCardOrder(NO_SORTING)
+            expectMostRecentItem()
+            assertThat("order changed", order, equalTo(NO_SORTING))
+            assertThat("changed direction", !orderAsc)
+
+            waitForSearchResults()
+
+            // pressing 'no sorting' again is a no-op
+            changeCardOrder(NO_SORTING)
+            expectNoEvents()
+            assertThat("order unchanged", order, equalTo(NO_SORTING))
+            assertThat("unchanged direction", !orderAsc)
+        }
+    }
+
+    @Test
+    fun `change direction of results`() = runViewModelTest {
+        flowOfSearchState.test {
+            ignoreEventsDuringViewModelInit()
+            assertThat("initial order", order, equalTo(SORT_FIELD))
+            assertThat("initial direction", !orderAsc)
+
+            // changing the order performs a search & changes order
+            changeCardOrder(EASE)
+            expectMostRecentItem()
+            assertThat("order changed", order, equalTo(EASE))
+            assertThat("changed direction is the default", !orderAsc)
+
+            waitForSearchResults()
+
+            // pressing 'ease' again changes direction
+            changeCardOrder(EASE)
+            expectMostRecentItem()
+            assertThat("order unchanged", order, equalTo(EASE))
+            assertThat("direction is changed", orderAsc)
+        }
+    }
+
+    /*
+     * Note: suspension behavior has been questioned from a performance perspective and is
+     * subject to change
+     *
+     * Needing to know the 'suspended' status of all cards, makes this O(n).
+     * Anki uses the O(1) approach of using the first selected card
+     */
+
+    @Test
+    fun `suspend cards - cards - no selection`() = runViewModelTest(notes = 2) {
+        ensureNoOpsExecuted {
+            toggleSuspendCards()
+
+            assertAllUnsuspended("no selection")
+        }
+    }
+
+    @Test
+    fun `suspend - cards - all suspended`() = runViewModelTest(notes = 2) {
+        suspendAll()
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+
+            assertAllUnsuspended("all suspended: unsuspend")
+        }
+    }
+
+    @Test
+    fun `suspend - cards - some suspended`() = runViewModelTest(notes = 2) {
+        suspend(cards.first())
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+
+            assertAllSuspended("mixed selection: suspend all")
+        }
+    }
+
+    @Test
+    fun `suspend - cards - none suspended`() = runViewModelTest(notes = 2) {
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+
+            assertAllSuspended("none suspended: suspend all")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - no selection`() = runViewModelNotesTest(notes = 2) {
+        ensureNoOpsExecuted {
+            toggleSuspendCards()
+            assertAllUnsuspended("none selected: do nothing")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - all suspended`() = runViewModelNotesTest(notes = 2) {
+        suspendAll()
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllUnsuspended("all suspended -> unsuspend")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - some notes suspended`() = runViewModelNotesTest(notes = 2) {
+        val nid = cards.first().card.nid
+        suspend(col.getNote(nid))
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllSuspended("mixed selection -> suspend all")
+        }
+    }
+
+    @Test
+    fun `suspend - notes - some cards suspended`() = runViewModelNotesTest(notes = 2) {
+        // this suspends o single cid from a nid
+        suspend(cards.first())
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllSuspended("mixed selection -> suspend all")
+        }
+    }
+
+    fun `suspend cards - notes - none suspended`() = runViewModelNotesTest(notes = 2) {
+        ensureOpsExecuted(1) {
+            selectAll()
+            toggleSuspendCards()
+            assertAllSuspended("none suspended -> suspend all")
+        }
+    }
+
+    @Test
+    fun `export - no selection`() = runViewModelTest(notes = 2) {
+        assertNull(getSelectionExportData(), "no export data if no selection")
+    }
+
+    @Test
+    fun `export - one card`() = runViewModelTest(notes = 2) {
+        selectRowsWithPositions(0)
+
+        val (exportType, ids) = assertNotNull(getSelectionExportData())
+
+        assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Cards))
+        assertThat(ids, hasSize(1))
+
+        assertThat(ids.single(), equalTo(cards[0].id))
+    }
+
+    @Test
+    fun `export - one note`() = runViewModelNotesTest(notes = 2) {
+        selectRowsWithPositions(0)
+
+        val (exportType, ids) = assertNotNull(getSelectionExportData())
+
+        assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Notes))
+        assertThat(ids, hasSize(1))
+
+        assertThat(ids.single(), equalTo(cards[0].card.nid))
+    }
+
+    private fun runViewModelNotesTest(
+        notes: Int = 0,
+        manualInit: Boolean = true,
+        testBody: suspend CardBrowserViewModel.() -> Unit
+    ) =
+        runTest {
+            with(col) { CardsOrNotes.NOTES.saveToCollection() }
+            for (i in 0 until notes) {
+                // ensure 1 note = 2 cards
+                addNoteUsingBasicAndReversedModel()
+            }
+            val viewModel = CardBrowserViewModel(
+                lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
+                cacheDir = createTransientDirectory(),
+                options = null,
+                preferences = AnkiDroidApp.sharedPreferencesProvider,
+                manualInit = manualInit
+            )
+            // makes ignoreValuesFromViewModelLaunch work under test
+            if (manualInit) {
+                viewModel.manualInit()
+            }
+            testBody(viewModel)
+        }
+
+    private fun runViewModelTest(
+        notes: Int = 0,
+        manualInit: Boolean = true,
+        testBody: suspend CardBrowserViewModel.() -> Unit
+    ) = runTest {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
         }
+        notes.ifNotZero { count -> Timber.d("added %d notes", count) }
         val viewModel = CardBrowserViewModel(
             lastDeckIdRepository = SharedPreferencesLastDeckIdRepository(),
             cacheDir = createTransientDirectory(),
             options = null,
-            preferences = AnkiDroidApp.sharedPreferencesProvider
+            preferences = AnkiDroidApp.sharedPreferencesProvider,
+            manualInit = manualInit
         )
+        // makes ignoreValuesFromViewModelLaunch work under test
+        if (manualInit) {
+            viewModel.manualInit()
+        }
         testBody(viewModel)
     }
 
@@ -249,6 +575,21 @@ private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) 
     }
 }
 
+/**
+ * Helper for testing flows:
+ *
+ * A MutableStateFlow can either emit a value or not emit a value
+ * depending on whether a consumer subscribes before or after the task launched
+ * from init is completed
+ */
+private fun <T> TurbineTestContext<T>.ignoreEventsDuringViewModelInit() {
+    try {
+        expectMostRecentItem()
+    } catch (e: AssertionError) {
+        // explicitly ignored: no items
+    }
+}
+
 private suspend fun CardBrowserViewModel.waitForSearchResults() {
     searchJob?.join()
 }
@@ -267,4 +608,45 @@ internal suspend fun CardBrowserViewModel.invokeInitialSearch() {
     // This will be removed once we handle #11889
     // numberOfCardsToRenderFlow.emit(1)
     Timber.v("initial search completed")
+}
+
+private fun TestClass.assertAllSuspended(context: String) {
+    val cards = col.findCards("").map { col.getCard(it) }
+    assertThat("performance", cards.size, lessThan(10))
+
+    for (card in cards) {
+        assertThat(
+            "$context: all cards are unsuspended",
+            card.queue,
+            equalTo(QUEUE_TYPE_SUSPENDED)
+        )
+    }
+}
+
+private fun TestClass.assertAllUnsuspended(context: String) {
+    val cards = col.findCards("").map { col.getCard(it) }
+    assertThat("performance", cards.size, lessThan(10))
+
+    for (card in cards) {
+        assertThat(
+            "$context: all cards unsuspended",
+            card.queue,
+            not(equalTo(QUEUE_TYPE_SUSPENDED))
+        )
+    }
+}
+
+private fun TestClass.suspendAll() {
+    col.findCards("").also { cards ->
+        col.sched.suspendCards(col.findCards(""))
+        Timber.d("suspended %d cards", cards.size)
+    }
+}
+
+private fun TestClass.suspend(vararg cards: CardBrowser.CardCache) {
+    col.sched.suspendCards(cards.map { it.id })
+}
+
+private fun TestClass.suspend(note: Note) {
+    col.sched.suspendCards(note.cardIds(col))
 }

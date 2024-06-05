@@ -103,7 +103,7 @@
     <string name="menu_add_note">הוספת רשומה</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">סנכרון חשבון</string>
     <string name="menu_dismiss_note">הסתרה / מחיקה</string>
-    <string name="menu_bury_card">לקבור קלף</string>
+    <string name="menu_bury_card">הטמן כרטיס</string>
     <string name="menu_bury_note">קבור הערה</string>
     <string name="menu_suspend_card">הקפאת קלף</string>
     <string name="menu_suspend_note">הקפאת רשומה</string>
@@ -111,7 +111,7 @@
     <string name="menu_suspend">הקפאה</string>
     <string name="menu_delete_note">מחיקת רשומה</string>
     <string name="menu_flag">דגל</string>
-    <string name="menu_flag_card">סימון קלף</string>
+    <string name="menu_flag_card">סימון כרטיס</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_search">חפש ב%1$s</string>
@@ -146,7 +146,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">המשך סנכרון</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">סנכרון בוטל</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">מבטל&#8230;\n אנא המתן.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">מסנכרן מדיה</string>
     <string name="export_deck">ייצוא חפיסה</string>
     <string name="nothing">ריק</string>
     <!-- Card template editor -->
@@ -158,7 +158,7 @@
     <string name="card_template_editor_deck_override">שכתוב חפיסה</string>
     <string name="card_template_editor_insert_field">הוסף שדה</string>
     <string name="card_template_editor_select_field">בחר שדה</string>
-    <string name="card_template_editor_cant_delete">לפחות סוג קלף אחד נדרש</string>
+    <string name="card_template_editor_cant_delete">לפחות סוג כרטיס אחד נדרש</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">זה ייצר כרטיס אחד. האם להמשיך?</item>
         <item quantity="two">פעולה זו תיצור %1$d כרטיסים. להמשיך?</item>
@@ -173,17 +173,17 @@
     </plurals>
     <string name="card_template_editor_would_delete_note">הסרת סוג קלף זה תוביל למחיקת רשומה אחת או יותר. נא ליצור ולשמור סוג קלף חדש תחילה.</string>
     <string name="card_template_editor_save_error">לא ניתן לשמור שינויים לתבנית הקלף: %s</string>
-    <string name="template_for_current_card_deleted">סוג הקלף של הקלף הנוכחי נמחק.</string>
+    <string name="template_for_current_card_deleted">התבנית של הכרטיס הנוכחי נמחקה.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
     <!-- card Info -->
-    <string name="card_info_title">מידע על הקלף</string>
+    <string name="card_info_title">מידע על הכרטיס</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">קרא ושמור לממסד הנתונים של אנקידרוייד</string>
     <string name="read_write_permission_description">לגשת להערות, כרטיס, סוגי רשומות וחפיסות וגם ליצור חדשים</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הקלפים</string>
-    <string name="context_menu_anki_card_label">קלף Anki</string>
+    <string name="context_menu_anki_card_label">כרטיס Anki</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">לא ניתן לחבר את האוספים. איזה אחד לשמור?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">אנקידרויד</string>
@@ -255,5 +255,7 @@
     <string name="storage_access_summary">שומר את האוסף שלך במקום בטוח כך שלא יימחק אם האפליקציה תוסר</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">גישה לכל הקבצים</string>
     <string name="image_occlusion">חסימת תמונה</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">הסר חשבון</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

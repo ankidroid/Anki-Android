@@ -232,8 +232,10 @@ open class Scheduler(val col: Collection) {
      * @param ids Id of cards to suspend
      */
     open fun suspendCards(ids: Iterable<CardId>): OpChangesWithCount {
+        val cids = ids.toList()
+        Timber.i("suspending %d card(s)", cids.size)
         return col.backend.buryOrSuspendCards(
-            cardIds = ids.toList(),
+            cardIds = cids,
             noteIds = listOf(),
             mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
         )
@@ -251,8 +253,10 @@ open class Scheduler(val col: Collection) {
      * @param ids Id of cards to unsuspend
      */
     open fun unsuspendCards(ids: Iterable<CardId>): OpChanges {
+        val cids = ids.toList()
+        Timber.i("unsuspending %d card(s)", cids.size)
         return col.backend.restoreBuriedAndSuspendedCards(
-            cids = ids.toList()
+            cids = cids
         )
     }
 

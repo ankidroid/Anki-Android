@@ -145,7 +145,7 @@
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid అప్‌గ్రేడ్ చేయబడింది</string>
     <string name="integrity_check_startup_content">AnkiDroid అప్‌గ్రేడ్ చేయబడింది. ఈ అప్‌గ్రేడ్ సాధ్యమయ్యే డేటాబేస్ సమస్యలకు పరిష్కారాలను కలిగి ఉంది మరియు డేటాబేస్‌ను ఇప్పుడే తనిఖీ చేయమని మేము మీకు సలహా ఇస్తున్నాము.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">ఏమైనా కొనసాగించండి</string>
     <string name="integrity_check_insufficient_space">డేటాబేస్ పెద్ద మొత్తంలో తాత్కాలిక నిల్వను ఉపయోగిస్తుంది. ఇన్‌స్టాల్ చేసే ముందు మీ పరికరంలో కనీసం %s ఖాళీ స్థలం ఉండాలని గట్టిగా సిఫార్సు చేయబడింది.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nమీకు ప్రస్తుతం %s ఉచితం.</string>
     <!-- Card Browser -->
@@ -171,7 +171,7 @@
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">అవసరమైన నిల్వ అనుమతి లేదు. దయచేసి నిల్వ అనుమతిని మంజూరు చేసి, మీ చర్యను మళ్లీ ప్రయత్నించండి.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">కార్డ్ బ్రౌజర్ ఫారమ్‌ను లోడ్ చేయడం సాధ్యపడలేదు</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">రిమైండర్‌లను షెడ్యూల్ చేయడంలో విఫలమైంది</string>
     <string name="boot_service_too_many_notifications">చాలా ఎక్కువ రిమైండర్‌లు షెడ్యూల్ చేయబడ్డాయి. కొన్ని కనిపించవు</string>
@@ -198,7 +198,7 @@
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">ఫేస్బుక్</string>
     <string name="help_item_twitter">ట్విట్టర్</string>
-    <string name="help_title_privacy">Privacy</string>
+    <string name="help_title_privacy">గోప్యత</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid గోప్యతా విధానం</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb గోప్యతా విధానం</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb నిబంధనలు మరియు షరతులు</string>
@@ -252,4 +252,9 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">నుండి</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">కు</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="tap_to_cloze">Single tap text to cloze</string>
 </resources>
