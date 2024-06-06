@@ -68,13 +68,25 @@ import kotlin.test.assertNull
 class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `delete search history - Issue 14989`() = runViewModelTest {
-        saveSearch("hello", "aa")
+        saveSearch("hello", "aa").also { result ->
+            assertThat(result, equalTo(SaveSearchResult.SUCCESS))
+        }
         savedSearches().also { searches ->
             assertThat("filters after saving", searches.size, equalTo(1))
             assertThat("filters after saving", searches["hello"], equalTo("aa"))
         }
         removeSavedSearch("hello")
         assertThat("filters should be empty after removing", savedSearches().size, equalTo(0))
+    }
+
+    @Test
+    fun `saving search with same name fails`() = runViewModelTest {
+        saveSearch("hello", "aa").also { result ->
+            assertThat("saving a new search succeeds", result, equalTo(SaveSearchResult.SUCCESS))
+        }
+        saveSearch("hello", "bb").also { result ->
+            assertThat("saving with same name fails", result, equalTo(SaveSearchResult.ALREADY_EXISTS))
+        }
     }
 
     @Test

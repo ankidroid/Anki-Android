@@ -18,6 +18,7 @@ package com.ichi2.anki.browser
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -598,6 +599,7 @@ class CardBrowserViewModel(
         }
     }
 
+    @CheckResult
     suspend fun saveSearch(searchName: String, searchTerms: String): SaveSearchResult {
         Timber.d("saving user search")
         var alreadyExists = false
