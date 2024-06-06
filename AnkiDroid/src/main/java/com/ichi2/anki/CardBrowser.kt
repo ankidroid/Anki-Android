@@ -172,7 +172,7 @@ open class CardBrowser :
         }
         if (result.resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...")
-            launchCatchingTask { saveEditedCard() }
+            saveEditedCard()
         }
         val data = result.data
         if (data != null &&
@@ -481,10 +481,6 @@ open class CardBrowser :
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
-    }
-
-    fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
-        viewModel.setFilterQuery(filterQuery)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
@@ -907,12 +903,12 @@ open class CardBrowser :
     @VisibleForTesting
     suspend fun updateSelectedCardsFlag(flag: Flag) {
         // list of cards with updated flags
-        val updatedCards = withProgress { viewModel.updateSelectedCardsFlag(flag) }
+        val updatedCardIds = withProgress { viewModel.updateSelectedCardsFlag(flag) }
         // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
         // otherwise it could hang the main thread
-        updateCardsInList(updatedCards)
+        updateCardsInList(updatedCardIds)
         invalidateOptionsMenu() // maybe the availability of undo changed
-        if (updatedCards.any { card -> card.id == reviewerCardId }) {
+        if (updatedCardIds.any { it == reviewerCardId }) {
             reloadRequired = true
         }
     }
@@ -1422,13 +1418,6 @@ open class CardBrowser :
             return resources.getQuantityString(subtitleId, count, count)
         }
 
-    // convenience method for updateCardsInList(...)
-    private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = ArrayList(1)
-        cards.add(card)
-        updateCardsInList(cards)
-    }
-
     /** Returns the decks which are valid targets for "Change Deck"  */
     suspend fun getValidDecksForChangeDeck(): List<DeckNameId> =
         deckSpinnerSelection.computeDropDownDecks(includeFiltered = false)
@@ -1474,29 +1463,23 @@ open class CardBrowser :
     fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
-     * Loads/Reloads (Updates the Q, A & etc) of cards in the [cards] list
-     * @param cards Cards that were changed
+     * Loads/Reloads (Updates the Q, A & etc) of cards in the [cardIds] list
+     * @param cardIds Card IDs that were changed
      */
-    private fun updateCardsInList(cards: List<Card>) {
+    private fun updateCardsInList(cardIds: List<CardId>) {
         val idToPos = viewModel.cardIdToPositionMap
         // TODO: Inefficient
-        cards
-            .mapNotNull { c -> idToPos[c.id] }
+        cardIds
+            .mapNotNull { cid -> idToPos[cid] }
             .filterNot { pos -> pos >= viewModel.rowCount }
             .map { pos -> viewModel.getRowAtPosition(pos) }
             .forEach { it.load(true, viewModel.column1Index, viewModel.column2Index) }
         updateList()
     }
 
-    private suspend fun saveEditedCard() {
+    private fun saveEditedCard() {
         Timber.d("CardBrowser - saveEditedCard()")
-        val card = try {
-            withCol { getCard(currentCardId) }
-        } catch (e: Exception) {
-            Timber.i("edited card no longer exists")
-            return
-        }
-        updateCardInList(card)
+        updateCardsInList(listOf(currentCardId))
     }
 
     /**
