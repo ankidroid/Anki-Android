@@ -290,6 +290,15 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
+    fun `executing select all twice does nothing`() = runViewModelTest(notes = 2) {
+        assertThat(selectedRowCount(), equalTo(0))
+        selectAll()
+        assertThat(selectedRowCount(), equalTo(2))
+        selectAll()
+        assertThat(selectedRowCount(), equalTo(2))
+    }
+
+    @Test
     fun `changing column index 1`() = runViewModelTest {
         flowOfColumnIndex1.test {
             ignoreEventsDuringViewModelInit()
