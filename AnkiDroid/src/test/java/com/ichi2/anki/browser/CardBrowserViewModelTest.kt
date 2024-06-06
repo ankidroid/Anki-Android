@@ -602,6 +602,55 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `notes - preview intent`() = runViewModelNotesTest(notes = 5) {
+        assertThat("note count", col.noteCount(), equalTo(5))
+        assertThat("card count", col.cardCount(), equalTo(10))
+        val data = queryPreviewIntentData()
+        assertThat(data.currentIndex, equalTo(0))
+
+        data.previewerIdsFile.getCardIds().also { actualCardIds ->
+            assertThat("previewing a note previews cards", actualCardIds, hasSize(5))
+
+            val firstCardIds = col.findCards("")
+                .filter { col.getCard(it).ord == 0 }
+
+            assertThat("first card ids", firstCardIds, hasSize(5))
+
+            // TODO: this behaviour is unconfirmed in Anki Desktop
+            assertThat(
+                "previewing first card in each note",
+                actualCardIds.toLongArray(),
+                equalTo(firstCardIds.toLongArray())
+            )
+        }
+    }
+
+    @Test
+    fun `cards - preview intent - no selection`() = runViewModelTest(notes = 2) {
+        val data = queryPreviewIntentData()
+        assertThat(data.currentIndex, equalTo(0))
+        assertThat(data.previewerIdsFile.getCardIds(), hasSize(2))
+    }
+
+    @Test
+    fun `cards - preview intent - selection`() = runViewModelTest(notes = 2) {
+        selectRowsWithPositions(0).also {
+            val data = queryPreviewIntentData()
+            assertThat(data.currentIndex, equalTo(0))
+            assertThat(data.previewerIdsFile.getCardIds(), hasSize(2))
+        }
+
+        selectNone()
+
+        // ensure currentIndex changes
+        selectRowsWithPositions(1).also {
+            val data = queryPreviewIntentData()
+            assertThat(data.currentIndex, equalTo(1))
+            assertThat(data.previewerIdsFile.getCardIds(), hasSize(2))
+        }
+    }
+
     private fun runViewModelNotesTest(
         notes: Int = 0,
         manualInit: Boolean = true,
