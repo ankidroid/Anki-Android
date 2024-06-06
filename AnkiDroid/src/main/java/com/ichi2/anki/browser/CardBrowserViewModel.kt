@@ -622,7 +622,11 @@ class CardBrowserViewModel(
         launchSearchForCards(filterQuery)
     }
 
-    suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
+    suspend fun searchForMarkedNotes() {
+        // only intended to be used if the user has no selection
+        if (hasSelectedAnyRows()) return
+        setFilterQuery("tag:marked")
+    }
 
     suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
     suspend fun setFlagFilter(flag: Flag) {

@@ -33,6 +33,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType.EASE
 import com.ichi2.anki.model.SortType.NO_SORTING
 import com.ichi2.anki.model.SortType.SORT_FIELD
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
@@ -544,6 +545,34 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat("1 note deleted - 2 cards deleted", col.cardCount(), equalTo(2))
         assertThat("no selection after", selectedRowCount(), equalTo(0))
         assertThat("one row removed", rowCount, equalTo(1))
+    }
+
+    @Test
+    fun `notes - search for marked`() = runTest {
+        addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            NoteService.toggleMark(note)
+        }
+        addNoteUsingBasicAndReversedModel("hello2", "world")
+
+        runViewModelNotesTest {
+            searchForMarkedNotes()
+            waitForSearchResults()
+            assertThat("A marked note is found", rowCount, equalTo(1))
+        }
+    }
+
+    @Test
+    fun `cards - search for marked`() = runTest {
+        addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            NoteService.toggleMark(note)
+        }
+        addNoteUsingBasicAndReversedModel("hello2", "world")
+
+        runViewModelTest {
+            searchForMarkedNotes()
+            waitForSearchResults()
+            assertThat("both cards of a marked note are found", rowCount, equalTo(2))
+        }
     }
 
     private fun runViewModelNotesTest(
