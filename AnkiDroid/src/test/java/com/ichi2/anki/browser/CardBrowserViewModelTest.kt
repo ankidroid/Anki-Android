@@ -575,6 +575,33 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `notes - search for suspended`() = runTest {
+        addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            col.sched.suspendCards(listOf(note.cardIds(col).first()))
+        }
+        addNoteUsingBasicAndReversedModel("hello2", "world")
+
+        runViewModelNotesTest {
+            searchForSuspendedCards()
+            waitForSearchResults()
+            assertThat("A suspended card is found for the note", rowCount, equalTo(1))
+        }
+    }
+
+    @Test
+    fun `cards - search for suspended`() = runTest {
+        addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            col.sched.suspendCards(listOf(note.cardIds(col).first()))
+        }
+
+        runViewModelTest {
+            searchForSuspendedCards()
+            waitForSearchResults()
+            assertThat("one suspended cards of a note is found", rowCount, equalTo(1))
+        }
+    }
+
     private fun runViewModelNotesTest(
         notes: Int = 0,
         manualInit: Boolean = true,

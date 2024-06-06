@@ -628,7 +628,12 @@ class CardBrowserViewModel(
         setFilterQuery("tag:marked")
     }
 
-    suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
+    suspend fun searchForSuspendedCards() {
+        // only intended to be used if the user has no selection
+        if (hasSelectedAnyRows()) return
+        setFilterQuery("is:suspended")
+    }
+
     suspend fun setFlagFilter(flag: Flag) {
         Timber.i("filtering to flag: %s", flag)
         val flagSearchTerm = "flag:${flag.code}"
