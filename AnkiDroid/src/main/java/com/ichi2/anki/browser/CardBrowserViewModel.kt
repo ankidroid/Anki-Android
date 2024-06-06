@@ -364,8 +364,14 @@ class CardBrowserViewModel(
      * @return the number of deleted notes
      */
     suspend fun deleteSelectedNotes(): Int {
+        // PERF: use `undoableOp(this)` & notify CardBrowser of changes
+        // this does a double search
         val cardIds = queryAllSelectedCardIds()
         return undoableOp { removeNotes(cids = cardIds) }.count
+            .also {
+                endMultiSelectMode()
+                refreshSearch()
+            }
     }
 
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
@@ -740,6 +746,8 @@ class CardBrowserViewModel(
         }
         return searchJob!!
     }
+
+    private suspend fun refreshSearch() = launchSearchForCards()?.join()
 
     private suspend fun clearCardsList() {
         cards.reset()

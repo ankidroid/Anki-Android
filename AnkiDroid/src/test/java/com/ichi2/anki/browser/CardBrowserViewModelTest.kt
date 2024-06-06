@@ -497,6 +497,34 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat(ids.single(), equalTo(cards[0].card.nid))
     }
 
+    @Test
+    fun `cards - delete one`() = runViewModelTest(notes = 2) {
+        assertThat("initial card count", col.cardCount(), equalTo(2))
+        selectRowsWithPositions(0)
+
+        ensureOpsExecuted(1) {
+            deleteSelectedNotes()
+        }
+
+        assertThat("1 card deleted", col.cardCount(), equalTo(1))
+        assertThat("no selection after", selectedRowCount(), equalTo(0))
+        assertThat("one row removed", rowCount, equalTo(1))
+    }
+
+    @Test
+    fun `notes - delete one`() = runViewModelNotesTest(notes = 2) {
+        assertThat("initial card count", col.cardCount(), equalTo(4))
+        selectRowsWithPositions(0)
+
+        ensureOpsExecuted(1) {
+            deleteSelectedNotes()
+        }
+
+        assertThat("1 note deleted - 2 cards deleted", col.cardCount(), equalTo(2))
+        assertThat("no selection after", selectedRowCount(), equalTo(0))
+        assertThat("one row removed", rowCount, equalTo(1))
+    }
+
     private fun runViewModelNotesTest(
         notes: Int = 0,
         manualInit: Boolean = true,
