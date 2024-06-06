@@ -44,7 +44,9 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
 object ChangeManager {
-    fun interface Subscriber {
+    // do not make this a 'fun interface' - lambdas may immediately be GCed
+    // due to the use of WeakReference
+    interface Subscriber {
         /**
          * Called after a backend method invoked via col.op() or col.opWithProgress()
          * has modified the collection. Subscriber should inspect the changes, and update
