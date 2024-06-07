@@ -25,7 +25,6 @@ import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.pages.AnkiServer
-import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.libanki.sched.CurrentQueueState
@@ -36,9 +35,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
-    CardViewerViewModel(cardMediaPlayer),
-    PostRequestHandler {
+class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) : CardViewerViewModel(cardMediaPlayer) {
 
     private var queueState: Deferred<CurrentQueueState?> = asyncIO {
         // this assumes that the Reviewer won't be launched if there isn't a queueState
@@ -49,7 +46,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
 
-    private val server = AnkiServer(this).also { it.start() }
+    override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     val statesMutationEval = MutableSharedFlow<String>()
 
@@ -85,8 +82,6 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         }
     }
 
-    override fun baseUrl(): String = server.baseUrl()
-
     fun showAnswer() {
         launchCatchingIO {
             while (!statesMutated) {
@@ -115,10 +110,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
                 "setSchedulingStates" -> setSchedulingStates(bytes)
-                else -> byteArrayOf()
+                else -> super.handlePostRequest(uri, bytes)
             }
         } else {
-            byteArrayOf()
+            super.handlePostRequest(uri, bytes)
         }
     }
 

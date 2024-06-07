@@ -26,6 +26,7 @@ import com.ichi2.anki.NotetypeFile
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.utils.ext.ifNullOrEmpty
 import com.ichi2.libanki.Card
@@ -59,6 +60,7 @@ class TemplatePreviewerViewModel(
     private val templateNames: Deferred<List<String>>
     private val clozeOrds: Deferred<List<Int>>?
     override var currentCard: Deferred<Card>
+    override val server = AnkiServer(this).also { it.start() }
 
     init {
         note = asyncIO {
