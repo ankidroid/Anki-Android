@@ -37,9 +37,9 @@ private const val TIME_DAY_LONG = 24 * TIME_HOUR_LONG
 // These are doubles on purpose because we want a rounded, not integer result later.
 // Use values from Anki Desktop:
 // https://github.com/ankitects/anki/blob/05cc47a5d3d48851267cda47f62af79f468eb028/rslib/src/sched/timespan.rs#L83
-private const val TIME_MINUTE = 60.0 // seconds
-private const val TIME_HOUR = 60.0 * TIME_MINUTE
-private const val TIME_DAY = 24.0 * TIME_HOUR
+const val TIME_MINUTE = 60.0 // seconds
+const val TIME_HOUR = 60.0 * TIME_MINUTE
+const val TIME_DAY = 24.0 * TIME_HOUR
 private const val TIME_MONTH = 30.0 * TIME_DAY
 private const val TIME_YEAR = 12.0 * TIME_MONTH
 
