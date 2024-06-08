@@ -31,7 +31,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
-import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.export.ExportDialogFragment.*
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
@@ -39,7 +39,6 @@ import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
-import com.ichi2.anki.servicelayer.CardService
 import com.ichi2.anki.setUserFlag
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
@@ -110,9 +109,6 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
-    /** The CardIds of all the cards in the results */
-    val allCardIds get() = cards.map { c -> c.id }
-
     var searchTerms = ""
         private set
     private var restrictOnDeck: String = ""
@@ -167,23 +163,24 @@ class CardBrowserViewModel(
     val flowOfSelectedRows: Flow<Set<CardBrowser.CardCache>> =
         flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
 
-    /** A list of either:
-     * * [CardsOrNotes.CARDS] all selected card Ids
-     * * [CardsOrNotes.NOTES] one selected Id for every note
-     */
-    val selectedRowIds: List<CardId>
-        get() = selectedRows.map { c -> c.id }
-
     suspend fun queryAllSelectedCardIds(): List<CardId> = when (cardsOrNotes) {
-        CARDS -> selectedRowIds
+        CARDS -> selectedRows.map { c -> c.id }
         NOTES ->
             selectedRows
                 .flatMap { row -> withCol { cardIdsOfNote(nid = row.card.nid) } }
     }
 
     // TODO: move the tag computation to ViewModel
-    suspend fun queryAllSelectedNoteIds(): List<NoteId> =
-        withCol { notesOfCards(selectedRowIds) }
+    suspend fun queryAllSelectedNoteIds(): List<NoteId> {
+        val cardIds = selectedRows.map { c -> c.id }
+        return withCol { notesOfCards(cids = cardIds) }
+    }
+
+    @Suppress("RedundantSuspendModifier") // will be necessary
+    @VisibleForTesting
+    internal suspend fun queryAllCardIds(): List<CardId> {
+        return cards.map { it.id }
+    }
 
     var lastSelectedPosition = 0
 
@@ -212,11 +209,11 @@ class CardBrowserViewModel(
     val flowOfDeckId = MutableStateFlow(lastDeckId)
     val deckId get() = flowOfDeckId.value
 
-    val cardInfoDestination: CardInfoDestination?
-        get() {
-            val firstSelectedCard = selectedRowIds.firstOrNull() ?: return null
-            return CardInfoDestination(firstSelectedCard)
-        }
+    suspend fun queryCardInfoDestination(): CardInfoDestination? {
+        // TODO: Inefficient
+        val firstSelectedCard = queryAllSelectedCardIds().firstOrNull() ?: return null
+        return CardInfoDestination(firstSelectedCard)
+    }
 
     private suspend fun getInitialDeck(): DeckId {
         // TODO: Handle the launch intent
@@ -339,8 +336,9 @@ class CardBrowserViewModel(
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked
      */
-    suspend fun toggleMark(cardIds: List<CardId>) {
-        if (!hasSelectedAnyRows()) {
+    suspend fun toggleMark() {
+        val cardIds = queryAllSelectedCardIds()
+        if (cardIds.isEmpty()) {
             Timber.i("Not marking cards - nothing selected")
             return
         }
@@ -357,15 +355,18 @@ class CardBrowserViewModel(
                 tags.bulkRemove(noteIds, "marked")
             }
         }
-        selectedRows.forEach { it.reload() }
+        val modifiedIds = cardIds.toSet()
+        cards.filter { modifiedIds.contains(it.id) }.forEach { it.reload() }
     }
 
     /**
      * Deletes the selected notes,
      * @return the number of deleted notes
      */
-    suspend fun deleteSelectedNotes(): Int =
-        undoableOp { removeNotes(cids = selectedRowIds) }.count
+    suspend fun deleteSelectedNotes(): Int {
+        val cardIds = queryAllSelectedCardIds()
+        return undoableOp { removeNotes(cids = cardIds) }.count
+    }
 
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
         Timber.i("setting mode to %s", newValue)
@@ -530,14 +531,11 @@ class CardBrowserViewModel(
         return BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
     }
 
-    suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
+    suspend fun querySelectionExportData(): Pair<ExportType, List<Long>>? {
         if (!hasSelectedAnyRows()) return null
         return when (cardsOrNotes) {
-            CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedRowIds)
-            NOTES -> Pair(
-                ExportDialogFragment.ExportType.Notes,
-                withCol { CardService.selectedNoteIds(selectedRowIds) }
-            )
+            CARDS -> Pair(ExportType.Cards, queryAllSelectedCardIds())
+            NOTES -> Pair(ExportType.Notes, queryAllSelectedNoteIds())
         }
     }
 
@@ -545,15 +543,16 @@ class CardBrowserViewModel(
      * @see [com.ichi2.libanki.sched.Scheduler.sortCards]
      * @return the number of cards which were repositioned
      */
-    suspend fun repositionSelectedRows(position: Int) = undoableOp {
-        sched.sortCards(selectedRowIds, position, 1, shuffle = false, shift = true)
-    }.count
+    suspend fun repositionSelectedRows(position: Int): Int {
+        val ids = queryAllSelectedCardIds()
+        return undoableOp {
+            sched.sortCards(cids = ids, position, 1, shuffle = false, shift = true)
+        }.count
+    }
 
     /** Returns the number of rows of the current result set  */
     val rowCount: Int
         get() = cards.size()
-
-    fun getCardIdAtPosition(position: Int): CardId = cards[position].id
 
     fun getRowAtPosition(position: Int) = cards[position]
 
@@ -640,23 +639,21 @@ class CardBrowserViewModel(
     }
 
     /** Previewing */
-
-    val previewIntentData: PreviewerDestination
-        get() {
-            // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
-            return if (selectedRowCount() > 1) {
-                PreviewerDestination(currentIndex = 0, PreviewerIdsFile(cacheDir, selectedRowIds))
-            } else {
-                // Preview all cards, starting from the one that is currently selected
-                val startIndex = indexOfFirstCheckedCard() ?: 0
-                PreviewerDestination(startIndex, PreviewerIdsFile(cacheDir, allCardIds))
-            }
+    suspend fun queryPreviewIntentData(): PreviewerDestination {
+        // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
+        return if (selectedRowCount() > 1) {
+            PreviewerDestination(currentIndex = 0, PreviewerIdsFile(cacheDir, queryAllSelectedCardIds()))
+        } else {
+            // Preview all cards, starting from the one that is currently selected
+            val startIndex = indexOfFirstCheckedCard() ?: 0
+            PreviewerDestination(startIndex, PreviewerIdsFile(cacheDir, queryAllCardIds()))
         }
+    }
 
     /** @return the index of the first checked card in [cards], or `null` if no cards are checked */
     private fun indexOfFirstCheckedCard(): Int? {
         val idToFind = selectedRows.firstOrNull()?.id ?: return null
-        return allCardIds.indexOf(idToFind)
+        return cards.map { it.id }.indexOf(idToFind)
     }
 
     fun setSearchQueryExpanded(expand: Boolean) {
@@ -747,6 +744,16 @@ class CardBrowserViewModel(
     private suspend fun clearCardsList() {
         cards.reset()
         flowOfCardsUpdated.emit(Unit)
+    }
+
+    suspend fun queryCardIdAtPosition(index: Int): CardId {
+        // TODO: Slow - this will be refactored
+        return queryAllCardIds()[index]
+    }
+
+    suspend fun querySelectedCardIdAtPosition(index: Int): CardId {
+        // TODO: Slow - this will be refactored
+        return queryAllSelectedCardIds()[index]
     }
 
     companion object {

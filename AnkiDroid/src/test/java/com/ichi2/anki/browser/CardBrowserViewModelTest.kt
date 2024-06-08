@@ -189,7 +189,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `toggle bury - queue changes`() = runViewModelTest(notes = 1) {
         selectRowAtPosition(0)
-        fun getQueue() = col.getCard(selectedRowIds.single()).queue
+        suspend fun getQueue() = col.getCard(queryAllSelectedCardIds().single()).queue
 
         assertThat("initial queue = NEW", getQueue(), equalTo(QUEUE_TYPE_NEW))
 
@@ -470,14 +470,14 @@ class CardBrowserViewModelTest : JvmTest() {
 
     @Test
     fun `export - no selection`() = runViewModelTest(notes = 2) {
-        assertNull(getSelectionExportData(), "no export data if no selection")
+        assertNull(querySelectionExportData(), "no export data if no selection")
     }
 
     @Test
     fun `export - one card`() = runViewModelTest(notes = 2) {
         selectRowsWithPositions(0)
 
-        val (exportType, ids) = assertNotNull(getSelectionExportData())
+        val (exportType, ids) = assertNotNull(querySelectionExportData())
 
         assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Cards))
         assertThat(ids, hasSize(1))
@@ -489,7 +489,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `export - one note`() = runViewModelNotesTest(notes = 2) {
         selectRowsWithPositions(0)
 
-        val (exportType, ids) = assertNotNull(getSelectionExportData())
+        val (exportType, ids) = assertNotNull(querySelectionExportData())
 
         assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Notes))
         assertThat(ids, hasSize(1))
