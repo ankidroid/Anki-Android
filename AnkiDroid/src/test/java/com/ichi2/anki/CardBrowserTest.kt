@@ -372,7 +372,7 @@ class CardBrowserTest : RobolectricTest() {
         // check if all card flags turned green
         assertThat(
             "All cards should be flagged",
-            cardBrowser.viewModel.allCardIds
+            cardBrowser.viewModel.queryAllCardIds()
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
                 .all { flag1 -> flag1 == Flag.GREEN.code }
         )
@@ -430,7 +430,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
-    fun previewWorksAfterSort() {
+    fun previewWorksAfterSort() = runTest {
         // #7286
         val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id
         val cid2 = addNoteUsingBasicModel("Hello2", "World2").cards()[0].id
@@ -441,7 +441,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(1))
 
         b.selectRowsWithPositions(0)
-        val previewIntent = b.viewModel.previewIntentData
+        val previewIntent = b.viewModel.queryPreviewIntentData()
         assertThat("before: index", previewIntent.currentIndex, equalTo(0))
         assertThat(
             "before: cards",
@@ -456,7 +456,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(0))
 
         b.replaceSelectionWith(intArrayOf(0))
-        val intentAfterReverse = b.viewModel.previewIntentData
+        val intentAfterReverse = b.viewModel.queryPreviewIntentData()
         assertThat("after: index", intentAfterReverse.currentIndex, equalTo(0))
         assertThat(
             "after: cards",
@@ -567,7 +567,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Ignore("Doesn't work - but should")
-    fun dataUpdatesAfterUndoReposition() {
+    fun dataUpdatesAfterUndoReposition() = runTest {
         val b = getBrowserWithNotes(1)
 
         b.selectRowsWithPositions(0)
@@ -747,14 +747,15 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
-    private fun getCheckedCard(b: CardBrowser): CardCache {
-        val ids = b.viewModel.selectedRowIds
+    private suspend fun getCheckedCard(b: CardBrowser): CardCache {
+        val ids = b.viewModel.queryAllSelectedCardIds()
         assertThat("only one card expected to be checked", ids, hasSize(1))
         return b.getPropertiesForCardId(ids[0])
     }
 
-    private fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
-        removeCardFromCollection(browser.viewModel.allCardIds[positionToCorrupt])
+    private suspend fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
+        val id = browser.viewModel.queryCardIdAtPosition(positionToCorrupt)
+        removeCardFromCollection(id)
         browser.clearCardData(positionToCorrupt)
     }
 

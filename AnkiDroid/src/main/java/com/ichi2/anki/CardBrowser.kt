@@ -295,9 +295,6 @@ open class CardBrowser :
         }
     }
 
-    private val selectedRowIds: List<CardId>
-        get() = viewModel.selectedRowIds
-
     @MainThread
     @NeedsTest("search bar is set after selecting a saved search as first action")
     private fun searchForQuery(query: String) {
@@ -528,10 +525,12 @@ open class CardBrowser :
                 cb.toggle()
                 viewModel.toggleRowSelectionAtPosition(position)
             } else {
-                // load up the card selected on the list
-                val clickedCardId = viewModel.getCardIdAtPosition(position)
-                saveScrollingState(position)
-                openNoteEditorForCard(clickedCardId)
+                launchCatchingTask {
+                    // load up the card selected on the list
+                    val clickedCardId = viewModel.queryCardIdAtPosition(position)
+                    saveScrollingState(position)
+                    openNoteEditorForCard(clickedCardId)
+                }
             }
         }
         @KotlinCleanup("helper function for min/max range")
@@ -539,15 +538,17 @@ open class CardBrowser :
             if (viewModel.isInMultiSelectMode) {
                 viewModel.selectRowsBetweenPositions(lastSelectedPosition, position)
             } else {
-                lastSelectedPosition = position
-                saveScrollingState(position)
+                launchCatchingTask {
+                    lastSelectedPosition = position
+                    saveScrollingState(position)
 
-                // click on whole cell triggers select
-                val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
-                cb.toggle()
-                viewModel.toggleRowSelectionAtPosition(position)
-                recenterListView(view)
-                cardsAdapter.notifyDataSetChanged()
+                    // click on whole cell triggers select
+                    val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
+                    cb.toggle()
+                    viewModel.toggleRowSelectionAtPosition(position)
+                    recenterListView(view)
+                    cardsAdapter.notifyDataSetChanged()
+                }
             }
             true
         }
@@ -630,7 +631,7 @@ open class CardBrowser :
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
     @VisibleForTesting
     fun toggleMark() = launchCatchingTask {
-        withProgress { viewModel.toggleMark(selectedRowIds) }
+        withProgress { viewModel.toggleMark() }
         cardsAdapter.notifyDataSetChanged()
     }
 
@@ -646,10 +647,10 @@ open class CardBrowser :
         viewModel.endMultiSelectMode()
     }
 
-    private fun openNoteEditorForCurrentlySelectedNote() {
+    private fun openNoteEditorForCurrentlySelectedNote() = launchCatchingTask {
         try {
             // Just select the first one. It doesn't particularly matter if there's a multiselect occurring.
-            openNoteEditorForCard(selectedRowIds[0])
+            openNoteEditorForCard(viewModel.querySelectedCardIdAtPosition(0))
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
             showSnackbar(
@@ -1055,28 +1056,29 @@ open class CardBrowser :
             R.id.action_reposition_cards -> {
                 Timber.i("CardBrowser:: Reposition button pressed")
                 if (warnUserIfInNotesOnlyMode()) return true
-                // `selectedRowIds` getter does a lot of work so save it in a val beforehand
-                val selectedCardIds = selectedRowIds
-                // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-                if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
-                    showDialogFragment(
-                        SimpleMessageDialog.newInstance(
-                            title = getString(R.string.vague_error),
-                            message = getString(R.string.reposition_card_not_new_error),
-                            reload = false
+                launchCatchingTask {
+                    val selectedCardIds = viewModel.queryAllSelectedCardIds()
+                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                    if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+                        showDialogFragment(
+                            SimpleMessageDialog.newInstance(
+                                title = getString(R.string.vague_error),
+                                message = getString(R.string.reposition_card_not_new_error),
+                                reload = false
+                            )
                         )
-                    )
-                    return false
+                        return@launchCatchingTask
+                    }
+                    val repositionDialog = IntegerDialog().apply {
+                        setArgs(
+                            title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                            prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
+                            digits = 5
+                        )
+                        setCallbackRunnable(::repositionCardsNoValidation)
+                    }
+                    showDialogFragment(repositionDialog)
                 }
-                val repositionDialog = IntegerDialog().apply {
-                    setArgs(
-                        title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                        prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                        digits = 5
-                    )
-                    setCallbackRunnable(::repositionCardsNoValidation)
-                }
-                showDialogFragment(repositionDialog)
                 return true
             }
             R.id.action_edit_note -> {
@@ -1084,9 +1086,11 @@ open class CardBrowser :
                 return super.onOptionsItemSelected(item)
             }
             R.id.action_view_card_info -> {
-                viewModel.cardInfoDestination?.let { destination ->
-                    val intent: Intent = destination.toIntent(this)
-                    startActivity(intent)
+                launchCatchingTask {
+                    viewModel.queryCardInfoDestination()?.let { destination ->
+                        val intent: Intent = destination.toIntent(this@CardBrowser)
+                        startActivity(intent)
+                    }
                 }
                 return true
             }
@@ -1106,7 +1110,7 @@ open class CardBrowser :
     override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory
 
     private fun exportSelected() = launchCatchingTask {
-        val (type, selectedIds) = viewModel.getSelectionExportData() ?: return@launchCatchingTask
+        val (type, selectedIds) = viewModel.querySelectionExportData() ?: return@launchCatchingTask
         ExportDialogFragment.newInstance(type, selectedIds).show(supportFragmentManager, "exportDialog")
     }
 
@@ -1128,8 +1132,11 @@ open class CardBrowser :
 
     private fun onResetProgress() {
         if (warnUserIfInNotesOnlyMode()) return
-        val dialog = ForgetCardsDialog.newInstance(viewModel.selectedRowIds)
-        showDialogFragment(dialog)
+        launchCatchingTask {
+            val cardIds = viewModel.queryAllSelectedCardIds()
+            val dialog = ForgetCardsDialog.newInstance(cardIds = cardIds)
+            showDialogFragment(dialog)
+        }
     }
 
     @VisibleForTesting
@@ -1146,8 +1153,10 @@ open class CardBrowser :
     }
 
     private fun onPreview() {
-        val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
+        launchCatchingTask {
+            val intentData = viewModel.queryPreviewIntentData()
+            onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
+        }
     }
 
     private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
@@ -1205,7 +1214,7 @@ open class CardBrowser :
         get() = intent.getLongExtra("currentCard", -1)
 
     private fun showEditTagsDialog() {
-        if (selectedRowIds.isEmpty()) {
+        if (!viewModel.hasSelectedAnyRows()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
 
@@ -1441,10 +1450,10 @@ open class CardBrowser :
      * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
      */
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
+        val selectedNoteIds = viewModel.queryAllSelectedNoteIds().distinct()
         undoableOp {
-            val selectedNotes = selectedRowIds
-                .map { cardId -> getCard(cardId).note() }
-                .distinct()
+            val selectedNotes = selectedNoteIds
+                .map { noteId -> getNote(noteId) }
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
                     val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
@@ -1535,8 +1544,8 @@ open class CardBrowser :
         updatePreviewMenuItem()
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
-    private fun saveScrollingState(position: Int) {
-        oldCardId = viewModel.getCardIdAtPosition(position)
+    private suspend fun saveScrollingState(position: Int) {
+        oldCardId = viewModel.queryCardIdAtPosition(position)
         oldCardTopOffset = calculateTopOffset(position)
     }
 
