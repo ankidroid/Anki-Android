@@ -57,7 +57,7 @@ import java.util.*
 // This module manages the tag cache and tags for notes.
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @WorkerThread
-open class Collection(
+class Collection(
     /**
      *  The path to the collection.anki2 database. Must be unicode and openable with [File].
      */
@@ -227,7 +227,7 @@ open class Collection(
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    open fun modSchemaNoCheck() {
+    fun modSchemaNoCheck() {
         db.execute(
             "update col set scm=?, mod=?",
             TimeManager.time.intTimeMS(),
