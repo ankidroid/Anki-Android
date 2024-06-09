@@ -29,7 +29,6 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
-import anki.config.preferences
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
@@ -308,7 +307,7 @@ class Collection(
     /**
      * Cards ******************************************************************** ***************************
      */
-    val isEmpty: Boolean
+    val containsNoCard: Boolean
         get() = db.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0
 
     fun cardCount(): Int {
@@ -320,7 +319,7 @@ class Collection(
         return db.queryScalar("SELECT count() FROM cards WHERE did IN " + ids2str(dids))
     }
 
-    fun isEmptyDeck(vararg dids: Long): Boolean {
+    fun areEmptyDecks(vararg dids: Long): Boolean {
         return cardCount(*dids) == 0
     }
 
