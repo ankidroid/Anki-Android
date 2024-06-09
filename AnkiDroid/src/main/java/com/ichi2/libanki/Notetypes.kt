@@ -45,6 +45,7 @@ import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.index
@@ -275,7 +276,7 @@ class Notetypes(val col: Collection) {
     ##################################################
      */
 
-    // not in libanki
+    @NotInLibAnki
     fun nids(model: NotetypeJson): List<int> = nids(model.getLong("id"))
 
     /** Note ids for M. */

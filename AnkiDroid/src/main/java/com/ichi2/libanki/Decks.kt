@@ -580,6 +580,13 @@ class Decks(private val col: Collection) {
         return deck.getString("name") + DECK_SEPARATOR + subdeckName
     }
 
+    @NotInLibAnki
+    fun cardCount(did: DeckId): Int =
+        col.db.queryScalar("SELECT count() FROM cards WHERE did = ? ", did)
+
+    @NotInLibAnki
+    fun isEmpty(did: DeckId): Boolean = cardCount(did) == 0
+
     companion object {
         /* Parents/children */
 
@@ -614,7 +621,7 @@ class Decks(private val col: Collection) {
         /** Configuration saving the set of active decks (i.e. current decks and its descendants)  */
         const val ACTIVE_DECKS = "activeDecks"
 
-        // not in libAnki
+        @NotInLibAnki
         const val DECK_SEPARATOR = "::"
 
         @NotInLibAnki
