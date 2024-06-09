@@ -244,10 +244,10 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">最短</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">最長</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
-    <string name="tap_to_cloze">Single tap text to cloze</string>
+    <string name="cloze_note_required">「穴埋め問題」用のノートタイプが必要です</string>
+    <string name="cloze_not_found_message">「穴埋め問題」に対応したノートタイプが見つかりませんでした。アプリで「穴埋め問題」に対応したノートタイプを追加してからもう一度試すか、それ以外のノートタイプのノートを編集するため、「開く」ボタンを押してください。</string>
+    <string name="open">開く</string>
+    <string name="tap_to_cloze">シングルタップで穴埋め問題</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">「AndroidシステムのWebView 」（または「Android System WebView」）が古くなっています。いくつかの機能が正しく動作しません。更新してください。\n\nインストールされているバージョン: %1$d\n最低限必要なバージョン: %2$d</string>
 </resources>
