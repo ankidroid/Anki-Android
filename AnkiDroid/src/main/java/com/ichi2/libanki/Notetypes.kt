@@ -269,7 +269,7 @@ class Notetypes(val col: Collection) {
     ##################################################
      */
 
-    // not in libanki
+    @NotInLibAnki
     fun nids(model: NotetypeJson): List<int> = nids(model.getLong("id"))
 
     /** Note ids for M. */

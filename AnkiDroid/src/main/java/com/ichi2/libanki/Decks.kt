@@ -35,6 +35,7 @@ import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
 import com.google.protobuf.kotlin.toByteStringUtf8
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.utils.*
@@ -611,7 +612,7 @@ class Decks(private val col: Collection) {
         /** Configuration saving the set of active decks (i.e. current decks and its descendants)  */
         const val ACTIVE_DECKS = "activeDecks"
 
-        // not in libAnki
+        @NotInLibAnki
         const val DECK_SEPARATOR = "::"
 
         @NotInLibAnki
@@ -630,4 +631,14 @@ fun Collection.getDeckNamesRaw(input: ByteArray): ByteArray {
  */
 fun Collection.getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate {
     return backend.getOrCreateFilteredDeck(did = did)
+}
+
+@NotInLibAnki
+suspend fun cardCount(did: DeckId): Int {
+    return withCol { db.queryScalar("SELECT count() FROM cards WHERE did = ? ", did) }
+}
+
+@NotInLibAnki
+suspend fun isEmptyDeck(did: DeckId): Boolean {
+    return cardCount(did) == 0
 }

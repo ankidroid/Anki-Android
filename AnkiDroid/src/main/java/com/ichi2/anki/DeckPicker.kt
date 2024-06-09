@@ -2039,15 +2039,15 @@ open class DeckPicker :
         loadDeckCounts = launchCatchingTask {
             withProgress {
                 Timber.d("Refreshing deck list")
-                val deckData = withCol {
-                    Pair(sched.deckDueTree(), this.isEmpty)
+                val (deckDueTree, collectionHasNoCards) = withCol {
+                    Pair(sched.deckDueTree(), isEmpty)
                 }
-                onDecksLoaded(deckData.first, deckData.second)
+                onDecksLoaded(deckDueTree, collectionHasNoCards)
             }
         }
     }
 
-    private fun onDecksLoaded(result: DeckNode, collectionIsEmpty: Boolean) {
+    private fun onDecksLoaded(result: DeckNode, collectionHasNoCards: Boolean) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
         // Make sure the fragment is visible
@@ -2055,7 +2055,7 @@ open class DeckPicker :
             studyoptionsFrame!!.visibility = View.VISIBLE
         }
         dueTree = result
-        launchCatchingTask { renderPage(collectionIsEmpty) }
+        launchCatchingTask { renderPage(collectionHasNoCards) }
         // Update the mini statistics bar as well
         reviewSummaryTextView.setSingleLine()
         launchCatchingTask {
@@ -2655,15 +2655,14 @@ open class DeckPicker :
      */
     private suspend fun queryCompletedDeckCustomStudyAction(
         did: DeckId
-    ): CompletedDeckStatus = withCol {
+    ): CompletedDeckStatus =
         when {
-            sched.hasCardsTodayAfterStudyAheadLimit() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            sched.newDue() || sched.revDue() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
-            decks.isFiltered(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
+            withCol { sched.hasCardsTodayAfterStudyAheadLimit() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
+            withCol { sched.newDue() || sched.revDue() } -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
+            withCol { decks.isFiltered(did) } -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
             deckListAdapter.getNodeByDid(did).children.isEmpty() && isEmptyDeck(did) -> CompletedDeckStatus.EMPTY_REGULAR_DECK
             else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
         }
-    }
 
     /** Status for a deck with no current cards to review */
     enum class CompletedDeckStatus {
