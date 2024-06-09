@@ -228,12 +228,13 @@ class Collection(
         config = Config(backend)
     }
 
-    /** Note: not in libanki.  Mark schema modified to force a full
+    /** Mark schema modified to force a full
      * sync, but with the confirmation checking function disabled This
      * is equivalent to `modSchema(False)` in Anki. A distinct method
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
+    @NotInLibAnki
     fun modSchemaNoCheck() {
         db.execute(
             "update col set scm=?, mod=?",
@@ -315,20 +316,16 @@ class Collection(
     /**
      * Cards ******************************************************************** ***************************
      */
+
+    /**
+     * Returns whether the collection contains no cards.
+     */
+    @LibAnkiAlias("is_empty")
     val isEmpty: Boolean
         get() = db.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0
 
     fun cardCount(): Int {
         return db.queryScalar("SELECT count() FROM cards")
-    }
-
-    // NOT IN LIBANKI //
-    fun cardCount(vararg dids: Long): Int {
-        return db.queryScalar("SELECT count() FROM cards WHERE did IN " + ids2str(dids))
-    }
-
-    fun isEmptyDeck(vararg dids: Long): Boolean {
-        return cardCount(*dids) == 0
     }
 
     /*
@@ -410,7 +407,8 @@ class Collection(
     data class CardIdToNoteId(val id: Long, val nid: Long)
 
     /** Return a list of card ids  */
-    @RustCleanup("Remove in V16.") // Not in libAnki
+    @RustCleanup("Remove in V16.")
+    @NotInLibAnki
     fun findOneCardByNote(query: String, order: SortOrder): List<CardId> {
         // This function shouldn't exist and CardBrowser should be modified to use Notes,
         // so not much effort was expended here
@@ -652,7 +650,7 @@ class Collection(
 
     //endregion
 
-    /** Not in libAnki  */
+    @NotInLibAnki
     @CheckResult
     fun filterToValidCards(cards: LongArray?): List<Long> {
         return db.queryLongList("select id from cards where id in " + ids2str(cards))
