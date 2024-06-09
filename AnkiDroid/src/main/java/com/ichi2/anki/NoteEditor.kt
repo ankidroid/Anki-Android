@@ -196,10 +196,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     var clipboard: ClipboardManager? = null
 
+    private var newNoteEditorResultSaved = false
+
     private val requestAddLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
         NoteEditorActivityResultCallback {
             if (it.resultCode != RESULT_CANCELED) {
+                newNoteEditorResultSaved = true
                 changed = true
             }
         }
@@ -1044,10 +1047,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         } else {
             // Check whether note type has been changed
-            val newModel = currentlySelectedNotetype
+            var newModel = currentlySelectedNotetype
             val oldModel = if (currentEditedCard == null) null else currentEditedCard!!.noteType(getColUnsafe)
             // Compare model content instead of references
-            if (newModel!!.equals(oldModel)) {
+            if (newNoteEditorResultSaved) {
+                Timber.d("New note was successfully note, switching back to original model")
+                newModel = oldModel
+            }
+            if (newModel!! != oldModel) {
                 reloadRequired = true
                 if (modelChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) || modelChangeCardMap!!.containsValue(
                         null
