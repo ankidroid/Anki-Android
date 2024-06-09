@@ -70,6 +70,7 @@
     <string name="sync_title">同步</string>
     <string name="sync_log_uploading_message">由本地端完整同步</string>
     <string name="sync_database_acknowledge">集合同步完成</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">你的資料庫已損壞。請先嘗試修復然後再試一次。\n\n關於如何修復資料庫，請參考 %s 。</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">本機</string>

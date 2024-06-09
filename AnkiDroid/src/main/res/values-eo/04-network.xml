@@ -70,6 +70,7 @@
     <string name="sync_title">Samtempigo</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
     <string name="sync_database_acknowledge">Kolekto estas sinkronigita</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Via datumbazo estas difektita. Bonvolu ripari ĝin antaŭ reprovi samtempigi.\n\n Legu %s por informoj pri kiel ripari datumbazon.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Loka</string>
