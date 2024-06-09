@@ -70,6 +70,7 @@
     <string name="sync_title">ಸಿಂಕ್ರೊನೈಸೇಶನ್</string>
     <string name="sync_log_uploading_message">ಸ್ಥಳೀಯದಿಂದ ಪೂರ್ಣ ಸಿಂಕ್</string>
     <string name="sync_database_acknowledge">ಸಂಗ್ರಹವನ್ನು ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">ನಿಮ್ಮ ಡೇಟಾಬೇಸ್ ದೋಷಪೂರಿತವಾಗಿದೆ. ಮತ್ತೊಮ್ಮೆ ಸಿಂಕ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸುವ ಮೊದಲು ಅದನ್ನು ಸರಿಪಡಿಸಿ.\n\nನಿಮ್ಮ ಡೇಟಾಬೇಸ್ ಅನ್ನು ದುರಸ್ತಿ ಮಾಡುವ ಕುರಿತು ಮಾಹಿತಿಗಾಗಿ %s ಅನ್ನು ನೋಡಿ.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ಸ್ಥಳೀಯ</string>

@@ -70,6 +70,7 @@
     <string name="sync_title">Синхронизација</string>
     <string name="sync_log_uploading_message">Целосна синхронизација од локално</string>
     <string name="sync_database_acknowledge">Колекцијата е синхронизирана</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Вашата база на податоци е корумпирана. Ве молиме поправете го пред да се обидете повторно да синхронизирате.\n\nВидете %s за информации за поправање на вашата база на податоци.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Локален</string>

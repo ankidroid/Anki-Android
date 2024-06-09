@@ -70,6 +70,7 @@
     <string name="sync_title">همگام سازى</string>
     <string name="sync_log_uploading_message">همگام سازی کامل از دستگاه</string>
     <string name="sync_database_acknowledge">کل مجموعه همگام سازی شد</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">پایگاه داده شما آسیب دیده است. لطفا قبل از همگام سازی مجدد آن را تعمیر نمایید.\n\nبرای اطلاعاتی درباره تعمیر پایگاه داده تان %s را ببینید.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">محلی</string>

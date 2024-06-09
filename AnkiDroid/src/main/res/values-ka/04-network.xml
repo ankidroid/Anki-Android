@@ -70,6 +70,7 @@
     <string name="sync_title">სინქრონიზაცია</string>
     <string name="sync_log_uploading_message">სრული სინქრონიზაცია ლოკალურიდან</string>
     <string name="sync_database_acknowledge">კოლექციის სინქრონიზაცია წარმატებით განხორციელდა</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">თქვენი მონაცემთა ბაზა დაზიანებულია. გთხოვთ, სინქრონიზების ხელახლა ცდამდე პრობლემა აღმოფხვრათ.\n\nმონაცემთა ბაზის გამოსასწორებლად საჭირო ინფორმაციისთვის იხილეთ %s.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ლოკალური</string>
