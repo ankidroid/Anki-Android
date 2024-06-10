@@ -129,6 +129,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>

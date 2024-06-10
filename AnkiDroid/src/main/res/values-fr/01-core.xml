@@ -131,6 +131,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chercher un deck</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé&#8230; pour l’instant !</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>
