@@ -33,7 +33,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs.Companion.MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.utils.copyToClipboard
-import makeLinksClickable
+import com.ichi2.anki.dialogs.makeLinksClickable
 
 // TODO BEFORE-RELEASE Dismiss the related notification, if any, when the dialog is dismissed.
 //   Currently we are leaving the notification dangling after the migration has completed.
