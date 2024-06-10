@@ -36,7 +36,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.AnkiActivity
@@ -59,11 +59,11 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.math.max
 
 /**
  * Single instance Activity for instantly editing and adding cloze card/s without actually opening the app,
@@ -76,13 +76,17 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     private var dialogView: View? = null
 
-    private var sharedIntentText: IntentSharedText? = null
+    private var editMode = EditMode.ADVANCED
 
-    private lateinit var singleTapSwitch: MaterialSwitch
+    private lateinit var editModeButton: MaterialButton
+
     private var editFieldsLayout: LinearLayout? = null
     private lateinit var clozeEditTextField: TextInputEditText
     private lateinit var warningTextField: FixedTextView
     private lateinit var instantAlertDialog: AlertDialog
+    private lateinit var clozeChipGroup: ChipGroup
+    private lateinit var singleTapLayout: LinearLayout
+    private lateinit var singleTapLayoutTitle: FixedTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -138,7 +142,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
             alwaysShowDefault = true,
             showFilteredDecks = false
         ).apply {
-            initializeNoteEditorDeckSpinner(getColUnsafe)
+            initializeNoteEditorDeckSpinner(getColUnsafe, android.R.layout.simple_spinner_item)
             launchCatchingTask {
                 viewModel.deckId?.let { selectDeckById(it, true) }
             }
@@ -149,7 +153,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     private fun handleSharedText(receivedIntent: Intent) {
         val sharedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT) ?: intent.getStringExtra("extra_text_key")
 
-        sharedIntentText = IntentSharedText(sharedText!!)
+        viewModel.setClozeFieldText(sharedText)
     }
 
     private fun openNoteEditor() {
@@ -168,15 +172,15 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
             dialogView = dv
         }
         editFieldsLayout = dialogView.findViewById(R.id.editor_fields_layout)
-        singleTapSwitch = dialogView.findViewById(R.id.switch_single_tap_cloze)
+        editModeButton = dialogView.findViewById(R.id.switch_edit_mode_button)
         dialogView.findViewById<MaterialButton>(R.id.open_note_editor)?.setOnClickListener {
             openNoteEditor()
         }
         warningTextField = dialogView.findViewById(R.id.warning_text)
-        dialogView.findViewById<MaterialButton>(R.id.increment_cloze_button)?.setOnClickListener {
-            currentClozeNumber++
-            Timber.d("Incrementing cloze number: $currentClozeNumber")
-        }
+        handleClozeMode(dialogView.findViewById(R.id.increment_cloze_button))
+        clozeChipGroup = dialogView.findViewById(R.id.cloze_text_chip_group)
+        singleTapLayout = dialogView.findViewById(R.id.single_tap_layout)
+        singleTapLayoutTitle = dialogView.findViewById(R.id.chip_layout_title)
 
         val editFields = createEditFields(this, viewModel.currentlySelectedNotetype.value)
 
@@ -227,6 +231,8 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
             // Anki allows multiple cloze fields, we pick the first field
             if (clozeFields.contains(name) && !clozeFieldsSet) {
                 setupClozeFields(textInputEditText)
+                singleTapLayoutTitle.text = name
+                setupChipGroup(viewModel, clozeChipGroup)
                 clozeFieldsSet = true
             }
 
@@ -238,20 +244,41 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     /** Sets the copied text to the cloze field and enable the single tap gesture for that field**/
     private fun setupClozeFields(textBox: TextInputEditText) {
         clozeEditTextField = textBox
-        textBox.setText(sharedIntentText?.sharedTextString)
-        val gestureHelper = EditTextGestureHelper(
-            textBox,
-            EditTextGestureState(singleTapSwitch.isChecked)
-        )
+        lifecycleScope.launch {
+            viewModel.actualClozeFieldText.collectLatest { text ->
+                textBox.setText(text)
+            }
+        }
+
+        editFieldsLayout?.visibility = View.GONE
 
         enableErrorMessage()
 
         setActionModeCallback(textBox)
 
-        singleTapSwitch.setOnCheckedChangeListener { _, check ->
-            gestureHelper.toggleGestureState()
-            if (check) {
-                hideKeyboard()
+        editModeButton.setOnClickListener {
+            viewModel.setClozeFieldText(textBox.text.toString())
+            when (editMode) {
+                EditMode.SINGLE_TAP -> {
+                    hideKeyboard()
+                    textBox.setText(viewModel.actualClozeFieldText.value)
+                    editMode = EditMode.ADVANCED
+                    viewModel.setEditorMode(EditMode.SINGLE_TAP)
+                    editModeButton.setIconResource(R.drawable.ic_mode_edit_white)
+
+                    singleTapLayout.visibility = View.VISIBLE
+                    setupChipGroup(viewModel, clozeChipGroup)
+                    editFieldsLayout?.visibility = View.GONE
+                }
+
+                EditMode.ADVANCED -> {
+                    viewModel.setEditorMode(EditMode.ADVANCED)
+                    editModeButton.setIconResource(R.drawable.ic_touch)
+                    editMode = EditMode.SINGLE_TAP
+
+                    singleTapLayout.visibility = View.GONE
+                    editFieldsLayout?.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -260,6 +287,20 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         val inputMethodManager =
             this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(clozeEditTextField.windowToken, 0)
+    }
+
+    private fun handleClozeMode(clozeButton: MaterialButton) {
+        clozeButton.setOnClickListener {
+            viewModel.toggleClozeMode()
+        }
+        lifecycleScope.launch {
+            viewModel.currentClozeMode.collectLatest { mode ->
+                when (mode) {
+                    ClozeMode.INCREMENT -> clozeButton.setIconResource(R.drawable.ic_cloze_new_card)
+                    ClozeMode.NO_INCREMENT -> clozeButton.setIconResource(R.drawable.ic_cloze_same_card)
+                }
+            }
+        }
     }
 
     /** Set the error message to null when the text is changed in the TextInputEditText **/
@@ -297,7 +338,6 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
             }
 
             SaveNoteResult.Success -> {
-                currentClozeNumber = 0
                 // Don't show snackbar to avoid blocking parent app
                 showThemedToast(this@InstantNoteEditorActivity, TR.addingAdded(), true)
                 instantAlertDialog.dismiss()
@@ -310,11 +350,6 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        currentClozeNumber = 0
-    }
-
     /** Gets the field content from the editor, and updates the Note **/
     private fun extractFieldValues() {
         val editTextValues = mutableListOf<String>()
@@ -322,6 +357,10 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         editFieldsLayout?.let { layout ->
             for (i in 0 until layout.childCount) {
                 val childView = layout.getChildAt(i)
+
+                if (childView.id == R.id.single_tap_layout) {
+                    continue
+                }
 
                 if (childView is TextInputLayout) {
                     val text = extractTextFromInputField(childView)
@@ -430,7 +469,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         }
         viewModel.setDeckId(deck.deckId)
         // this is called because DeckSpinnerSelection.onDeckAdded doesn't update the list
-        deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe)
+        deckSpinnerSelection!!.initializeNoteEditorDeckSpinner(getColUnsafe, android.R.layout.simple_spinner_item)
         launchCatchingTask {
             viewModel.deckId?.let { deckSpinnerSelection!!.selectDeckById(it, false) }
         }
@@ -440,7 +479,6 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         val clozeMenuId = View.generateViewId()
         textBox.customSelectionActionModeCallback = getActionModeCallback(textBox, clozeMenuId)
         textBox.customInsertionActionModeCallback = getActionModeCallback(textBox, clozeMenuId)
-        getActionModeCallback(textBox, clozeMenuId)
     }
 
     private fun getActionModeCallback(
@@ -462,7 +500,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                     convertSelectedTextToCloze(
                         textBox,
                         selectedText,
-                        max(currentClozeNumber, 1)
+                        viewModel.currentClozeNumber
                     )
 
                     mode.finish()
@@ -495,6 +533,29 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     }
 
     /**
+     * Enum representing the modes available for cloze functionality.
+     */
+    enum class ClozeMode {
+        INCREMENT,
+        NO_INCREMENT
+    }
+
+    /**
+     * This enum class represents the different edit modes available for the user interface element.
+     */
+    enum class EditMode {
+        /**
+         * In this mode, a single tap on the text will turn it to cloze
+         */
+        SINGLE_TAP,
+
+        /**
+         * In this mode, user can edit the text as they want
+         */
+        ADVANCED
+    }
+
+    /**
      * Enum class that represent the dialog that can be shown when the InstantEditor is initialized
      * **/
     enum class DialogType {
@@ -504,17 +565,4 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         /** Indicates that the editor dialog should be shown. **/
         SHOW_EDITOR_DIALOG
     }
-
-    companion object {
-        // TODO: Should not be global
-        /** Allows to keep track of the current cloze number, reset to 0 when activity is destroyed **/
-        var currentClozeNumber: Int = 0
-    }
 }
-
-/**
- * Encapsulates the shared text data received through Intent
- **/
-data class IntentSharedText(
-    val sharedTextString: String
-)
