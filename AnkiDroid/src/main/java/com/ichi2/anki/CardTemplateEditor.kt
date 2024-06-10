@@ -19,6 +19,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -430,11 +431,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
             editorEditText.addTextChangedListener(templateEditorWatcher)
 
-            /* When keyboard is visible, hide the bottom navigation bar to allow viewing
-            of all template text when resize happens */
+            /**
+             * When keyboard is visible, show bottom navigation bar only if screen size is x-large and vertically oriented.
+             * Otherwise hide bottom navigation bar.
+             */
             ViewCompat.setOnApplyWindowInsetsListener(mainView) { _, insets ->
                 val imeIsVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-                if (imeIsVisible) {
+                if (imeIsVisible && !(templateEditor.fragmented && resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)) {
                     bottomNavigation.visibility = View.GONE
                 } else {
                     bottomNavigation.visibility = View.VISIBLE
