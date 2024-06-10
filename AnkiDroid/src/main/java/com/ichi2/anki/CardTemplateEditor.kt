@@ -22,6 +22,8 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -364,6 +366,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     class CardTemplateFragment : Fragment() {
+        private val refreshFragmentHandler = Handler(Looper.getMainLooper())
         private var currentEditorTitle: FixedTextView? = null
         private lateinit var editorEditText: FixedEditText
 
@@ -411,7 +414,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
+                /**
+                 * Declare a nullable variable refreshFragmentRunnable of type Runnable.
+                 * This will hold a reference to the Runnable that refreshes the previewer fragment.
+                 * It is used to manage delayed fragment updates and can be null if no updates in card.
+                 */
+                private var refreshFragmentRunnable: Runnable? = null
                 override fun afterTextChanged(arg0: Editable) {
+                    refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
                     templateEditor.tabToCursorPosition[cardIndex] = editorEditText.selectionStart
                     when (currentEditorViewId) {
                         R.id.styling_edit -> tempModel.updateCss(editorEditText.text.toString())
@@ -419,6 +429,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         else -> template.put("qfmt", editorEditText.text)
                     }
                     templateEditor.tempModel!!.updateTemplate(cardIndex, template)
+                    val updateRunnable = Runnable {
+                        templateEditor.loadTemplatePreviewerFragmentIfFragmented()
+                    }
+                    refreshFragmentRunnable = updateRunnable
+                    refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
                 }
 
                 override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {
@@ -616,6 +631,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // It is invalid to delete if there is only one card template, remove the option from UI
             if (templateEditor.tempModel!!.templateCount < 2) {
                 menu.findItem(R.id.action_delete).isVisible = false
+            }
+
+            // Hide preview option if the view is big enough
+            if (templateEditor.fragmented) {
+                menu.findItem(R.id.action_preview).isVisible = false
             }
 
             // marked insert field menu item invisible for style view
@@ -1100,6 +1120,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
+
+        // Time to wait before refreshing the previewer, in milliseconds.
+        private const val REFRESH_PREVIEW_DELAY = 1000L
 
         @Suppress("unused")
         private const val REQUEST_PREVIEWER = 0
