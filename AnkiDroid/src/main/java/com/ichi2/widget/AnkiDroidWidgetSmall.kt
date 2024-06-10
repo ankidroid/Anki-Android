@@ -73,15 +73,15 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
         /** The cached number of total due cards.  */
         private var dueCardsCount = 0
         fun doUpdate(context: Context) {
-            AppWidgetManager.getInstance(context)
-                .updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
+            val appWidgetManager = getAppWidgetManager(context) ?: return
+            appWidgetManager.updateAppWidget(ComponentName(context, AnkiDroidWidgetSmall::class.java), buildUpdate(context, true))
         }
 
         override fun onStart(intent: Intent, startId: Int) {
             Timber.i("SmallWidget: OnStart")
+            val manager = getAppWidgetManager(this) ?: return
             val updateViews = buildUpdate(this, true)
             val thisWidget = ComponentName(this, AnkiDroidWidgetSmall::class.java)
-            val manager = AppWidgetManager.getInstance(this)
             manager.updateAppWidget(thisWidget, updateViews)
         }
 
@@ -179,7 +179,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
         private var mMountReceiver: BroadcastReceiver? = null
         private var remounted = false
         private fun updateWidgetDimensions(context: Context, updateViews: RemoteViews, cls: Class<*>) {
-            val manager = AppWidgetManager.getInstance(context)
+            val manager = getAppWidgetManager(context) ?: return
             val ids = manager.getAppWidgetIds(ComponentName(context, cls))
             for (id in ids) {
                 val scale = context.resources.displayMetrics.density
