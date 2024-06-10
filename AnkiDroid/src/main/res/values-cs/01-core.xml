@@ -137,6 +137,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hledat balíček</string>
     <string name="invalid_deck_name">Neplatný název balíčku</string>
     <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím máte hotovo.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>

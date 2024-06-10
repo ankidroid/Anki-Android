@@ -134,6 +134,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kavu meklētājs</string>
     <string name="invalid_deck_name">Nederīgs kavas nosaukums</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Nav gaidāmu kāršu</string>
     <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
     <string name="button_sync" comment="Text of the sync button">Saskaņošana</string>

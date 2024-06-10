@@ -131,6 +131,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">డెక్ శోధన</string>
     <string name="invalid_deck_name">చెల్లని డెక్ పేరు</string>
     <string name="studyoptions_congrats_finished">అభినందనలు! ప్రస్తుతానికి మీరు పూర్తి చేసారు.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ఎక్కువ కార్డులు లేవు</string>
     <string name="sd_card_not_mounted">పరికర నిల్వ మౌంట్ చేయబడలేదు</string>
     <string name="button_sync" comment="Text of the sync button">సమకాలీకరణ</string>

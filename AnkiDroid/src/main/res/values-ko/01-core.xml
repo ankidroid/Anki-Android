@@ -128,6 +128,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">뭉치 검색</string>
     <string name="invalid_deck_name">유효하지 않은 뭉치 이름입니다</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">남은 카드가 없습니다.</string>
     <string name="sd_card_not_mounted">장치 저장소가 마운트되지 않음</string>
     <string name="button_sync" comment="Text of the sync button">동기화</string>

@@ -131,6 +131,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>

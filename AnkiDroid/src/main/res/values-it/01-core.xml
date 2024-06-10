@@ -131,6 +131,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Ricerca mazzo</string>
     <string name="invalid_deck_name">Nome mazzo non valido</string>
     <string name="studyoptions_congrats_finished">Congratulazioni! Hai finito per ora.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Nessuna carta da ripetere ora.</string>
     <string name="sd_card_not_mounted">Dispositivo archiviazione non montato</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizza</string>
