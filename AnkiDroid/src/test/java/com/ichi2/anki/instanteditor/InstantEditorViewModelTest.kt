@@ -23,7 +23,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.instantnoteeditor.InstantEditorViewModel
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.instantnoteeditor.SaveNoteResult
-import com.ichi2.libanki.removeNotetype
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -85,6 +84,85 @@ class InstantEditorViewModelTest : RobolectricTest() {
         val result = checkAndSaveNote(targetContext)
 
         assertTrue(result is SaveNoteResult.Warning)
+    }
+
+    @Test
+    fun `buildClozeText handles punctuation at end`() = runViewModelTest {
+        val text = "test,"
+        val result = buildClozeText(text)
+
+        assertEquals("{{c1::test}},", result)
+    }
+
+    @Test
+    fun `buildClozeText handles cloze punctuation at end`() = runViewModelTest {
+        val text = "{{c1::test}},"
+        val result = buildClozeText(text)
+
+        assertEquals("test,", result)
+    }
+
+    @Test
+    fun buildClozeTextTest() = runViewModelTest {
+        val text = "test"
+        val result = buildClozeText(text)
+
+        assertEquals("{{c1::test}}", result)
+    }
+
+    @Test
+    fun `buildClozeText handles undo word`() = runViewModelTest {
+        val text = "{{c1::Word}}"
+        val result = buildClozeText(text)
+
+        assertEquals("Word", result)
+    }
+
+    @Test
+    fun testExtractWordsIncludingClozes() = runViewModelTest {
+        val sentence = "This is a {{c1::test}} sentence with {{c2::multiple}} clozes."
+        setClozeFieldText(sentence)
+        val expectedWords = listOf("This", "is", "a", "{{c1::test}}", "sentence", "with", "{{c2::multiple}}", "clozes.")
+        val extractedWords = getWordsFromFieldText()
+        assertEquals(expectedWords, extractedWords)
+    }
+
+    @Test
+    fun testExtractWordsIncludingPunctuations() = runViewModelTest {
+        val sentence = "This is a {{c1::test}}!! sentence with {{c2::multiple}} clozes?"
+        setClozeFieldText(sentence)
+        val expectedWords = listOf("This", "is", "a", "{{c1::test}}!!", "sentence", "with", "{{c2::multiple}}", "clozes?")
+        val extractedWords = getWordsFromFieldText()
+        assertEquals(expectedWords, extractedWords)
+    }
+
+    @Test
+    fun testGetCleanClozeWords() = runViewModelTest {
+        val testCases = listOf(
+            "{{c1::word}}" to "word",
+            "{{c2::another}}" to "another",
+            "{{c4::help}}!!" to "help!!",
+            "no cloze" to "no cloze"
+        )
+
+        testCases.forEach { (input, expected) ->
+            val cleanedWord = getCleanClozeWords(input)
+            assertEquals(expected, cleanedWord)
+        }
+    }
+
+    @Test
+    fun testSwitchingBetweenEditModes() = runViewModelTest {
+        val word = "Word!"
+        val expectedCloze = "{{c1::Word}}!"
+
+        val result = buildClozeText(word)
+
+        assertEquals(expectedCloze, result)
+
+        val cleanWord = getCleanClozeWords(expectedCloze)
+
+        assertEquals(word, cleanWord)
     }
 
     private fun runViewModelTest(

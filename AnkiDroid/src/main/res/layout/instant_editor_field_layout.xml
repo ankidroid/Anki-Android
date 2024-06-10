@@ -27,6 +27,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_field_text"
             android:textSize="18sp"
+            android:paddingTop="30dp"
             android:scrollbars="vertical"
             android:scrollbarStyle="insideOverlay"
             android:overScrollMode="ifContentScrolls"
