@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingTop="16dp"
+    android:paddingVertical="16dp"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:background="?attr/selectableItemBackground"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     tools:context=".ui.windows.permissions.PermissionItem">
 
