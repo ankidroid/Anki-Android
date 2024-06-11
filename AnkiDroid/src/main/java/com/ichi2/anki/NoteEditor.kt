@@ -95,6 +95,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.getTimestamp
+import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -430,7 +431,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             closeCardEditorWithCheck()
         }
 
-        setNavigationBarColor(R.attr.toolbarBackgroundColor)
+        if (!navBarNeedsScrim) {
+            setNavigationBarColor(R.attr.toolbarBackgroundColor)
+        }
     }
 
     @NeedsTest("Test when the user directly passes image to the edit note field")
