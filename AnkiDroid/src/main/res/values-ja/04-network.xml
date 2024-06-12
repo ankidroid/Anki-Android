@@ -70,7 +70,7 @@
     <string name="sync_title">同期</string>
     <string name="sync_log_uploading_message">この端末側のコレクションによる完全同期が完了しました</string>
     <string name="sync_database_acknowledge">コレクションの同期が完了しました</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">コレクションの同期が完了しました。メディアの同期はバックグラウンドで進行します。</string>
     <string name="sync_corrupt_database">データベースが破損しています。同期を再試行する前にデータベースを修復してください。修復に関する情報は %s を参照してください。</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ローカル</string>

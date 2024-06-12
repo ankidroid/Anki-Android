@@ -70,7 +70,7 @@
     <string name="sync_title">Senkronizasyon</string>
     <string name="sync_log_uploading_message">Yerelden tam senkronizasyon</string>
     <string name="sync_database_acknowledge">Koleksiyon senkronize edildi</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Koleksiyon senkronize edildi. Medya arkaplanda senkronize ediliyor.</string>
     <string name="sync_corrupt_database">Veritabanınız bozuk. Lütfen eşitlemeyi yeniden denemeden önce onu düzeltin.\n\nVeritabanınızı onarmak hakkında bilgi için %s bakın.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Yerel</string>
