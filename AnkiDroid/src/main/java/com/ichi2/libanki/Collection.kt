@@ -1,19 +1,25 @@
-/****************************************************************************************
- * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General private License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General private License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General private License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+ * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General private License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General private License for more details.
+ *
+ * You should have received a copy of the GNU General private License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  This file incorporates code under the following license
+ *  https://github.com/ankitects/anki/blob/33a923797afc9655c3b4f79847e1705a1f998d03/pylib/anki/browser.py
+ *
+ *    Copyright: Ankitects Pty Ltd and contributors
+ *    License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+ */
 
 // "FunctionName": many libAnki functions used to have leading _s
 @file:Suppress("FunctionName")
@@ -29,7 +35,8 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
-import anki.config.preferences
+import anki.search.BrowserColumns
+import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
@@ -40,6 +47,7 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.sched.DummyScheduler
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.KotlinCleanup
@@ -440,9 +448,61 @@ class Collection(
         return sortedResultList.map { it.id }
     }
 
+    @LibAnkiAlias("find_and_replace")
     @RustCleanup("Calling code should handle returned OpChanges")
     fun findReplace(nids: List<Long>, src: String, dst: String, regex: Boolean = false, field: String? = null, fold: Boolean = true): Int {
         return backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
+    }
+
+    /* Browser Table */
+
+    @LibAnkiAlias("all_browser_columns")
+    fun allBrowserColumns(): List<BrowserColumns.Column> = backend.allBrowserColumns()
+
+    @LibAnkiAlias("get_browser_column")
+    fun getBrowserColumn(key: String): BrowserColumns.Column? {
+        for (column in backend.allBrowserColumns()) {
+            if (column.key == key) {
+                return column
+            }
+        }
+        return null
+    }
+
+    // consider changing implementation to return protobuf directly
+    @LibAnkiAlias("browser_row_for_id")
+    @Deprecated("not implemented", replaceWith = ReplaceWith("nothing"))
+    fun browserRowForId(id: Long): BrowserRow = TODO()
+
+    /** Return the stored card column names and ensure the backend columns are set and in sync. */
+    @LibAnkiAlias("load_browser_card_columns")
+    fun loadBrowserCardColumns(): List<String> {
+        val columns = config.get<List<String>>(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, BrowserDefaults.CARD_COLUMNS)!!
+        backend.setActiveBrowserColumns(columns)
+        return columns
+    }
+
+    @LibAnkiAlias("set_browser_card_columns")
+    fun setBrowserCardColumns(columns: List<String>) {
+        config.set(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, columns)
+        backend.setActiveBrowserColumns(columns)
+    }
+
+    /** Return the stored note column names and ensure the backend columns are set and in sync. */
+    @LibAnkiAlias("load_browser_note_columns")
+    fun loadBrowserNoteColumns(): List<String> {
+        val columns = config.get<List<String>>(
+            BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY,
+            BrowserDefaults.NOTE_COLUMNS
+        )!!
+        backend.setActiveBrowserColumns(columns)
+        return columns
+    }
+
+    @LibAnkiAlias("set_browser_note_columns")
+    fun setBrowserNoteColumns(columns: List<String>) {
+        config.set(BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY, columns)
+        backend.setActiveBrowserColumns(columns)
     }
 
     /*
