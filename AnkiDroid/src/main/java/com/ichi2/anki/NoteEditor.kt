@@ -20,6 +20,7 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Activity.RESULT_CANCELED
 import android.content.BroadcastReceiver
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -30,7 +31,6 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ActionMode
@@ -69,6 +69,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
 import anki.notes.NoteFieldsCheckResponse
@@ -87,6 +88,13 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
+import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
+import com.ichi2.anki.multimedia.MultimediaActivityExtra
+import com.ichi2.anki.multimedia.MultimediaBottomSheet
+import com.ichi2.anki.multimedia.MultimediaImageFragment
+import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
+import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
@@ -116,7 +124,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -136,7 +143,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.load
 import com.ichi2.libanki.note
 import com.ichi2.libanki.undoableOp
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.HashUtil
@@ -157,6 +163,7 @@ import com.ichi2.utils.show
 import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
@@ -216,6 +223,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     // non-null after onCollectionLoaded
     private var editorNote: Note? = null
 
+    private val multimediaViewModel: MultimediaViewModel by activityViewModels()
+
     private var currentImageOccPath: String? = null
 
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
@@ -260,26 +269,44 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
     )
 
+    private val multimediaFragmentLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        NoteEditorActivityResultCallback { result ->
+            if (result.resultCode == RESULT_CANCELED) {
+                Timber.d("Multimedia result canceled")
+                return@NoteEditorActivityResultCallback
+            }
+
+            Timber.d("Getting multimedia result")
+            val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
+            handleMultimediaResult(extras)
+        }
+    )
+
+    // TODO: remove this once we migrate to the new multimedia UI
     private val requestMultiMediaEditLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
         @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
         NoteEditorActivityResultCallback { result ->
-            if (result.resultCode != Activity.RESULT_CANCELED) {
-                val col = getColUnsafe
-                val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
-                val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
-                val field = extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD) ?: return@NoteEditorActivityResultCallback
-                if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
-                    Timber.i("field imagePath and audioPath are both null")
-                    return@NoteEditorActivityResultCallback
-                }
-                val note = getCurrentMultimediaEditableNote(col)
-                note.setField(index, field)
+
+            if (result.resultCode == RESULT_CANCELED) return@NoteEditorActivityResultCallback
+            val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
+
+            val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
+            val field = extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD) ?: return@NoteEditorActivityResultCallback
+            if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
+                Timber.i("field imagePath and audioPath are both null")
+                return@NoteEditorActivityResultCallback
+            }
+
+            lifecycleScope.launch {
+                val note = getCurrentMultimediaEditableNote()
+                note?.setField(index, field)
                 val fieldEditText = editFields!![index]
                 // Import field media
                 // This goes before setting formattedValue to update
                 // media paths with the checksum when they have the same name
-                NoteService.importMediaToDirectory(col, field)
+                withCol { NoteService.importMediaFileToDirectory(field) }
                 // Completely replace text for text fields (because current text was passed in)
                 val formattedValue = field.formattedValue
                 if (field.type === EFieldType.TEXT) {
@@ -489,17 +516,19 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         configureMainToolbar()
     }
 
-    @NeedsTest("Test when the user directly passes image to the edit note field")
     /**
-     * Handles the intent for sharing an image to the NoteEditor.
+     * Handles an intent containing an image from the user's gallery or the internet by opening
+     * MultimediaActivity specifically for creating a new card.
      *
-     * This method is invoked when an image is shared from the gallery using the "Add Image" option.
-     * It extracts the image URI from the intent data and then opens the multimedia field editor to
-     * add the image to a new note.
+     * It extracts the image URI from the intent data based on the intent's action.
+     * If the action is `Intent.ACTION_SEND`, the method uses `IntentCompat.getParcelableExtra` to retrieve
+     * the image URI from the `Intent.EXTRA_STREAM` extra. Otherwise, it assumes the image URI is directly
+     * available in the intent's data field.
      *
-     * @param data The intent containing the image data.
+     * @param data the Intent containing the image information from the user's share action
      */
-    private fun handleImageIntent(data: Intent) {
+    @NeedsTest("Test when the user directly passes image to the edit note field")
+    private suspend fun handleImageIntent(data: Intent) {
         val imageUri = if (data.action == Intent.ACTION_SEND) {
             BundleCompat.getParcelable(requireArguments(), Intent.EXTRA_STREAM, Uri::class.java)
         } else {
@@ -508,7 +537,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         Timber.d("Image Uri : $imageUri")
         // ImageIntentManager.saveImageUri(imageUri)
         // the field won't exist so it will always be a new card
-        val note = getCurrentMultimediaEditableNote(getColUnsafe)
+        val note = getCurrentMultimediaEditableNote()
+        if (note == null) {
+            Timber.w("Note is null, returning")
+            return
+        }
         startMultimediaFieldEditor(0, note, imageUri)
     }
 
@@ -711,7 +744,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             }
             contents?.let { setEditFieldTexts(it) }
             tags?.let { setTags(it) }
-            if (caller == CALLER_ADD_IMAGE) handleImageIntent(intent)
+            // If the activity was called to handle an image addition, launch a coroutine to process the image intent.
+            if (caller == CALLER_ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
         } else {
             noteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
             setTitle(R.string.cardeditor_title_edit_card)
@@ -790,11 +824,14 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     private fun dispatchCameraEvent() {
         val photoFile: File? = try {
-            createImageFile()
+            requireContext().createImageFile()
         } catch (e: Exception) {
             Timber.w("Error creating the file", e)
             return
         }
+
+        currentImageOccPath = photoFile?.absolutePath
+
         photoFile?.let {
             val photoURI: Uri = FileProvider.getUriForFile(
                 requireContext(),
@@ -802,18 +839,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 it
             )
             cameraLauncher.launch(photoURI)
-        }
-    }
-
-    private fun createImageFile(): File {
-        val currentDateTime = getTimestamp(TimeManager.time)
-        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "ANKIDROID_$currentDateTime",
-            ".jpg",
-            storageDir
-        ).apply {
-            currentImageOccPath = absolutePath
         }
     }
 
@@ -1548,13 +1573,12 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         insertStringInField(getFieldForTest(fieldIndex), newString)
     }
 
-    /** @param col Readonly variable to get cache dir
-     */
     @KotlinCleanup("fix the requireNoNulls")
-    private fun getCurrentMultimediaEditableNote(col: Collection): MultimediaEditableNote {
+    private suspend fun getCurrentMultimediaEditableNote(): MultimediaEditableNote? {
         val note = NoteService.createEmptyNote(editorNote!!.notetype)
         val fields = currentFieldStrings.requireNoNulls()
-        NoteService.updateMultimediaNoteFromFields(col, fields, editorNote!!.mid, note!!)
+        withCol { NoteService.updateMultimediaNoteFromFields(fields, editorNote!!.mid, note!!) }
+
         return note
     }
 
@@ -1642,7 +1666,16 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             } else {
                 // Use media editor button if not changing note type
                 mediaButton.setBackgroundResource(R.drawable.ic_attachment)
-                setMMButtonListener(mediaButton, i)
+
+                if (sharedPrefs().getBoolean(getString(R.string.pref_new_multimedia_ui), false)) {
+                    mediaButton.setOnClickListener {
+                        @NeedsTest("Ensure bottom sheet fragment is shown")
+                        handleMultimediaActions(i)
+                    }
+                } else {
+                    setMMButtonListener(mediaButton, i)
+                }
+
                 if (addNote) {
                     // toggle sticky button
                     toggleStickyButton.setBackgroundResource(R.drawable.ic_baseline_push_pin_24)
@@ -1681,6 +1714,117 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         )
     }
 
+    /**
+     * Handles user interactions with the multimedia options for a specific field in a note.
+     *
+     * This method is called when the user interacts with a option that allows them to add multimedia
+     * content to a field in a note being edited. It presents a `MultimediaBottomSheet`
+     * fragment to the user, which provides options for selecting different multimedia types.
+     *
+     * @param fieldIndex the index of the field in the note where the multimedia content should be added
+     */
+    private fun handleMultimediaActions(fieldIndex: Int) {
+        Timber.d("Showing MultimediaBottomSheet fragment")
+        val multimediaBottomSheet = MultimediaBottomSheet()
+        multimediaBottomSheet.show(parentFragmentManager, "MultimediaBottomSheet")
+
+        // Based on the type of multimedia action received, perform the corresponding operation
+        lifecycleScope.launch {
+            val note: MultimediaEditableNote = getCurrentMultimediaEditableNote() ?: return@launch
+
+            multimediaViewModel.multimediaAction.first { action ->
+                when (action) {
+                    MultimediaBottomSheet.MultimediaAction.SELECT_IMAGE_FILE -> {
+                        Timber.i("Selected Image option")
+                        val field = ImageField()
+                        note.setField(fieldIndex, field)
+                        val imageIntent = MultimediaImageFragment.getIntent(
+                            requireContext(),
+                            MultimediaActivityExtra(fieldIndex, field, note),
+                            MultimediaImageFragment.ImageOptions.GALLERY
+                        )
+
+                        multimediaFragmentLauncher.launch(imageIntent)
+                    }
+
+                    MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_FILE -> {
+                        // TODO("Not yet implemented")
+                    }
+
+                    MultimediaBottomSheet.MultimediaAction.OPEN_DRAWING -> {
+                        // TODO("Not yet implemented")
+                    }
+
+                    MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING -> {
+                        // TODO("Not yet implemented")
+                    }
+
+                    MultimediaBottomSheet.MultimediaAction.SELECT_VIDEO_FILE -> {
+                        // TODO("Not yet implemented")
+                    }
+
+                    MultimediaBottomSheet.MultimediaAction.OPEN_CAMERA -> {
+                        Timber.i("Selected Camera option")
+
+                        val field = ImageField()
+                        note.setField(fieldIndex, field)
+                        val imageIntent = MultimediaImageFragment.getIntent(
+                            requireContext(),
+                            MultimediaActivityExtra(fieldIndex, field, note),
+                            MultimediaImageFragment.ImageOptions.CAMERA
+                        )
+
+                        multimediaFragmentLauncher.launch(imageIntent)
+                    }
+                }
+                true
+            }
+        }
+    }
+
+    private fun handleMultimediaResult(extras: Bundle) {
+        val index = extras.getInt(MULTIMEDIA_RESULT_FIELD_INDEX)
+        val field = extras.getSerializableCompat<IField>(MULTIMEDIA_RESULT)
+            ?: return
+
+        // Process successful result only if field has data
+        if (field.type != EFieldType.TEXT || field.imagePath != null || field.audioPath != null) {
+            addMediaFileToField(index, field)
+        } else {
+            Timber.i("field imagePath and audioPath are both null")
+        }
+    }
+
+    /**
+     * Adds a media file to a specific field within the currently edited multimedia note.
+     *
+     * @param index The index of the field within the note to update.
+     * @param field The `IField` object representing the media file and its details.
+     */
+    private fun addMediaFileToField(index: Int, field: IField) {
+        lifecycleScope.launch {
+            val note = getCurrentMultimediaEditableNote()
+            note?.setField(index, field)
+            val fieldEditText = editFields!![index]
+
+            // Import field media
+            // This goes before setting formattedValue to update
+            // media paths with the checksum when they have the same name
+            withCol {
+                NoteService.importMediaToDirectory(this, field)
+            }
+
+            // Completely replace text for text fields (because current text was passed in)
+            val formattedValue = field.formattedValue
+            if (field.type === EFieldType.TEXT) {
+                fieldEditText!!.setText(formattedValue)
+            } else if (fieldEditText!!.text != null) {
+                insertStringInField(fieldEditText, formattedValue)
+            }
+            changed = true
+        }
+    }
+
     private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
         val imageTag = mediaRegistration!!.onImagePaste(uri) ?: return false
         insertStringInField(editText, imageTag)
@@ -1693,8 +1837,14 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             if (editorNote!!.items()[index][1].isNotEmpty()) {
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
-                val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(getColUnsafe)
-                startMultimediaFieldEditor(index, note)
+                lifecycleScope.launch {
+                    val note: IMultimediaEditableNote? = getCurrentMultimediaEditableNote()
+                    if (note == null) {
+                        Timber.w("Note is null, returning")
+                        return@launch
+                    }
+                    startMultimediaFieldEditor(index, note)
+                }
             } else {
                 // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
                 val popup = PopupMenu(requireContext(), v)
@@ -1797,9 +1947,13 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         setFieldValueFromUi(index, "")
     }
 
-    private fun startMultimediaFieldEditorForField(index: Int, field: IField) {
-        val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(getColUnsafe)
-        note.setField(index, field)
+    private fun startMultimediaFieldEditorForField(index: Int, field: IField) = lifecycleScope.launch {
+        val note: IMultimediaEditableNote? = getCurrentMultimediaEditableNote()
+        note?.setField(index, field)
+        if (note == null) {
+            Timber.w("Note is null, returning")
+            return@launch
+        }
         startMultimediaFieldEditor(index, note)
     }
 
