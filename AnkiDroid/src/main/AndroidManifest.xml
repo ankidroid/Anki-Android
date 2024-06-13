@@ -342,6 +342,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
+            android:name=".multimedia.MultimediaActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
             android:name="com.ichi2.anki.preferences.Preferences"
             android:exported="false"
             android:configChanges="screenSize"
