@@ -198,4 +198,5 @@
 
     <!-- Instant Editor -->
     <string name="pref_open_instant_editor">openInstantEditor</string>
+    <string name="pref_new_multimedia_ui">newMultimediaUI</string>
 </resources>
