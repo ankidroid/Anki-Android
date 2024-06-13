@@ -322,4 +322,6 @@
 
     <!-- Instant Editor -->
     <string name="open_instant_editor">Open Instant Editor</string>
+    <!-- Multimedia UI -->
+    <string name="new_multimedia_ui">New multimedia UI</string>
 </resources>
