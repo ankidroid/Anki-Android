@@ -21,6 +21,9 @@ import com.ichi2.anki.browser.CardBrowserColumn.CHANGED
 import com.ichi2.anki.browser.CardBrowserColumn.CREATED
 import com.ichi2.anki.browser.CardBrowserColumn.DUE
 import com.ichi2.anki.browser.CardBrowserColumn.EDITED
+import com.ichi2.anki.browser.CardBrowserColumn.FSRS_DIFFICULTY
+import com.ichi2.anki.browser.CardBrowserColumn.FSRS_RETRIEVABILITY
+import com.ichi2.anki.browser.CardBrowserColumn.FSRS_STABILITY
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
@@ -73,6 +76,19 @@ class CardBrowserColumnTest : JvmTest() {
     private fun `ensure old values match backend values`(cardsOrNotes: CardsOrNotes) {
         // dates seem correct - we don't currently display minutes
         assumeThat(column, not(`in`(listOf(CHANGED, CREATED, EDITED))))
+        // FSRS is not implemented
+        assumeThat(
+            column,
+            not(
+                `in`(
+                    listOf(
+                        FSRS_DIFFICULTY,
+                        FSRS_RETRIEVABILITY,
+                        FSRS_STABILITY
+                    )
+                )
+            )
+        )
 
         val note = addNoteUsingBasicModel()
         val cid = note.cids()[0]
