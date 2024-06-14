@@ -1920,9 +1920,6 @@ open class CardBrowser :
 
         fun getColumnHeaderText(key: CardBrowserColumn?): String? {
             return when (key) {
-                CardBrowserColumn.FLAGS -> Integer.valueOf(card.userFlag()).toString()
-                CardBrowserColumn.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                CardBrowserColumn.MARKED -> if (isMarked(col, card.note(col))) "marked" else null
                 CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
