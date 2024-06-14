@@ -92,7 +92,26 @@ enum class CardBrowserColumn(val ankiColumnKey: String) {
      * The name of the note type `Basic (and reversed card)`
      */
     NOTE_TYPE("note"),
-    REVIEWS("cardReps");
+    REVIEWS("cardReps"),
+
+    /**
+     * The inherent complexity associated with a particular memory.
+     * Used in FSRS, blank if using SM-2
+     */
+    FSRS_DIFFICULTY("difficulty"),
+
+    /**
+     * The probability of recalling a specific memory at a given moment.
+     * Used in FSRS, blank if using SM-2
+     */
+    FSRS_RETRIEVABILITY("retrievability"),
+
+    /**
+     * The time required for the probability of recall for a particular memory to decline from
+     * 100% to 90%.
+     * Used in FSRS, blank if using SM-2
+     */
+    FSRS_STABILITY("stability");
 
     companion object {
 
