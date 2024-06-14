@@ -1,4 +1,7 @@
 [versions]
+compileSdk = "34"
+minSdk = "23"  # also in testlib/build.gradle.kts
+targetSdk = "33"  # also in  ../robolectricDownloader.gradle
 acra = '5.11.3'
 amazonappstorepublisher = "0.1.0"
 androidGradlePlugin = "8.4.1"
