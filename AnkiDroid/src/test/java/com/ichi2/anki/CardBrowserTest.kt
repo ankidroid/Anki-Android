@@ -31,9 +31,12 @@ import com.ichi2.anki.CardBrowser.Companion.dueString
 import com.ichi2.anki.CardBrowser.Companion.nextDue
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
+import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.EASE
+import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
+import com.ichi2.anki.browser.CardBrowserColumn.SFLD
+import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserViewModel
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -41,6 +44,8 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsViewModel
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService
+import com.ichi2.libanki.BrowserConfig
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
@@ -894,11 +899,13 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun `column spinner positions are set to 0 if no preferences exist`() = runBlocking {
+    fun `column spinner positions are set if no preferences exist`() = runBlocking {
         // GIVEN: No shared preferences exist for display column selections
         getSharedPrefs().edit {
-            remove(DISPLAY_COLUMN_1_KEY)
-            remove(DISPLAY_COLUMN_2_KEY)
+            remove("cardBrowserColumn1")
+            remove("cardBrowserColumn2")
+            remove(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY)
+            remove(BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY)
         }
 
         // WHEN: CardBrowser is created
@@ -910,19 +917,18 @@ class CardBrowserTest : RobolectricTest() {
         val column1SpinnerPosition = column1Spinner.selectedItemPosition
         val column2SpinnerPosition = column2Spinner.selectedItemPosition
 
-        assertThat(column1SpinnerPosition, equalTo(0))
-        assertThat(column2SpinnerPosition, equalTo(0))
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        assertThat(selectedColumn1, equalTo(SFLD))
+        assertThat(selectedColumn2, equalTo(CARD))
     }
 
     @Test
     fun `column spinner positions are initially set from existing preferences`() = runTest {
         // GIVEN: Shared preferences exists for display column selections
-        val index1 = 1
-        val index2 = 5
-
         getSharedPrefs().edit {
-            putInt(DISPLAY_COLUMN_1_KEY, index1)
-            putInt(DISPLAY_COLUMN_2_KEY, index2)
+            putString(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, "question|cardEase")
         }
 
         // WHEN: CardBrowser is created
@@ -934,8 +940,72 @@ class CardBrowserTest : RobolectricTest() {
         val column1SpinnerPosition = column1Spinner.selectedItemPosition
         val column2SpinnerPosition = column2Spinner.selectedItemPosition
 
-        assertThat(column1SpinnerPosition, equalTo(index1))
-        assertThat(column2SpinnerPosition, equalTo(index2))
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        assertThat(selectedColumn1, equalTo(QUESTION))
+        assertThat(selectedColumn2, equalTo(EASE))
+    }
+
+    @Test
+    fun `column spinner positions are upgraded`() = runTest {
+        // GIVEN: Shared preferences exists for display column selections
+
+        // using legacy keys - test of PreferenceUpgradeService
+        getSharedPrefs().edit {
+            putInt("cardBrowserColumn1", 1)
+            putInt("cardBrowserColumn2", 5)
+        }
+
+        // meta test
+        assertThat(CardBrowserColumn.COLUMN1_KEYS[1], equalTo(SFLD))
+        assertThat(CardBrowserColumn.COLUMN2_KEYS[5], equalTo(TAGS))
+
+        PreferenceUpgradeService.upgradePreferences(getSharedPrefs(), 20300130)
+
+        // WHEN: CardBrowser is created
+        val cardBrowser: CardBrowser = getBrowserWithNotes(7)
+
+        // THEN: The display column selections should match the shared preferences values
+        val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
+        val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
+        val column1SpinnerPosition = column1Spinner.selectedItemPosition
+        val column2SpinnerPosition = column2Spinner.selectedItemPosition
+
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        assertThat(selectedColumn1, equalTo(SFLD))
+        assertThat(selectedColumn2, equalTo(TAGS))
+
+        assertThat("column 1 is cleared", !getSharedPrefs().all.containsKey("cardBrowserColumn1"))
+        assertThat("column 2 is cleared", !getSharedPrefs().all.containsKey("cardBrowserColumn2"))
+    }
+
+    @Test
+    fun `loading corrupt columns returns default`() {
+        // GIVEN: Shared preferences exists for display column selections
+        // with a corrupt value
+        getSharedPrefs().edit {
+            putString(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, "question|corrupt")
+        }
+
+        // WHEN: CardBrowser is created
+        val cardBrowser: CardBrowser = getBrowserWithNotes(7)
+
+        // THEN: The display column selections should match the shared preferences values
+        val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
+        val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
+        val column1SpinnerPosition = column1Spinner.selectedItemPosition
+        val column2SpinnerPosition = column2Spinner.selectedItemPosition
+
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        // In future, we may want to keep the 'question' value and only reset
+        // the corrupt column.
+        assertThat("column 1 reset to default", selectedColumn1, equalTo(SFLD))
+        assertThat("column 2 reset to default", selectedColumn2, equalTo(CARD))
     }
 
     @Test

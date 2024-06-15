@@ -16,21 +16,16 @@
 
 package com.ichi2.anki.browser
 
-import android.content.SharedPreferences
-import androidx.core.content.edit
 import anki.search.BrowserColumns
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
 import net.ankiweb.rsdroid.Backend
-import timber.log.Timber
 
 /**
  * A column available in the [browser][CardBrowser]
  *
- * @see COLUMN1_KEYS: from preference [DISPLAY_COLUMN_1_KEY] to [R.array.browser_column1_headings]
- * @see COLUMN2_KEYS: from preference [DISPLAY_COLUMN_2_KEY] to [R.array.browser_column2_headings]
+ * @see COLUMN1_KEYS: maps to [R.array.browser_column1_headings]
+ * @see COLUMN2_KEYS: maps to [R.array.browser_column2_headings]
  * @see CardBrowser.CardCache.getColumnHeaderText - how columns are rendered
  *
  * @param ankiColumnKey The key used in [Backend.setActiveBrowserColumns]
@@ -124,35 +119,12 @@ enum class CardBrowserColumn(val ankiColumnKey: String) {
         // Note: the last 6 are currently hidden
         val COLUMN2_KEYS = arrayOf(ANSWER, CARD, DECK, NOTE_TYPE, QUESTION, TAGS, LAPSES, REVIEWS, INTERVAL, EASE, DUE, CHANGED, CREATED, EDITED)
 
-        fun SharedPreferences.loadBrowserColumn(index: Int): CardBrowserColumn {
-            return when (index) {
-                0 -> COLUMN1_KEYS[getInt(DISPLAY_COLUMN_1_KEY, 0)]
-                1 -> COLUMN2_KEYS[getInt(DISPLAY_COLUMN_2_KEY, 0)]
-                else -> {
-                    Timber.w("Unexpected column access: %d", index)
-                    QUESTION
-                }
-            }
-        }
-
-        fun save(prefs: SharedPreferences, columnIndex: Int, value: CardBrowserColumn) {
-            if (columnIndex != 0 && columnIndex != 1) return
-            val (key, array) = when (columnIndex) {
-                0 -> Pair(DISPLAY_COLUMN_1_KEY, COLUMN1_KEYS)
-                1 -> Pair(DISPLAY_COLUMN_2_KEY, COLUMN2_KEYS)
-                else -> throw IllegalStateException()
-            }
-
-            Timber.i("updating '%s' to '%s'", key, value)
-            val index = array.indexOf(value)
-            if (index == -1) {
-                Timber.w("illegal value: %s", value)
-                return
-            }
-            prefs.edit { putInt(key, index) }
-        }
+        fun fromColumnKey(key: String): CardBrowserColumn =
+            entries.firstOrNull { it.ankiColumnKey == key }
+                ?: throw IllegalArgumentException("Invalid key: $key")
     }
 }
 
 fun List<BrowserColumns.Column>.find(column: CardBrowserColumn): BrowserColumns.Column =
-    this.first { it.key == column.ankiColumnKey }
+    this.firstOrNull { it.key == column.ankiColumnKey }
+        ?: throw IllegalArgumentException("Invalid column: ${column.ankiColumnKey}")
