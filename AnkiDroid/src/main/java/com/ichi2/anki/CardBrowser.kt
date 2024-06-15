@@ -349,8 +349,8 @@ open class CardBrowser :
         val sflRelativeFontSize =
             preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
         val columnsContent = arrayOf(
-            COLUMN1_KEYS[viewModel.column1Index],
-            COLUMN2_KEYS[viewModel.column2Index]
+            viewModel.column1,
+            viewModel.column2
         )
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter = MultiColumnListAdapter(
@@ -408,10 +408,10 @@ open class CardBrowser :
             }
         }
         fun onSelectedRowsChanged(rows: Set<CardCache>) = onSelectionChanged()
-        fun onColumnIndex1Changed(index: Int) =
-            cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] }
-        fun onColumnIndex2Changed(index: Int) =
-            cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] }
+        fun onColumn1Changed(column: CardBrowserColumn) =
+            cardsAdapter.updateMapping { it[0] = column }
+        fun onColumn2Changed(column: CardBrowserColumn) =
+            cardsAdapter.updateMapping { it[1] = column }
         fun onFilterQueryChanged(filterQuery: String) {
             // setQuery before expand does not set the view's value
             searchItem!!.expandActionView()
@@ -470,8 +470,8 @@ open class CardBrowser :
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
-        viewModel.flowOfColumnIndex1.launchCollectionInLifecycleScope(::onColumnIndex1Changed)
-        viewModel.flowOfColumnIndex2.launchCollectionInLifecycleScope(::onColumnIndex2Changed)
+        viewModel.flowOfColumn1.launchCollectionInLifecycleScope(::onColumn1Changed)
+        viewModel.flowOfColumn2.launchCollectionInLifecycleScope(::onColumn2Changed)
         viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
@@ -497,9 +497,9 @@ open class CardBrowser :
                 setDropDownViewResource(R.layout.spinner_custom_layout)
             }
             onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-                viewModel.setColumn1Index(pos)
+                viewModel.setColumn1(COLUMN1_KEYS[pos])
             }
-            setSelection(viewModel.column1Index)
+            setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
         }
         // Setup the column 2 heading as a spinner so that users can easily change the column type
         findViewById<Spinner>(R.id.browser_column2_spinner).apply {
@@ -513,9 +513,9 @@ open class CardBrowser :
             }
             // Create a new list adapter with updated column map any time the user changes the column
             onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-                viewModel.setColumn2Index(pos)
+                viewModel.setColumn2(COLUMN2_KEYS[pos])
             }
-            setSelection(viewModel.column2Index)
+            setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
         }
 
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
@@ -1483,7 +1483,7 @@ open class CardBrowser :
             .mapNotNull { cid -> idToPos[cid] }
             .filterNot { pos -> pos >= viewModel.rowCount }
             .map { pos -> viewModel.getRowAtPosition(pos) }
-            .forEach { it.load(true, viewModel.column1Index, viewModel.column2Index) }
+            .forEach { it.load(true, viewModel.column1, viewModel.column2) }
         updateList()
     }
 
@@ -1673,8 +1673,8 @@ open class CardBrowser :
             cards,
             firstVisibleItem,
             visibleItemCount,
-            viewModel.column1Index,
-            viewModel.column2Index
+            viewModel.column1,
+            viewModel.column2
         ) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
@@ -1983,13 +1983,13 @@ open class CardBrowser :
 
         /** pre compute the note and question/answer.  It can safely
          * be called twice without doing extra work.  */
-        fun load(reload: Boolean, column1Index: Int, column2Index: Int) {
+        fun load(reload: Boolean, column1: CardBrowserColumn, column2: CardBrowserColumn) {
             if (reload) {
                 reload()
             }
             card.note(col)
             // First column can not be the answer. If it were to change, this code should also be changed.
-            if (COLUMN1_KEYS[column1Index] == CardBrowserColumn.QUESTION || arrayOf(CardBrowserColumn.QUESTION, CardBrowserColumn.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
+            if (column1 == CardBrowserColumn.QUESTION || arrayOf(CardBrowserColumn.QUESTION, CardBrowserColumn.ANSWER).contains(column2)) {
                 updateSearchItemQA()
             }
             isLoaded = true

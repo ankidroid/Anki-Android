@@ -25,6 +25,10 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
+import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
+import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.SystemContextMenu
 import com.ichi2.anki.export.ExportDialogFragment
@@ -313,36 +317,36 @@ class CardBrowserViewModelTest : JvmTest() {
 
     @Test
     fun `changing column index 1`() = runViewModelTest {
-        flowOfColumnIndex1.test {
+        flowOfColumn1.test {
             ignoreEventsDuringViewModelInit()
 
-            assertThat("default column1Index value", column1Index, equalTo(0))
+            assertThat("default column1 value", column1, equalTo(QUESTION))
 
-            setColumn1Index(1)
+            setColumn1(SFLD)
 
-            assertThat("flowOfColumnIndex1", awaitItem(), equalTo(1))
-            assertThat("column1Index", column1Index, equalTo(1))
+            assertThat("flowOfColumn1", awaitItem(), equalTo(SFLD))
+            assertThat("column1", column1, equalTo(SFLD))
 
             // expect no change if the value is selected again
-            setColumn1Index(1)
+            setColumn1(SFLD)
             expectNoEvents()
         }
     }
 
     @Test
     fun `changing column index 2`() = runViewModelTest {
-        flowOfColumnIndex2.test {
+        flowOfColumn2.test {
             ignoreEventsDuringViewModelInit()
 
-            assertThat("default column2Index value", column2Index, equalTo(0))
+            assertThat("default column2Index value", column2, equalTo(ANSWER))
 
-            setColumn2Index(1)
+            setColumn2(CARD)
 
-            assertThat("flowOfColumnIndex2", awaitItem(), equalTo(1))
-            assertThat("column2Index", column2Index, equalTo(1))
+            assertThat("flowOfColumnIndex2", awaitItem(), equalTo(CARD))
+            assertThat("column2Index", column2, equalTo(CARD))
 
             // expect no change if the value is selected again
-            setColumn2Index(1)
+            setColumn2(CARD)
             expectNoEvents()
         }
     }
