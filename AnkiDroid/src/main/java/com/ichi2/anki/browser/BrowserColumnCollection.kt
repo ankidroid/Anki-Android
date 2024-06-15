@@ -41,6 +41,7 @@ import timber.log.Timber
  * @see BrowserConfig.activeColumnsKey
  */
 class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
+    val backendKeys: Iterable<String> get() = columns.map { it.ankiColumnKey }
     val count = columns.size
     operator fun get(index: Int) = columns[index]
 
