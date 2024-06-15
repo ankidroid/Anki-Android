@@ -28,29 +28,28 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import timber.log.Timber
 
-object NotificationChannels {
+/**
+ * Create or update all the notification channels for the app
+ *
+ * In Oreo and higher, you must create a channel for all notifications.
+ * This will create the channel if it doesn't exist, or if it exists it will update the name.
+ *
+ * Note that once a channel is created, only the name may be changed as long as the application
+ * is installed on the user device. All other settings are fully under user control.
 
-    /**
-     * Create or update all the notification channels for the app
-     *
-     * In Oreo and higher, you must create a channel for all notifications.
-     * This will create the channel if it doesn't exist, or if it exists it will update the name.
-     *
-     * Note that once a channel is created, only the name may be changed as long as the application
-     * is installed on the user device. All other settings are fully under user control.
-
-     * TODO should be called in response to [Intent.ACTION_LOCALE_CHANGED]
-     * @param context the context for access to localized strings for channel names
-     */
-    @TargetApi(26)
-    fun setup(context: Context) {
+ * TODO should be called in response to [Intent.ACTION_LOCALE_CHANGED]
+ * @param context the context for access to localized strings for channel names
+ */
+fun setupNotificationChannels(context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val res = context.resources
         for (channel in Channel.entries) {
             val id = channel.id
             val name = channel.getName(res)
             val importance = channel.importance()
             Timber.i("Creating notification channel with id/name: %s/%s", id, name)
-            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val manager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel = NotificationChannel(id, name, importance)
             notificationChannel.setShowBadge(true)
             notificationChannel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC

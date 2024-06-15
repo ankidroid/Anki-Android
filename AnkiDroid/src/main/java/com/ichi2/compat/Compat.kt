@@ -70,7 +70,6 @@ import java.util.*
  * `CompatV23` due to a change of API, need not be implemented again in CompatV26.
  */
 interface Compat {
-    fun setupNotificationChannel(context: Context)
     fun setTooltipTextByContentDescription(view: View)
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder

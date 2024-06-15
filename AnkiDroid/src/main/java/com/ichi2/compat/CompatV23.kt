@@ -46,9 +46,6 @@ import java.util.Locale
 // TODO add extension method logging file.delete() failure" + "Fix Deprecation"
 @Suppress("Deprecation")
 open class CompatV23 : Compat {
-    // Until API26, ignore notification channels
-    override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
-    }
 
     // Until API26, tooltips cannot be defined declaratively in layouts
     override fun setTooltipTextByContentDescription(view: View) {

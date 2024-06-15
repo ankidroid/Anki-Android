@@ -44,7 +44,6 @@ import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.IntentUtil
@@ -250,7 +249,7 @@ abstract class NavigationDrawerActivity :
                 REQUEST_PREFERENCES_UPDATE,
                 result.resultCode
             )
-            CompatHelper.compat.setupNotificationChannel(applicationContext)
+            setupNotificationChannels(applicationContext)
             // Restart the activity on preference change
             // collection path hasn't been changed so just restart the current activity
             if (this is Reviewer && preferences.getBoolean("tts", false)) {
