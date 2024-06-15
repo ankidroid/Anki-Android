@@ -56,7 +56,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
         val foundClasses = context.uastFile!!.classes
-        if (!LintUtils.isAnAllowedClass(foundClasses, "SystemTime") && evaluator.isMemberInClass(method, "java.lang.System")) {
+        if (!LintUtils.isAnAllowedClass(foundClasses, "SystemTime", "CompatV29") && evaluator.isMemberInClass(method, "java.lang.System")) {
             context.report(
                 ISSUE,
                 context.getCallLocation(node, includeReceiver = true, includeArguments = true),
