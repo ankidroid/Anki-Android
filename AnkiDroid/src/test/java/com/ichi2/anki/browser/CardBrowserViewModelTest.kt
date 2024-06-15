@@ -27,6 +27,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.NOTE_TYPE
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserLaunchOptions.DeepLink
@@ -316,37 +317,73 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     @Test
-    fun `changing column index 1`() = runViewModelTest {
+    fun `cards - changing column index 1`() = runViewModelTest {
         flowOfColumn1.test {
             ignoreEventsDuringViewModelInit()
 
-            assertThat("default column1 value", column1, equalTo(QUESTION))
+            assertThat("default column1 value", column1, equalTo(SFLD))
 
-            setColumn1(SFLD)
+            setColumn1(QUESTION)
 
-            assertThat("flowOfColumn1", awaitItem(), equalTo(SFLD))
-            assertThat("column1", column1, equalTo(SFLD))
+            assertThat("flowOfColumn1", awaitItem(), equalTo(QUESTION))
+            assertThat("column1", column1, equalTo(QUESTION))
 
             // expect no change if the value is selected again
-            setColumn1(SFLD)
+            setColumn1(QUESTION)
             expectNoEvents()
         }
     }
 
     @Test
-    fun `changing column index 2`() = runViewModelTest {
+    fun `cards - changing column index 2`() = runViewModelTest {
         flowOfColumn2.test {
             ignoreEventsDuringViewModelInit()
 
-            assertThat("default column2Index value", column2, equalTo(ANSWER))
+            assertThat("default column2Index value", column2, equalTo(CARD))
 
-            setColumn2(CARD)
+            setColumn2(ANSWER)
 
-            assertThat("flowOfColumnIndex2", awaitItem(), equalTo(CARD))
-            assertThat("column2Index", column2, equalTo(CARD))
+            assertThat("flowOfColumnIndex2", awaitItem(), equalTo(ANSWER))
+            assertThat("column2Index", column2, equalTo(ANSWER))
 
             // expect no change if the value is selected again
-            setColumn2(CARD)
+            setColumn2(ANSWER)
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `notes - changing column index 1`() = runViewModelNotesTest {
+        flowOfColumn1.test {
+            ignoreEventsDuringViewModelInit()
+
+            assertThat("default column1 value", column1, equalTo(SFLD))
+
+            setColumn1(QUESTION)
+
+            assertThat("flowOfColumn1", awaitItem(), equalTo(QUESTION))
+            assertThat("column1", column1, equalTo(QUESTION))
+
+            // expect no change if the value is selected again
+            setColumn1(QUESTION)
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `notes - changing column index 2`() = runViewModelNotesTest {
+        flowOfColumn2.test {
+            ignoreEventsDuringViewModelInit()
+
+            assertThat("default column2Index value", column2, equalTo(NOTE_TYPE))
+
+            setColumn2(ANSWER)
+
+            assertThat("flowOfColumnIndex2", awaitItem(), equalTo(ANSWER))
+            assertThat("column2Index", column2, equalTo(ANSWER))
+
+            // expect no change if the value is selected again
+            setColumn2(ANSWER)
             expectNoEvents()
         }
     }

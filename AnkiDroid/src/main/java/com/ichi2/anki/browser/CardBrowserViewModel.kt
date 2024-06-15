@@ -32,7 +32,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
-import com.ichi2.anki.browser.CardBrowserColumn.Companion.loadBrowserColumn
 import com.ichi2.anki.export.ExportDialogFragment.*
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.model.CardStateFilter
@@ -135,8 +134,10 @@ class CardBrowserViewModel(
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
-    val flowOfColumn1 = MutableStateFlow(sharedPrefs().loadBrowserColumn(0))
-    val flowOfColumn2 = MutableStateFlow(sharedPrefs().loadBrowserColumn(1))
+    // TODO: Initial values are temporary - set in init { } as they depend on cardsOrNotes
+    // consider a loading state
+    val flowOfColumn1 = MutableStateFlow(CardBrowserColumn.QUESTION)
+    val flowOfColumn2 = MutableStateFlow(CardBrowserColumn.ANSWER)
     val column1 get() = flowOfColumn1.value
     val column2 get() = flowOfColumn2.value
 
@@ -276,12 +277,12 @@ class CardBrowserViewModel(
 
         flowOfColumn1
             .ignoreValuesFromViewModelLaunch()
-            .onEach { column -> CardBrowserColumn.save(sharedPrefs(), columnIndex = 0, value = column) }
+            .onEach { column1 -> updateColumnCollection { toUpdate -> toUpdate[0] = column1 } }
             .launchIn(viewModelScope)
 
         flowOfColumn2
             .ignoreValuesFromViewModelLaunch()
-            .onEach { column -> CardBrowserColumn.save(sharedPrefs(), columnIndex = 1, value = column) }
+            .onEach { column2 -> updateColumnCollection { toUpdate -> toUpdate[1] = column2 } }
             .launchIn(viewModelScope)
 
         performSearchFlow.onEach {
@@ -304,6 +305,10 @@ class CardBrowserViewModel(
             setDeckId(initialDeckId)
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
             flowOfCardsOrNotes.update { cardsOrNotes }
+
+            val columns = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
+            flowOfColumn1.update { columns.columns[0] }
+            flowOfColumn2.update { columns.columns[1] }
 
             withCol {
                 sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
@@ -766,6 +771,13 @@ class CardBrowserViewModel(
         flowOfCardsUpdated.emit(Unit)
     }
 
+    private fun updateColumnCollection(block: (MutableList<CardBrowserColumn?>) -> Unit) {
+        BrowserColumnCollection.update(sharedPrefs(), cardsOrNotes) {
+            block(it)
+            return@update true
+        }
+    }
+
     suspend fun queryCardIdAtPosition(index: Int): CardId {
         // TODO: Slow - this will be refactored
         return queryAllCardIds()[index]
@@ -777,8 +789,6 @@ class CardBrowserViewModel(
     }
 
     companion object {
-        const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
-        const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
         fun factory(
             lastDeckIdRepository: LastDeckIdRepository,
             cacheDir: File,
