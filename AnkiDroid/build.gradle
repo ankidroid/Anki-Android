@@ -308,6 +308,7 @@ dependencies {
 
     // modules
     implementation project(":common")
+    implementation project(":compat")
 
     implementation libs.androidx.activity
     implementation libs.androidx.annotation
