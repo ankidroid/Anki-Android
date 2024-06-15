@@ -16,12 +16,15 @@
 
 package com.ichi2.anki.browser
 
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import anki.search.BrowserColumns
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
 import net.ankiweb.rsdroid.Backend
+import timber.log.Timber
 
 /**
  * A column available in the [browser][CardBrowser]
@@ -120,6 +123,34 @@ enum class CardBrowserColumn(val ankiColumnKey: String) {
         // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
         // Note: the last 6 are currently hidden
         val COLUMN2_KEYS = arrayOf(ANSWER, CARD, DECK, NOTE_TYPE, QUESTION, TAGS, LAPSES, REVIEWS, INTERVAL, EASE, DUE, CHANGED, CREATED, EDITED)
+
+        fun SharedPreferences.loadBrowserColumn(index: Int): CardBrowserColumn {
+            return when (index) {
+                0 -> COLUMN1_KEYS[getInt(DISPLAY_COLUMN_1_KEY, 0)]
+                1 -> COLUMN2_KEYS[getInt(DISPLAY_COLUMN_2_KEY, 0)]
+                else -> {
+                    Timber.w("Unexpected column access: %d", index)
+                    QUESTION
+                }
+            }
+        }
+
+        fun save(prefs: SharedPreferences, columnIndex: Int, value: CardBrowserColumn) {
+            if (columnIndex != 0 && columnIndex != 1) return
+            val (key, array) = when (columnIndex) {
+                0 -> Pair(DISPLAY_COLUMN_1_KEY, COLUMN1_KEYS)
+                1 -> Pair(DISPLAY_COLUMN_2_KEY, COLUMN2_KEYS)
+                else -> throw IllegalStateException()
+            }
+
+            Timber.i("updating '%s' to '%s'", key, value)
+            val index = array.indexOf(value)
+            if (index == -1) {
+                Timber.w("illegal value: %s", value)
+                return
+            }
+            prefs.edit { putInt(key, index) }
+        }
     }
 }
 

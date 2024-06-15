@@ -32,6 +32,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
+import com.ichi2.anki.browser.CardBrowserColumn.Companion.loadBrowserColumn
 import com.ichi2.anki.export.ExportDialogFragment.*
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.model.CardStateFilter
@@ -134,10 +135,10 @@ class CardBrowserViewModel(
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
-    val flowOfColumnIndex1 = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
-    val flowOfColumnIndex2 = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
-    val column1Index get() = flowOfColumnIndex1.value
-    val column2Index get() = flowOfColumnIndex2.value
+    val flowOfColumn1 = MutableStateFlow(sharedPrefs().loadBrowserColumn(0))
+    val flowOfColumn2 = MutableStateFlow(sharedPrefs().loadBrowserColumn(1))
+    val column1 get() = flowOfColumn1.value
+    val column2 get() = flowOfColumn2.value
 
     val flowOfSearchQueryExpanded = MutableStateFlow(false)
 
@@ -273,20 +274,14 @@ class CardBrowserViewModel(
             null -> {}
         }
 
-        flowOfColumnIndex1
+        flowOfColumn1
             .ignoreValuesFromViewModelLaunch()
-            .onEach { index ->
-                Timber.d("updating %s", DISPLAY_COLUMN_1_KEY)
-                sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) }
-            }
+            .onEach { column -> CardBrowserColumn.save(sharedPrefs(), columnIndex = 0, value = column) }
             .launchIn(viewModelScope)
 
-        flowOfColumnIndex2
+        flowOfColumn2
             .ignoreValuesFromViewModelLaunch()
-            .onEach { index ->
-                Timber.d("updating %s", DISPLAY_COLUMN_2_KEY)
-                sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) }
-            }
+            .onEach { column -> CardBrowserColumn.save(sharedPrefs(), columnIndex = 1, value = column) }
             .launchIn(viewModelScope)
 
         performSearchFlow.onEach {
@@ -466,9 +461,15 @@ class CardBrowserViewModel(
         }
     }
 
-    fun setColumn1Index(value: Int) = flowOfColumnIndex1.update { value }
+    fun setColumn1(value: CardBrowserColumn) {
+        Timber.d("updating column 1 to %s", value)
+        flowOfColumn1.update { value }
+    }
 
-    fun setColumn2Index(value: Int) = flowOfColumnIndex2.update { value }
+    fun setColumn2(value: CardBrowserColumn) {
+        Timber.d("updating column 2 to %s", value)
+        flowOfColumn2.update { value }
+    }
 
     /**
      * Toggles the 'suspend' state of the selected cards
@@ -749,7 +750,7 @@ class CardBrowserViewModel(
             val cardsToRender = min((numCardsToRender ?: 0), cards.size)
             for (i in 0 until cardsToRender) {
                 ensureActive()
-                cards[i].load(false, column1Index, column2Index)
+                cards[i].load(false, column1, column2)
             }
             ensureActive()
             this@CardBrowserViewModel.cards.replaceWith(cards)
