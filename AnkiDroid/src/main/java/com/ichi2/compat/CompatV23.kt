@@ -31,7 +31,6 @@ import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -44,7 +43,7 @@ import java.io.Serializable
 import java.util.Locale
 
 /** Baseline implementation of [Compat]. Check [Compat]'s for more detail.  */
-@KotlinCleanup("add extension method logging file.delete() failure" + "Fix Deprecation")
+// TODO add extension method logging file.delete() failure" + "Fix Deprecation"
 @Suppress("Deprecation")
 open class CompatV23 : Compat {
     // Until API26, ignore notification channels
@@ -106,11 +105,14 @@ open class CompatV23 : Compat {
         // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
         val buffer = ByteArray(1024 * 32)
         var count: Long = 0
-        var n: Int
-        @KotlinCleanup("This code feels hard to read, Improve readability")
-        while (source.read(buffer).also { n = it } != -1) {
-            target.write(buffer, 0, n)
-            count += n.toLong()
+        while (true) {
+            val readBytes = source.read(buffer)
+            if (readBytes < 0) {
+                break
+            } else {
+                target.write(buffer, 0, readBytes)
+                count += readBytes
+            }
         }
         target.flush()
         return count
