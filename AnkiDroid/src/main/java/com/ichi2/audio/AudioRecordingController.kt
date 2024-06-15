@@ -36,6 +36,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.fields.FieldControllerBase
 import com.ichi2.anki.multimediacard.fields.IFieldController
@@ -48,7 +49,6 @@ import com.ichi2.anki.utils.formatAsString
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.audio.AudioRecordingController.RecordingState.ImmediatePlayback
-import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil

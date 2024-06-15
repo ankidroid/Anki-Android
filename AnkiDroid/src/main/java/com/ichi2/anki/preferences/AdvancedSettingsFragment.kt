@@ -23,11 +23,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import com.ichi2.anki.*
 import com.ichi2.anki.R
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
 import timber.log.Timber
 

@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.model
 
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import java.io.File
 import java.io.IOException
 import java.nio.file.NotDirectoryException

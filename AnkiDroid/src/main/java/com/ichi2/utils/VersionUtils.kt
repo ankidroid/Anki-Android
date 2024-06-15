@@ -21,8 +21,8 @@ import android.content.pm.PackageManager
 import androidx.core.content.pm.PackageInfoCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
-import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
-import com.ichi2.compat.PackageInfoFlagsCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import timber.log.Timber
 import java.lang.NullPointerException
 

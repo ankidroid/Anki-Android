@@ -17,8 +17,8 @@ package com.ichi2.anki
 
 import android.content.pm.PackageManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
-import com.ichi2.compat.PackageInfoFlagsCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.getPackageInfoCompat
+import com.ichi2.anki.compat.PackageInfoFlagsCompat
 import com.ichi2.testutils.ActivityList
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers

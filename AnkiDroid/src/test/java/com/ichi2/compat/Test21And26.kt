@@ -17,6 +17,10 @@
 package com.ichi2.compat
 
 import android.annotation.SuppressLint
+import com.ichi2.anki.compat.Compat
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.CompatV23
+import com.ichi2.anki.compat.CompatV26
 import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.*

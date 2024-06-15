@@ -21,7 +21,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.os.StatFs
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream

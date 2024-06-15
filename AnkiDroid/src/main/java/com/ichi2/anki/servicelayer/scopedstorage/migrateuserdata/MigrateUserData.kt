@@ -19,6 +19,7 @@ package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
@@ -30,7 +31,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
 import com.ichi2.anki.utils.TranslatableAggregateException
 import com.ichi2.anki.utils.getUserFriendlyErrorText
-import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
 import java.util.concurrent.CountDownLatch

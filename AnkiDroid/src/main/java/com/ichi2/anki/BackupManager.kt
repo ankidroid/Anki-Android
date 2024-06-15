@@ -22,8 +22,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import anki.config.Preferences.BackupLimits
 import anki.config.copy
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time

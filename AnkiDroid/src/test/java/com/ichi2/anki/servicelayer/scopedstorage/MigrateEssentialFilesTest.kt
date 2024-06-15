@@ -22,11 +22,11 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.servicelayer.DestFolderOverride
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.ScopedStorageService.prepareAndValidateSourceAndDestinationFolders
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.UserActionRequiredException.MissingEssentialFileException
-import com.ichi2.compat.CompatHelper
 import com.ichi2.testutils.CollectionDBCorruption
 import com.ichi2.testutils.createTransientDirectory
 import net.ankiweb.rsdroid.BackendException

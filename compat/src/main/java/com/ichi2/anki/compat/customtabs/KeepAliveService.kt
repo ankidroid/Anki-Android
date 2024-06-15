@@ -12,22 +12,25 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.ichi2.compat.customtabs
+package com.ichi2.anki.compat.customtabs
 
-import androidx.browser.customtabs.CustomTabsClient
+import android.app.Service
+import android.content.Intent
+import android.os.Binder
+import android.os.IBinder
 
 /**
- * Callback for events when connecting and disconnecting from Custom Tabs Service.
+ * Empty service used by the custom tab to bind to, raising the application's importance.
  */
-interface ServiceConnectionCallback {
-    /**
-     * Called when the service is connected.
-     * @param client a CustomTabsClient
-     */
-    fun onServiceConnected(client: CustomTabsClient)
+class KeepAliveService : Service() {
 
-    /**
-     * Called when the service is disconnected.
-     */
-    fun onServiceDisconnected()
+    @Suppress("RedundantNullableReturnType")
+    // follows the super method which marks its return as nullable
+    override fun onBind(intent: Intent): IBinder? {
+        return sBinder
+    }
+
+    companion object {
+        private val sBinder = Binder()
+    }
 }

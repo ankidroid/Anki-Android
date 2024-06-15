@@ -28,7 +28,7 @@ package com.ichi2.libanki
 import android.text.TextUtils
 import anki.config.ConfigKey
 import com.ichi2.anki.CollectionManager
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NotInLibAnki
 import org.intellij.lang.annotations.Language

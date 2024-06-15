@@ -14,16 +14,19 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
-import android.annotation.TargetApi
-import android.view.MotionEvent
+import android.speech.tts.UtteranceProgressListener
+import timber.log.Timber
 
-@TargetApi(34)
-open class CompatV34 : CompatV33(), Compat {
-    override val AXIS_GESTURE_X_OFFSET = MotionEvent.AXIS_GESTURE_X_OFFSET
-    override val AXIS_GESTURE_Y_OFFSET = MotionEvent.AXIS_GESTURE_Y_OFFSET
-    override val AXIS_GESTURE_SCROLL_X_DISTANCE = MotionEvent.AXIS_GESTURE_SCROLL_X_DISTANCE
-    override val AXIS_GESTURE_SCROLL_Y_DISTANCE = MotionEvent.AXIS_GESTURE_SCROLL_Y_DISTANCE
-    override val AXIS_GESTURE_PINCH_SCALE_FACTOR = MotionEvent.AXIS_GESTURE_PINCH_SCALE_FACTOR
+abstract class UtteranceProgressListenerCompat : UtteranceProgressListener() {
+
+    abstract override fun onError(utteranceId: String?, errorCode: Int)
+
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("")
+    override fun onError(utteranceId: String?) {
+        // required for UtteranceProgressListener, but also deprecated
+        Timber.e("onError(string) should not have been called")
+    }
 }

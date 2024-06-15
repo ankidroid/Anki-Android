@@ -16,6 +16,9 @@
 
 package com.ichi2.compat
 
+import com.ichi2.anki.compat.Compat
+import com.ichi2.anki.compat.CompatV23
+import com.ichi2.anki.compat.CompatV26
 import com.ichi2.testutils.*
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.hamcrest.CoreMatchers.equalTo

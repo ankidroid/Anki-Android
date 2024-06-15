@@ -24,6 +24,7 @@ import android.os.Environment
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
@@ -31,7 +32,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.UserDataMigrationPreferences
 import com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp
-import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
 import com.ichi2.utils.FileUtil.isDescendantOf

@@ -27,11 +27,11 @@ import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.*
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.File

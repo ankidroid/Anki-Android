@@ -12,17 +12,17 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.ichi2.compat.customtabs
+package com.ichi2.anki.compat.customtabs
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsService
-import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
-import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
-import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
-import com.ichi2.compat.ResolveInfoFlagsCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveActivityCompat
+import com.ichi2.anki.compat.CompatHelper.Companion.resolveServiceCompat
+import com.ichi2.anki.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 
 /**

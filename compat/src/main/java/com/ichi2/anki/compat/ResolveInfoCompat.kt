@@ -29,7 +29,7 @@
  *
  *     https://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/content/pm/PackageManager.java
  */
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
 import android.content.pm.*
 import android.os.UserManager

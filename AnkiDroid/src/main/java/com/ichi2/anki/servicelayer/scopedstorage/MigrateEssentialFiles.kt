@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.*
@@ -31,7 +32,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.Companion
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.UserActionRequiredException
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
 

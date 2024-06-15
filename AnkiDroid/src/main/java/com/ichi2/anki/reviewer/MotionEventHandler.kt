@@ -21,8 +21,8 @@ import android.view.MotionEvent
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 
 /**

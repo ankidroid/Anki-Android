@@ -30,9 +30,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.model.CardStateFilter
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.OS

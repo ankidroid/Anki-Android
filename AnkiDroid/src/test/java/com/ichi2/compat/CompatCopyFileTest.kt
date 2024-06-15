@@ -17,6 +17,7 @@
 package com.ichi2.compat
 
 import com.ichi2.anki.TestUtils
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.utils.FileOperation.Companion.getFileResource
 import org.junit.Assert
 import org.junit.Test

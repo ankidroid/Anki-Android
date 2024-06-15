@@ -42,13 +42,13 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
+import com.ichi2.anki.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.anki.exportApkgPackage
 import com.ichi2.anki.exportCollectionPackage
 import com.ichi2.anki.exportSelectedCards
 import com.ichi2.anki.exportSelectedNotes
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.utils.getTimestamp
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.utils.TimeManager

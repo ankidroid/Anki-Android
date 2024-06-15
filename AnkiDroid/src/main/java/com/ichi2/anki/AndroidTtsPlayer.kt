@@ -22,7 +22,7 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
 import androidx.annotation.CheckResult
 import com.ichi2.anki.AndroidTtsError.TtsErrorCode
-import com.ichi2.compat.UtteranceProgressListenerCompat
+import com.ichi2.anki.compat.UtteranceProgressListenerCompat
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.TtsPlayer.TtsCompletionStatus

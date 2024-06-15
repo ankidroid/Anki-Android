@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
 import android.annotation.TargetApi
 import android.icu.util.ULocale

@@ -25,7 +25,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TtsVoice
 import kotlinx.coroutines.Dispatchers

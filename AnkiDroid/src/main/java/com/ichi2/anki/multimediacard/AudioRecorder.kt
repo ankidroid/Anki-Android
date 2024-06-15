@@ -23,7 +23,7 @@ package com.ichi2.anki.multimediacard
 import android.content.Context
 import android.media.MediaRecorder
 import android.os.Build
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import timber.log.Timber
 import java.io.IOException
 

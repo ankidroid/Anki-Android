@@ -18,7 +18,7 @@ package com.ichi2.anki.tests
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.utils.KotlinCleanup

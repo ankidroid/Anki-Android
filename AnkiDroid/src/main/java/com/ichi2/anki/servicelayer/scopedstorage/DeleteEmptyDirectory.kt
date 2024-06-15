@@ -16,10 +16,10 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
-import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.FileNotFoundException
 import java.io.IOException

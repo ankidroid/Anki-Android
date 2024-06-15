@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
-package com.ichi2.compat
+package com.ichi2.anki.compat
 
 import android.content.Context
 import android.content.Intent
@@ -22,11 +22,12 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
 import android.content.pm.ResolveInfo
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
-import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.anki.compat.CompatHelper.Companion.compat
 import java.io.Serializable
 
 /**
@@ -63,6 +64,16 @@ class CompatHelper private constructor() {
          * Main public method to get the compatibility class
          */
         val compat get() = instance.compatValue
+
+        internal var tabsFallbackFailure: ((Exception, Uri) -> Unit)? = null
+
+        /**
+         * An extra initialization method that our custom base activity class can use to
+         * signal/report an error.
+         */
+        fun initialize(onTabsFallbackFailure: (Exception, Uri) -> Unit) {
+            tabsFallbackFailure = onTabsFallbackFailure
+        }
 
         @Suppress("unused")
         val isChromebook: Boolean

@@ -17,12 +17,12 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.FileStream
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
-import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.FileStream
 import java.io.File
 import java.io.IOException
 

@@ -18,13 +18,13 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
-import com.ichi2.compat.CompatHelper
 import java.io.File
 
 /**

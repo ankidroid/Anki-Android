@@ -39,6 +39,10 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.compat.CompatHelper
+import com.ichi2.anki.compat.customtabs.CustomTabActivityHelper
+import com.ichi2.anki.compat.customtabs.CustomTabsFallback
+import com.ichi2.anki.compat.customtabs.CustomTabsHelper
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.SimpleMessageDialog
@@ -49,9 +53,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
-import com.ichi2.compat.customtabs.CustomTabActivityHelper
-import com.ichi2.compat.customtabs.CustomTabsFallback
-import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
@@ -74,6 +75,13 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId) {
         activityName = javaClass.simpleName
+    }
+
+    init {
+        CompatHelper.initialize { exception, uri ->
+            CrashReportService.sendExceptionReport(exception, "CustomTabsFallback::openUri")
+            showThemedToast(this, getString(R.string.web_page_error, uri), false)
+        }
     }
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets

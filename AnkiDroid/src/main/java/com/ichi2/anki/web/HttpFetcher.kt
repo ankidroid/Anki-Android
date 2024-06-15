@@ -20,7 +20,7 @@
 
 package com.ichi2.anki.web
 import android.content.Context
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.compat.CompatHelper
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Interceptor
