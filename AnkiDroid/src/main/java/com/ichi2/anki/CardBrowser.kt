@@ -50,6 +50,7 @@ import com.ichi2.anki.browser.CardBrowserViewModel.*
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.*
@@ -408,10 +409,18 @@ open class CardBrowser :
             }
         }
         fun onSelectedRowsChanged(rows: Set<CardCache>) = onSelectionChanged()
-        fun onColumn1Changed(column: CardBrowserColumn) =
+        fun onColumn1Changed(column: CardBrowserColumn) {
             cardsAdapter.updateMapping { it[0] = column }
-        fun onColumn2Changed(column: CardBrowserColumn) =
+            findViewById<Spinner>(R.id.browser_column1_spinner)
+                .setSelection(COLUMN1_KEYS.indexOf(column))
+        }
+
+        fun onColumn2Changed(column: CardBrowserColumn) {
             cardsAdapter.updateMapping { it[1] = column }
+            findViewById<Spinner>(R.id.browser_column2_spinner)
+                .setSelection(COLUMN2_KEYS.indexOf(column))
+        }
+
         fun onFilterQueryChanged(filterQuery: String) {
             // setQuery before expand does not set the view's value
             searchItem!!.expandActionView()
@@ -463,10 +472,62 @@ open class CardBrowser :
                 }
             }
         }
-        fun initCompletedChanged(completed: Boolean) {
-            if (completed) searchCards()
+
+        fun setupColumnSpinners() {
+            // Create a spinner for column 1
+            findViewById<Spinner>(R.id.browser_column1_spinner).apply {
+                adapter = ArrayAdapter(
+                    this@CardBrowser,
+                    android.R.layout.simple_spinner_item,
+                    viewModel.column1Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                ).apply {
+                    setDropDownViewResource(R.layout.spinner_custom_layout)
+                }
+                onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                    viewModel.setColumn1(COLUMN1_KEYS[pos])
+                }
+                setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
+            }
+
+            // Setup the column 2 heading as a spinner so that users can easily change the column type
+            findViewById<Spinner>(R.id.browser_column2_spinner).apply {
+                adapter = ArrayAdapter(
+                    this@CardBrowser,
+                    android.R.layout.simple_spinner_item,
+                    viewModel.column2Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                ).apply {
+                    // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
+                    setDropDownViewResource(R.layout.spinner_custom_layout)
+                }
+                // Create a new list adapter with updated column map any time the user changes the column
+                onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                    viewModel.setColumn2(COLUMN2_KEYS[pos])
+                }
+                setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
+            }
         }
 
+        fun initCompletedChanged(completed: Boolean) {
+            if (!completed) return
+
+            setupColumnSpinners()
+            searchCards()
+        }
+
+        @Suppress("UNCHECKED_CAST") // as? ArrayAdapter<String>?
+        fun cardsOrNotesChanged(cardsOrNotes: CardsOrNotes) {
+            Timber.d("mode change: %s - updating spinner titles", cardsOrNotes)
+            findViewById<Spinner>(R.id.browser_column1_spinner)?.adapter?.apply {
+                val adapter = this as? ArrayAdapter<String>? ?: return@apply
+                adapter.clear()
+                adapter.addAll(viewModel.column1Candidates.map { it.getLabel(cardsOrNotes) })
+            }
+            findViewById<Spinner>(R.id.browser_column2_spinner)?.adapter?.apply {
+                val adapter = this as? ArrayAdapter<String>? ?: return@apply
+                adapter.clear()
+                adapter.addAll(viewModel.column2Candidates.map { it.getLabel(cardsOrNotes) })
+            }
+        }
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -479,6 +540,7 @@ open class CardBrowser :
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
+        viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::cardsOrNotesChanged)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
@@ -487,36 +549,6 @@ open class CardBrowser :
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
         cards.reset()
-        // Create a spinner for column 1
-        findViewById<Spinner>(R.id.browser_column1_spinner).apply {
-            adapter = ArrayAdapter.createFromResource(
-                this@CardBrowser,
-                R.array.browser_column1_headings,
-                android.R.layout.simple_spinner_item
-            ).apply {
-                setDropDownViewResource(R.layout.spinner_custom_layout)
-            }
-            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-                viewModel.setColumn1(COLUMN1_KEYS[pos])
-            }
-            setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
-        }
-        // Setup the column 2 heading as a spinner so that users can easily change the column type
-        findViewById<Spinner>(R.id.browser_column2_spinner).apply {
-            adapter = ArrayAdapter.createFromResource(
-                this@CardBrowser,
-                R.array.browser_column2_headings,
-                android.R.layout.simple_spinner_item
-            ).apply {
-                // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
-                setDropDownViewResource(R.layout.spinner_custom_layout)
-            }
-            // Create a new list adapter with updated column map any time the user changes the column
-            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-                viewModel.setColumn2(COLUMN2_KEYS[pos])
-            }
-            setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
-        }
 
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (viewModel.isInMultiSelectMode) {

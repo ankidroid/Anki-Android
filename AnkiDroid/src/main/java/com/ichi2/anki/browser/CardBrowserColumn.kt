@@ -18,14 +18,13 @@ package com.ichi2.anki.browser
 
 import anki.search.BrowserColumns
 import com.ichi2.anki.CardBrowser
-import com.ichi2.anki.R
 import net.ankiweb.rsdroid.Backend
 
 /**
  * A column available in the [browser][CardBrowser]
  *
- * @see COLUMN1_KEYS: maps to [R.array.browser_column1_headings]
- * @see COLUMN2_KEYS: maps to [R.array.browser_column2_headings]
+ * @see COLUMN1_KEYS - values for first column
+ * @see COLUMN2_KEYS - values for second column
  * @see CardBrowser.CardCache.getColumnHeaderText - how columns are rendered
  *
  * @param ankiColumnKey The key used in [Backend.setActiveBrowserColumns]
