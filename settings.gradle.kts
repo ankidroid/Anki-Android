@@ -26,4 +26,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":lint-rules", ":api", ":AnkiDroid", ":testlib")
+include(":lint-rules", ":api", ":AnkiDroid", ":testlib", ":common")

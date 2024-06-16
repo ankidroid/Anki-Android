@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">नोट संपादित करें</string>
     <string name="discard">खारिज</string>
     <string name="note_editor_no_cards_created">कोई कार्ड नहीं बनाया गया। कृपया अधिक फ़ील्ड भरें</string>
-    <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
-    <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
     <string name="note_editor_no_cards_created_all_fields">वर्तमान प्रलेख के प्रकार ने किसी भी कार्ड का निर्माण नहीं किया । कृपया एक और प्रलेख का प्रकार चुने , कृपया एक और प्रलेख का प्रकार चुनिये । या आप एक क्षेत्र का प्रतिस्थापन बढ़ाइये ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">क्लोज डिलीट केवल क्लोज नोट टाइप पर काम करेगा</string>
     <string name="saving_facts">नोट सहेजने</string>
@@ -358,12 +356,12 @@
     <string name="failed_to_copy">प्रतिलिपि बनाने में विफल</string>
     <string name="card_browser_unavailable_when_notes_mode">\'नोट्स\' मोड में अनुपलब्ध</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d कार्ड अनबियर किया गया</item>
+        <item quantity="other">%d कार्ड दफनाए नहीं गए</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">स्थान बदलने</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="start_recording">अभिलेख</string>
+    <string name="stop_recording">रुकना</string>
+    <string name="play_recording">खेल</string>
+    <string name="next_recording">अगला</string>
 </resources>

@@ -70,6 +70,7 @@
     <string name="sync_title">Sinchronizavimas</string>
     <string name="sync_log_uploading_message">Išsamus sinchronizavimas iš įrenginio</string>
     <string name="sync_database_acknowledge">Kolekcija susinchronizuota</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Jūsų duomenų bazė yra sugadinta. Prašome ją pataisyti prieš bandydami ją dar kartą susinchronizuoti.\n\nDaugiau informacijos apie duomenų bazės taisymą rasite %s.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Įrenginio</string>

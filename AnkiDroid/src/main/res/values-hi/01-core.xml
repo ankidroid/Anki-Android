@@ -61,15 +61,15 @@
     <string name="collapse">संक्षिप्त करें</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d मिनट शेष है</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d मिनट बचे हैं</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d घंटा %2$d शेष है</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d घंटे %2$d शेष</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d दिन %2$d शेष है</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d दिन %2$d शेष</item>
     </plurals>
     <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
     <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए \n+ आइकन का उपयोग करें।</string>
@@ -131,6 +131,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक खोज</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
     <string name="studyoptions_congrats_finished">बधाई हो! आपने अभी के लिए समाप्त कर लिया है.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">कोई कार्ड अभी तक देय नहीं है</string>
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
     <string name="button_sync" comment="Text of the sync button">सिंक</string>
@@ -249,4 +250,6 @@ Back - बैक</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">सभी फ़ाइलों का एक्सेस</string>
     <string name="image_occlusion">छवि अवरोधन</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">खाता हटाएं</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

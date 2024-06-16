@@ -137,6 +137,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
@@ -256,4 +257,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ ко всем файлам</string>
     <string name="image_occlusion">Image Occlusion</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

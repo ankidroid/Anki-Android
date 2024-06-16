@@ -16,6 +16,7 @@
 package com.ichi2.anki.previewer
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -40,7 +41,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
-import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.packageManager
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
@@ -89,7 +89,7 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
 
             loadDataWithBaseURL(
-                "http://${AnkiServer.LOCALHOST}/",
+                viewModel.baseUrl(),
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,
@@ -132,6 +132,12 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 request: WebResourceRequest
             ): WebResourceResponse? {
                 return resourceHandler.shouldInterceptRequest(request)
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                // TODO remove this after the backend is upgraded to v0.1.39
+                view?.evaluateJavascript("globalThis.ankidroid = globalThis.ankidroid || {}; ankidroid.postBaseUrl = ``", null)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {

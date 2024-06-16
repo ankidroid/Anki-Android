@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">تعديل الملحوظة</string>
     <string name="discard">تجاهل</string>
     <string name="note_editor_no_cards_created">لم تُنشَأ أي بطاقات. الرجاء تعبئة مزيد من الحقول</string>
-    <string name="note_editor_no_first_field">الحقل الأول فارغ</string>
-    <string name="note_editor_no_cloze_delations">يجب أن يحتوي نوع الملحوظة هذا على عبارات ملء فراغات</string>
     <string name="note_editor_no_cards_created_all_fields">لا يولّد نوع الملحوظة الحالي أي بطاقات.\nالرجاء اختيار نوع آخر، أو الضغط على «بطاقات» وإضافة حقل بديل</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">تعمل عبارات ملء الفراغات في نوع ملحوظة ملء فراغات فقط.</string>
     <string name="saving_facts">حفظ الملحوظة</string>
@@ -216,7 +214,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">لم نجد متصفحًا لفتح الرابط: %s</string>
     <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -328,7 +326,7 @@
     <string name="expand_tag">إسدال الوسم \"%s\"</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">فشل الوصول إلى المجموعة. يرجى المحاولة مجددًا!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">إضافة نوع جديد من الملاحظات</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ادرس أقل</string>
     <string name="intro_ankidroid_tagline_two">تذكر أكثر</string>
@@ -383,9 +381,9 @@
         <item quantity="many">%d cards unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">تغيير الموضع</string>
+    <string name="start_recording">تسجيل</string>
+    <string name="stop_recording">إيقاف</string>
+    <string name="play_recording">تشغيل</string>
+    <string name="next_recording">التالي</string>
 </resources>

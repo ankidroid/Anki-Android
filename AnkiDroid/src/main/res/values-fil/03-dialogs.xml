@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">I-tsek ang database?</string>
+    <string name="check_db_title">Suriin ang database?</string>
     <string name="check_db_warning">It ay maaaring tumagal ng mahabang oras</string>
     <string name="contextmenu_deckpicker_delete_deck">Burahin ang deck</string>
     <string name="delete_deck_title">Burahin ang deck?</string>
@@ -69,25 +69,25 @@
         <item quantity="other">%d mga card ang naiskedyul muli</item>
     </plurals>
     <string name="answering_error_title">Database error</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
+    <string name="answering_error_message">Ang pagsulat sa koleksyon ay nabigo. Maaaring sira ang database o di kaya`y hindi sapat ang bakanteng space sa disk. \n\n Kung ito ay nangyayari ng madalas, subukang tignan ang database, ayusin ang koleksyon o ibalik ito mula sa isang backup. Pindutin ang \"mga opsyon\" para diyan. \n\Maaaring ito rin ay isang AnkiDroid bug; i-ulat ang mali upang maiayos namin ito.</string>
     <string name="answering_error_report">Maling ulat</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Hindi sapat ang bakanteng storage upang buksan ang AnkiDroid. Magbukas pa ng space para makapagpatuloy. </string>
     <string name="repair_deck_dialog">Gusto mo ba talagang subukan ang pag-aayos ng database? \n\n Bago mo simulan ang pagtatangka, isang kopya ang lilikhain sa mga subfolder \"%s\".</string>
     <string name="intent_aedict_empty">Ang kategoryang \"default\" ay walng laman</string>
     <string name="intent_aedict_category">Upang magdagdag ng mga kard sa AnkiDroid alisin lahat ng mga kategorya ng Notepad o magdagdag ng isa na pinangalanang \"default\"</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
+    <string name="custom_study_new_total_new">Mga bagong kard sa deck:%d</string>
+    <string name="custom_study_rev_total_rev">Mga review na nakatakda sa deck:%d</string>
+    <string name="custom_study_new_extend">Dagdagan/bawasan (\"-3\") ang hangganan ng bagong card ngayong araw ng</string>
+    <string name="custom_study_rev_extend">Dagdagan/bawasan (\"-3\") ang hangganan ng pagrepaso ngayong araw ng</string>
     <string name="custom_study_forgotten">Ang mga review kard na nakalimutan sa huling x araw:</string>
     <string name="custom_study_ahead">Suriin nang maaga ng x araw:</string>
     <string name="custom_study_random">Pumili ng x kard sa pamamagitan ng random mula sa deck:</string>
     <string name="custom_study_preview">I-preview ang mga bagong kjard na naidagdag sa mga huling x araw:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_rebuild_deck_corrupt">Hindi maisaayos muli ang custom na deck pang-aral</string>
     <string name="storage_full_title">Puno na ang storage</string>
     <string name="storage_almost_full_title">Malapit nang mapuno ang storage</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Walang espasyo</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">Kailangan ng AnkiDroid ng %s na bakanteng storage space para makapagpatuloy. Mangyaring magbukas pa ng space.</string>
     <string name="restore_backup_title">Ibalik ang backup?</string>
     <string name="restore_backup">Ang iyong koleksyon ay mapapalitan ng mas lumang kopya. Ang anumang pag-unlad na hindi na - isave ay mawawala.</string>
     <string name="restore_backup_choose_another">Pumili ng iba pa</string>
@@ -96,8 +96,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Kumpirmahin</string>
     <string name="dialog_no">Hindi</string>
     <string name="dialog_yes">Oo</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Panatilihin</string>
+    <string name="dialog_remove">Tanggalin</string>
     <string name="dialog_continue">Magpatuloy</string>
     <string name="dialog_processing">Pinoproseso&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Gumawa</string>
@@ -109,7 +109,7 @@
     <string name="dialog_positive_replace">Palitan</string>
     <string name="dialog_collection_path_not_dir">Ang path na tinukoy ay hindi isang wastong direktoryo</string>
     <!-- Media checking -->
-    <string name="check_media_title">I - tsek ang media?</string>
+    <string name="check_media_title">Suriin ang media?</string>
     <string name="check_media_warning">Ito ay maaaring tumagal ng mahabang oras kasama ang malalaking koleksyon ng media</string>
     <string name="check_media_message">Sinusuri ang media&#8230;</string>
     <string name="check_media_acknowledge">Ang media ay sinuri</string>
@@ -135,122 +135,128 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="empty_cards_count">Mga kard na tatanggalin:%d</string>
     <string name="empty_cards_deleted">Ang mga kard ay tinanggal na%d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Nabigong makakuha ng permiso na gamitin ang mikropono.</string>
+    <string name="multimedia_editor_camera_permission_refused">Hindi makamit ang permiso sa kamera. Hindi pinagana ang katanginang ito.</string>
+    <string name="multimedia_editor_failed">Bigong buksan ang Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="multimedia_editor_audio_permission_denied">Hindi binigyang permiso na mag-record ng audio</string>
+    <string name="mutimedia_editor_assertion_failed">Hindi malamang kamalian ang nangyari habang pinapakita ang Advanced Editor</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">Na-upgrade ang AnkiDroid</string>
+    <string name="integrity_check_startup_content">Na-upgrade na ang AnkiDroid. Ang upgrade na ito ay naglalaman ng pag-aayos sa mga posibleng problema sa database, at pinapayuhan ka namin na suriin ang database ngayon.</string>
+    <string name="integrity_check_continue_anyway">Magpatuloy pa rin</string>
+    <string name="integrity_check_insufficient_space">Ang pagsuri ng database ay gagamit ng malaking panandaliang storage.\n\nLabis na nirerekomenda na mayroon kang hindi bababa sa %s na bakanteng space sa iyong device bago magpatuloy.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nMayroon kang %s na bakante.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">May mali sa pag-decode sa datos mula sa iyong card</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="database_locked_title">Nakakandado ang Database</string>
+    <string name="database_locked_summary">Ginagamit ng ibang aplikasyon ang database ng AnkiDroid. Mangyaring isara ang ibang aplikasyon at buksan muli ang AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Hindi Angkop Ang Bersyon ng Database</string>
+    <string name="incompatible_database_version_summary">Mas abante ang database na ito kumpara sa bersyong kayang gamitin ng AnkiDroid. I-upgrade o i-downgrade ang database ng AnkiDroid upang mabuksan ito\n\nBersyon na suportado: %1$d\nBersyon ng database: %2$d\n\nAng sumusunod na mga opsyon sa pagbalik ay posibleng sapawan ang kasalukuyan mong koleksyon ng isang angkop na bersyon ng database.</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="background_image_applied">Inapply ang larawan sa background</string>
+    <string name="background_image_removed">Tinanggal ang larawan sa background</string>
+    <string name="no_image_selected">Walang napiling larawan</string>
+    <string name="error_selecting_image">May mali sa pagpili ng larawan. Mangyari na tingnan ang gabay. %s</string>
+    <string name="error_deleting_image">May mali sa pagbura ng larawan</string>
+    <string name="failed_to_apply_background_image">Bigong ilagay ang background na larawan %s</string>
+    <string name="background_image_too_large">Masyadong malaki ang background ng Deck Picker</string>
+    <string name="image_max_size_allowed">Hanggang %d MB lamang ang pupwedeng laki ng larawan</string>
+    <string name="image_dimensions_too_large">Masyadong malaki ang sukat ng larawan (%1$d x%2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Kulang ang kinakailangang permiso sa storage. Mangyaring bigyang permiso sa storage at ulitin ang iyong aksyon.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">HIndi mabuksan ang Card Browser Appearance</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Bigong makaskedyul ng mga paalala</string>
+    <string name="boot_service_too_many_notifications">Masyadong maraming paalalang nakaskedyul. May mga ibang hindi lalabas.</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title_new">Pumili ng Wika</string>
+    <string name="locale_selection_dialog_summary">May mga multilingual na keyboard tulad ng GBoard na maaaring palitan ang wika habang nag-eedit ng teksto\n\nMangyaring magrequest ng \"setImeHintLocales\" na katangian mula sa gumawa ng iyong keyboard kung hindi nito sinusuporta ang pagpapalit ng wika.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_title_using_ankidroid">Paggamit sa AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Patnubay sa AnkiDroid</string>
+    <string name="help_item_anki_manual">Patnubay sa Anki</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_get_help">Humingi ng Tulong</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
-    <string name="help_title_community">Community</string>
+    <string name="help_item_report_bug">I-sumbong ang Bug</string>
+    <string name="help_title_support_ankidroid">Suportahan ang AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Maghandog</string>
+    <string name="help_item_support_develop_ankidroid">Mag-develop</string>
+    <string name="help_item_support_rate_ankidroid">I-rate</string>
+    <string name="help_item_support_other_ankidroid">Iba pa</string>
+    <string name="multimedia_editor_trans_translate">Isalin</string>
+    <string name="help_title_community">Komunidad</string>
     <string name="help_item_anki_forums">Anki Forums</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_title_privacy">Praybasi</string>
+    <string name="help_item_ankidroid_privacy_policy">Polisiya Pangpraybasi ng AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Polisiya Pangpraybasi ng AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Mga Termino at Kondisyon ng AnkiWeb</string>
+    <string name="help_title_send_exception">Magpadala ng ulat pang-ayos</string>
+    <string name="help_dialog_exception_report_debounce">Naipadala na ang ulat</string>
+    <string name="help_dialog_exception_report_sent">Naipadala ang ulat!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">Maaaring gumana ang automatic na pag-sync sa %d segundo</item>
+        <item quantity="other">Maaaring gumana ang automatic na pag-sync sa %d segundo</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="metered_sync_data_warning">Maaaring sumingil ang iyong internet provider sa paggamit ng data</string>
+    <string name="deck_picker_new">Dami ng mga bagong card na makikita ngayong araw sa deck na ito.</string>
+    <string name="deck_picker_rev">Dami ng mga card na nakatakda ngayong araw sa deck na ito.</string>
+    <string name="deck_picker_lrn">Dami ng mga card na pag-aaralan ngayong araw sa deck na ito.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
+    <string name="deck_picker_counts">Buksan ang pahina ng buod ng deck na naglalaman ng dami ng mga card na makikita ngayong araw.</string>
+    <string name="import_deck_package">Deck na package (.apkg)</string>
+    <string name="import_collection_package">Koleksyon na package (.colpkg)</string>
     <string name="import_csv">Text file (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Hindi ka maaaring lumikha ng subdeck para sa lahat ng mga deck.</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">I-backup ang iyong koleksyon</string>
+    <string name="backup_collection_message">Matagal mo nang hindi nai-backup ang iyong koleksyon. Mangyaring gawin na ito ngayon nang maiwasan ang pagkawala ng datos.</string>
+    <string name="button_backup">I-backup</string>
+    <string name="button_disable_reminder">Tanggalin ang paalala</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Mamaya</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Huwag ipakita muli</string>
+    <string name="dismiss_backup_warning_title">Babala sa pagkawala ng datos</string>
+    <string name="dismiss_backup_warning_new_user">        Dahil sa pagbabago ng praybasi ng Android, mabubura ang iyong datos at automated na backup sa iyong phone kapag inuninstall ang app.
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        Dahil sa pagbabago ng praybasi ng Android, mabubura ang iyong datos at automated na backup sa iyong phone kapag inuninstall ang app.
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="deck_already_exists">Umiiral na ang deck na ito</string>
+    <string name="create_deck_numeric_hint">Kung may mga isyu ka sa hanay ng iyong deck (hal. lumabas ang \'10\' bago ang \'2\'), palitan ang \'2\' ng \'02\'</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">I-set ang pagitan sa parehong halaga</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">Ipakita ang card makalipas ang</item>
+        <item quantity="other">Ipakita ang mga card makalipas ang</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">Ipakita ang card sa pagitan</item>
+        <item quantity="other">Ipakita ang mga card sa pagitan</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">araw</item>
+        <item quantity="other">araw</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Mula</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Hanggang</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

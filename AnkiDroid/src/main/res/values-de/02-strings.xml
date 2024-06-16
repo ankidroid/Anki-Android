@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
     <string name="discard">Verwerfen</string>
     <string name="note_editor_no_cards_created">Keine Karten erstellt. Bitte füllen Sie weitere Felder aus</string>
-    <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
-    <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
     <string name="note_editor_no_cards_created_all_fields">Der aktuelle Notiztyp hat keine Karten erzeugt.\nBitte wählen Sie einen anderen Notiztyp oder tippen Sie auf »Karten« und fügen Sie eine Feldersetzung hinzu.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Auslassungen funktionieren nur beim Notiztyp »Lückentext«</string>
     <string name="saving_facts">Notiz speichern</string>
@@ -360,12 +358,12 @@
     <string name="failed_to_copy">Kopieren fehlgeschlagen</string>
     <string name="card_browser_unavailable_when_notes_mode">Nicht verfügbar im \"Notiz\"-Modus</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d Karte ausgegraben</item>
+        <item quantity="other">%d Karten ausgegraben</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Position ändern</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
+    <string name="start_recording">Datensatz</string>
+    <string name="stop_recording">Stopp</string>
     <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="next_recording">Weiter</string>
 </resources>

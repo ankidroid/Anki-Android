@@ -117,6 +117,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
+import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
@@ -518,9 +519,8 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, recyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
-        if (BuildConfig.DEBUG) {
-            checkWebviewVersion()
-        }
+
+        InitialActivity.checkWebviewVersion(packageManager, this)
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {
@@ -611,27 +611,6 @@ open class DeckPicker :
                 Timber.i("Editing deck description for deck '%d'", deckId)
                 showDialogFragment(EditDeckDescriptionDialog.newInstance(deckId))
             }
-        }
-    }
-
-    /**
-     * Check if the current WebView version is older than the last supported version and if it is,
-     * inform the developer with a snackbar.
-     */
-    private fun checkWebviewVersion() {
-        // Doesn't need to be translated as it's debug only
-        val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager)
-        if (webviewPackageInfo == null) {
-            val snackbarMessage = "No Android System WebView found"
-            postSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
-            return
-        }
-
-        val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
-        if (versionCode < OLDEST_WORKING_WEBVIEW_VERSION) {
-            val snackbarMessage =
-                "The WebView version $versionCode is outdated (<$OLDEST_WORKING_WEBVIEW_VERSION)."
-            postSnackbar(snackbarMessage, Snackbar.LENGTH_INDEFINITE)
         }
     }
 
@@ -2305,8 +2284,12 @@ open class DeckPicker :
     }
 
     private fun openReviewer() {
-        val reviewer = Intent(this, Reviewer::class.java)
-        reviewLauncher.launch(reviewer)
+        val intent = if (sharedPrefs().getBoolean("newReviewer", false)) {
+            ReviewerFragment.getIntent(this)
+        } else {
+            Intent(this, Reviewer::class.java)
+        }
+        reviewLauncher.launch(intent)
     }
 
     override fun onCreateCustomStudySession() {

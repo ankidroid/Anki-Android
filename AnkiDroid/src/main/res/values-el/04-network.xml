@@ -70,6 +70,7 @@
     <string name="sync_title">Συγχρονισμός</string>
     <string name="sync_log_uploading_message">Πλήρης συγχρονισμός από το τοπικό</string>
     <string name="sync_database_acknowledge">Η συλλογή συγχρονίστηκε</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Η βάση δεδομένων είναι κατεστραμμένη. Παρακαλούμε να τη διορθώσετε πριν ξαναδοκιμάσετε να την συγχρονίσετε.\n\nΔείτε  %s για πληροφορίες σχετικές με τη διόρθωση της βάσης δεδομένων σας.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Τοπικά</string>

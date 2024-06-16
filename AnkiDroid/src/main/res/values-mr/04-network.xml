@@ -70,6 +70,7 @@
     <string name="sync_title">सिंक्रोनाइझेशन</string>
     <string name="sync_log_uploading_message">स्थानिक कडून पूर्ण संकालन</string>
     <string name="sync_database_acknowledge">संकलन समक्रमित केले</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">आपला डेटाबेस दूषित झाला आहे. कृपया पुन्हा संकालनाचा प्रयत्न करण्यापूर्वी ते निश्चित करा. Your \n\n आपल्या डेटाबेसच्या दुरुस्तीबद्दल माहितीसाठी%s पहा.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">स्थानिक</string>

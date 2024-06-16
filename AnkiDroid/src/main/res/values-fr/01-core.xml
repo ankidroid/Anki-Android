@@ -131,6 +131,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chercher un deck</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé&#8230; pour l’instant !</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>
@@ -245,4 +246,6 @@ ou reconnecter le support amovible qui contient votre collection.
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Accès à tous les fichiers</string>
     <string name="image_occlusion">Schéma à remplir</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Supprimer le compte</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

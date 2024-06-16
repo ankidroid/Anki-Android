@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Sunting nota</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Tiada kad dicipta. Sila isikan lebih banyak medan</string>
-    <string name="note_editor_no_first_field">Medan pertama kosong</string>
-    <string name="note_editor_no_cloze_delations">Jenis nota memerlukan penghapusan kloz</string>
     <string name="note_editor_no_cards_created_all_fields">Jenis nota ini tidak mencipta apa-apa kad.\nSila pilih jenis nota lain atau tekan \'Kad\' dan tambah medan penggantian.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Penghapusan kloz hanya akan berhasil dalam jenis nota Cloze.</string>
     <string name="saving_facts">Menyimpan nota</string>

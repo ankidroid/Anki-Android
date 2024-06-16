@@ -60,7 +60,7 @@
         <item quantity="many">%d כרטיסים הושמו מחדש</item>
         <item quantity="other">%d כרטיסים הושמו מחדש</item>
     </plurals>
-    <string name="reset_card_dialog_title">איפוס התקדמות הקלף</string>
+    <string name="reset_card_dialog_title">איפוס התקדמות הכרטיס</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">כרטיס אחד אופס</item>
         <item quantity="two">%d כרטיסים אופסו</item>
@@ -157,7 +157,7 @@
     <string name="integrity_check_insufficient_space_extra_content">\n\n כרגע יש לך %s פנוי.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">תקלה בפענוח מידע מקלף</string>
+    <string name="card_viewer_url_decode_error">תקלה בפענוח מידע מכרטיס</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">מסד הנתונים ננעל</string>
@@ -243,28 +243,34 @@
     <string name="dismiss_backup_warning_new_user">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך יימחקו מהטלפון שלך אם האפליקציה תוסר</string>
     <string name="dismiss_backup_warning_upgrade">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך לא יהיו נגישים אם האפליקציה תוסר</string>
     <string name="deck_already_exists">החפיסה כבר קיימת</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="create_deck_numeric_hint">אם יש לך בעיות בסדר החפיסות (למשל, \'10\' מופיע לפני \'2\'), החלף את \'2\' ב-\'02\'</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">הגדר מרווח לערך דומה</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
+        <item quantity="one">הצג כרטיס ב</item>
         <item quantity="two">Show cards in</item>
         <item quantity="many">Show cards in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="other">הצג כרטיסים ב</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
+        <item quantity="one">הצג כרטיס בטווח</item>
         <item quantity="two">Show cards in range</item>
         <item quantity="many">Show cards in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="other">הצג כרטיסים בטווח</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="one">day</item>
         <item quantity="two">days</item>
         <item quantity="many">days</item>
-        <item quantity="other">days</item>
+        <item quantity="other">ימים</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">מ</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">אל</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

@@ -139,6 +139,7 @@ class ManageNotetypes : AnkiActivity() {
             }.input(
                 prefill = noteTypeUiModel.name,
                 waitForPositiveButton = false,
+                displayKeyboard = true,
                 callback = { dialog, text ->
                     dialog.positiveButton.isEnabled =
                         text.isNotEmpty() && !allNotetypes.map { it.name }

@@ -18,12 +18,15 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteFullException
 import android.os.Build
 import android.os.Environment
 import android.os.Parcelable
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
@@ -34,6 +37,8 @@ import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
 import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import com.ichi2.utils.getAndroidSystemWebViewPackageInfo
+import com.ichi2.utils.show
 import kotlinx.parcelize.Parcelize
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
@@ -132,6 +137,44 @@ object InitialActivity {
     enum class StartupFailure {
         SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
         DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
+    }
+
+    /**
+     * Shows a dialog if the current WebView version is older than the last supported version.
+     */
+    fun checkWebviewVersion(packageManager: PackageManager, activity: AnkiActivity) {
+        val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
+        val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
+        if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION) {
+            Timber.d("WebView is up to date. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
+            return
+        }
+
+        val legacyWebViewPackageInfo = getLegacyWebViewPackageInfo(packageManager)
+        if (legacyWebViewPackageInfo != null) {
+            Timber.w("WebView is outdated. %s: %s", legacyWebViewPackageInfo.packageName, legacyWebViewPackageInfo.versionName)
+            showOutdatedWebViewDialog(activity, versionCode, activity.getString(R.string.link_legacy_webview_update))
+        } else {
+            Timber.w("WebView is outdated. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
+            showOutdatedWebViewDialog(activity, versionCode, activity.getString(R.string.link_webview_update))
+        }
+    }
+
+    private fun showOutdatedWebViewDialog(activity: AnkiActivity, installedVersion: Int, learnMoreUrl: String) {
+        AlertDialog.Builder(activity).show {
+            setMessage(activity.getString(R.string.webview_update_message, installedVersion, OLDEST_WORKING_WEBVIEW_VERSION))
+            setPositiveButton(R.string.scoped_storage_learn_more) { _, _ ->
+                activity.openUrl(learnMoreUrl)
+            }
+        }
+    }
+
+    private fun getLegacyWebViewPackageInfo(packageManager: PackageManager): PackageInfo? {
+        return try {
+            packageManager.getPackageInfo("com.android.webview", 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
     }
 }
 

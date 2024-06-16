@@ -44,12 +44,10 @@ import com.ichi2.utils.title
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.apache.commons.io.FileUtils
 import timber.log.Timber
-import java.io.DataInputStream
-import java.io.DataOutputStream
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import java.nio.charset.Charset
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -409,18 +407,17 @@ class TagsFile(path: String) : File(path), Parcelable {
      * @param data data for the dialog to display. Typically [Context.getCacheDir]
      */
     constructor(directory: File, data: TagsData) : this(createTempFile("tagsDialog", ".tmp", directory).path) {
-        DataOutputStream(FileOutputStream(this)).use { outputStream ->
-            // PERF: Use an alternate format
-            // https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/formats.md
-            val string = Json.encodeToString(data)
-            Timber.d("persisting tags to disk, length: %d", string.length)
-            outputStream.writeUTF(string)
-        }
+        // PERF: Use an alternate format
+        // https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/formats.md
+        val jsonEncoded = Json.encodeToString(data)
+        Timber.d("persisting tags to disk, length: %d", jsonEncoded.length)
+        FileUtils.writeStringToFile(this, jsonEncoded, Charset.forName("UTF-8"))
     }
 
-    fun getData() = DataInputStream(FileInputStream(this)).use { inputStream ->
+    fun getData(): TagsData {
         // PERF!!: This takes ~2 seconds with AnKing
-        Json.decodeFromString<TagsData>(inputStream.readUTF())
+        val jsonEncoded = FileUtils.readFileToString(this, Charset.forName("UTF-8"))
+        return Json.decodeFromString<TagsData>(jsonEncoded)
     }
 
     override fun describeContents(): Int = 0

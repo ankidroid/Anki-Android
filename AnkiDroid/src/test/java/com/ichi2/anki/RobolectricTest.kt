@@ -65,6 +65,7 @@ import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
+import kotlin.test.assertNotNull
 
 open class RobolectricTest : AndroidTest {
 
@@ -104,6 +105,12 @@ open class RobolectricTest : AndroidTest {
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
         throwOnShowError = true
 
+        // See the Android logging (from Timber)
+        ShadowLog.stream = System.out
+            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
+            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
+            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
+
         ChangeManager.clearSubscribers()
 
         validateRunWithAnnotationPresent()
@@ -118,12 +125,6 @@ open class RobolectricTest : AndroidTest {
         CollectionManager.setColForTests(null)
 
         maybeSetupBackend()
-
-        // See the Android logging (from Timber)
-        ShadowLog.stream = System.out
-            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
-            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
-            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
 
         Storage.setUseInMemory(useInMemoryDatabase())
 
@@ -188,6 +189,7 @@ open class RobolectricTest : AndroidTest {
 
             TimeManager.reset()
         }
+        WorkManagerTestInitHelper.closeWorkDatabase()
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         println("""-- completed test "${testName.methodName}"""")
@@ -197,7 +199,7 @@ open class RobolectricTest : AndroidTest {
      * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
      */
     protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
-        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+        val dialog = getLatestAlertDialog()
 
         dialog.getButton(button).performClick()
         // Need to run UI thread tasks to actually run the onClickHandler
@@ -216,7 +218,7 @@ open class RobolectricTest : AndroidTest {
      * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
      */
     protected fun getAlertDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
-        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+        val dialog = getLatestAlertDialog()
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
@@ -480,3 +482,6 @@ open class RobolectricTest : AndroidTest {
         }
     }
 }
+
+private fun getLatestAlertDialog(): AlertDialog =
+    assertNotNull(ShadowDialog.getLatestDialog() as? AlertDialog, "A dialog should be displayed")

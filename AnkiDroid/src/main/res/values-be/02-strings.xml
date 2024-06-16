@@ -114,8 +114,6 @@
     <string name="cardeditor_title_edit_card">Рэдагаваць нататку</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Карткі не створаныя. Калі ласка, запоўніце больш палёў.</string>
-    <string name="note_editor_no_first_field">Першае поле пустое</string>
-    <string name="note_editor_no_cloze_delations">Гэты тып нататкі павінен змяшчаць пропускі ў тэксце</string>
     <string name="note_editor_no_cards_created_all_fields">Бягучы тып нататкі не мае ніводнай карткі.\nВыберыце іншы тып нататкі або націсніце \"Карткі\" і дадайце поле падстаноўкі.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Заданні з пропускамі будуць працаваць толькі ў тыпе нататкі з пропускамі</string>
     <string name="saving_facts">Захаванне нататкі</string>

@@ -128,6 +128,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
     <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">このデッキの現在の課題をすべて達成しました。\nなお、%s</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
@@ -240,4 +241,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">すべてのファイルへのアクセス</string>
     <string name="image_occlusion">画像穴埋め問題</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">アカウントを削除</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">穴埋めクイック作成</string>
 </resources>

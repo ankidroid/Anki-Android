@@ -34,8 +34,10 @@ import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
 import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
+import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.anki.model.CardsOrNotes.*
+import com.ichi2.anki.model.CardsOrNotes.CARDS
+import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsViewModel
 import com.ichi2.anki.servicelayer.NoteService
@@ -53,11 +55,12 @@ import com.ichi2.testutils.OS
 import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.LanguageUtil
 import io.mockk.every
 import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.unmockkObject
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -369,7 +372,7 @@ class CardBrowserTest : RobolectricTest() {
         // check if all card flags turned green
         assertThat(
             "All cards should be flagged",
-            cardBrowser.viewModel.allCardIds
+            cardBrowser.viewModel.queryAllCardIds()
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
                 .all { flag1 -> flag1 == Flag.GREEN.code }
         )
@@ -396,11 +399,11 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
         try {
-            mockkObject(AdaptionUtil)
+            mockkStatic(::isRunningAsUnitTest)
             mockkObject(IntentHandler)
 
             every { grantedStoragePermissions(any(), any()) } returns false
-            every { AdaptionUtil.isRunningAsUnitTest } returns false
+            every { isRunningAsUnitTest } returns false
 
             val browserController = Robolectric.buildActivity(CardBrowser::class.java).create()
             val cardBrowser = browserController.get()
@@ -408,7 +411,7 @@ class CardBrowserTest : RobolectricTest() {
 
             assertThat("Activity should be finishing", cardBrowser.isFinishing)
         } finally {
-            unmockkObject(AdaptionUtil)
+            unmockkStatic(::isRunningAsUnitTest)
             unmockkObject(IntentHandler)
         }
     }
@@ -427,7 +430,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
-    fun previewWorksAfterSort() {
+    fun previewWorksAfterSort() = runTest {
         // #7286
         val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id
         val cid2 = addNoteUsingBasicModel("Hello2", "World2").cards()[0].id
@@ -438,7 +441,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(1))
 
         b.selectRowsWithPositions(0)
-        val previewIntent = b.viewModel.previewIntentData
+        val previewIntent = b.viewModel.queryPreviewIntentData()
         assertThat("before: index", previewIntent.currentIndex, equalTo(0))
         assertThat(
             "before: cards",
@@ -453,7 +456,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(0))
 
         b.replaceSelectionWith(intArrayOf(0))
-        val intentAfterReverse = b.viewModel.previewIntentData
+        val intentAfterReverse = b.viewModel.queryPreviewIntentData()
         assertThat("after: index", intentAfterReverse.currentIndex, equalTo(0))
         assertThat(
             "after: cards",
@@ -564,7 +567,7 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Ignore("Doesn't work - but should")
-    fun dataUpdatesAfterUndoReposition() {
+    fun dataUpdatesAfterUndoReposition() = runTest {
         val b = getBrowserWithNotes(1)
 
         b.selectRowsWithPositions(0)
@@ -744,14 +747,15 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
-    private fun getCheckedCard(b: CardBrowser): CardCache {
-        val ids = b.viewModel.selectedRowIds
+    private suspend fun getCheckedCard(b: CardBrowser): CardCache {
+        val ids = b.viewModel.queryAllSelectedCardIds()
         assertThat("only one card expected to be checked", ids, hasSize(1))
         return b.getPropertiesForCardId(ids[0])
     }
 
-    private fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
-        removeCardFromCollection(browser.viewModel.allCardIds[positionToCorrupt])
+    private suspend fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
+        val id = browser.viewModel.queryCardIdAtPosition(positionToCorrupt)
+        removeCardFromCollection(id)
         browser.clearCardData(positionToCorrupt)
     }
 

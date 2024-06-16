@@ -64,12 +64,13 @@
     <string name="log_out">Elsaluti</string>
     <string name="reset_password">Restarigi pasvorton</string>
     <string name="lost_mail_instructions">Ĉu vi forgesis la retpoŝtadreson?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Aliĝado</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Agordoj por XXX</string>
     <string name="sync_title">Samtempigo</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
     <string name="sync_database_acknowledge">Kolekto estas sinkronigita</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Via datumbazo estas difektita. Bonvolu ripari ĝin antaŭ reprovi samtempigi.\n\n Legu %s por informoj pri kiel ripari datumbazon.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Loka</string>

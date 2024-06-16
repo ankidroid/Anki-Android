@@ -318,8 +318,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         SAME_NUMBER, INCREMENT_NUMBER
     }
 
-    @NeedsTest("Error message should be null after save")
-    private var addNoteErrorMessage: String? = null
+    @VisibleForTesting
+    var addNoteErrorMessage: String? = null
 
     private fun displayErrorSavingNote() {
         val errorMessage = snackbarErrorText
@@ -517,7 +517,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
                 addNote = true
-            CALLER_NOTEEDITOR_INTENT_ADD -> {
+            CALLER_NOTEEDITOR_INTENT_ADD, INSTANT_NOTE_EDITOR -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
                     finish()
@@ -1070,7 +1070,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Regular changes in note content
             var modified = false
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
-            if (currentEditedCard != null && currentEditedCard!!.did != deckId) {
+            if (currentEditedCard != null && currentEditedCard!!.currentDeckId().did != deckId) {
                 reloadRequired = true
                 undoableOp { setDeck(listOf(currentEditedCard!!.id), deckId) }
                 // refresh the card object to reflect the database changes from above
@@ -1080,6 +1080,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // then set the card ID to the new deck
                 currentEditedCard!!.did = deckId
                 modified = true
+                Timber.d("deck ID updated to '%d'", deckId)
             }
             // now load any changes to the fields from the form
             for (f in editFields!!) {
@@ -2458,6 +2459,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val RESULT_UPDATED_IO_NOTE = 11
         const val CALLER_IMG_OCCLUSION = 12
         const val CALLER_ADD_IMAGE = 13
+        const val INSTANT_NOTE_EDITOR = 14
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"

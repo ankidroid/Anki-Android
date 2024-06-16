@@ -284,7 +284,7 @@
     <string name="user_action_8" maxLength="41">Дія 8</string>
     <string name="user_action_9" maxLength="41">Дія 9</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Вибрати сторону карти</string>
+    <string name="card_side_selection_title">Вибрати сторону картки</string>
     <string name="card_side_question">Питання</string>
     <string name="card_side_answer">Відповідь</string>
     <string name="card_side_both">Питання &amp; Відповідь</string>

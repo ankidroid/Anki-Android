@@ -14,10 +14,10 @@
 
 package com.ichi2.anki.ui.dialogs.tools
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume

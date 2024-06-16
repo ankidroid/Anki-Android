@@ -70,6 +70,7 @@
     <string name="sync_title">Sincronizare</string>
     <string name="sync_log_uploading_message">Sincronizare completă din local</string>
     <string name="sync_database_acknowledge">Colectia sincronizata</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Baza de date este corupta. Vă rugăm să o refaceti înainte de a încerca din nou să sync.\n\nSee %s pentru informaţii despre repararea bazei de date.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>

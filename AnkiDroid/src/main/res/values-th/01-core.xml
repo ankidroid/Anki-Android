@@ -60,13 +60,13 @@
     <string name="expand">ขยาย</string>
     <string name="collapse">ซ่อน</string>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">เหลืออีก %d นาที</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">เหลืออีก %1$d ชั่วโมง %2$d นาที</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">เหลืออีก %1$d วัน %2$d ชั่วโมง</item>
     </plurals>
     <string name="no_cards_placeholder_title">ไม่มีคอเล็คชั่น</string>
     <string name="no_cards_placeholder_description">เริ่มต้นเพิ่มการ์ดได้\nโดยการกดที่ไอคอน +</string>
@@ -88,7 +88,7 @@
     <string name="rename_deck">เปลี่ยนชื่อสำรับ</string>
     <string name="create_shortcut">สร้างทางลัด</string>
     <string name="browse_cards">ค้นหาการ์ด</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">แก้ไขคำอธิบาย</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">เพิ่ม</string>
     <string name="menu_add_note">เพิ่มโน้ต</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">เชื่อมบัญชีผู้ใช้</string>
@@ -109,41 +109,42 @@
     <string name="menu_unmark_note">ยกเลิกการทำเครื่องหมายโน้ต</string>
     <string name="menu_toggle_mic_tool_bar">ตรวจสอบวิธีการออกเสียง</string>
     <string name="new_deck">สร้างกองใหม่</string>
-    <string name="new_dynamic_deck">Create filtered deck</string>
-    <string name="directory_inaccessible">AnkiDroid directory is inaccessible</string>
+    <string name="new_dynamic_deck">สร้าง สำรับแบบกรอง</string>
+    <string name="directory_inaccessible">เข้าถึงที่เก็บข้อมูล AnkiDroid ไม่ได้</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
+    <string name="startup_no_storage_permission">กรุณาอนุญาติ AnkiDroid ให้เข้าถึง \'พื้นที่เก็บข้อมูล\' เพื่อดำเนินการต่อ</string>
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Rebuild</string>
-    <string name="empty_cram_label">Empty</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="empty_cram_label">ล้างสำรับ</string>
+    <string name="create_subdeck">สร้างสำรับย่อย</string>
+    <string name="empty_filtered_deck">กำลังทำให้สำรับแบบกรองว่าง&#8230;</string>
     <string name="custom_study_deck_name">Custom study session</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
+    <string name="search_deck" comment="Deck search for selecting it">ค้นหาสำรับ</string>
+    <string name="empty_deck">สำรับนี้ว่างเปล่า</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ค้นหาสำรับ</string>
+    <string name="invalid_deck_name">ชื่อนี้ไม่สามารถตั้งให้สำรับได้</string>
+    <string name="studyoptions_congrats_finished">ยินดีด้วย! คุณทบทวนเสร็จแล้วสำหรับตอนนี้</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_no_cards_due">ไม่มีบัตรคำที่ต้องทบทวนในตอนนี้</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="button_sync" comment="Text of the sync button">Sync</string>
+    <string name="button_sync" comment="Text of the sync button">การซิงค์</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Do you want to cancel the sync?</string>
-    <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
-    <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="syncing_media">Syncing media</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">ดำเนินการซิงค์ต่อไป</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">ยกเลิกการซิงค์เรียบร้อย</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">กำลังยกเลิกการซิงค์&amp;&#8230;\nอาจจะต้องใช้เวลาสักนิดหน่อย</string>
+    <string name="syncing_media">กำลังซิงค์มีเดีย</string>
+    <string name="export_deck">ส่งออกสำรับ</string>
+    <string name="nothing">ไม่มี</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
+    <string name="title_activity_template_editor">ชนิดบัตรคำ</string>
+    <string name="card_template_editor_front">แม่แบบด้านหน้า</string>
+    <string name="card_template_editor_back">แม่แบบด้านหลัง</string>
+    <string name="card_template_editor_styling">การตกแต่ง</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck override</string>
     <string name="card_template_editor_insert_field">Insert field</string>
@@ -240,4 +241,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

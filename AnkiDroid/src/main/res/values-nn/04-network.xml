@@ -70,6 +70,7 @@
     <string name="sync_title">Synkronisering</string>
     <string name="sync_log_uploading_message">Full synkronisering fra lokal</string>
     <string name="sync_database_acknowledge">Samling synkronisert</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Databasen din er ødelagt. Vennligst fiks den før du prøver å synkronisere på nytt.\n\nSee %s for informasjon om å reparere databaser.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokalt</string>

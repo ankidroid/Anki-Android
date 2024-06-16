@@ -128,6 +128,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌组搜索</string>
     <string name="invalid_deck_name">无效的牌组名称</string>
     <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">牌组目前已完成！ %s</string>
     <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
     <string name="sd_card_not_mounted">未挂载储存设备</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
@@ -240,4 +241,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">所有文件访问权限</string>
     <string name="image_occlusion">图片遮挡</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">删除账户</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">即时卡片</string>
 </resources>

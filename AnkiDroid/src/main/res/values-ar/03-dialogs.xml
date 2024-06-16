@@ -228,7 +228,7 @@
         <item quantity="many">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
         <item quantity="other">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">مقدم خدمة الإنترنت الخاص بك قد يدفّعك مالًا بدل استخدامك للبيانات</string>
     <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
     <string name="deck_picker_rev">عدد البطاقات التي موعدها اليوم في هذه الرزمة.</string>
     <string name="deck_picker_lrn">عدد بطاقات التعلّم في هذه الرزمة.</string>
@@ -253,7 +253,7 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        بسبب تغييرات خصوصية الأندرويد، سيتم حذف بياناتك والنسخ الاحتياطية الآلية من هاتفك إذا تم إلغاء تثبيت التطبيق
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">هذه الرزمة موجودة بالفعل</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
@@ -284,4 +284,10 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

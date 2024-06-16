@@ -40,12 +40,12 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import anki.frontend.SetSchedulingStatesRequest
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -67,6 +67,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.anki.utils.remainingTime
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController
@@ -89,6 +90,7 @@ import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.updateInBackground
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
@@ -169,6 +171,8 @@ open class Reviewer :
         FlashCardViewerResultCallback()
     )
 
+    private val flagItemIds = mutableSetOf<Int>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -184,7 +188,7 @@ open class Reviewer :
         textBarReview = findViewById(R.id.review_number)
         toolbar = findViewById(R.id.toolbar)
         micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
-        if (sharedPrefs().getString("answerButtonPosition", "bottom") == "bottom") {
+        if (sharedPrefs().getString("answerButtonPosition", "bottom") == "bottom" && !navBarNeedsScrim) {
             setNavigationBarColor(R.attr.showAnswerColor)
         }
         if (!sharedPrefs().getBoolean("showDeckTitle", false)) {
@@ -353,6 +357,13 @@ open class Reviewer :
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
+
+        Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
+            Timber.i("Reviewer:: onOptionItemSelected Flag - ${flag.name} clicked")
+            onFlag(currentCard, flag)
+            return true
+        }
+
         when (item.itemId) {
             android.R.id.home -> {
                 Timber.i("Reviewer:: Home button pressed")
@@ -451,38 +462,6 @@ open class Reviewer :
             R.id.action_add_note_reviewer -> {
                 Timber.i("Reviewer:: Add note button pressed")
                 addNote()
-            }
-            R.id.action_flag_zero -> {
-                Timber.i("Reviewer:: No flag")
-                onFlag(currentCard, Flag.NONE)
-            }
-            R.id.action_flag_one -> {
-                Timber.i("Reviewer:: Flag one")
-                onFlag(currentCard, Flag.RED)
-            }
-            R.id.action_flag_two -> {
-                Timber.i("Reviewer:: Flag two")
-                onFlag(currentCard, Flag.ORANGE)
-            }
-            R.id.action_flag_three -> {
-                Timber.i("Reviewer:: Flag three")
-                onFlag(currentCard, Flag.GREEN)
-            }
-            R.id.action_flag_four -> {
-                Timber.i("Reviewer:: Flag four")
-                onFlag(currentCard, Flag.BLUE)
-            }
-            R.id.action_flag_five -> {
-                Timber.i("Reviewer:: Flag five")
-                onFlag(currentCard, Flag.PINK)
-            }
-            R.id.action_flag_six -> {
-                Timber.i("Reviewer:: Flag six")
-                onFlag(currentCard, Flag.TURQUOISE)
-            }
-            R.id.action_flag_seven -> {
-                Timber.i("Reviewer:: Flag seven")
-                onFlag(currentCard, Flag.PURPLE)
             }
             R.id.action_card_info -> {
                 Timber.i("Card Viewer:: Card Info")
@@ -692,7 +671,7 @@ open class Reviewer :
         Timber.d("onCreateOptionsMenu()")
         // NOTE: This is called every time a new question is shown via invalidate options menu
         menuInflater.inflate(R.menu.reviewer, menu)
-        setFlagTitles(menu)
+        menu.findItem(R.id.action_flag).subMenu?.let { subMenu -> setupFlags(subMenu) }
         displayIcons(menu)
         actionButtons.setCustomButtonsStatus(menu)
         val alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
@@ -844,20 +823,19 @@ open class Reviewer :
         onboarding.onCreate()
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
-        tintOverflowMenuIcons(menu, skipIf = { isFlagResource(it.itemId) })
+        tintOverflowMenuIcons(menu, skipIf = { isFlagItem(it) })
 
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun setFlagTitles(menu: Menu) {
-        menu.findItem(R.id.action_flag_zero).title = Flag.NONE.displayName()
-        menu.findItem(R.id.action_flag_one).title = Flag.RED.displayName()
-        menu.findItem(R.id.action_flag_two).title = Flag.ORANGE.displayName()
-        menu.findItem(R.id.action_flag_three).title = Flag.GREEN.displayName()
-        menu.findItem(R.id.action_flag_four).title = Flag.BLUE.displayName()
-        menu.findItem(R.id.action_flag_five).title = Flag.PINK.displayName()
-        menu.findItem(R.id.action_flag_six).title = Flag.TURQUOISE.displayName()
-        menu.findItem(R.id.action_flag_seven).title = Flag.PURPLE.displayName()
+    private fun setupFlags(subMenu: SubMenu) {
+        lifecycleScope.launch {
+            for ((flag, displayName) in Flag.queryDisplayNames()) {
+                val menuItem = subMenu.add(Menu.NONE, flag.ordinal, Menu.NONE, displayName)
+                    .setIcon(flag.drawableRes)
+                flagItemIds.add(menuItem.itemId)
+            }
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -873,8 +851,8 @@ open class Reviewer :
         }
     }
 
-    private fun isFlagResource(itemId: Int): Boolean {
-        return itemId == R.id.action_flag_seven || itemId == R.id.action_flag_six || itemId == R.id.action_flag_five || itemId == R.id.action_flag_four || itemId == R.id.action_flag_three || itemId == R.id.action_flag_two || itemId == R.id.action_flag_one
+    private fun isFlagItem(menuItem: MenuItem): Boolean {
+        return flagItemIds.contains(menuItem.itemId)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
