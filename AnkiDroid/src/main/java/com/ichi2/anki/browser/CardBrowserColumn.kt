@@ -121,26 +121,7 @@ enum class CardBrowserColumn(
     companion object {
         val COLUMN1_KEYS = arrayOf(QUESTION, SFLD)
 
-        // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.
-        // Note: the last 6 are currently hidden
-        val COLUMN2_KEYS =
-            arrayOf(
-                ANSWER,
-                CARD,
-                DECK,
-                NOTE_TYPE,
-                QUESTION,
-                TAGS,
-                LAPSES,
-                REVIEWS,
-                INTERVAL,
-                EASE,
-                DUE,
-                CHANGED,
-                CREATED,
-                EDITED,
-                ORIGINAL_POSITION,
-            )
+        val COLUMN2_KEYS = entries.toTypedArray()
 
         fun fromColumnKey(key: String): CardBrowserColumn =
             entries.firstOrNull { it.ankiColumnKey == key }
