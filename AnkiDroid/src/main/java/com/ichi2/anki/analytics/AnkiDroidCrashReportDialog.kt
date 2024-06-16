@@ -17,12 +17,12 @@
 package com.ichi2.anki.analytics
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
