@@ -482,10 +482,10 @@ open class CardBrowser :
                 ).apply {
                     setDropDownViewResource(R.layout.spinner_custom_layout)
                 }
+                setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
                 onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
                     viewModel.setColumn1(COLUMN1_KEYS[pos])
                 }
-                setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
             }
 
             // Setup the column 2 heading as a spinner so that users can easily change the column type
@@ -498,11 +498,11 @@ open class CardBrowser :
                     // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
                     setDropDownViewResource(R.layout.spinner_custom_layout)
                 }
+                setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
                 // Create a new list adapter with updated column map any time the user changes the column
                 onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
                     viewModel.setColumn2(COLUMN2_KEYS[pos])
                 }
-                setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
             }
         }
 
