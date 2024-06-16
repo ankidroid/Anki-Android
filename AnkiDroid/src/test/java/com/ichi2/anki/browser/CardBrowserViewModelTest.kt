@@ -27,6 +27,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.FSRS_DIFFICULTY
 import com.ichi2.anki.browser.CardBrowserColumn.NOTE_TYPE
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
@@ -558,6 +559,22 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat(ids, hasSize(1))
 
         assertThat(ids.single(), equalTo(cards[0].card.nid))
+    }
+
+    @Test
+    fun `changing note types changes columns`() = runViewModelTest {
+        // BrowserColumnCollection contains BOTH notes and cards column configs
+        BrowserColumnCollection.update(sharedPrefs(), CardsOrNotes.NOTES) {
+            it[0] = QUESTION
+            it[1] = FSRS_DIFFICULTY
+            true
+        }
+
+        assertThat("column 2 before", column2, not(equalTo(FSRS_DIFFICULTY)))
+
+        setCardsOrNotes(CardsOrNotes.NOTES)
+
+        assertThat("column 2 after", column2, equalTo(FSRS_DIFFICULTY))
     }
 
     @Test

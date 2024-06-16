@@ -32,6 +32,7 @@ import com.ichi2.anki.CardBrowser.Companion.nextDue
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.DECK
 import com.ichi2.anki.browser.CardBrowserColumn.EASE
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
@@ -61,6 +62,7 @@ import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.UiUtil.setSelectedValue
 import io.mockk.every
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
@@ -1009,6 +1011,20 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("issues with launchCollectionInLifecycleScope")
+    fun `column titles update when moving to notes mode`() = withBrowser {
+        val column2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
+        column2Spinner.setSelectedValue("Interval")
+
+        assertThat("spinner title: cards", column2Spinner.selectedItem, equalTo("Interval"))
+
+        viewModel.setCardsOrNotes(NOTES)
+        waitForAsyncTasksToComplete()
+
+        assertThat("spinner title: notes", column2Spinner.selectedItem, equalTo("Avg. Interval"))
+    }
+
+    @Test
     fun `tapping row toggles state - Issue 14952`() = runTest {
         // tapping the row was broken, checkbox was fine
         browserWithMultipleNotes.apply {
@@ -1177,6 +1193,46 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(question, equalTo(""))
     }
 
+    @Test
+    fun `initial value is correct column`() {
+        // Column 1 is [QUESTION, SFLD], the values when [SFLD] is selected
+
+        addNoteUsingBasicAndReversedModel("Hello", "World")
+
+        withBrowser {
+            assertThat(viewModel.column1, equalTo(SFLD))
+
+            assertThat(column1Text(row = 0), equalTo("Hello"))
+            assertThat(column1Text(row = 1), equalTo("Hello"))
+        }
+    }
+
+    @Test
+    @Ignore(
+        "issues with launchCollectionInLifecycleScope - provided value is not current" +
+            "use an integration test"
+    )
+    fun `column text is updated - cardsOrNotes and column change`() {
+        addNoteUsingBasicAndReversedModel("Hello", "World")
+
+        withBrowser {
+            assertThat("cards: original column", column2TitleText, equalTo("Card Type"))
+
+            setColumn2(DECK)
+            assertThat("cards: changed column", column2TitleText, equalTo("Deck"))
+
+            viewModel.setCardsOrNotes(NOTES)
+            waitForAsyncTasksToComplete()
+
+            assertThat("notes: default column", column2TitleText, equalTo("Note Type"))
+            setColumn2(DECK)
+            assertThat("notes: changed column", column2TitleText, equalTo("Avg. Due"))
+
+            viewModel.setCardsOrNotes(CARDS)
+            assertThat("cards: updated column used", column2TitleText, equalTo("Deck"))
+        }
+    }
+
     fun NotetypeJson.addNote(field: String, vararg fields: String): Note {
         return addNoteUsingModelName(this.name, field, *fields)
     }
@@ -1198,6 +1254,21 @@ fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
 fun CardBrowser.replaceSelectionWith(positions: IntArray) {
     viewModel.selectNone()
     selectRowsWithPositions(*positions)
+}
+
+private val CardBrowser.column2TitleText: String
+    get() = findViewById<Spinner>(R.id.browser_column2_spinner)
+        .selectedItem.toString()
+
+private fun CardBrowser.setColumn2(col: CardBrowserColumn) {
+    findViewById<Spinner>(R.id.browser_column2_spinner)
+        .setSelection(CardBrowserColumn.COLUMN2_KEYS.indexOf(col))
+}
+
+fun CardBrowser.column1Text(row: Int): CharSequence? {
+    val rowView = cardsAdapter.getView(row, null, cardsListView)
+    val column1 = rowView.findViewById<FixedTextView>(R.id.card_sfld)
+    return column1.text
 }
 
 fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {

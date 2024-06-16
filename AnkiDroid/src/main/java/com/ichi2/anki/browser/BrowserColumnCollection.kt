@@ -84,7 +84,7 @@ class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
             val key = mode.toPreferenceKey()
             val preferenceValue = value.columns
                 .joinToString(separator = SEPARATOR_CHAR.toString()) { it.ankiColumnKey }
-            Timber.d("updating '%s' to '%s'", key, preferenceValue)
+            Timber.d("updating '%s' [%s] to '%s'", key, mode, preferenceValue)
             prefs.edit { putString(key, preferenceValue) }
         }
 
