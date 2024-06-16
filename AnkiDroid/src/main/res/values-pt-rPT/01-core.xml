@@ -131,7 +131,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralhos</string>
     <string name="invalid_deck_name">Nome de baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho finalizado por enquanto! %s</string>
     <string name="studyoptions_no_cards_due">Nenhuma ficha por rever</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -248,5 +248,5 @@
     <string name="image_occlusion">Oclusão de imagem</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Eliminar conta</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Cartão instantâneo</string>
 </resources>

@@ -45,9 +45,9 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
+    <string name="youre_offline">તમે ઑફલાઇન છો</string>
+    <string name="sync_error">સમન્વયન ભૂલ</string>
+    <string name="vague_error" comment="Network error dialog title">ભૂલ</string>
     <string name="retry">Retry</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">A network error has occurred</string>
