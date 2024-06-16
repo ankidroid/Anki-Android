@@ -50,6 +50,8 @@ import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN1_KEYS
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade.UpgradeBrowserColumns.Companion.LEGACY_COLUMN2_KEYS
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.BrowserConfig
@@ -997,8 +999,8 @@ class CardBrowserTest : RobolectricTest() {
             }
 
             // meta test
-            assertThat(CardBrowserColumn.COLUMN1_KEYS[1], equalTo(SFLD))
-            assertThat(CardBrowserColumn.COLUMN2_KEYS[5], equalTo(TAGS))
+            assertThat(LEGACY_COLUMN1_KEYS[1], equalTo(SFLD))
+            assertThat(LEGACY_COLUMN2_KEYS[5], equalTo(TAGS))
 
             PreferenceUpgradeService.upgradePreferences(getSharedPrefs(), 20300130)
 
