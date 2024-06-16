@@ -24,7 +24,21 @@ import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.BrowserColumnCollection
-import com.ichi2.anki.browser.CardBrowserColumn
+import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
+import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.CHANGED
+import com.ichi2.anki.browser.CardBrowserColumn.CREATED
+import com.ichi2.anki.browser.CardBrowserColumn.DECK
+import com.ichi2.anki.browser.CardBrowserColumn.DUE
+import com.ichi2.anki.browser.CardBrowserColumn.EASE
+import com.ichi2.anki.browser.CardBrowserColumn.EDITED
+import com.ichi2.anki.browser.CardBrowserColumn.INTERVAL
+import com.ichi2.anki.browser.CardBrowserColumn.LAPSES
+import com.ichi2.anki.browser.CardBrowserColumn.NOTE_TYPE
+import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
+import com.ichi2.anki.browser.CardBrowserColumn.REVIEWS
+import com.ichi2.anki.browser.CardBrowserColumn.SFLD
+import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.CardsOrNotes
@@ -592,8 +606,8 @@ object PreferenceUpgradeService {
                     return
                 }
 
-                val currentColumn1 = CardBrowserColumn.COLUMN1_KEYS[currentColumn1Index]
-                val currentColumn2 = CardBrowserColumn.COLUMN2_KEYS[currentColumn2Index]
+                val currentColumn1 = LEGACY_COLUMN1_KEYS[currentColumn1Index]
+                val currentColumn2 = LEGACY_COLUMN2_KEYS[currentColumn2Index]
 
                 BrowserColumnCollection.update(preferences, CardsOrNotes.CARDS) { columns ->
                     if (columns.size < 2) return@update false
@@ -617,6 +631,13 @@ object PreferenceUpgradeService {
             companion object {
                 private const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
                 private const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
+
+                @VisibleForTesting
+                internal val LEGACY_COLUMN1_KEYS = arrayOf(QUESTION, SFLD)
+
+                @VisibleForTesting
+                internal val LEGACY_COLUMN2_KEYS =
+                    arrayOf(ANSWER, CARD, DECK, NOTE_TYPE, QUESTION, TAGS, LAPSES, REVIEWS, INTERVAL, EASE, DUE, CHANGED, CREATED, EDITED)
             }
         }
     }
