@@ -104,6 +104,7 @@
     <string name="menu_suspend">સસ્પેન્ડ</string>
     <string name="menu_delete_note">નોંધ કાયમ માટે કાઢી નાખો</string>
     <string name="menu_flag">ધ્વજ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">કાર્ડને ચિહ્નિત કરો</string>
     <string name="menu_edit_tags">ચિહ્નો બદલો </string>
     <string name="delete_note_message">આ નોંધ અને તેના તમામ કાડઁ ખરેખર કાઢી નાખીએ ?\n%s</string>

@@ -110,6 +110,7 @@
     <string name="menu_suspend">Исключить</string>
     <string name="menu_delete_note">Удалить запись</string>
     <string name="menu_flag">Флажок</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Поставить флажок</string>
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>

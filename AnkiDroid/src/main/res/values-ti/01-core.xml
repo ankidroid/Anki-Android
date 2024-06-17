@@ -104,6 +104,7 @@
     <string name="menu_suspend">ስሓብ</string>
     <string name="menu_delete_note">ጽሑፍ ደምስስ</string>
     <string name="menu_flag">Flag</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">ናይባሓቂ ነዚ ጽሑፍ ከምኡ ውን ነዞም ካርድታትን ክትድምስስ ደሊኻ?\n%s</string>

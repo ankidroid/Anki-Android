@@ -110,6 +110,7 @@
     <string name="menu_suspend">Прыпыніць</string>
     <string name="menu_delete_note">Выдаліць нататку</string>
     <string name="menu_flag">Сцяжок</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Пазначыць картку</string>
     <string name="menu_edit_tags">Адрэдагаваць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>

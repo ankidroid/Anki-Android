@@ -104,6 +104,7 @@
     <string name="menu_suspend">Keskeytä</string>
     <string name="menu_delete_note">Poista merkintä</string>
     <string name="menu_flag">Lippu</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Lisää lippu</string>
     <string name="menu_edit_tags">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>

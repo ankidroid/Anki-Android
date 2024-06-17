@@ -104,6 +104,7 @@
     <string name="menu_suspend">Суспендирај</string>
     <string name="menu_delete_note">Бриши белешка</string>
     <string name="menu_flag">Знаме</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Постави знаме на карта</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Навистина избришете ја оваа белешка и сите нејзини картички?\n%s</string>

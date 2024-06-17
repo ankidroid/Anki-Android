@@ -110,6 +110,7 @@
     <string name="menu_suspend">Pozastaviť</string>
     <string name="menu_delete_note">Vymazať poznámku</string>
     <string name="menu_flag">Vlajočka</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Červená vlajočka</string>
     <string name="menu_edit_tags">Upraviť štítky</string>
     <string name="delete_note_message">Naozaj chcete odstrániť túto poznámku a všetky jej kartičky?\n%s</string>

@@ -104,6 +104,7 @@
     <string name="menu_suspend">സസ്പെൻഡ് ചെയ്യുക</string>
     <string name="menu_delete_note">കുറിപ്പ് മായ്ക്കുക</string>
     <string name="menu_flag">ഫ്ലാഗ്</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ഫ്ലാഗ് കാർഡ്</string>
     <string name="menu_edit_tags">ടാഗുകൾ എഡിറ്റുചെയ്യുക</string>
     <string name="delete_note_message">ഈ കുറിപ്പും അതിന്റെ എല്ലാ കാർഡുകളും ശരിക്കും ഇല്ലാതാക്കുക?\n%s</string>

@@ -110,6 +110,7 @@
     <string name="menu_suspend">Призупинити</string>
     <string name="menu_delete_note">Видалити запис</string>
     <string name="menu_flag">Прапорець</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Додати прапорець</string>
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>

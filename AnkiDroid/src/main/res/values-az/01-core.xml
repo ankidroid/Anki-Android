@@ -104,6 +104,7 @@
     <string name="menu_suspend">Dayandır</string>
     <string name="menu_delete_note">Qeydi sil</string>
     <string name="menu_flag">İşarələ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">İşarələnmiş kart</string>
     <string name="menu_edit_tags">Etiketlərə düzəliş et</string>
     <string name="delete_note_message">Bu qeyd və bütün kartlar həqiqətən də silinsin?\n%s</string>

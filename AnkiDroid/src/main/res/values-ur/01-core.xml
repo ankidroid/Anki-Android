@@ -104,6 +104,7 @@
     <string name="menu_suspend">معطل</string>
     <string name="menu_delete_note">نوٹ حذف کریں</string>
     <string name="menu_flag">فلیگ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">پرچم کارڈ</string>
     <string name="menu_edit_tags">کارڈز میں ترمیم کریں</string>
     <string name="delete_note_message">واقعی یہ نوٹ اور اس کے تمام کارڈز حذف کریں؟ \n%s</string>

@@ -104,6 +104,7 @@
     <string name="menu_suspend">To\'xtatib turish</string>
     <string name="menu_delete_note">Qaydni o\'chirish</string>
     <string name="menu_flag">Bayroq</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Kartaga bayroq qo\'yish</string>
     <string name="menu_edit_tags">Teglarni tahrirlash</string>
     <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>

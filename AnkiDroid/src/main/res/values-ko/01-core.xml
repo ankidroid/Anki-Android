@@ -101,6 +101,7 @@
     <string name="menu_suspend">비활성화</string>
     <string name="menu_delete_note">노트 삭제하기</string>
     <string name="menu_flag">표시</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">카드에 플래그 추가</string>
     <string name="menu_edit_tags">태그 수정</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>

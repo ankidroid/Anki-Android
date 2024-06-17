@@ -104,6 +104,7 @@
     <string name="menu_suspend">Αναστολή</string>
     <string name="menu_delete_note">Διαγραφή Σημείωσης</string>
     <string name="menu_flag">Σήμανση</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Σήμανση κάρτας</string>
     <string name="menu_edit_tags">Επεξεργασία ετικετών</string>
     <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>

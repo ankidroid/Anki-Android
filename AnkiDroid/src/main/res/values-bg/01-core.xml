@@ -104,6 +104,7 @@
     <string name="menu_suspend">Спиране</string>
     <string name="menu_delete_note">Изтрий бележка</string>
     <string name="menu_flag">Знаме</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Маркиране на карта</string>
     <string name="menu_edit_tags">Редакция на етикети</string>
     <string name="delete_note_message">Наистина изтрий тази бележка и всичките и карти? \n%s</string>

@@ -101,6 +101,7 @@
     <string name="menu_suspend">Bekukan</string>
     <string name="menu_delete_note">Padam nota</string>
     <string name="menu_flag">Tanda</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Tanda kad</string>
     <string name="menu_edit_tags">Sunting tag</string>
     <string name="delete_note_message">Pasti padam nota dan semua kadnya?\n%s</string>

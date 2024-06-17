@@ -104,6 +104,7 @@
     <string name="menu_suspend">ಅಮಾನತ್ತುಗೊಳಿಸು</string>
     <string name="menu_delete_note">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
     <string name="menu_flag">ಧ್ವಜ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>

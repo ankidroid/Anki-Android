@@ -107,6 +107,7 @@
     <string name="menu_suspend">Suspendă</string>
     <string name="menu_delete_note">Ștergere notă</string>
     <string name="menu_flag">Marcaj</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Marchează card</string>
     <string name="menu_edit_tags">Editează etichete </string>
     <string name="delete_note_message">Doriți sigur să ștergeți această notă și toate cardurile sale?\n%s</string>

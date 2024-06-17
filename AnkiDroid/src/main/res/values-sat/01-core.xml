@@ -104,6 +104,7 @@
     <string name="menu_suspend">ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
     <string name="menu_delete_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <string name="menu_flag">ᱯᱚᱛᱠᱟ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ᱠᱟᱰ ᱯᱚᱛᱠᱟᱭ ᱢᱮ</string>
     <string name="menu_edit_tags">ᱴᱮᱜᱥ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>

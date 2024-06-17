@@ -105,6 +105,7 @@
     <string name="menu_suspend">Suspende</string>
     <string name="menu_delete_note">Iscantzella sa nota</string>
     <string name="menu_flag">Bandera</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Marca sa carta cun una bandera</string>
     <string name="menu_edit_tags">Modìfica sas etichetas</string>
     <string name="delete_note_message">Boles a beru iscantzellare custa nota e totu sas cartas suas?\n

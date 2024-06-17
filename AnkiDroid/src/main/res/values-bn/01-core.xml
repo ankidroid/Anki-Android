@@ -104,6 +104,7 @@
     <string name="menu_suspend">স্থগিত</string>
     <string name="menu_delete_note">নোট মুছে ফেলুন</string>
     <string name="menu_flag">ফ্ল্যাগ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ফ্ল্যাগ কার্ড</string>
     <string name="menu_edit_tags">এডিট ফ্ল্যাগ</string>
     <string name="delete_note_message">সত্যি এই নোট এবং এর কার্ড মুছবেন? \n%s</string>

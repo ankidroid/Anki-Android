@@ -116,6 +116,7 @@
     <string name="menu_suspend">تعليق</string>
     <string name="menu_delete_note">حذف الملحوظة</string>
     <string name="menu_flag">أضف علما</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">أضف علما للبطاقة</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>

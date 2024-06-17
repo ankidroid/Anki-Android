@@ -104,6 +104,7 @@
     <string name="menu_suspend"> निलंबित करा</string>
     <string name="menu_delete_note">टीप हटवा</string>
     <string name="menu_flag">झेंडा</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">फ्लॅग कार्ड</string>
     <string name="menu_edit_tags">टॅग संपादित करा</string>
     <string name="delete_note_message">खरोखर ही टीप आणि त्याची सर्व कार्ड हटवायची?\n%s</string>

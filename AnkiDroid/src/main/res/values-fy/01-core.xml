@@ -104,6 +104,7 @@
     <string name="menu_suspend">Suspend</string>
     <string name="menu_delete_note">Memo fuortsmite</string>
     <string name="menu_flag">Flag</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Dizze memo en al syn kaarten fuortsmite?\n%s</string>

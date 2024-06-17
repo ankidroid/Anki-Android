@@ -104,6 +104,7 @@
     <string name="menu_suspend">ନିଲମ୍ବନ କରନ୍ତୁ</string>
     <string name="menu_delete_note">ନୋଟ୍ ଵିଲୋପ କରିବା</string>
     <string name="menu_flag">ପତାକା</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏଵଂ ଏହାର ସମସ୍ତ ପତ୍ର ଵିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>

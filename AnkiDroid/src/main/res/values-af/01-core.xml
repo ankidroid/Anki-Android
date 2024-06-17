@@ -104,6 +104,7 @@
     <string name="menu_suspend">Opskort</string>
     <string name="menu_delete_note">Verwyder nota</string>
     <string name="menu_flag">Merk</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Merk kaart</string>
     <string name="menu_edit_tags">Bewerk hegplaatjie</string>
     <string name="delete_note_message">Verwyder regtig hierdie nota en al die samegaande karte?\n%s</string>

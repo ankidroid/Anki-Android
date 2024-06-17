@@ -258,4 +258,6 @@
     <string name="open">Abrir</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema WebView está desatualizado. Alguns recursos não funcionarão corretamente. Atualize-o.\n\nVersão instalada: %1$d\nVersão mínima necessária: %2$d</string>
+    <!-- Rename Flags -->
+    <string name="confirm_before_saving">Confirm all changes before saving</string>
 </resources>

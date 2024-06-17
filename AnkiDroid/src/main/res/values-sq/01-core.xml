@@ -104,6 +104,7 @@
     <string name="menu_suspend">Pezulloni</string>
     <string name="menu_delete_note">Fshij shënimin</string>
     <string name="menu_flag">Flamurin</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flamurin kartën</string>
     <string name="menu_edit_tags">Redakto etiketat</string>
     <string name="delete_note_message">Të fshihet vërtet ky shënim dhe të gjitha kartat e tij?\n%s</string>

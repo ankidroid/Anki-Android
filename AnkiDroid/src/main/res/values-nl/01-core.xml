@@ -104,6 +104,7 @@
     <string name="menu_suspend">Opschorten</string>
     <string name="menu_delete_note">Notitie verwijderen</string>
     <string name="menu_flag">Vlag</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Markeer kaart</string>
     <string name="menu_edit_tags">Tags bewerken</string>
     <string name="delete_note_message">Deze memo en al zijn kaarten verwijderen?\n%s</string>

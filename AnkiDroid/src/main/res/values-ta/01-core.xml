@@ -104,6 +104,7 @@
     <string name="menu_suspend">இடைநிறுத்த</string>
     <string name="menu_delete_note">குறிப்பு நீக்கவும்</string>
     <string name="menu_flag">கொடிகள்</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_edit_tags">Tags-ஐ திருத்து</string>
     <string name="delete_note_message">உண்மையில் இந்த குறிப்பையும் அதன் அனைத்து அட்டைகளையும் நீக்கவா?\n%s</string>

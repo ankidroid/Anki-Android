@@ -104,6 +104,7 @@
     <string name="menu_suspend">Suspend</string>
     <string name="menu_delete_note">Usnim melein</string>
     <string name="menu_flag">Flag</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Wileizu bi sunjai þo melein jah allos kartos is usniman?\n%s</string>
