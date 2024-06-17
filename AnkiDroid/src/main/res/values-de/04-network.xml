@@ -70,7 +70,7 @@
     <string name="sync_title">Synchronisation</string>
     <string name="sync_log_uploading_message">Vollsynchronisation des lokalen Stapels</string>
     <string name="sync_database_acknowledge">Sammlung synchronisiert</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Sammlung synchronisiert. Medien werden im Hintergrund synchronisiert.</string>
     <string name="sync_corrupt_database">Ihre Datenbank ist beschädigt. Bitte reparieren Sie sie vor einem erneuten Synchronisationsversuch.\n\nBesuchen Sie %s für Informationen zum Reparieren Ihrer Datenbank.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
