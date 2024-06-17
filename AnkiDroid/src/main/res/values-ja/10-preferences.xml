@@ -194,7 +194,7 @@
     <string name="reset_custom_buttons" maxLength="41">既定値にリセット</string>
     <string name="reset_settings_to_default">初期設定にリセットしますか？</string>
     <string name="reset">リセット</string>
-    <string name="thirdparty_apps_title" maxLength="41">サードパーティ製APIアプリ</string>
+    <string name="thirdparty_apps_title" maxLength="41">サードパーティー製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
