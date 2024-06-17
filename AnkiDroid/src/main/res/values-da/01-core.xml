@@ -104,6 +104,7 @@
     <string name="menu_suspend">Suspendér</string>
     <string name="menu_delete_note">Slet note</string>
     <string name="menu_flag">Markér</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Markér kort</string>
     <string name="menu_edit_tags">Redigér tags</string>
     <string name="delete_note_message">Vil du virkelig slette denne note og alle dens kort?\n%s</string>

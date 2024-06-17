@@ -107,6 +107,7 @@
     <string name="menu_suspend">Obustavi</string>
     <string name="menu_delete_note">Izbriši bilješku</string>
     <string name="menu_flag">Označi</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Označi kartu</string>
     <string name="menu_edit_tags">Uredi oznake</string>
     <string name="delete_note_message">Zaista izbrisati ovu bilješku i sve njezine kartice?\n%s</string>

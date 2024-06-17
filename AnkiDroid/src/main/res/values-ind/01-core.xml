@@ -101,6 +101,7 @@
     <string name="menu_suspend">Tangguhkan</string>
     <string name="menu_delete_note">Hapus catatan</string>
     <string name="menu_flag">Panji</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Beri kartu panji</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>

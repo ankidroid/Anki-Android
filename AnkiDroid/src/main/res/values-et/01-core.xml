@@ -104,6 +104,7 @@
     <string name="menu_suspend">Seiska</string>
     <string name="menu_delete_note">Kustuta märge</string>
     <string name="menu_flag">Lipp</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Pane kaardile lipp</string>
     <string name="menu_edit_tags">Muuda silte</string>
     <string name="delete_note_message">Kas tõesti kustutada see märge ja kõik selle kaardid?\n%s</string>

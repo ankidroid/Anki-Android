@@ -104,6 +104,7 @@
     <string name="menu_suspend">Հեռացնել</string>
     <string name="menu_delete_note">Ջնջել գրառումը</string>
     <string name="menu_flag">Դրոշ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Ավելացնել դրոշ</string>
     <string name="menu_edit_tags">Խմբագրել պիտակները</string>
     <string name="delete_note_message">Ջնջե՞լ այս գրառումը և նրա բոլոր քարտերը:\n%s</string>

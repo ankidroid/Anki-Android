@@ -111,6 +111,7 @@
     <string name="menu_suspend">הקפאה</string>
     <string name="menu_delete_note">מחיקת רשומה</string>
     <string name="menu_flag">דגל</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">סימון כרטיס</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>

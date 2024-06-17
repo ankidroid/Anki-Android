@@ -110,6 +110,7 @@
     <string name="menu_suspend">Atidėti</string>
     <string name="menu_delete_note">Ištrinti užrašą</string>
     <string name="menu_flag">Pažymėti</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Pažymėti su vėliava</string>
     <string name="menu_edit_tags">Redaguoti žymes</string>
     <string name="delete_note_message">Ar tikrai norite ištrinti šį užrašą ir visas su juo susijusias korteles?\n%s</string>

@@ -102,6 +102,7 @@
     <string name="menu_suspend">長久擱置</string>
     <string name="menu_delete_note">刪除筆記</string>
     <string name="menu_flag">標記</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">標記卡片</string>
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>

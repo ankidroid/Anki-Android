@@ -105,6 +105,7 @@
     <string name="menu_suspend">ဆိုင်းငံ့</string>
     <string name="menu_delete_note">မှတ်စုကို ဖျက်ပစ်ပါ</string>
     <string name="menu_flag">အလံ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ကဒ်အလံ</string>
     <string name="menu_edit_tags">ကတ်ပြားပြင်ဆင်</string>
     <string name="delete_note_message">မှတ်စု နဲ့ ကတ်တွေဖြတ်မှာကျိန်းသေလား\n%s</string>

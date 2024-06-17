@@ -104,6 +104,7 @@
     <string name="menu_suspend">Suspendre</string>
     <string name="menu_delete_note">Supprimer la note</string>
     <string name="menu_flag">Ajouter un drapeau</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Ajouter un drapeau</string>
     <string name="menu_edit_tags">Modifier les étiquettes</string>
     <string name="delete_note_message">Voulez-vous vraiment supprimer cette note et toutes ses cartes ?\n%s</string>

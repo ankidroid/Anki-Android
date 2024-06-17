@@ -104,6 +104,7 @@
     <string name="menu_suspend">Хасах</string>
     <string name="menu_delete_note">Картын хэсгийг устгах</string>
     <string name="menu_flag">Дарцаг</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Картыг дарцаглах</string>
     <string name="menu_edit_tags">Шошгийг солих</string>
     <string name="delete_note_message">Та үнэхээр энэ картыг, хэсгүүдтэй нь цуг устгамаар байна уу?\n%s</string>

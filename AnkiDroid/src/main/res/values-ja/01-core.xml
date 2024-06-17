@@ -101,6 +101,7 @@
     <string name="menu_suspend">休止</string>
     <string name="menu_delete_note">ノートを削除</string>
     <string name="menu_flag">フラグ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">カードにフラグを付ける</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらもすべて削除されます。\n%s</string>

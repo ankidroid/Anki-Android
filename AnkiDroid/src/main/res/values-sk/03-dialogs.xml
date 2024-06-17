@@ -272,4 +272,6 @@
     <string name="open">Open</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <!-- Rename Flags -->
+    <string name="confirm_before_saving">Confirm all changes before saving</string>
 </resources>

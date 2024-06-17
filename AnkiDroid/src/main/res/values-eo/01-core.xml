@@ -104,6 +104,7 @@
     <string name="menu_suspend">Kaŝi daŭre</string>
     <string name="menu_delete_note">Forigi noton</string>
     <string name="menu_flag">Flagi</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flagi karton</string>
     <string name="menu_edit_tags">Redakti etikedojn</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>

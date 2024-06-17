@@ -104,6 +104,7 @@
     <string name="menu_suspend">გამოტოვება</string>
     <string name="menu_delete_note">შენიშვნის წაშლა</string>
     <string name="menu_flag">დროშა</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">დროშის მიმაგრება</string>
     <string name="menu_edit_tags">იარლიყის რედაქტირება</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>

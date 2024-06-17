@@ -101,6 +101,7 @@
     <string name="menu_suspend">暂停</string>
     <string name="menu_delete_note">删除笔记</string>
     <string name="menu_flag">旗标</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">为卡片设置旗标</string>
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>

@@ -104,6 +104,7 @@
     <string name="menu_suspend">Lås</string>
     <string name="menu_delete_note">Ta bort not</string>
     <string name="menu_flag">Flagga</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flagga kort</string>
     <string name="menu_edit_tags">Redigera taggar</string>
     <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>

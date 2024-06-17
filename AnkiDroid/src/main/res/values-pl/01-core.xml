@@ -110,6 +110,7 @@
     <string name="menu_suspend">Zawieś</string>
     <string name="menu_delete_note">Usuń notatkę</string>
     <string name="menu_flag">Oflaguj</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Oflaguj kartę</string>
     <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>

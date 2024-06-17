@@ -104,6 +104,7 @@
     <string name="menu_suspend">Suspendre</string>
     <string name="menu_delete_note">Suprimeix la nota</string>
     <string name="menu_flag">Bandera</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Marcar tarjeta</string>
     <string name="menu_edit_tags">Edita etiquetes</string>
     <string name="delete_note_message">Segur que voleu suprimir aquesta nota i totes les seves fitxes?\n%s</string>

@@ -104,6 +104,7 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
     <string name="menu_flag">Marca</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Marcar tarjeta</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">¿Realmente eliminar esta nota y todas sus tarjetas?\n%s</string>

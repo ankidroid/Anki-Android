@@ -104,6 +104,7 @@
     <string name="menu_suspend">Askıya Al</string>
     <string name="menu_delete_note">Notu sil</string>
     <string name="menu_flag">Bayrak</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Kartı bayrakla işaretle</string>
     <string name="menu_edit_tags">Etiketleri düzenle</string>
     <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
