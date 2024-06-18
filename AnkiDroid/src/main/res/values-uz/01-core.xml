@@ -111,7 +111,8 @@
     <string name="menu_search">%1$s dan izlab ko\'rish</string>
     <string name="menu_mark_note">Qaydni belgilash</string>
     <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>
-    <string name="menu_toggle_mic_tool_bar">Talaffuzni tekshirish</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Paluba yaratish</string>
     <string name="new_dynamic_deck">Siljiydigan paluba yaratish</string>
     <string name="directory_inaccessible">AnkiDroid katalogi mavjud emas</string>

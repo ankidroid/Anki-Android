@@ -117,7 +117,8 @@
     <string name="menu_search">Vyhľadať v %1$s</string>
     <string name="menu_mark_note">Označiť poznámku</string>
     <string name="menu_unmark_note">Odznačiť poznámku</string>
-    <string name="menu_toggle_mic_tool_bar">Skontrolovať výslovnosť</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Vytvoriť balíček</string>
     <string name="new_dynamic_deck">Vytvoriť filtrovaný balíček</string>
     <string name="directory_inaccessible">Adresár AnkiDroid je neprístupný</string>

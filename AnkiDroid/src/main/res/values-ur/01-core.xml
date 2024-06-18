@@ -111,7 +111,8 @@
     <string name="menu_search">%1$s میں تلاش کریں</string>
     <string name="menu_mark_note">نوٹ کو نشان زد کریں</string>
     <string name="menu_unmark_note">نوٹ بے نشان کریں</string>
-    <string name="menu_toggle_mic_tool_bar">تلفظ چیک کریں</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ڈیک بنائیں</string>
     <string name="new_dynamic_deck">فلٹر شدہ ڈیک بنائیں</string>
     <string name="directory_inaccessible">آنکی ڈیرائڈ ڈائریکٹری ناقابل رسائی ہے</string>

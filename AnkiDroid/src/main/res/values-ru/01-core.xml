@@ -117,7 +117,8 @@
     <string name="menu_search">Посмотреть в %1$s</string>
     <string name="menu_mark_note">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
-    <string name="menu_toggle_mic_tool_bar">Проверить произношение</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Создать колоду</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>

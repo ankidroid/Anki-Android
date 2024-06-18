@@ -111,7 +111,8 @@
     <string name="menu_search">Пребарување во %1$s</string>
     <string name="menu_mark_note">Означите белешка</string>
     <string name="menu_unmark_note">Отштиклирај ја белешката</string>
-    <string name="menu_toggle_mic_tool_bar">Провери изговор</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Креирајте deck</string>
     <string name="new_dynamic_deck">Креирајте филтер на deck</string>
     <string name="directory_inaccessible">AnkiDroid директориумот е недостапен</string>

@@ -118,7 +118,8 @@
     <string name="menu_search">חפש ב%1$s</string>
     <string name="menu_mark_note">סמן רשומה</string>
     <string name="menu_unmark_note">הסר סימון רשומה</string>
-    <string name="menu_toggle_mic_tool_bar">בדוק הגיה</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">יצירת חפיסה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
     <string name="directory_inaccessible">הספרייה של AnkiDroid אינה נגישה</string>

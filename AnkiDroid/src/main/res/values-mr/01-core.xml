@@ -111,7 +111,8 @@
     <string name="menu_search">%1$s मध्ये पहा</string>
     <string name="menu_mark_note">चिन्हांकित करा</string>
     <string name="menu_unmark_note">अचिन्हांची नोंद</string>
-    <string name="menu_toggle_mic_tool_bar">उच्चारण तपासा</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">डेक तयार करा</string>
     <string name="new_dynamic_deck">फिल्टर केलेले डेक तयार करा</string>
     <string name="directory_inaccessible">AnkiDroid निर्देशिका प्रवेश करण्यायोग्य आहे</string>

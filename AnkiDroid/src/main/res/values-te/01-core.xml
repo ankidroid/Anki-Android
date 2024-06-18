@@ -111,7 +111,8 @@
     <string name="menu_search">లో చూడండి%1$s</string>
     <string name="menu_mark_note">గమనికను గుర్తు పెట్టుకోండి</string>
     <string name="menu_unmark_note">గమనిక నుండి గుర్తు తీసివేయండి</string>
-    <string name="menu_toggle_mic_tool_bar">ఉచ్చారణను తనిఖీ చేయండి</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ఒక డెక్ సృష్టించండి</string>
     <string name="new_dynamic_deck">ఫిల్టర్ డెక్ను సృష్టించండి</string>
     <string name="directory_inaccessible">AnkiDroid డైరెక్టరీ అందుబాటులో లేదు</string>

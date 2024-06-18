@@ -111,7 +111,8 @@
     <string name="menu_search">Haku %1$s</string>
     <string name="menu_mark_note">Merkitse merkintä</string>
     <string name="menu_unmark_note">Poista merkintä</string>
-    <string name="menu_toggle_mic_tool_bar">Tarkista ääntäminen</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Uusi pakka</string>
     <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
     <string name="directory_inaccessible">AnkiDroidin hakemisto ei ole käytettävissä</string>
