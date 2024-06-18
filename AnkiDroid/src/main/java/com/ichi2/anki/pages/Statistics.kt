@@ -26,15 +26,10 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.utils.TimeManager
 
 class Statistics : PageFragment(R.layout.statistics) {
-    override val title: String
-        get() = resources.getString(R.string.statistics)
-
-    override val pageName = "graphs"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,7 +67,7 @@ class Statistics : PageFragment(R.layout.statistics) {
 
     companion object {
         fun getIntent(context: Context): Intent {
-            return SingleFragmentActivity.getIntent(context, Statistics::class)
+            return getIntent(context, "graphs", context.getString(R.string.statistics), Statistics::class)
         }
     }
 }

@@ -15,28 +15,31 @@
  */
 package com.ichi2.anki.pages
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.themes.Themes
 import timber.log.Timber
+import kotlin.reflect.KClass
 
 /**
  * Base class for displaying Anki HTML pages
  */
 @Suppress("LeakingThis")
-abstract class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment) :
+open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment) :
     Fragment(contentLayoutId),
     PostRequestHandler {
-
-    abstract val title: String
-    abstract val pageName: String
 
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
@@ -62,14 +65,20 @@ abstract class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_frag
             webViewClient = onCreateWebViewClient(savedInstanceState)
             webChromeClient = PageChromeClient()
         }
-        val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
-        val url = server.baseUrl() + "backend/web/$pageName.html$nightMode"
 
+        val arguments = requireArguments()
+        val path = requireNotNull(arguments.getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
+        val title = arguments.getString(TITLE_ARG_KEY)
+
+        val nightMode = if (Themes.currentTheme.isNightMode) "#night" else ""
+        val url = Uri.parse("${server.baseUrl()}$path$nightMode")
         Timber.i("Loading $url")
-        webView.loadUrl(url)
+        webView.loadUrl(url.toString())
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
-            title = this@PageFragment.title
+            if (title != null) {
+                setTitle(title)
+            }
             setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
@@ -85,5 +94,14 @@ abstract class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_frag
         return activity.handleUiPostRequest(methodName, bytes)
             ?: handleCollectionPostRequest(methodName, bytes)
             ?: throw IllegalArgumentException("unhandled method: $methodName")
+    }
+    companion object {
+        const val PATH_ARG_KEY = "path"
+        const val TITLE_ARG_KEY = "title"
+
+        fun getIntent(context: Context, path: String, title: String? = null, clazz: KClass<out PageFragment> = PageFragment::class): Intent {
+            val arguments = bundleOf(PATH_ARG_KEY to path, TITLE_ARG_KEY to title)
+            return SingleFragmentActivity.getIntent(context, clazz, arguments)
+        }
     }
 }

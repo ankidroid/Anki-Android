@@ -23,7 +23,6 @@ import android.webkit.WebView
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import com.google.android.material.appbar.MaterialToolbar
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DiscardChangesDialog
@@ -31,10 +30,6 @@ import org.json.JSONObject
 import timber.log.Timber
 
 class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
-
-    override val title: String
-        get() = TR.notetypesImageOcclusionName()
-    override val pageName = "image-occlusion"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,31 +45,33 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
         view.findViewById<MaterialToolbar>(R.id.toolbar).setOnMenuItemClickListener {
             if (it.itemId == R.id.action_save) {
                 Timber.i("save item selected")
-                webView.evaluateJavascript("anki.imageOcclusion.addNote()", null)
+                webView.evaluateJavascript("anki.imageOcclusion.save()", null)
             }
             return@setOnMenuItemClickListener true
         }
     }
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        val kind = arguments?.getString(ARG_KEY_KIND) ?: throw Exception("missing kind")
-        val id = arguments?.getLong(ARG_KEY_ID) ?: throw Exception("missing ID")
-        val path = arguments?.getString(ARG_KEY_PATH) ?: if (kind == "add") throw Exception("missing path") else ""
-        return ImageOcclusionWebViewClient(kind, id, path)
-    }
-
-    class ImageOcclusionWebViewClient(val kind: String, private val noteOrNotetypeId: Long, private val path: String?) : PageWebViewClient() {
-        override fun onPageFinished(view: WebView?, url: String?) {
-            val options = JSONObject()
-            options.put("kind", kind)
-            options.put("imagePath", path)
-            if (kind == "add") {
-                options.put("notetypeId", noteOrNotetypeId)
-            } else {
-                options.put("noteId", noteOrNotetypeId)
-            }
-            view!!.evaluateJavascript("anki.setupImageOcclusion($options);") {
+        return object : PageWebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+
+                val kind = requireArguments().getString(ARG_KEY_KIND)
+                val noteOrNotetypeId = requireArguments().getLong(ARG_KEY_ID)
+                val imagePath = requireArguments().getString(ARG_KEY_PATH)
+
+                val options = JSONObject()
+                options.put("kind", kind)
+                if (kind == "add") {
+                    options.put("imagePath", imagePath)
+                    options.put("notetypeId", noteOrNotetypeId)
+                } else {
+                    options.put("noteId", noteOrNotetypeId)
+                }
+
+                view?.evaluateJavascript("globalThis.anki.imageOcclusion.mode = $options") {
+                    super.onPageFinished(view, url)
+                }
             }
         }
     }
@@ -82,10 +79,20 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
     companion object {
         private const val ARG_KEY_KIND = "kind"
         private const val ARG_KEY_ID = "id"
-        private const val ARG_KEY_PATH = "path"
+        private const val ARG_KEY_PATH = "imagePath"
 
         fun getIntent(context: Context, kind: String, noteOrNotetypeId: Long, imagePath: String?): Intent {
-            val arguments = bundleOf(ARG_KEY_KIND to kind, ARG_KEY_ID to noteOrNotetypeId, ARG_KEY_PATH to imagePath)
+            val suffix = if (kind == "edit") {
+                "/$noteOrNotetypeId"
+            } else {
+                imagePath
+            }
+            val arguments = bundleOf(
+                ARG_KEY_KIND to kind,
+                ARG_KEY_ID to noteOrNotetypeId,
+                ARG_KEY_PATH to imagePath,
+                PATH_ARG_KEY to "image-occlusion$suffix"
+            )
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
         }
     }
