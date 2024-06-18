@@ -18,6 +18,7 @@ package com.ichi2.anki.browser
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -364,8 +365,14 @@ class CardBrowserViewModel(
      * @return the number of deleted notes
      */
     suspend fun deleteSelectedNotes(): Int {
+        // PERF: use `undoableOp(this)` & notify CardBrowser of changes
+        // this does a double search
         val cardIds = queryAllSelectedCardIds()
         return undoableOp { removeNotes(cids = cardIds) }.count
+            .also {
+                endMultiSelectMode()
+                refreshSearch()
+            }
     }
 
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
@@ -592,6 +599,7 @@ class CardBrowserViewModel(
         }
     }
 
+    @CheckResult
     suspend fun saveSearch(searchName: String, searchTerms: String): SaveSearchResult {
         Timber.d("saving user search")
         var alreadyExists = false
@@ -614,9 +622,18 @@ class CardBrowserViewModel(
         launchSearchForCards(filterQuery)
     }
 
-    suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
+    suspend fun searchForMarkedNotes() {
+        // only intended to be used if the user has no selection
+        if (hasSelectedAnyRows()) return
+        setFilterQuery("tag:marked")
+    }
 
-    suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
+    suspend fun searchForSuspendedCards() {
+        // only intended to be used if the user has no selection
+        if (hasSelectedAnyRows()) return
+        setFilterQuery("is:suspended")
+    }
+
     suspend fun setFlagFilter(flag: Flag) {
         Timber.i("filtering to flag: %s", flag)
         val flagSearchTerm = "flag:${flag.code}"
@@ -740,6 +757,8 @@ class CardBrowserViewModel(
         }
         return searchJob!!
     }
+
+    private suspend fun refreshSearch() = launchSearchForCards()?.join()
 
     private suspend fun clearCardsList() {
         cards.reset()
