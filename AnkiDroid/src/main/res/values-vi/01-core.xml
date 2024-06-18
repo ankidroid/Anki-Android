@@ -108,7 +108,8 @@
     <string name="menu_search">Tra cứu trong %1$s</string>
     <string name="menu_mark_note">Đánh dấu ghi chú</string>
     <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>
-    <string name="menu_toggle_mic_tool_bar">Kiểm tra phát âm</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Tạo bộ thẻ</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
     <string name="directory_inaccessible">Không thể truy cập thư mục AnkiDroid</string>

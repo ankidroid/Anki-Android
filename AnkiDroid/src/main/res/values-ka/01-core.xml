@@ -111,7 +111,8 @@
     <string name="menu_search">მონახულება %1$s-ში</string>
     <string name="menu_mark_note">მონიშნე შენიშვნა</string>
     <string name="menu_unmark_note">შენიშვნის გაუქმება</string>
-    <string name="menu_toggle_mic_tool_bar">გამოთქმის შემოწმება</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">დასტის შექმნა</string>
     <string name="new_dynamic_deck">ფილტრირებული დასტის შექმნა</string>
     <string name="directory_inaccessible">AnkiDroid-ის ბიბლიოთეკა მიუწვდომელია</string>

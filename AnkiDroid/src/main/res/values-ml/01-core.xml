@@ -111,7 +111,8 @@
     <string name="menu_search">%1$s ൽ തിരയുക</string>
     <string name="menu_mark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>
     <string name="menu_unmark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>
-    <string name="menu_toggle_mic_tool_bar">ഉച്ചാരണം പരിശോധിക്കുക</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ഡെക്ക് സൃഷ്ടിക്കുക</string>
     <string name="new_dynamic_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് സൃഷ്ടിക്കുക</string>
     <string name="directory_inaccessible">AnkiDroid ഡയറക്‌ടറി ആക്‌സസ്സുചെയ്യാനാകില്ല</string>

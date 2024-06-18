@@ -111,7 +111,8 @@
     <string name="menu_search">Որոնում %1$s-ում</string>
     <string name="menu_mark_note">Նշել գրառումը</string>
     <string name="menu_unmark_note">Ապանշել գրառումը</string>
-    <string name="menu_toggle_mic_tool_bar">Արտասանության ստուգում</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Ստեղծել կապուկ</string>
     <string name="new_dynamic_deck">Ստեղծել զտված կապուկ</string>
     <string name="directory_inaccessible">AnkiDroid-ի պանակը անհասանելի է</string>

@@ -108,7 +108,8 @@
     <string name="menu_search">ค้นหาใน %1$s</string>
     <string name="menu_mark_note">ทำเครื่องหมายโน้ต</string>
     <string name="menu_unmark_note">ยกเลิกการทำเครื่องหมายโน้ต</string>
-    <string name="menu_toggle_mic_tool_bar">ตรวจสอบวิธีการออกเสียง</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">สร้างกองใหม่</string>
     <string name="new_dynamic_deck">สร้าง สำรับแบบกรอง</string>
     <string name="directory_inaccessible">เข้าถึงที่เก็บข้อมูล AnkiDroid ไม่ได้</string>

@@ -108,7 +108,8 @@
     <string name="menu_search">Pencarian di %1$s</string>
     <string name="menu_mark_note">Tandai catatan</string>
     <string name="menu_unmark_note">Batal tandai catatan</string>
-    <string name="menu_toggle_mic_tool_bar">Cek pelafalan</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Buat dek</string>
     <string name="new_dynamic_deck">Buat dek terfilter</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat diakses</string>

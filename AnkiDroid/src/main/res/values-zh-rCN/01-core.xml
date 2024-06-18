@@ -101,14 +101,15 @@
     <string name="menu_suspend">暂停</string>
     <string name="menu_delete_note">删除笔记</string>
     <string name="menu_flag">旗标</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">重命名标记</string>
     <string name="menu_flag_card">为卡片设置旗标</string>
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>
     <string name="menu_search">在%1$s中查找</string>
     <string name="menu_mark_note">标记笔记</string>
     <string name="menu_unmark_note">取消标记</string>
-    <string name="menu_toggle_mic_tool_bar">检查发音</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">创建牌组</string>
     <string name="new_dynamic_deck">创建筛选牌组</string>
     <string name="directory_inaccessible">无法访问AnkiDroid目录</string>

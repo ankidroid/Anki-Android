@@ -111,7 +111,8 @@
     <string name="menu_search">लुकअप में %1$s</string>
     <string name="menu_mark_note">नोट चिह्नित करें</string>
     <string name="menu_unmark_note">नोट अचिह्नित करें</string>
-    <string name="menu_toggle_mic_tool_bar">आप उच्चारण जाँचिये</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">डेक बनाने</string>
     <string name="new_dynamic_deck">फ़िल्टर्ड डेक बनाएं</string>
     <string name="directory_inaccessible">AnkiDroid निर्देशिका पहुंच योग्य नहीं है</string>

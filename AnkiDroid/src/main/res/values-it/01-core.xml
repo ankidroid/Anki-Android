@@ -111,7 +111,8 @@
     <string name="menu_search">Ricerca in %1$s</string>
     <string name="menu_mark_note">Contrassegna nota</string>
     <string name="menu_unmark_note">Rimuovi contrassegno nota</string>
-    <string name="menu_toggle_mic_tool_bar">Controlla pronuncia</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Crea mazzo</string>
     <string name="new_dynamic_deck">Crea mazzo filtrato</string>
     <string name="directory_inaccessible">La directory AnkiDroid è inaccessibile</string>

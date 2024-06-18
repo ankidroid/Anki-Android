@@ -111,7 +111,8 @@
     <string name="menu_search">Soek in %1$s</string>
     <string name="menu_mark_note">Merk nota</string>
     <string name="menu_unmark_note">Ontmerk</string>
-    <string name="menu_toggle_mic_tool_bar">Sien uitspraak na</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Skep pak</string>
     <string name="new_dynamic_deck">Skep gefiltreerde kaartpak</string>
     <string name="directory_inaccessible">AnkiDroid gids is onbereikbaar</string>
