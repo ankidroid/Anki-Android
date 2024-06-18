@@ -1,0 +1,116 @@
+name: APK Size Comparison
+
+on:
+  workflow_dispatch:
+    inputs:
+      prNumber:
+        description: "Number of PR to calculate sizes for"
+        required: true
+        type: number
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
+permissions:
+  contents: read
+  pull-requests: write
+
+
+jobs:
+  sizeCheck:
+    name: APK Size Check
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    env:
+      # could be better, '/home/runner' should be '~/' but neither that nor '$HOME' worked
+      STOREFILEDIR: /home/runner/src
+      STOREFILE: android-keystore
+      STOREPASS: testpass
+      KEYPASS: testpass
+      KEYALIAS: nrkeystorealias
+    steps:
+      - name: Configure JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Test Credential Prep
+        run: |
+          echo "KSTOREPWD=$STOREPASS" >> $GITHUB_ENV
+          echo "KEYPWD=$KEYPASS" >> $GITHUB_ENV
+          mkdir $STOREFILEDIR
+          cd $STOREFILEDIR
+          echo y | keytool -genkeypair -dname "cn=AnkiDroid, ou=ankidroid, o=AnkiDroid, c=US" -alias $KEYALIAS -keypass $KEYPASS -keystore "$STOREFILE" -storepass $STOREPASS -keyalg RSA -validity 20000
+        shell: bash
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        timeout-minutes: 5
+        with:
+          cache-read-only: true
+          gradle-home-cache-cleanup: true
+
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: 'refs/pull/${{ github.event.inputs.prNumber }}/head'
+
+      - name: Assemble PR APK
+        # This makes sure we fetch gradle network resources with a retry
+        uses: nick-invision/retry@v3
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew :AnkiDroid:assemblePlayRelease --daemon
+
+      - name: Get PR APK size
+        run: echo NEWSIZE=`ls -lrt AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk | awk '{print $5}'` >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Assemble Baseline APK
+        # This makes sure we fetch gradle network resources with a retry
+        uses: nick-invision/retry@v3
+        with:
+          timeout_minutes: 10
+          retry_wait_seconds: 60
+          max_attempts: 3
+          command: ./gradlew :AnkiDroid:assemblePlayRelease --daemon
+
+      - name: Get Baseline APK size
+        run: echo OLDSIZE=`ls -lrt AnkiDroid/build/outputs/apk/play/release/AnkiDroid-play-arm64-v8a-release.apk | awk '{print $5}'` >> $GITHUB_ENV
+
+      - name: Post comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            var inputs = ${{ toJSON(inputs) }}
+            let prNumber = inputs['prNumber'];
+
+            async function getPullRequest() {
+                return await github.rest.pulls.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: prNumber,
+                });
+            }
+            const pullRequestData = await getPullRequest();
+
+            async function addComment(prNumber, oldSize, newSize) {
+              return await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: `Old APK size: ${oldSize}
+                      New APK size: ${newSize}`
+              })
+            }
+            await addComment(prNumber, process.env.OLDSIZE, process.env.NEWSIZE);
