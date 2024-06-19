@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Błąd krytyczny: awaria renderowania WebView. Przyczyna: %s</string>
     <string name="webview_crash_loop_dialog_title">Błąd renderowania WebView systemu</string>
     <string name="webview_crash_loop_dialog_content">System WebView nie potrafił wyrenderować karty \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pytanie</item>
-        <item>Sortowanie według pola</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Odpowiedź</item>
-        <item>Karta</item>
-        <item>Talia</item>
-        <item>Notka</item>
-        <item>Pytanie</item>
-        <item>Tagi</item>
-        <item>Pomyłki</item>
-        <item>Powtórki</item>
-        <item>Przerwa</item>
-        <item>Łatwość</item>
-        <item>Do przejrzenia</item>
-        <item>Zmodyfikowano kartę</item>
-        <item>Stworzona</item>
-        <item>Zmodyfikowano notatkę</item>
-    </string-array>
     <string name="filter_by_flags">Flagi </string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zmień dzisiejszy limit nowych kart</string>

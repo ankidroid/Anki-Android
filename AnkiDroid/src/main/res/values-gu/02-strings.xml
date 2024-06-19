@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">જીવલેણ ભૂલ: WebView રેન્ડરર ક્રેશ થયું. કારણ: %s</string>
     <string name="webview_crash_loop_dialog_title">સિસ્ટમ વેબ વ્યૂ રેન્ડરિંગ નિષ્ફળતા</string>
     <string name="webview_crash_loop_dialog_content">સિસ્ટમ WebView કાર્ડ \'%1$s\' રેન્ડર કરવામાં નિષ્ફળ થયું.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>પ્રશ્ન</item>
-        <item>સૉર્ટ ક્ષેત્ર</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>જવાબ આપો</item>
-        <item>કાર્ડ</item>
-        <item>તૂતક</item>
-        <item>નૉૅધ</item>
-        <item>પ્રશ્ન</item>
-        <item>ટૅગ્સ</item>
-        <item>ક્ષતિઓ</item>
-        <item>સમીક્ષાઓ</item>
-        <item>અંતરાલ</item>
-        <item>સરળતા</item>
-        <item>બાકી</item>
-        <item>કાર્ડ સંશોધિત</item>
-        <item>બનાવ્યું</item>
-        <item>નોંધ સંશોધિત</item>
-    </string-array>
     <string name="filter_by_flags">ધ્વજ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">આજની નવી કાર્ડ મર્યાદામાં ફેરફાર કરો</string>

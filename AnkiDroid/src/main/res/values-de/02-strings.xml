@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Schwerer Fehler: WebView-Renderer ist abgestürzt. Grund: %s</string>
     <string name="webview_crash_loop_dialog_title">Fehler beim System-WebView-Rendering</string>
     <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Frage</item>
-        <item>Sortierfeld</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Antwort</item>
-        <item>Karte</item>
-        <item>Stapel</item>
-        <item>Notiz</item>
-        <item>Frage</item>
-        <item>Schlagwörter</item>
-        <item>Vergessene</item>
-        <item>Wiederholungen</item>
-        <item>Intervall</item>
-        <item>Leichtigkeit</item>
-        <item>Fällig</item>
-        <item>Karte geändert</item>
-        <item>Erstellt</item>
-        <item>Notiz geändert</item>
-    </string-array>
     <string name="filter_by_flags">Flaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>

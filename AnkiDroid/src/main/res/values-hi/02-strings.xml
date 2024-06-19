@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatal Error: WebView रेंडरर क्रैश हो गया। कारण: %s</string>
     <string name="webview_crash_loop_dialog_title">सिस्टम WebView रेंडरिंग विफलता</string>
     <string name="webview_crash_loop_dialog_content">सिस्टम WebView कार्ड रेंडर करने में विफल रहा \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>प्रश्न</item>
-        <item>सॉर्ट फ़ील्ड</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>उत्तर</item>
-        <item>पत्ता</item>
-        <item>डेक</item>
-        <item>नोट</item>
-        <item>प्रश्न</item>
-        <item>टैग</item>
-        <item>चूक</item>
-        <item>समीक्षाएँ</item>
-        <item>अंतराल</item>
-        <item>आसानी</item>
-        <item>देय</item>
-        <item>कार्ड संशोधित किया गया</item>
-        <item>बनाया गया</item>
-        <item>नोट संशोधित किया गया</item>
-    </string-array>
     <string name="filter_by_flags">झंडे</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आज की नई कार्ड सीमा को संशोधित करें</string>

@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Pogreška: Webview se srušio. Razlog: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistemski WebView render  greška.</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pitanje</item>
-        <item>Polje za sortiranje</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Odgovor</item>
-        <item>Karta</item>
-        <item>Špil</item>
-        <item>Bilješka</item>
-        <item>Pitanje</item>
-        <item>Oznake</item>
-        <item>Greške</item>
-        <item>Pregledi</item>
-        <item>Interval</item>
-        <item>Ublažavanje</item>
-        <item>Istek</item>
-        <item>Card Modified</item>
-        <item>Kreirano</item>
-        <item>Note Modified</item>
-    </string-array>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>

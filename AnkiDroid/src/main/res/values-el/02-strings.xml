@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Μοιραίο σφάλμα: Η συσκευή αναπαραγωγής WebView κατέρρευσε. Αιτία: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Ερώτηση</item>
-        <item>Sort field</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Απάντηση</item>
-        <item>Κάρτα</item>
-        <item>Τράπουλα</item>
-        <item>Σημείωση</item>
-        <item>Ερώτηση</item>
-        <item>Ετικέτες</item>
-        <item>Lapses</item>
-        <item>Επαναλήψεις</item>
-        <item>Διάστημα</item>
-        <item>Ευκολία</item>
-        <item>Due</item>
-        <item>Τροποποιημένες κάρτες</item>
-        <item>Δημιουργήθηκε</item>
-        <item>Τροποποιημένες σημειώσεις</item>
-    </string-array>
     <string name="filter_by_flags">Σημαίες</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Τροποποίηση σημερινού ορίου νέων καρτών</string>

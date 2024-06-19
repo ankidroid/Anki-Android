@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Question</item>
-        <item>Sort field</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Bersiv</item>
-        <item>Card</item>
-        <item>Deck</item>
-        <item>Note</item>
-        <item>Pirs</item>
-        <item>Etîket</item>
-        <item>Lapses</item>
-        <item>Reviews</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
-    </string-array>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>

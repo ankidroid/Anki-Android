@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">خطای وخیم: تنظیم‌کنندۀ ظاهر برنامه دچار مشکل شد. دلیل: %s</string>
     <string name="webview_crash_loop_dialog_title">مشکل در سیستم تنظیم‌کنندۀ ظاهر برنامه</string>
     <string name="webview_crash_loop_dialog_content">سیستم در تنظیم ظاهر کارت %1$s با خطا مواجه شد.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>سوال</item>
-        <item>مرتب کردن فیلد</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>پاسخ</item>
-        <item>کارت</item>
-        <item>مجموعه</item>
-        <item>یادداشت</item>
-        <item>پرسش</item>
-        <item>برچسب ها</item>
-        <item>دفعات اشتباه</item>
-        <item>بازبینی ها</item>
-        <item>بازه</item>
-        <item>سهولت</item>
-        <item>موعد مرور</item>
-        <item>زمان ویرایش کارت</item>
-        <item>ساخته شده</item>
-        <item>زمان ویرایش یادداشت</item>
-    </string-array>
     <string name="filter_by_flags">پرچم ها</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعیین محدودیت برای کارت جدید امروز</string>

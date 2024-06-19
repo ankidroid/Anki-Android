@@ -81,27 +81,6 @@
     <string name="webview_crash_loop_dialog_title">WebView 렌더링이 실패했습니다.</string>
     <string name="webview_crash_loop_dialog_content">WebView가 \'%1$s\' 카드를 렌더링하지 못했습니다.
 %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>질문</item>
-        <item>필드 정렬</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>정답</item>
-        <item>카드</item>
-        <item>덱</item>
-        <item>노트</item>
-        <item>문제</item>
-        <item>태그</item>
-        <item>오답 횟수</item>
-        <item>복습</item>
-        <item>시간 간격</item>
-        <item>수월함</item>
-        <item>예정</item>
-        <item>카드 수정일</item>
-        <item>작성한 날짜</item>
-        <item>노트 편집일</item>
-    </string-array>
     <string name="filter_by_flags">플래그</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>

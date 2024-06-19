@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">गंभीर त्रुटी: वेबव्यू प्रस्तुतकर्ता क्रॅश झाला. कारणः%s</string>
     <string name="webview_crash_loop_dialog_title">सिस्टम वेबव्यू प्रस्तुत करणे अयशस्वी</string>
     <string name="webview_crash_loop_dialog_content">सिस्टम \'वेबव्यू\' \'%1$s\' कार्ड प्रस्तुत करण्यात अयशस्वी. \ N%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Praśna</item>
-        <item>Kramavārī lāvā phīlḍa</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Uttara dyā</item>
-        <item>Kārḍa</item>
-        <item>Ḍēka</item>
-        <item>Ṭīpa</item>
-        <item>Praśna</item>
-        <item>Ṭĕgja</item>
-        <item>Lapses</item>
-        <item>Punarāvalōkanē</item>
-        <item>मध्यांतर</item>
-        <item>सहजता</item>
-        <item>देय</item>
-        <item>कार्ड सुधारित</item>
-        <item>तयार केले</item>
-        <item>टीप सुधारित</item>
-    </string-array>
     <string name="filter_by_flags">ध्वज</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आजची नवीन कार्ड मर्यादा सुधारित करा</string>

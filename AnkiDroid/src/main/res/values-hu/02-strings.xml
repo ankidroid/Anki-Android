@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Végzetes Hiba: a WebView megjelenítő összeomlott. Hiba oka: %s</string>
     <string name="webview_crash_loop_dialog_title">Webview Rendszer Megjenítői Hiba</string>
     <string name="webview_crash_loop_dialog_content">A WebView rendszer nem tudta megjeleníteni a \'%1$s\' kártyát.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Kérdés</item>
-        <item>Rendezési mező</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Válasz</item>
-        <item>Kártya</item>
-        <item>Pakli neve</item>
-        <item>Jegyzettípus neve</item>
-        <item>Kérdés</item>
-        <item>Címkék</item>
-        <item>Elfelejtések száma</item>
-        <item>Ismétlések száma</item>
-        <item>Intervallum</item>
-        <item>Nehézség</item>
-        <item>Határidő</item>
-        <item>A kártya módosítva lett</item>
-        <item>Létrehozva</item>
-        <item>A jegyzet módosítva lett</item>
-    </string-array>
     <string name="filter_by_flags">Zászlók</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Módosítsa a mai új kártyakorlátot</string>

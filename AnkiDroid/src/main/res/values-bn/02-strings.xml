@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">মারাত্মক ত্রুটি: ওয়েবভিউ রেনডারার ক্র্যাশ করেছে। কারণ: %s</string>
     <string name="webview_crash_loop_dialog_title">সিস্টেম ওয়েবভিউ রেন্ডারিং ব্যর্থ</string>
     <string name="webview_crash_loop_dialog_content">সিস্টেম ওয়েব-ভিউ \'%1$s\'.\n %2$s কার্ড রেন্ডার করতে ব্যর্থ হয়েছে</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>প্রশ্ন</item>
-        <item>ফিল্ড সাজান</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>উত্তর</item>
-        <item>কার্ড</item>
-        <item>ডেক</item>
-        <item>নোট</item>
-        <item>প্রশ্ন</item>
-        <item>টেগসমূহ</item>
-        <item>ভুলে যাওয়া</item>
-        <item>পরিদর্শন</item>
-        <item>বিরামকাল</item>
-        <item>সহজতা</item>
-        <item>ডিউ</item>
-        <item>কার্ড পরিবর্তন</item>
-        <item>রচিত</item>
-        <item>নোট পরিবর্তিত</item>
-    </string-array>
     <string name="filter_by_flags">নিশান</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">আজকের নতুন কার্ড সীমা বদল</string>

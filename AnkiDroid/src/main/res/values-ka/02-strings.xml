@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">ფატალური შეცდომა: WebView მიმღები ავარიულად გაითიშა. მიზეზი: %s</string>
     <string name="webview_crash_loop_dialog_title">შეცდომა WebView სისტემის დამუშავებისას</string>
     <string name="webview_crash_loop_dialog_content">WebView სისტემამ ვერ დაამუშავა ბარათი „%1$s“.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>კითხვა</item>
-        <item>სორტირების ველი</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>პასუხი</item>
-        <item>ბარათი</item>
-        <item>დასტა</item>
-        <item>შენიშვნა</item>
-        <item>კითხვა</item>
-        <item>იარლიყები</item>
-        <item>გადავიწყება</item>
-        <item>გადახედვა</item>
-        <item>შუალედი</item>
-        <item>სიმარტივე</item>
-        <item>სასწავლო</item>
-        <item>ბარათის მოდიფიკაცია</item>
-        <item>შექმნილია</item>
-        <item>შენიშვნის მოდიფიკაცია</item>
-    </string-array>
     <string name="filter_by_flags">დროშები</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">დღეის ახალი ბარათების ლიმიტის შეცვლა</string>
