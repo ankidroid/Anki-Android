@@ -24,6 +24,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import org.json.JSONObject
+import timber.log.Timber
 
 enum class Flag(val code: Int, @DrawableRes val drawableRes: Int, @ColorRes val browserColorRes: Int?) {
     NONE(0, R.drawable.ic_flag_transparent, null),
@@ -108,5 +109,8 @@ private value class FlagLabels(val value: JSONObject) {
     }
 }
 
-fun Collection.setUserFlag(flag: Flag, cids: List<CardId>) = this.setUserFlag(flag.code, cids)
+fun Collection.setUserFlag(flag: Flag, cids: List<CardId>) {
+    Timber.d("Flagging %d card(s) as %s", cids.size, flag)
+    this.setUserFlag(flag.code, cids)
+}
 fun Card.setUserFlag(flag: Flag) = this.setUserFlag(flag.code)
