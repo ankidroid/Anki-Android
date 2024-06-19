@@ -74,8 +74,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21900104
-        versionName="2.19alpha4"
+        versionCode=21900105
+        versionName="2.19alpha5"
         minSdk libs.versions.minSdk.get().toInteger()
         // After #13695: change .tests_emulator.yml
         targetSdk libs.versions.targetSdk.get().toInteger()
