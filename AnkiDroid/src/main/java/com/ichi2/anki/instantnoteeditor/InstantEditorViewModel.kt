@@ -38,8 +38,10 @@ import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlin.math.max
 
 /**
  * ViewModel for managing instant note editing functionality.
@@ -51,6 +53,23 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
 
     /** Errors or Warnings related to the edit fields that might occur when trying to save note */
     val instantEditorError = MutableSharedFlow<String?>()
+
+    private val _currentClozeNumber = MutableStateFlow(1)
+
+    val currentClozeNumber: Int
+        get() = _currentClozeNumber.value
+
+    private val _currentClozeMode = MutableStateFlow(InstantNoteEditorActivity.ClozeMode.INCREMENT)
+
+    val currentClozeMode: StateFlow<InstantNoteEditorActivity.ClozeMode> = _currentClozeMode.asStateFlow()
+
+    private val _actualClozeFieldText = MutableStateFlow<String?>(null)
+
+    val actualClozeFieldText: StateFlow<String?> = _actualClozeFieldText.asStateFlow()
+
+    private val _editorMode = MutableStateFlow(InstantNoteEditorActivity.EditMode.SINGLE_TAP)
+
+    val editorMode: StateFlow<InstantNoteEditorActivity.EditMode> = _editorMode.asStateFlow()
 
     /**
      * Gets the current editor note.
@@ -175,6 +194,171 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
             instantEditorError.emit(message)
         }
     }
+
+    private fun incrementClozeNumber() {
+        Timber.d("Incrementing cloze number: $currentClozeNumber")
+        _currentClozeNumber.value++
+    }
+
+    fun setClozeFieldText(text: String?) {
+        _actualClozeFieldText.value = text
+    }
+
+    /**
+     * Creates or removes the cloze deletion for a word around the given offset.
+     *
+     * This method first checks if the provided text already contains a cloze deletion.
+     * If it does, it returns the clean text. If not, it creates a new cloze
+     * deletion for the text, optionally including punctuation if present at the end of the text.
+     *
+     * The method also handles incrementing the cloze number based on the current cloze mode.
+     *
+     * @param text the text to be converted into a cloze deletion
+     * @return the cloze-deleted version of the input text or clean text if already cloze
+     */
+    fun buildClozeText(text: String): String {
+        val cloze = processClozeUndo(text)
+        if (cloze != null) {
+            Timber.d("Text contains cloze, removed cloze")
+            return cloze
+        }
+
+        Timber.d("Text doesn't have cloze, selecting and adding cloze")
+
+        val matcher = clozeBuilderPattern.findAll(text).firstOrNull()
+
+        val clozeText: String?
+
+        val punctuation: String? = matcher?.groups?.get(2)?.value
+        if (!punctuation.isNullOrEmpty()) {
+            val capturedWord = matcher.groups[1]?.value
+            clozeText = "{{c$currentClozeNumber::$capturedWord}}$punctuation"
+        } else {
+            clozeText = "{{c$currentClozeNumber::$text}}"
+        }
+
+        when (currentClozeMode.value) {
+            InstantNoteEditorActivity.ClozeMode.INCREMENT -> { incrementClozeNumber() }
+            InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
+                // Do nothing here
+            }
+        }
+
+        return clozeText
+    }
+
+    /**
+     * This method extracts the cloze number (if present) from a given word
+     * that indicates a cloze deletion (a blank replaced with a number).
+     * If the pattern matches, it extracts the number from the captured group
+     * and converts it to an integer, otherwise it returns null.
+     *
+     * Example: word is {{c`number`::`text`}} then it extracts `number`
+     *
+     * @param word The word to be analyzed for a cloze number.
+     * @return The extracted cloze number as an integer if found, otherwise null.
+     */
+    fun getWordClozeNumber(word: String): Int? {
+        val matcher = clozePattern.find(word)
+        return matcher?.groups?.get(1)?.value?.toIntOrNull()
+    }
+
+    fun getWordsFromFieldText(): List<String> {
+        val sentence = actualClozeFieldText.value ?: ""
+
+        val words = mutableListOf<String>()
+        var lastIndex = 0
+
+        clozePattern.findAll(sentence).forEach { matchResult ->
+            val cloze = matchResult.value
+            // Add any words between the last match and this match
+            val inBetween = sentence.substring(lastIndex, matchResult.range.first)
+            words.addAll(inBetween.trim().split(spaceRegex).filter { it.isNotEmpty() })
+            words.add(cloze)
+            lastIndex = matchResult.range.last + 1
+        }
+
+        // Add any remaining words after the last cloze
+        if (lastIndex < sentence.length) {
+            val remaining = sentence.substring(lastIndex).trim()
+            words.addAll(remaining.split(spaceRegex).filter { it.isNotEmpty() })
+        }
+
+        return combineWordsWithPunctuation(words)
+    }
+
+    private fun combineWordsWithPunctuation(words: List<String>): List<String> {
+        val combinedWords = mutableListOf<String>()
+
+        var clozeEncountered = false
+
+        words.forEachIndexed { _, word ->
+            if (punctuationPattern.matches(word) && clozeEncountered) {
+                // Combine punctuation with the previous cloze
+                combinedWords[combinedWords.size - 1] += word
+            } else {
+                clozeEncountered = clozePattern.matches(word)
+                combinedWords.add(word)
+            }
+        }
+
+        return combinedWords
+    }
+
+    /**
+     * Removes the cloze deletion marker and surrounding delimiters from a word.
+     *
+     * @param word The word having a potential cloze deletion.
+     * @return The cleaned word with the cloze deletion marker and delimiters removed,
+     * or the original word if no match is found.
+     */
+    fun getCleanClozeWords(word: String): String {
+        val regex = clozePattern
+        return regex.replace(word) { matchResult ->
+            (matchResult.groups[2]?.value ?: "") + (matchResult.groups[3]?.value ?: "")
+        }
+    }
+
+    /**
+     * Processes a cloze-deleted word and removes cloze if any, if a user tap the words twice then
+     * it will detect the cloze and remove it and revert the text to its original state.
+     *
+     * @param text The text to be analyzed for cloze deletion.
+     * @return The processed text with the cloze deletion marker and delimiters removed
+     *         (if applicable), the original text if no match is found, or null
+     *         if an undo is confirmed.
+     */
+    private fun processClozeUndo(text: String): String? {
+        val matchResult = clozePattern.find(text)
+        val capturedClozeNumber = matchResult?.groups?.get(1)?.value
+        if (capturedClozeNumber != null && currentClozeNumber - capturedClozeNumber.toInt() == 1) {
+            decrementClozeNumber()
+        }
+        if (matchResult?.groups?.get(3)?.value != null) {
+            return matchResult.groups[2]?.value + matchResult.groups[3]?.value
+        }
+        return matchResult?.groups?.get(2)?.value
+    }
+
+    fun setEditorMode(mode: InstantNoteEditorActivity.EditMode) {
+        _editorMode.value = mode
+    }
+
+    private fun decrementClozeNumber() {
+        val newValue = _currentClozeNumber.value - 1
+        _currentClozeNumber.value = max(1, newValue)
+    }
+
+    fun toggleClozeMode() {
+        val newMode = when (_currentClozeMode.value) {
+            InstantNoteEditorActivity.ClozeMode.INCREMENT -> InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
+            InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
+                incrementClozeNumber()
+                InstantNoteEditorActivity.ClozeMode.INCREMENT
+            }
+        }
+        _currentClozeMode.value = newMode
+    }
 }
 
 /**
@@ -216,3 +400,20 @@ sealed class SaveNoteResult {
      */
     data class Warning(val message: String?) : SaveNoteResult()
 }
+
+/**
+ * A compiled regular expression pattern used to match cloze deletions within a string.
+ *
+ * This pattern is designed to identify text formatted as cloze deletions, which are commonly
+ * used in educational materials. The pattern follows the format:
+ * {{c`number`::`content`}} (optional punctuation)
+ */
+val clozePattern = Regex("""\{\{c(\d+)::([^}]+?)\}\}(\p{Punct}+)?""")
+
+private val punctuationPattern = Regex("""\p{Punct}+$""")
+
+/** Used when splitting words **/
+private val spaceRegex = Regex("\\s+")
+
+/** Used to build cloze text here word is not null **/
+private val clozeBuilderPattern = "(\\w+)(\\p{Punct}*)".toRegex()

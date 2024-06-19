@@ -104,13 +104,15 @@
     <string name="menu_suspend">ಅಮಾನತ್ತುಗೊಳಿಸು</string>
     <string name="menu_delete_note">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
     <string name="menu_flag">ಧ್ವಜ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
     <string name="menu_search">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>
     <string name="menu_mark_note">ಟಿಪ್ಪಣಿ ಗುರುತಿಸಿ</string>
     <string name="menu_unmark_note">ಟಿಪ್ಪಣಿ ಗುರುತು</string>
-    <string name="menu_toggle_mic_tool_bar">ಉಚ್ಚಾರಣೆಯನ್ನು ಪರಿಶೀಲಿಸಿ</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="new_dynamic_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಸಂಗ್ರಹ ರಚಿಸಿ</string>
     <string name="directory_inaccessible">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೈರೆಕ್ಟರಿ ಪ್ರವೇಶಿಸಲಾಗುವುದಿಲ್ಲ</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ಡೆಕ್ ಹುಡುಕಾಟ</string>
     <string name="invalid_deck_name">ಅಮಾನ್ಯ ಡೆಕ್ ಹೆಸರು</string>
     <string name="studyoptions_congrats_finished">ಅಭಿನಂದನೆಗಳು! ನೀವು ಸದ್ಯಕ್ಕೆ ಮುಗಿಸಿದ್ದೀರಿ.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಇನ್ನೂ ಬಾಕಿ ಉಳಿದಿಲ್ಲ</string>
     <string name="sd_card_not_mounted">ಸಾಧನ ಸಂಗ್ರಹಣೆಯನ್ನು ಆರೋಹಿಸಲಾಗಿಲ್ಲ</string>
     <string name="button_sync" comment="Text of the sync button">ಸಿಂಕ್</string>

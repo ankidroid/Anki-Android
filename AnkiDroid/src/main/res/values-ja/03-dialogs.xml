@@ -203,7 +203,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
-    <string name="metered_sync_data_warning">データ通信量の消費によって、通信事業者（携帯会社など）への支払い料金が増える場合があります。</string>
+    <string name="metered_sync_data_warning">データ通信の使用によって、通信事業者（携帯電話会社など）への支払い料金が増える場合があります。</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、習得中カードの数。</string>
@@ -244,8 +244,11 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">最短</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">最長</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
-    <string name="tap_to_cloze">Single tap text to cloze</string>
+    <string name="cloze_note_required">「穴埋め問題」用のノートタイプが必要です</string>
+    <string name="cloze_not_found_message">「穴埋め問題」に対応したノートタイプが見つかりませんでした。アプリで「穴埋め問題」に対応したノートタイプを追加してからもう一度試すか、それ以外のノートタイプのノートを編集するため、「開く」ボタンを押してください。</string>
+    <string name="open">開く</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">「AndroidシステムのWebView 」（または「Android System WebView」）が古くなっています。いくつかの機能が正しく動作しません。更新してください。\n\nインストールされているバージョン: %1$d\n最低限必要なバージョン: %2$d</string>
+    <!-- Rename Flags -->
+    <string name="confirm_before_saving">編集中のフラグがあります。保存する前に編集を終了してください。</string>
 </resources>

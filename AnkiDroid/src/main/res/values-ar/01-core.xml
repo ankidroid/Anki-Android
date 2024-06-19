@@ -116,13 +116,15 @@
     <string name="menu_suspend">تعليق</string>
     <string name="menu_delete_note">حذف الملحوظة</string>
     <string name="menu_flag">أضف علما</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">أضف علما للبطاقة</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_search">البحث في %1$s</string>
     <string name="menu_mark_note">تأشير الملحوظة</string>
     <string name="menu_unmark_note">إلغاء تأشير الملحوظة</string>
-    <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">إنشاء رزمة</string>
     <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
     <string name="directory_inaccessible">لا يمكن الوصول لمجلد آنكيدرويد</string>
@@ -143,6 +145,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_congrats_finished">مبارك! أكملت مهامك الحالية.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
@@ -271,5 +274,5 @@
     <string name="image_occlusion">صورة معماة</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">حذف الحساب</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">بطاقة فورية</string>
 </resources>

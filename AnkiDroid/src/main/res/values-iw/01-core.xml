@@ -111,13 +111,15 @@
     <string name="menu_suspend">הקפאה</string>
     <string name="menu_delete_note">מחיקת רשומה</string>
     <string name="menu_flag">דגל</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">סימון כרטיס</string>
     <string name="menu_edit_tags">ערוך תגיות</string>
     <string name="delete_note_message">למחוק את הרשומה הזאת ואת כל הקלפים שלה?‏\n%s</string>
     <string name="menu_search">חפש ב%1$s</string>
     <string name="menu_mark_note">סמן רשומה</string>
     <string name="menu_unmark_note">הסר סימון רשומה</string>
-    <string name="menu_toggle_mic_tool_bar">בדוק הגיה</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">יצירת חפיסה</string>
     <string name="new_dynamic_deck">יצירת חפיסה מסוננת</string>
     <string name="directory_inaccessible">הספרייה של AnkiDroid אינה נגישה</string>
@@ -138,6 +140,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">חיפוש חפיסה</string>
     <string name="invalid_deck_name">שם חפיסה לא חוקי</string>
     <string name="studyoptions_congrats_finished">אשריך! סיימת לעת עתה.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">אין כרטיסים נוספים</string>
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>

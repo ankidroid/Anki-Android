@@ -18,19 +18,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
-import androidx.core.os.bundleOf
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.hideShowButtonCss
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 class AnkiPackageImporterFragment : PageFragment() {
-    override val title: String
-        get() = resources.getString(R.string.menu_import)
-    override val pageName: String
-        get() = "import-anki-package"
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         // the back callback is only enabled when import is running and showing progress
@@ -41,14 +33,11 @@ class AnkiPackageImporterFragment : PageFragment() {
                 remove()
             }
         }
-        val path = arguments?.getString(ARG_FILE_PATH)
-            ?: throw IllegalStateException("No path provided for apkg package to import")
         requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
-        return AnkiPackageImporterWebViewClient(path, backCallback)
+        return AnkiPackageImporterWebViewClient(backCallback)
     }
 
     class AnkiPackageImporterWebViewClient(
-        private val path: String,
         private val backCallback: OnBackPressedCallback
     ) : PageWebViewClient() {
         /**
@@ -59,9 +48,7 @@ class AnkiPackageImporterFragment : PageFragment() {
         private var isDone = false
 
         override fun onPageFinished(view: WebView?, url: String?) {
-            val params = Json.encodeToString(path)
-            // https://github.com/ankitects/anki/blob/main/ts/import-page/index.ts
-            view!!.evaluateJavascript("anki.setupImportAnkiPackagePage($params);$hideShowButtonCss;") {
+            view!!.evaluateJavascript(hideShowButtonCss) {
                 super.onPageFinished(view, url)
             }
         }
@@ -81,11 +68,9 @@ class AnkiPackageImporterFragment : PageFragment() {
     }
 
     companion object {
-        private const val ARG_FILE_PATH = "arg_file_path"
-
         fun getIntent(context: Context, filePath: String): Intent {
-            val args = bundleOf(ARG_FILE_PATH to filePath)
-            return SingleFragmentActivity.getIntent(context, AnkiPackageImporterFragment::class, args)
+            val title = context.getString(R.string.menu_import)
+            return getIntent(context, "import-anki-package$filePath", title, AnkiPackageImporterFragment::class)
         }
     }
 }

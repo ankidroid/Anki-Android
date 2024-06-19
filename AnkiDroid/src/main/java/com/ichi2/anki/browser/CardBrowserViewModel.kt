@@ -18,6 +18,7 @@ package com.ichi2.anki.browser
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,13 +26,14 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.search.BrowserColumns
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
-import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.export.ExportDialogFragment.*
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
@@ -39,7 +41,6 @@ import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
-import com.ichi2.anki.servicelayer.CardService
 import com.ichi2.anki.setUserFlag
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
@@ -110,9 +111,6 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
-    /** The CardIds of all the cards in the results */
-    val allCardIds get() = cards.map { c -> c.id }
-
     var searchTerms = ""
         private set
     private var restrictOnDeck: String = ""
@@ -125,7 +123,7 @@ class CardBrowserViewModel(
      * Whether the browser is working in Cards mode or Notes mode.
      * default: [CARDS]
      * */
-    private val flowOfCardsOrNotes = MutableStateFlow(CARDS)
+    val flowOfCardsOrNotes = MutableStateFlow(CARDS)
     val cardsOrNotes get() = flowOfCardsOrNotes.value
 
     // card that was clicked (not marked)
@@ -137,10 +135,18 @@ class CardBrowserViewModel(
     private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
     val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
-    val flowOfColumnIndex1 = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
-    val flowOfColumnIndex2 = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
-    val column1Index get() = flowOfColumnIndex1.value
-    val column2Index get() = flowOfColumnIndex2.value
+    // TODO: Initial values are temporary - set in init { } as they depend on cardsOrNotes
+    // consider a loading state
+    val flowOfColumn1 = MutableStateFlow(CardBrowserColumn.QUESTION)
+    val flowOfColumn2 = MutableStateFlow(CardBrowserColumn.ANSWER)
+    val column1 get() = flowOfColumn1.value
+    val column2 get() = flowOfColumn2.value
+
+    /** Potential headings for the first column */
+    lateinit var column1Candidates: List<BrowserColumns.Column>
+
+    /** Potential headings for the second column */
+    lateinit var column2Candidates: List<BrowserColumns.Column>
 
     val flowOfSearchQueryExpanded = MutableStateFlow(false)
 
@@ -167,23 +173,24 @@ class CardBrowserViewModel(
     val flowOfSelectedRows: Flow<Set<CardBrowser.CardCache>> =
         flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
 
-    /** A list of either:
-     * * [CardsOrNotes.CARDS] all selected card Ids
-     * * [CardsOrNotes.NOTES] one selected Id for every note
-     */
-    val selectedRowIds: List<CardId>
-        get() = selectedRows.map { c -> c.id }
-
     suspend fun queryAllSelectedCardIds(): List<CardId> = when (cardsOrNotes) {
-        CARDS -> selectedRowIds
+        CARDS -> selectedRows.map { c -> c.id }
         NOTES ->
             selectedRows
                 .flatMap { row -> withCol { cardIdsOfNote(nid = row.card.nid) } }
     }
 
     // TODO: move the tag computation to ViewModel
-    suspend fun queryAllSelectedNoteIds(): List<NoteId> =
-        withCol { notesOfCards(selectedRowIds) }
+    suspend fun queryAllSelectedNoteIds(): List<NoteId> {
+        val cardIds = selectedRows.map { c -> c.id }
+        return withCol { notesOfCards(cids = cardIds) }
+    }
+
+    @Suppress("RedundantSuspendModifier") // will be necessary
+    @VisibleForTesting
+    internal suspend fun queryAllCardIds(): List<CardId> {
+        return cards.map { it.id }
+    }
 
     var lastSelectedPosition = 0
 
@@ -212,11 +219,11 @@ class CardBrowserViewModel(
     val flowOfDeckId = MutableStateFlow(lastDeckId)
     val deckId get() = flowOfDeckId.value
 
-    val cardInfoDestination: CardInfoDestination?
-        get() {
-            val firstSelectedCard = selectedRowIds.firstOrNull() ?: return null
-            return CardInfoDestination(firstSelectedCard)
-        }
+    suspend fun queryCardInfoDestination(): CardInfoDestination? {
+        // TODO: Inefficient
+        val firstSelectedCard = queryAllSelectedCardIds().firstOrNull() ?: return null
+        return CardInfoDestination(firstSelectedCard)
+    }
 
     private suspend fun getInitialDeck(): DeckId {
         // TODO: Handle the launch intent
@@ -275,20 +282,14 @@ class CardBrowserViewModel(
             null -> {}
         }
 
-        flowOfColumnIndex1
+        flowOfColumn1
             .ignoreValuesFromViewModelLaunch()
-            .onEach { index ->
-                Timber.d("updating %s", DISPLAY_COLUMN_1_KEY)
-                sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) }
-            }
+            .onEach { column1 -> updateColumnCollection { toUpdate -> toUpdate[0] = column1 } }
             .launchIn(viewModelScope)
 
-        flowOfColumnIndex2
+        flowOfColumn2
             .ignoreValuesFromViewModelLaunch()
-            .onEach { index ->
-                Timber.d("updating %s", DISPLAY_COLUMN_2_KEY)
-                sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) }
-            }
+            .onEach { column2 -> updateColumnCollection { toUpdate -> toUpdate[1] = column2 } }
             .launchIn(viewModelScope)
 
         performSearchFlow.onEach {
@@ -312,6 +313,12 @@ class CardBrowserViewModel(
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection() }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
+            val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
+            column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
+            column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
+
+            setupColumns(cardsOrNotes)
+
             withCol {
                 sortTypeFlow.update { SortType.fromCol(config, cardsOrNotes, sharedPrefs()) }
                 reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
@@ -322,6 +329,16 @@ class CardBrowserViewModel(
                 flowOfInitCompleted.update { true }
             }
         }
+    }
+
+    private suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {
+        Timber.d("loading columns columns for %s mode", cardsOrNotes)
+        val columns = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
+        flowOfColumn1.update { columns.columns[0] }
+        flowOfColumn2.update { columns.columns[1] }
+
+        // This impacts browserRowForId(), which we do not use yet
+        withCol { backend.setActiveBrowserColumns(columns.backendKeys) }
     }
 
     @VisibleForTesting
@@ -339,8 +356,9 @@ class CardBrowserViewModel(
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked
      */
-    suspend fun toggleMark(cardIds: List<CardId>) {
-        if (!hasSelectedAnyRows()) {
+    suspend fun toggleMark() {
+        val cardIds = queryAllSelectedCardIds()
+        if (cardIds.isEmpty()) {
             Timber.i("Not marking cards - nothing selected")
             return
         }
@@ -357,15 +375,24 @@ class CardBrowserViewModel(
                 tags.bulkRemove(noteIds, "marked")
             }
         }
-        selectedRows.forEach { it.reload() }
+        val modifiedIds = cardIds.toSet()
+        cards.filter { modifiedIds.contains(it.id) }.forEach { it.reload() }
     }
 
     /**
      * Deletes the selected notes,
      * @return the number of deleted notes
      */
-    suspend fun deleteSelectedNotes(): Int =
-        undoableOp { removeNotes(cids = selectedRowIds) }.count
+    suspend fun deleteSelectedNotes(): Int {
+        // PERF: use `undoableOp(this)` & notify CardBrowser of changes
+        // this does a double search
+        val cardIds = queryAllSelectedCardIds()
+        return undoableOp { removeNotes(cids = cardIds) }.count
+            .also {
+                endMultiSelectMode()
+                refreshSearch()
+            }
+    }
 
     fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
         Timber.i("setting mode to %s", newValue)
@@ -374,6 +401,7 @@ class CardBrowserViewModel(
             newValue.saveToCollection()
         }
         flowOfCardsOrNotes.update { newValue }
+        setupColumns(newValue)
     }
 
     fun setTruncated(value: Boolean) {
@@ -458,9 +486,15 @@ class CardBrowserViewModel(
         }
     }
 
-    fun setColumn1Index(value: Int) = flowOfColumnIndex1.update { value }
+    fun setColumn1(value: CardBrowserColumn) {
+        Timber.d("updating column 1 to %s", value)
+        flowOfColumn1.update { value }
+    }
 
-    fun setColumn2Index(value: Int) = flowOfColumnIndex2.update { value }
+    fun setColumn2(value: CardBrowserColumn) {
+        Timber.d("updating column 2 to %s", value)
+        flowOfColumn2.update { value }
+    }
 
     /**
      * Toggles the 'suspend' state of the selected cards
@@ -530,14 +564,11 @@ class CardBrowserViewModel(
         return BuryResult(wasBuried = wasBuried!!, count = cardIds.size)
     }
 
-    suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
+    suspend fun querySelectionExportData(): Pair<ExportType, List<Long>>? {
         if (!hasSelectedAnyRows()) return null
         return when (cardsOrNotes) {
-            CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedRowIds)
-            NOTES -> Pair(
-                ExportDialogFragment.ExportType.Notes,
-                withCol { CardService.selectedNoteIds(selectedRowIds) }
-            )
+            CARDS -> Pair(ExportType.Cards, queryAllSelectedCardIds())
+            NOTES -> Pair(ExportType.Notes, queryAllSelectedNoteIds())
         }
     }
 
@@ -545,15 +576,16 @@ class CardBrowserViewModel(
      * @see [com.ichi2.libanki.sched.Scheduler.sortCards]
      * @return the number of cards which were repositioned
      */
-    suspend fun repositionSelectedRows(position: Int) = undoableOp {
-        sched.sortCards(selectedRowIds, position, 1, shuffle = false, shift = true)
-    }.count
+    suspend fun repositionSelectedRows(position: Int): Int {
+        val ids = queryAllSelectedCardIds()
+        return undoableOp {
+            sched.sortCards(cids = ids, position, 1, shuffle = false, shift = true)
+        }.count
+    }
 
     /** Returns the number of rows of the current result set  */
     val rowCount: Int
         get() = cards.size()
-
-    fun getCardIdAtPosition(position: Int): CardId = cards[position].id
 
     fun getRowAtPosition(position: Int) = cards[position]
 
@@ -593,6 +625,7 @@ class CardBrowserViewModel(
         }
     }
 
+    @CheckResult
     suspend fun saveSearch(searchName: String, searchTerms: String): SaveSearchResult {
         Timber.d("saving user search")
         var alreadyExists = false
@@ -615,9 +648,18 @@ class CardBrowserViewModel(
         launchSearchForCards(filterQuery)
     }
 
-    suspend fun searchForMarkedNotes() = setFilterQuery("tag:marked")
+    suspend fun searchForMarkedNotes() {
+        // only intended to be used if the user has no selection
+        if (hasSelectedAnyRows()) return
+        setFilterQuery("tag:marked")
+    }
 
-    suspend fun searchForSuspendedCards() = setFilterQuery("is:suspended")
+    suspend fun searchForSuspendedCards() {
+        // only intended to be used if the user has no selection
+        if (hasSelectedAnyRows()) return
+        setFilterQuery("is:suspended")
+    }
+
     suspend fun setFlagFilter(flag: Flag) {
         Timber.i("filtering to flag: %s", flag)
         val flagSearchTerm = "flag:${flag.code}"
@@ -640,23 +682,21 @@ class CardBrowserViewModel(
     }
 
     /** Previewing */
-
-    val previewIntentData: PreviewerDestination
-        get() {
-            // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
-            return if (selectedRowCount() > 1) {
-                PreviewerDestination(currentIndex = 0, PreviewerIdsFile(cacheDir, selectedRowIds))
-            } else {
-                // Preview all cards, starting from the one that is currently selected
-                val startIndex = indexOfFirstCheckedCard() ?: 0
-                PreviewerDestination(startIndex, PreviewerIdsFile(cacheDir, allCardIds))
-            }
+    suspend fun queryPreviewIntentData(): PreviewerDestination {
+        // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
+        return if (selectedRowCount() > 1) {
+            PreviewerDestination(currentIndex = 0, PreviewerIdsFile(cacheDir, queryAllSelectedCardIds()))
+        } else {
+            // Preview all cards, starting from the one that is currently selected
+            val startIndex = indexOfFirstCheckedCard() ?: 0
+            PreviewerDestination(startIndex, PreviewerIdsFile(cacheDir, queryAllCardIds()))
         }
+    }
 
     /** @return the index of the first checked card in [cards], or `null` if no cards are checked */
     private fun indexOfFirstCheckedCard(): Int? {
         val idToFind = selectedRows.firstOrNull()?.id ?: return null
-        return allCardIds.indexOf(idToFind)
+        return cards.map { it.id }.indexOf(idToFind)
     }
 
     fun setSearchQueryExpanded(expand: Boolean) {
@@ -691,14 +731,10 @@ class CardBrowserViewModel(
         }
     }
 
-    suspend fun updateSelectedCardsFlag(flag: Flag): List<Card> {
+    suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> {
         val idsToChange = queryAllSelectedCardIds()
-        return withCol {
-            setUserFlag(flag, cids = idsToChange)
-            selectedRowIds
-                .map { getCard(it) }
-                .onEach { load() }
-        }
+        withCol { setUserFlag(flag, cids = idsToChange) }
+        return idsToChange
     }
 
     /**
@@ -739,7 +775,7 @@ class CardBrowserViewModel(
             val cardsToRender = min((numCardsToRender ?: 0), cards.size)
             for (i in 0 until cardsToRender) {
                 ensureActive()
-                cards[i].load(false, column1Index, column2Index)
+                cards[i].load(false, column1, column2)
             }
             ensureActive()
             this@CardBrowserViewModel.cards.replaceWith(cards)
@@ -748,14 +784,32 @@ class CardBrowserViewModel(
         return searchJob!!
     }
 
+    private suspend fun refreshSearch() = launchSearchForCards()?.join()
+
     private suspend fun clearCardsList() {
         cards.reset()
         flowOfCardsUpdated.emit(Unit)
     }
 
+    private fun updateColumnCollection(block: (MutableList<CardBrowserColumn?>) -> Unit) {
+        Timber.d("updateColumnCollection")
+        BrowserColumnCollection.update(sharedPrefs(), cardsOrNotes) {
+            block(it)
+            return@update true
+        }
+    }
+
+    suspend fun queryCardIdAtPosition(index: Int): CardId {
+        // TODO: Slow - this will be refactored
+        return queryAllCardIds()[index]
+    }
+
+    suspend fun querySelectedCardIdAtPosition(index: Int): CardId {
+        // TODO: Slow - this will be refactored
+        return queryAllSelectedCardIds()[index]
+    }
+
     companion object {
-        const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
-        const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
         fun factory(
             lastDeckIdRepository: LastDeckIdRepository,
             cacheDir: File,
@@ -855,3 +909,6 @@ class PreviewerIdsFile(path: String) : File(path), Parcelable {
         }
     }
 }
+
+fun BrowserColumns.Column.getLabel(cardsOrNotes: CardsOrNotes): String =
+    if (cardsOrNotes == CARDS) cardsModeLabel else notesModeLabel

@@ -21,6 +21,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.annotation.IdRes
@@ -30,6 +31,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.model.CardsOrNotes
+import timber.log.Timber
 
 class BrowserOptionsDialog(private val cardsOrNotes: CardsOrNotes, private val isTruncated: Boolean) : AppCompatDialogFragment() {
     private lateinit var dialogView: View
@@ -60,6 +62,13 @@ class BrowserOptionsDialog(private val cardsOrNotes: CardsOrNotes, private val i
         }
 
         dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked = isTruncated
+
+        dialogView.findViewById<LinearLayout>(R.id.action_rename_flag).setOnClickListener {
+            Timber.d("Rename flag clicked")
+            val flagRenameDialog = FlagRenameDialog()
+            flagRenameDialog.show(parentFragmentManager, "FlagRenameDialog")
+            dismiss()
+        }
 
         return MaterialAlertDialogBuilder(requireContext()).run {
             this.setView(dialogView)

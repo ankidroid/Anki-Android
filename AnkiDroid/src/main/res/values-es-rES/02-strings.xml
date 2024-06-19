@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Error fatal: El renderizador de WebView se cayó. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Fallo de procesamiento de WebView del sistema</string>
     <string name="webview_crash_loop_dialog_content">WebView del sistema no pudo procesar la tarjeta \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pregunta</item>
-        <item>Campo de clasificación</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Respuesta</item>
-        <item>Tarjeta</item>
-        <item>Mazo</item>
-        <item>Nota</item>
-        <item>Pregunta</item>
-        <item>Etiquetas</item>
-        <item>Fallos</item>
-        <item>Repasos</item>
-        <item>Intervalo</item>
-        <item>Facilidad</item>
-        <item>Programadas</item>
-        <item>Tarjeta modificada</item>
-        <item>Creado</item>
-        <item>Nota modificada</item>
-    </string-array>
     <string name="filter_by_flags">Banderas</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Cambiar el límite de tarjetas nuevas para hoy</string>

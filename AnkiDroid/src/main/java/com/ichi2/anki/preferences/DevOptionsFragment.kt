@@ -86,7 +86,7 @@ class DevOptionsFragment : SettingsFragment() {
         // Instant Editor
         requirePreference<Preference>(R.string.pref_open_instant_editor).setOnPreferenceClickListener {
             val intent = Intent(activity, InstantNoteEditorActivity::class.java).apply {
-                putExtra("extra_text_key", "Hello developer, this a test sentence. You can test turning text to cloze here")
+                putExtra("extra_text_key", "Hello developer this is a test sentence. You can test turning text to cloze here")
             }
             startActivity(intent)
             false

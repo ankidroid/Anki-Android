@@ -104,13 +104,15 @@
     <string name="menu_suspend">સસ્પેન્ડ</string>
     <string name="menu_delete_note">નોંધ કાયમ માટે કાઢી નાખો</string>
     <string name="menu_flag">ધ્વજ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">કાર્ડને ચિહ્નિત કરો</string>
     <string name="menu_edit_tags">ચિહ્નો બદલો </string>
     <string name="delete_note_message">આ નોંધ અને તેના તમામ કાડઁ ખરેખર કાઢી નાખીએ ?\n%s</string>
     <string name="menu_search">%1$s માં જુઓ </string>
     <string name="menu_mark_note">નોંધ ચિહ્નિત કરો</string>
     <string name="menu_unmark_note">ચિહ્નિત નોંધોમાથી કાઢો</string>
-    <string name="menu_toggle_mic_tool_bar">ઊચ્ચારણ તપાસો</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">થપ્પી ઉમેરો </string>
     <string name="new_dynamic_deck">ફિલ્ટર કરેલ ડેક બનાવો</string>
     <string name="directory_inaccessible">AnkiDroid શબ્દાવલિ પહોંચ બહાર છે</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ડેક શોધ</string>
     <string name="invalid_deck_name">અમાન્ય ડેક નામ</string>
     <string name="studyoptions_congrats_finished">અભિનંદન! તમે હમણાં માટે સમાપ્ત કર્યું છે.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">હજુ સુધી કોઈ કાર્ડ બાકી નથી</string>
     <string name="sd_card_not_mounted">ઉપકરણ સંગ્રહ માઉન્ટ થયેલ નથી</string>
     <string name="button_sync" comment="Text of the sync button">સમન્વયન</string>

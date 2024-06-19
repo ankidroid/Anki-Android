@@ -104,13 +104,15 @@
     <string name="menu_suspend">Kaŝi daŭre</string>
     <string name="menu_delete_note">Forigi noton</string>
     <string name="menu_flag">Flagi</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flagi karton</string>
     <string name="menu_edit_tags">Redakti etikedojn</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>
     <string name="menu_search">Serĉi en %1$s</string>
     <string name="menu_mark_note">Marki noton</string>
     <string name="menu_unmark_note">Malmarki noton</string>
-    <string name="menu_toggle_mic_tool_bar">Kontroli elparolon</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Krei kartaron</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
     <string name="directory_inaccessible">Dosierujo de AnkiDroid estas nealirebla</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Serĉi kartaron</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Neniu karto por ripeti</string>
     <string name="sd_card_not_mounted">Aparata konservejo ne muntita</string>
     <string name="button_sync" comment="Text of the sync button">Samtempigi</string>

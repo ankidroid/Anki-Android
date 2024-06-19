@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Errore fatale: il renderer WebView si è blocatto. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Errore di restituzione grafica del sistema WebView</string>
     <string name="webview_crash_loop_dialog_content">La WebView sistema non è riuscita a rendere la carta «%1$s».\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Domanda</item>
-        <item>Ordina per</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Risposta</item>
-        <item>Carta</item>
-        <item>Mazzo</item>
-        <item>Nota</item>
-        <item>Domanda</item>
-        <item>Etichette</item>
-        <item>Errori</item>
-        <item>Ripetizioni</item>
-        <item>Intervallo</item>
-        <item>Facilità</item>
-        <item>Da ripetere</item>
-        <item>Carta modificata</item>
-        <item>Creato</item>
-        <item>Nota modificata</item>
-    </string-array>
     <string name="filter_by_flags">Contrassegni</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifica il limite odierno di nuove carte</string>

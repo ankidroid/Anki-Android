@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatal ᱵᱷᱩᱞ: WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="webview_crash_loop_dialog_title">ᱥᱤᱥᱴᱚᱢ WebView ᱨᱮᱱᱰᱚᱨᱤᱝ ᱯᱷᱮᱞ ᱮᱱᱟ</string>
     <string name="webview_crash_loop_dialog_content">ᱥᱤᱥᱴᱚᱢ WebView ᱠᱟᱨᱰ ᱨᱮᱱᱰᱚᱨᱤᱝ ᱡᱚᱠᱷᱟᱜ ᱯᱷᱮᱞ ᱮᱱᱟ \'%1$s\'.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>ᱯᱚᱨᱥᱚᱱ</item>
-        <item>ᱡᱟᱭᱛᱟ ᱥᱚᱨᱟᱴ ᱢᱮ</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>ᱛᱮᱞᱟ</item>
-        <item>ᱠᱟᱰ</item>
-        <item>ᱰᱮᱠ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ</item>
-        <item>ᱯᱚᱨᱥᱚᱱ</item>
-        <item>ᱴᱮᱜᱥ</item>
-        <item>ᱞᱮᱯᱥ</item>
-        <item>ᱥᱚᱢᱤᱠᱷᱭᱟ</item>
-        <item>ᱚᱸᱛᱨᱟᱞ</item>
-        <item>ᱥᱚᱦᱚᱡ</item>
-        <item>ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</item>
-        <item>ᱠᱟᱰ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
-        <item>ᱛᱮᱭᱟᱨ ᱮᱱᱟ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
-    </string-array>
     <string name="filter_by_flags">ᱯᱚᱛᱠᱟ ᱠᱚ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>

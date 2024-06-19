@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.ichi2.anki.testlib"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 23
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     flavorDimensions += "appStore"

@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Malubhang Kamalian: Nawask ang renderer ng WebView. Dahilan: %s</string>
     <string name="webview_crash_loop_dialog_title">Bigo ang Pag-Render ng Pansistemang WebView</string>
     <string name="webview_crash_loop_dialog_content">Bigo ang Pansistemang Webview sa pag-render sa card na \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Tanong</item>
-        <item>I-sort ang field</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Sagot</item>
-        <item>Card</item>
-        <item>Deck</item>
-        <item>Tala</item>
-        <item>Tanong</item>
-        <item>Mga Tag</item>
-        <item>Mga Pagkukulang</item>
-        <item>Mga Repaso</item>
-        <item>Agwat</item>
-        <item>Gaan</item>
-        <item>Takda</item>
-        <item>Binago ang Card</item>
-        <item>Nilikha</item>
-        <item>Binago ang Tala</item>
-    </string-array>
     <string name="filter_by_flags">Mga Watawat</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Baguhin ang limitasyon sa bagong card ngayong araw</string>
@@ -144,9 +123,9 @@
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopyahin bilang Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sa %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Baguhin ang pangalan</string>
-    <string name="checks_action">Tsek</string>
-    <string name="check_db">I-tsek ang database</string>
-    <string name="check_media">I-tsek ang media</string>
+    <string name="checks_action">Suriin</string>
+    <string name="check_db">Suriin ang database</string>
+    <string name="check_media">Suriin ang media</string>
     <string name="empty_cards">Mga walang lamang card</string>
     <string name="empty_card_warning">Walang laman ang card na ito. Gamitin ang opsiyon na \"Mga walang lamang card\" mula sa menu sa screen ng listahan ng deck.</string>
     <string name="unknown_type_field_warning">I-type ang sagot: hindi kilalang patlang %s</string>

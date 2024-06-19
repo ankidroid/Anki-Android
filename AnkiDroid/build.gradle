@@ -35,7 +35,7 @@ static def gitCommitHash() {
 android {
     namespace "com.ichi2.anki"
 
-    compileSdk 34 // change api compileSdk at the same time
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     buildFeatures {
         buildConfig = true
@@ -76,9 +76,9 @@ android {
         // needed for upgrades to be offered correctly.
         versionCode=21900104
         versionName="2.19alpha4"
-        minSdk 23 // also in testlib/build.gradle.kts
+        minSdk libs.versions.minSdk.get().toInteger()
         // After #13695: change .tests_emulator.yml
-        targetSdk 33 // also in [api|testlib]/build.gradle.kts and ../robolectricDownloader.gradle
+        targetSdk libs.versions.targetSdk.get().toInteger()
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
@@ -305,6 +305,9 @@ dependencies {
     compileOnly libs.jetbrains.annotations
     compileOnly libs.auto.service.annotations
     annotationProcessor libs.auto.service
+
+    // modules
+    implementation project(":common")
 
     implementation libs.androidx.activity
     implementation libs.androidx.annotation

@@ -104,13 +104,15 @@
     <string name="menu_suspend">Pezulloni</string>
     <string name="menu_delete_note">Fshij shënimin</string>
     <string name="menu_flag">Flamurin</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flamurin kartën</string>
     <string name="menu_edit_tags">Redakto etiketat</string>
     <string name="delete_note_message">Të fshihet vërtet ky shënim dhe të gjitha kartat e tij?\n%s</string>
     <string name="menu_search">Kërkoni në %1$s</string>
     <string name="menu_mark_note">Shënoni shënimin</string>
     <string name="menu_unmark_note">Zhshënjoni shënimin</string>
-    <string name="menu_toggle_mic_tool_bar">Kontrolloni shqiptimin</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Krijo kuvertë</string>
     <string name="new_dynamic_deck">Krijo kuvertë të filtruar</string>
     <string name="directory_inaccessible">Drejtoria AnkiDroid është e paarritshme</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kërkimi i kuvertës</string>
     <string name="invalid_deck_name">Emër i pavlefshëm kuvertë</string>
     <string name="studyoptions_congrats_finished">urime! Ju keni mbaruar tani për tani.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Nuk ka ende afat</string>
     <string name="sd_card_not_mounted">Hapësira ruajtëse e pajisjes nuk është montuar</string>
     <string name="button_sync" comment="Text of the sync button">Sinkronizo</string>

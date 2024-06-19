@@ -70,6 +70,7 @@
     <string name="sync_title">Sincronització</string>
     <string name="sync_log_uploading_message">Sincronització completa dels paquets locals</string>
     <string name="sync_database_acknowledge">Col·lecció sincronitzada</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">La base de dades està feta malbé. Corregiu-ho abans d\'intentar una nova sincronització.\n\nVeieu %s per a obtenir informació sobre com reparar la base de dades.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>

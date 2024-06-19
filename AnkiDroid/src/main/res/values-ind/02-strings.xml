@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Galat Fatal: Perender WebView mogok. Sebab: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Gagal Merender</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView gagal merender kartu \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pertanyaan</item>
-        <item>Urutkan bidang</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Jawaban</item>
-        <item>Kartu</item>
-        <item>Dek</item>
-        <item>Catatan</item>
-        <item>Pertanyaan</item>
-        <item>Tag</item>
-        <item>Kelupaan</item>
-        <item>Ulasan</item>
-        <item>Interval</item>
-        <item>Renggang</item>
-        <item>Jatuh tempo</item>
-        <item>Kartu diubah</item>
-        <item>Dibuat</item>
-        <item>Catatan diubah</item>
-    </string-array>
     <string name="filter_by_flags">Bendera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>

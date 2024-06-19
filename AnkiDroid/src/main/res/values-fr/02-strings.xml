@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Erreur Fatale : Plantage du moteur de rendu Webview. Cause : %s</string>
     <string name="webview_crash_loop_dialog_title">Échec de rendu du système WebView</string>
     <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte « %1$s ».\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Question</item>
-        <item>Trier</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Réponse</item>
-        <item>Carte</item>
-        <item>Paquet</item>
-        <item>Note</item>
-        <item>Question</item>
-        <item>Étiquettes</item>
-        <item>Erreurs</item>
-        <item>Révisions</item>
-        <item>Intervalle</item>
-        <item>Facilité</item>
-        <item>À faire</item>
-        <item>Carte modifiée</item>
-        <item>Créée</item>
-        <item>Note modifiée</item>
-    </string-array>
     <string name="filter_by_flags">Marqueurs</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifier la limite de nouvelles cartes d\'aujourd\'hui</string>

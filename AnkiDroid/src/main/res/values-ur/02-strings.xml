@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">مہلک خرابی: WebView پیش کنندہ کریش ہو گیا۔ وجہ: %s</string>
     <string name="webview_crash_loop_dialog_title">سسٹم ویب ویو رینڈرنگ میں ناکامی۔</string>
     <string name="webview_crash_loop_dialog_content">سسٹم WebView کارڈ \'%1$s\' رینڈر کرنے میں ناکام رہا۔\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>سوال</item>
-        <item>ترتیب دیں فیلڈ</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>جواب</item>
-        <item>کارڈ</item>
-        <item>ڈیک</item>
-        <item>نوٹ</item>
-        <item>سوال</item>
-        <item>ٹیگز</item>
-        <item>لیپس</item>
-        <item>جائزے</item>
-        <item>وقفہ</item>
-        <item>آسانی</item>
-        <item>بقایا</item>
-        <item>کارڈ میں ترمیم کی گئی</item>
-        <item>بنایا</item>
-        <item>ترمیم شدہ نوٹ</item>
-    </string-array>
     <string name="filter_by_flags">جھنڈے</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">آج کی نئی کارڈ کی حد میں ترمیم کریں۔</string>

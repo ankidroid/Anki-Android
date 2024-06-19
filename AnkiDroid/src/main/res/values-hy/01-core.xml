@@ -104,13 +104,15 @@
     <string name="menu_suspend">Հեռացնել</string>
     <string name="menu_delete_note">Ջնջել գրառումը</string>
     <string name="menu_flag">Դրոշ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Ավելացնել դրոշ</string>
     <string name="menu_edit_tags">Խմբագրել պիտակները</string>
     <string name="delete_note_message">Ջնջե՞լ այս գրառումը և նրա բոլոր քարտերը:\n%s</string>
     <string name="menu_search">Որոնում %1$s-ում</string>
     <string name="menu_mark_note">Նշել գրառումը</string>
     <string name="menu_unmark_note">Ապանշել գրառումը</string>
-    <string name="menu_toggle_mic_tool_bar">Արտասանության ստուգում</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Ստեղծել կապուկ</string>
     <string name="new_dynamic_deck">Ստեղծել զտված կապուկ</string>
     <string name="directory_inaccessible">AnkiDroid-ի պանակը անհասանելի է</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Կապուկների որոնում</string>
     <string name="invalid_deck_name">Invalid deck name</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Կրկնելիք քարտեր դեռ չկան</string>
     <string name="sd_card_not_mounted">Սարքի պահեստը տեղադրված չէ</string>
     <string name="button_sync" comment="Text of the sync button">Համաժամեցում</string>

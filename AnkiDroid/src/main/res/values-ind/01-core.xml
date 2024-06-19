@@ -101,13 +101,15 @@
     <string name="menu_suspend">Tangguhkan</string>
     <string name="menu_delete_note">Hapus catatan</string>
     <string name="menu_flag">Panji</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Beri kartu panji</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_search">Pencarian di %1$s</string>
     <string name="menu_mark_note">Tandai catatan</string>
     <string name="menu_unmark_note">Batal tandai catatan</string>
-    <string name="menu_toggle_mic_tool_bar">Cek pelafalan</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Buat dek</string>
     <string name="new_dynamic_deck">Buat dek terfilter</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat diakses</string>
@@ -128,6 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pencarian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
     <string name="button_sync" comment="Text of the sync button">Sinkronisasi</string>

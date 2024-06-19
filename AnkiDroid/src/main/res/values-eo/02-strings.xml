@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Neriparebla eraro pri WebView. Kaŭzo: %s</string>
     <string name="webview_crash_loop_dialog_title">Eraro bildigi per sistema WebView</string>
     <string name="webview_crash_loop_dialog_content">La sistema komponanto WebView fiaskis bildigi la karton “%1$s”.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Demando</item>
-        <item>Ordigi laŭ kampo</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Respondo</item>
-        <item>Karto</item>
-        <item>Kartaro</item>
-        <item>Noto</item>
-        <item>Demando</item>
-        <item>Etikedoj</item>
-        <item>Misrespondoj</item>
-        <item>Ripetoj</item>
-        <item>Intertempo</item>
-        <item>Facileco</item>
-        <item>Lernenda</item>
-        <item>Modifis karton</item>
-        <item>Kreita</item>
-        <item>Modifis noton</item>
-    </string-array>
     <string name="filter_by_flags">Flagoj</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifi hodiaŭan limigon de novaj kartoj</string>
@@ -361,8 +340,8 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="start_recording">Registri</string>
+    <string name="stop_recording">Haltigi</string>
+    <string name="play_recording">Ludi</string>
+    <string name="next_recording">Antaŭen</string>
 </resources>

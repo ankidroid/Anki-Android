@@ -104,13 +104,15 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
     <string name="menu_flag">Sinalização</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Sinalizar ficha</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
     <string name="menu_search">Procurar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_toggle_mic_tool_bar">Verificar a pronúncia</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho filtrado</string>
     <string name="directory_inaccessible">A diretoria AnkiDroid está inacessível</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralhos</string>
     <string name="invalid_deck_name">Nome de baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho finalizado por enquanto! %s</string>
     <string name="studyoptions_no_cards_due">Nenhuma ficha por rever</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -247,5 +250,5 @@
     <string name="image_occlusion">Oclusão de imagem</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Eliminar conta</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Cartão instantâneo</string>
 </resources>

@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">خطأ قاتل: توقف معالج عارض الويب عن العمل. السبب: %s</string>
     <string name="webview_crash_loop_dialog_title">فشل في معالجة عارض الويب الخاص بالنظام</string>
     <string name="webview_crash_loop_dialog_content">فشل عارض ويب النظام في عرض البطاقة %1$s.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>سؤال</item>
-        <item>حقل الفرز</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>جواب</item>
-        <item>بطاقة</item>
-        <item>رزمة</item>
-        <item>ملحوظة</item>
-        <item>سؤال</item>
-        <item>وسوم</item>
-        <item>هفوات</item>
-        <item>مراجعات</item>
-        <item>التباعد</item>
-        <item>سهولة</item>
-        <item>تاريخ الاستحقاق</item>
-        <item>تاريخ تعديل البطاقة</item>
-        <item>تاريخ الإنشاء</item>
-        <item>تاريخ تعديل الملحوظة</item>
-    </string-array>
     <string name="filter_by_flags">أعلام</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>

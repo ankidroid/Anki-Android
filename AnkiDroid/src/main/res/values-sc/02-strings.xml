@@ -81,27 +81,6 @@
     <string name="webview_crash_loop_dialog_title">Fallimentu de sa renderizatzione WebView de sistema</string>
     <string name="webview_crash_loop_dialog_content">Su renderizadore WebView de sistema no est resèssidu a renderizare sa carta \'%1$s\'.\n
    %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Campu de ordinamentu</item>
-        <item>Pregunta</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Carta</item>
-        <item>Matzu</item>
-        <item>Nota</item>
-        <item>Pregunta</item>
-        <item>Etichetas</item>
-        <item>Faddinas</item>
-        <item>Revisiones</item>
-        <item>I</item>
-        <item>Intervallu</item>
-        <item>Nota modificada</item>
-        <item>G</item>
-        <item>Fatzilidade</item>
-        <item>Creadu</item>
-        <item>Carta modificada</item>
-    </string-array>
     <string name="filter_by_flags">Banderas</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modìfica su lìmite de cartas noas de oe</string>

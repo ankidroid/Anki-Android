@@ -104,13 +104,15 @@
     <string name="menu_suspend">സസ്പെൻഡ് ചെയ്യുക</string>
     <string name="menu_delete_note">കുറിപ്പ് മായ്ക്കുക</string>
     <string name="menu_flag">ഫ്ലാഗ്</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ഫ്ലാഗ് കാർഡ്</string>
     <string name="menu_edit_tags">ടാഗുകൾ എഡിറ്റുചെയ്യുക</string>
     <string name="delete_note_message">ഈ കുറിപ്പും അതിന്റെ എല്ലാ കാർഡുകളും ശരിക്കും ഇല്ലാതാക്കുക?\n%s</string>
     <string name="menu_search">%1$s ൽ തിരയുക</string>
     <string name="menu_mark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>
     <string name="menu_unmark_note">കുറിപ്പ് അടയാളപ്പെടുത്തുക</string>
-    <string name="menu_toggle_mic_tool_bar">ഉച്ചാരണം പരിശോധിക്കുക</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ഡെക്ക് സൃഷ്ടിക്കുക</string>
     <string name="new_dynamic_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് സൃഷ്ടിക്കുക</string>
     <string name="directory_inaccessible">AnkiDroid ഡയറക്‌ടറി ആക്‌സസ്സുചെയ്യാനാകില്ല</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
     <string name="invalid_deck_name">ഡെക്കിന്റെ പേര് അസാധുവാണ്</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">കാർഡുകളൊന്നും ഇതുവരെ ലഭിച്ചിട്ടില്ല</string>
     <string name="sd_card_not_mounted">ഉപകരണ സംഭരണം മ .ണ്ട് ചെയ്തിട്ടില്ല</string>
     <string name="button_sync" comment="Text of the sync button">സമന്വയിപ്പിക്കുക</string>

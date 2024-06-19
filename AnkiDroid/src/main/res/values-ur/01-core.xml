@@ -104,13 +104,15 @@
     <string name="menu_suspend">معطل</string>
     <string name="menu_delete_note">نوٹ حذف کریں</string>
     <string name="menu_flag">فلیگ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">پرچم کارڈ</string>
     <string name="menu_edit_tags">کارڈز میں ترمیم کریں</string>
     <string name="delete_note_message">واقعی یہ نوٹ اور اس کے تمام کارڈز حذف کریں؟ \n%s</string>
     <string name="menu_search">%1$s میں تلاش کریں</string>
     <string name="menu_mark_note">نوٹ کو نشان زد کریں</string>
     <string name="menu_unmark_note">نوٹ بے نشان کریں</string>
-    <string name="menu_toggle_mic_tool_bar">تلفظ چیک کریں</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ڈیک بنائیں</string>
     <string name="new_dynamic_deck">فلٹر شدہ ڈیک بنائیں</string>
     <string name="directory_inaccessible">آنکی ڈیرائڈ ڈائریکٹری ناقابل رسائی ہے</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ڈیک تلاش</string>
     <string name="invalid_deck_name">ڈیک کا نام غلط ہے</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ابھی تک کوئی کارڈ باقی نہیں ہے</string>
     <string name="sd_card_not_mounted">ڈیوائس اسٹوریج نصب نہیں ہے</string>
     <string name="button_sync" comment="Text of the sync button">ہم وقت سازی</string>

@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Фатална грешка: WebView визуализаторът се срина. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Неуспех при системно WebView визуализиране</string>
     <string name="webview_crash_loop_dialog_content">На системното WebView не се получи да покаже картата \'%1$s\'.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Въпрос</item>
-        <item>Поле за сортиране</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Oтговор</item>
-        <item>Карта</item>
-        <item>Тесте</item>
-        <item>Бележка</item>
-        <item>Въпрос</item>
-        <item>Етикети</item>
-        <item>Пропуски</item>
-        <item>Разглеждания</item>
-        <item>Интервал</item>
-        <item>Лесно</item>
-        <item>Поради</item>
-        <item>променена карта</item>
-        <item>Създадено</item>
-        <item>променена бележка</item>
-    </string-array>
     <string name="filter_by_flags">Флагове</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Модифициране на днешното ограничение за нови карти</string>

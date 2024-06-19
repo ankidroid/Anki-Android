@@ -110,13 +110,15 @@
     <string name="menu_suspend">Прыпыніць</string>
     <string name="menu_delete_note">Выдаліць нататку</string>
     <string name="menu_flag">Сцяжок</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Пазначыць картку</string>
     <string name="menu_edit_tags">Адрэдагаваць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
     <string name="menu_search">Шукаць у %1$s</string>
     <string name="menu_mark_note">Пазначыць нататку</string>
     <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
-    <string name="menu_toggle_mic_tool_bar">Праверыць вымаўленне</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="new_dynamic_deck">Стварыць фільтраваную калоду</string>
     <string name="directory_inaccessible">Каталог AnkiDroid недаступны</string>
@@ -137,6 +139,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук калоды</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>

@@ -19,7 +19,7 @@ package com.ichi2.compat
 import android.annotation.TargetApi
 import android.icu.util.ULocale
 import android.view.MotionEvent
-import com.ichi2.utils.isRobolectric
+import com.ichi2.anki.common.utils.android.isRobolectric
 import timber.log.Timber
 import java.util.Locale
 

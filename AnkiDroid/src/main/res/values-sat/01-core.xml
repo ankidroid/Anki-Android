@@ -104,13 +104,15 @@
     <string name="menu_suspend">ᱵᱚᱸᱫᱚᱭ ᱢᱮ</string>
     <string name="menu_delete_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤ</string>
     <string name="menu_flag">ᱯᱚᱛᱠᱟ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ᱠᱟᱰ ᱯᱚᱛᱠᱟᱭ ᱢᱮ</string>
     <string name="menu_edit_tags">ᱴᱮᱜᱥ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="delete_note_message">ᱱᱚᱛᱴ ᱥᱟᱞᱟᱜ ᱛᱮ ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱥᱚ ᱠᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ ᱥᱮ?\n%s</string>
     <string name="menu_search">%1$s ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ</string>
     <string name="menu_mark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ</string>
     <string name="menu_unmark_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱚ-ᱪᱤᱱᱦᱟᱹᱭ ᱢᱮ </string>
-    <string name="menu_toggle_mic_tool_bar">ᱥᱩᱨ ᱧᱣᱞ ᱛᱟᱢ</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ᱱᱟᱶᱟ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="new_dynamic_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="directory_inaccessible">AnkiDroid ᱩᱱᱩᱫᱩᱜ ᱫᱚ ᱵᱟᱭ ᱦᱟᱛᱟᱣ ᱫᱟᱲᱮᱟᱜ ᱠᱟᱱᱟ </string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ᱰᱮᱠ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="invalid_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱷᱩᱞ</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ᱱᱤᱛᱚᱜ ᱫᱚ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <string name="sd_card_not_mounted">ᱥᱟᱫᱷᱚᱱ ᱜᱚᱫᱟᱢ ᱫᱚ ᱵᱟᱭ ᱢᱟᱩᱱᱴ ᱟᱠᱟᱱᱟ</string>
     <string name="button_sync" comment="Text of the sync button">ᱟᱭᱩᱨ ᱢᱤᱫ</string>

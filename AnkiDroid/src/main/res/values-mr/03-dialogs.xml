@@ -86,20 +86,20 @@
     <string name="custom_study_rebuild_deck_corrupt">सानुकूल अभ्यास डेक पुन्हा तयार करू शकलो नाही</string>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">जागा नाही</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid ला सुरू ठेवण्यासाठी %s विनामूल्य स्टोरेज स्पेस आवश्यक आहे. कृपया थोडी जागा द्या</string>
     <string name="restore_backup_title">बॅकअप पुनर्संचयित?</string>
     <string name="restore_backup">आपला संग्रह जुन्या प्रतीसह पुनर्स्थित केला जाईल. कोणतीही जतन न केलेली प्रगती गमावली जाईल.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">दुसरा निवडा</string>
     <string name="dialog_cancel">रद्द करा</string>
     <string name="dialog_ok">ठीक आहे</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">पुष्टी</string>
     <string name="dialog_no">नाही</string>
     <string name="dialog_yes">होय</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">ठेवा</string>
+    <string name="dialog_remove">काढा</string>
     <string name="dialog_continue">सुरू</string>
-    <string name="dialog_processing">Processing&#8230;</string>
+    <string name="dialog_processing">प्रक्रिया करत आहे&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">तयार करा</string>
     <string name="dialog_positive_delete">हटवा</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -174,7 +174,7 @@
     <string name="boot_service_failed_to_schedule_notifications">स्मरणपत्रे शेड्यूल करण्यात अयशस्वी</string>
     <string name="boot_service_too_many_notifications">बरीच स्मरणपत्रे शेड्यूल केली. काही दिसणार नाहीत</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">भाषा सेट करा</string>
     <string name="locale_selection_dialog_summary">मजकूर संपादित करताना जीबीआर्ड बदलणारी भाषा समर्थन करणारे काही बहुभाषिक कीबोर्ड \n\n कृपया आपला कीबोर्ड भाषा बदलत नसेल तर आपल्या कीबोर्ड निर्मात्याकडून “setImeHintLocales” वैशिष्ट्याची विनंती करा.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid वापरणे</string>
@@ -190,26 +190,26 @@
     <string name="help_item_support_develop_ankidroid">विकसित करा</string>
     <string name="help_item_support_rate_ankidroid">दर</string>
     <string name="help_item_support_other_ankidroid">इतर</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">भाषांतर करा</string>
     <string name="help_title_community">समुदाय</string>
     <string name="help_item_anki_forums">अंकी मंच</string>
     <string name="help_item_discord">विघटन</string>
     <string name="help_item_facebook">फेसबुक</string>
     <string name="help_item_twitter">ट्विटर</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_title_privacy">गोपनीयता</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid गोपनीयता धोरण</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb गोपनीयता धोरण</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb अटी आणि नियम</string>
     <string name="help_title_send_exception">समस्यानिवारण अहवाल पाठवा</string>
     <string name="help_dialog_exception_report_debounce">अहवाल आधीच सादर केला आहे</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">अहवाल पाठवला!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">स्वयंचलित समक्रमण %d सेकंदात ट्रिगर केले जाऊ शकते</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
+    <string name="metered_sync_data_warning">तुमचा इंटरनेट प्रदाता डेटा वापरासाठी पैसे आकारू शकतो</string>
+    <string name="deck_picker_new">या डेकमध्ये आज पाहण्यासाठी नवीन कार्डांची संख्या.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
     <!-- This description is valid fos
@@ -256,5 +256,8 @@
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
     <string name="open">Open</string>
-    <string name="tap_to_cloze">Single tap text to cloze</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <!-- Rename Flags -->
+    <string name="confirm_before_saving">Confirm all changes before saving</string>
 </resources>

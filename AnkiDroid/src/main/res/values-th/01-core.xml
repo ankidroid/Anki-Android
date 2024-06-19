@@ -101,13 +101,15 @@
     <string name="menu_suspend">ระงับ</string>
     <string name="menu_delete_note">ลบโน้ต</string>
     <string name="menu_flag">เครื่องหมาย</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">เครื่องหมายการ์ด</string>
     <string name="menu_edit_tags">แก้ไขแท็ก</string>
     <string name="delete_note_message">คุณต้องการจะลบโน้ตนี้และการ์ดภายในทั้งหมดหรือไม่?\n%s</string>
     <string name="menu_search">ค้นหาใน %1$s</string>
     <string name="menu_mark_note">ทำเครื่องหมายโน้ต</string>
     <string name="menu_unmark_note">ยกเลิกการทำเครื่องหมายโน้ต</string>
-    <string name="menu_toggle_mic_tool_bar">ตรวจสอบวิธีการออกเสียง</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">สร้างกองใหม่</string>
     <string name="new_dynamic_deck">สร้าง สำรับแบบกรอง</string>
     <string name="directory_inaccessible">เข้าถึงที่เก็บข้อมูล AnkiDroid ไม่ได้</string>
@@ -128,6 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ค้นหาสำรับ</string>
     <string name="invalid_deck_name">ชื่อนี้ไม่สามารถตั้งให้สำรับได้</string>
     <string name="studyoptions_congrats_finished">ยินดีด้วย! คุณทบทวนเสร็จแล้วสำหรับตอนนี้</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ไม่มีบัตรคำที่ต้องทบทวนในตอนนี้</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync" comment="Text of the sync button">การซิงค์</string>

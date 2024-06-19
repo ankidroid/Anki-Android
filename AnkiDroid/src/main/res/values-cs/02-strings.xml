@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kritická chyba: Vykreslování WebView selhalo. Příčina: %s</string>
     <string name="webview_crash_loop_dialog_title">Selhání vykreslování systémového webView</string>
     <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Otázka</item>
-        <item>Pole řazení</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Odpověď</item>
-        <item>Karta</item>
-        <item>Balíček</item>
-        <item>Poznámka</item>
-        <item>Otázka</item>
-        <item>Štítky</item>
-        <item>Zapomínání</item>
-        <item>Opakování</item>
-        <item>Interval</item>
-        <item>Snadnost</item>
-        <item>Ke zkoušení</item>
-        <item>Karta upravena</item>
-        <item>Vytvořeno</item>
-        <item>Poznámka upravena</item>
-    </string-array>
     <string name="filter_by_flags">Příznaky</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
@@ -367,10 +346,10 @@
     <string name="failed_to_copy">Kopírování se nezdařilo</string>
     <string name="card_browser_unavailable_when_notes_mode">Nedostupné v režimu „Poznámky“</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="few">%d cards unburied</item>
-        <item quantity="many">%d cards unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">Zrušeno přeskočení %d karty</item>
+        <item quantity="few">Zrušeno přeskočení %d karet</item>
+        <item quantity="many">Zrušeno přeskočení %d karty</item>
+        <item quantity="other">Zrušeno přeskočení %d karet</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Přemístit</string>
     <string name="start_recording">Record</string>

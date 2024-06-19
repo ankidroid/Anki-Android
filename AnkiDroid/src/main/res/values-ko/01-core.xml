@@ -101,13 +101,15 @@
     <string name="menu_suspend">비활성화</string>
     <string name="menu_delete_note">노트 삭제하기</string>
     <string name="menu_flag">표시</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">카드에 플래그 추가</string>
     <string name="menu_edit_tags">태그 수정</string>
     <string name="delete_note_message">다음 노트와 그 노트의 모든 카드를 정말로 삭제하시겠습니까?\n%s</string>
     <string name="menu_search">%1$s에서 찾아보기</string>
     <string name="menu_mark_note">노트 표시</string>
     <string name="menu_unmark_note">노트 표시 해제</string>
-    <string name="menu_toggle_mic_tool_bar">발음 확인</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">카드 묶음 만들기</string>
     <string name="new_dynamic_deck">필터링된 카드 묶음 만들기</string>
     <string name="directory_inaccessible">AnkiDroid 폴더에 접근할 수 없습니다</string>
@@ -128,6 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">뭉치 검색</string>
     <string name="invalid_deck_name">유효하지 않은 뭉치 이름입니다</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">남은 카드가 없습니다.</string>
     <string name="sd_card_not_mounted">장치 저장소가 마운트되지 않음</string>
     <string name="button_sync" comment="Text of the sync button">동기화</string>
