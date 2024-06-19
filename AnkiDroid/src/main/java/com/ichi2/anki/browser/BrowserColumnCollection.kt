@@ -63,21 +63,27 @@ class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
         }
 
         /**
-         * @param block Update the column list here. `null` meaning 'none'
+         * @param block Update the column list here. `null` meaning 'none'.
+         * Return `false` if no changes should be made
+         *
+         * @return the updated [BrowserColumnCollection], or `null` if [block] returned `false` so
+         * no changes were made
          */
         fun update(
             prefs: SharedPreferences,
             mode: CardsOrNotes,
             block: (MutableList<CardBrowserColumn?>) -> Boolean
-        ) {
+        ): BrowserColumnCollection? {
             val valuesToUpdate: MutableList<CardBrowserColumn?> = load(prefs, mode).columns.toMutableList()
             if (!block(valuesToUpdate)) {
                 Timber.d("no changes requested")
-                return
+                return null
             }
             // as in AnkiMobile, this converts: [QUESTION, NONE, TAGS] into [QUESTION, TAGS]
             val updatedValues = valuesToUpdate.filterNotNull()
-            save(prefs, mode, BrowserColumnCollection(updatedValues))
+            return BrowserColumnCollection(updatedValues).also {
+                save(prefs, mode, it)
+            }
         }
 
         fun save(prefs: SharedPreferences, mode: CardsOrNotes, value: BrowserColumnCollection) {
