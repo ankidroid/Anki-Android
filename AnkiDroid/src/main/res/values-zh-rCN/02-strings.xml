@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">严重错误：WebView 渲染器崩溃。原因：%s</string>
     <string name="webview_crash_loop_dialog_title">系统 WebView 渲染失败</string>
     <string name="webview_crash_loop_dialog_content">系统 WebView 渲染卡片 “%1$s” 失败。\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>问题</item>
-        <item>字段</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>答案</item>
-        <item>卡片</item>
-        <item>牌组</item>
-        <item>笔记</item>
-        <item>问题</item>
-        <item>标签</item>
-        <item>遗忘</item>
-        <item>复习</item>
-        <item>间隔</item>
-        <item>简易度</item>
-        <item>到期</item>
-        <item>卡片修改时间</item>
-        <item>卡片创建时间</item>
-        <item>笔记修改时间</item>
-    </string-array>
     <string name="filter_by_flags">旗标</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>

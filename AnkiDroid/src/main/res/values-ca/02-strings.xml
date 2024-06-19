@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Error Fatal: El renderitzador de WebView s\'ha penjat. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Error al sistema de renderització de WebView</string>
     <string name="webview_crash_loop_dialog_content">El sistema WebView ha fallat al renderitzar la carta \'%1$s.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pregunta</item>
-        <item>Camp d\'ordenació</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Resposta</item>
-        <item>Carta</item>
-        <item>Paquet</item>
-        <item>Anotació</item>
-        <item>Pregunta</item>
-        <item>Etiquetes</item>
-        <item>Errades</item>
-        <item>Revisions</item>
-        <item>Intèrval</item>
-        <item>Facilitat</item>
-        <item>Pendent</item>
-        <item>Carta modificada</item>
-        <item>Creada</item>
-        <item>Nota modificada</item>
-    </string-array>
     <string name="filter_by_flags">Bandera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Canviar el límit de cartes noves d\'avui</string>

@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatálna chyba: WebView renderovanie zlyhalo. Príčina: %s</string>
     <string name="webview_crash_loop_dialog_title">Zlyhanie systému WebView renderovania</string>
     <string name="webview_crash_loop_dialog_content">Zobrazenie kartičky systémom WebView zlyhalo \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Otázka</item>
-        <item>Triediace pole</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Odpoveď</item>
-        <item>Kartička</item>
-        <item>Balíček</item>
-        <item>Poznámka</item>
-        <item>Otázka</item>
-        <item>Štítky</item>
-        <item>Zabudnutia</item>
-        <item>Opakovania</item>
-        <item>Interval</item>
-        <item>Ľahkosť</item>
-        <item>Na preskúšanie</item>
-        <item>Kartička modifikovaná</item>
-        <item>Vytvorené</item>
-        <item>Poznámka modifikovaná</item>
-    </string-array>
     <string name="filter_by_flags">Vlajky</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifikovať dnešný limit nových kartičiek</string>

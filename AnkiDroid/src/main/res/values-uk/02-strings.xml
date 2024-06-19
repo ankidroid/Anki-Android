@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Критична помилка WebView. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Збій системного WebView</string>
     <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося відобразити картку \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Запитання</item>
-        <item>Поле сортування</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Відповідь</item>
-        <item>Картка</item>
-        <item>Колода</item>
-        <item>Запис</item>
-        <item>Запитання</item>
-        <item>Теги</item>
-        <item>Забуті</item>
-        <item>Повторення</item>
-        <item>Інтервал</item>
-        <item>Легкість</item>
-        <item>До перегляду</item>
-        <item>Картку змінено</item>
-        <item>Створено</item>
-        <item>Запис змінено</item>
-    </string-array>
     <string name="filter_by_flags">Прапорці</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>

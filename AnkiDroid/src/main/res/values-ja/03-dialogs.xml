@@ -250,5 +250,5 @@
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">「AndroidシステムのWebView 」（または「Android System WebView」）が古くなっています。いくつかの機能が正しく動作しません。更新してください。\n\nインストールされているバージョン: %1$d\n最低限必要なバージョン: %2$d</string>
     <!-- Rename Flags -->
-    <string name="confirm_before_saving">Confirm all changes before saving</string>
+    <string name="confirm_before_saving">編集中のフラグがあります。保存する前に編集を終了してください。</string>
 </resources>

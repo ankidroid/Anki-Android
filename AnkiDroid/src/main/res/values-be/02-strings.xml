@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Крытычная памылка: збой апрацоўшчыка WebView. Прычына: %s</string>
     <string name="webview_crash_loop_dialog_title">Памылка апрацоўшчыка сістэмнага WebView</string>
     <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Пытанне</item>
-        <item>Поле сартавання</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Адказ</item>
-        <item>Картка</item>
-        <item>Калода</item>
-        <item>Нататка</item>
-        <item>Пытанне</item>
-        <item>Меткі</item>
-        <item>Памылковых</item>
-        <item>Паўтарэнняў</item>
-        <item>Інтэрвал</item>
-        <item>Лёгкасць</item>
-        <item>Засталося</item>
-        <item>Картка змененая</item>
-        <item>Створана</item>
-        <item>Нататка зменена</item>
-    </string-array>
     <string name="filter_by_flags">Сцягі</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>

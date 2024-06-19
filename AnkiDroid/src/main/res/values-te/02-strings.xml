@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">ఘోరమైన లోపం: WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
     <string name="webview_crash_loop_dialog_title">సిస్టమ్ WebView రెండరింగ్ వైఫల్యం</string>
     <string name="webview_crash_loop_dialog_content">\'%1$s\' కార్డ్‌ని రెండర్ చేయడంలో సిస్టమ్ WebView విఫలమైంది.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>ప్రశ్న</item>
-        <item>క్రమీకరించు ఫీల్డ్</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>సమాధానం</item>
-        <item>కార్డ్</item>
-        <item>డెక్</item>
-        <item>గమనిక</item>
-        <item>ప్రశ్న</item>
-        <item>టాగ్లు</item>
-        <item>లాప్సెస్</item>
-        <item>సమీక్షలు</item>
-        <item>విరామం</item>
-        <item>సులభంగా</item>
-        <item>ఎందుకంటే</item>
-        <item>కార్డ్ సవరించబడింది</item>
-        <item>సృష్టించబడింది</item>
-        <item>గమనిక సవరించబడింది</item>
-    </string-array>
     <string name="filter_by_flags">జెండాలు</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">నేటి కొత్త కార్డ్ పరిమితిని సవరించండి</string>

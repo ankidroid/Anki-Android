@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kritik Hata: WebView oluşturucusu çöktü. Neden: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Oluşturma Hatası</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Soru</item>
-        <item>Alanı sırala</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Cevap</item>
-        <item>Kart</item>
-        <item>Deste</item>
-        <item>Not</item>
-        <item>Soru</item>
-        <item>Etiketler</item>
-        <item>Yanlışlar</item>
-        <item>Çalışmalar</item>
-        <item>Aralık</item>
-        <item>Kolaylık</item>
-        <item>Vade</item>
-        <item>Kart Değiştirildi</item>
-        <item>Oluşturulma Tarihi</item>
-        <item>Değiştirilmiş Notlar</item>
-    </string-array>
     <string name="filter_by_flags">Bayraklar</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
