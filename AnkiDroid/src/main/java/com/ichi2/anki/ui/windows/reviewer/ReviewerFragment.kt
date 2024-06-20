@@ -252,7 +252,11 @@ class ReviewerFragment :
 
     private val noteEditorLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            viewModel.handleNoteEditorResult(result)
+            if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
+                result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
+            ) {
+                viewModel.refreshCard()
+            }
         }
 
     private fun launchEditNote() {
@@ -277,7 +281,7 @@ class ReviewerFragment :
     }
 
     private val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        viewModel.handleDeckOptionsResult()
+        viewModel.refreshCard()
     }
 
     private fun launchDeckOptions() {
