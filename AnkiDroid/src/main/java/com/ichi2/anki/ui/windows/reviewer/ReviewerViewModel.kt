@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
-import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -25,7 +24,6 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Ease
 import com.ichi2.anki.Flag
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
@@ -159,13 +157,9 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         return NoteEditorDestination(currentCard.await().id)
     }
 
-    fun handleNoteEditorResult(result: ActivityResult) {
-        if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
-            result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
-        ) {
-            launchCatchingIO {
-                updateCurrentCard()
-            }
+    fun refreshCard() {
+        launchCatchingIO {
+            updateCurrentCard()
         }
     }
 
@@ -177,12 +171,6 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         val deckId = withCol { decks.getCurrentId() }
         val isFiltered = withCol { decks.isFiltered(deckId) }
         return DeckOptionsDestination(deckId, isFiltered)
-    }
-
-    fun handleDeckOptionsResult() {
-        launchCatchingIO {
-            updateCurrentCard()
-        }
     }
 
     fun deleteNote() {
