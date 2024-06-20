@@ -116,7 +116,7 @@ def testReport = tasks.register('jacocoTestReport', JacocoReport) {
 }
 testReport.configure {
     dependsOn('testPlayDebugUnitTest')
-    dependsOn('connectedPlayDebugAndroidTest')
+    dependsOn(rootProject.androidTestName)
 }
 
 // A unit-test only report task
@@ -166,4 +166,4 @@ def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) 
             '**/*.ec'
     ])
 }
-androidTestReport.configure { dependsOn('connectedPlayDebugAndroidTest') }
+androidTestReport.configure { dependsOn(rootProject.androidTestName) }

@@ -118,6 +118,11 @@ val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 // allows for universal APKs to be generated
 val universalApkEnabled by extra("true" == System.getProperty("universal-apk", "false"))
 
+val testReleaseBuild by extra(System.getenv("TEST_RELEASE_BUILD") == "true")
+var androidTestName by extra(
+    if (testReleaseBuild) "connectedPlayReleaseAndroidTest" else "connectedPlayDebugAndroidTest"
+)
+
 val gradleTestMaxParallelForks by extra(
     if (System.getProperty("os.name") == "Mac OS X") {
         // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon

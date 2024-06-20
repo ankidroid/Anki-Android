@@ -42,6 +42,12 @@ android {
         aidl = true
     }
 
+    if (rootProject.testReleaseBuild) {
+        testBuildType "release"
+    } else {
+        testBuildType "debug"
+    }
+
     defaultConfig {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
@@ -132,6 +138,7 @@ android {
             minifyEnabled true
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-test-rules.pro'
             signingConfig signingConfigs.release
 
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
@@ -283,7 +290,7 @@ tasks.register('assertNonzeroAndroidTests') {
     }
 }
 afterEvaluate {
-    tasks.named('connectedPlayDebugAndroidTest').configure { finalizedBy('assertNonzeroAndroidTests') }
+    tasks.named(androidTestName).configure { finalizedBy('assertNonzeroAndroidTests') }
 }
 
 apply from: "./robolectricDownloader.gradle"
