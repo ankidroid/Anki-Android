@@ -35,6 +35,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
@@ -123,6 +124,14 @@ class ReviewerFragment :
             R.id.action_suspend_card -> viewModel.suspendCard()
             R.id.action_suspend_note -> viewModel.suspendNote()
             R.id.action_undo -> viewModel.undo()
+            R.id.flag_none -> viewModel.setFlag(Flag.NONE)
+            R.id.flag_red -> viewModel.setFlag(Flag.RED)
+            R.id.flag_orange -> viewModel.setFlag(Flag.ORANGE)
+            R.id.flag_green -> viewModel.setFlag(Flag.GREEN)
+            R.id.flag_blue -> viewModel.setFlag(Flag.BLUE)
+            R.id.flag_pink -> viewModel.setFlag(Flag.PINK)
+            R.id.flag_turquoise -> viewModel.setFlag(Flag.TURQUOISE)
+            R.id.flag_purple -> viewModel.setFlag(Flag.PURPLE)
             R.id.user_action_1 -> viewModel.userAction(1)
             R.id.user_action_2 -> viewModel.userAction(2)
             R.id.user_action_3 -> viewModel.userAction(3)
@@ -169,7 +178,24 @@ class ReviewerFragment :
         }
     }
 
+    private fun setupFlagMenu(menu: Menu) {
+        val submenu = menu.findItem(R.id.action_flag).subMenu
+        lifecycleScope.launch {
+            for ((flag, name) in Flag.queryDisplayNames()) {
+                submenu?.add(Menu.NONE, flag.id, Menu.NONE, name)
+                    ?.setIcon(flag.drawableRes)
+            }
+        }
+
+        viewModel.flagCodeFlow.flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { flagCode ->
+                menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
+            }
+    }
+
     private fun setupMenuItems(menu: Menu) {
+        setupFlagMenu(menu)
+
         // TODO show that the card is marked somehow when the menu item is overflowed or not shown
         val markItem = menu.findItem(R.id.action_mark)
         viewModel.isMarkedFlow.flowWithLifecycle(lifecycle)

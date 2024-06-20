@@ -30,6 +30,16 @@
         tools:title="Redo"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/action_flag"
+        android:title="@string/menu_flag_card"
+        android:icon="@drawable/ic_flag_transparent"
+        app:showAsAction="never"
+        >
+        <menu>
+            <!-- flags are added dynamically  -->
+        </menu>
+    </item>
+    <item
         android:id="@+id/action_mark"
         android:icon="@drawable/ic_star_border_white"
         android:title="@string/menu_mark_note"

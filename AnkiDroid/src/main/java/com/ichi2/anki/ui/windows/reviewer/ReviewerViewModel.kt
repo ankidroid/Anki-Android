@@ -24,6 +24,7 @@ import anki.frontend.SetSchedulingStatesRequest
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Ease
+import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
@@ -66,6 +67,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
     val isMarkedFlow = MutableStateFlow(false)
+    val flagCodeFlow = MutableStateFlow(Flag.NONE.code)
     val actionFeedbackFlow = MutableSharedFlow<String>()
     val canBuryNoteFlow = MutableStateFlow(true)
     val canSuspendNoteFlow = MutableStateFlow(true)
@@ -136,6 +138,16 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             val note = withCol { card.note() }
             NoteService.toggleMark(note)
             isMarkedFlow.emit(NoteService.isMarked(note))
+        }
+    }
+
+    fun setFlag(flag: Flag) {
+        launchCatchingIO {
+            val card = currentCard.await()
+            undoableOp {
+                setUserFlagForCards(listOf(card.id), flag.code)
+            }
+            flagCodeFlow.emit(flag.code)
         }
     }
 
@@ -357,6 +369,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
         updateMarkedStatus()
+        flagCodeFlow.emit(card.userFlag())
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
     }
