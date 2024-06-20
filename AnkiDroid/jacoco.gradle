@@ -4,13 +4,13 @@ import groovy.xml.XmlParser
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.11"
+    toolVersion = "0.8.12"
 
 }
 
 android {
     testCoverage {
-        jacocoVersion '0.8.11'
+        jacocoVersion '0.8.12'
     }
 }
 
