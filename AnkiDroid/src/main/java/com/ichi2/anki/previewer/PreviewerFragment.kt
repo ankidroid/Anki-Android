@@ -50,7 +50,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class PreviewerFragment :
     CardViewerFragment(R.layout.previewer),
@@ -194,23 +193,25 @@ class PreviewerFragment :
         val submenu = menu.findItem(R.id.action_flag).subMenu
         lifecycleScope.launch {
             for ((flag, name) in Flag.queryDisplayNames()) {
-                submenu?.add(Menu.NONE, flag.ordinal, Menu.NONE, name)
+                submenu?.add(Menu.NONE, flag.id, Menu.NONE, name)
                     ?.setIcon(flag.drawableRes)
             }
         }
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
-            Timber.i("PreviewerFragment:: onMenuItemClick Flag - ${flag.name} clicked")
-            viewModel.setFlag(flag)
-            return true
-        }
-
         when (item.itemId) {
             R.id.action_edit -> editCard()
             R.id.action_mark -> viewModel.toggleMark()
             R.id.action_back_side_only -> viewModel.toggleBackSideOnly()
+            R.id.flag_none -> viewModel.setFlag(Flag.NONE)
+            R.id.flag_red -> viewModel.setFlag(Flag.RED)
+            R.id.flag_orange -> viewModel.setFlag(Flag.ORANGE)
+            R.id.flag_green -> viewModel.setFlag(Flag.GREEN)
+            R.id.flag_blue -> viewModel.setFlag(Flag.BLUE)
+            R.id.flag_pink -> viewModel.setFlag(Flag.PINK)
+            R.id.flag_turquoise -> viewModel.setFlag(Flag.TURQUOISE)
+            R.id.flag_purple -> viewModel.setFlag(Flag.PURPLE)
         }
         return true
     }

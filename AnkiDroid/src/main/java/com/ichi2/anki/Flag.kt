@@ -17,6 +17,7 @@ package com.ichi2.anki
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.utils.ext.getStringOrNull
@@ -26,15 +27,20 @@ import com.ichi2.libanki.Collection
 import org.json.JSONObject
 import timber.log.Timber
 
-enum class Flag(val code: Int, @DrawableRes val drawableRes: Int, @ColorRes val browserColorRes: Int?) {
-    NONE(0, R.drawable.ic_flag_transparent, null),
-    RED(1, R.drawable.ic_flag_red, R.color.flag_red),
-    ORANGE(2, R.drawable.ic_flag_orange, R.color.flag_orange),
-    GREEN(3, R.drawable.ic_flag_green, R.color.flag_green),
-    BLUE(4, R.drawable.ic_flag_blue, R.color.flag_blue),
-    PINK(5, R.drawable.ic_flag_pink, R.color.flag_pink),
-    TURQUOISE(6, R.drawable.ic_flag_turquoise, R.color.flag_turquoise),
-    PURPLE(7, R.drawable.ic_flag_purple, R.color.flag_purple);
+enum class Flag(
+    val code: Int,
+    @IdRes val id: Int,
+    @DrawableRes val drawableRes: Int,
+    @ColorRes val browserColorRes: Int?
+) {
+    NONE(0, R.id.flag_none, R.drawable.ic_flag_transparent, null),
+    RED(1, R.id.flag_red, R.drawable.ic_flag_red, R.color.flag_red),
+    ORANGE(2, R.id.flag_orange, R.drawable.ic_flag_orange, R.color.flag_orange),
+    GREEN(3, R.id.flag_green, R.drawable.ic_flag_green, R.color.flag_green),
+    BLUE(4, R.id.flag_blue, R.drawable.ic_flag_blue, R.color.flag_blue),
+    PINK(5, R.id.flag_pink, R.drawable.ic_flag_pink, R.color.flag_pink),
+    TURQUOISE(6, R.id.flag_turquoise, R.drawable.ic_flag_turquoise, R.color.flag_turquoise),
+    PURPLE(7, R.id.flag_purple, R.drawable.ic_flag_purple, R.color.flag_purple);
 
     /**
      * Retrieves the name associated with the flag. This may be user-defined
