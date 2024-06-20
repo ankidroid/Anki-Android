@@ -3,10 +3,6 @@ name: Unit Tests
 on:
   workflow_dispatch:
     inputs:
-      clearCaches:
-        description: "Clear workflow caches where possible, empty means false"
-        required: false
-        type: string
       iterations:
         description: "Number of iterations on each chosen operating system. Default 1. Max 85."
         required: true
@@ -150,14 +146,6 @@ jobs:
           # gradle-home-cache-cleanup is temporarily disabled to investigate cache pollution issues
           # Requested in: https://github.com/gradle/actions/issues/167#issuecomment-2052352341
           #   gradle-home-cache-cleanup: true
-
-      - name: Clear Caches Optionally
-        if: "${{ github.event.inputs.clearCaches != '' }}"
-        shell: bash
-        run: |
-          du -sk ~/.gradle
-          rm -fr ~/.gradle
-          du -sk ~/.gradle || echo ~/.gradle is gone
 
       - name: Gradle Dependency Download
         uses: nick-invision/retry@v3
