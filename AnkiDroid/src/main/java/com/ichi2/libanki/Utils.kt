@@ -28,7 +28,6 @@ import java.security.NoSuchAlgorithmException
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.math.*
 
 // TODO switch to standalone functions and properties and remove Utils container
 object Utils {
@@ -40,13 +39,9 @@ object Utils {
     private val stylePattern = Pattern.compile("(?si)<style.*?>.*?</style>")
     private val scriptPattern = Pattern.compile("(?si)<script.*?>.*?</script>")
     private val tagPattern = Pattern.compile("(?s)<.*?>")
-    private val imgPattern = Pattern.compile("(?i)<img[^>]+src=[\"']?([^\"'>]+)[\"']?[^>]*>")
     private val typePattern = Pattern.compile("(?s)\\[\\[type:.+?]]")
     private val avRefPattern = Pattern.compile("(?s)\\[anki:play:.:\\d+?]")
     private val htmlEntitiesPattern = Pattern.compile("&#?\\w+;")
-    private const val ALL_CHARACTERS =
-        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    private const val BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~"
 
     /*
      * Locale
@@ -78,14 +73,6 @@ object Utils {
         val s = htmlMatcher.replaceAll("")
         htmlMatcher = scriptPattern.matcher(s)
         return htmlMatcher.replaceAll("")
-    }
-
-    /**
-     * Strip HTML but keep media filenames
-     */
-    fun stripHTMLMedia(s: String, replacement: String = " $1 "): String {
-        val imgMatcher = imgPattern.matcher(s)
-        return stripHTML(imgMatcher.replaceAll(replacement))
     }
 
     /**
@@ -169,33 +156,6 @@ object Utils {
         append(")")
     }.toString()
 
-    // used in ankiweb
-    private fun base62(numParam: Int, @Suppress("SameParameterValue") extra: String): String {
-        var num = numParam
-        val table = ALL_CHARACTERS + extra
-        val len = table.length
-        var buf = ""
-        var mod: Int
-        while (num != 0) {
-            mod = num % len
-            buf += table.substring(mod, mod + 1)
-            num /= len
-        }
-        return buf
-    }
-
-    // all printable characters minus quotes, backslash and separators
-    private fun base91(num: Int): String {
-        return base62(num, BASE91_EXTRA_CHARS)
-    }
-
-    /** return a base91-encoded 64bit random number  */
-    fun guid64(): String {
-        return base91(
-            Random().nextInt((2.0.pow(61.0) - 1).toInt())
-        )
-    }
-
     /**
      * Fields
      * ***********************************************************************************************
@@ -255,25 +215,5 @@ object Utils {
             result = zeroes.substring(0, zeroes.length - result.length) + result
         }
         return result
-    }
-
-    /**
-     * Optimized in case of sortIdx = 0
-     * @param fields Fields of a note
-     * @param sortIdx An index of the field
-     * @return The field at sortIdx, without html media, and the csum of the first field.
-     */
-    fun sfieldAndCsum(fields: List<String>, sortIdx: Int): Pair<String, Long> {
-        val firstStripped = stripHTMLMedia(fields[0])
-        val sortStripped = if (sortIdx == 0) firstStripped else stripHTMLMedia(fields[sortIdx])
-        return Pair(sortStripped, fieldChecksumWithoutHtmlMedia(firstStripped))
-    }
-
-    /**
-     * @param data the string to generate hash from. Html media should be removed
-     * @return 32 bit unsigned number from first 8 digits of sha1 hash
-     */
-    private fun fieldChecksumWithoutHtmlMedia(data: String?): Long {
-        return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
     }
 }

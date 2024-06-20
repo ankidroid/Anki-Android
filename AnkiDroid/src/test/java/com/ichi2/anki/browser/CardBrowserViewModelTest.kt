@@ -42,6 +42,7 @@ import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
@@ -118,7 +119,7 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat("Deck should be changed", col.getCard(cardId).did, equalTo(newDeck))
         }
 
-        val hasSomeDecksUnchanged = cards.any { row -> row.card.did != newDeck }
+        val hasSomeDecksUnchanged = cards.any { row -> col.getCard(row.toCardId(cardsOrNotes)).did != newDeck }
         assertThat("some decks are unchanged", hasSomeDecksUnchanged)
     }
 
@@ -465,7 +466,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
     @Test
     fun `suspend - cards - some suspended`() = runViewModelTest(notes = 2) {
-        suspend(cards.first())
+        suspend(cards.first().toCardId(cardsOrNotes))
         ensureOpsExecuted(1) {
             selectAll()
             toggleSuspendCards()
@@ -504,7 +505,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
     @Test
     fun `suspend - notes - some notes suspended`() = runViewModelNotesTest(notes = 2) {
-        val nid = cards.first().card.nid
+        val nid = cards.first().cardOrNoteId
         suspend(col.getNote(nid))
         ensureOpsExecuted(1) {
             selectAll()
@@ -516,7 +517,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `suspend - notes - some cards suspended`() = runViewModelNotesTest(notes = 2) {
         // this suspends o single cid from a nid
-        suspend(cards.first())
+        suspend(cards.first().toCardId(cardsOrNotes))
         ensureOpsExecuted(1) {
             selectAll()
             toggleSuspendCards()
@@ -546,7 +547,7 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Cards))
         assertThat(ids, hasSize(1))
 
-        assertThat(ids.single(), equalTo(cards[0].id))
+        assertThat(ids.single(), equalTo(cards[0].cardOrNoteId))
     }
 
     @Test
@@ -558,8 +559,26 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Notes))
         assertThat(ids, hasSize(1))
 
-        assertThat(ids.single(), equalTo(cards[0].card.nid))
+        assertThat(ids.single(), equalTo(cards[0].cardOrNoteId))
     }
+
+    @Test
+    fun `selection is maintained after toggle mark 14950`() = runViewModelTest(notes = 5) {
+        selectRowsWithPositions(0, 1, 2)
+
+        assertThat("3 rows are selected", selectedRows.size, equalTo(3))
+        assertThat("selection is not marked", queryAllSelectedNotes().all { !it.isMarked() })
+
+        toggleMark()
+
+        assertThat("3 rows are still selected", selectedRows.size, equalTo(3))
+        assertThat("selection is now marked", queryAllSelectedNotes().all { it.isMarked() })
+    }
+
+    private suspend fun CardBrowserViewModel.queryAllSelectedNotes() =
+        queryAllSelectedNoteIds().map { col.getNote(it) }
+
+    private suspend fun Note.isMarked(): Boolean = NoteService.isMarked(this)
 
     @Test
     fun `changing note types changes columns`() = runViewModelTest {
@@ -855,8 +874,8 @@ private fun TestClass.suspendAll() {
     }
 }
 
-private fun TestClass.suspend(vararg cards: CardBrowser.CardCache) {
-    col.sched.suspendCards(cards.map { it.id })
+private fun TestClass.suspend(vararg cardIds: CardId) {
+    col.sched.suspendCards(ids = cardIds.toList())
 }
 
 private fun TestClass.suspend(note: Note) {
