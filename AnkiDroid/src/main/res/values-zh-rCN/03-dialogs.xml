@@ -250,6 +250,4 @@
     <string name="open">打开</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">系统 WebView 已过时。有些功能将无法正常工作。请更新它。\n\n已安装版本： %1$d\n所需最低版本： %2$d</string>
-    <!-- Rename Flags -->
-    <string name="confirm_before_saving">保存前确认所有更改</string>
 </resources>
