@@ -2,11 +2,6 @@ name: Emulator Tests
 
 on:
   workflow_dispatch:
-    inputs:
-      clearCaches:
-        description: "Clear workflow caches where possible"
-        required: false
-        type: string
   pull_request:
   push:
     # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
@@ -77,17 +72,6 @@ jobs:
           key: avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1-${{ github.event.inputs.clearCaches }}
           restore-keys: |
             avd-${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-v1
-
-      - name: Clear Caches Optionally
-        if: "${{ github.event.inputs.clearCaches != '' }}"
-        shell: bash
-        run: |
-          du -sk ~/.gradle
-          du -sk ~/.android
-          rm -fr ~/.gradle
-          rm -fr ~/.android
-          du -sk ~/.gradle || echo ~/.gradle is gone
-          du -sk ~/.android || echo ~/.android is gone
 
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
