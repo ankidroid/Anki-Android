@@ -147,17 +147,12 @@ jobs:
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
-      - name: Compress Emulator Log
-        if: always()
-        run: gzip -9 adb-log.txt
-        shell: bash
-
       - name: Upload Emulator Log
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_logs
-          path: adb-log.txt.gz
+          path: adb-log.txt
 
       - name: Upload Emulator Screen Record
         uses: actions/upload-artifact@v4
