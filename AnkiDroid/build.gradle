@@ -345,7 +345,7 @@ dependencies {
         testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
     } else {
         implementation libs.ankiBackend.backend
-        implementation libs.ankiBackend.testing
+        testImplementation libs.ankiBackend.testing
     }
 
     // May need a resolution strategy for support libs to our versions
