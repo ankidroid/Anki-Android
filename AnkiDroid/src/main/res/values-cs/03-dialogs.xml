@@ -274,6 +274,4 @@
     <string name="open">Open</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
-    <!-- Rename Flags -->
-    <string name="confirm_before_saving">Confirm all changes before saving</string>
 </resources>

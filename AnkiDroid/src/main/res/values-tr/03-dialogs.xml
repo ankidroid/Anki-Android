@@ -258,6 +258,4 @@
     <string name="open">Aç</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
-    <!-- Rename Flags -->
-    <string name="confirm_before_saving">Confirm all changes before saving</string>
 </resources>
