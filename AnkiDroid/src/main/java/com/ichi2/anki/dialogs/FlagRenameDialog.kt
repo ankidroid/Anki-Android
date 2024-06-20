@@ -28,10 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
-import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.customView
-import com.ichi2.utils.negativeButton
-import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -48,33 +45,12 @@ class FlagRenameDialog : DialogFragment() {
         val builder = AlertDialog.Builder(requireContext()).apply {
             customView(view = dialogView, 4, 4, 4, 4)
             title(R.string.rename_flag)
-            // positiveButton is set in onResume so dialog is not always dismissed
-            positiveButton(R.string.dialog_ok, click = null)
-            negativeButton(R.string.dialog_cancel)
         }
         val dialog = builder.create()
 
         recyclerView = dialogView.findViewById(R.id.recyclerview_flags)
         setupRecyclerView()
         return dialog
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (dialog as AlertDialog).positiveButton.setOnClickListener {
-            // TODO: Extract pending changes from the adapter and save them
-            if (!::flagAdapter.isInitialized) return@setOnClickListener
-            val pendingChanges = flagAdapter.currentList.filter { it.isInEditMode }
-            if (pendingChanges.any()) {
-                Timber.i("Attempted to close with %d pending changes", pendingChanges.size)
-                showThemedToast(R.string.confirm_before_saving, true)
-                return@setOnClickListener
-            }
-
-            Timber.i("Closing dialog", pendingChanges.size)
-            activity?.invalidateOptionsMenu()
-            dismiss()
-        }
     }
 
     override fun onDismiss(dialog: DialogInterface) {
