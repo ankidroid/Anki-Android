@@ -778,24 +778,38 @@ open class DeckPicker :
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         floatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+        // TODO: Refactor menu handling logic to the activity
+        // The menus for the fragmented view should be the responsibility of the activity.
+        // This would mean extracting the menu logic out of the fragments, extending it to the full width of the activity,
+        // and having the activity be responsible for it. This change should reduce complexity.
+        // We should have two menu files for the DeckPicker (fragmented/non), and one for the Options (non-fragmented)
         menuInflater.inflate(R.menu.deck_picker, menu)
-        menu.findItem(R.id.action_export)?.title = TR.exportingExport()
-        setupMediaSyncMenuItem(menu)
         menu.findItem(R.id.deck_picker_action_filter)?.let {
             toolbarSearchItem = it
             setupSearchIcon(it)
             toolbarSearchView = it.actionView as SearchView
         }
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
-        // redraw menu synchronously to avoid flicker
-        updateMenuFromState(menu)
+
+        if (fragmented && studyoptionsFrame!!.visibility == View.VISIBLE) {
+            menu.setGroupVisible(R.id.commonItems, false)
+        } else {
+            menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
+            setupMediaSyncMenuItem(menu)
+            // redraw menu synchronously to avoid flicker
+            updateMenuFromState(menu)
+            updateSearchVisibilityFromState(menu)
+        }
         // ...then launch a task to possibly update the visible icons.
         // Store the job so that tests can easily await it. In the future
         // this may be better done by injecting a custom test scheduler
         // into CollectionManager, and awaiting that.
         createMenuJob = launchCatchingTask {
             updateMenuState()
-            updateMenuFromState(menu)
+            updateSearchVisibilityFromState(menu)
+            if (!fragmented) {
+                updateMenuFromState(menu)
+            }
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -803,7 +817,7 @@ open class DeckPicker :
     private var migrationProgressPublishingJob: Job? = null
     private var cachedMigrationProgressMenuItemActionView: View? = null
 
-    private fun setupMediaSyncMenuItem(menu: Menu) {
+    fun setupMediaSyncMenuItem(menu: Menu) {
         // shouldn't be necessary, but `invalidateOptionsMenu()` is called way more than necessary
         syncMediaProgressJob?.cancel()
 
@@ -897,6 +911,7 @@ open class DeckPicker :
                                 is MigrationService.Progress.Done -> {
                                     updateMenuState()
                                     updateMenuFromState(menu)
+                                    updateSearchVisibilityFromState(menu)
                                 }
                             }
                         }
@@ -949,14 +964,18 @@ open class DeckPicker :
         searchDecksIcon = menuItem
     }
 
-    private fun updateMenuFromState(menu: Menu) {
-        menu.setGroupVisible(R.id.allItems, optionsMenuState != null)
+    fun updateMenuFromState(menu: Menu) {
         optionsMenuState?.run {
-            menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
             updateUndoLabelFromState(menu.findItem(R.id.action_undo), undoLabel, undoAvailable)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), this)
             menu.findItem(R.id.action_scoped_storage_migrate).isVisible = shouldShowStartMigrationButton
             setupMigrationProgressMenuItem(menu, mediaMigrationState)
+        }
+    }
+
+    private fun updateSearchVisibilityFromState(menu: Menu) {
+        optionsMenuState?.run {
+            menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
         }
     }
 
@@ -1118,7 +1137,7 @@ open class DeckPicker :
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
                 return true
             }
-            R.id.action_export -> {
+            R.id.action_export_collection -> {
                 Timber.i("DeckPicker:: Export menu item selected")
                 if (mediaMigrationIsInProgress(this)) {
                     showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
