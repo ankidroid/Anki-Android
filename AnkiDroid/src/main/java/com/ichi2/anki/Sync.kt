@@ -366,7 +366,7 @@ suspend fun monitorMediaSync(
             .setPositiveButton(R.string.dialog_continue) { _, _ ->
                 scope.cancel()
             }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+            .setNegativeButton(TR.syncAbortButton()) { _, _ ->
                 cancelMediaSync(backend)
             }
             .show()
