@@ -13,3 +13,8 @@
 # no impact for these classes to be missing, ignore them
 -dontwarn com.google.protobuf.GeneratedMessageLite$MergeFromVisitor
 -dontwarn com.google.protobuf.GeneratedMessageLite$Visitor
+
+
+-keep class java.util.** { *; }
+-keep class java.util.concurrent.** { *; }
+-keep class java.lang.ThreadLocal { *; }
