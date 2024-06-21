@@ -125,6 +125,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling…\nThis may take some time.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Export deck</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Nothing</string>
 
     <!-- Card template editor -->

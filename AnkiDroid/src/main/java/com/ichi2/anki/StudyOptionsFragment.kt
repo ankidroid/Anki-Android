@@ -34,6 +34,7 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import anki.collection.OpChanges
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
@@ -80,6 +81,12 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     private lateinit var textNewTotal: TextView
     private lateinit var textTotal: TextView
     private var toolbar: Toolbar? = null
+
+    private var createMenuJob: Job? = null
+
+    /** Current activity.*/
+    private val deckPicker: DeckPicker
+        get() = activity as DeckPicker
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
     private var loadWithDeckOptions = false
@@ -144,6 +151,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
         initAllContentViews(studyOptionsView)
         toolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
         if (toolbar != null) {
+            toolbar!!.inflateMenu(R.menu.deck_picker)
             toolbar!!.inflateMenu(R.menu.study_options_fragment)
             configureToolbar()
         }
@@ -223,7 +231,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_undo -> {
+            R.id.action_undo_study_options -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
                 launchCatchingTask {
                     requireActivity().undoAndShowSnackbar()
@@ -267,18 +275,19 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 return true
             }
             R.id.action_rename -> {
-                (activity as DeckPicker).renameDeckDialog(col!!.decks.selected())
+                deckPicker.renameDeckDialog(col!!.decks.selected())
                 return true
             }
             R.id.action_delete -> {
-                (activity as DeckPicker).confirmDeckDeletion(col!!.decks.selected())
+                deckPicker.confirmDeckDeletion(col!!.decks.selected())
                 return true
             }
-            R.id.action_export -> {
-                (activity as DeckPicker).exportDeck(col!!.decks.selected())
+            R.id.action_export_deck -> {
+                deckPicker.exportDeck(col!!.decks.selected())
                 return true
             }
-            else -> return false
+            // If the menu item is not specific to study options, delegate it to the deck picker
+            else -> return deckPicker.onOptionsItemSelected(item)
         }
     }
 
@@ -335,10 +344,34 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
             }
             // Switch on rename / delete / export if tablet layout
             if (fragmented) {
+                menu.setGroupVisible(R.id.commonItems, true)
                 menu.findItem(R.id.action_rename).isVisible = true
                 menu.findItem(R.id.action_delete).isVisible = true
                 menu.findItem(R.id.action_export).isVisible = true
+                menu.findItem(R.id.action_export).title = TR.actionsExport()
+                /**
+                 * Add "export collection" item in the export menu and remove it from the main menu.
+                 * The "export collection" action appears in the menu directly when we only display the deck picker.
+                 * When we display the split view, we want to move it to a submenu that already contains "export deck".
+                 */
+                val exportMenu = menu.findItem(R.id.action_export).subMenu
+                if (exportMenu?.findItem(R.id.action_export_collection) == null) {
+                    exportMenu?.add(0, R.id.action_export_collection, 0, R.string.export_collection)
+                }
+                menu.removeItem(R.id.action_export_collection)
+
+                deckPicker.setupMediaSyncMenuItem(menu)
+                deckPicker.updateMenuFromState(menu)
+                /**
+                 * Launch a task to possibly update the visible icons.
+                 * Save the job in a member variable to manage the lifecycle
+                 */
+                createMenuJob = launchCatchingTask {
+                    deckPicker.updateMenuState()
+                    deckPicker.updateMenuFromState(menu)
+                }
             } else {
+                menu.setGroupVisible(R.id.commonItems, false)
                 menu.findItem(R.id.action_rename).isVisible = false
                 menu.findItem(R.id.action_delete).isVisible = false
                 menu.findItem(R.id.action_export).isVisible = false
@@ -347,15 +380,15 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
             menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
             // Set the proper click target for the undo button's ActionProvider
             val undoActionProvider: RtlCompliantActionProvider? = MenuItemCompat.getActionProvider(
-                menu.findItem(R.id.action_undo)
+                menu.findItem(R.id.action_undo_study_options)
             ) as? RtlCompliantActionProvider
             undoActionProvider?.clickHandler = { _, menuItem -> onMenuItemClick(menuItem) }
             // Switch on or off undo depending on whether undo is available
             if (col == null || !col!!.undoAvailable()) {
-                menu.findItem(R.id.action_undo).isVisible = false
+                menu.findItem(R.id.action_undo_study_options).isVisible = false
             } else {
-                menu.findItem(R.id.action_undo).isVisible = true
-                menu.findItem(R.id.action_undo).title = col?.undoLabel()
+                menu.findItem(R.id.action_undo_study_options).isVisible = true
+                menu.findItem(R.id.action_undo_study_options).title = col?.undoLabel()
             }
             // Set the back button listener
             if (fragmented) {
