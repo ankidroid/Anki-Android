@@ -42,6 +42,7 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
 import com.ichi2.libanki.redo
+import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undo
 import com.ichi2.libanki.undoableOp
@@ -71,6 +72,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     val canSuspendNoteFlow = MutableStateFlow(true)
     val undoLabelFlow = MutableStateFlow<String?>(null)
     val redoLabelFlow = MutableStateFlow<String?>(null)
+    val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -360,6 +362,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         flagCodeFlow.emit(card.userFlag())
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
+        countsFlow.emit(state.counts to state.countsIndex)
     }
 
     // TODO

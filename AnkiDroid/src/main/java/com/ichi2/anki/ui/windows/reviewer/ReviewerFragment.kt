@@ -18,6 +18,8 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -33,6 +35,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Flag
@@ -47,6 +50,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.navBarNeedsScrim
+import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import kotlinx.coroutines.launch
 
@@ -70,6 +74,7 @@ class ReviewerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         setupAnswerButtons(view)
+        setupCounts(view)
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             setOnMenuItemClickListener(this@ReviewerFragment)
@@ -176,6 +181,28 @@ class ReviewerFragment :
                 answerButtonsLayout.isVisible = false
             }
         }
+    }
+
+    private fun setupCounts(view: View) {
+        val newCount = view.findViewById<MaterialTextView>(R.id.new_count)
+        val learnCount = view.findViewById<MaterialTextView>(R.id.lrn_count)
+        val reviewCount = view.findViewById<MaterialTextView>(R.id.rev_count)
+
+        viewModel.countsFlow.flowWithLifecycle(lifecycle)
+            .collectLatestIn(lifecycleScope) { (counts, countsType) ->
+                newCount.text = counts.new.toString()
+                learnCount.text = counts.lrn.toString()
+                reviewCount.text = counts.rev.toString()
+
+                val currentCount = when (countsType) {
+                    Counts.Queue.NEW -> newCount
+                    Counts.Queue.LRN -> learnCount
+                    Counts.Queue.REV -> reviewCount
+                }
+                val spannableString = SpannableString(currentCount.text)
+                spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
+                currentCount.text = spannableString
+            }
     }
 
     private fun setupFlagMenu(menu: Menu) {

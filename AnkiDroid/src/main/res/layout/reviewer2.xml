@@ -28,7 +28,40 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/alternativeBackgroundColor"
                 app:menu="@menu/reviewer2"
-                />
+                >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/new_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/newCountColor"
+                    app:layout_constraintEnd_toStartOf="@id/lrn_count"
+                    android:paddingEnd="5dp"
+                    tools:text="27"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/lrn_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/learnCountColor"
+                    app:layout_constraintStart_toEndOf="@id/new_count"
+                    app:layout_constraintEnd_toStartOf="@id/rev_count"
+                    android:paddingEnd="5dp"
+                    tools:text="81"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/rev_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/reviewCountColor"
+                    app:layout_constraintStart_toEndOf="@id/lrn_count"
+                    tools:text="54"
+                    />
+
+
+            </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.card.MaterialCardView
