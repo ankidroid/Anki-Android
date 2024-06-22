@@ -38,6 +38,7 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
+import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.hasTag
 import com.ichi2.libanki.note
@@ -78,6 +79,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
     val statesMutationEval = MutableSharedFlow<String>()
 
+    private val autoAdvance = AutoAdvance(this)
+
     /**
      * A flag that determines if the SchedulingStates in CurrentQueueState are
      * safe to persist in the database when answering a card. This is used to
@@ -97,6 +100,17 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         ChangeManager.subscribe(this)
         launchCatchingIO {
             updateUndoAndRedoLabels()
+        }
+        cardMediaPlayer.setOnSoundGroupCompletedListener {
+            launchCatchingIO {
+                if (!autoAdvance.shouldWaitForAudio()) return@launchCatchingIO
+
+                if (showingAnswer.value) {
+                    autoAdvance.onShowAnswer()
+                } else {
+                    autoAdvance.onShowQuestion()
+                }
+            }
         }
     }
 
@@ -124,6 +138,9 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             }
             showAnswerInternal()
             loadAndPlaySounds(CardSide.ANSWER)
+            if (!autoAdvance.shouldWaitForAudio()) {
+                autoAdvance.onShowAnswer()
+            } // else wait for onSoundGroupCompleted
         }
     }
 
@@ -266,6 +283,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         }
     }
 
+    fun stopAutoAdvance() {
+        autoAdvance.cancelQuestionAndAnswerActionJobs()
+    }
+
     /* *********************************************************************************************
     *************************************** Internal methods ***************************************
     ********************************************************************************************* */
@@ -285,6 +306,9 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     override suspend fun showQuestion() {
         super.showQuestion()
         runStateMutationHook()
+        if (!autoAdvance.shouldWaitForAudio()) {
+            autoAdvance.onShowQuestion()
+        } // else run in onSoundGroupCompleted
     }
 
     private suspend fun runStateMutationHook() {
@@ -356,6 +380,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
         val card = state.topCard
         currentCard = CompletableDeferred(card)
+        autoAdvance.onCardChange(card)
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
         updateMarkedStatus()

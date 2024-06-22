@@ -70,6 +70,13 @@ class ReviewerFragment :
         anchorView = this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
     }
 
+    override fun onStop() {
+        super.onStop()
+        if (!requireActivity().isChangingConfigurations) {
+            viewModel.stopAutoAdvance()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
