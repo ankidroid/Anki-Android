@@ -53,15 +53,17 @@ jobs:
 
       - name: Credential Prep
         run: |
-          echo "KSTOREPWD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+          export KEYSTOREPATH=$HOME/src/android-keystore
+          echo "KEYSTOREPATH=$KEYSTOREPATH" >> $GITHUB_ENV
+          echo "KEYALIAS=nrkeystorealias" >> $GITHUB_ENV
+          echo "KEYSTOREPWD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
           echo "KEYPWD=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $GITHUB_ENV
           mkdir ~/src
           echo "${{ secrets.AMAZON_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-Amazon-Publish-Security-Profile.json.gz
           echo "${{ secrets.GOOGLE_PUBLISH_CREDENTIALS }}" | base64 -d > ~/src/AnkiDroid-GCP-Publish-Credentials.json.gz
           echo "${{ secrets.RELEASES_PUBLISH_TOKEN }}" | base64 -d > ~/src/my-github-personal-access-token.gz
-          echo "${{ secrets.KEYSTORE }}" | base64 -d > ~/src/android-keystore.gz
-          cd ~/src
-          gunzip *gz
+          echo "${{ secrets.KEYSTORE }}" | base64 -d > $KEYSTOREPATH.gz
+          gunzip $KEYSTOREPATH.gz
         shell: bash
 
       - name: Build and Release public release

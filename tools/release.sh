@@ -100,13 +100,7 @@ git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION"
 git tag v"$VERSION"
 
-# Read the key passwords if needed
-if [ "$KSTOREPWD" == "" ]; then
-  read -rsp "Enter keystore password: " KSTOREPWD; echo
-  read -rsp "Enter key password: " KEYPWD; echo
-  export KSTOREPWD
-  export KEYPWD
-fi
+. tools/check-keystore.sh
 
 # Build signed APK using Gradle and publish to Play.
 # Do this before building universal of the play flavor so the universal is not uploaded to Play Store

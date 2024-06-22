@@ -24,11 +24,9 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     env:
-      # could be better, '/home/runner' should be '~/' but neither that nor '$HOME' worked
-      STOREFILEDIR: /home/runner/src
-      STOREFILE: android-keystore
-      STOREPASS: testpass
-      KEYPASS: testpass
+      KEYSTORENAME: keystore
+      KEYSTOREPWD: testpass
+      KEYPWD: testpass
       KEYALIAS: nrkeystorealias
     steps:
       - name: Configure JDK
@@ -39,11 +37,9 @@ jobs:
 
       - name: Test Credential Prep
         run: |
-          echo "KSTOREPWD=$STOREPASS" >> $GITHUB_ENV
-          echo "KEYPWD=$KEYPASS" >> $GITHUB_ENV
-          mkdir $STOREFILEDIR
-          cd $STOREFILEDIR
-          echo y | keytool -genkeypair -dname "cn=AnkiDroid, ou=ankidroid, o=AnkiDroid, c=US" -alias $KEYALIAS -keypass $KEYPASS -keystore "$STOREFILE" -storepass $STOREPASS -keyalg RSA -validity 20000
+          export KEYSTOREPATH=$HOME/$KEYSTORENAME
+          echo "KEYSTOREPATH=$KEYSTOREPATH" >> $GITHUB_ENV
+          echo y | keytool -genkeypair -dname "cn=AnkiDroid, ou=ankidroid, o=AnkiDroid, c=US" -alias $KEYALIAS -keypass $KEYPWD -keystore $KEYSTOREPATH -storepass $KEYSTOREPWD -keyalg RSA -validity 20000
         shell: bash
 
       - name: Setup Gradle
