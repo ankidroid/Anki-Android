@@ -56,6 +56,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
+import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentBuilder
 
 @UiThread
 @KotlinCleanup("set activityName")
@@ -331,7 +332,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
             .build()
-        val builder = Builder(customTabActivityHelper.session)
+        val builder = CustomTabsIntentBuilder(customTabActivityHelper.session)
             .setShowTitle(true)
             .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
             .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
