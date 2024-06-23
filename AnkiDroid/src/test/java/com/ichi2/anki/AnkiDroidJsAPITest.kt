@@ -21,6 +21,7 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.utils.BASIC_MODEL_NAME
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -37,7 +38,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiGetNextTimeTest() = runTest {
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -70,7 +71,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiTestCurrentCard() = runTest {
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -180,7 +181,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiJsUiTest() = runTest {
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -222,7 +223,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // js api test for marking and flagging card
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -282,7 +283,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // in scheduling the count will be less than previous scheduling
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")
@@ -352,7 +353,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         TimeManager.reset()
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")

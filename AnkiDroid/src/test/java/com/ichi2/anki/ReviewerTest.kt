@@ -46,6 +46,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
+import com.ichi2.utils.BASIC_MODEL_NAME
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import junit.framework.TestCase.assertEquals
@@ -267,7 +268,7 @@ class ReviewerTest : RobolectricTest() {
         val models = col.notetypes
 
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
 
