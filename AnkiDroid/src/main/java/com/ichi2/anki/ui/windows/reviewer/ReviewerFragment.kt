@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
@@ -146,18 +147,31 @@ class ReviewerFragment :
     }
 
     private fun setupAnswerButtons(view: View) {
-        view.findViewById<MaterialButton>(R.id.again_button).setOnClickListener {
-            viewModel.answerAgain()
+        fun MaterialButton.setAnswerButtonNextTime(@StringRes title: Int, nextTime: String?) {
+            val titleString = context.getString(title)
+            text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
         }
-        view.findViewById<MaterialButton>(R.id.hard_button).setOnClickListener {
-            viewModel.answerHard()
+
+        val againButton = view.findViewById<MaterialButton>(R.id.again_button).apply {
+            setOnClickListener { viewModel.answerAgain() }
         }
-        view.findViewById<MaterialButton>(R.id.good_button).setOnClickListener {
-            viewModel.answerGood()
+        val hardButton = view.findViewById<MaterialButton>(R.id.hard_button).apply {
+            setOnClickListener { viewModel.answerHard() }
         }
-        view.findViewById<MaterialButton>(R.id.easy_button).setOnClickListener {
-            viewModel.answerEasy()
+        val goodButton = view.findViewById<MaterialButton>(R.id.good_button).apply {
+            setOnClickListener { viewModel.answerGood() }
         }
+        val easyButton = view.findViewById<MaterialButton>(R.id.easy_button).apply {
+            setOnClickListener { viewModel.answerEasy() }
+        }
+
+        viewModel.answerButtonsNextTimeFlow.flowWithLifecycle(lifecycle)
+            .collectIn(lifecycleScope) { times ->
+                againButton.setAnswerButtonNextTime(R.string.ease_button_again, times?.again)
+                hardButton.setAnswerButtonNextTime(R.string.ease_button_hard, times?.hard)
+                goodButton.setAnswerButtonNextTime(R.string.ease_button_good, times?.good)
+                easyButton.setAnswerButtonNextTime(R.string.ease_button_easy, times?.easy)
+            }
 
         val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
             setOnClickListener {
