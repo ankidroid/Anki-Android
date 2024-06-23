@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="@string/pick_image_gallery"
+            android:text="@string/multimedia_editor_image_field_editing_galery"
             app:iconPadding="12dp" />
     </LinearLayout>
 
