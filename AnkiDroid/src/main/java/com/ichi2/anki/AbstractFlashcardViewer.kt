@@ -144,7 +144,6 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
@@ -2505,7 +2504,6 @@ abstract class AbstractFlashcardViewer :
          * @param url
          */
         @NeedsTest("14221: 'playsound' should play the sound from the start")
-        @BlocksSchemaUpgrade("handle TTS tags")
         private suspend fun controlSound(url: String) {
             val avTag = when (val tag = currentCard?.let { getAvTag(it, url) }) {
                 is SoundOrVideoTag -> tag
