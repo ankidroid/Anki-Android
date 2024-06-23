@@ -1188,7 +1188,7 @@ class CardBrowserTest : RobolectricTest() {
         }.addNote("Test", "Blank")
 
         val question = CardCache(note.firstCard().id, col, 1, CARDS)
-            .getColumnHeaderText(CardBrowserColumn.QUESTION)
+            .getColumnHeaderText(QUESTION)
 
         assertThat(question, equalTo(""))
     }

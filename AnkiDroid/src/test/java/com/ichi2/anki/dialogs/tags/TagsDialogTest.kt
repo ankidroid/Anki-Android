@@ -40,7 +40,6 @@ import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.utils.ListUtil
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsNull
 import org.junit.Assert
@@ -68,7 +67,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val optionsGroup = dialog!!.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)!!
             Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
@@ -91,7 +90,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val returnedList = AtomicReference<List<String>?>()
             val returnedOption = AtomicReference<CardStateFilter>()
             f.parentFragmentManager.setFragmentResultListener(
@@ -129,7 +128,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
             val tag = "zzzz"
@@ -164,7 +163,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
             val tag = "e"
@@ -202,7 +201,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
 
@@ -257,7 +256,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
 
@@ -304,7 +303,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
             val tag = "common::sport::football::small"
@@ -358,7 +357,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
             val tag = "common::::careless"
@@ -406,7 +405,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
             val adapter = recycler.adapter!! as TagsArrayAdapter
@@ -447,7 +446,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
 
@@ -494,7 +493,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
 
@@ -613,7 +612,7 @@ class TagsDialogTest : RobolectricTest() {
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+            assertThat(dialog, IsNull.notNullValue())
             val editText = f.getSearchView()!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)!!
 
             editText.setText("hello ")
