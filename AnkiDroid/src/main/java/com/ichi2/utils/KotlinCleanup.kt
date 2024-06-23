@@ -31,20 +31,3 @@ package com.ichi2.utils
 @Repeatable
 @MustBeDocumented
 annotation class KotlinCleanup(val value: String)
-
-/** This must be fixed/implemented before AnkiDroid can switch to using the new backend code
- * by default.
- */
-@Target(
-    AnnotationTarget.CLASS,
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER,
-    AnnotationTarget.EXPRESSION,
-    AnnotationTarget.FIELD,
-    AnnotationTarget.PROPERTY,
-    AnnotationTarget.LOCAL_VARIABLE
-)
-@Retention(AnnotationRetention.SOURCE)
-@Repeatable
-@MustBeDocumented
-annotation class BlocksSchemaUpgrade(val value: String)
