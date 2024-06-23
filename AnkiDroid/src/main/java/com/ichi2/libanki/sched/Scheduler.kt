@@ -41,6 +41,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.EpochSeconds
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
@@ -114,6 +115,7 @@ open class Scheduler(val col: Collection) {
     }
 
     /** The time labels for the four answer buttons. */
+    @LibAnkiAlias("describe_next_states")
     fun describeNextStates(states: SchedulingStates): List<String> {
         return col.backend.describeNextStates(states)
     }
