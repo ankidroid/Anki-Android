@@ -17,7 +17,9 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.notes.NoteFieldsCheckResponse
+import anki.notetypes.StockNotetype
 import com.ichi2.testutils.JvmTest
+import com.ichi2.utils.createBasicModel
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
@@ -174,12 +176,15 @@ class CollectionTest : JvmTest() {
 
     @Test
     fun test_timestamps() {
-        val stdModelSize = StdModels.STD_MODELS.size
-        assertEquals(col.notetypes.all().size, stdModelSize)
+        // old code used StdModels.STD_MODELS.size for this variable. There were 6 models:
+        // BASIC_MODEL, BASIC_TYPING_MODEL, FORWARD_REVERSE_MODEL, FORWARD_OPTIONAL_REVERSE_MODEL,
+        // CLOZE_MODEL, IMAGE_OCCLUSION_MODEL
+        val numberOfStandardModels = StockNotetype.Kind.entries.count { it != StockNotetype.Kind.UNRECOGNIZED }
+        assertEquals(col.notetypes.all().size, numberOfStandardModels)
         for (i in 0..99) {
-            StdModels.BASIC_MODEL.add(col)
+            col.createBasicModel()
         }
-        assertEquals(col.notetypes.all().size, (100 + stdModelSize))
+        assertEquals(col.notetypes.all().size, (100 + numberOfStandardModels))
     }
 
     @Test
