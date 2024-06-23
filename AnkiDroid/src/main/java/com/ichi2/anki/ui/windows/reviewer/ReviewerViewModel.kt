@@ -15,6 +15,9 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.text.style.RelativeSizeSpan
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -96,6 +99,11 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
      */
     private var statesMutated = true
 
+    val answerButtonsNextTimeFlow: MutableStateFlow<AnswerButtonsNextTime?> = MutableStateFlow(null)
+    private val shouldShowNextTimes: Deferred<Boolean> = asyncIO {
+        withCol { config.get("estTimes") ?: true }
+    }
+
     init {
         ChangeManager.subscribe(this)
         launchCatchingIO {
@@ -136,6 +144,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             while (!statesMutated) {
                 delay(50)
             }
+            updateNextTimes()
             showAnswerInternal()
             loadAndPlaySounds(CardSide.ANSWER)
             if (!autoAdvance.shouldWaitForAudio()) {
@@ -400,6 +409,14 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         redoLabelFlow.emit(withCol { redoLabel() })
     }
 
+    private suspend fun updateNextTimes() {
+        if (!shouldShowNextTimes.await()) return
+        val state = queueState.await() ?: return
+
+        val nextTimes = AnswerButtonsNextTime.from(state)
+        answerButtonsNextTimeFlow.emit(nextTimes)
+    }
+
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         launchCatchingIO { updateUndoAndRedoLabels() }
     }
@@ -410,6 +427,20 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
                 initializer {
                     ReviewerViewModel(soundPlayer)
                 }
+            }
+        }
+
+        fun buildAnswerButtonText(title: String, nextTime: String?): CharSequence {
+            return if (nextTime != null) {
+                buildSpannedString {
+                    inSpans(RelativeSizeSpan(0.8F)) {
+                        append(nextTime)
+                    }
+                    append("\n")
+                    append(title)
+                }
+            } else {
+                title
             }
         }
     }
