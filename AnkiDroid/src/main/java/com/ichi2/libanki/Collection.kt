@@ -569,7 +569,9 @@ class Collection(
     }
 
     fun removeNotes(nids: Iterable<NoteId> = listOf(), cids: Iterable<CardId> = listOf()): OpChangesWithCount {
-        return backend.removeNotes(noteIds = nids, cardIds = cids)
+        return backend.removeNotes(noteIds = nids, cardIds = cids).also {
+            Timber.d("removeNotes: %d changes", it.count)
+        }
     }
 
     fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {

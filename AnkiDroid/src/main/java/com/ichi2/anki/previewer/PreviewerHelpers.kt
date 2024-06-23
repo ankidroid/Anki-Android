@@ -36,7 +36,7 @@ class NoteEditorDestination(val cardId: Long) {
 
 /**
  * Not exactly equal to anki's stdHtml. Some differences:
- * * `ankidroid.css` is added
+ * * `ankidroid.css` and `ankidroid.js` are added
  * * `bridgeCommand()` is ignored
  *
  * Aimed to be used only for reviewing/previewing cards
@@ -77,7 +77,6 @@ fun stdHtml(
         ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
     }
 
-    @Suppress("UnnecessaryVariable") // necessary for the HTML notation
     @Language("HTML")
     val html = """
                 <!DOCTYPE html>
@@ -98,6 +97,7 @@ fun stdHtml(
                     <div id="qa"></div>
                     <script src="file:///android_asset/jquery.min.js"></script>
                     <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
+                    <script src="file:///android_asset/scripts/ankidroid.js"></script>
                     <script src="file:///android_asset/backend/web/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>

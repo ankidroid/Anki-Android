@@ -457,6 +457,7 @@ class CardBrowserViewModel(
     /** emits a new value in [flowOfSelectedRows] */
     private fun refreshSelectedRowsFlow() = viewModelScope.launch {
         refreshSelectedRowsFlow.emit(Unit)
+        Timber.d("refreshed selected rows")
     }
 
     fun selectedRowCount(): Int = selectedRows.size

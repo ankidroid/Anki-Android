@@ -113,7 +113,7 @@ class SyncMediaWorker(
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
         val title = applicationContext.getString(R.string.syncing_media)
-        val cancelTitle = applicationContext.getString(R.string.dialog_cancel)
+        val cancelTitle = CollectionManager.TR.syncAbortButton()
         val notification = buildNotification {
             setContentTitle(title)
             setOngoing(true)
@@ -148,7 +148,7 @@ class SyncMediaWorker(
 
     private fun getProgressNotification(progress: CharSequence): Notification {
         val title = applicationContext.getString(R.string.syncing_media)
-        val cancelTitle = applicationContext.getString(R.string.dialog_cancel)
+        val cancelTitle = CollectionManager.TR.syncAbortButton()
 
         return buildNotification {
             setContentTitle(title)

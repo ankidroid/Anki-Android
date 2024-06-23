@@ -242,3 +242,23 @@ fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(col, note(
 fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(col, note(col))
 
 fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(col))
+
+suspend fun isBuryNoteAvailable(card: Card): Boolean {
+    return withCol {
+        db.queryScalar(
+            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+            card.nid,
+            card.id
+        ) == 1
+    }
+}
+
+suspend fun isSuspendNoteAvailable(card: Card): Boolean {
+    return withCol {
+        db.queryScalar(
+            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+            card.nid,
+            card.id
+        ) == 1
+    }
+}
