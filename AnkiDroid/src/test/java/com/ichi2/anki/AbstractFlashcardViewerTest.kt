@@ -34,8 +34,8 @@ import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import com.ichi2.testutils.Flaky
-import com.ichi2.testutils.OS
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.*

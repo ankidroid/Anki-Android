@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.testutils
+package com.ichi2.testutils.common
 
 import com.ichi2.anki.BuildConfig
 import org.hamcrest.CoreMatchers.not

@@ -33,11 +33,11 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.utils.AnKingTags
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
-import com.ichi2.testutils.OS
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.utils.ListUtil
 import org.hamcrest.MatcherAssert.assertThat

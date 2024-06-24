@@ -44,6 +44,8 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
+import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
+import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

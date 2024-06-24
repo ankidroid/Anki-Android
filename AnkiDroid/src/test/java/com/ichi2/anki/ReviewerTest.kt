@@ -43,9 +43,9 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.OS
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import junit.framework.TestCase.assertEquals
