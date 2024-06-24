@@ -33,7 +33,7 @@ enum class Flag(
     @DrawableRes val drawableRes: Int,
     @ColorRes val browserColorRes: Int?
 ) {
-    NONE(0, R.id.flag_none, R.drawable.ic_flag_transparent, null),
+    NONE(0, R.id.flag_none, R.drawable.ic_flag_lightgrey, null),
     RED(1, R.id.flag_red, R.drawable.ic_flag_red, R.color.flag_red),
     ORANGE(2, R.id.flag_orange, R.drawable.ic_flag_orange, R.color.flag_orange),
     GREEN(3, R.id.flag_green, R.drawable.ic_flag_green, R.color.flag_green),
