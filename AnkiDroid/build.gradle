@@ -264,6 +264,16 @@ tasks.register('installGitHook', Copy) {
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
+tasks.register('copyTestLibIntoAndroidTest', Copy) {
+    into new File(rootProject.rootDir, 'AnkiDroid/src/androidTest/java/com/ichi2/testutils')
+    from new File(rootProject.rootDir, 'testlib/src/main/java/com/ichi2/testutils')
+    into ('common') {
+        from 'common'
+    }
+}
+tasks.named('preBuild').configure { dependsOn('copyTestLibIntoAndroidTest') }
+tasks.named('runKtlintCheckOverAndroidTestSourceSet').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
+
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
     doLast {
@@ -408,7 +418,9 @@ dependencies {
     // for testing flows
     testImplementation libs.cashapp.turbine
 
-    androidTestImplementation project(':testlib')
+    // we should depend directly on the common testlib for androidTest, but we cannot
+    // until coverage-breaking issue is fixed https://issuetracker.google.com/issues/332746900
+    // androidTestImplementation project(':testlib')
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation libs.androidx.espresso.core

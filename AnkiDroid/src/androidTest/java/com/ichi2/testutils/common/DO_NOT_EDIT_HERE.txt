@@ -1,0 +1,14 @@
+DO NOT EDIT FILES IN THIS DIRECTORY
+
+FILES IN THIS DIRECTORY ARE AUTO-COPIED BY GRADLE AT BUILD TIME
+
+If you want to edit the files here, instead:
+
+1) edit the files in testlib/src/java/com/ichi2/testutils/common
+2) run `./gradlew copyTestLibIntoAndroidTest` or a general build
+
+Then your edits in testlib should be copied here for use in androidTest
+
+That gradle task, and this entire directory should be removed when
+issue https://issuetracker.google.com/issues/332746900 is fixed
+
