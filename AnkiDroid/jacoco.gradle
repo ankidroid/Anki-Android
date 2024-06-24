@@ -190,7 +190,7 @@ tasks.register('assertNonzeroAndroidTestCoverage') {
                 continue;
 
             if (child.attribute("covered") == "0") {
-                logger.warn("jacoco registered zero code coverage for counter type %s", child.attribute("type"))
+                logger.warn("jacoco registered zero code coverage for counter type " + child.attribute("type"), null)
             } else {
                 hasCovered = true
             }
