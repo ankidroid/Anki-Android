@@ -47,7 +47,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
     private lateinit var dialogView: View
     suspend fun showAddNewNotetypeDialog() {
         dialogView = LayoutInflater.from(activity).inflate(R.layout.dialog_new_note_type, null)
-        val optionsToDisplay = activity.withProgress {
+        val (allOptions, currentNames) = activity.withProgress {
             withCol {
                 val standardNotetypesModels = StockNotetype.Kind.entries
                     .filter { it != StockNotetype.Kind.UNRECOGNIZED }
@@ -59,10 +59,14 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                             isStandard = true
                         )
                     }
-                mutableListOf<NotetypeBasicUiModel>().apply {
-                    addAll(standardNotetypesModels)
-                    addAll(getNotetypeNames().map { it.toUiModel() })
-                }
+                val foundNotetypes = getNotetypeNames()
+                Pair(
+                    mutableListOf<NotetypeBasicUiModel>().apply {
+                        addAll(standardNotetypesModels)
+                        addAll(foundNotetypes.map { it.toUiModel() })
+                    },
+                    foundNotetypes.map { it.name }
+                )
             }
         }
         val dialog = AlertDialog.Builder(activity).apply {
@@ -73,7 +77,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                 val selectedPosition =
                     dialogView.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
                 if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
-                val selectedOption = optionsToDisplay[selectedPosition]
+                val selectedOption = allOptions[selectedPosition]
                 if (selectedOption.isStandard) {
                     addStandardNotetype(newName, selectedOption)
                 } else {
@@ -82,17 +86,20 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
             }
             negativeButton(R.string.dialog_cancel)
         }.show()
-        dialog.initializeViewsWith(optionsToDisplay)
+        dialog.initializeViewsWith(allOptions, currentNames)
     }
 
-    private fun AlertDialog.initializeViewsWith(optionsToDisplay: List<NotetypeBasicUiModel>) {
+    private fun AlertDialog.initializeViewsWith(
+        optionsToDisplay: List<NotetypeBasicUiModel>,
+        currentNames: List<String>
+    ) {
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
         val nameInput = dialogView.findViewById<EditText>(R.id.notetype_new_name)
         nameInput.addTextChangedListener { editableText ->
             val currentName = editableText?.toString() ?: ""
             positiveButton.isEnabled =
-                currentName.isNotEmpty() && !optionsToDisplay.map { it.name }.contains(currentName)
+                currentName.isNotEmpty() && !currentNames.contains(currentName)
         }
         dialogView.findViewById<Spinner>(R.id.notetype_new_type).apply {
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
