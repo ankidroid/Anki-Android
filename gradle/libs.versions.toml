@@ -70,7 +70,7 @@ sharedPreferencesMock = "1.2.4"
 slackKeeper = "0.16.0"
 slf4jTimber = "3.1"
 timber = "5.0.1"
-triplet = "3.10.0"
+triplet = "3.10.1"
 turbine = "1.1.0"
 workRuntimeKtx = "2.9.0"
 
