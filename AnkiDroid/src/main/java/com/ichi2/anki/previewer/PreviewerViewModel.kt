@@ -104,10 +104,10 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
             backSideOnly.emit(!backSideOnly.value)
             if (!backSideOnly.value && showingAnswer.value) {
                 showQuestion()
-                cardMediaPlayer.playAllSoundsForSide(CardSide.QUESTION)
+                cardMediaPlayer.autoplayAllSoundsForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
                 showAnswerInternal()
-                cardMediaPlayer.playAllSoundsForSide(CardSide.ANSWER)
+                cardMediaPlayer.autoplayAllSoundsForSide(CardSide.ANSWER)
             }
         }
     }
@@ -147,7 +147,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
                 showAnswerInternal()
-                cardMediaPlayer.playAllSoundsForSide(CardSide.ANSWER)
+                cardMediaPlayer.autoplayAllSoundsForSide(CardSide.ANSWER)
             } else {
                 currentIndex.update { it + 1 }
             }
@@ -227,7 +227,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
             else -> CardSide.QUESTION
         }
         cardMediaPlayer.loadCardSounds(currentCard.await())
-        cardMediaPlayer.playAllSoundsForSide(side)
+        cardMediaPlayer.autoplayAllSoundsForSide(side)
     }
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L671) */

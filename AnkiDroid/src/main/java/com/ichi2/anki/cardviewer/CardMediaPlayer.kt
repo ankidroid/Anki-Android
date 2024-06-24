@@ -166,6 +166,13 @@ class CardMediaPlayer : Closeable {
         }
     }
 
+    suspend fun autoplayAllSoundsForSide(cardSide: CardSide): Job? {
+        if (config.autoplay) {
+            return playAllSoundsForSide(cardSide)
+        }
+        return null
+    }
+
     suspend fun playAllSoundsForSide(cardSide: CardSide): Job? {
         if (!isEnabled) return null
         playSoundsJob {
