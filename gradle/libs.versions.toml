@@ -67,6 +67,7 @@ robolectric = "4.12.2"
 searchpreference = "2.5.1"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
+slackKeeper = "0.16.0"
 slf4jTimber = "3.1"
 timber = "5.0.1"
 triplet = "3.10.0"
@@ -177,3 +178,4 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 
+keeper = { id = "com.slack.keeper", version.ref = "slackKeeper" }

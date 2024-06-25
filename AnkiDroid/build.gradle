@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.keeper)
     id 'idea'
 }
 
@@ -15,6 +16,12 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+keeper {
+    traceReferences {
+        // Silence missing definitions
+        arguments.set(["--map-diagnostics:MissingDefinitionsDiagnostic", "error", "none"])
+    }
+}
 
 idea {
     module {
@@ -40,6 +47,12 @@ android {
     buildFeatures {
         buildConfig = true
         aidl = true
+    }
+
+    if (rootProject.testReleaseBuild) {
+        testBuildType "release"
+    } else {
+        testBuildType "debug"
     }
 
     defaultConfig {
@@ -77,6 +90,12 @@ android {
         versionCode=21900107
         versionName="2.19alpha7"
         minSdk libs.versions.minSdk.get().toInteger()
+
+        // Stays until this is in a release: https://github.com/google/desugar_jdk_libs/commit/c01a5446ca13586b801dbba4d83c6821337b3cc2
+        if (testReleaseBuild && minSdk < 24) {
+            minSdk 24
+        }
+
         // After #13695: change .tests_emulator.yml
         targetSdk libs.versions.targetSdk.get().toInteger()
         testApplicationId "com.ichi2.anki.tests"
@@ -129,9 +148,11 @@ android {
             resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
         }
         named('release') {
+            testCoverageEnabled = testReleaseBuild
             minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testProguardFile 'proguard-test-rules.pro'
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
 
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
@@ -293,7 +314,7 @@ tasks.register('assertNonzeroAndroidTests') {
     }
 }
 afterEvaluate {
-    tasks.named('connectedPlayDebugAndroidTest').configure { finalizedBy('assertNonzeroAndroidTests') }
+    tasks.named(androidTestName).configure { finalizedBy('assertNonzeroAndroidTests') }
 }
 
 apply from: "./robolectricDownloader.gradle"
