@@ -68,7 +68,8 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         // potential personal data
         "syncAccount",
         "syncBaseUrl",
-        "language"
+        "language",
+        "customSyncCertificate"
     )
 
     @Test

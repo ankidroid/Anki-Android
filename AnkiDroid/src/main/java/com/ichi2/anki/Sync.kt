@@ -62,6 +62,7 @@ object SyncPreferences {
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
+    const val CUSTOM_SYNC_CERTIFICATE = "customSyncCertificate"
 
     // Used in the legacy schema path
     const val HOSTNUM = "hostNum"
@@ -79,6 +80,11 @@ interface SyncCompletionListener {
 
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = this.sharedPrefs()
+
+    // Grab custom sync certificate from preferences (default is the empty string) and set it in CollectionManager
+    val currentSyncCertificate = preferences.getString(SyncPreferences.CUSTOM_SYNC_CERTIFICATE, "") ?: ""
+    CollectionManager.updateCustomCertificate(currentSyncCertificate)
+
     val hkey = preferences.getString(SyncPreferences.HKEY, null)
     val resolvedEndpoint = getEndpoint(this)
     return hkey?.let {
