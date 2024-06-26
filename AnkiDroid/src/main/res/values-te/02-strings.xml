@@ -72,7 +72,7 @@
     <string name="replay_audio">ఆడియోను రీప్లే చేయండి</string>
     <string name="leech_suspend_notification">కార్డ్ జ్వాల మరియు సస్పెండ్ గా గుర్తించబడింది</string>
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
-    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="webview_crash_unknown">గుర్తించలేని లోపం</string>
     <string name="webview_crash_unknwon_detailed">WebViewలో అంతర్గత లోపం కారణంగా ఇది జరిగింది</string>
     <string name="webview_crash_oom">జ్ఞాపకశక్తి కోల్పోవడం</string>
     <string name="webview_crash_oom_details">సిస్టమ్ ద్వారా WebView నిలిపివేయబడింది. సాధారణంగా పెద్ద ఫాంట్‌లు లేదా మీడియా కారణంగా అప్లికేషన్ మెమరీ అయిపోయినప్పుడు ఇది జరుగుతుంది.</string>
@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">ఘోరమైన లోపం: WebView రెండరర్ క్రాష్ అయింది. కారణం: %s</string>
     <string name="webview_crash_loop_dialog_title">సిస్టమ్ WebView రెండరింగ్ వైఫల్యం</string>
     <string name="webview_crash_loop_dialog_content">\'%1$s\' కార్డ్‌ని రెండర్ చేయడంలో సిస్టమ్ WebView విఫలమైంది.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>ప్రశ్న</item>
-        <item>క్రమీకరించు ఫీల్డ్</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>సమాధానం</item>
-        <item>కార్డ్</item>
-        <item>డెక్</item>
-        <item>గమనిక</item>
-        <item>ప్రశ్న</item>
-        <item>టాగ్లు</item>
-        <item>లాప్సెస్</item>
-        <item>సమీక్షలు</item>
-        <item>విరామం</item>
-        <item>సులభంగా</item>
-        <item>Due</item>
-        <item>కార్డ్ సవరించబడింది</item>
-        <item>సృష్టించబడింది</item>
-        <item>గమనిక సవరించబడింది</item>
-    </string-array>
     <string name="filter_by_flags">జెండాలు</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">నేటి కొత్త కార్డ్ పరిమితిని సవరించండి</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">కార్డులు సృష్టించబడలేదు. దయచేసి మరిన్ని ఫీల్డ్‌లను పూరించండి</string>
-    <string name="note_editor_no_first_field">మొదటి ఫీల్డ్ ఖాళీగా ఉంది</string>
-    <string name="note_editor_no_cloze_delations">ఈ నోట్ రకం తప్పనిసరిగా దగ్గరి తొలగింపులను కలిగి ఉండాలి</string>
     <string name="note_editor_no_cards_created_all_fields">ప్రస్తుత గమనిక రకం ఏ కార్డ్‌లను రూపొందించలేదు.\nదయచేసి మరొక గమనిక రకాన్ని ఎంచుకోండి లేదా \'కార్డ్‌లు\' క్లిక్ చేసి ఫీల్డ్ ప్రత్యామ్నాయాన్ని జోడించండి</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">క్లోజ్ డిలీట్‌లు క్లోజ్ నోట్ రకంపై మాత్రమే పని చేస్తాయి</string>
     <string name="saving_facts">గమనికను సేవ్ చేస్తోంది</string>
@@ -225,7 +202,7 @@
     <string name="invalid_json_data">కార్డ్ చెల్లని డేటాను అందించింది. %s</string>
     <string name="valid_js_api_version">చెల్లని AnkiDroid JS API వెర్షన్. డెవలపర్ %sని సంప్రదించండి లేదా వికీని వీక్షించండి</string>
     <string name="update_js_api_version">AnkiDroid JS API అప్‌డేట్ అందుబాటులో ఉంది. డెవలపర్ %sని సంప్రదించండి లేదా వికీని వీక్షించండి</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">చూడండి</string>
     <string name="anki_js_error_code">(లోపం కోడ్: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">క్లిప్‌బోర్డ్‌కి కాపీ చేయబడింది</string>
@@ -315,10 +292,10 @@
     <string name="field_editor_model_not_available">సేకరణను యాక్సెస్ చేయడంలో విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి!</string>
     <string name="cd_manage_notetypes_add">కొత్త నోట్ రకాన్ని జోడించండి</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
+    <string name="intro_ankidroid_tagline_one">తక్కువ చదవండి</string>
     <string name="intro_ankidroid_tagline_two">మరింత గుర్తుంచుకో</string>
     <string name="intro_short_ankidroid_explanation">Anki కార్డ్ షెడ్యూలర్ మీ బలహీనమైన జ్ఞాపకాలను బలోపేతం చేయడం ద్వారా మరియు మీ బలమైన జ్ఞాపకాలను సంరక్షించడం ద్వారా సమయాన్ని ఆదా చేస్తుంది</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ప్రారంభించడానికి</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb నుండి సమకాలీకరించండి</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid ఇంకా ప్రారంభించబడలేదు. దయచేసి AnkiDroidని తెరిచి, మళ్లీ ప్రయత్నించండి</string>
@@ -357,9 +334,9 @@
         <item quantity="one">%d కార్డ్ పాతిపెట్టబడలేదు</item>
         <item quantity="other">%d కార్డ్‌లు పాతిపెట్టబడలేదు</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">ప్రత్యామ్నాయం</string>
     <string name="start_recording">దానిని రికార్డ్ చేయండి</string>
     <string name="stop_recording">ఆపు దాన్ని</string>
     <string name="play_recording">ఆడండి</string>
-    <string name="next_recording">Next</string>
+    <string name="next_recording">తర్వాత</string>
 </resources>

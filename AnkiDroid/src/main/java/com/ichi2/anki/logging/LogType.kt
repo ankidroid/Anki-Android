@@ -17,7 +17,7 @@
 package com.ichi2.anki.logging
 
 import com.ichi2.anki.BuildConfig
-import com.ichi2.utils.isRobolectric
+import com.ichi2.anki.common.utils.android.isRobolectric
 import timber.log.Timber
 
 enum class LogType {

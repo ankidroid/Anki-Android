@@ -24,8 +24,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NoteEditor.Companion.intentLaunchedWithImage
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
-import com.ichi2.testutils.Flaky
-import com.ichi2.testutils.OS
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
+import com.ichi2.utils.AssetHelper.TEXT_PLAIN
 import junit.framework.TestCase.assertFalse
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -62,7 +63,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
     fun intentLaunchedWithNonImageIntent() {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
-            type = "text/plain"
+            type = TEXT_PLAIN
         }
         assertFalse(intentLaunchedWithImage(intent))
     }

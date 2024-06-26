@@ -33,7 +33,7 @@ import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.*
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Scheduler
-import com.ichi2.testutils.assertThrows
+import com.ichi2.testutils.common.assertThrows
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException

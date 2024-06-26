@@ -70,15 +70,16 @@
     <string name="sync_title">Sincronización</string>
     <string name="sync_log_uploading_message">Sincronización desde el dispositivo completa</string>
     <string name="sync_database_acknowledge">Colección sincronizada</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Su base de datos está dañada. Por favor, repárela antes de intentar la sincronización nuevamente.\n\nVer %s para informarse sobre la reparación de su base de datos.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remoto</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title">Sincronización unidireccional</string>
+    <string name="one_way_sync_confirmation">Sincronización unidireccional solicitada</string>
     <string name="full_sync_confirmation">El cambio solicitado requiere una subida completa de la base de datos en la próxima sincronización de su colección. Si tiene repasos u otros cambios aguardando en otro dispositivo que no hayan sido aún sincronizados, se perderán. ¿Continuar?</string>
     <string name="full_sync_confirmation_upgrade">Debido a un error en la versión previamente instalada de AnkiDroid, se recomienda forzar una sincronización completa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Sincronización (unidireccional)</string>
     <string name="sync_menu_title_no_account">Sincronizar (iniciar sesión)</string>
 </resources>

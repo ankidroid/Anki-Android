@@ -70,6 +70,7 @@
     <string name="sync_title">Synkronointi</string>
     <string name="sync_log_uploading_message">Täysi synkronointi tästä laitteesta</string>
     <string name="sync_database_acknowledge">Kokoelma synkronoitu</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Tietokanta on vioittunut. Korjaa se, ennen kuin yrität synkronoida uudelleen.\n\nKatso %s saadaksesi lisätietoja tietokannan korjaamisesta.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Paikallinen</string>

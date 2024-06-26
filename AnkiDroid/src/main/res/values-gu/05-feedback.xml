@@ -46,14 +46,14 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Error reporting mode</string>
-    <string name="feedback_disclaimer">Disclaimer: We don’t collect any personal information such as your email address, phone number, or your phone IMEI. We do collect some information about your device such as the manufacturer, model and version of Android, as well as the nature of reported errors themselves and the steps which led up to them occurring.</string>
-    <string name="feedback_title">AnkiDroid Feedback</string>
-    <string name="feedback_default_text">Enter your feedback or information about the nature of any errors you’re reporting.</string>
-    <string name="feedback_auto_toast_text">AnkiDroid has encountered a problem; a report is being sent to the developers&#8230;</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
-    <string name="feedback_copy_debug">Copy debug info</string>
-    <string name="feedback_report">Report</string>
-    <string name="feedback_report_automatically">Send error reports automatically</string>
-    <string name="feedback_no_suitable_app_found">No suitable app found</string>
+    <string name="error_reporting_choice">ભૂલ રિપોર્ટિંગ મોડ</string>
+    <string name="feedback_disclaimer">અસ્વીકરણ: અમે તમારું ઇમેઇલ સરનામું, ફોન નંબર અથવા તમારા ફોન IMEI જેવી કોઈપણ વ્યક્તિગત માહિતી એકત્રિત કરતા નથી. અમે તમારા ઉપકરણ વિશે કેટલીક માહિતી એકત્રિત કરીએ છીએ જેમ કે Android ના ઉત્પાદક, મોડલ અને સંસ્કરણ, તેમજ જાણ કરવામાં આવેલી ભૂલોની પ્રકૃતિ અને તે થવા તરફ દોરી જતા પગલાં.</string>
+    <string name="feedback_title">AnkiDroid પ્રતિસાદ</string>
+    <string name="feedback_default_text">તમે જાણ કરી રહ્યાં છો તે કોઈપણ ભૂલોની પ્રકૃતિ વિશે તમારો પ્રતિસાદ અથવા માહિતી દાખલ કરો.</string>
+    <string name="feedback_auto_toast_text">AnkiDroid ને સમસ્યા આવી છે; વિકાસકર્તાઓને રિપોર્ટ મોકલવામાં આવી રહ્યો છે&#8230;</string>
+    <string name="feedback_for_manual_toast_text">વિકાસકર્તાઓ માટે એક ભૂલ રિપોર્ટ તૈયાર કરવામાં આવી રહી છે&#8230;</string>
+    <string name="feedback_copy_debug">ડીબગ માહિતી કૉપિ કરો</string>
+    <string name="feedback_report">જાણ કરો</string>
+    <string name="feedback_report_automatically">આપમેળે ભૂલ અહેવાલો મોકલો</string>
+    <string name="feedback_no_suitable_app_found">કોઈ યોગ્ય એપ્લિકેશન મળી નથી</string>
 </resources>

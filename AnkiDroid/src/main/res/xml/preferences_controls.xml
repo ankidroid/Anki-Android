@@ -18,6 +18,7 @@
 <!-- Key com.ichi2.ui.BindingPreferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_controls"
     android:key="@string/pref_controls_screen_key">
 
@@ -128,7 +129,7 @@
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/reschedule_command_key"
-            android:title="@string/card_editor_reschedule_card"
+            tools:title="Set due date"
             android:icon="@drawable/ic_reschedule"
             />
         <com.ichi2.preferences.ControlPreference

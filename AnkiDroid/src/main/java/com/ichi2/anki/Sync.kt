@@ -238,7 +238,8 @@ private suspend fun handleNormalSync(
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
             // scheduler version may have changed
             withCol { _loadScheduler() }
-            deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
+            val message = if (syncMedia) R.string.col_synced_media_in_background else R.string.sync_database_acknowledge
+            deckPicker.showSyncLogMessage(message, output.serverMessage)
             deckPicker.refreshState()
             if (syncMedia) {
                 SyncMediaWorker.start(deckPicker, auth2)
@@ -365,7 +366,7 @@ suspend fun monitorMediaSync(
             .setPositiveButton(R.string.dialog_continue) { _, _ ->
                 scope.cancel()
             }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+            .setNegativeButton(TR.syncAbortButton()) { _, _ ->
                 cancelMediaSync(backend)
             }
             .show()

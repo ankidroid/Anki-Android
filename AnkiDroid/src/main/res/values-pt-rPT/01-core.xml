@@ -90,7 +90,7 @@
     <string name="unbury">Mostrar</string>
     <string name="rename_deck">Renomear baralho</string>
     <string name="create_shortcut">Criar atalho</string>
-    <string name="browse_cards">Navegar fichas</string>
+    <string name="browse_cards">Explorar fichas</string>
     <string name="edit_deck_description" comment="edit the deck description">Editar descrição</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Adicionar</string>
     <string name="menu_add_note">Adicionar nota</string>
@@ -104,13 +104,15 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
     <string name="menu_flag">Sinalização</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Sinalizar ficha</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
     <string name="menu_search">Procurar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_toggle_mic_tool_bar">Verificar a pronúncia</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho filtrado</string>
     <string name="directory_inaccessible">A diretoria AnkiDroid está inacessível</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralhos</string>
     <string name="invalid_deck_name">Nome de baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Terminou por agora.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho finalizado por enquanto! %s</string>
     <string name="studyoptions_no_cards_due">Nenhuma ficha por rever</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -147,7 +150,7 @@
     <string name="card_template_editor_front">Modelo da frente</string>
     <string name="card_template_editor_back">Modelo de trás</string>
     <string name="card_template_editor_styling">Estilo</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Aparência do navegador de fichas</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Aparência do explorador de fichas</string>
     <string name="card_template_editor_deck_override">Baralho por defeito</string>
     <string name="card_template_editor_insert_field">Inserir campo</string>
     <string name="card_template_editor_select_field">Selecionar campo</string>
@@ -164,14 +167,14 @@
     <string name="card_template_editor_save_error">Incapaz de gravar alterações ao modelo das fichas: %s</string>
     <string name="template_for_current_card_deleted">O tipo de ficha da ficha atual foi eliminado.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Aparência do navegador</string>
+    <string name="card_template_browser_appearance_title">Aparência do explorador</string>
     <!-- card Info -->
     <string name="card_info_title">Informações da ficha</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ler e escrever na base de dados do AnkiDroid</string>
     <string name="read_write_permission_description">aceder às notas, fichas, tipos de nota e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de fichas</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Explorador de fichas</string>
     <string name="context_menu_anki_card_label">Ficha Anki</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">As colecções não podem ser combinadas.\nQue colecção quer manter?</string>
@@ -246,4 +249,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acesso a todos os ficheiros</string>
     <string name="image_occlusion">Oclusão de imagem</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Eliminar conta</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Cartão instantâneo</string>
 </resources>

@@ -101,13 +101,15 @@
     <string name="menu_suspend">Bekukan</string>
     <string name="menu_delete_note">Padam nota</string>
     <string name="menu_flag">Tanda</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Tanda kad</string>
     <string name="menu_edit_tags">Sunting tag</string>
     <string name="delete_note_message">Pasti padam nota dan semua kadnya?\n%s</string>
     <string name="menu_search">Cari di %1$s</string>
     <string name="menu_mark_note">Cap nota</string>
     <string name="menu_unmark_note">Buang cap nota</string>
-    <string name="menu_toggle_mic_tool_bar">Semak sebutan</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Cipta dek</string>
     <string name="new_dynamic_deck">Cipta dek tapisan</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat dicapai</string>
@@ -128,6 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Carian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak sah</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Tiada kad tertunggak lagi</string>
     <string name="sd_card_not_mounted">Peranti storan tidak dipasang</string>
     <string name="button_sync" comment="Text of the sync button">Segerak</string>
@@ -240,4 +243,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

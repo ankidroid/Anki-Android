@@ -21,6 +21,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -84,10 +85,10 @@ class DeckSpinnerSelection(
     }
 
     @MainThread // spinner.adapter
-    fun initializeNoteEditorDeckSpinner(col: Collection) {
+    fun initializeNoteEditorDeckSpinner(col: Collection, @LayoutRes layoutResource: Int = R.layout.multiline_spinner_item) {
         dropDownDecks = computeDropDownDecks(col, includeFiltered = false).toMutableList()
         val deckNames = dropDownDecks.map { it.name }
-        val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
+        val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, layoutResource, deckNames as List<String?>) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                 // Cast the drop down items (popup items) as text view
                 val tv = super.getDropDownView(position, convertView, parent) as TextView

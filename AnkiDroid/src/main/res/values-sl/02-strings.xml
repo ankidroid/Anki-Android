@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Vprašanje</item>
-        <item>Polje za razvrščanje</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Odgovor</item>
-        <item>Kartica</item>
-        <item>Komplet</item>
-        <item>Zapisek</item>
-        <item>Vprašanje</item>
-        <item>Oznake</item>
-        <item>Spodrsljaji</item>
-        <item>Pregledi</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Spremenjena kartica</item>
-        <item>Ustvarjeno</item>
-        <item>Spremenjen zapisek</item>
-    </string-array>
     <string name="filter_by_flags">Oznaka</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Povečaj omejitev novih kartic za danes</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Uredi zapisek</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Nobena kartica ni bila ustvarjena. Prosim izpolni več polj.</string>
-    <string name="note_editor_no_first_field">Prvo polje je prazno.</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Shranjevanje zapiska</string>

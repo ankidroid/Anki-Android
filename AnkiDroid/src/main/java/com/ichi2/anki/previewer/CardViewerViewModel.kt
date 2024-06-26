@@ -29,6 +29,8 @@ import com.ichi2.anki.cardviewer.MediaErrorHandler
 import com.ichi2.anki.cardviewer.SoundErrorBehavior
 import com.ichi2.anki.cardviewer.SoundErrorListener
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.pages.AnkiServer
+import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TtsPlayer
@@ -45,7 +47,10 @@ import timber.log.Timber
 
 abstract class CardViewerViewModel(
     cardMediaPlayer: CardMediaPlayer
-) : ViewModel(), OnErrorListener {
+) : ViewModel(),
+    OnErrorListener,
+    PostRequestHandler {
+
     override val onError = MutableSharedFlow<String>()
     val onMediaError = MutableSharedFlow<String>()
     val onTtsError = MutableSharedFlow<TtsPlayer.TtsError>()
@@ -60,6 +65,8 @@ abstract class CardViewerViewModel(
         javascriptEvaluator = { JavascriptEvaluator { launchCatchingIO { eval.emit(it) } } }
     }
     abstract var currentCard: Deferred<Card>
+
+    abstract val server: AnkiServer
 
     @CallSuper
     override fun onCleared() {
@@ -77,6 +84,8 @@ abstract class CardViewerViewModel(
      * @param isAfterRecreation whether this is being called after an `Activity` recreation
      */
     abstract fun onPageFinished(isAfterRecreation: Boolean)
+
+    fun baseUrl(): String = server.baseUrl()
 
     fun setSoundPlayerEnabled(isEnabled: Boolean) {
         cardMediaPlayer.isEnabled = isEnabled
@@ -171,6 +180,17 @@ abstract class CardViewerViewModel(
                     viewModelScope.launch { onTtsError.emit(error) }
                 }
             }
+        }
+    }
+
+    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+        return if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+            when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
+                "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
+                else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
+            }
+        } else {
+            throw IllegalArgumentException("Unhandled POST request: $uri")
         }
     }
 

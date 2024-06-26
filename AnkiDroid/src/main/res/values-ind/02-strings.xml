@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Galat Fatal: Perender WebView mogok. Sebab: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Gagal Merender</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView gagal merender kartu \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pertanyaan</item>
-        <item>Urutkan bidang</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Jawaban</item>
-        <item>Kartu</item>
-        <item>Dek</item>
-        <item>Catatan</item>
-        <item>Pertanyaan</item>
-        <item>Tag</item>
-        <item>Kelupaan</item>
-        <item>Ulasan</item>
-        <item>Interval</item>
-        <item>Renggang</item>
-        <item>Jatuh tempo</item>
-        <item>Kartu diubah</item>
-        <item>Dibuat</item>
-        <item>Catatan diubah</item>
-    </string-array>
     <string name="filter_by_flags">Bendera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Edit catatan</string>
     <string name="discard">Buang</string>
     <string name="note_editor_no_cards_created">Tidak ada kartu yang dibuat. Harap isi semua bidang teks</string>
-    <string name="note_editor_no_first_field">Bidang teks pertama kosong</string>
-    <string name="note_editor_no_cloze_delations">Tipe catatan ini harus berisi titik-titik</string>
     <string name="note_editor_no_cards_created_all_fields">Tipe catatan sekarang tidak menghasilkan kartu apapun.\nHarap memilih jenis catatan lain, atau pilih \'Kartu\' dan tambahkan bidang teks pengganti</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Kosongan Kloza hanya bekerja pada tipe catatan Kloza</string>
     <string name="saving_facts">Menyimpan catatan</string>

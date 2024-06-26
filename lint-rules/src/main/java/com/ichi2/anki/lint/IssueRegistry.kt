@@ -21,6 +21,7 @@ import com.android.tools.lint.client.api.IssueRegistry
 import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 import com.android.tools.lint.detector.api.Issue
+import com.ichi2.anki.lint.rules.AvoidAlertDialogUsage
 import com.ichi2.anki.lint.rules.CopyrightHeaderExists
 import com.ichi2.anki.lint.rules.DirectCalendarInstanceUsage
 import com.ichi2.anki.lint.rules.DirectDateInstantiation
@@ -62,7 +63,8 @@ class IssueRegistry : IssueRegistry() {
                 FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,
-                InvalidStringFormatDetector.ISSUE
+                InvalidStringFormatDetector.ISSUE,
+                AvoidAlertDialogUsage.ISSUE
             )
         }
     override val api: Int

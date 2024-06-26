@@ -20,7 +20,6 @@ import {
     LOCALIZED_REGIONS,
     TEMP_DIR,
     TITLE_STR,
-    TITLE_FILE,
     I18N_FILES,
     XML_LICENSE_HEADER,
     RES_VALUES_LANG_DIR,
@@ -82,7 +81,6 @@ async function replacechars(fileName: string): Promise<boolean> {
  */
 function fileExtFor(f: string): string {
     if (f == "14-marketdescription") return ".txt";
-    else if (f == "15-markettitle") return ".txt";
     else return ".xml";
 }
 
@@ -142,16 +140,6 @@ async function update(
         return true;
     }
 
-    // these are appended to a special file
-    if (f == "15-markettitle") {
-        const translatedTitle = translatedContent.split("\n")[0];
-
-        if (TITLE_STR != translatedTitle) {
-            fs.appendFileSync(TITLE_FILE, "\n" + language + ": " + translatedTitle);
-        }
-        return true;
-    }
-
     // Everything else is a regular file to translate into Android resources
     const newfile = valuesDirectory + f + ".xml";
     fs.writeFileSync(newfile, translatedContent);
@@ -162,10 +150,6 @@ async function update(
  * Update translated I18n files in res/value dir
  */
 export async function updateI18nFiles() {
-    // Create new / empty marketing title file to populate
-    fs.truncateSync(TITLE_FILE);
-    fs.appendFileSync(TITLE_FILE, TITLE_STR);
-
     for (const language of LANGUAGES) {
         // Language tags are 2- or 3-letters, and regional files need a marker in Android where subtag starts with "r"
         // Note the documentation does not describe what works in practice:

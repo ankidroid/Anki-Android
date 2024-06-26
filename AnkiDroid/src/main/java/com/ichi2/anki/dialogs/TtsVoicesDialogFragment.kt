@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.dialogs
 
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -28,6 +27,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -160,7 +160,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
         viewModel.availableVoicesFlow.observe {
             if (it is TtsVoicesViewModel.VoiceLoadingState.Failure) {
                 progressBar.visibility = View.VISIBLE
-                AlertDialog.Builder(this.context)
+                AlertDialog.Builder(requireContext())
                     .setMessage(it.exception.localizedMessage)
                     .setOnDismissListener { this@TtsVoicesDialogFragment.dismiss() }
                     .show()

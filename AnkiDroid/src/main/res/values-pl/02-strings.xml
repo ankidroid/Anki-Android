@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Błąd krytyczny: awaria renderowania WebView. Przyczyna: %s</string>
     <string name="webview_crash_loop_dialog_title">Błąd renderowania WebView systemu</string>
     <string name="webview_crash_loop_dialog_content">System WebView nie potrafił wyrenderować karty \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pytanie</item>
-        <item>Sortowanie według pola</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Odpowiedź</item>
-        <item>Karta</item>
-        <item>Talia</item>
-        <item>Notka</item>
-        <item>Pytanie</item>
-        <item>Tagi</item>
-        <item>Pomyłki</item>
-        <item>Powtórki</item>
-        <item>Przerwa</item>
-        <item>Łatwość</item>
-        <item>Do przejrzenia</item>
-        <item>Zmodyfikowano kartę</item>
-        <item>Stworzona</item>
-        <item>Zmodyfikowano notatkę</item>
-    </string-array>
     <string name="filter_by_flags">Flagi </string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zmień dzisiejszy limit nowych kart</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Edytuj notatkę</string>
     <string name="discard">Odrzuć</string>
     <string name="note_editor_no_cards_created">Nie stworzono żadnych kart. Wypełnij więcej pól.</string>
-    <string name="note_editor_no_first_field">Pierwsze pole jest puste</string>
-    <string name="note_editor_no_cloze_delations">Ten typ notatki musi zawierać luki do wypełnienia</string>
     <string name="note_editor_no_cards_created_all_fields">Obecny typ notatki nie wygenerował żadnych kart. Wybierz inny typ notatki, lub kliknij \'Karty\' i dodaj substytucję pola.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Luki do wypełnienia będą działały tylko w typie notatki \"luka\"</string>
     <string name="saving_facts">Zapisywanie notatki</string>

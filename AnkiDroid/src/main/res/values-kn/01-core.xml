@@ -104,13 +104,15 @@
     <string name="menu_suspend">ಅಮಾನತ್ತುಗೊಳಿಸು</string>
     <string name="menu_delete_note">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
     <string name="menu_flag">ಧ್ವಜ</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
     <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
     <string name="menu_search">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>
     <string name="menu_mark_note">ಟಿಪ್ಪಣಿ ಗುರುತಿಸಿ</string>
     <string name="menu_unmark_note">ಟಿಪ್ಪಣಿ ಗುರುತು</string>
-    <string name="menu_toggle_mic_tool_bar">ಉಚ್ಚಾರಣೆಯನ್ನು ಪರಿಶೀಲಿಸಿ</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="new_dynamic_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಸಂಗ್ರಹ ರಚಿಸಿ</string>
     <string name="directory_inaccessible">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೈರೆಕ್ಟರಿ ಪ್ರವೇಶಿಸಲಾಗುವುದಿಲ್ಲ</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ಡೆಕ್ ಹುಡುಕಾಟ</string>
     <string name="invalid_deck_name">ಅಮಾನ್ಯ ಡೆಕ್ ಹೆಸರು</string>
     <string name="studyoptions_congrats_finished">ಅಭಿನಂದನೆಗಳು! ನೀವು ಸದ್ಯಕ್ಕೆ ಮುಗಿಸಿದ್ದೀರಿ.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಇನ್ನೂ ಬಾಕಿ ಉಳಿದಿಲ್ಲ</string>
     <string name="sd_card_not_mounted">ಸಾಧನ ಸಂಗ್ರಹಣೆಯನ್ನು ಆರೋಹಿಸಲಾಗಿಲ್ಲ</string>
     <string name="button_sync" comment="Text of the sync button">ಸಿಂಕ್</string>
@@ -196,43 +199,39 @@
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">ವರ್ಗಾವಣೆ ಗಾತ್ರವನ್ನು ಲೆಕ್ಕಾಚಾರ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$s ರಲ್ಲಿ %1$s ಅನ್ನು ಸರಿಸಲಾಗಿದೆ</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">ವಲಸೆ ಯಶಸ್ವಿಯಾಗಿದೆ</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸ್ಥಳಾಂತರಿಸಲಾಗಿದೆ.
+        AnkiDroid ಮತ್ತೆ ಸಂಪೂರ್ಣವಾಗಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ, ಮತ್ತು ನೀವು ಸಿಂಕ್ ಮಾಡಬಹುದು.
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
-    </string>
+        \nನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯು ಈಗ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡುವಾಗ ತೆಗೆದುಹಾಕಲಾದ ಫೋಲ್ಡರ್‌ನಲ್ಲಿದೆ ಎಂಬುದನ್ನು ಗಮನಿಸಿ.
+        ನಿಯಮಿತವಾಗಿ ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಸಿಂಕ್ ಮಾಡುವ ಅಥವಾ ರಫ್ತು ಮಾಡುವ ಮೂಲಕ ನಿಮ್ಮ ಡೇಟಾ ಸುರಕ್ಷಿತವಾಗಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.</string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">ವಲಸೆ ವಿಫಲವಾಗಿದೆ</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[ದೋಷದೊಂದಿಗೆ ಡೇಟಾಬೇಸ್ ಫೈಲ್‌ಗಳನ್ನು ನಕಲಿಸಲು ವಿಫಲವಾಗಿದೆ: %1$s.
         <br><br>
-        The changes were reverted.
+        ಬದಲಾವಣೆಗಳನ್ನು ಹಿಂತಿರುಗಿಸಲಾಯಿತು.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        ದಯವಿಟ್ಟು ವಲಸೆಯನ್ನು ಮರು-ರನ್ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ.
+        ಸಮಸ್ಯೆಯನ್ನು ಪರಿಹರಿಸಲು, ನೀವು ಕೆಲವು ಡಿಸ್ಕ್ ಜಾಗವನ್ನು ಮುಕ್ತಗೊಳಿಸಬೇಕಾಗಬಹುದು,
+        ಅಥವಾ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಹೊಂದಿರುವ ತೆಗೆಯಬಹುದಾದ ಸಂಗ್ರಹಣೆಯನ್ನು ಮರುಸಂಪರ್ಕಿಸಿ.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+        <a href="%2$s">ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ ಮತ್ತು ಸಹಾಯ ಪಡೆಯಿರಿ</a>]]></string>
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[ದೋಷದೊಂದಿಗೆ ವಿಫಲವಾದ ನಂತರ ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಸರಿಸುವುದನ್ನು ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        ಬದಲಾವಣೆಗಳನ್ನು <i>ಇಲ್ಲ</i> ಹಿಂತಿರುಗಿಸಲಾಗಿದೆ.
+        ಯಾವುದೇ ಡೇಟಾವನ್ನು ಕಳೆದುಕೊಳ್ಳಬಾರದು,
+        ಮಾಧ್ಯಮ ಫೈಲ್‌ಗಳನ್ನು ಹಳೆಯ ಮತ್ತು ಹೊಸ ಫೋಲ್ಡರ್‌ಗಳ ನಡುವೆ ವಿಭಜಿಸಬಹುದು.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        ದಯವಿಟ್ಟು ವಲಸೆಯನ್ನು ಮರು-ಚಾಲನೆ ಮಾಡಲು ಪ್ರಯತ್ನಿಸಿ.
+        ಸಮಸ್ಯೆಯನ್ನು ಪರಿಹರಿಸಲು, ನೀವು ಕೆಲವು ಡಿಸ್ಕ್ ಜಾಗವನ್ನು ಮುಕ್ತಗೊಳಿಸಬೇಕಾಗಬಹುದು,
+        ಅಥವಾ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಹೊಂದಿರುವ ತೆಗೆಯಬಹುದಾದ ಸಂಗ್ರಹಣೆಯನ್ನು ಮರುಸಂಪರ್ಕಿಸಿ.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <a href="%2$s">ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ ಮತ್ತು ಸಹಾಯ ಪಡೆಯಿರಿ</a>]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[ದೋಷದೊಂದಿಗೆ ವಿಫಲವಾದ ನಂತರ ಶೇಖರಣಾ ಸ್ಥಳಾಂತರವನ್ನು ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
+        <a href="%2$s">ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ ಮತ್ತು ಸಹಾಯ ಪಡೆಯಿರಿ</a>]]></string>
     <string name="migration__resume_after_failed_dialog__button_positive">ವಲಸೆಯನ್ನು ಪುನರಾರಂಭಿಸಿ</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ಪ್ರವೇಶಿಸಲಾಗದ ಸಂಗ್ರಹ</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store ನೀತಿಯಲ್ಲಿನ ಬದಲಾವಣೆಯಿಂದಾಗಿ AnkiDroid ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದ ನಂತರ ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಪ್ರವೇಶಿಸಲು ನಮಗೆ ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ\n\nನಿಮ್ಮ ಡೇಟಾ ಸುರಕ್ಷಿತವಾಗಿದೆ ಮತ್ತು ಮರುಸ್ಥಾಪಿಸಬಹುದು. ಇದು \n%s\n\nಮರುಸ್ಥಾಪಿಸಲು ಕೆಳಗಿನ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ಆ್ಯಪ್ ನಿಷ್ಕ್ರಿಯತೆಯಿಂದಾಗಿ Android AnkiDroid ನ %1$s ಅನುಮತಿಯನ್ನು ತೆಗೆದುಹಾಕಿದೆ.\n\nನಿಮ್ಮ ಡೇಟಾ ಸುರಕ್ಷಿತವಾಗಿದೆ ಮತ್ತು ಮರುಸ್ಥಾಪಿಸಬಹುದು. ಇದು \n%2$s\n\nಮರುಸ್ಥಾಪಿಸಲು ಕೆಳಗಿನ ಆಯ್ಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb ನಿಂದ ಮರುಸ್ಥಾಪಿಸಿ (ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ)</string>
     <string name="install_non_play_store_ankidroid_recommended">ಫೋಲ್ಡರ್ ಪ್ರವೇಶವನ್ನು ಮರುಸ್ಥಾಪಿಸಿ (ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ)</string>
     <string name="install_non_play_store_ankidroid">ಫೋಲ್ಡರ್ ಪ್ರವೇಶವನ್ನು ಮರುಸ್ಥಾಪಿಸಿ (ಸುಧಾರಿತ)</string>
@@ -244,6 +243,8 @@
     <string name="storage_access_title">ಶೇಖರಣಾ ಪ್ರವೇಶ</string>
     <string name="storage_access_summary">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯನ್ನು ಸುರಕ್ಷಿತ ಸ್ಥಳದಲ್ಲಿ ಉಳಿಸುತ್ತದೆ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದರೆ ಅದನ್ನು ಅಳಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ಎಲ್ಲಾ ಫೈಲ್‌ಗಳ ಪ್ರವೇಶ</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">ಚಿತ್ರ ಮುಚ್ಚುವಿಕೆ</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ಖಾತೆಯನ್ನು ತೆಗೆದುಹಾಕಿ</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

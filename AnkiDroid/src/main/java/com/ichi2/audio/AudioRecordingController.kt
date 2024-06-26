@@ -41,6 +41,8 @@ import com.ichi2.anki.multimediacard.fields.FieldControllerBase
 import com.ichi2.anki.multimediacard.fields.IFieldController
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.OnHoldListener
+import com.ichi2.anki.ui.setOnHoldListener
 import com.ichi2.anki.utils.elapsed
 import com.ichi2.anki.utils.formatAsString
 import com.ichi2.annotations.NeedsTest
@@ -186,10 +188,28 @@ class AudioRecordingController :
         setUpMediaPlayer()
 
         audioTimer = AudioTimer(this, this)
-        recordButton.setOnClickListener {
-            Timber.i("primary 'record' button clicked")
-            controlAudioRecorder()
-        }
+
+        // if the recorder is in the 'cleared' state
+        // holding the 'record' button should start a recording
+        // releasing the 'record' button should complete the recording
+        // TODO: remove haptics from the long press - the 'buzz' can be heard on the recording
+        recordButton.setOnHoldListener(object : OnHoldListener {
+            override fun onTouchStart() {
+                Timber.d("pressed 'record' button'")
+                controlAudioRecorder()
+            }
+
+            override fun onHoldEnd() {
+                Timber.d("finished holding 'record' button'")
+                if (state is ImmediatePlayback) {
+                    controlAudioRecorder()
+                } else {
+                    // if we're recording audio to add permanently,
+                    // releasing the button after a long press should be 'save', not 'pause'
+                    saveButton?.performClick()
+                }
+            }
+        })
 
         playAudioButton.setOnClickListener {
             Timber.i("play/pause clicked")

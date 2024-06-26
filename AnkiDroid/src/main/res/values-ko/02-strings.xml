@@ -81,27 +81,6 @@
     <string name="webview_crash_loop_dialog_title">WebView 렌더링이 실패했습니다.</string>
     <string name="webview_crash_loop_dialog_content">WebView가 \'%1$s\' 카드를 렌더링하지 못했습니다.
 %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>질문</item>
-        <item>필드 정렬</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>정답</item>
-        <item>카드</item>
-        <item>덱</item>
-        <item>노트</item>
-        <item>문제</item>
-        <item>태그</item>
-        <item>오답 횟수</item>
-        <item>복습</item>
-        <item>시간 간격</item>
-        <item>수월함</item>
-        <item>예정</item>
-        <item>카드 수정일</item>
-        <item>작성한 날짜</item>
-        <item>노트 편집일</item>
-    </string-array>
     <string name="filter_by_flags">플래그</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
@@ -115,8 +94,6 @@
     <string name="cardeditor_title_edit_card">노트 편집하기</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">작성된 카드가 없습니다. 먼저 필드를 입력해주십시오.</string>
-    <string name="note_editor_no_first_field">첫번째 필드가 비어있습니다</string>
-    <string name="note_editor_no_cloze_delations">이 노트유형은 빈칸이 있어야 합니다</string>
     <string name="note_editor_no_cards_created_all_fields">현재의 노트 유형으로는 카드를 생성할 수 없습니다.\n먼저 다른 노트 유형을 선택하거나 \'카드\'를 눌러 대체할 필드를 생성해주십시오.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">빈칸 뚫기는 오직 빈칸 노트 유형에서만 작동합니다.</string>
     <string name="saving_facts">노트 저장 중</string>

@@ -37,6 +37,7 @@ import androidx.work.Configuration
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
@@ -152,7 +153,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
         }
 
         // make default HTML / JS debugging true for debug build and disable for unit/android tests
-        if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest) {
+        if (BuildConfig.DEBUG && !isRunningAsUnitTest) {
             preferences.edit { putBoolean("html_javascript_debugging", true) }
         }
         CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(

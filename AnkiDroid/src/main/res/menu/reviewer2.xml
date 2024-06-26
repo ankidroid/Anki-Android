@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Copyright (c) 2024 Brayan Oliveira <brayandso.dev@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_undo"
+        android:enabled="false"
+        android:icon="@drawable/ic_undo_white"
+        tools:title="Undo"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_redo"
+        android:enabled="false"
+        android:icon="@drawable/ic_redo"
+        tools:title="Redo"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_flag"
+        android:title="@string/menu_flag_card"
+        android:icon="@drawable/ic_flag_transparent"
+        app:showAsAction="never"
+        >
+        <menu>
+            <!-- flags are added dynamically  -->
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_mark"
+        android:icon="@drawable/ic_star_border_white"
+        android:title="@string/menu_mark_note"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/ic_mode_edit_white"
+        android:title="@string/cardeditor_title_edit_card"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_card_info"
+        android:icon="@drawable/ic_dialog_info"
+        android:title="@string/card_info_title"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_open_deck_options"
+        android:icon="@drawable/ic_tune_white"
+        android:title="@string/menu__deck_options"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_add_note"
+        android:title="@string/menu_add_note"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/menu_delete_note"
+        android:icon="@drawable/ic_delete_white"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_bury_card"
+        android:title="@string/menu_bury_card"
+        android:icon="@drawable/ic_flip_to_back_white"
+        android:visible="false"
+        />
+    <item
+        android:id="@+id/action_bury"
+        android:title="@string/menu_bury"
+        android:icon="@drawable/ic_flip_to_back_white">
+        <menu>
+            <item
+                android:id="@+id/action_bury_card"
+                android:title="@string/menu_bury_card" />
+            <item
+                android:id="@+id/action_bury_note"
+                android:title="@string/menu_bury_note" />
+        </menu>
+    </item>
+    <item android:id="@+id/action_suspend_card"
+        android:title="@string/menu_suspend_card"
+        android:icon="@drawable/ic_suspend"
+        android:visible="false"/>
+    <item
+        android:id="@+id/action_suspend"
+        android:title="@string/menu_suspend"
+        android:icon="@drawable/ic_suspend">
+        <menu>
+            <item
+                android:id="@+id/action_suspend_card"
+                android:title="@string/menu_suspend_card" />
+            <item
+                android:id="@+id/action_suspend_note"
+                android:title="@string/menu_suspend_note" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/user_action_1"
+        android:icon="@drawable/user_action_1"
+        android:title="@string/user_action_1"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_2"
+        android:icon="@drawable/user_action_2"
+        android:title="@string/user_action_2"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_3"
+        android:icon="@drawable/user_action_3"
+        android:title="@string/user_action_3"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_4"
+        android:icon="@drawable/user_action_4"
+        android:title="@string/user_action_4"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_5"
+        android:icon="@drawable/user_action_5"
+        android:title="@string/user_action_5"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_6"
+        android:icon="@drawable/user_action_6"
+        android:title="@string/user_action_6"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_7"
+        android:icon="@drawable/user_action_7"
+        android:title="@string/user_action_7"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_8"
+        android:icon="@drawable/user_action_8"
+        android:title="@string/user_action_8"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/user_action_9"
+        android:icon="@drawable/user_action_9"
+        android:title="@string/user_action_9"
+        app:showAsAction="never"
+        />
+</menu>

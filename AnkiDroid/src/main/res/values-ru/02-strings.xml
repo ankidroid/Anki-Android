@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Критическая ошибка: WebView завершился. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Сбой системного WebView</string>
     <string name="webview_crash_loop_dialog_content">Системному WebView не удалось отрисовать карточку «%1$s».\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Вопрос</item>
-        <item>Поле сортировки</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Ответ</item>
-        <item>Карточка</item>
-        <item>Колода</item>
-        <item>Тип записи</item>
-        <item>Вопрос</item>
-        <item>Метки</item>
-        <item>Забытые</item>
-        <item>Повторения</item>
-        <item>Интервал</item>
-        <item>Лёгкость</item>
-        <item>Срок</item>
-        <item>Карточка изменена</item>
-        <item>Создано</item>
-        <item>Запись изменена</item>
-    </string-array>
     <string name="filter_by_flags">Флажки</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Править запись</string>
     <string name="discard">Отменить</string>
     <string name="note_editor_no_cards_created">Карточки не созданы. Заполните больше полей</string>
-    <string name="note_editor_no_first_field">Первое поле пусто</string>
-    <string name="note_editor_no_cloze_delations">Этот тип записи должен содержать задание с пропусками</string>
     <string name="note_editor_no_cards_created_all_fields">Текущий тип записи не производит никаких карточек.\nВыберите другой тип записи или нажмите «Карты» и добавьте подстановку поля</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Задание с пропусками работают только в типе записи с пропусками</string>
     <string name="saving_facts">Запись сохраняется</string>

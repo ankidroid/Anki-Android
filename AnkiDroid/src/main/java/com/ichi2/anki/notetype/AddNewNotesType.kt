@@ -17,6 +17,7 @@ package com.ichi2.anki.notetype
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -98,6 +99,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                 override fun onItemSelected(av: AdapterView<*>?, rv: View?, index: Int, id: Long) {
                     val selectedNotetype = optionsToDisplay[index]
                     nameInput.setText(randomizeName(selectedNotetype.name))
+                    nameInput.setSelection(nameInput.text.length)
                 }
 
                 override fun onNothingSelected(widget: AdapterView<*>?) {
@@ -117,6 +119,8 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
             ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
+            nameInput.requestFocus()
+            window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
     }
 

@@ -23,8 +23,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.browser.BrowserColumnCollection
+import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
@@ -99,6 +102,7 @@ object PreferenceUpgradeService {
                 yield(SetShowDeckTitle())
                 yield(ResetAnalyticsOptIn())
                 yield(RemoveNoCodeFormatting())
+                yield(UpgradeBrowserColumns())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -499,6 +503,71 @@ object PreferenceUpgradeService {
         internal class RemoveNoCodeFormatting : PreferenceUpgrade(18) {
             override fun upgrade(preferences: SharedPreferences) =
                 preferences.edit { remove("noCodeFormatting") }
+        }
+
+        internal class UpgradeBrowserColumns : PreferenceUpgrade(19) {
+            override fun upgrade(preferences: SharedPreferences) {
+                // Columns were stored as an index into COLUMN[1/2]_KEYS
+                // This produced a CardBrowserColumn object, and the index was used as an index
+                // into a string array
+
+                // This has a number of issues:
+                // * Cards Mode and Notes Mode uses the same column definitions
+                // * The index was opaque: 0 meant different things in column 1 and column 2
+                // * COLUMN[N]_KEYS differed from the available columns in Anki Desktop
+                // * A user could only select two columns, even on a Tablet/Chromebook/TV
+
+                // To improve this, we define: CardBrowserColumnCollection
+                // This uses 1 preference for cards or notes mode, rather than 1 preference per
+                // column
+
+                // The values are now equivalent to the keys which are sent to Anki Desktop
+                // and allow an arbitrary ordering and number of values
+                // "activeNoteCols" -> "question|cardEase"
+
+                fun clearLegacyKeys() {
+                    Timber.d("removing legacy keys")
+                    preferences.edit {
+                        remove(DISPLAY_COLUMN_1_KEY)
+                        remove(DISPLAY_COLUMN_2_KEY)
+                    }
+                }
+
+                val currentColumn1Index = preferences.getInt(DISPLAY_COLUMN_1_KEY, -1)
+                val currentColumn2Index = preferences.getInt(DISPLAY_COLUMN_2_KEY, -1)
+
+                if (currentColumn1Index == -1 || currentColumn2Index == -1) {
+                    Timber.d("no update needed")
+                    clearLegacyKeys()
+                    return
+                }
+
+                val currentColumn1 = CardBrowserColumn.COLUMN1_KEYS[currentColumn1Index]
+                val currentColumn2 = CardBrowserColumn.COLUMN2_KEYS[currentColumn2Index]
+
+                BrowserColumnCollection.update(preferences, CardsOrNotes.CARDS) { columns ->
+                    if (columns.size < 2) return@update false
+                    Timber.d("upgrading browser 'cards' columns")
+                    columns[0] = currentColumn1
+                    columns[1] = currentColumn2
+                    true
+                }
+
+                BrowserColumnCollection.update(preferences, CardsOrNotes.NOTES) { columns ->
+                    if (columns.size < 2) return@update false
+                    Timber.d("upgrading browser 'notes' columns")
+                    columns[0] = currentColumn1
+                    columns[1] = currentColumn2
+                    true
+                }
+
+                clearLegacyKeys()
+            }
+
+            companion object {
+                private const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
+                private const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
+            }
         }
     }
 }

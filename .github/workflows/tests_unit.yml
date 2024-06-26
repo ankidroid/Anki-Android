@@ -111,7 +111,7 @@ jobs:
     # Do not run the scheduled jobs on forks
     if: (github.event_name == 'schedule' && github.repository == 'ankidroid/Anki-Android') || (github.event_name != 'schedule')
     needs: matrix_prep
-    timeout-minutes: 30
+    timeout-minutes: 35
     env:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     strategy:
@@ -141,7 +141,7 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
-        timeout-minutes: 5
+        timeout-minutes: 10
         with:
           # Only write to the cache for builds on the 'main' branches, stops branches evicting main cache
           # Builds on other branches will only read from main branch cache writes

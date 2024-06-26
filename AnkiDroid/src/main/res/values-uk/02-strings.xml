@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Критична помилка WebView. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Збій системного WebView</string>
     <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося відобразити картку \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Запитання</item>
-        <item>Поле сортування</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Відповідь</item>
-        <item>Картка</item>
-        <item>Колода</item>
-        <item>Запис</item>
-        <item>Запитання</item>
-        <item>Теги</item>
-        <item>Забуті</item>
-        <item>Повторення</item>
-        <item>Інтервал</item>
-        <item>Легкість</item>
-        <item>До перегляду</item>
-        <item>Картку змінено</item>
-        <item>Створено</item>
-        <item>Запис змінено</item>
-    </string-array>
     <string name="filter_by_flags">Прапорці</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Редагувати запис</string>
     <string name="discard">Відкинути</string>
     <string name="note_editor_no_cards_created">Картки не створено. Будь ласка, заповніть більше полів</string>
-    <string name="note_editor_no_first_field">Перше поле порожнє</string>
-    <string name="note_editor_no_cloze_delations">Цей тип запису повинен містити пропуски</string>
     <string name="note_editor_no_cards_created_all_fields">Від поточного типу запису нема жодної картки. \nБудь ласка, оберіть інший тип запису чи натисніть «картки», додати поле підміни</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Завдання з пропусками працюватиме лише у типі запису з завданнями з пропуском</string>
     <string name="saving_facts">Зберегти запис</string>
@@ -224,7 +201,7 @@
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
     <string name="title_whiteboard_pen_color">Колір пензля</string>
-    <string name="title_whiteboard_editor">Редактор дошоки</string>
+    <string name="title_whiteboard_editor">Редактор дошки</string>
     <string name="user_is_a_robot">Виявлено автоматичний тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %1$s, або перегляньте вікі. %2$s</string>

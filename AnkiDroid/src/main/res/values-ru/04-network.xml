@@ -70,6 +70,7 @@
     <string name="sync_title">Синхронизация</string>
     <string name="sync_log_uploading_message">Полностью синхронизировано с устройством</string>
     <string name="sync_database_acknowledge">Коллекция синхронизирована</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">База данных повреждена. Попробуйте исправить её и синхронизироваться опять.\n\nОб исправлении см. %s.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Локальную</string>

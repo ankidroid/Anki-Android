@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">മാരകമായ പിശക്: വെബ്‌വ്യൂ റെൻഡറർ തകർന്നു. കാരണം:%s</string>
     <string name="webview_crash_loop_dialog_title">സിസ്റ്റം വെബ്‌വ്യൂ റെൻഡറിംഗ് പരാജയം</string>
     <string name="webview_crash_loop_dialog_content">\'%1$s\' കാർഡ് റെൻഡർ ചെയ്യുന്നതിൽ സിസ്റ്റം വെബ്‌വ്യൂ പരാജയപ്പെട്ടു. \n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>ചോദ്യം</item>
-        <item>ഫീൽഡ് അടുക്കുക</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>ഉത്തരം</item>
-        <item>കാർഡ്</item>
-        <item>ഡെക്ക്</item>
-        <item>കുറിപ്പ്</item>
-        <item>ചോദ്യം</item>
-        <item>ടാഗുകൾ</item>
-        <item>ലാപ്‌സുകൾ</item>
-        <item>അവലോകനങ്ങൾ</item>
-        <item>ഇടവേള</item>
-        <item>അനായാസം</item>
-        <item>കാരണം</item>
-        <item>കാർഡ് പരിഷ്‌ക്കരിച്ചു</item>
-        <item>സൃഷ്ടിച്ചു</item>
-        <item>കുറിപ്പ് പരിഷ്‌ക്കരിച്ചു</item>
-    </string-array>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ഇന്നത്തെ പുതിയ കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">കുറിപ്പ് എഡിറ്റുചെയ്യുക</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">കാർഡുകളൊന്നും സൃഷ്‌ടിച്ചിട്ടില്ല. കൂടുതൽ ഫീൽഡുകൾ പൂരിപ്പിക്കുക</string>
-    <string name="note_editor_no_first_field">ആദ്യ ഫീൽഡ് ശൂന്യമാണ്</string>
-    <string name="note_editor_no_cloze_delations">ഈ കുറിപ്പ് തരത്തിൽ ക്ലോസ് ഇല്ലാതാക്കലുകൾ അടങ്ങിയിരിക്കണം</string>
     <string name="note_editor_no_cards_created_all_fields">നിലവിലെ കുറിപ്പ് തരം കാർഡുകളൊന്നും നൽകിയില്ല. Note \n ദയവായി മറ്റൊരു കുറിപ്പ് തരം തിരഞ്ഞെടുക്കുക, അല്ലെങ്കിൽ ‘കാർഡുകൾ’ ക്ലിക്കുചെയ്‌ത് ഒരു ഫീൽഡ് പകരക്കാരനെ ചേർക്കുക</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ക്ലോസ് ഇല്ലാതാക്കലുകൾ ഒരു ക്ലോസ് കുറിപ്പ് തരത്തിൽ മാത്രമേ പ്രവർത്തിക്കൂ</string>
     <string name="saving_facts">കുറിപ്പ് സംരക്ഷിക്കുന്നു</string>

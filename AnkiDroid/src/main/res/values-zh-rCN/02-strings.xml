@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">严重错误：WebView 渲染器崩溃。原因：%s</string>
     <string name="webview_crash_loop_dialog_title">系统 WebView 渲染失败</string>
     <string name="webview_crash_loop_dialog_content">系统 WebView 渲染卡片 “%1$s” 失败。\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>问题</item>
-        <item>字段</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>答案</item>
-        <item>卡片</item>
-        <item>牌组</item>
-        <item>笔记</item>
-        <item>问题</item>
-        <item>标签</item>
-        <item>遗忘</item>
-        <item>复习</item>
-        <item>间隔</item>
-        <item>简易度</item>
-        <item>到期</item>
-        <item>卡片修改时间</item>
-        <item>卡片创建时间</item>
-        <item>笔记修改时间</item>
-    </string-array>
     <string name="filter_by_flags">旗标</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">编辑笔记</string>
     <string name="discard">丢弃</string>
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
-    <string name="note_editor_no_first_field">第一字段为空</string>
-    <string name="note_editor_no_cloze_delations">此笔记模板必须包含填空题</string>
     <string name="note_editor_no_cards_created_all_fields">当前笔记模板没有生成任何卡片。\n请选择另一个笔记模板，或点击「卡片」并添加一个字段替换</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">填空题只能在填空题笔记模板上使用</string>
     <string name="saving_facts">保存笔记</string>
