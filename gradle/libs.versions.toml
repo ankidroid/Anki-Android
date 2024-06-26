@@ -21,6 +21,7 @@ androidxRunner = "1.6.0"
 androidxSqliteFramework = "2.4.0"
 androidxSwiperefreshlayout = "1.1.0"
 androidxTextCore = "1.6.0"
+androidxTracing = "1.2.0"
 androidxUiautomator = "2.3.0"
 androidxViewpager2 = "1.1.0"
 androidxWebkit = "1.11.0"
@@ -90,6 +91,7 @@ androidx-annotation = { module = "androidx.annotation:annotation", version.ref =
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidxActivity" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidxPreferenceKtx" }
 androidx-media = { module = "androidx.media:media", version.ref = "androidxMedia" }
+androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "androidxTracing" }
 androidx-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidxUiautomator" }
 androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "androidxWebkit" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidxViewpager2" }

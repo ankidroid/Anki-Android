@@ -325,7 +325,12 @@ dependencies {
     configurations.configureEach {
         resolutionStrategy {
             // Timber has this as a dependency but they are not up to date. We want to force our version.
-            force 'org.jetbrains:annotations:24.1.0'
+            force libs.jetbrains.annotations
+
+            // Espresso's new version has transitive dependencies on 1.1.0+ of tracing
+            // Activity lifecycle has transitive dependencies on 1.0.0+ of tracing
+            // Go with the higher version which is just a superset of the 1.0.0 API so works
+            force libs.androidx.tracing
         }
     }
     api project(":api")
