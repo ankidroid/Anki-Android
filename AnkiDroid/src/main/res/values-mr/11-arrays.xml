@@ -63,7 +63,7 @@
     <string name="add_to_deck_use_current_deck">वर्तमान डेक वापरा</string>
     <string name="add_to_deck_decide_by_note_type">नोट प्रकाराद्वारे निर्णय घ्या</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">प्रणालीचे अनुसरण करा</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">प्रकाश</string>
     <string name="day_theme_plain">साधा</string>
@@ -98,7 +98,7 @@
     <string name="gesture_abort_sync">निरस्त शिक्षण आणि संकालन</string>
     <string name="gesture_toggle_whiteboard">व्हाईटबोर्ड टॉगल करा</string>
     <string name="gesture_show_hint">इशारा दर्शवा</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_all_hints">सर्व सूचना दाखवा</string>
     <string name="record_voice">आवाज रेकॉर्ड करा</string>
     <string name="replay_voice">आवाज पुन्हा प्ले करा</string>
     <string name="save_voice">रेकॉर्डिंग जतन करा</string>

@@ -80,6 +80,6 @@
     <string name="full_sync_confirmation">Последние изменения требуют полную выгрузку базы данных при следующей синхронизации. Если на другом вашем устройстве есть изменения, они будут утеряны. Продолжить?</string>
     <string name="full_sync_confirmation_upgrade">Из-за ошибке в прошлой версии AnkiDroid рекомендуем полную синхронизацию.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Синхронизировать в одну сторону</string>
     <string name="sync_menu_title_no_account">Синхро (войти)</string>
 </resources>

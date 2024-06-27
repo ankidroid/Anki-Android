@@ -130,7 +130,7 @@
     <string name="automatic_sync_choice" maxLength="41">स्वयंचलित सिंक्रोनाइझेशन</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">नेहमी</string>
     <string name="sync_media_only_unmetered">केवळ मीटर नसलेल्या कनेक्शनवर</string>
     <string name="sync_media_never">कधीही</string>
     <string name="sync_status_badge" maxLength="41">सिंक्रोनाइझेशन स्थिती प्रदर्शित करा</string>
@@ -140,7 +140,7 @@
     <string name="backup_limits_frequency">Frequency</string>
     <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Theme</string>
-    <string name="day_theme" maxLength="41">Day theme</string>
+    <string name="day_theme" maxLength="41">दिवसाची थीम</string>
     <string name="night_theme" maxLength="41">Night theme</string>
     <string name="language" maxLength="41">Language</string>
     <string name="language_system">System language</string>
@@ -240,9 +240,9 @@
     <string name="deck_conf_cram_order" maxLength="41">द्वारे निवडलेली कार्डे</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">रीशेड्यूल</string>
     <string name="deck_conf_cram_reschedule_summ">या डेकमधील माझ्या उत्तरावर आधारित कार्ड रीशेड्यूल करा</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">दुसरा फिल्टर सक्षम करा</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">सानुकूल चरण परिभाषित करा</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">पूर्वावलोकन विलंब</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid अधिक चांगले करण्यात मदत करा!</string>
@@ -261,15 +261,15 @@
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_add_gesture">एक जेश्चर जोडा</string>
+    <string name="binding_replace_gesture">जेश्चर बदला</string>
     <string name="binding_add_key">की जोडा</string>
     <string name="binding_replace_key">की बदला</string>
     <string name="key_picker_default_press_key">एक कळ दाबा</string>
     <string name="binding_add_axis">जॉयस्टिक/मोशन कंट्रोलर जोडा</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="axis_picker_move_joystick">जॉयस्टिक/मोशन कंट्रोलर हलवा</string>
+    <string name="user_actions" maxLength="41">वापरकर्ता क्रिया</string>
+    <string name="user_actions_summary" maxLength="41">पुनरावलोकन स्क्रीनवरून JavaScript ट्रिगर करा</string>
     <string name="user_action_1" maxLength="41">वापरकर्ता क्रिया 1</string>
     <string name="user_action_2" maxLength="41">वापरकर्ता क्रिया 2</string>
     <string name="user_action_3" maxLength="41">वापरकर्ता क्रिया 3</string>
@@ -280,10 +280,10 @@
     <string name="user_action_8" maxLength="41">वापरकर्ता क्रिया 8</string>
     <string name="user_action_9" maxLength="41">वापरकर्ता क्रिया 9</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
+    <string name="card_side_selection_title">कार्डची बाजू निवडा</string>
+    <string name="card_side_question">प्रश्न</string>
+    <string name="card_side_answer">उत्तर द्या</string>
+    <string name="card_side_both">प्रश्न &amp; उत्तर</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -356,8 +356,8 @@
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">त्रुटी</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">गणना करत आहे&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">संग्रह अस्तित्वात नाही</string>
 </resources>

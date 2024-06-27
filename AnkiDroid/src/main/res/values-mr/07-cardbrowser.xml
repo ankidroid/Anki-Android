@@ -55,12 +55,12 @@
     </plurals>
     <string name="card_browser_all_decks">सर्व डेक</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">कार्ड हटवा</item>
+        <item quantity="other">कार्डे हटवा</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">टीप हटवा</item>
+        <item quantity="other">नोट्स हटवा</item>
     </plurals>
     <string name="card_browser_change_deck">डेक बदला</string>
     <string name="delete_card_title">टीप हटवायची?</string>
@@ -99,14 +99,14 @@
     <string name="card_browser_search_all_decks">सर्व डेक शोधा</string>
     <string name="card_browser_unknown_deck_name">अज्ञात</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">आज \'0 %1$s\' आहे, उद्या \'1 %2$s\' आहे, इ&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">निर्यात कार्ड</item>
+        <item quantity="other">कार्ड निर्यात करा</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">नोट निर्यात करा</item>
+        <item quantity="other">नोट्स निर्यात करा</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d कार्ड हटविले</item>

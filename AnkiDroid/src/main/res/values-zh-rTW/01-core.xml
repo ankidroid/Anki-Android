@@ -63,10 +63,10 @@
         <item quantity="other">剩下%d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">剩餘 %1$d 小時 %2$d 分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">剩餘 %1$d 天 %2$d 小時</item>
     </plurals>
     <string name="no_cards_placeholder_title">牌組是空的</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n
@@ -82,14 +82,14 @@
     <string name="ease_button_easy">簡單</string>
     <string name="menu_import">匯入</string>
     <string name="undo">復原</string>
-    <string name="redo">Redo</string>
+    <string name="redo">重做</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">復原筆觸</string>
     <string name="move_all_to_deck">全部移動到牌組</string>
     <string name="unbury">取消暫時隱藏</string>
     <string name="rename_deck">重新命名牌組</string>
     <string name="create_shortcut">建立捷徑</string>
     <string name="browse_cards">瀏覽卡片</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">編輯描述</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">新增</string>
     <string name="menu_add_note">新增筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳戶</string>
@@ -102,15 +102,15 @@
     <string name="menu_suspend">長久擱置</string>
     <string name="menu_delete_note">刪除筆記</string>
     <string name="menu_flag">標記</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">重新命名標記</string>
     <string name="menu_flag_card">標記卡片</string>
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
     <string name="menu_search">在%1$s中查詢</string>
     <string name="menu_mark_note">標記筆記</string>
     <string name="menu_unmark_note">取消標記筆記</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">啟動聲音重放功能</string>
+    <string name="menu_disable_voice_playback">關閉聲音重放功能</string>
     <string name="new_deck">建立牌組</string>
     <string name="new_dynamic_deck">新增篩選牌組</string>
     <string name="directory_inaccessible">無法存取 AnkiDroid 目錄</string>
@@ -130,8 +130,8 @@
     <string name="empty_deck">這個牌組是空的</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">完成了本牌組了！ %s</string>
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
@@ -140,7 +140,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">繼續同步</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同步已取消</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n這可能需要一點時間。</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">正在使媒體同步</string>
     <string name="export_deck">匯出牌組</string>
     <string name="nothing">無</string>
     <!-- Card template editor -->
@@ -186,9 +186,9 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">無法寫入或建立檔案 %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"發生了許多錯誤，其中最後一個是：%s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">多於一個連續錯誤發生並沒有任何進度，最新：%s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">正在遷移數據</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">複製中&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">遷移資料中</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">計算傳輸檔案大小</string>
@@ -197,35 +197,34 @@
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        您的數據已經成功轉移。
         AnkiDroid 已經恢復正常工作，你可以進行同步。</string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">轉移失敗</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        複製數據出現問題，錯誤：%1$s
         <br><br>
-        The changes were reverted.
+        所有更改沒有还原
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        请重新進行遷移
+        去解决此问题，您可能需要釋放一些磁碟空問，
+        或重新連接儲存了文件亦能被刪除的空間
+        <br>
+        <a href="%2$s">了解更多並取得援助</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        複製數據出現問題，錯誤：%1$s
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        所有更改<i>沒有</i>被還原
+        雖然數據沒有遺失，媒體數文件有機會於新與舊的文件夾內散開
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        請重新進行遷移
+        去解决此問题，您可能需要釋放一些磁碟空問，
+        或重新連接儲存了文件亦能被刪除的空間
+        <br>
+        <a href="%2$s">了解更多並取得援助</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        數據遷移已暫停，由於此錯誤出現：%1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">了解更多並獲取援助</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__button_positive">重新遷移</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">無法存取收藏</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroid 被卸載後，由於 Google Play 政策有改動，我們不能讀取你的收藏\n\n您的資料安全有能修復. 您的資料置於\n%s\n\n選擇以下一項選項以修復資料：</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">從 AnkiWeb 回復 (推薦)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
