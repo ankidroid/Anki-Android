@@ -108,6 +108,9 @@
     <string name="dialog_positive_repair">اصلاح</string>
     <string name="dialog_positive_replace">جایگزین کردن</string>
     <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">رسانه بررسی شود؟</string>
     <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>

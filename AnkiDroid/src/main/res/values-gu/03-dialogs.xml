@@ -108,6 +108,9 @@
     <string name="dialog_positive_repair">સમારકામ</string>
     <string name="dialog_positive_replace">બદલો</string>
     <string name="dialog_collection_path_not_dir">ઉલ્લેખિત પાથ માન્ય ડિરેક્ટરી ન હતી</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">મીડિયા તપાસીએ?</string>
     <string name="check_media_warning">મોટા મીડિયા સંગ્રહ સાથે આમાં લાંબો સમય લાગી શકે છે</string>
