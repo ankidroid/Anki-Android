@@ -216,6 +216,7 @@
          Nếu không được thiết lập, máy chủ AnkiWeb mặc định sẽ được sử dụng thay thế.
          <a href="%s">Tìm hiểu thêm</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Đồng bộ hóa url</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Bàn phím</string>
     <string name="bluetooth">Bluetooth</string>

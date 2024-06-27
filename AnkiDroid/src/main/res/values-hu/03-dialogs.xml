@@ -108,6 +108,9 @@
     <string name="dialog_positive_repair">Javít</string>
     <string name="dialog_positive_replace">Kicserél</string>
     <string name="dialog_collection_path_not_dir">A megadott elérési út nem érvényes mappa</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Média ellenőrzése?</string>
     <string name="check_media_warning">Ez sokáig tarthat nagy média gyűjtemények esetén</string>
