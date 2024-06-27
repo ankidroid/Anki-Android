@@ -22,6 +22,10 @@ import android.content.Context
 import android.widget.RemoteViews
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 data class DeckPickerWidgetData(
@@ -63,18 +67,40 @@ class DeckPickerWidget : AppWidgetProvider() {
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         Timber.d("onUpdate")
-        updateWidget(context, appWidgetManager, appWidgetIds)
+        // Do not call updateWidget here directly since we need the deckIds
     }
 
     companion object {
 
+        @OptIn(DelicateCoroutinesApi::class)
         fun updateWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            widgetId: IntArray
+            widgetId: IntArray,
+            deckIds: LongArray
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_deck_picker_large)
-            appWidgetManager.updateAppWidget(widgetId, remoteViews)
+
+            // Launch a coroutine to fetch deck stats
+            GlobalScope.launch(Dispatchers.Main) {
+                val deckData = getDeckNameAndStats(deckIds.toList())
+
+                // Clear previous deck views
+                remoteViews.removeAllViews(R.id.deckCollection)
+
+                // Inflate deck views dynamically based on deckData
+                for (deck in deckData) {
+                    val deckView = RemoteViews(context.packageName, R.layout.widget_item_deck_main)
+
+                    deckView.setTextViewText(R.id.deckName, deck.name)
+                    deckView.setTextViewText(R.id.deckNew, deck.newCount.toString())
+                    deckView.setTextViewText(R.id.deckDue, deck.reviewCount.toString())
+                    deckView.setTextViewText(R.id.deckLearn, deck.learnCount.toString())
+
+                    remoteViews.addView(R.id.deckCollection, deckView)
+                }
+                appWidgetManager.updateAppWidget(widgetId, remoteViews)
+            }
         }
     }
 }

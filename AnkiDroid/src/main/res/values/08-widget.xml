@@ -39,4 +39,12 @@
 
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
     <string name="app_widget_description">Deck Picker</string>
+
+    <string name="select_deck_title">Mark Favourite</string>
+    <string name="no_favourite_deck_placeholder_title">"No decks are marked favourite "</string>
+    <string name="no_favourite_deck_placeholder_description">Start marking decks favourite using the + icon.</string>
+    <string name="deck_limit_reached">Only 5 decks can be marked favourite.</string>
+    <string name="widget_config_screen_deck_name">Deck Name</string>
+    <string name="widget_config_screen_done_button" comment="This will redirect the user to widget deck picker and will mark the end of configuration screen of widget deck picker">Done</string>
+
 </resources>

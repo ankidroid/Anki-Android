@@ -537,6 +537,14 @@
                 android:resource="@xml/widget_provider_deck_picker" />
         </receiver>
 
+        <activity
+            android:name="com.ichi2.widget.DeckPickerWidgetConfig"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
             android:exported="true">
             <intent-filter>
