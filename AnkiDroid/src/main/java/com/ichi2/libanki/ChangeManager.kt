@@ -85,9 +85,9 @@ object ChangeManager {
         }
     }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun clearSubscribers() {
-        Timber.d("clearing %d subscribers", subscribers.size)
+        subscribers.size.ifNotZero { size -> Timber.d("clearing %d subscribers", size) }
         subscribers.clear()
     }
 
