@@ -19,6 +19,7 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.*
