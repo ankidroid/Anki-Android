@@ -50,7 +50,7 @@
     <string name="delete_deck_title">डेक हटवायचा?</string>
     <string name="no_tts_available_message">मजकूर-ते-भाषणाची भाषा उपलब्ध नाही</string>
     <string name="tts_no_tts">बोलू नका</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nन वापरलेल्या फाइल्स:\n</string>
     <string name="reposition_card_dialog_title">नवीन कार्ड पुनर्स्थित करा</string>
     <string name="reposition_card_dialog_message">प्रारंभ स्थितीः</string>
     <string name="reposition_card_not_new_error">केवळ नवीन कार्डे पुनर्स्थित केली जाऊ शकतात</string>
@@ -60,8 +60,8 @@
     </plurals>
     <string name="reset_card_dialog_title">कार्ड प्रगती रीसेट करा</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d card reset</item>
-        <item quantity="other">%d कार्डे रीसेट केली</item>
+        <item quantity="one">%d कार्ड रीसेट</item>
+        <item quantity="other">%d कार्ड रीसेट</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_acknowledge">
@@ -122,7 +122,7 @@
     <string name="delete_media_message">मीडिया हटवित आहे&#8230;</string>
     <string name="delete_media_result_title">हटविण्याचा निकाल</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
+        <item quantity="one">%d फायली हटविल्या</item>
         <item quantity="other">%d फायली हटविल्या</item>
     </plurals>
     <!-- Tags Dialog Options -->
@@ -210,52 +210,52 @@
     </plurals>
     <string name="metered_sync_data_warning">तुमचा इंटरनेट प्रदाता डेटा वापरासाठी पैसे आकारू शकतो</string>
     <string name="deck_picker_new">या डेकमध्ये आज पाहण्यासाठी नवीन कार्डांची संख्या.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_rev">या डेकमध्ये आज देय असलेल्या कार्डांची संख्या.</string>
+    <string name="deck_picker_lrn">या डेकमध्ये शिकत असलेल्या कार्डांची संख्या.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="deck_picker_counts">आज पाहण्यासाठी कार्डांच्या संख्येसह डेक विहंगावलोकन पृष्ठ उघडा.</string>
+    <string name="import_deck_package">डेक पॅकेज (.apkg)</string>
+    <string name="import_collection_package">संकलन पॅकेज (.colpkg)</string>
+    <string name="import_csv">मजकूर फाइल (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">तुम्ही सर्व डेकसाठी सबडेक तयार करू शकत नाही</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_your_collection">तुमच्या संग्रहाचा बॅकअप घ्या</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_backup">बॅकअप</string>
+    <string name="button_disable_reminder">स्मरणपत्र अक्षम करा</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">परत दाखवू नकोस</string>
+    <string name="dismiss_backup_warning_title">डेटा गमावण्याची चेतावणी</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">डेक आधीच अस्तित्वात आहे</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">मध्यांतर समान मूल्यावर सेट करा</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">आत कार्ड दाखवा</item>
+        <item quantity="other">मध्ये कार्ड दाखवा</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">श्रेणीमध्ये कार्ड दर्शवा</item>
+        <item quantity="other">श्रेणीमध्ये कार्ड दर्शवा</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">दिवस</item>
+        <item quantity="other">दिवस</item>
     </plurals>
-    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">पासून</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_note_required">क्लोज टाईप नोट आवश्यक आहे</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="open">उघड</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>
