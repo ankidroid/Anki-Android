@@ -16,6 +16,8 @@
 
 package com.ichi2.utils
 
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -31,4 +33,12 @@ fun interface FragmentManagerSupplier {
     fun getFragmentManager(): FragmentManager
 }
 
-fun AppCompatActivity.asFragmentManagerSupplier() = FragmentManagerSupplier { this.supportFragmentManager }
+fun Context.asFragmentManagerSupplier(): FragmentManagerSupplier? {
+    return when (this) {
+        is AppCompatActivity -> FragmentManagerSupplier { this.supportFragmentManager }
+        is ContextWrapper -> (baseContext as? AppCompatActivity)?.let {
+            FragmentManagerSupplier { it.supportFragmentManager }
+        }
+        else -> null
+    }
+}

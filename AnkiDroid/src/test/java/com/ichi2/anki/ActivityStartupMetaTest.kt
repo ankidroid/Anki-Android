@@ -38,6 +38,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
         val manifestActivityNames = manifestActivities
             .map { it.name }
             .filter { it != "com.ichi2.anki.TestCardTemplatePreviewer" }
+            .filter { it != "com.ichi2.anki.NoteEditor" }
             .filter { it != "com.ichi2.anki.AnkiCardContextMenuAction" }
             .filter { it != "com.ichi2.anki.analytics.AnkiDroidCrashReportDialog" }
             .filter { !it.startsWith("androidx") }

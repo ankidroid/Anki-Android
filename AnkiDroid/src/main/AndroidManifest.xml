@@ -116,6 +116,29 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true"
             >
+            <intent-filter android:label="@string/fact_adder_intent_title">
+                <action android:name="org.openintents.action.CREATE_FLASHCARD" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter android:label="@string/fact_adder_intent_title">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <!-- Keep it separate as when sharing image AnkiDroid would be shown with Add Image label -->
+            <intent-filter android:label="@string/multimedia_editor_popup_image">
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/jpg" />
+                <data android:mimeType="image/jpeg" />
+                <data android:mimeType="image/png" />
+                <data android:mimeType="image/ico" />
+                <data android:mimeType="image/webp" />
+                <data android:mimeType="image/tiff" />
+                <data android:mimeType="image/gif" />
+                <data android:mimeType="image/svg" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -379,33 +402,9 @@
             android:name="com.ichi2.anki.NoteEditor"
             android:label="@string/fact_adder_intent_title"
             android:theme="@style/Theme_Dark.Launcher"
-            android:exported="true"
+            android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            >
-            <intent-filter>
-                <action android:name="org.openintents.action.CREATE_FLASHCARD" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-            <!-- Keep it separate as when sharing image AnkiDroid would be shown with Add Image label -->
-            <intent-filter android:label="@string/multimedia_editor_popup_image">
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="image/jpg" />
-                <data android:mimeType="image/jpeg" />
-                <data android:mimeType="image/png" />
-                <data android:mimeType="image/ico" />
-                <data android:mimeType="image/webp" />
-                <data android:mimeType="image/tiff" />
-                <data android:mimeType="image/gif" />
-                <data android:mimeType="image/svg" />
-            </intent-filter>
-        </activity>
+            />
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:exported="true"

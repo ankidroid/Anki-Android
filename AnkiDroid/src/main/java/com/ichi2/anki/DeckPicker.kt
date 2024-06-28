@@ -1428,8 +1428,7 @@ open class DeckPicker :
     }
 
     fun addNote() {
-        val intent = Intent(this@DeckPicker, NoteEditor::class.java)
-        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+        val intent = NoteEditor.getIntent(this, NoteEditor.OpenNoteEditorDestination.AddNote())
         startActivity(intent)
     }
 

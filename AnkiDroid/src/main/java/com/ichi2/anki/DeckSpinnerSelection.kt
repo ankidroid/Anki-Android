@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki
 
+import android.content.Context
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.ichi2.anki.AnkiActivity.Companion.showDialogFragment
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckCreationListener
@@ -58,14 +60,13 @@ import timber.log.Timber
         "only the selected item is visible"
 )
 class DeckSpinnerSelection(
-    private val context: AppCompatActivity,
+    private val context: Context,
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
-    private val showFilteredDecks: Boolean
+    private val showFilteredDecks: Boolean,
+    private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()!!
 ) {
-
-    private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
 
     private var deckDropDownAdapter: DeckDropDownAdapter? = null
 
@@ -118,7 +119,7 @@ class DeckSpinnerSelection(
     private fun setSpinnerListener() {
         spinner.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_UP) {
-                context.launchCatchingTask { displayDeckSelectionDialog() }
+                (context as AppCompatActivity).launchCatchingTask { displayDeckSelectionDialog() }
             }
             true
         }
@@ -209,7 +210,7 @@ class DeckSpinnerSelection(
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
         // TODO: retain state after onDestroy
         dialog.deckCreationListener = DeckCreationListener { onDeckAdded(it) }
-        AnkiActivity.showDialogFragment(fragmentManagerSupplier.getFragmentManager(), dialog)
+        showDialogFragment(fragmentManagerSupplier.getFragmentManager(), dialog)
     }
 
     private fun onDeckAdded(deck: DeckNameId) {

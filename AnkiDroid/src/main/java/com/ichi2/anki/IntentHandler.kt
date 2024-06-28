@@ -66,9 +66,26 @@ class IntentHandler : Activity() {
         setContentView(R.layout.progress_bar)
         val intent = intent
         Timber.v(intent.toString())
+        val action = intent.action
+
+        if (action == NoteEditor.ACTION_CREATE_FLASHCARD || action == NoteEditor.ACTION_CREATE_FLASHCARD_SEND || action == Intent.ACTION_VIEW) {
+            val arguments = intent.extras!!
+            val fragmentIntent = NoteEditor.getIntent(this, NoteEditor.OpenNoteEditorDestination.Action(arguments, action))
+            startActivity(fragmentIntent)
+            finish()
+            return
+        }
+
+        val destination = intent.getStringExtra(EXTRA_DESTINATION)
+        if (destination != null && destination == NoteEditor::class.java.name) {
+            val fragmentIntent = NoteEditor.getIntent(this, NoteEditor.OpenNoteEditorDestination.AddNote())
+            startActivity(fragmentIntent)
+            finish()
+            return
+        }
+
         val reloadIntent = Intent(this, DeckPicker::class.java)
         reloadIntent.setDataAndType(getIntent().data, getIntent().type)
-        val action = intent.action
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = { runnable: () -> Unit -> performActionIfStorageAccessible(reloadIntent, action) { runnable() } }
@@ -265,6 +282,7 @@ class IntentHandler : Activity() {
     companion object {
         private const val CLIPBOARD_INTENT = "com.ichi2.anki.COPY_DEBUG_INFO"
         private const val CLIPBOARD_INTENT_EXTRA_DATA = "clip_data"
+        const val EXTRA_DESTINATION = "extra_destination"
 
         private fun isValidViewIntent(intent: Intent): Boolean {
             // Negating a negative because we want to call specific attention to the fact that it's invalid

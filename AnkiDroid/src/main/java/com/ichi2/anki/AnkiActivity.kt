@@ -528,7 +528,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         return supportActionBar!!
     }
 
-    protected fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
+    fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
         showedActivityFailedScreen(
             savedInstanceState = savedInstanceState,
             activitySuperOnCreate = { state -> super.onCreate(state) }

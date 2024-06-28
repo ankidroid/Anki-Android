@@ -16,6 +16,7 @@
 package com.ichi2.testutils
 
 import android.content.Intent
+import com.ichi2.anki.SingleFragmentActivity
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import kotlin.test.assertNotNull
@@ -28,8 +29,8 @@ object IntentAssert {
 
     fun hasExtra(intent: Intent, extraKey: String?, value: Long) {
         val keySet = assertNotNull(intent.extras).keySet()
-        assertThat("Intent should have extra '$extraKey'", keySet, hasItem(extraKey))
+        assertThat("Intent should have extra '${SingleFragmentActivity.FRAGMENT_ARGS_EXTRA}", keySet, hasItem(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA))
 
-        assertThat(intent.getLongExtra(extraKey, -1337), equalTo(value))
+        assertThat(intent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)?.getLong(extraKey, -1337), equalTo(value))
     }
 }
