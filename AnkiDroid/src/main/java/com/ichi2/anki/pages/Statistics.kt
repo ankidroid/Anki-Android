@@ -21,19 +21,32 @@ import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintManager
 import android.view.View
+import android.widget.Spinner
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.utils.getTimestamp
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.utils.TimeManager
 
-class Statistics : PageFragment(R.layout.statistics) {
+class Statistics :
+    PageFragment(R.layout.statistics),
+    DeckSelectionDialog.DeckSelectionListener {
+
+    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
+    private lateinit var spinner: Spinner
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        spinner = view.findViewById(R.id.deck_selector)
         view.findViewById<AppBarLayout>(R.id.app_bar)
             .addLiftOnScrollListener { _, backgroundColor ->
                 activity?.window?.statusBarColor = backgroundColor
@@ -46,6 +59,28 @@ class Statistics : PageFragment(R.layout.statistics) {
                     exportWebViewContentAsPDF()
                 }
                 true
+            }
+        }
+        deckSpinnerSelection = DeckSpinnerSelection(
+            requireAnkiActivity(),
+            spinner,
+            showAllDecks = false,
+            alwaysShowDefault = false,
+            showFilteredDecks = false
+        )
+        if (savedInstanceState == null) {
+            requireActivity().launchCatchingTask {
+                deckSpinnerSelection.initializeStatsBarDeckSpinner()
+                val selectedDeck = withCol { decks.get(decks.selected()) }
+                if (selectedDeck == null) return@launchCatchingTask
+                select(selectedDeck.id)
+                changeDeck(selectedDeck.name)
+            }
+        } else {
+            requireActivity().launchCatchingTask {
+                deckSpinnerSelection.initializeStatsBarDeckSpinner()
+                select(savedInstanceState.getLong(KEY_DECK_ID))
+                savedInstanceState.getString(KEY_DECK_NAME)?.let { changeDeck(it) }
             }
         }
     }
@@ -65,9 +100,59 @@ class Statistics : PageFragment(R.layout.statistics) {
         )
     }
 
+    override fun onDeckSelected(deck: DeckSelectionDialog.SelectableDeck?) {
+        if (deck == null) return
+        select(deck.deckId)
+        changeDeck(deck.name)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val selectedDeck = spinner.adapter.getItem(spinner.selectedItemPosition) as DeckNameId
+        outState.putLong(KEY_DECK_ID, selectedDeck.id)
+        outState.putString(KEY_DECK_NAME, selectedDeck.name)
+    }
+
+    /**
+     * Given the [deckId] look in the decks adapter for its position and select it if found.
+     */
+    private fun select(deckId: DeckId) {
+        var foundPosition = -1
+        // find the selected position in the adapter and manually select it
+        for (i in 0 until spinner.adapter.count) {
+            val item = spinner.adapter.getItem(i) as DeckNameId
+            if (item.id == deckId) {
+                foundPosition = i
+                break
+            }
+        }
+        if (foundPosition >= 0) spinner.setSelection(foundPosition)
+    }
+
+    /**
+     * This method is a workaround to change the deck in the webview by finding the text box and
+     * replacing the deck name with the selected deck name from the dialog and updating the stats
+     **/
+    private fun changeDeck(selectedDeckName: String) {
+        val javascriptCode = """
+        var textBox = [].slice.call(document.getElementsByTagName('input'), 0).filter(x => x.type == "text")[0];
+        textBox.value = "deck:$selectedDeckName";
+        textBox.dispatchEvent(new Event("input", { bubbles: true }));
+        textBox.dispatchEvent(new Event("change"));
+        """.trimIndent()
+        webView.evaluateJavascript(javascriptCode, null)
+    }
+
     companion object {
+        private const val KEY_DECK_ID = "key_deck_id"
+        private const val KEY_DECK_NAME = "key_deck_name"
+
+        /**
+         * Note: the title argument is set to null as the [Statistics] fragment is expected to
+         * handle the toolbar content(shows a deck selection spinner).
+         */
         fun getIntent(context: Context): Intent {
-            return getIntent(context, "graphs", context.getString(R.string.statistics), Statistics::class)
+            return getIntent(context, "graphs", null, Statistics::class)
         }
     }
 }
