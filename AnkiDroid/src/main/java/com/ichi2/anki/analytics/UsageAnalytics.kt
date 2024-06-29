@@ -526,6 +526,7 @@ object UsageAnalytics {
         "binding_TOGGLE_WHITEBOARD",
         "binding_CLEAR_WHITEBOARD",
         "binding_CHANGE_WHITEBOARD_PEN_COLOR",
+        "binding_TOGGLE_AUTO_ADVANCE",
         "binding_SHOW_HINT",
         "binding_SHOW_ALL_HINTS",
         "binding_ADD_NOTE",
