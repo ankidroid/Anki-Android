@@ -29,7 +29,6 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -71,6 +70,11 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
+import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
+import com.ichi2.anki.multimedia.MultimediaBottomSheet
+import com.ichi2.anki.multimedia.MultimediaImageFragment
+import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
@@ -94,7 +98,6 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.isImageOcclusion
-import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -103,7 +106,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.widget.WidgetStatus
@@ -725,11 +727,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun dispatchCameraEvent() {
         val photoFile: File? = try {
-            createImageFile()
+            this.createImageFile()
         } catch (e: Exception) {
             Timber.w("Error creating the file", e)
             return
         }
+
+        currentImageOccPath = photoFile?.absolutePath
+
         photoFile?.let {
             val photoURI: Uri = FileProvider.getUriForFile(
                 this,
@@ -737,18 +742,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 it
             )
             cameraLauncher.launch(photoURI)
-        }
-    }
-
-    private fun createImageFile(): File {
-        val currentDateTime = getTimestamp(TimeManager.time)
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "ANKIDROID_$currentDateTime",
-            ".jpg",
-            storageDir
-        ).apply {
-            currentImageOccPath = absolutePath
         }
     }
 
@@ -1570,7 +1563,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             } else {
                 // Use media editor button if not changing note type
                 mediaButton.setBackgroundResource(R.drawable.ic_attachment)
-                setMMButtonListener(mediaButton, i)
+
+                if (sharedPrefs().getBoolean(getString(R.string.pref_new_multimedia_ui), false)) {
+                    mediaButton.setOnClickListener {
+                        handleMultimediaClick(i)
+                    }
+                } else {
+                    setMMButtonListener(mediaButton, i)
+                }
+
                 if (addNote) {
                     // toggle sticky button
                     toggleStickyButton.setBackgroundResource(R.drawable.ic_baseline_push_pin_24)
@@ -1608,6 +1609,85 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         )
     }
+
+    private fun handleMultimediaClick(index: Int) {
+        val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(getColUnsafe)
+
+        val multimediaBottomSheet = MultimediaBottomSheet()
+        multimediaBottomSheet.multimediaClickListener =
+            object : MultimediaBottomSheet.MultiMediaBottomSheetListener {
+                override fun onAudioClicked() {
+                    // TODO("Not yet implemented")
+                }
+
+                override fun onVideoClicked() {
+                    // TODO("Not yet implemented")
+                }
+
+                override fun onCameraClicked() {
+                    note.setField(index, ImageField())
+                    val field = note.getField(index)!!
+                    val imageIntent = MultimediaImageFragment.getIntent(
+                        this@NoteEditor,
+                        MultimediaEditFieldActivityExtra(index, field, note),
+                        MultimediaImageFragment.ImageOptions.CAMERA
+                    )
+                    imageFragmentLauncer.launch(imageIntent)
+                }
+
+                override fun onDrawingClicked() {
+                    // TODO("Not yet implemented")
+                }
+
+                override fun onRecordingClicked() {
+                    // TODO("Not yet implemented")
+                }
+
+                override fun onImageClicked() {
+                    note.setField(index, ImageField())
+                    val field = note.getField(index)!!
+                    val imageIntent = MultimediaImageFragment.getIntent(
+                        this@NoteEditor,
+                        MultimediaEditFieldActivityExtra(index, field, note),
+                        MultimediaImageFragment.ImageOptions.GALLERY
+                    )
+                    imageFragmentLauncer.launch(imageIntent)
+                }
+            }
+        multimediaBottomSheet.show(supportFragmentManager, "MultimediaBottomSheet")
+    }
+
+    val imageFragmentLauncer = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        NoteEditorActivityResultCallback { result ->
+            if (result.resultCode != RESULT_CANCELED) {
+                Timber.d("Getting multimedia result")
+                val col = getColUnsafe
+                val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
+                val index = extras.getInt(MULTIMEDIA_RESULT_FIELD_INDEX)
+                val field = extras.getSerializableCompat<IField>(MULTIMEDIA_RESULT) ?: return@NoteEditorActivityResultCallback
+                if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
+                    Timber.i("field imagePath and audioPath are both null")
+                    return@NoteEditorActivityResultCallback
+                }
+                val note = getCurrentMultimediaEditableNote(col)
+                note.setField(index, field)
+                val fieldEditText = editFields!![index]
+                // Import field media
+                // This goes before setting formattedValue to update
+                // media paths with the checksum when they have the same name
+                NoteService.importMediaToDirectory(col, field)
+                // Completely replace text for text fields (because current text was passed in)
+                val formattedValue = field.formattedValue
+                if (field.type === EFieldType.TEXT) {
+                    fieldEditText!!.setText(formattedValue)
+                } else if (fieldEditText!!.text != null) {
+                    insertStringInField(fieldEditText, formattedValue)
+                }
+                changed = true
+            }
+        }
+    )
 
     private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
         val imageTag = mediaRegistration!!.onImagePaste(uri) ?: return false

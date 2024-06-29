@@ -24,6 +24,7 @@ import com.ichi2.anki.*
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWER_FORMAT
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
+import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.Preferences
@@ -75,7 +76,8 @@ object ActivityList {
             get(PermissionsActivity::class.java),
             get(SingleFragmentActivity::class.java),
             get(CardViewerActivity::class.java),
-            get(InstantNoteEditorActivity::class.java)
+            get(InstantNoteEditorActivity::class.java),
+            get(MultimediaActivity::class.java)
         )
     }
 
