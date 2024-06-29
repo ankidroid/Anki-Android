@@ -19,6 +19,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Im
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
@@ -33,6 +34,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import anki.ankiweb.Ankiweb
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.dialogs.help.HelpDialog
@@ -59,6 +61,8 @@ open class MyAccount : AnkiActivity() {
     var toolbar: Toolbar? = null
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var ankidroidLogo: ImageView
+    private lateinit var ankiwebLogo: ImageView
+    private lateinit var ankiwebTextLogo: ImageView
 
     // if the 'remove account' fragment is open, close it first
     private val onRemoveAccountBackCallback = object : OnBackPressedCallback(false) {
@@ -110,9 +114,9 @@ open class MyAccount : AnkiActivity() {
             switchToState(STATE_LOG_IN)
         }
         if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            ankidroidLogo.visibility = View.GONE
+            ankiwebLogo.visibility = View.GONE
         } else {
-            ankidroidLogo.visibility = View.VISIBLE
+            ankiwebLogo.visibility = View.VISIBLE
         }
         onBackPressedDispatcher.addCallback(this, onRemoveAccountBackCallback)
     }
@@ -251,19 +255,22 @@ open class MyAccount : AnkiActivity() {
         val lostEmail = loginToMyAccountView.findViewById<Button>(R.id.lost_mail_instructions)
         val lostMailUrl = Uri.parse(resources.getString(R.string.link_ankiweb_lost_email_instructions))
         lostEmail.setOnClickListener { openUrl(lostMailUrl) }
-        loggedIntoMyAccountView = layoutInflater.inflate(R.layout.my_account_logged_in, null).apply {
-            usernameLoggedIn = findViewById(R.id.username_logged_in)
-            findViewById<Button>(R.id.logout_button).apply {
-                setOnClickListener { logout() }
-            }
-            findViewById<Button>(R.id.remove_account_button).apply {
-                setOnClickListener { openRemoveAccountScreen() }
-            }
-            findViewById<Button>(R.id.privacy_policy_button).apply {
-                setOnClickListener { openAnkiDroidPrivacyPolicy() }
-            }
-            ankidroidLogo = findViewById(R.id.ankidroid_logo)
-        }
+
+            loggedIntoMyAccountView =
+                layoutInflater.inflate(R.layout.my_account_logged_in, null).apply {
+                    usernameLoggedIn = findViewById(R.id.username_logged_in)
+                    findViewById<Button>(R.id.logout_button).apply {
+                        setOnClickListener { logout() }
+                    }
+                    findViewById<Button>(R.id.remove_account_button).apply {
+                        setOnClickListener { openRemoveAccountScreen() }
+                    }
+                    findViewById<Button>(R.id.privacy_policy_button).apply {
+                        setOnClickListener { openAnkiDroidPrivacyPolicy() }
+                    }
+                    ankiwebTextLogo = findViewById(R.id.ankiwebText_logo)
+                    ankiwebLogo = findViewById(R.id.ankiweb_logo)
+                }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             password.setAutoFillListener {
@@ -287,9 +294,11 @@ open class MyAccount : AnkiActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (isScreenSmall && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            ankidroidLogo.visibility = View.GONE
+            ankiwebLogo.visibility = View.GONE
+            ankiwebTextLogo.visibility = View.GONE
         } else {
-            ankidroidLogo.visibility = View.VISIBLE
+            ankiwebLogo.visibility = View.VISIBLE
+            ankiwebTextLogo.visibility = View.VISIBLE
         }
     }
 
