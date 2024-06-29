@@ -15,35 +15,24 @@
 package com.ichi2.widget
 
 import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
-import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import timber.log.Timber
 
-class AddNoteWidget : AppWidgetProvider() {
-    override fun onEnabled(context: Context) {
-        super.onEnabled(context)
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
-    }
+class AddNoteWidget : AnalyticsWidgetProvider() {
 
-    override fun onDisabled(context: Context) {
-        super.onDisabled(context)
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
-    }
-
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-        if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
-            Timber.w("Opening AddNote widget without storage access")
-            return
-        }
-        Timber.d("onUpdate")
+    override fun performUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+        usageAnalytics: UsageAnalytics
+    ) {
+        Timber.d("AddNoteWidget: performUpdate")
         updateWidgets(context, appWidgetManager, appWidgetIds)
     }
 
