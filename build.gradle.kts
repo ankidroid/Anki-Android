@@ -20,11 +20,6 @@ buildscript {
             }
         }
     }
-
-    dependencies {
-        // Stays until this is merged: https://github.com/slackhq/keeper/pull/147
-        classpath(files("${rootDir.path}/tools/keeper-gradle-plugin.jar"))
-    }
 }
 
 plugins {
