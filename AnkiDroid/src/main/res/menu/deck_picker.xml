@@ -69,5 +69,9 @@
         <item
             android:id="@+id/action_export"
             android:menuCategory="secondary" />
+        <item
+            android:id="@+id/move_decks"
+            android:menuCategory="secondary"
+            android:title="@string/move_decks"/>
     </group>
 </menu>

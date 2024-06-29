@@ -164,6 +164,19 @@
                 app:backgroundTint="?attr/fab_normal"
                 app:fabSize="normal"
                 />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="17dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_done_white"
+                app:backgroundTint="?attr/fab_normal"
+                app:fabSize="normal"
+                />
         </LinearLayout>
 
     </LinearLayout>
