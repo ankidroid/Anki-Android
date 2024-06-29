@@ -19,15 +19,19 @@
 
 package com.ichi2.anki.servicelayer
 
+import android.content.Context
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.arthenica.mobileffmpeg.Config
+import com.arthenica.mobileffmpeg.FFmpeg
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -117,7 +121,7 @@ object NoteService {
      *
      * @param field
      */
-    fun importMediaToDirectory(col: Collection, field: IField?) {
+    fun importMediaToDirectory(context: Context, col: Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
             EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
@@ -127,13 +131,28 @@ object NoteService {
         }
         if (tmpMediaPath != null) {
             try {
-                val inFile = File(tmpMediaPath)
+                var inFile = File(tmpMediaPath)
                 if (inFile.exists() && inFile.length() > 0) {
+                    // Check if AVI decoding is forced by user preferences
+                    val forceAviConversion = context.sharedPrefs().getBoolean("mediaForceAviDecoding", false)
+
+                    if (forceAviConversion && inFile.extension == "avi") {
+                        // Convert AVI to MP4
+                        val outFile = File(inFile.parent, inFile.nameWithoutExtension + "Converted.mp4")
+                        val success = convertVideoToMp4(inFile.absolutePath, outFile.absolutePath)
+
+                        if (success) {
+                            inFile = outFile
+                        } else {
+                            Timber.e("Failed to convert AVI to MP4: $inFile")
+                        }
+                    }
+
                     val fname = col.media.addFile(inFile)
                     val outFile = File(col.media.dir, fname)
                     Timber.v("""File "%s" should be copied to "%s""", fname, outFile)
                     if (field.hasTemporaryMedia && outFile.absolutePath != tmpMediaPath) {
-                        // Delete original
+                        // Delete original file if it was copied to media directory
                         inFile.delete()
                     }
                     when (field.type) {
@@ -225,6 +244,109 @@ object NoteService {
         val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
 
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
+    }
+
+    /**
+     * Converts a video file from AVI format to MP4 format using FFmpeg.
+     *
+     * The conversion is done synchronously, ideally should be done in a background thread.
+     * @param inputPath The path to the input AVI file.
+     * @param outputPath The path where the output MP4 file should be saved.
+     * @return A boolean indicating whether the conversion was successful.
+     */
+    fun convertVideoToMp4(inputPath: String, outputPath: String): Boolean {
+        Timber.i("Starting video conversion from AVI to MP4")
+        Timber.d("Input path: $inputPath")
+        Timber.d("Output path: $outputPath")
+
+        if (!validateFilePath(inputPath)) {
+            Timber.e("Invalid input file path: $inputPath")
+            return false
+        }
+
+        if (!validateOutputPath(outputPath)) {
+            Timber.e("Invalid output file path: $outputPath")
+            return false
+        }
+
+        val command = buildFFmpegCommand(inputPath, outputPath)
+        Timber.d("FFmpeg command: $command")
+
+        // Execute synchronously
+        val returnCode = FFmpeg.execute(command)
+
+        val commandOutput = Config.getLastCommandOutput()
+        Timber.d("FFmpeg command output: $commandOutput")
+
+        return handleFFmpegReturnCode(returnCode, inputPath, outputPath)
+    }
+
+    /**
+     * Validates the input file path.
+     *
+     * @param path The file path to validate.
+     * @return A boolean indicating whether the file path is valid.
+     */
+    private fun validateFilePath(path: String): Boolean {
+        val file = File(path)
+
+        return file.exists() && file.isFile
+    }
+
+    /**
+     * Validates the output file path.
+     *
+     * @param path The file path to validate.
+     * @return A boolean indicating whether the file path is valid.
+     */
+    private fun validateOutputPath(path: String): Boolean {
+        val file = File(path)
+        val parentDir = file.parentFile
+
+        return parentDir != null && parentDir.exists() && parentDir.isDirectory
+    }
+
+    /**
+     * Builds the FFmpeg command for converting AVI to MP4.
+     *
+     * Uses H.264 video codec and AAC audio codec.
+     * The ultrafast preset is used for faster conversion along with the
+     * -y flag to overwrite the output file if it already exists.
+     *
+     * @param inputPath The path to the input AVI file.
+     * @param outputPath The path where the output MP4 file should be saved.
+     * @return The constructed FFmpeg command as a string.
+     */
+    private fun buildFFmpegCommand(inputPath: String, outputPath: String): String {
+        return "-i $inputPath -c:v libx264 -preset ultrafast -c:a aac -y $outputPath"
+    }
+
+    /**
+     * Handles the FFmpeg return code and logs the appropriate messages.
+     *
+     * @param returnCode The return code from the FFmpeg execution.
+     * @param inputPath The path to the input AVI file.
+     * @param outputPath The path where the output MP4 file should be saved.
+     * @return A boolean indicating whether the conversion was successful.
+     */
+    private fun handleFFmpegReturnCode(returnCode: Int, inputPath: String, outputPath: String): Boolean {
+        return when (returnCode) {
+            Config.RETURN_CODE_SUCCESS -> {
+                Timber.d("Video conversion successful: $inputPath to $outputPath")
+                true
+            }
+
+            Config.RETURN_CODE_CANCEL -> {
+                Timber.d("Video conversion cancelled")
+                false
+            }
+
+            else -> {
+                val error = Config.getLastCommandOutput()
+                Timber.e("Video conversion failed with return code $returnCode: $error")
+                false
+            }
+        }
     }
 
     interface NoteField {
