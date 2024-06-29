@@ -18,18 +18,20 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import androidx.appcompat.widget.ThemeUtils
+import androidx.appcompat.widget.Toolbar
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -43,11 +45,17 @@ import timber.log.Timber
 
 class TemplatePreviewerFragment :
     CardViewerFragment(R.layout.template_previewer),
-    BaseSnackbarBuilderProvider {
+    BaseSnackbarBuilderProvider,
+    Toolbar.OnMenuItemClickListener {
+    /**
+     * Indicates whether the view is x-large or not.
+     */
+    private var inFragmentedActivity = false
+    private lateinit var templatePreviewerArguments: TemplatePreviewerArguments
 
     override val viewModel: TemplatePreviewerViewModel by viewModels {
-        val arguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
-        TemplatePreviewerViewModel.factory(arguments, CardMediaPlayer())
+        templatePreviewerArguments = BundleCompat.getParcelable(requireArguments(), ARGS_KEY, TemplatePreviewerArguments::class.java)!!
+        TemplatePreviewerViewModel.factory(templatePreviewerArguments, CardMediaPlayer())
     }
     override val webView: WebView
         get() = requireView().findViewById(R.id.webview)
@@ -58,8 +66,19 @@ class TemplatePreviewerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        // The template previewer fragment is either displayed on the trailing side of the card template editor, on xlarge screen, or as a stand-alone fragment.
+        // Retrieve the boolean argument "inFragmentedActivity" from the fragment's arguments bundle
+        // and assign it to the variable inFragmentedActivity. This indicates whether the fragment
+        // is hosted within a fragmented activity or not.
+        inFragmentedActivity = templatePreviewerArguments.inFragmentedActivity
+        // If this fragment is a part of fragmented activity, we want no navigation icon, otherwise ensure that the arrow request the transmit the "back" action to its parent.
+        if (inFragmentedActivity) {
+            toolbar.navigationIcon = null
+        } else {
+            toolbar.setNavigationOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
         }
 
         val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
@@ -107,11 +126,27 @@ class TemplatePreviewerFragment :
             if (!navBarNeedsScrim) {
                 window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
             }
+            window.statusBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.appBarColor)
         }
+        if (inFragmentedActivity) {
+            toolbar.setOnMenuItemClickListener(this)
+            toolbar.inflateMenu(R.menu.card_template_editor)
+            (activity as CardTemplateEditor).currentFragment?.setupCommonMenu(toolbar.menu)
+        }
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        return (activity as CardTemplateEditor).currentFragment?.handleMenuItemSelected(item) == true
     }
 
     companion object {
         const val ARGS_KEY = "templatePreviewerArgs"
+
+        fun newInstance(arguments: TemplatePreviewerArguments): TemplatePreviewerFragment {
+            return TemplatePreviewerFragment().apply {
+                this.arguments = bundleOf(ARGS_KEY to arguments)
+            }
+        }
 
         fun getIntent(context: Context, arguments: TemplatePreviewerArguments): Intent {
             return CardViewerActivity.getIntent(

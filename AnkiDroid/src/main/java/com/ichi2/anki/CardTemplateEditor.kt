@@ -19,8 +19,11 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -35,6 +38,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -96,6 +101,17 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     private var tabToViewId: HashMap<Int, Int?> = HashMap()
     private var startingOrdId = 0
 
+    /**
+     * The frame containing the template previewer. Non null only in layout x-large.
+     */
+    private var templatePreviewerFrame: FragmentContainerView? = null
+
+    /**
+     * If true, the view is split in two. The template editor appears on the leading side and the previewer on the trailing side.
+     * This occurs when the view is big enough.
+     */
+    var fragmented = false
+
     // ----------------------------------------------------------------------------
     // Listeners
     // ----------------------------------------------------------------------------
@@ -107,7 +123,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.card_template_editor_activity)
+        setContentView(R.layout.card_template_editor)
         // Load the args either from the intent or savedInstanceState bundle
         if (savedInstanceState == null) {
             // get model id
@@ -132,13 +148,60 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tempModel = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
+        templatePreviewerFrame = findViewById(R.id.template_previewer_fragment)
+        /**
+         * Check if templatePreviewerFrame is not null and if its visibility is set to VISIBLE.
+         * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
+         * [fragmented] will be true if the screen size is large otherwise false
+         */
+        fragmented = templatePreviewerFrame != null && templatePreviewerFrame!!.visibility == View.VISIBLE
+
         slidingTabLayout = findViewById(R.id.sliding_tabs)
         viewPager = findViewById(R.id.pager)
-        setNavigationBarColor(R.attr.appBarColor)
+        setNavigationBarColor(R.attr.alternativeBackgroundColor)
 
         // Disable the home icon
         enableToolbar()
         startLoadingCollection()
+
+        // Open TemplatePreviewerFragment if in fragmented mode
+        loadTemplatePreviewerFragmentIfFragmented()
+    }
+
+    /**
+     *  Loads and displays a TemplatePreviewerFragment in container.
+     *  Retrieves the note type from tempModel, constructs the necessary arguments.
+     *  It loads the contents of previewer fragment when
+     *  1. Addition of Card
+     *  2. Renaming of Card
+     *  3. Deletion of Card
+     *  4. Insertion of field
+     *  5. Editing  of Card
+     *  6. Changing tab on the leading side in template editor.
+     */
+    fun loadTemplatePreviewerFragmentIfFragmented() {
+        if (!fragmented) {
+            return
+        }
+        launchCatchingTask {
+            val notetype = tempModel!!.notetype
+            val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
+            val ord = viewPager.currentItem
+            val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(notetype.id) }
+            val args = TemplatePreviewerArguments(
+                notetypeFile = notetypeFile,
+                id = note.id,
+                ord = ord,
+                fields = note.fields,
+                tags = note.tags,
+                fillEmpty = true,
+                inFragmentedActivity = fragmented
+            )
+            val details = TemplatePreviewerFragment.newInstance(args)
+            supportFragmentManager.commit {
+                replace(R.id.template_previewer_fragment, details)
+            }
+        }
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -303,6 +366,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     class CardTemplateFragment : Fragment() {
+        private val refreshFragmentHandler = Handler(Looper.getMainLooper())
         private var currentEditorTitle: FixedTextView? = null
         private lateinit var editorEditText: FixedEditText
 
@@ -350,7 +414,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
+                /**
+                 * Declare a nullable variable refreshFragmentRunnable of type Runnable.
+                 * This will hold a reference to the Runnable that refreshes the previewer fragment.
+                 * It is used to manage delayed fragment updates and can be null if no updates in card.
+                 */
+                private var refreshFragmentRunnable: Runnable? = null
                 override fun afterTextChanged(arg0: Editable) {
+                    refreshFragmentRunnable?.let { refreshFragmentHandler.removeCallbacks(it) }
                     templateEditor.tabToCursorPosition[cardIndex] = editorEditText.selectionStart
                     when (currentEditorViewId) {
                         R.id.styling_edit -> tempModel.updateCss(editorEditText.text.toString())
@@ -358,6 +429,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         else -> template.put("qfmt", editorEditText.text)
                     }
                     templateEditor.tempModel!!.updateTemplate(cardIndex, template)
+                    val updateRunnable = Runnable {
+                        templateEditor.loadTemplatePreviewerFragmentIfFragmented()
+                    }
+                    refreshFragmentRunnable = updateRunnable
+                    refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
                 }
 
                 override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {
@@ -370,11 +446,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
             editorEditText.addTextChangedListener(templateEditorWatcher)
 
-            /* When keyboard is visible, hide the bottom navigation bar to allow viewing
-            of all template text when resize happens */
+            /**
+             * When keyboard is visible, show bottom navigation bar only if screen size is x-large and vertically oriented.
+             * Otherwise hide bottom navigation bar.
+             */
             ViewCompat.setOnApplyWindowInsetsListener(mainView) { _, insets ->
                 val imeIsVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-                if (imeIsVisible) {
+                if (imeIsVisible && !(templateEditor.fragmented && resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)) {
                     bottomNavigation.visibility = View.GONE
                 } else {
                     bottomNavigation.visibility = View.VISIBLE
@@ -457,6 +535,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
                 // update the tab
                 templateEditor.viewPager.adapter!!.notifyDataSetChanged()
+                templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             }
         }
 
@@ -487,13 +566,24 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             initTabLayoutMediator()
+            templateEditor.slidingTabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(p0: TabLayout.Tab?) {
+                    templateEditor.loadTemplatePreviewerFragmentIfFragmented()
+                }
+                override fun onTabUnselected(p0: TabLayout.Tab?) {
+                }
+                override fun onTabReselected(p0: TabLayout.Tab?) {
+                }
+            })
             parentFragmentManager.setFragmentResultListener(REQUEST_FIELD_INSERT, viewLifecycleOwner) { key, bundle ->
                 if (key == REQUEST_FIELD_INSERT) {
                     // this is guaranteed to be non null, as we put a non null value on the other side
                     insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
                 }
             }
-            setupMenu()
+            if (!templateEditor.fragmented) {
+                setupMenu()
+            }
         }
 
         private fun initTabLayoutMediator() {
@@ -518,6 +608,130 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return noteType.isCloze || noteType.isImageOcclusion
         }
 
+        /**
+         * This method setup the part of the menu that can be used either in template editor or in previewer fragment.
+         */
+        fun setupCommonMenu(menu: Menu) {
+            if (noteTypeCreatesDynamicNumberOfNotes()) {
+                Timber.d("Editing cloze/occlusion model, disabling add/delete card template and deck override functionality")
+                menu.findItem(R.id.action_add).isVisible = false
+                menu.findItem(R.id.action_rename).isVisible = false
+                menu.findItem(R.id.action_add_deck_override).isVisible = false
+            } else {
+                val template = getCurrentTemplate()
+
+                @StringRes val overrideStringRes = if (template != null && template.has("did") && !template.isNull("did")) {
+                    R.string.card_template_editor_deck_override_on
+                } else {
+                    R.string.card_template_editor_deck_override_off
+                }
+                menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes)
+            }
+
+            // It is invalid to delete if there is only one card template, remove the option from UI
+            if (templateEditor.tempModel!!.templateCount < 2) {
+                menu.findItem(R.id.action_delete).isVisible = false
+            }
+
+            // Hide preview option if the view is big enough
+            if (templateEditor.fragmented) {
+                menu.findItem(R.id.action_preview).isVisible = false
+            }
+
+            // marked insert field menu item invisible for style view
+            val isInsertFieldItemVisible = currentEditorViewId != R.id.styling_edit
+            menu.findItem(R.id.action_insert_field).isVisible = isInsertFieldItemVisible
+        }
+
+        fun handleMenuItemSelected(menuItem: MenuItem): Boolean {
+            val col = templateEditor.getColUnsafe
+            val tempModel = templateEditor.tempModel
+            when (menuItem.itemId) {
+                R.id.action_add -> {
+                    Timber.i("CardTemplateEditor:: Add template button pressed")
+                    // Show confirmation dialog
+                    val ordinal = templateEditor.viewPager.currentItem
+                    // isOrdinalPendingAdd method will check if there are any new card types added or not,
+                    // if TempModel has new card type then numAffectedCards will be 0 by default.
+                    val numAffectedCards = if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, ordinal)) {
+                        col.notetypes.tmplUseCount(tempModel.notetype, ordinal)
+                    } else {
+                        0
+                    }
+                    confirmAddCards(tempModel.notetype, numAffectedCards)
+                    return true
+                }
+                R.id.action_reposition -> showRepositionDialog()
+                R.id.action_rename -> showRenameDialog()
+                R.id.action_copy_as_markdown -> copyMarkdownTemplateToClipboard()
+                R.id.action_insert_field -> showInsertFieldDialog()
+                R.id.action_delete -> {
+                    Timber.i("CardTemplateEditor:: Delete template button pressed")
+                    val res = resources
+                    val ordinal = templateEditor.viewPager.currentItem
+                    val template = tempModel!!.getTemplate(ordinal)
+                    // Don't do anything if only one template
+                    if (tempModel.templateCount < 2) {
+                        templateEditor.showSimpleMessageDialog(res.getString(R.string.card_template_editor_cant_delete))
+                        return true
+                    }
+
+                    if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
+                        return true
+                    }
+
+                    // Show confirmation dialog
+                    val numAffectedCards = if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) {
+                        Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
+                        col.notetypes.tmplUseCount(tempModel.notetype, ordinal)
+                    } else {
+                        0
+                    }
+                    confirmDeleteCards(template, tempModel.notetype, numAffectedCards)
+                    return true
+                }
+                R.id.action_add_deck_override -> {
+                    displayDeckOverrideDialog(tempModel!!)
+                    return true
+                }
+                R.id.action_preview -> {
+                    performPreview()
+                    return true
+                }
+                R.id.action_confirm -> {
+                    Timber.i("CardTemplateEditor:: Save model button pressed")
+                    if (modelHasChanged()) {
+                        val confirmButton = templateEditor.findViewById<View>(R.id.action_confirm)
+                        if (confirmButton != null) {
+                            if (!confirmButton.isEnabled) {
+                                Timber.d("CardTemplateEditor::discarding extra click after button disabled")
+                                return true
+                            }
+                            confirmButton.isEnabled = false
+                        }
+                        launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
+                            requireActivity().withProgress(resources.getString(R.string.saving_model)) {
+                                withCol { tempModel!!.saveToDatabase() }
+                            }
+                            onModelSaved()
+                        }
+                    } else {
+                        Timber.d("CardTemplateEditor:: model has not changed, exiting")
+                        templateEditor.finish()
+                    }
+
+                    return true
+                }
+                R.id.action_card_browser_appearance -> {
+                    Timber.i("CardTemplateEditor::Card Browser Template button pressed")
+                    val currentTemplate = getCurrentTemplate()
+                    currentTemplate?.let { launchCardBrowserAppearance(it) }
+                    return true
+                }
+            }
+            return false
+        }
+
         private fun setupMenu() {
             // Enable menu
             (requireActivity() as MenuHost).addMenuProvider(
@@ -525,120 +739,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                         menu.clear()
                         menuInflater.inflate(R.menu.card_template_editor, menu)
-
-                        if (noteTypeCreatesDynamicNumberOfNotes()) {
-                            Timber.d("Editing cloze/occlusion model, disabling add/delete card template and deck override functionality")
-                            menu.findItem(R.id.action_add).isVisible = false
-                            menu.findItem(R.id.action_rename).isVisible = false
-                            menu.findItem(R.id.action_add_deck_override).isVisible = false
-                        } else {
-                            val template = getCurrentTemplate()
-
-                            @StringRes val overrideStringRes = if (template != null && template.has("did") && !template.isNull("did")) {
-                                R.string.card_template_editor_deck_override_on
-                            } else {
-                                R.string.card_template_editor_deck_override_off
-                            }
-                            menu.findItem(R.id.action_add_deck_override).setTitle(overrideStringRes)
-                        }
-
-                        // It is invalid to delete if there is only one card template, remove the option from UI
-                        if (templateEditor.tempModel!!.templateCount < 2) {
-                            menu.findItem(R.id.action_delete).isVisible = false
-                        }
-
-                        // marked insert field menu item invisible for style view
-                        val isInsertFieldItemVisible = currentEditorViewId != R.id.styling_edit
-                        menu.findItem(R.id.action_insert_field).isVisible = isInsertFieldItemVisible
+                        setupCommonMenu(menu)
                     }
 
                     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                        val col = templateEditor.getColUnsafe
-                        val tempModel = templateEditor.tempModel
-                        when (menuItem.itemId) {
-                            R.id.action_add -> {
-                                Timber.i("CardTemplateEditor:: Add template button pressed")
-                                // Show confirmation dialog
-                                val ordinal = templateEditor.viewPager.currentItem
-                                // isOrdinalPendingAdd method will check if there are any new card types added or not,
-                                // if TempModel has new card type then numAffectedCards will be 0 by default.
-                                val numAffectedCards = if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, ordinal)) {
-                                    col.notetypes.tmplUseCount(tempModel.notetype, ordinal)
-                                } else {
-                                    0
-                                }
-                                confirmAddCards(tempModel.notetype, numAffectedCards)
-                                return true
-                            }
-                            R.id.action_reposition -> showRepositionDialog()
-                            R.id.action_rename -> showRenameDialog()
-                            R.id.action_copy_as_markdown -> copyMarkdownTemplateToClipboard()
-                            R.id.action_insert_field -> showInsertFieldDialog()
-                            R.id.action_delete -> {
-                                Timber.i("CardTemplateEditor:: Delete template button pressed")
-                                val res = resources
-                                val ordinal = templateEditor.viewPager.currentItem
-                                val template = tempModel!!.getTemplate(ordinal)
-                                // Don't do anything if only one template
-                                if (tempModel.templateCount < 2) {
-                                    templateEditor.showSimpleMessageDialog(res.getString(R.string.card_template_editor_cant_delete))
-                                    return true
-                                }
-
-                                if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
-                                    return true
-                                }
-
-                                // Show confirmation dialog
-                                val numAffectedCards = if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) {
-                                    Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                                    col.notetypes.tmplUseCount(tempModel.notetype, ordinal)
-                                } else {
-                                    0
-                                }
-                                confirmDeleteCards(template, tempModel.notetype, numAffectedCards)
-                                return true
-                            }
-                            R.id.action_add_deck_override -> {
-                                displayDeckOverrideDialog(tempModel!!)
-                                return true
-                            }
-                            R.id.action_preview -> {
-                                performPreview()
-                                return true
-                            }
-                            R.id.action_confirm -> {
-                                Timber.i("CardTemplateEditor:: Save model button pressed")
-                                if (modelHasChanged()) {
-                                    val confirmButton = templateEditor.findViewById<View>(R.id.action_confirm)
-                                    if (confirmButton != null) {
-                                        if (!confirmButton.isEnabled) {
-                                            Timber.d("CardTemplateEditor::discarding extra click after button disabled")
-                                            return true
-                                        }
-                                        confirmButton.isEnabled = false
-                                    }
-                                    launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
-                                        requireActivity().withProgress(resources.getString(R.string.saving_model)) {
-                                            withCol { tempModel!!.saveToDatabase() }
-                                        }
-                                        onModelSaved()
-                                    }
-                                } else {
-                                    Timber.d("CardTemplateEditor:: model has not changed, exiting")
-                                    templateEditor.finish()
-                                }
-
-                                return true
-                            }
-                            R.id.action_card_browser_appearance -> {
-                                Timber.i("CardTemplateEditor::Card Browser Template button pressed")
-                                val currentTemplate = getCurrentTemplate()
-                                currentTemplate?.let { launchCardBrowserAppearance(it) }
-                                return true
-                            }
-                        }
-                        return false
+                        return handleMenuItemSelected(menuItem)
                     }
                 },
                 viewLifecycleOwner,
@@ -683,7 +788,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             templateEditor.finish()
         }
 
-        private fun getNote(col: Collection): Note? {
+        fun getNote(col: Collection): Note? {
             val nid = requireArguments().getLong(EDITOR_NOTE_ID)
             return if (nid != -1L) col.getNote(nid) else null
         }
@@ -871,6 +976,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             try {
                 templateEditor.getColUnsafe.modSchema()
                 schemaChangingAction.run()
+                templateEditor.loadTemplatePreviewerFragmentIfFragmented()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 val d = ConfirmationDialog()
@@ -1014,6 +1120,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private const val EDITOR_NOTE_ID = "noteId"
         private const val EDITOR_START_ORD_ID = "ordId"
         private const val CARD_INDEX = "card_ord"
+
+        // Time to wait before refreshing the previewer, in milliseconds.
+        private const val REFRESH_PREVIEW_DELAY = 1000L
 
         @Suppress("unused")
         private const val REQUEST_PREVIEWER = 0
