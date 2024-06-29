@@ -23,6 +23,7 @@ import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import timber.log.Timber
 
 object DiscardChangesDialog {
     fun showDialog(
@@ -32,6 +33,7 @@ object DiscardChangesDialog {
         message: String = CollectionManager.TR.addingDiscardCurrentInput(),
         positiveMethod: () -> Unit
     ) = AlertDialog.Builder(context).show {
+        Timber.i("showing 'discard changes' dialog")
         message(text = message)
         positiveButton(text = positiveButtonText) { positiveMethod() }
         negativeButton(text = negativeButtonText)

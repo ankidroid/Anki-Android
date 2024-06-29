@@ -59,6 +59,9 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
     val currentClozeNumber: Int
         get() = _currentClozeNumber.value
 
+    // List to store the cloze integers
+    private val intClozeList = mutableListOf<Int>()
+
     private val _currentClozeMode = MutableStateFlow(InstantNoteEditorActivity.ClozeMode.INCREMENT)
 
     val currentClozeMode: StateFlow<InstantNoteEditorActivity.ClozeMode> = _currentClozeMode.asStateFlow()
@@ -174,6 +177,18 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         }
     }
 
+    private fun shouldResetClozeNumber(number: Int) {
+        val index = intClozeList.indexOf(number)
+        if (index != -1) {
+            intClozeList.removeAt(index)
+        }
+
+        // Reset cloze number if the list is empty
+        if (intClozeList.isEmpty()) {
+            _currentClozeNumber.value = 1
+        }
+    }
+
     /**
      * Retrieves all cloze text fields from the current editor note's note type.
      *
@@ -229,19 +244,18 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
 
         val clozeText: String?
 
+        val clozeNumber = currentClozeNumber
+        if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
+            incrementClozeNumber()
+        }
+        intClozeList.add(currentClozeNumber)
+
         val punctuation: String? = matcher?.groups?.get(2)?.value
         if (!punctuation.isNullOrEmpty()) {
             val capturedWord = matcher.groups[1]?.value
-            clozeText = "{{c$currentClozeNumber::$capturedWord}}$punctuation"
+            clozeText = "{{c$clozeNumber::$capturedWord}}$punctuation"
         } else {
-            clozeText = "{{c$currentClozeNumber::$text}}"
-        }
-
-        when (currentClozeMode.value) {
-            InstantNoteEditorActivity.ClozeMode.INCREMENT -> { incrementClozeNumber() }
-            InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
-                // Do nothing here
-            }
+            clozeText = "{{c$clozeNumber::$text}}"
         }
 
         return clozeText
@@ -334,10 +348,18 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         if (capturedClozeNumber != null && currentClozeNumber - capturedClozeNumber.toInt() == 1) {
             decrementClozeNumber()
         }
-        if (matchResult?.groups?.get(3)?.value != null) {
+
+        if (matchResult == null) {
+            Timber.d("No match found for the input text")
+            return null
+        }
+
+        matchResult.groups[1]?.value?.toInt()?.let { shouldResetClozeNumber(it) }
+
+        if (matchResult.groups[3]?.value != null) {
             return matchResult.groups[2]?.value + matchResult.groups[3]?.value
         }
-        return matchResult?.groups?.get(2)?.value
+        return matchResult.groups[2]?.value
     }
 
     fun setEditorMode(mode: InstantNoteEditorActivity.EditMode) {
@@ -351,7 +373,10 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
 
     fun toggleClozeMode() {
         val newMode = when (_currentClozeMode.value) {
-            InstantNoteEditorActivity.ClozeMode.INCREMENT -> InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
+            InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
+                decrementClozeNumber()
+                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
+            }
             InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
                 incrementClozeNumber()
                 InstantNoteEditorActivity.ClozeMode.INCREMENT
