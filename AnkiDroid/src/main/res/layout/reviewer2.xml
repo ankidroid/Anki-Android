@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -69,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="4dp"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintBottom_toTopOf="@id/buttons_area"
             style="@style/CardView.PreviewerStyle">
@@ -85,7 +87,7 @@
             android:id="@+id/buttons_area"
             android:layout_width="0dp"
             android:layout_height="@dimen/touch_target"
-            android:layout_marginVertical="2dp"
+            android:layout_marginTop="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/webview_container"
             app:layout_constraintStart_toStartOf="@id/webview_container"
