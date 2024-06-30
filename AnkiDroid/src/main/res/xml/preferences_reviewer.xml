@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ListPreference
+        android:defaultValue="@string/hide_system_bars_none_value"
+        android:entries="@array/hide_system_bars_entries"
+        android:entryValues="@array/hide_system_bars_values"
+        android:key="@string/hide_system_bars_key"
+        android:title="@string/hide_system_bars"
+        app:useSimpleSummaryProvider="true"/>
 </androidx.preference.PreferenceScreen>

@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.ichi2.anki.SingleFragmentActivity
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -27,6 +28,11 @@ import kotlin.reflect.jvm.jvmName
  * @see TemplatePreviewerFragment
  */
 class CardViewerActivity : SingleFragmentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge() // TODO assess moving this to SingleFragmentActivity
+        super.onCreate(savedInstanceState)
+    }
+
     companion object {
         fun getIntent(context: Context, fragmentClass: KClass<out CardViewerFragment>, arguments: Bundle? = null): Intent {
             return Intent(context, CardViewerActivity::class.java).apply {
