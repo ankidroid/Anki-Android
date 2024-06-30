@@ -54,6 +54,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
@@ -318,8 +319,14 @@ class ReviewerFragment :
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
+        val ignoreDisplayCutout = sharedPrefs().getBoolean(getString(R.string.ignore_display_cutout_key), false)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val typeMask = if (ignoreDisplayCutout) {
+                WindowInsetsCompat.Type.systemBars()
+            } else {
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            }
+            val bars = insets.getInsets(typeMask)
             v.updatePadding(
                 left = bars.left,
                 top = bars.top,
