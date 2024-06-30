@@ -15,4 +15,10 @@
         android:key="@string/ignore_display_cutout_key"
         android:title="@string/ignore_display_cutout"
         />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="@string/hide_answer_buttons_key"
+        android:title="@string/hide_answer_buttons"
+        />
 </androidx.preference.PreferenceScreen>
