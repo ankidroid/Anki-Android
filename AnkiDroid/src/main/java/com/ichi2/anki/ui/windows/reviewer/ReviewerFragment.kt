@@ -24,13 +24,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -50,6 +55,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
@@ -81,6 +87,7 @@ class ReviewerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupImmersiveMode(view)
         setupAnswerButtons(view)
         setupCounts(view)
 
@@ -159,6 +166,12 @@ class ReviewerFragment :
     }
 
     private fun setupAnswerButtons(view: View) {
+        val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        if (hideAnswerButtons) {
+            view.findViewById<FrameLayout>(R.id.buttons_area).isVisible = false
+            return
+        }
+
         fun MaterialButton.setAnswerButtonNextTime(@StringRes title: Int, nextTime: String?) {
             val titleString = context.getString(title)
             text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
@@ -296,6 +309,39 @@ class ReviewerFragment :
                 redoItem.title = label ?: CollectionManager.TR.undoRedo()
                 redoItem.isEnabled = label != null
             }
+    }
+
+    private fun setupImmersiveMode(view: View) {
+        val hideSystemBarsSetting = HideSystemBars.from(requireContext())
+        val barsToHide = when (hideSystemBarsSetting) {
+            HideSystemBars.NONE -> return
+            HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.statusBars()
+            HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.navigationBars()
+            HideSystemBars.ALL -> WindowInsetsCompat.Type.systemBars()
+        }
+
+        val window = requireActivity().window
+        with(WindowInsetsControllerCompat(window, window.decorView)) {
+            hide(barsToHide)
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+
+        val ignoreDisplayCutout = sharedPrefs().getBoolean(getString(R.string.ignore_display_cutout_key), false)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val typeMask = if (ignoreDisplayCutout) {
+                WindowInsetsCompat.Type.systemBars()
+            } else {
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            }
+            val bars = insets.getInsets(typeMask)
+            v.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = bars.bottom
+            )
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     private val noteEditorLauncher =
