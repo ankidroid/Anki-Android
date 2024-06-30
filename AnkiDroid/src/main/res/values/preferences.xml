@@ -199,4 +199,7 @@
 
     <!-- Instant Editor -->
     <string name="pref_open_instant_editor">openInstantEditor</string>
+
+    <!-- Reviewer options -->
+    <string name="hide_system_bars_key">hideSystemBars</string>
 </resources>
