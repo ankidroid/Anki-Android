@@ -24,6 +24,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
@@ -165,6 +166,12 @@ class ReviewerFragment :
     }
 
     private fun setupAnswerButtons(view: View) {
+        val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
+        if (hideAnswerButtons) {
+            view.findViewById<FrameLayout>(R.id.buttons_area).isVisible = false
+            return
+        }
+
         fun MaterialButton.setAnswerButtonNextTime(@StringRes title: Int, nextTime: String?) {
             val titleString = context.getString(title)
             text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
