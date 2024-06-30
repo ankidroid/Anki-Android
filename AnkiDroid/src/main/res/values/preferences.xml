@@ -202,4 +202,5 @@
 
     <!-- Reviewer options -->
     <string name="hide_system_bars_key">hideSystemBars</string>
+    <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
 </resources>
