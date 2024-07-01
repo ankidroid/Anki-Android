@@ -42,7 +42,7 @@ abstract class NoteEditorTest protected constructor() {
         get() {
             return Intent(targetContext, NoteEditor::class.java).apply {
                 component = ComponentName(targetContext, NoteEditor::class.java)
-                putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+                NoteEditorCaller.CALLER_DECKPICKER.putAsExtra(this)
             }
         }
 

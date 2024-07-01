@@ -23,6 +23,7 @@ import androidx.annotation.CheckResult
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditorCaller
 import com.ichi2.libanki.CardId
 
 /**
@@ -35,7 +36,7 @@ data class EditCardDestination(val cardId: CardId)
 @CheckResult
 fun EditCardDestination.toIntent(context: Context, animation: ActivityTransitionAnimation.Direction): Intent {
     return Intent(context, NoteEditor::class.java).apply {
-        putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_EDIT)
+        NoteEditorCaller.CALLER_EDIT.putAsExtra(this)
         putExtra(NoteEditor.EXTRA_CARD_ID, cardId)
         putExtra(AnkiActivity.FINISH_ANIMATION_EXTRA, animation as Parcelable)
     }

@@ -41,6 +41,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditorCaller
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.previewer.CardViewerActivity
@@ -316,7 +317,7 @@ class ReviewerFragment :
 
     private fun launchAddNote() {
         val intent = Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
+            NoteEditorCaller.CALLER_REVIEWER_ADD.putAsExtra(this)
         }
         noteEditorLauncher.launch(intent)
     }

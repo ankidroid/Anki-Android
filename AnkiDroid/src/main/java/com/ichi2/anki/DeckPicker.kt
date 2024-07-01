@@ -1429,7 +1429,7 @@ open class DeckPicker :
 
     fun addNote() {
         val intent = Intent(this@DeckPicker, NoteEditor::class.java)
-        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+        NoteEditorCaller.CALLER_DECKPICKER.putAsExtra(intent)
         startActivity(intent)
     }
 
