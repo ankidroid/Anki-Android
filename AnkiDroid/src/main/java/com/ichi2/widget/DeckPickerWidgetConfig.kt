@@ -80,6 +80,7 @@ class DeckPickerWidgetConfig : FragmentActivity(), DeckSelectionListener {
             val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             setResult(RESULT_OK, resultValue)
 
+            // Send broadcast to update widget
             sendBroadcast(Intent(this, DeckPickerWidget::class.java))
 
             finish()
@@ -166,6 +167,14 @@ class DeckPickerWidgetConfig : FragmentActivity(), DeckSelectionListener {
         val selectedDecks = deckAdapter.decks.map { it.deckId.toString() }.toSet()
         editor.putStringSet("selected_decks_$appWidgetId", selectedDecks)
         editor.apply()
+
+        // Trigger widget update
+        val updateIntent = Intent(this, DeckPickerWidget::class.java).apply {
+            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
+            putExtra("selected_deck_ids", selectedDecks.map { it.toLong() }.toLongArray())
+        }
+        sendBroadcast(updateIntent)
     }
 
     private fun loadSelectedDecksFromPreferences() {
