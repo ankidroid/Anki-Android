@@ -27,7 +27,7 @@ class ImageOcclusionIntentBuilder(private val context: Context) {
     fun buildIntent(imageUri: Uri?): Intent {
         return Intent(context, NoteEditor::class.java).apply {
             putExtra(NoteEditor.EXTRA_IMG_OCCLUSION, imageUri)
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_IMG_OCCLUSION)
+            NoteEditorCaller.CALLER_IMG_OCCLUSION.putAsExtra(this)
         }
     }
 }

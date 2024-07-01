@@ -443,7 +443,7 @@ abstract class NavigationDrawerActivity :
             val intentAddNote = Intent(context, NoteEditor::class.java)
             intentAddNote.action = Intent.ACTION_VIEW
             intentAddNote.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intentAddNote.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            NoteEditorCaller.CALLER_DECKPICKER.putAsExtra(intentAddNote)
             val noteEditorShortcut = ShortcutInfoCompat.Builder(context, "noteEditorShortcutId")
                 .setShortLabel(context.getString(R.string.menu_add))
                 .setLongLabel(context.getString(R.string.menu_add))

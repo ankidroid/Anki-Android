@@ -44,7 +44,9 @@ import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.contains
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -513,8 +515,8 @@ class NoteEditorTest : RobolectricTest() {
         ensureCollectionLoadIsSynchronous()
         val i = Intent()
         when (from) {
-            REVIEWER -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-            DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            REVIEWER -> NoteEditorCaller.CALLER_REVIEWER_ADD.putAsExtra(i)
+            DECK_LIST -> NoteEditorCaller.CALLER_DECKPICKER.putAsExtra(i)
         }
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i)
     }
@@ -530,7 +532,7 @@ class NoteEditorTest : RobolectricTest() {
             REVIEWER -> {
                 i = EditCardDestination(n.firstCard().id).toIntent(targetContext, DEFAULT)
             }
-            DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            DECK_LIST -> NoteEditorCaller.CALLER_DECKPICKER.putAsExtra(i)
         }
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i)
     }

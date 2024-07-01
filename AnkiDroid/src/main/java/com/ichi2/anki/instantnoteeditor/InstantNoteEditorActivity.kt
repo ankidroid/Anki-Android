@@ -44,6 +44,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CustomActionModeCallback
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditorCaller
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.launchCatchingTask
@@ -159,7 +160,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     private fun openNoteEditor() {
         val sharedText = intent.getStringExtra(Intent.EXTRA_TEXT)
         val noteEditorIntent = Intent(this, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.INSTANT_NOTE_EDITOR)
+            NoteEditorCaller.CALLER_INSTANT_NOTE_EDITOR.putAsExtra(this)
             putExtra(Intent.EXTRA_TEXT, sharedText)
         }
         startActivity(noteEditorIntent)
