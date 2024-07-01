@@ -22,6 +22,8 @@ import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditorCaller
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
 import org.intellij.lang.annotations.Language
@@ -29,7 +31,7 @@ import org.intellij.lang.annotations.Language
 class NoteEditorDestination(val cardId: Long) {
     fun toIntent(context: Context): Intent =
         Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
+            putExtra(NoteEditorCaller.CALLER_PREVIEWER_EDIT)
             putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, cardId)
         }
 }

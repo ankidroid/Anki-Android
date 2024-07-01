@@ -19,6 +19,8 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
+
 /**
  * Builder class for creating intents related to image occlusion in the [NoteEditor].
  */
@@ -27,7 +29,7 @@ class ImageOcclusionIntentBuilder(private val context: Context) {
     fun buildIntent(imageUri: Uri?): Intent {
         return Intent(context, NoteEditor::class.java).apply {
             putExtra(NoteEditor.EXTRA_IMG_OCCLUSION, imageUri)
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_IMG_OCCLUSION)
+            putExtra(NoteEditorCaller.CALLER_IMG_OCCLUSION)
         }
     }
 }

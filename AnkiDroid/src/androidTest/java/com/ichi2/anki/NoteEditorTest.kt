@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.Matchers.*
@@ -42,7 +43,7 @@ abstract class NoteEditorTest protected constructor() {
         get() {
             return Intent(targetContext, NoteEditor::class.java).apply {
                 component = ComponentName(targetContext, NoteEditor::class.java)
-                putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+                putExtra(NoteEditorCaller.CALLER_DECKPICKER)
             }
         }
 

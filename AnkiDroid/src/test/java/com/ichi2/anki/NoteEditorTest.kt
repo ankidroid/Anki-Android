@@ -27,6 +27,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.config.ConfigKey
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
@@ -44,7 +45,9 @@ import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.contains
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -513,8 +516,8 @@ class NoteEditorTest : RobolectricTest() {
         ensureCollectionLoadIsSynchronous()
         val i = Intent()
         when (from) {
-            REVIEWER -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-            DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            REVIEWER -> i.putExtra(NoteEditorCaller.CALLER_REVIEWER_ADD)
+            DECK_LIST -> i.putExtra(NoteEditorCaller.CALLER_DECKPICKER)
         }
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i)
     }
@@ -530,7 +533,7 @@ class NoteEditorTest : RobolectricTest() {
             REVIEWER -> {
                 i = EditCardDestination(n.firstCard().id).toIntent(targetContext, DEFAULT)
             }
-            DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            DECK_LIST -> i.putExtra(NoteEditorCaller.CALLER_DECKPICKER)
         }
         return super.startActivityNormallyOpenCollectionWithIntent(clazz, i)
     }

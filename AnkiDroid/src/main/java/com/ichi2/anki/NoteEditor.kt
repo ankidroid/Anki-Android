@@ -32,16 +32,29 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.*
+import android.view.ActionMode
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams
-import android.widget.*
+import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.*
+import androidx.annotation.CheckResult
+import androidx.annotation.DrawableRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
@@ -61,6 +74,19 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.NoteEditorCaller.CALLER_ADD_IMAGE
+import com.ichi2.anki.NoteEditorCaller.CALLER_CARDBROWSER_ADD
+import com.ichi2.anki.NoteEditorCaller.CALLER_DECKPICKER
+import com.ichi2.anki.NoteEditorCaller.CALLER_EDIT
+import com.ichi2.anki.NoteEditorCaller.CALLER_IMG_OCCLUSION
+import com.ichi2.anki.NoteEditorCaller.CALLER_INSTANT_NOTE_EDITOR
+import com.ichi2.anki.NoteEditorCaller.CALLER_NOTEEDITOR
+import com.ichi2.anki.NoteEditorCaller.CALLER_NOTEEDITOR_INTENT_ADD
+import com.ichi2.anki.NoteEditorCaller.CALLER_NO_CALLER
+import com.ichi2.anki.NoteEditorCaller.CALLER_PREVIEWER_EDIT
+import com.ichi2.anki.NoteEditorCaller.CALLER_REVIEWER_ADD
+import com.ichi2.anki.NoteEditorCaller.CALLER_STUDYOPTIONS
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
 import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -74,7 +100,12 @@ import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
-import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
+import com.ichi2.anki.multimediacard.fields.EFieldType
+import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
@@ -98,26 +129,87 @@ import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.libanki.Note
 import com.ichi2.libanki.Note.ClozeUtils
+import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.load
+import com.ichi2.libanki.note
+import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.*
+import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.ClipboardUtil
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.ImageUtils
+import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.IntentUtil.resolveMimeType
+import com.ichi2.utils.KeyUtils
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.MapUtil
+import com.ichi2.utils.NoteFieldDecorator
+import com.ichi2.utils.TextViewUtil
+import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.tintOverflowMenuIcons
+import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
-import java.util.*
+import java.util.LinkedList
+import java.util.Locale
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+
+// Represents the way the note editor can be opened.
+enum class NoteEditorCaller {
+    CALLER_NO_CALLER,
+    CALLER_EDIT,
+    CALLER_STUDYOPTIONS,
+    CALLER_DECKPICKER,
+    CALLER_REVIEWER_ADD,
+    CALLER_CARDBROWSER_ADD,
+    CALLER_NOTEEDITOR,
+    CALLER_PREVIEWER_EDIT,
+    CALLER_NOTEEDITOR_INTENT_ADD,
+    CALLER_INSTANT_NOTE_EDITOR,
+    CALLER_IMG_OCCLUSION,
+    CALLER_ADD_IMAGE;
+
+    fun putInBundle(bundle: Bundle) {
+        bundle.putInt(BUNDLE_KEY, ordinal)
+    }
+
+    companion object {
+        fun getFromBundle(bundle: Bundle) =
+            entries[bundle.getInt(BUNDLE_KEY)]
+
+        fun getFromExtra(intent: Intent) =
+            entries[intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER.ordinal)]
+
+        fun Intent.putExtra(caller: NoteEditorCaller) =
+            putExtra(EXTRA_CALLER, caller.ordinal)
+
+        private const val BUNDLE_KEY = "caller"
+        private const val EXTRA_CALLER = "CALLER"
+    }
+}
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -181,7 +273,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private var aedictIntent = false
 
     /* indicates which activity called Note Editor */
-    private var caller = 0
+    private var caller = CALLER_NO_CALLER
     private var editFields: LinkedList<FieldEditText?>? = null
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
@@ -378,7 +470,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         setContentView(R.layout.note_editor)
         val intent = intent
         if (savedInstanceState != null) {
-            caller = savedInstanceState.getInt("caller")
+            caller = NoteEditorCaller.getFromBundle(savedInstanceState)
             addNote = savedInstanceState.getBoolean("addNote")
             deckId = savedInstanceState.getLong("did")
             selectedTags = savedInstanceState.getStringArrayList("tags")
@@ -391,9 +483,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         } else {
             if (intentLaunchedWithImage(intent)) {
                 Timber.i("Intent contained an image")
-                intent.putExtra(EXTRA_CALLER, CALLER_ADD_IMAGE)
+                intent.putExtra(CALLER_ADD_IMAGE)
             }
-            caller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER)
+            caller = NoteEditorCaller.getFromExtra(intent)
             if (caller == CALLER_NO_CALLER) {
                 val action = intent.action
                 if (ACTION_CREATE_FLASHCARD == action || ACTION_CREATE_FLASHCARD_SEND == action || Intent.ACTION_PROCESS_TEXT == action) {
@@ -454,7 +546,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun addInstanceStateToBundle(savedInstanceState: Bundle) {
         Timber.i("Saving instance")
-        savedInstanceState.putInt("caller", caller)
+        caller.putInBundle(savedInstanceState)
         savedInstanceState.putBoolean("addNote", addNote)
         savedInstanceState.putLong("did", deckId)
         savedInstanceState.putBoolean(NOTE_CHANGED_EXTRA_KEY, changed)
@@ -475,7 +567,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         val intent = intent
-        Timber.d("NoteEditor() onCollectionLoaded: caller: %d", caller)
+        Timber.d("NoteEditor() onCollectionLoaded: caller: %s", caller)
         registerExternalStorageListener()
         fieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
         tagsButton = findViewById(R.id.CardEditorTagButton)
@@ -517,7 +609,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
                 addNote = true
-            CALLER_NOTEEDITOR_INTENT_ADD, INSTANT_NOTE_EDITOR -> {
+            CALLER_NOTEEDITOR_INTENT_ADD, CALLER_INSTANT_NOTE_EDITOR -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
                     finish()
@@ -534,7 +626,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             CALLER_IMG_OCCLUSION, CALLER_ADD_IMAGE -> {
                 addNote = true
             }
-            else -> {}
         }
 
         if (addNote) {
@@ -1295,7 +1386,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun openNewNoteEditor(intentEnricher: Consumer<Intent>) {
         val intent = Intent(this@NoteEditor, NoteEditor::class.java)
-        intent.putExtra(EXTRA_CALLER, CALLER_NOTEEDITOR)
+        intent.putExtra(CALLER_NOTEEDITOR)
         intent.putExtra(EXTRA_DID, deckId)
         // mutate event with additional properties
         intentEnricher.accept(intent)
@@ -2432,7 +2523,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         //    public static final String TARGET_LANGUAGE = "TARGET_LANGUAGE";
         const val SOURCE_TEXT = "SOURCE_TEXT"
         const val TARGET_TEXT = "TARGET_TEXT"
-        const val EXTRA_CALLER = "CALLER"
         const val EXTRA_CARD_ID = "CARD_ID"
         const val EXTRA_CONTENTS = "CONTENTS"
         const val EXTRA_TAGS = "TAGS"
@@ -2447,19 +2537,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val EXTRA_IMG_OCCLUSION = "image_uri"
 
         // calling activity
-        const val CALLER_NO_CALLER = 0
-        const val CALLER_EDIT = 1
-        const val CALLER_STUDYOPTIONS = 2
-        const val CALLER_DECKPICKER = 3
-        const val CALLER_REVIEWER_ADD = 11
-        const val CALLER_CARDBROWSER_ADD = 7
-        const val CALLER_NOTEEDITOR = 8
-        const val CALLER_PREVIEWER_EDIT = 9
-        const val CALLER_NOTEEDITOR_INTENT_ADD = 10
         const val RESULT_UPDATED_IO_NOTE = 11
-        const val CALLER_IMG_OCCLUSION = 12
-        const val CALLER_ADD_IMAGE = 13
-        const val INSTANT_NOTE_EDITOR = 14
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"

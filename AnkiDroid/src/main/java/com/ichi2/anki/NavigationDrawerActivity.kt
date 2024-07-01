@@ -40,6 +40,7 @@ import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
@@ -443,7 +444,7 @@ abstract class NavigationDrawerActivity :
             val intentAddNote = Intent(context, NoteEditor::class.java)
             intentAddNote.action = Intent.ACTION_VIEW
             intentAddNote.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intentAddNote.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            intentAddNote.putExtra(NoteEditorCaller.CALLER_DECKPICKER)
             val noteEditorShortcut = ShortcutInfoCompat.Builder(context, "noteEditorShortcutId")
                 .setShortLabel(context.getString(R.string.menu_add))
                 .setLongLabel(context.getString(R.string.menu_add))

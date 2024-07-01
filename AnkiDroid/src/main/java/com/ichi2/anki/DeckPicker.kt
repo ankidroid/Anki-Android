@@ -78,6 +78,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.InitialActivity.StartupFailure.*
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
@@ -1429,7 +1430,7 @@ open class DeckPicker :
 
     fun addNote() {
         val intent = Intent(this@DeckPicker, NoteEditor::class.java)
-        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+        intent.putExtra(NoteEditorCaller.CALLER_DECKPICKER)
         startActivity(intent)
     }
 

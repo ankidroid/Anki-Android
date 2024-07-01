@@ -41,6 +41,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.NoteEditorCaller.Companion.putExtra
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
@@ -108,7 +109,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.*
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -2182,7 +2182,7 @@ open class CardBrowser :
         @VisibleForTesting
         fun createAddNoteIntent(context: Context, viewModel: CardBrowserViewModel): Intent {
             val intent = Intent(context, NoteEditor::class.java)
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
+            intent.putExtra(NoteEditorCaller.CALLER_CARDBROWSER_ADD)
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
             }
