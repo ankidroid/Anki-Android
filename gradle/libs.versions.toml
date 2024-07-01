@@ -73,6 +73,7 @@ timber = "5.0.1"
 triplet = "3.10.1"
 turbine = "1.1.0"
 workRuntimeKtx = "2.9.0"
+coreKtx = "1.6.1"
 
 [libraries]
 acra-limiter = { module = "ch.acra:acra-limiter", version.ref = "acra" }
@@ -157,6 +158,7 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 cashapp-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
 
 [plugins]
 

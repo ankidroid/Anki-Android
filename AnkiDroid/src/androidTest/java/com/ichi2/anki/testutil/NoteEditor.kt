@@ -14,23 +14,26 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.noteeditor
+package com.ichi2.anki.testutil
 
-import android.content.Context
-import android.content.Intent
-import androidx.annotation.CheckResult
-import com.ichi2.anim.ActivityTransitionAnimation
+import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.NoteEditor
-import com.ichi2.libanki.CardId
+import com.ichi2.anki.R
+import com.ichi2.anki.SingleFragmentActivity
+import java.util.concurrent.atomic.AtomicReference
 
-/**
- * Opens the [Note Editor][NoteEditor] to the note of a selected card
- *
- * As the card of the note is known, additional context is provided to the UI
- */
-data class EditCardDestination(val cardId: CardId)
-
-@CheckResult
-fun EditCardDestination.toIntent(context: Context, animation: ActivityTransitionAnimation.Direction): Intent {
-    return NoteEditor.getIntent(context, NoteEditor.OpenNoteEditorDestination.EditCard(cardId, animation))
+@Throws(Throwable::class)
+fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(
+    block: (NoteEditor) -> Unit
+) {
+    val wrapped = AtomicReference<Throwable?>(null)
+    this.onActivity { activity: SingleFragmentActivity ->
+        try {
+            val editor = activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
+            block(editor)
+        } catch (t: Throwable) {
+            wrapped.set(t)
+        }
+    }
+    wrapped.get()?.let { throw it }
 }

@@ -29,8 +29,10 @@ import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.testing.FragmentScenario
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
+import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.testing.SynchronousExecutor
@@ -38,6 +40,7 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.annotations.DuplicatedCode
 import com.ichi2.async.*
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.*
@@ -67,6 +70,7 @@ import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.test.assertNotNull
 
 open class RobolectricTest : AndroidTest {
@@ -76,8 +80,14 @@ open class RobolectricTest : AndroidTest {
 
     private val controllersForCleanup = ArrayList<ActivityController<*>>()
 
+    private val scenariosForCleanup = ArrayList<FragmentScenario<*>>()
+
     protected fun saveControllerForCleanup(controller: ActivityController<*>) {
         controllersForCleanup.add(controller)
+    }
+
+    protected fun saveScenarioForCleanup(scenario: FragmentScenario<*>) {
+        scenariosForCleanup.add(scenario)
     }
 
     protected open fun useInMemoryDatabase(): Boolean {
@@ -340,6 +350,29 @@ open class RobolectricTest : AndroidTest {
     /** Restore regular collection behavior  */
     protected fun disableNullCollection() {
         CollectionManager.emulateOpenFailure = false
+    }
+
+    fun openNoteEditorWithArgs(arguments: NoteEditor.OpenNoteEditorDestination): NoteEditor {
+        val activity = startActivityNormallyOpenCollectionWithIntent(SingleFragmentActivity::class.java, NoteEditor.getIntent(targetContext, arguments))
+        return activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
+    }
+
+    @DuplicatedCode("NoteEditor in androidTest")
+    @Throws(Throwable::class)
+    fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(
+        block: (NoteEditor) -> Unit
+    ) {
+        val wrapped = AtomicReference<Throwable?>(null)
+        this.onActivity { activity: SingleFragmentActivity ->
+            try {
+                val editor =
+                    activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
+                block(editor)
+            } catch (t: Throwable) {
+                wrapped.set(t)
+            }
+        }
+        wrapped.get()?.let { throw it }
     }
 
     @Throws(JSONException::class)

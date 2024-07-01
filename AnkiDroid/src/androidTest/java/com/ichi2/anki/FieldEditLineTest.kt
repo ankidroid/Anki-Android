@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.testutil.onNoteEditor
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -57,8 +58,8 @@ class FieldEditLineTest : NoteEditorTest() {
 
     private fun fieldEditLine(): FieldEditLine {
         val reference = AtomicReference<FieldEditLine>()
-        activityRule!!.scenario.onActivity { noteEditor: NoteEditor? ->
-            reference.set(FieldEditLine(noteEditor!!))
+        activityRule!!.scenario.onNoteEditor { noteEditor ->
+            reference.set(FieldEditLine(noteEditor.requireContext()))
         }
         return reference.get()
     }

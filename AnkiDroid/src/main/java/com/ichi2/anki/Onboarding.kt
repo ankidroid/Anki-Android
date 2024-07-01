@@ -253,8 +253,8 @@ abstract class Onboarding<Feature>(
         }
     }
 
-    class NoteEditor(private val activityContext: com.ichi2.anki.NoteEditor) :
-        Onboarding<NoteEditor.NoteEditorOnboardingEnum>(activityContext, mutableListOf()) {
+    class NoteEditor(private val fragment: com.ichi2.anki.NoteEditor) :
+        Onboarding<NoteEditor.NoteEditorOnboardingEnum>(fragment.requireContext(), mutableListOf()) {
 
         init {
             tutorials.add(TutorialArguments(NoteEditorOnboardingEnum.FRONT_BACK, this::showTutorialForFrontAndBackIfNew))
@@ -262,7 +262,7 @@ abstract class Onboarding<Feature>(
         }
 
         private fun showTutorialForFrontAndBackIfNew() {
-            CustomMaterialTapTargetPromptBuilder(activityContext, NoteEditorOnboardingEnum.FRONT_BACK)
+            CustomMaterialTapTargetPromptBuilder(fragment.requireActivity(), NoteEditorOnboardingEnum.FRONT_BACK)
                 .createRectangleWithDimmedBackground()
                 .setDismissedListener { onCreate() }
                 .setTarget(R.id.CardEditorEditFieldsLayout)
@@ -272,7 +272,7 @@ abstract class Onboarding<Feature>(
         }
 
         private fun showTutorialForFormattingTools() {
-            CustomMaterialTapTargetPromptBuilder(activityContext, NoteEditorOnboardingEnum.FORMATTING_TOOLS)
+            CustomMaterialTapTargetPromptBuilder(fragment.requireActivity(), NoteEditorOnboardingEnum.FORMATTING_TOOLS)
                 .createRectangleWithDimmedBackground()
                 .setTarget(R.id.editor_toolbar)
                 .setPrimaryText(R.string.format_content)
