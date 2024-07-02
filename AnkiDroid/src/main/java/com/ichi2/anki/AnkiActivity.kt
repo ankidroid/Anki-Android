@@ -82,13 +82,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         activityName = javaClass.simpleName
     }
 
-    // This functions will remain here only for a single commit to ensure moving to fragment require little code change
-    fun requireContext(): AnkiActivity = this
-
-    fun requireActivity(): AnkiActivity = this
-
-    fun requireArguments(): Bundle = intent.extras!!
-
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     override fun onCreate(savedInstanceState: Bundle?) {
         // The hardware buttons should control the music volume
@@ -305,7 +298,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     }
 
     /** The action to take when there was an error loading the collection  */
-    protected fun onCollectionLoadError() {
+    fun onCollectionLoadError() {
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.putExtra("collectionLoadError", true) // don't currently do anything with this
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -333,6 +326,15 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         }
     }
 
+    /**
+     * Opens a URL in a custom tab, with fallback to a browser if no custom tab implementation is available.
+     *
+     * This method first checks if there is a web browser available on the device. If no browser is found,
+     * a snackbar message is displayed informing the user. If a browser is available, a custom tab is
+     * opened with customized appearance and animations.
+     *
+     * @param url The URI to be opened.
+     */
     @KotlinCleanup("toast -> snackbar")
     open fun openUrl(url: Uri) {
         if (!AdaptionUtil.hasWebBrowser(this)) {

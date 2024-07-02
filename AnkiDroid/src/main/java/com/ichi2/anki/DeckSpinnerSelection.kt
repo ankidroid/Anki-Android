@@ -63,10 +63,9 @@ class DeckSpinnerSelection(
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
-    private val showFilteredDecks: Boolean
-) {
-
+    private val showFilteredDecks: Boolean,
     private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
+) {
 
     private var deckDropDownAdapter: DeckDropDownAdapter? = null
 

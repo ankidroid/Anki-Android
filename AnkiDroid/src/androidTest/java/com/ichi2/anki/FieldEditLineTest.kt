@@ -57,8 +57,8 @@ class FieldEditLineTest : NoteEditorTest() {
 
     private fun fieldEditLine(): FieldEditLine {
         val reference = AtomicReference<FieldEditLine>()
-        activityRule!!.scenario.onActivity { noteEditor: NoteEditor? ->
-            reference.set(FieldEditLine(noteEditor!!))
+        activityRule!!.scenario.onActivity { activity ->
+            reference.set(FieldEditLine(activity.baseContext))
         }
         return reference.get()
     }

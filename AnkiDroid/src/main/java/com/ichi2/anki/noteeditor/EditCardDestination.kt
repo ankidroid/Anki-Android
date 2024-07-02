@@ -18,6 +18,7 @@ package com.ichi2.anki.noteeditor
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.CheckResult
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -34,9 +35,10 @@ data class EditCardDestination(val cardId: CardId)
 
 @CheckResult
 fun EditCardDestination.toIntent(context: Context, animation: ActivityTransitionAnimation.Direction): Intent {
-    return Intent(context, NoteEditor::class.java).apply {
-        putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_EDIT)
-        putExtra(NoteEditor.EXTRA_CARD_ID, cardId)
-        putExtra(AnkiActivity.FINISH_ANIMATION_EXTRA, animation as Parcelable)
+    val bundle = Bundle().apply {
+        putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_EDIT)
+        putLong(NoteEditor.EXTRA_CARD_ID, cardId)
+        putParcelable(AnkiActivity.FINISH_ANIMATION_EXTRA, animation as Parcelable)
     }
+    return NoteEditor.getIntent(context, bundle)
 }

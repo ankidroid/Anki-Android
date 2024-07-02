@@ -423,7 +423,7 @@ class DeckPickerTest : RobolectricTest() {
 
             supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.ADD_CARD, didA)
             val noteEditor = Shadows.shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.NoteEditor", noteEditor.component!!.className)
+            assertEquals("com.ichi2.anki.SingleFragmentActivity", noteEditor.component!!.className)
             onBackPressedDispatcher.onBackPressed()
 
             supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.BROWSE_CARDS, didA)

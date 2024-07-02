@@ -19,8 +19,8 @@ import android.app.Application
 import android.content.Intent
 import android.view.Menu
 import androidx.annotation.CheckResult
-import androidx.core.content.IntentCompat
 import androidx.core.content.edit
+import androidx.core.os.BundleCompat
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -132,8 +132,9 @@ class ReviewerTest : RobolectricTest() {
         // Assert
         val shadowApplication = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Application>())
         val intent = shadowApplication.nextStartedActivity
-        val actualAnimation = IntentCompat.getParcelableExtra(
-            intent,
+        val fragmentBundle = intent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
+        val actualAnimation = BundleCompat.getParcelable(
+            fragmentBundle!!,
             AnkiActivity.FINISH_ANIMATION_EXTRA,
             ActivityTransitionAnimation.Direction::class.java
         )

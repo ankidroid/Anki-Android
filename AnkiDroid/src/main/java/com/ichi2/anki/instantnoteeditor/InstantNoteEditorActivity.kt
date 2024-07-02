@@ -183,10 +183,11 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     private fun openNoteEditor() {
         val sharedText = clozeEditTextField.text.toString()
-        val noteEditorIntent = Intent(this, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.INSTANT_NOTE_EDITOR)
-            putExtra(Intent.EXTRA_TEXT, sharedText)
+        val bundle = Bundle().apply {
+            putInt(NoteEditor.EXTRA_CALLER, NoteEditor.INSTANT_NOTE_EDITOR)
+            putString(Intent.EXTRA_TEXT, sharedText)
         }
+        val noteEditorIntent = NoteEditor.getIntent(this, bundle)
         startActivity(noteEditorIntent)
         finish()
     }

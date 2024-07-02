@@ -487,6 +487,12 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
     }
 }
 
+/**
+ * Returns whether we are allowed to change the schema.
+ *
+ * If changing the schema would require the next sync to be a full sync, and it's not already required, ask
+ * the user whether or not they still allow the schema change.
+ */
 suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
     if (withCol { schemaChanged() }) {
         return true
