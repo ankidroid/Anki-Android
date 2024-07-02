@@ -314,14 +314,12 @@ abstract class NavigationDrawerActivity :
 
                 R.id.nav_stats -> {
                     Timber.i("Navigating to stats")
-                    val intent = com.ichi2.anki.pages.Statistics.getIntent(this)
-                    startActivity(intent)
+                    openStatistics()
                 }
 
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
-                    val intent = Intent(this, Preferences::class.java)
-                    preferencesLauncher.launch(intent)
+                    openSettings()
                 }
 
                 R.id.nav_help -> {
@@ -346,6 +344,16 @@ abstract class NavigationDrawerActivity :
             intent.putExtra("currentCard", currentCardId)
         }
         startActivity(intent)
+    }
+
+    protected fun openStatistics() {
+        val intent = com.ichi2.anki.pages.Statistics.getIntent(this)
+        startActivity(intent)
+    }
+
+    protected fun openSettings() {
+        val intent = Intent(this, Preferences::class.java)
+        preferencesLauncher.launch(intent)
     }
 
     // Override this to specify a specific card id

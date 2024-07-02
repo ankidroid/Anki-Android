@@ -598,19 +598,24 @@ open class CardBrowser :
         // NOTE: These are all active when typing in the search - doesn't matter as all need CTRL
         when (keyCode) {
             KeyEvent.KEYCODE_A -> {
-                if (event.isCtrlPressed) {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    showEditTagsDialog()
+                } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+A - Select All")
                     viewModel.selectAll()
-                    return true
                 }
+                return true
             }
             KeyEvent.KEYCODE_E -> {
-                // Ctrl+Shift+E: Export (TODO)
-                if (event.isCtrlPressed) {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    exportSelected()
+                } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+E: Add Note")
                     launchCatchingTask { addNoteFromCardBrowser() }
-                    return true
+                } else {
+                    openNoteEditorForCurrentlySelectedNote()
                 }
+                return true
             }
             KeyEvent.KEYCODE_D -> {
                 if (event.isCtrlPressed) {
@@ -631,9 +636,11 @@ open class CardBrowser :
                     Timber.i("Ctrl+Alt+R - Reschedule")
                     rescheduleSelectedCards()
                     return true
+                } else if (event.isCtrlPressed) {
+                    onResetProgress()
                 }
             }
-            KeyEvent.KEYCODE_FORWARD_DEL -> {
+            KeyEvent.KEYCODE_DEL -> {
                 Timber.i("Delete pressed - Delete Selected Note")
                 deleteSelectedNotes()
                 return true
@@ -652,8 +659,51 @@ open class CardBrowser :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_T -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    showOptionsDialog()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_S -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    repositionSelectedCards()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_J -> {
+                if (event.isCtrlPressed) {
+                    toggleSuspendCards()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_I -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    getCardInfo()
+                    return true
+                }
+            }
+            in KeyEvent.KEYCODE_1..KeyEvent.KEYCODE_7 -> {
+                if (event.isCtrlPressed) {
+                    handleFlagKey(keyCode)
+                }
+            }
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    private fun handleFlagKey(keyCode: Int) {
+        val flag = when (keyCode) {
+            KeyEvent.KEYCODE_1 -> Flag.RED
+            KeyEvent.KEYCODE_2 -> Flag.ORANGE
+            KeyEvent.KEYCODE_3 -> Flag.GREEN
+            KeyEvent.KEYCODE_4 -> Flag.BLUE
+            KeyEvent.KEYCODE_5 -> Flag.PINK
+            KeyEvent.KEYCODE_6 -> Flag.TURQUOISE
+            KeyEvent.KEYCODE_7 -> Flag.PURPLE
+            else -> return
+        }
+        filterByFlag(flag)
     }
 
     /** All the notes of the selected cards will be marked
@@ -681,7 +731,12 @@ open class CardBrowser :
     private fun openNoteEditorForCurrentlySelectedNote() = launchCatchingTask {
         try {
             // Just select the first one. It doesn't particularly matter if there's a multiselect occurring.
-            openNoteEditorForCard(viewModel.querySelectedCardIdAtPosition(0))
+            val cardId = if (viewModel.isInMultiSelectMode) {
+                viewModel.querySelectedCardIdAtPosition(0)
+            } else {
+                viewModel.getRowAtPosition(0).id
+            }
+            openNoteEditorForCard(cardId)
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
             showSnackbar(
@@ -1085,31 +1140,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_reposition_cards -> {
-                Timber.i("CardBrowser:: Reposition button pressed")
-                if (warnUserIfInNotesOnlyMode()) return true
-                launchCatchingTask {
-                    val selectedCardIds = viewModel.queryAllSelectedCardIds()
-                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-                    if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
-                        showDialogFragment(
-                            SimpleMessageDialog.newInstance(
-                                title = getString(R.string.vague_error),
-                                message = getString(R.string.reposition_card_not_new_error),
-                                reload = false
-                            )
-                        )
-                        return@launchCatchingTask
-                    }
-                    val repositionDialog = IntegerDialog().apply {
-                        setArgs(
-                            title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                            prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                            digits = 5
-                        )
-                        setCallbackRunnable(::repositionCardsNoValidation)
-                    }
-                    showDialogFragment(repositionDialog)
-                }
+                repositionSelectedCards()
                 return true
             }
             R.id.action_edit_note -> {
@@ -1117,12 +1148,7 @@ open class CardBrowser :
                 return super.onOptionsItemSelected(item)
             }
             R.id.action_view_card_info -> {
-                launchCatchingTask {
-                    viewModel.queryCardInfoDestination()?.let { destination ->
-                        val intent: Intent = destination.toIntent(this@CardBrowser)
-                        startActivity(intent)
-                    }
-                }
+                getCardInfo()
                 return true
             }
             R.id.action_edit_tags -> {
@@ -1204,6 +1230,43 @@ open class CardBrowser :
         launchCatchingTask {
             val allCardIds = viewModel.queryAllSelectedCardIds()
             showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
+        }
+    }
+
+    private fun repositionSelectedCards() {
+        Timber.i("CardBrowser:: Reposition button pressed")
+        if (warnUserIfInNotesOnlyMode()) return
+        launchCatchingTask {
+            val selectedCardIds = viewModel.queryAllSelectedCardIds()
+            // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+            if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+                showDialogFragment(
+                    SimpleMessageDialog.newInstance(
+                        title = getString(R.string.vague_error),
+                        message = getString(R.string.reposition_card_not_new_error),
+                        reload = false
+                    )
+                )
+                return@launchCatchingTask
+            }
+            val repositionDialog = IntegerDialog().apply {
+                setArgs(
+                    title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                    prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
+                    digits = 5
+                )
+                setCallbackRunnable(::repositionCardsNoValidation)
+            }
+            showDialogFragment(repositionDialog)
+        }
+    }
+
+    private fun getCardInfo() {
+        launchCatchingTask {
+            viewModel.queryCardInfoDestination()?.let { destination ->
+                val intent: Intent = destination.toIntent(this@CardBrowser)
+                startActivity(intent)
+            }
         }
     }
 

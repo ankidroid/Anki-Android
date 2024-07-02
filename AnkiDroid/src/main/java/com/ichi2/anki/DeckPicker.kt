@@ -1107,10 +1107,7 @@ open class DeckPicker :
             }
             R.id.action_model_browser_open -> {
                 Timber.i("DeckPicker:: Model browser button pressed")
-                val manageNoteTypesTarget =
-                    ManageNotetypes::class.java
-                val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-                startActivity(noteTypeBrowser)
+                openManageNoteTypes()
                 return true
             }
             R.id.action_restore_backup -> {
@@ -1152,6 +1149,12 @@ open class DeckPicker :
             return
         }
         ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
+    }
+
+    private fun openManageNoteTypes() {
+        val manageNoteTypesTarget = ManageNotetypes::class.java
+        val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
+        startActivity(noteTypeBrowser)
     }
 
     private fun processReviewResults(resultCode: Int) {
@@ -1362,9 +1365,87 @@ open class DeckPicker :
                     handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
                 }
             }
+            KeyEvent.KEYCODE_T -> {
+                Timber.i("Open Statistics from keypress")
+                openStatistics()
+            }
+            KeyEvent.KEYCODE_D -> {
+                // Ensure it's not Ctrl + D
+                if (!event.isCtrlPressed) {
+                    Timber.i("Create Deck from keypress")
+                    createDeckDialog()
+                }
+            }
+            KeyEvent.KEYCODE_F -> {
+                Timber.i("Create Deck from keypress")
+                createFilteredDialog()
+            }
+            KeyEvent.KEYCODE_DEL -> {
+                Timber.i("Delete Deck from keypress")
+                deleteDeck(focusedDeck)
+            }
+            KeyEvent.KEYCODE_R -> {
+                // Ensure it's not Ctrl + R
+                if (!event.isCtrlPressed) {
+                    Timber.i("Rename Deck from keypress")
+                    renameDeckDialog(focusedDeck)
+                }
+            }
+            KeyEvent.KEYCODE_P -> {
+                Timber.i("Open Settings from keypress")
+                openSettings()
+            }
+            KeyEvent.KEYCODE_M -> {
+                Timber.i("check media from keypress")
+                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+            }
+            KeyEvent.KEYCODE_E -> {
+                // Ensure it's not Ctrl + E
+                if (!event.isCtrlPressed) {
+                    Timber.i("check empty cards from keypress")
+                    handleEmptyCards()
+                }
+            }
             else -> {}
         }
         return super.onKeyUp(keyCode, event)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_I -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("show import dialog from keypress")
+                    showImportDialog()
+                }
+            }
+            KeyEvent.KEYCODE_E -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("show export dialog from keypress")
+                    exportCollection()
+                }
+            }
+            KeyEvent.KEYCODE_N -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("open ManageNoteTypes from keypress")
+                    openManageNoteTypes()
+                }
+            }
+            KeyEvent.KEYCODE_R -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("show restore backup dialog from keypress")
+                    showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
+                }
+            }
+            KeyEvent.KEYCODE_D -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("check database from keypress")
+                    showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK)
+                }
+            }
+            else -> {}
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     /**
@@ -2217,6 +2298,15 @@ open class DeckPicker :
             if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
+        }
+        createDeckDialog.showDialog()
+    }
+
+    fun createDeckDialog() {
+        val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+        createDeckDialog.onNewDeckCreated = {
+            updateDeckList()
+            invalidateOptionsMenu()
         }
         createDeckDialog.showDialog()
     }
