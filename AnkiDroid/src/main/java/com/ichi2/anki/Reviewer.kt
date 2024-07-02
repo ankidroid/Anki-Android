@@ -685,10 +685,12 @@ open class Reviewer :
     }
 
     fun addNote(fromGesture: Gesture? = null) {
-        val intent = Intent(this, NoteEditor::class.java)
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-        intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        val bundle = Bundle().apply {
+            putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
+            putParcelable(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
+        }
+        val intent = NoteEditor.getIntent(this, bundle)
         addNoteLauncher.launch(intent)
     }
 

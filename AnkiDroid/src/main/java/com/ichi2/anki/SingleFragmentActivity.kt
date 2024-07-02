@@ -42,6 +42,9 @@ open class SingleFragmentActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStoragePermissions()) {
+            return
+        }
         setContentView(R.layout.single_fragment_activity)
         setTransparentStatusBar()
 
@@ -75,10 +78,11 @@ open class SingleFragmentActivity : AnkiActivity() {
         const val FRAGMENT_NAME_EXTRA = "fragmentName"
         const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
 
-        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
+        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null, intentAction: String? = null): Intent {
             return Intent(context, SingleFragmentActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+                action = intentAction
             }
         }
     }

@@ -15,15 +15,15 @@
  */
 package com.ichi2.anki
 
-import android.content.ComponentName
 import android.content.Intent
+import android.os.Bundle
 import androidx.lifecycle.Lifecycle
-import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NoteEditor.Companion.intentLaunchedWithImage
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
+import com.ichi2.anki.testutil.getEditor
 import com.ichi2.testutils.common.Flaky
 import com.ichi2.testutils.common.OS
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
@@ -34,7 +34,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
 class NoteEditorIntentTest : InstrumentedTest() {
@@ -42,7 +41,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
     var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
-    var activityRuleIntent: ActivityScenarioRule<NoteEditor>? = ActivityScenarioRule(
+    var activityRuleIntent: ActivityScenarioRule<SingleFragmentActivity>? = ActivityScenarioRule(
         noteEditorTextIntent
     )
 
@@ -53,10 +52,12 @@ class NoteEditorIntentTest : InstrumentedTest() {
         val scenario = activityRuleIntent!!.scenario
         scenario.moveToState(Lifecycle.State.RESUMED)
 
-        onActivity(scenario) { editor ->
-            val currentFieldStrings = editor.currentFieldStrings
-            MatcherAssert.assertThat(currentFieldStrings[0], Matchers.equalTo("sample text"))
+        var currentFieldStrings: String? = null
+        scenario.onActivity { activity ->
+            val editor = activity.getEditor()
+            currentFieldStrings = editor.currentFieldStrings[0]
         }
+        MatcherAssert.assertThat(currentFieldStrings!![0], Matchers.equalTo("sample text"))
     }
 
     @Test
@@ -70,26 +71,11 @@ class NoteEditorIntentTest : InstrumentedTest() {
 
     private val noteEditorTextIntent: Intent
         get() {
-            return Intent(testContext, NoteEditor::class.java).apply {
-                component = ComponentName(testContext, NoteEditor::class.java)
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "sample text")
+            val bundle = Bundle().apply {
+                putString(Intent.EXTRA_TEXT, "sample text")
             }
+            val intent = NoteEditor.getIntent(testContext, bundle)
+            intent.action = Intent.ACTION_SEND
+            return intent
         }
-
-    @Throws(Throwable::class)
-    private fun onActivity(
-        scenario: ActivityScenario<NoteEditor>,
-        noteEditorActivityAction: ActivityScenario.ActivityAction<NoteEditor>
-    ) {
-        val wrapped = AtomicReference<Throwable?>(null)
-        scenario.onActivity { a: NoteEditor ->
-            try {
-                noteEditorActivityAction.perform(a)
-            } catch (t: Throwable) {
-                wrapped.set(t)
-            }
-        }
-        wrapped.get()?.let { throw it }
-    }
 }

@@ -19,15 +19,17 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 /**
  * Builder class for creating intents related to image occlusion in the [NoteEditor].
  */
 class ImageOcclusionIntentBuilder(private val context: Context) {
 
     fun buildIntent(imageUri: Uri?): Intent {
-        return Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_IMG_OCCLUSION, imageUri)
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_IMG_OCCLUSION)
+        val bundle = Bundle().apply {
+            putParcelable(NoteEditor.EXTRA_IMG_OCCLUSION, imageUri)
+            putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_IMG_OCCLUSION)
         }
+        return NoteEditor.getIntent(context, bundle)
     }
 }

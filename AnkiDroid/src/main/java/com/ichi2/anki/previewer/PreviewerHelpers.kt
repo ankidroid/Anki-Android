@@ -18,6 +18,7 @@ package com.ichi2.anki.previewer
 import android.R
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
@@ -27,11 +28,11 @@ import com.ichi2.utils.toRGBHex
 import org.intellij.lang.annotations.Language
 
 class NoteEditorDestination(val cardId: Long) {
-    fun toIntent(context: Context): Intent =
-        Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, cardId)
-        }
+    val bundle = Bundle().apply {
+        putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
+        putLong(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, cardId)
+    }
+    fun toIntent(context: Context): Intent = NoteEditor.getIntent(context, bundle)
 }
 
 /**
