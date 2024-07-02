@@ -16,7 +16,6 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -34,8 +33,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.themes.Themes
-import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
@@ -54,16 +51,14 @@ import kotlin.math.min
 /**
  * Class which handles how the application responds to different intents, forcing it to always be single task,
  * but allowing custom behavior depending on the intent
+ * It inherits from [AbstractIntentHandler]
  *
  * @author Tim
  */
-class IntentHandler : Activity() {
+class IntentHandler : AbstractIntentHandler() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         super.onCreate(savedInstanceState)
-        Themes.setTheme(this)
-        disableXiaomiForceDarkMode(this)
-        setContentView(R.layout.progress_bar)
         val intent = intent
         Timber.v(intent.toString())
         val reloadIntent = Intent(this, DeckPicker::class.java)

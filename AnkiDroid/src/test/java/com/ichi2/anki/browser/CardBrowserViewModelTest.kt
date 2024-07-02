@@ -25,6 +25,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserColumn.ANSWER
 import com.ichi2.anki.browser.CardBrowserColumn.CARD
 import com.ichi2.anki.browser.CardBrowserColumn.FSRS_DIFFICULTY
@@ -134,8 +135,8 @@ class CardBrowserViewModelTest : JvmTest() {
         assertThat("All decks should be selected", hasSelectedAllDecks())
 
         val addIntent = CardBrowser.createAddNoteIntent(mockIt(), this)
-
-        IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID)
+        val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
+        IntentAssert.doesNotHaveExtra(bundle, NoteEditor.EXTRA_DID)
     }
 
     @Test

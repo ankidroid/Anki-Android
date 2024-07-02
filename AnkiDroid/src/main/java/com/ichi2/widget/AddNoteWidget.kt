@@ -17,7 +17,7 @@ package com.ichi2.widget
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.IntentHandler
@@ -63,8 +63,10 @@ class AddNoteWidget : AppWidgetProvider() {
             appWidgetIds: IntArray
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
-            val intent = Intent(context, NoteEditor::class.java)
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            val bundle = Bundle().apply {
+                putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            }
+            val intent = NoteEditor.getIntent(context, bundle)
             val pendingIntent = PendingIntentCompat.getActivity(context, 0, intent, 0, false)
             remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent)
             appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)

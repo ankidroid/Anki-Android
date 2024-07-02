@@ -2222,13 +2222,14 @@ open class CardBrowser :
 
         @VisibleForTesting
         fun createAddNoteIntent(context: Context, viewModel: CardBrowserViewModel): Intent {
-            val intent = Intent(context, NoteEditor::class.java)
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
-            if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
-                intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
+            val bundle = Bundle().apply {
+                putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
+                if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
+                    putLong(NoteEditor.EXTRA_DID, viewModel.lastDeckId!!)
+                }
+                putString(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, viewModel.searchTerms)
             }
-            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, viewModel.searchTerms)
-            return intent
+            return NoteEditor.getIntent(context, bundle)
         }
 
         @CheckResult

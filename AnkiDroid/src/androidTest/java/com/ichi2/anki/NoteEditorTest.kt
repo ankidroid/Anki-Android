@@ -15,10 +15,10 @@
  */
 package com.ichi2.anki
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.testutil.GrantStoragePermission
@@ -35,16 +35,16 @@ abstract class NoteEditorTest protected constructor() {
     var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<NoteEditor>? = ActivityScenarioRule(
+    var activityRule: ActivityScenarioRule<SingleFragmentActivity>? = ActivityScenarioRule(
         noteEditorIntent
     )
 
     private val noteEditorIntent: Intent
         get() {
-            return Intent(targetContext, NoteEditor::class.java).apply {
-                component = ComponentName(targetContext, NoteEditor::class.java)
-                putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+            val bundle = Bundle().apply {
+                putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
             }
+            return NoteEditor.getIntent(targetContext, bundle)
         }
 
     @Before

@@ -30,11 +30,11 @@ import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.Info
 import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.LoginActivity
 import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.MyAccount
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.SharedDecksActivity
 import com.ichi2.anki.SingleFragmentActivity
@@ -66,6 +66,7 @@ object ActivityList {
                     1L
                 )
             },
+            get(IntentHandler2::class.java),
             get(StudyOptionsActivity::class.java),
             get(CardBrowser::class.java),
             get(ModelFieldEditor::class.java),
@@ -78,8 +79,6 @@ object ActivityList {
             get(DrawingActivity::class.java),
             // Info has unhandled intents
             get(Info::class.java),
-            // NoteEditor has unhandled intents
-            get(NoteEditor::class.java),
             get(MultimediaEditFieldActivity::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },

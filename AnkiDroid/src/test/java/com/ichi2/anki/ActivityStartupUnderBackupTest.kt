@@ -52,6 +52,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     fun before() {
         notYetHandled(CropImageActivity::class.java.simpleName, "cannot implemented - activity from canhub.cropper")
         notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
+        notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(SingleFragmentActivity::class.java.simpleName, "Implemented, but the test fails because the activity throws if a specific intent extra isn't set")
