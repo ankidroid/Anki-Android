@@ -82,6 +82,13 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         activityName = javaClass.simpleName
     }
 
+    // This functions will remain here only for a single commit to ensure moving to fragment require little code change
+    fun requireContext(): AnkiActivity = this
+
+    fun requireActivity(): AnkiActivity = this
+
+    fun requireArguments(): Bundle = intent.extras!!
+
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     override fun onCreate(savedInstanceState: Bundle?) {
         // The hardware buttons should control the music volume
