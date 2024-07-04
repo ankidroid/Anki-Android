@@ -50,7 +50,7 @@
         <item quantity="one">%d ମି</item>
         <item quantity="other">%d ମି</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s ମିଲିସେକେଣ୍ଡ</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">କିଛି ପରିଣାମ ନାହିଁ</string>
     <!-- preferences.xml categories-->

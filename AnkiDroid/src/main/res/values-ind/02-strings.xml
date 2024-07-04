@@ -277,7 +277,7 @@
     <string name="migration_part_1_done_resume">Anda dapat melanjutkan penggunaan AnkiDroid.
 \nMigrasi penyimpanan akan dilanjutkan di latar belakang.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s bukan merupakan paket pengaya JavaScript yang valid</string>
     <string name="could_not_create_dir">Tidak dapat membuat direktori %s</string>
     <string name="malicious_archive_entry_outside">Arsip berbahaya. Berisi entri di luar direktori target: %s</string>
     <string name="malicious_archive_exceeds_limit">Arsip berbahaya. Ukuran melebihi %1$s atau berisi lebih dari %2$d berkas</string>
@@ -286,7 +286,7 @@
     <string name="expand_tag">Buka tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Gagal mengakses koleksi. Silakan coba lagi!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Menambahkan jenis catatan baru</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Belajar lebih sedikit</string>
     <string name="intro_ankidroid_tagline_two">Ingat lebih banyak</string>
@@ -337,8 +337,8 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Pindah posisi</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="start_recording">Mulai rekam</string>
+    <string name="stop_recording">Selesai rekam</string>
+    <string name="play_recording">Mainkan</string>
+    <string name="next_recording">Berikutnya</string>
 </resources>
