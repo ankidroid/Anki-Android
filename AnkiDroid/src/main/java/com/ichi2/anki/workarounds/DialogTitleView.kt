@@ -36,6 +36,9 @@
  * * renamed: `DialogTitle` -> `DialogTitleView`
  * * Inherit from FixedTextView
  */
+
+@file:Suppress("PackageDirectoryMismatch")
+
 package androidx.appcompat.widget
 
 import android.content.Context

@@ -14,6 +14,8 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 // ಠ_ಠ This is required to override a package-private method to block animations
+@file:Suppress("PackageDirectoryMismatch")
+
 package androidx.drawerlayout.widget
 
 import android.content.Context
