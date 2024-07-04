@@ -105,9 +105,9 @@
     <string name="dialog_positive_repair">修復</string>
     <string name="dialog_positive_replace">上書き</string>
     <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">提供されたテキストをPEMエンコードしても有効な X.509証明書になりません</string>
+    <string name="dialog_invalid_custom_certificate_title">証明書の解析エラー</string>
+    <string name="dialog_updated_custom_certificate">証明書が更新されました</string>
     <!-- Media checking -->
     <string name="check_media_title">メディアをチェックしますか？</string>
     <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>

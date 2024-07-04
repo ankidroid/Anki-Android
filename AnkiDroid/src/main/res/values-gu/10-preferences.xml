@@ -62,14 +62,14 @@
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">વ્હાઇટબોર્ડ</string>
     <string name="pref_cat_appearance" maxLength="41">Appearance</string>
-    <string name="pref_cat_themes" maxLength="41">Themes</string>
-    <string name="pref_cat_gestures" maxLength="41">Gestures</string>
+    <string name="pref_cat_themes" maxLength="41">થીમ્સ</string>
+    <string name="pref_cat_gestures" maxLength="41">હાવભાવ</string>
     <string name="pref_cat_controls" maxLength="41">નિયંત્રણો</string>
     <string name="pref_cat_advanced" maxLength="41">અદ્યતન</string>
     <string name="pref_cat_workarounds" maxLength="41">વર્કઅરાઉન્ડ</string>
     <string name="pref_cat_plugins" maxLength="41">પ્લગઈન્સ</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Stroke width</string>
+    <string name="whiteboard_stroke_width" maxLength="41">સ્ટ્રોક પહોળાઈ</string>
     <string name="use_input_tag" maxLength="41">Type answer into the card</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">ભાષાઓ રીસેટ કરો</string>
@@ -79,11 +79,11 @@
     <string name="card_zoom" maxLength="41">કાર્ડ ઝૂમ</string>
     <string name="image_zoom" maxLength="41">છબી ઝૂમ</string>
     <string name="button_size" maxLength="41">Answer button size</string>
-    <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
+    <string name="card_browser_font_size" maxLength="41">કાર્ડ બ્રાઉઝર ફોન્ટ સ્કેલિંગ</string>
+    <string name="card_browser_hide_media" maxLength="41">કાર્ડ બ્રાઉઝરમાં ફાઇલનામો દર્શાવો</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
+    <string name="col_path" maxLength="41">AnkiDroid ડિરેક્ટરી</string>
+    <string name="fullscreen_review" maxLength="41">પૂર્ણસ્ક્રીન મોડ</string>
     <string name="full_screen_off">બંધ</string>
     <string name="full_screen_system">સિસ્ટમ બાર છુપાવો</string>
     <string name="full_screen_complete">સિસ્ટમ બાર અને જવાબ બટનો છુપાવો</string>
@@ -119,8 +119,8 @@
     <string name="card_browser_enable_external_context_menu">\'%s\' મેનૂ</string>
     <string name="card_browser_enable_external_context_menu_summary">વૈશ્વિક સ્તરે \'%s\' સંદર્ભ મેનૂને સક્ષમ કરે છે</string>
     <string name="double_scrolling_gap" maxLength="41">ડબલ સ્ક્રોલિંગ</string>
-    <string name="double_scrolling_gap_summ">Double the scroll gap with eReader</string>
-    <string name="swipe_sensitivity" maxLength="41">Swipe sensitivity</string>
+    <string name="double_scrolling_gap_summ">eReader વડે સ્ક્રોલ ગેપને બમણો કરો</string>
+    <string name="swipe_sensitivity" maxLength="41">સ્વાઇપ સંવેદનશીલતા</string>
     <string name="tts" maxLength="41">ટેક્સ્ટ ટુ સ્પીચ</string>
     <string name="tts_summ">જો કોઈ ધ્વનિ ફાઇલ શામેલ ન હોય તો પ્રશ્ન અને જવાબ વાંચે છે</string>
     <!-- Sync -->
@@ -147,22 +147,22 @@
     <string name="notification_pref" maxLength="41">Notifications</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
     <string name="never_notify">Never notify</string>
-    <string name="notify_when_pending">Pending messages available</string>
-    <string name="notification_minimum_cards_due">More than %d cards due</string>
-    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
+    <string name="notify_when_pending">બાકીના સંદેશા ઉપલબ્ધ છે</string>
+    <string name="notification_minimum_cards_due">%d કરતાં વધુ કાર્ડ બાકી છે</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">વાઇબ્રેટ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ઝબકતો પ્રકાશ</string>
     <string name="timeout_answer_text" maxLength="41">આપોઆપ પ્રદર્શન જવાબ</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">વપરાશકર્તા ઇનપુટ વિના આપમેળે જવાબ બતાવો. ડેક વિકલ્પોમાંથી ગોઠવો.</string>
     <string name="select_locale_title">ભાષા પસંદ કરો</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">કાર્ડ હાર્ડવેર રેન્ડરને અક્ષમ કરો</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display" maxLength="41">Safe display mode</string>
+    <string name="safe_display" maxLength="41">સેફ ડિસ્પ્લે મોડ</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
     <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering" maxLength="41">Center align</string>
-    <string name="vertical_centering_summ">Center the content of cards vertically</string>
+    <string name="vertical_centering" maxLength="41">કેન્દ્રમાં સંરેખિત કરો</string>
+    <string name="vertical_centering_summ">કાર્ડ્સની સામગ્રીને ઊભી રીતે કેન્દ્રમાં રાખો</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
@@ -171,33 +171,33 @@
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
+    <string name="show_top_bar" maxLength="41">ટોચની પટ્ટી બતાવો</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Show remaining</string>
     <string name="show_progress_summ">Show remaining card count</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
-    <string name="use_current" maxLength="41">Deck for new cards</string>
+    <string name="show_eta_summ">બાકીનો સમય બતાવો</string>
+    <string name="use_current" maxLength="41">નવા કાર્ડ માટે ડેક</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
+    <string name="day_offset_with_description" maxLength="41">બીજા દિવસની શરૂઆત</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d hour past midnight</item>
         <item quantity="other">%d hours past midnight</item>
     </plurals>
-    <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
-    <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
-    <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
+    <string name="pref_keep_screen_on" maxLength="41">સ્ક્રીન ચાલુ રાખો</string>
+    <string name="pref_keep_screen_on_summ">સ્ક્રીન સમયસમાપ્તિ અક્ષમ કરો</string>
+    <string name="enable_api_title" maxLength="41">AnkiDroid API ને સક્ષમ કરો</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
-    <string name="custom_buttons_setting_always_show">Always show</string>
-    <string name="custom_buttons_setting_if_room">Show if room</string>
-    <string name="custom_buttons_setting_menu_only">Menu only</string>
-    <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
-    <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
+    <string name="custom_buttons_setting_always_show">હંમેશા બતાવો</string>
+    <string name="custom_buttons_setting_if_room">જો રૂમ બતાવો</string>
+    <string name="custom_buttons_setting_menu_only">માત્ર મેનુ</string>
+    <string name="reset_custom_buttons" maxLength="41">ડિફૉલ્ટ પર ફરીથી સેટ કરો</string>
+    <string name="reset_settings_to_default">સેટિંગ્સને ડિફોલ્ટ પર રીસેટ કરો</string>
+    <string name="reset">રીસેટ કરો</string>
+    <string name="thirdparty_apps_title" maxLength="41">તૃતીય-પક્ષ API એપ્લિકેશન્સ</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
@@ -206,14 +206,14 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back" maxLength="41">પાછા જવા/બહાર જવા માટે બે વાર પાછા દબાવો</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">મીડિયા આયાતમાં બધી ફાઇલોને મંજૂરી આપો</string>
+    <string name="media_import_allow_all_files_summ">જો એન્ડ્રોઇડ મીડિયા ફાઇલને ઓળખતું નથી</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ઉપયોગ થતો નથી</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -222,7 +222,7 @@
     <string name="custom_sync_server_base_url_title" maxLength="41">Sync url</string>
     <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">કીબોર્ડ</string>
     <string name="bluetooth">બ્લુટુથ</string>
     <string name="answer_buttons" maxLength="41">જવાબ બટનો</string>
     <string name="card" maxLength="41">કાર્ડ</string>
@@ -236,12 +236,12 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">જનરલ</string>
     <string name="deck_conf_reminders" maxLength="41">રીમાઇન્ડર્સ</string>
     <string name="deck_conf_cram_filter" maxLength="41">ફિલ્ટર કરો</string>
-    <string name="deck_conf_cram_search" maxLength="41">Search</string>
+    <string name="deck_conf_cram_search" maxLength="41">શોધો</string>
     <string name="deck_conf_cram_limit" maxLength="41">સુધીની મર્યાદા</string>
-    <string name="deck_conf_cram_order" maxLength="41">cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">દ્વારા પસંદ કરાયેલ કાર્ડ</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
+    <string name="deck_conf_cram_filter_2_check">બીજા ફિલ્ટરને સક્ષમ કરો</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
     <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
@@ -258,7 +258,7 @@
     <string name="pref_cat_about_title" maxLength="41">About</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">લાઇસન્સ</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->

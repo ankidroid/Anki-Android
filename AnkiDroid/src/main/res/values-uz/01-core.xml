@@ -61,15 +61,15 @@
     <string name="collapse">Toraytirish</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d minut qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d soat %2$d minut qoldi</item>
+        <item quantity="other">%1$d soat %2$d minut qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d kun %2$d soat qoldi</item>
+        <item quantity="other">%1$d kun %2$d soat qoldi</item>
     </plurals>
     <string name="no_cards_placeholder_title">To\'plam bo\'sh</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
@@ -91,7 +91,7 @@
     <string name="rename_deck">To\'plamni qayta nomlash</string>
     <string name="create_shortcut">Yorliq yaratish</string>
     <string name="browse_cards">Kartalarni ko\'rib chiqish</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Tavsifini tahrirlash</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Qo\'shish</string>
     <string name="menu_add_note">Qayd qo\'shish</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Akkauntni sinxronlashtirish</string>
@@ -111,8 +111,8 @@
     <string name="menu_search">%1$s dan izlab ko\'rish</string>
     <string name="menu_mark_note">Qaydni belgilash</string>
     <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">Ovozli o\'qishni yoqish</string>
+    <string name="menu_disable_voice_playback">Ovozli o\'qishni o\'chirish</string>
     <string name="new_deck">Paluba yaratish</string>
     <string name="new_dynamic_deck">Siljiydigan paluba yaratish</string>
     <string name="directory_inaccessible">AnkiDroid katalogi mavjud emas</string>
@@ -132,7 +132,7 @@
     <string name="empty_deck">Bu to\'plam bo\'sh</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
     <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">Tabriklamiz! Hammasini tugatdingiz.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Tugashi lozim kartalar halicha yo\'q</string>
     <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
@@ -142,7 +142,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Sinxronlashni davom ettirish</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinxronlash bekor qilindi</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Bekor qilinyapti&#8230;\n Bu biroz vaqt olishi mumkin</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Mediani sinxronlash</string>
     <string name="export_deck">To\'plamni eksport qilish</string>
     <string name="nothing">Hechnima</string>
     <!-- Card template editor -->
