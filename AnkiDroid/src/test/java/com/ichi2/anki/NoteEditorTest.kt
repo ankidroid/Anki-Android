@@ -21,7 +21,6 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
@@ -34,6 +33,7 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.DuplicatedCode
 import com.ichi2.libanki.Consts
@@ -199,10 +199,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun verifyStartupAndCloseWithNoCollectionDoesNotCrash() {
         enableNullCollection()
-        val bundle = Bundle().apply {
-            putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_NO_CALLER)
-        }
-        val intent = NoteEditor.getIntent(targetContext, bundle)
+        val intent = NoteEditorLauncher.AddNote().getIntent(targetContext)
         ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
                 noteEditor.requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -519,12 +516,11 @@ class NoteEditorTest : RobolectricTest() {
 
     private fun getNoteEditorAddingNote(from: FromScreen): NoteEditor {
         ensureCollectionLoadIsSynchronous()
-        val bundle = Bundle().apply {
+        val bundle =
             when (from) {
-                REVIEWER -> putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-                DECK_LIST -> putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
+                REVIEWER -> NoteEditorLauncher.AddNoteFromReviewer().toBundle()
+                DECK_LIST -> NoteEditorLauncher.AddNote().toBundle()
             }
-        }
         return openNoteEditorWithArgs(bundle)
     }
 
@@ -534,22 +530,16 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     private fun getNoteEditorEditingExistingBasicNote(n: Note, from: FromScreen): NoteEditor {
-        val bundle = Bundle()
-        when (from) {
-            REVIEWER -> {
-                bundle.putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_EDIT)
-                bundle.putLong(NoteEditor.EXTRA_CARD_ID, n.firstCard().id)
-                bundle.putParcelable(AnkiActivity.FINISH_ANIMATION_EXTRA, DEFAULT as Parcelable)
+        val bundle =
+            when (from) {
+                REVIEWER -> NoteEditorLauncher.EditCard(n.firstCard().id, DEFAULT).toBundle()
+                DECK_LIST -> NoteEditorLauncher.AddNote().toBundle()
             }
-            DECK_LIST -> {
-                bundle.putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-            }
-        }
         return openNoteEditorWithArgs(bundle)
     }
 
     fun openNoteEditorWithArgs(arguments: Bundle, action: String? = null): NoteEditor {
-        val activity = startActivityNormallyOpenCollectionWithIntent(SingleFragmentActivity::class.java, NoteEditor.getIntent(targetContext, arguments, action))
+        val activity = startActivityNormallyOpenCollectionWithIntent(SingleFragmentActivity::class.java, NoteEditorLauncher.PassArguments(arguments).getIntent(targetContext, action))
         return activity.getEditor()
     }
 

@@ -28,6 +28,7 @@ import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
@@ -168,7 +169,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
         }
     }
 
-    suspend fun getNoteEditorDestination() = NoteEditorDestination(currentCard.await().id)
+    suspend fun getNoteEditorDestination() = NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
 
     fun handleEditCardResult(result: ActivityResult) {
         if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||

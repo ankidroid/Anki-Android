@@ -17,23 +17,12 @@ package com.ichi2.anki.previewer
 
 import android.R
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
-import com.ichi2.anki.NoteEditor
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
 import org.intellij.lang.annotations.Language
-
-class NoteEditorDestination(val cardId: Long) {
-    val bundle = Bundle().apply {
-        putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-        putLong(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, cardId)
-    }
-    fun toIntent(context: Context): Intent = NoteEditor.getIntent(context, bundle)
-}
 
 /**
  * Not exactly equal to anki's stdHtml. Some differences:
