@@ -355,7 +355,7 @@ class ReviewerFragment :
 
     private fun launchEditNote() {
         lifecycleScope.launch {
-            val intent = viewModel.getEditNoteDestination().toIntent(requireContext())
+            val intent = viewModel.getEditNoteDestination().getIntent(requireContext())
             noteEditorLauncher.launch(intent)
         }
     }

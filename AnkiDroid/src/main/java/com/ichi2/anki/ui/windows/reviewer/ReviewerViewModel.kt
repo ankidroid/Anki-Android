@@ -31,11 +31,11 @@ import com.ichi2.anki.Reviewer
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.previewer.CardViewerViewModel
-import com.ichi2.anki.previewer.NoteEditorDestination
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -181,8 +181,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         statesMutated = true
     }
 
-    suspend fun getEditNoteDestination(): NoteEditorDestination {
-        return NoteEditorDestination(currentCard.await().id)
+    suspend fun getEditNoteDestination(): NoteEditorLauncher {
+        return NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
     }
 
     fun refreshCard() {

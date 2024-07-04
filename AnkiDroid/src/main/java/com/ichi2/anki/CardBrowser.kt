@@ -95,8 +95,7 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.noteeditor.EditCardDestination
-import com.ichi2.anki.noteeditor.toIntent
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -713,7 +712,7 @@ open class CardBrowser :
     @NeedsTest("I/O edits are saved")
     private fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId
-        val intent = EditCardDestination(currentCardId).toIntent(this, animation = Direction.DEFAULT)
+        val intent = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT).getIntent(this)
         onEditCardActivityResult.launch(intent)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         viewModel.endMultiSelectMode()
@@ -2222,14 +2221,7 @@ open class CardBrowser :
 
         @VisibleForTesting
         fun createAddNoteIntent(context: Context, viewModel: CardBrowserViewModel): Intent {
-            val bundle = Bundle().apply {
-                putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
-                if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
-                    putLong(NoteEditor.EXTRA_DID, viewModel.lastDeckId!!)
-                }
-                putString(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, viewModel.searchTerms)
-            }
-            return NoteEditor.getIntent(context, bundle)
+            return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
         }
 
         @CheckResult

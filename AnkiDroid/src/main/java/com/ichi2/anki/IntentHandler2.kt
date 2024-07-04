@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.os.Bundle
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import timber.log.Timber
 
 /**
@@ -33,7 +34,7 @@ class IntentHandler2 : AbstractIntentHandler() {
             Timber.i("Intent contained an image")
             intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_ADD_IMAGE)
         }
-        val noteEditorIntent = NoteEditor.getIntent(this, intent.extras!!, intent.action)
+        val noteEditorIntent = NoteEditorLauncher.PassArguments(intent.extras!!).getIntent(this, intent.action)
         noteEditorIntent.setDataAndType(intent.data, intent.type)
         startActivity(noteEditorIntent)
         finish()
