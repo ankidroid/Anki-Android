@@ -16,11 +16,12 @@
 package com.ichi2.anki
 
 import android.content.Intent
-import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.NoteEditor.Companion.intentLaunchedWithImage
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.anki.testutil.getEditor
@@ -71,11 +72,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
 
     private val noteEditorTextIntent: Intent
         get() {
-            val bundle = Bundle().apply {
-                putString(Intent.EXTRA_TEXT, "sample text")
-            }
-            val intent = NoteEditor.getIntent(testContext, bundle)
-            intent.action = Intent.ACTION_SEND
-            return intent
+            val bundle = bundleOf(Intent.EXTRA_TEXT to "sample text")
+            return NoteEditorLauncher.PassArguments(bundle).getIntent(testContext, Intent.ACTION_SEND)
         }
 }

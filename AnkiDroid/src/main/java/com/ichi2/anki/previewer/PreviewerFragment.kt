@@ -234,7 +234,7 @@ class PreviewerFragment :
 
     private fun editCard() {
         lifecycleScope.launch {
-            val intent = viewModel.getNoteEditorDestination().toIntent(requireContext())
+            val intent = viewModel.getNoteEditorDestination().getIntent(requireContext())
             editCardLauncher.launch(intent)
         }
     }

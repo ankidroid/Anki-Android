@@ -17,13 +17,12 @@ package com.ichi2.widget
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.IntentHandler
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import timber.log.Timber
 
 class AddNoteWidget : AppWidgetProvider() {
@@ -63,10 +62,7 @@ class AddNoteWidget : AppWidgetProvider() {
             appWidgetIds: IntArray
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
-            val bundle = Bundle().apply {
-                putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-            }
-            val intent = NoteEditor.getIntent(context, bundle)
+            val intent = NoteEditorLauncher.AddNote().getIntent(context)
             val pendingIntent = PendingIntentCompat.getActivity(context, 0, intent, 0, false)
             remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent)
             appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)

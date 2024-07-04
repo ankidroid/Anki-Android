@@ -62,6 +62,7 @@ import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKIDROID_JS_PREFIX
 import com.ichi2.anki.pages.AnkiServer.Companion.ANKI_PREFIX
 import com.ichi2.anki.pages.CardInfoDestination
@@ -686,11 +687,8 @@ open class Reviewer :
 
     fun addNote(fromGesture: Gesture? = null) {
         val animation = getAnimationTransitionFromGesture(fromGesture)
-        val bundle = Bundle().apply {
-            putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-            putParcelable(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
-        }
-        val intent = NoteEditor.getIntent(this, bundle)
+        val inverseAnimation = getInverseTransition(animation)
+        val intent = NoteEditorLauncher.AddNoteFromReviewer(inverseAnimation).getIntent(this)
         addNoteLauncher.launch(intent)
     }
 

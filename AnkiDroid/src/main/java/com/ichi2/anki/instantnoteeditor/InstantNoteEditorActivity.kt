@@ -46,11 +46,11 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CustomActionModeCallback
 import com.ichi2.anki.DeckSpinnerSelection
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.withProgress
@@ -183,11 +183,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     private fun openNoteEditor() {
         val sharedText = clozeEditTextField.text.toString()
-        val bundle = Bundle().apply {
-            putInt(NoteEditor.EXTRA_CALLER, NoteEditor.INSTANT_NOTE_EDITOR)
-            putString(Intent.EXTRA_TEXT, sharedText)
-        }
-        val noteEditorIntent = NoteEditor.getIntent(this, bundle)
+        val noteEditorIntent = NoteEditorLauncher.AddInstantNote(sharedText).getIntent(this)
         startActivity(noteEditorIntent)
         finish()
     }

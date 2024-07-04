@@ -18,9 +18,9 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.Matchers.equalTo
@@ -41,10 +41,7 @@ abstract class NoteEditorTest protected constructor() {
 
     private val noteEditorIntent: Intent
         get() {
-            val bundle = Bundle().apply {
-                putInt(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-            }
-            return NoteEditor.getIntent(targetContext, bundle)
+            return NoteEditorLauncher.AddNote().getIntent(targetContext)
         }
 
     @Before
