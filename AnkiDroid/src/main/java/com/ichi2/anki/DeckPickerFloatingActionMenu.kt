@@ -25,7 +25,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.ui.DoubleTapListener
 import timber.log.Timber
 
@@ -339,17 +338,7 @@ class DeckPickerFloatingActionMenu(
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
                 closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
-                val createDeckDialog = CreateDeckDialog(
-                    context,
-                    R.string.new_deck,
-                    CreateDeckDialog.DeckDialogType.DECK,
-                    null
-                )
-                createDeckDialog.onNewDeckCreated = {
-                    deckPicker.updateDeckList()
-                    deckPicker.invalidateOptionsMenu()
-                }
-                createDeckDialog.showDialog()
+                deckPicker.showCreateDeckDialog()
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
@@ -357,7 +346,7 @@ class DeckPickerFloatingActionMenu(
         val addFilteredDeckListener = View.OnClickListener {
             if (isFABOpen) {
                 closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
-                deckPicker.createFilteredDialog()
+                deckPicker.showCreateFilteredDeckDialog()
             }
         }
         addFilteredDeckButton.setOnClickListener(addFilteredDeckListener)
