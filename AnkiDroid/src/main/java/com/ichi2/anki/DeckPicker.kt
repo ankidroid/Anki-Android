@@ -110,6 +110,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog
+import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
 import com.ichi2.anki.dialogs.DeckPickerNoSpaceLeftDialog
@@ -1202,10 +1203,7 @@ open class DeckPicker :
             }
             R.id.action_model_browser_open -> {
                 Timber.i("DeckPicker:: Model browser button pressed")
-                val manageNoteTypesTarget =
-                    ManageNotetypes::class.java
-                val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-                startActivity(noteTypeBrowser)
+                openManageNoteTypes()
                 return true
             }
             R.id.action_restore_backup -> {
@@ -1226,7 +1224,7 @@ open class DeckPicker :
         }
     }
 
-    fun createFilteredDialog() {
+    fun showCreateFilteredDeckDialog() {
         val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
         createFilteredDeckDialog.onNewDeckCreated = {
             // a filtered deck was created
@@ -1247,6 +1245,15 @@ open class DeckPicker :
             return
         }
         ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
+    }
+
+    /**
+     * Opens the Manage Note Types screen.
+     */
+    private fun openManageNoteTypes() {
+        val manageNoteTypesTarget = ManageNotetypes::class.java
+        val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
+        startActivity(noteTypeBrowser)
     }
 
     private fun processReviewResults(resultCode: Int) {
@@ -1428,7 +1435,7 @@ open class DeckPicker :
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        if (toolbarSearchView != null && toolbarSearchView!!.hasFocus()) {
+        if (toolbarSearchView?.hasFocus() == true) {
             Timber.d("Skipping keypress: search action bar is focused")
             return true
         }
@@ -1436,30 +1443,144 @@ open class DeckPicker :
             KeyEvent.KEYCODE_A -> {
                 Timber.i("Adding Note from keypress")
                 addNote()
+                return true
             }
             KeyEvent.KEYCODE_B -> {
-                Timber.i("Open Browser from keypress")
-                openCardBrowser()
+                if (event.isCtrlPressed) {
+                    // Shortcut: CTRL + B
+                    Timber.i("show restore backup dialog from keypress")
+                    showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
+                } else {
+                    // Shortcut: B
+                    Timber.i("Open Browser from keypress")
+                    openCardBrowser()
+                }
+                return true
             }
             KeyEvent.KEYCODE_Y -> {
                 Timber.i("Sync from keypress")
                 sync()
+                return true
             }
             KeyEvent.KEYCODE_SLASH -> {
                 Timber.d("Search from keypress")
                 if (toolbarSearchItem?.isVisible == true) {
                     toolbarSearchItem?.expandActionView()
                 }
+                return true
             }
             KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
                 launchCatchingTask {
                     handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
                 }
+                return true
+            }
+            KeyEvent.KEYCODE_T -> {
+                Timber.i("Open Statistics from keypress")
+                openStatistics()
+                return true
+            }
+            KeyEvent.KEYCODE_C -> {
+                // Shortcut: C
+                Timber.i("Check database from keypress")
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK)
+                return true
+            }
+            KeyEvent.KEYCODE_D -> {
+                // Shortcut: D
+                Timber.i("Create Deck from keypress")
+                showCreateDeckDialog()
+                return true
+            }
+            KeyEvent.KEYCODE_F -> {
+                Timber.i("Create Filtered Deck from keypress")
+                showCreateFilteredDeckDialog()
+                return true
+            }
+            KeyEvent.KEYCODE_DEL -> {
+                // This action on a deck should only occur when the user see the deck name very clearly,
+                // that is, when it appears in the trailing study option fragment
+                if (fragmented) {
+                    if (event.isShiftPressed) {
+                        // Shortcut: Shift + DEL - Delete deck without confirmation dialog
+                        Timber.i("Shift+DEL: Deck deck without confirmation")
+                        deleteDeck(focusedDeck)
+                    } else {
+                        // Shortcut: DEL
+                        Timber.i("Delete Deck from keypress")
+                        showDeleteDeckConfirmationDialog()
+                    }
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_R -> {
+                // Shortcut: R
+                // This action on a deck should only occur when the user see the deck name very clearly,
+                // that is, when it appears in the trailing study option fragment
+                if (fragmented) {
+                    Timber.i("Rename Deck from keypress")
+                    renameDeckDialog(focusedDeck)
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_P -> {
+                Timber.i("Open Settings from keypress")
+                openSettings()
+                return true
+            }
+            KeyEvent.KEYCODE_M -> {
+                Timber.i("Check media from keypress")
+                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+                return true
+            }
+            KeyEvent.KEYCODE_E -> {
+                if (event.isCtrlPressed) {
+                    // Shortcut: CTRL + E
+                    Timber.i("Show export dialog from keypress")
+                    exportCollection()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_I -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    // Shortcut: CTRL + Shift + I
+                    Timber.i("Show import dialog from keypress")
+                    showImportDialog()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_N -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    // Shortcut: CTRL + Shift + N
+                    Timber.i("Open ManageNoteTypes from keypress")
+                    openManageNoteTypes()
+                    return true
+                }
             }
             else -> {}
         }
         return super.onKeyUp(keyCode, event)
+    }
+
+    /**
+     * Displays a confirmation dialog for deleting deck.
+     */
+    private fun showDeleteDeckConfirmationDialog() = launchCatchingTask {
+        val (deckName, totalCards, isFilteredDeck) = withCol {
+            Triple(
+                decks.name(focusedDeck),
+                sched.cardCount(),
+                decks.isFiltered(focusedDeck)
+            )
+        }
+        val confirmDeleteDeckDialog = DeckPickerConfirmDeleteDeckDialog.newInstance(
+            deckName = deckName,
+            deckId = focusedDeck,
+            totalCards = totalCards,
+            isFilteredDeck = isFilteredDeck
+        )
+        showDialogFragment(confirmDeleteDeckDialog)
     }
 
     /**
@@ -2312,6 +2433,20 @@ open class DeckPicker :
             if (fragmented) {
                 loadStudyOptionsFragment(false)
             }
+        }
+        createDeckDialog.showDialog()
+    }
+
+    /**
+     * Displays a dialog for creating a new deck.
+     *
+     * @see CreateDeckDialog
+     */
+    fun showCreateDeckDialog() {
+        val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.DECK, null)
+        createDeckDialog.onNewDeckCreated = {
+            updateDeckList()
+            invalidateOptionsMenu()
         }
         createDeckDialog.showDialog()
     }
