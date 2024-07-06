@@ -53,6 +53,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
@@ -163,6 +165,12 @@ open class CardBrowser :
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
 
+    /**
+     * Provides an instance of NoteEditorLauncher for editing a note
+     */
+    private val editNoteLauncher: NoteEditorLauncher
+        get() = NoteEditorLauncher.EditCard(viewModel.currentCardId, Direction.DEFAULT)
+
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             launchCatchingTask { selectDeckAndSave(deck.deckId) }
@@ -174,6 +182,11 @@ open class CardBrowser :
     }
 
     lateinit var viewModel: CardBrowserViewModel
+
+    /**
+     * The frame containing the NoteEditor. Non null only in layout x-large.
+     */
+    private var noteEditorFrame: FragmentContainerView? = null
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
@@ -378,8 +391,17 @@ open class CardBrowser :
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions)
 
-        setContentView(R.layout.card_browser)
+        setContentView(R.layout.cardbrowser)
         initNavigationDrawer(findViewById(android.R.id.content))
+
+        noteEditorFrame = findViewById(R.id.note_editor_frame)
+        /**
+         * Check if noteEditorFrame is not null and if its visibility is set to VISIBLE.
+         * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
+         * [fragmented] will be true if the view size is large otherwise false
+         */
+        fragmented = noteEditorFrame != null && noteEditorFrame!!.visibility == View.VISIBLE
+
         // initialize the lateinit variables
         // Load reference to action bar title
         actionBarTitle = findViewById(R.id.toolbar_title)
@@ -431,6 +453,21 @@ open class CardBrowser :
         onboarding.onCreate()
 
         setupFlows()
+    }
+
+    /**
+     * Loads the NoteEditor fragment in container if the view is x-large.
+     *
+     * @param launcher The NoteEditorLauncher containing the necessary data to initialize the NoteEditor Fragment.
+     */
+    private fun loadNoteEditorFragmentIfFragmented(launcher: NoteEditorLauncher) {
+        if (!fragmented) {
+            return
+        }
+        val noteEditor = NoteEditor.newInstance(launcher)
+        supportFragmentManager.commit {
+            replace(R.id.note_editor_frame, noteEditor)
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -712,10 +749,14 @@ open class CardBrowser :
     @NeedsTest("I/O edits are saved")
     private fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId
-        val intent = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT).getIntent(this)
-        onEditCardActivityResult.launch(intent)
-        // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
-        viewModel.endMultiSelectMode()
+        // Load NoteEditor on trailing side if in fragmented mode
+        if (fragmented) {
+            loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+        } else {
+            onEditCardActivityResult.launch(editNoteLauncher.getIntent(this))
+            // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
+            viewModel.endMultiSelectMode()
+        }
     }
 
     private fun openNoteEditorForCurrentlySelectedNote() = launchCatchingTask {
@@ -1427,6 +1468,9 @@ open class CardBrowser :
     private fun redrawAfterSearch() {
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
+        // Sets the first card as the current card by default after searching for cards
+        currentCardId = viewModel.cards[0].id
+        loadNoteEditorFragmentIfFragmented(editNoteLauncher)
         /*check whether mSearchView is initialized as it is lateinit property.*/
         if (searchView == null || searchView!!.isIconified) {
             restoreScrollPositionIfRequested()

@@ -251,6 +251,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     var clipboard: ClipboardManager? = null
 
+    /**
+     * Indicates whether the view is x-large or not.
+     */
+    private var inFragmentedActivity = false
+
     private val requestAddLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
         NoteEditorActivityResultCallback {
@@ -449,6 +454,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // The NoteEditor is either displayed on the trailing side of the CardBrowser, on xlarge screen, or as a stand-alone fragment.
+        // Checks if the NoteEditorFragment is not an instance of `SingleFragmentActivity`
+        // and assign it to the variable inFragmentedActivity. This indicates whether the fragment
+        // is hosted within a fragmented activity or not.
+        inFragmentedActivity = requireActivity().javaClass != SingleFragmentActivity::class.java
         // Set up toolbar
         toolbar = findViewById(R.id.editor_toolbar)
         toolbar.apply {
@@ -466,6 +476,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             )
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
+        // Hide mainToolbar if this fragment is a part of fragmented activity
+        if (inFragmentedActivity) {
+            mainToolbar.visibility = View.GONE
+        }
+
         startLoadingCollection()
         // Onboarding must be initialised after creating view
         val onboarding = Onboarding.NoteEditor(this)
@@ -2540,6 +2555,12 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         private const val PREF_NOTE_EDITOR_CAPITALIZE = "note_editor_capitalize"
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
+
+        fun newInstance(launcher: NoteEditorLauncher): NoteEditor {
+            return NoteEditor().apply {
+                this.arguments = launcher.toBundle()
+            }
+        }
 
         private fun shouldReplaceNewlines(): Boolean {
             return AnkiDroidApp.instance.sharedPrefs()
