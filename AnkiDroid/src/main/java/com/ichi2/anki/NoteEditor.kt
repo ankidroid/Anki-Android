@@ -1513,6 +1513,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             // ensure there are no orphans from possible edit previews
             CardTemplateNotetype.clearTempModelFiles()
 
+            // Don't close this fragment if it is in fragmented activity
+            if (inFragmentedActivity) {
+                return
+            }
+
             // Set the finish animation if there is one on the intent which created the activity
             val animation = BundleCompat.getParcelable(
                 requireArguments(),

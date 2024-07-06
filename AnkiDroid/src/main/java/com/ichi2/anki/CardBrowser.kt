@@ -49,6 +49,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
@@ -164,6 +165,13 @@ open class CardBrowser :
     TagsDialogListener,
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
+
+    /**
+     * Provides an instance of NoteEditorLauncher for adding a note
+     */
+    @get:VisibleForTesting
+    val addNoteLauncher: NoteEditorLauncher
+        get() = createAddNoteLauncher(viewModel, fragmented)
 
     /**
      * Provides an instance of NoteEditorLauncher for editing a note
@@ -478,6 +486,10 @@ open class CardBrowser :
     private fun loadNoteEditorFragmentIfFragmented(launcher: NoteEditorLauncher) {
         if (!fragmented) {
             return
+        }
+        // Show note editor frame when adding first card
+        if (!noteEditorFrame!!.isVisible) {
+            noteEditorFrame!!.isVisible = true
         }
         val noteEditor = NoteEditor.newInstance(launcher)
         supportFragmentManager.commit {
@@ -1532,12 +1544,12 @@ open class CardBrowser :
         showDialogFragment(dialog)
     }
 
-    @get:VisibleForTesting
-    val addNoteIntent: Intent
-        get() = createAddNoteIntent(this, viewModel)
-
     private fun addNoteFromCardBrowser() {
-        onAddNoteActivityResult.launch(addNoteIntent)
+        if (fragmented) {
+            loadNoteEditorFragmentIfFragmented(addNoteLauncher)
+        } else {
+            onAddNoteActivityResult.launch(addNoteLauncher.getIntent(this))
+        }
     }
 
     private val reviewerCardId: CardId
@@ -2511,8 +2523,8 @@ open class CardBrowser :
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @VisibleForTesting
-        fun createAddNoteIntent(context: Context, viewModel: CardBrowserViewModel): Intent {
-            return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
+        fun createAddNoteLauncher(viewModel: CardBrowserViewModel, inFragmentedActivity: Boolean = false): NoteEditorLauncher {
+            return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inFragmentedActivity)
         }
 
         @CheckResult
