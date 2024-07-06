@@ -1371,7 +1371,9 @@ class NoteEditor :
             menu.findItem(R.id.action_save).isVisible = iconVisible
             menu.findItem(R.id.action_preview).isVisible = iconVisible
         } else {
-            menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
+            // Hide add note item if fragment is in fragmented activity
+            // because this item is already present in CardBrowser
+            menu.findItem(R.id.action_add_note_from_note_editor).isVisible = !inFragmentedActivity
         }
         if (editFields != null) {
             for (i in editFields!!.indices) {
