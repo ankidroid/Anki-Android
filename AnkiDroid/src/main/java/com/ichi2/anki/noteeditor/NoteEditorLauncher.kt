@@ -89,12 +89,13 @@ sealed interface NoteEditorLauncher {
      * Represents adding a note to the NoteEditor from the card browser.
      * @property viewModel The view model containing data from the card browser.
      */
-    data class AddNoteFromCardBrowser(val viewModel: CardBrowserViewModel) :
+    data class AddNoteFromCardBrowser(val viewModel: CardBrowserViewModel, val inFragmentedActivity: Boolean = false) :
         NoteEditorLauncher {
         override fun toBundle(): Bundle {
             val bundle = bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_CARDBROWSER_ADD,
-                NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms
+                NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms,
+                NoteEditor.IN_FRAGMENTED_ACTIVITY to inFragmentedActivity
             )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 bundle.putLong(NoteEditor.EXTRA_DID, viewModel.lastDeckId!!)
