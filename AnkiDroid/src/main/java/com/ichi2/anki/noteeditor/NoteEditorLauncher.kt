@@ -138,12 +138,13 @@ sealed interface NoteEditorLauncher {
      * @property cardId The ID of the card to edit.
      * @property animation The animation direction.
      */
-    data class EditCard(val cardId: CardId, val animation: ActivityTransitionAnimation.Direction) :
+    data class EditCard(val cardId: CardId, val animation: ActivityTransitionAnimation.Direction, val inFragmentedActivity: Boolean = false) :
         NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
             NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_EDIT,
             NoteEditor.EXTRA_CARD_ID to cardId,
-            AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable
+            AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable,
+            NoteEditor.IN_FRAGMENTED_ACTIVITY to inFragmentedActivity
         )
     }
 
