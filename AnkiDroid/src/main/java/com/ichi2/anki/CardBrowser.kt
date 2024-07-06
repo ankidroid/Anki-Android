@@ -151,6 +151,13 @@ open class CardBrowser :
     TagsDialogListener,
     ChangeManager.Subscriber {
     /**
+     * Provides an instance of NoteEditorLauncher for adding a note
+     */
+    @get:VisibleForTesting
+    val addNoteLauncher: NoteEditorLauncher
+        get() = createAddNoteLauncher(viewModel, fragmented)
+
+    /**
      * Provides an instance of NoteEditorLauncher for editing a note
      */
     private val editNoteLauncher: NoteEditorLauncher
@@ -505,6 +512,8 @@ open class CardBrowser :
         if (!fragmented) {
             return
         }
+        // Show note editor frame
+        noteEditorFrame!!.isVisible = true
         val noteEditor = NoteEditor.newInstance(launcher)
         supportFragmentManager.commit {
             replace(R.id.note_editor_frame, noteEditor)
@@ -1592,12 +1601,12 @@ open class CardBrowser :
             showDialogFragment(dialog)
         }
 
-    @get:VisibleForTesting
-    val addNoteIntent: Intent
-        get() = createAddNoteIntent(this, viewModel)
-
     private fun addNoteFromCardBrowser() {
-        onAddNoteActivityResult.launch(addNoteIntent)
+        if (fragmented) {
+            loadNoteEditorFragmentIfFragmented(addNoteLauncher)
+        } else {
+            onAddNoteActivityResult.launch(addNoteLauncher.toIntent(this))
+        }
     }
 
     private val reviewerCardId: CardId
@@ -2020,10 +2029,10 @@ open class CardBrowser :
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @VisibleForTesting
-        fun createAddNoteIntent(
-            context: Context,
+        fun createAddNoteLauncher(
             viewModel: CardBrowserViewModel,
-        ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).toIntent(context)
+            inFragmentedActivity: Boolean = false,
+        ): NoteEditorLauncher = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inFragmentedActivity)
     }
 
     private fun calculateTopOffset(cardPosition: Int): Int {
