@@ -1122,8 +1122,8 @@ open class CardBrowser :
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
-        // Append note editor menu to card browser menu if fragmented
-        if (fragmented) {
+        // Append note editor menu to card browser menu if fragmented and deck is not empty
+        if (fragmented && viewModel.rowCount != 0) {
             fragment?.onCreateMenu(menu, menuInflater)
         }
         actionBarMenu?.findItem(R.id.action_select_all)?.run {
@@ -1713,8 +1713,19 @@ open class CardBrowser :
         launchCatchingTask {
             Timber.i("CardBrowser:: Completed searchCards() Successfully")
             updateList()
-            viewModel.currentCardId = viewModel.cards[0].toCardId(viewModel.cardsOrNotes)
-            loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+            // Check whether deck is empty or not
+            val isDeckEmpty = viewModel.rowCount == 0
+            // Hide note editor frame if deck is empty and fragmented
+            noteEditorFrame?.visibility =
+                if (fragmented && !isDeckEmpty) {
+                    viewModel.currentCardId = viewModel.cards[0].toCardId(viewModel.cardsOrNotes)
+                    loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+                    View.VISIBLE
+                } else {
+                    invalidateOptionsMenu()
+                    View.GONE
+                }
+            // check whether mSearchView is initialized as it is lateinit property.
             if (searchView == null || searchView!!.isIconified) {
                 return@launchCatchingTask
             }
