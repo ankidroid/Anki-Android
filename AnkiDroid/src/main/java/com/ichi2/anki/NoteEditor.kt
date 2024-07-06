@@ -1606,6 +1606,12 @@ class NoteEditor :
             // ensure there are no orphans from possible edit previews
             CardTemplateNotetype.clearTempModelFiles()
 
+            // Don't close this fragment if it is in fragmented activity
+            if (inFragmentedActivity) {
+                Timber.i("not closing activity: fragmented")
+                return
+            }
+
             Timber.i("Closing note editor")
 
             // Set the finish animation if there is one on the intent which created the activity
