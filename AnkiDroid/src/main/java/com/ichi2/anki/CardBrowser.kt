@@ -456,6 +456,19 @@ open class CardBrowser :
     }
 
     /**
+     * Retrieves the `NoteEditor` fragment if it is present in the fragment container
+     */
+    val fragment: NoteEditor?
+        get() {
+            val frag = supportFragmentManager.findFragmentById(R.id.note_editor_frame)
+            return if (frag is NoteEditor) {
+                frag
+            } else {
+                null
+            }
+        }
+
+    /**
      * Loads the NoteEditor fragment in container if the view is x-large.
      *
      * @param launcher The NoteEditorLauncher containing the necessary data to initialize the NoteEditor Fragment.
@@ -468,6 +481,8 @@ open class CardBrowser :
         supportFragmentManager.commit {
             replace(R.id.note_editor_frame, noteEditor)
         }
+        // invalidate options menu so that note editor menu will show
+        invalidateOptionsMenu()
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -897,6 +912,11 @@ open class CardBrowser :
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
+        // Append note editor menu to card browser menu if fragmented
+        if (fragmented) {
+            menuInflater.inflate(R.menu.note_editor, menu)
+            fragment?.configureMainToolbar(menu)
+        }
         actionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = getColUnsafe.undoAvailable()
             title = getColUnsafe.undoLabel()
@@ -942,7 +962,7 @@ open class CardBrowser :
     }
 
     private fun updatePreviewMenuItem() {
-        previewItem?.isVisible = viewModel.rowCount > 0
+        previewItem?.isVisible = !fragmented && viewModel.rowCount > 0
     }
 
     private fun updateMultiselectMenu() {
@@ -995,7 +1015,7 @@ open class CardBrowser :
         // Note: Theoretically should not happen, as this should kick us back to the menu
         actionBarMenu.findItem(R.id.action_select_none).isVisible =
             viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
+        actionBarMenu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
         actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
@@ -1216,7 +1236,7 @@ open class CardBrowser :
                 exportSelected()
             }
         }
-        return super.onOptionsItemSelected(item)
+        return fragmented && fragment!!.onMenuItemClick(item)
     }
 
     override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory

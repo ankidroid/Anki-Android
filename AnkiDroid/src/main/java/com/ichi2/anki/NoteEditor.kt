@@ -501,7 +501,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        configureMainToolbar()
+        mainToolbar.setOnMenuItemClickListener(this)
+        mainToolbar.inflateMenu(R.menu.note_editor)
+        configureMainToolbar(mainToolbar.menu)
     }
 
     @NeedsTest("Test when the user directly passes image to the edit note field")
@@ -1239,17 +1241,16 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     /**
      * Configures the main toolbar with the appropriate menu items and their visibility based on the current state.
      */
-    private fun configureMainToolbar() {
-        mainToolbar.setOnMenuItemClickListener(this)
-        mainToolbar.inflateMenu(R.menu.note_editor)
-        val menu = mainToolbar.menu
+    fun configureMainToolbar(menu: Menu) {
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
             val iconVisible = allowSaveAndPreview()
             menu.findItem(R.id.action_save).isVisible = iconVisible
             menu.findItem(R.id.action_preview).isVisible = iconVisible
         } else {
-            menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
+            // Hide add note item if fragment is in fragmented activity
+            // because this item is already present in CardBrowser
+            menu.findItem(R.id.action_add_note_from_note_editor).isVisible = !inFragmentedActivity
         }
         if (editFields != null) {
             for (i in editFields!!.indices) {
