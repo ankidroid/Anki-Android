@@ -1488,9 +1488,18 @@ open class CardBrowser :
     private fun redrawAfterSearch() {
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
-        // Sets the first card as the current card by default after searching for cards
-        currentCardId = viewModel.cards[0].id
-        loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+        // Check whether deck is empty or not
+        val isDeckEmpty = viewModel.rowCount == 0
+        // Hide note editor frame if deck is empty
+        noteEditorFrame?.visibility = if (!isDeckEmpty) {
+            // Sets the first card as the current card by default after searching for cards
+            currentCardId = viewModel.cards[0].id
+            loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+            View.VISIBLE
+        } else {
+            invalidateOptionsMenu()
+            View.GONE
+        }
         /*check whether mSearchView is initialized as it is lateinit property.*/
         if (searchView == null || searchView!!.isIconified) {
             restoreScrollPositionIfRequested()
