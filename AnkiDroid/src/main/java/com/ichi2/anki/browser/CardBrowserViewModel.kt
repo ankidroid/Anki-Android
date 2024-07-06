@@ -203,6 +203,10 @@ class CardBrowserViewModel(
     val flowOfSelectedRows: Flow<Set<CardOrNoteId>> =
         flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
 
+    val rowLongPressFocusFlow = MutableStateFlow<CardOrNoteId?>(null)
+
+    val cardSelectionEventFlow = MutableSharedFlow<Unit>()
+
     suspend fun queryAllSelectedCardIds() = selectedRows.queryCardIds(this.cardsOrNotes)
 
     suspend fun queryAllSelectedNoteIds() = selectedRows.queryNoteIds(this.cardsOrNotes)
@@ -425,6 +429,25 @@ class CardBrowserViewModel(
         require(manualInit) { "'manualInit' should be true" }
         flowOfInitCompleted.update { true }
         Timber.d("manualInit")
+    }
+
+    fun handleRowLongPress(id: CardOrNoteId) =
+        viewModelScope.launch {
+            currentCardId = id.toCardId(cardsOrNotes)
+            if (isInMultiSelectMode && lastSelectedId != null) {
+                selectRowsBetween(lastSelectedId!!, id)
+            } else {
+                saveScrollingState(id)
+                toggleRowSelection(id)
+            }
+            rowLongPressFocusFlow.emit(id)
+        }
+
+    fun handleCardSelection(
+        cardId: CardId,
+        fragmented: Boolean,
+    ) {
+        createCardSelector(this)(cardId, fragmented)
     }
 
     /** Whether any rows are selected */
@@ -1083,6 +1106,17 @@ class CardBrowserViewModel(
     }
 
     companion object {
+        fun createCardSelector(viewModel: CardBrowserViewModel) =
+            { cardId: CardId, fragmented: Boolean ->
+                viewModel.currentCardId = cardId
+                if (!fragmented) {
+                    viewModel.endMultiSelectMode()
+                }
+                viewModel.viewModelScope.launch {
+                    viewModel.cardSelectionEventFlow.emit(Unit)
+                }
+            }
+
         fun factory(
             lastDeckIdRepository: LastDeckIdRepository,
             cacheDir: File,
