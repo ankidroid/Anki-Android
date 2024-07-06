@@ -1642,7 +1642,7 @@ fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
 
 fun CardBrowser.clickRowAtPosition(pos: Int) = onTap(viewModel.cards[pos])
 
-fun CardBrowser.longClickRowAtPosition(pos: Int) = onLongPress(viewModel.cards[pos])
+fun CardBrowser.longClickRowAtPosition(pos: Int) = viewModel.handleRowLongPress(viewModel.cards[pos])
 
 val CardBrowser.lastDeckId
     get() = viewModel.lastDeckId
