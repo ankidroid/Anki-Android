@@ -48,6 +48,10 @@
         android:title="New congrats screen"
         android:key="@string/new_congrats_screen_pref_key"
         android:defaultValue="false"/>
+    <SwitchPreferenceCompat
+        android:title="Split card browser"
+        android:key="@string/split_cardbrowser_pref_key"
+        android:defaultValue="false"/>
     <PreferenceCategory
         android:title="Create fake media"
         >
