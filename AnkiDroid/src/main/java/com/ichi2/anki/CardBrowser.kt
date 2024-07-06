@@ -46,6 +46,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -145,6 +147,15 @@ open class CardBrowser :
     DeckSelectionListener,
     TagsDialogListener,
     ChangeManager.Subscriber {
+    /**
+     * Provides an instance of NoteEditorLauncher for editing a note
+     */
+    private val editNoteLauncher: NoteEditorLauncher
+        get() =
+            NoteEditorLauncher.EditCard(viewModel.currentCardId, Direction.DEFAULT, fragmented).also {
+                Timber.i("editNoteLauncher: %s", it)
+            }
+
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             launchCatchingTask { selectDeckAndSave(deck.deckId) }
@@ -157,6 +168,11 @@ open class CardBrowser :
     }
 
     lateinit var viewModel: CardBrowserViewModel
+
+    /**
+     * The frame containing the NoteEditor. Non null only in layout x-large.
+     */
+    private var noteEditorFrame: FragmentContainerView? = null
 
     private lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
@@ -344,9 +360,15 @@ open class CardBrowser :
     fun onTap(id: CardOrNoteId) =
         launchCatchingTask {
             if (viewModel.isInMultiSelectMode) {
+                val wasSelected = viewModel.selectedRows.contains(id)
                 viewModel.toggleRowSelection(id)
                 viewModel.saveScrollingState(id)
                 viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
+                // Load NoteEditor on trailing side if card is selected
+                if (wasSelected) {
+                    viewModel.currentCardId = id.toCardId(viewModel.cardsOrNotes)
+                    loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+                }
             } else {
                 viewModel.lastSelectedPosition = (cardsListView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                 viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
@@ -354,18 +376,6 @@ open class CardBrowser :
                 openNoteEditorForCard(cardId)
             }
         }
-
-    @VisibleForTesting
-    fun onLongPress(id: CardOrNoteId) {
-        // click on whole cell triggers select
-        if (viewModel.isInMultiSelectMode && viewModel.lastSelectedId != null) {
-            viewModel.selectRowsBetween(viewModel.lastSelectedId!!, id)
-        } else {
-            viewModel.saveScrollingState(id)
-            viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
-            viewModel.toggleRowSelection(id)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -392,6 +402,20 @@ open class CardBrowser :
 
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
+
+        noteEditorFrame = findViewById(R.id.note_editor_frame)
+
+        /**
+         * Check if noteEditorFrame is not null and if its visibility is set to VISIBLE.
+         * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
+         * [fragmented] will be true if the view size is large otherwise false
+         */
+        // TODO: Consider refactoring by storing noteEditorFrame and similar views in a sealed class (e.g., FragmentAccessor).
+        fragmented =
+            (noteEditorFrame?.visibility == View.VISIBLE).apply {
+                Timber.i("Using split Browser: %b", fragmented)
+            }
+
         // initialize the lateinit variables
         // Load reference to action bar title
         actionBarTitle = findViewById(R.id.toolbar_title)
@@ -406,7 +430,7 @@ open class CardBrowser :
                 this,
                 viewModel,
                 onTap = ::onTap,
-                onLongPress = ::onLongPress,
+                onLongPress = viewModel::handleRowLongPress,
             )
         cardsListView.adapter = cardsAdapter
         cardsAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -463,6 +487,21 @@ open class CardBrowser :
     override fun setupBackPressedCallbacks() {
         onBackPressedDispatcher.addCallback(this, multiSelectOnBackPressedCallback)
         super.setupBackPressedCallbacks()
+    }
+
+    /**
+     * Loads the NoteEditor fragment in container if the view is x-large.
+     *
+     * @param launcher The NoteEditorLauncher containing the necessary data to initialize the NoteEditor Fragment.
+     */
+    private fun loadNoteEditorFragmentIfFragmented(launcher: NoteEditorLauncher) {
+        if (!fragmented) {
+            return
+        }
+        val noteEditor = NoteEditor.newInstance(launcher)
+        supportFragmentManager.commit {
+            replace(R.id.note_editor_frame, noteEditor)
+        }
     }
 
     fun notifyDataSetChanged() {
@@ -615,6 +654,20 @@ open class CardBrowser :
             }
         }
 
+        fun onSelectedRowUpdated(id: CardOrNoteId?) {
+            if (!viewModel.isInMultiSelectMode || viewModel.lastSelectedId == null) {
+                viewModel.oldCardTopOffset = calculateTopOffset(viewModel.lastSelectedPosition)
+            }
+        }
+
+        fun onSelectedCardUpdated(unit: Unit) {
+            if (fragmented) {
+                loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+            } else {
+                onEditCardActivityResult.launch(editNoteLauncher.toIntent(this))
+            }
+        }
+
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -626,6 +679,8 @@ open class CardBrowser :
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfColumnHeadings.launchCollectionInLifecycleScope(::onColumnNamesChanged)
+        viewModel.rowLongPressFocusFlow.launchCollectionInLifecycleScope(::onSelectedRowUpdated)
+        viewModel.cardSelectionEventFlow.launchCollectionInLifecycleScope(::onSelectedCardUpdated)
     }
 
     fun isKeyboardVisible(view: View?): Boolean =
@@ -878,11 +933,7 @@ open class CardBrowser :
     @NeedsTest("note edits are saved")
     @NeedsTest("I/O edits are saved")
     private fun openNoteEditorForCard(cardId: CardId) {
-        currentCardId = cardId
-        val intent = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT).toIntent(this)
-        onEditCardActivityResult.launch(intent)
-        // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
-        viewModel.endMultiSelectMode()
+        viewModel.handleCardSelection(cardId, fragmented)
     }
 
     /**
@@ -1605,27 +1656,31 @@ open class CardBrowser :
     @NeedsTest("searchView == null -> return early & ensure no snackbar when the screen is opened")
     @MainThread
     private fun redrawAfterSearch() {
-        Timber.i("CardBrowser:: Completed searchCards() Successfully")
-        updateList()
-        if (searchView == null || searchView!!.isIconified) {
-            return
-        }
-        updateList()
-        if (viewModel.hasSelectedAllDecks()) {
-            showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
-        } else {
-            // If we haven't selected all decks, allow the user the option to search all decks.
-            val message =
-                if (viewModel.rowCount == 0) {
-                    getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
-                } else {
-                    subtitleText
-                }
-            showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
-                setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
+        launchCatchingTask {
+            Timber.i("CardBrowser:: Completed searchCards() Successfully")
+            updateList()
+            viewModel.currentCardId = viewModel.cards[0].toCardId(viewModel.cardsOrNotes)
+            loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+            if (searchView == null || searchView!!.isIconified) {
+                return@launchCatchingTask
             }
+            updateList()
+            if (viewModel.hasSelectedAllDecks()) {
+                showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
+            } else {
+                // If we haven't selected all decks, allow the user the option to search all decks.
+                val message =
+                    if (viewModel.rowCount == 0) {
+                        getString(R.string.card_browser_no_cards_in_deck, selectedDeckNameForUi)
+                    } else {
+                        subtitleText
+                    }
+                showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+                    setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
+                }
+            }
+            updatePreviewMenuItem()
         }
-        updatePreviewMenuItem()
     }
 
     @MainThread
@@ -1728,7 +1783,7 @@ open class CardBrowser :
 
     private fun saveEditedCard() {
         Timber.d("CardBrowser - saveEditedCard()")
-        updateCardsInList(listOf(currentCardId))
+        updateCardsInList(listOf(viewModel.currentCardId))
     }
 
     private fun toggleSuspendCards() = launchCatchingTask { withProgress { viewModel.toggleSuspendCards().join() } }

@@ -285,6 +285,13 @@ class NoteEditor :
 
     var clipboard: ClipboardManager? = null
 
+    /**
+     * Whether this is displayed in a fragment view.
+     * If true, this fragment is on the trailing side of the card browser.
+     */
+    private val inFragmentedActivity
+        get() = requireArguments().getBoolean(IN_FRAGMENTED_ACTIVITY)
+
     private val requestAddLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
@@ -539,6 +546,12 @@ class NoteEditor :
             )
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
+
+        // Hide mainToolbar since CardBrowser handles the toolbar in fragmented activities.
+        if (inFragmentedActivity) {
+            mainToolbar.visibility = View.GONE
+        }
+
         try {
             setupEditor(getColUnsafe)
         } catch (ex: RuntimeException) {
@@ -1588,6 +1601,8 @@ class NoteEditor :
             }
             // ensure there are no orphans from possible edit previews
             CardTemplateNotetype.clearTempNoteTypeFiles()
+
+            Timber.i("Closing note editor")
 
             // Set the finish animation if there is one on the intent which created the activity
             val animation =
@@ -2877,6 +2892,7 @@ class NoteEditor :
         const val NOTE_CHANGED_EXTRA_KEY = "noteChanged"
         const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
+        const val IN_FRAGMENTED_ACTIVITY = "inFragmentedActivity"
 
         // calling activity
         enum class NoteEditorCaller(
@@ -2910,6 +2926,11 @@ class NoteEditor :
         private const val PREF_NOTE_EDITOR_CAPITALIZE = "note_editor_capitalize"
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
+
+        fun newInstance(launcher: NoteEditorLauncher): NoteEditor =
+            NoteEditor().apply {
+                this.arguments = launcher.toBundle()
+            }
 
         private fun shouldReplaceNewlines(): Boolean =
             AnkiDroidApp.instance
