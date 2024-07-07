@@ -231,6 +231,7 @@ class CreateDeckDialog(
                 displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
             }
         }
+        shownDialog?.dismiss()
     }
 
     private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
