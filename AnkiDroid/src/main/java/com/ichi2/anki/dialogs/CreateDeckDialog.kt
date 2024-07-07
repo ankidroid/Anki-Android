@@ -113,7 +113,6 @@ class CreateDeckDialog(
                 dialog.positiveButton.isEnabled = false
                 return@input
             }
-
             dialog.getInputTextLayout().error = null
             dialog.positiveButton.isEnabled = true
 
@@ -125,7 +124,6 @@ class CreateDeckDialog(
                 null
             }
         }
-
         shownDialog = dialog
         return dialog
     }
@@ -177,6 +175,20 @@ class CreateDeckDialog(
         return true
     }
 
+    private fun createNewDeck(deckName: String): Boolean {
+        try {
+            // create normal deck or sub deck
+            Timber.i("CreateDeckDialog::createNewDeck")
+            val newDeckId = getColUnsafe.decks.id(deckName)
+            Timber.d("Created deck '%s'; id: %d", deckName, newDeckId)
+            onNewDeckCreated(newDeckId)
+        } catch (filteredAncestor: BackendDeckIsFilteredException) {
+            Timber.w(filteredAncestor)
+            return false
+        }
+        return true
+    }
+
     private fun onPositiveButtonClicked() {
         if (deckName.isNotEmpty()) {
             when (deckDialogType) {
@@ -199,20 +211,6 @@ class CreateDeckDialog(
         }
     }
 
-    private fun createNewDeck(deckName: String): Boolean {
-        try {
-            // create normal deck or sub deck
-            Timber.i("CreateDeckDialog::createNewDeck")
-            val newDeckId = getColUnsafe.decks.id(deckName)
-            Timber.d("Created deck '%s'; id: %d", deckName, newDeckId)
-            onNewDeckCreated(newDeckId)
-        } catch (filteredAncestor: BackendDeckIsFilteredException) {
-            Timber.w(filteredAncestor)
-            return false
-        }
-        return true
-    }
-
     fun renameDeck(newDeckName: String) {
         val newName = newDeckName.replace("\"".toRegex(), "")
         if (!Decks.isValidDeckName(newName)) {
@@ -233,7 +231,6 @@ class CreateDeckDialog(
                 displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
             }
         }
-        shownDialog?.dismiss()
     }
 
     private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
@@ -250,4 +247,3 @@ class CreateDeckDialog(
 // we use (?:[^:]|$) to ensure "12:" doesn't match
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
 fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""(?:[^:]|^)[1-9]\d+(?:[^:]|$)""").find(this) != null
-
