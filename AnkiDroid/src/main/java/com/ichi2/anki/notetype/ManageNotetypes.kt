@@ -29,17 +29,33 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.copy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CardTemplateEditor
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.ModelFieldEditor
+import com.ichi2.anki.R
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.*
-import com.ichi2.utils.*
+import com.ichi2.anki.userAcceptsSchemaChange
+import com.ichi2.anki.withProgress
+import com.ichi2.libanki.getNotetype
+import com.ichi2.libanki.getNotetypeNameIdUseCount
+import com.ichi2.libanki.getNotetypeNames
+import com.ichi2.libanki.removeNotetype
+import com.ichi2.libanki.updateNotetype
+import com.ichi2.utils.getInputField
+import com.ichi2.utils.input
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
 
-    private var currentNotetypes: List<NoteTypeUiModel> = emptyList()
+    private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
 
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
@@ -113,9 +129,9 @@ class ManageNotetypes : AnkiActivity() {
     }
 
     @SuppressLint("CheckResult")
-    private fun renameNotetype(noteTypeUiModel: NoteTypeUiModel) {
+    private fun renameNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
         launchCatchingTask {
-            val allNotetypes = mutableListOf<NotetypeBasicUiModel>()
+            val allNotetypes = mutableListOf<AddNotetypeUiModel>()
             allNotetypes.addAll(
                 withProgress {
                     withCol { getNotetypeNames().map { it.toUiModel() } }
@@ -126,7 +142,7 @@ class ManageNotetypes : AnkiActivity() {
                 positiveButton(R.string.rename) {
                     launchCatchingTask {
                         runAndRefreshAfter {
-                            val initialNotetype = getNotetype(noteTypeUiModel.id)
+                            val initialNotetype = getNotetype(manageNoteTypeUiModel.id)
                             val renamedNotetype = initialNotetype.copy {
                                 this.name = (it as AlertDialog).getInputField().text.toString()
                             }
@@ -137,7 +153,7 @@ class ManageNotetypes : AnkiActivity() {
                 negativeButton(R.string.dialog_cancel)
                 setView(R.layout.dialog_generic_text_input)
             }.input(
-                prefill = noteTypeUiModel.name,
+                prefill = manageNoteTypeUiModel.name,
                 waitForPositiveButton = false,
                 displayKeyboard = true,
                 callback = { dialog, text ->
@@ -151,7 +167,7 @@ class ManageNotetypes : AnkiActivity() {
         }
     }
 
-    private fun deleteNotetype(noteTypeUiModel: NoteTypeUiModel) {
+    private fun deleteNotetype(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
         launchCatchingTask {
             val messageResourceId: Int? = if (userAcceptsSchemaChange()) {
                 withProgress {
@@ -174,7 +190,7 @@ class ManageNotetypes : AnkiActivity() {
                 message(messageResourceId)
                 positiveButton(R.string.dialog_positive_delete) {
                     launchCatchingTask {
-                        runAndRefreshAfter { removeNotetype(noteTypeUiModel.id) }
+                        runAndRefreshAfter { removeNotetype(manageNoteTypeUiModel.id) }
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
