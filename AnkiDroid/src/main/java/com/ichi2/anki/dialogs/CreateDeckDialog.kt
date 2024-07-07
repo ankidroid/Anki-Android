@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.content.Context
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
@@ -90,6 +91,16 @@ class CreateDeckDialog(
             negativeButton(R.string.dialog_cancel)
             setView(R.layout.dialog_generic_text_input)
         }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
+            //defining the action of done button in keyboard
+            val inputField = dialog.getInputField()
+            inputField.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onPositiveButtonClicked()
+                    true
+                } else {
+                    false
+                }
+            }
             // we need the fully-qualified name for subdecks
             val maybeDeckName = fullyQualifyDeckName(dialogText = text)
             // if the name is empty, it seems distracting to show an error
@@ -102,6 +113,7 @@ class CreateDeckDialog(
                 dialog.positiveButton.isEnabled = false
                 return@input
             }
+
             dialog.getInputTextLayout().error = null
             dialog.positiveButton.isEnabled = true
 
@@ -113,6 +125,7 @@ class CreateDeckDialog(
                 null
             }
         }
+
         shownDialog = dialog
         return dialog
     }
@@ -164,20 +177,6 @@ class CreateDeckDialog(
         return true
     }
 
-    private fun createNewDeck(deckName: String): Boolean {
-        try {
-            // create normal deck or sub deck
-            Timber.i("CreateDeckDialog::createNewDeck")
-            val newDeckId = getColUnsafe.decks.id(deckName)
-            Timber.d("Created deck '%s'; id: %d", deckName, newDeckId)
-            onNewDeckCreated(newDeckId)
-        } catch (filteredAncestor: BackendDeckIsFilteredException) {
-            Timber.w(filteredAncestor)
-            return false
-        }
-        return true
-    }
-
     private fun onPositiveButtonClicked() {
         if (deckName.isNotEmpty()) {
             when (deckDialogType) {
@@ -200,6 +199,20 @@ class CreateDeckDialog(
         }
     }
 
+    private fun createNewDeck(deckName: String): Boolean {
+        try {
+            // create normal deck or sub deck
+            Timber.i("CreateDeckDialog::createNewDeck")
+            val newDeckId = getColUnsafe.decks.id(deckName)
+            Timber.d("Created deck '%s'; id: %d", deckName, newDeckId)
+            onNewDeckCreated(newDeckId)
+        } catch (filteredAncestor: BackendDeckIsFilteredException) {
+            Timber.w(filteredAncestor)
+            return false
+        }
+        return true
+    }
+
     fun renameDeck(newDeckName: String) {
         val newName = newDeckName.replace("\"".toRegex(), "")
         if (!Decks.isValidDeckName(newName)) {
@@ -220,6 +233,7 @@ class CreateDeckDialog(
                 displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
             }
         }
+        shownDialog?.dismiss()
     }
 
     private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
@@ -236,3 +250,4 @@ class CreateDeckDialog(
 // we use (?:[^:]|$) to ensure "12:" doesn't match
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
 fun CharSequence.containsNumberLargerThanNine(): Boolean = Regex("""(?:[^:]|^)[1-9]\d+(?:[^:]|$)""").find(this) != null
+
