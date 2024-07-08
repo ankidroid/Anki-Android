@@ -97,7 +97,7 @@
     <string name="rename_deck">Перайменаваць калоду</string>
     <string name="create_shortcut">Стварыць ярлык</string>
     <string name="browse_cards">Праглядзець карткі</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Рэдагаваць апісанне</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Дадаць</string>
     <string name="menu_add_note">Дадаць нататку</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
@@ -110,15 +110,15 @@
     <string name="menu_suspend">Прыпыніць</string>
     <string name="menu_delete_note">Выдаліць нататку</string>
     <string name="menu_flag">Сцяжок</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Перайменаваць сцягі</string>
     <string name="menu_flag_card">Пазначыць картку</string>
     <string name="menu_edit_tags">Адрэдагаваць меткі</string>
     <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
     <string name="menu_search">Шукаць у %1$s</string>
     <string name="menu_mark_note">Пазначыць нататку</string>
     <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">Уключыць галасавое прайграванне</string>
+    <string name="menu_disable_voice_playback">Адключыць галасавое прайграванне</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="new_dynamic_deck">Стварыць фільтраваную калоду</string>
     <string name="directory_inaccessible">Каталог AnkiDroid недаступны</string>
@@ -138,8 +138,8 @@
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук калоды</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">Віншуем! Пакуль няма картак для навучання.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Калода скончана! %s</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
@@ -148,7 +148,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Працягнуць сiнхранiзацыю</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Сiнхранiзацыя скасаваная</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі&#8230;\nГэта можа заняць некаторы час.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Сінхранізацыя медыяфайлаў</string>
     <string name="export_deck">Экспартаваць калоду</string>
     <string name="nothing">Нічога</string>
     <!-- Card template editor -->
@@ -259,8 +259,8 @@
     <string name="storage_access_title">Доступ да сховішча</string>
     <string name="storage_access_summary">Захаванне калекцыі ў бяспечным месцы, якое не будзе выдалена пры выдаленні праграмы</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ да ўсіх файлаў</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="image_occlusion">Аклюзія відарысу</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Выдаліць уліковы запіс</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>
