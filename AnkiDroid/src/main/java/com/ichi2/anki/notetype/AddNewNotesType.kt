@@ -53,7 +53,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                     .filter { it != StockNotetype.Kind.UNRECOGNIZED }
                     .map {
                         val stockNotetype = BackendUtils.from_json_bytes(getStockNotetypeLegacy(it))
-                        NotetypeBasicUiModel(
+                        AddNotetypeUiModel(
                             id = it.number.toLong(),
                             name = stockNotetype.get("name") as String,
                             isStandard = true
@@ -61,7 +61,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                     }
                 val foundNotetypes = getNotetypeNames()
                 Pair(
-                    mutableListOf<NotetypeBasicUiModel>().apply {
+                    mutableListOf<AddNotetypeUiModel>().apply {
                         addAll(standardNotetypesModels)
                         addAll(foundNotetypes.map { it.toUiModel() })
                     },
@@ -90,7 +90,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
     }
 
     private fun AlertDialog.initializeViewsWith(
-        optionsToDisplay: List<NotetypeBasicUiModel>,
+        optionsToDisplay: List<AddNotetypeUiModel>,
         currentNames: List<String>
     ) {
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
@@ -131,7 +131,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
         }
     }
 
-    private fun addStandardNotetype(newName: String, selectedOption: NotetypeBasicUiModel) {
+    private fun addStandardNotetype(newName: String, selectedOption: AddNotetypeUiModel) {
         activity.launchCatchingTask {
             activity.runAndRefreshAfter {
                 val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
@@ -144,7 +144,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
         }
     }
 
-    private fun cloneStandardNotetype(newName: String, model: NotetypeBasicUiModel) {
+    private fun cloneStandardNotetype(newName: String, model: AddNotetypeUiModel) {
         activity.launchCatchingTask {
             activity.runAndRefreshAfter {
                 val targetNotetype = getNotetype(model.id)
