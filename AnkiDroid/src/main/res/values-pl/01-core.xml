@@ -110,14 +110,14 @@
     <string name="menu_suspend">Zawieś</string>
     <string name="menu_delete_note">Usuń notatkę</string>
     <string name="menu_flag">Oflaguj</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Zmień flagi</string>
     <string name="menu_flag_card">Oflaguj kartę</string>
     <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback">Włącz odtwarzanie głosu</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Stwórz talię</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
@@ -139,7 +139,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Wyszukiwanie talii</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
     <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Talia na razie skończona! %s</string>
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>

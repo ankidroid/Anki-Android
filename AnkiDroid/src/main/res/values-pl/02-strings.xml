@@ -138,7 +138,7 @@
     <string name="import_title">Importowanie</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Dodać \"%s\" do kolekcji? Może to zająć dłuższą chwilę</string>
     <string name="import_log_no_apkg">To nie jest prawidłowy plik pakietu Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Błąd</string>
     <string name="import_error_handle_exception">Nie udało się zaimportować pliku \n\n%s</string>
@@ -187,13 +187,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">System nie ma zainstalowanej aplikacji, która może wykonać tę czynność.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Zdjęcia z kamery mogą mieć duży rozmiar. Możesz skompresować oraz zmienić rozmiar obrazów w katalogu mediów]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Nie znaleziono przeglądarki do otwarcia linku: %s</string>
     <string name="web_page_error">Błąd ładowania strony: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Tło</string>
     <string name="choose_an_image">Wybierz obraz</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Usunąć tło?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Przywróć domyślne</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Pusto</string>
@@ -248,7 +248,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Wpisz poprawny adres e-mail</string>
     <string name="password_empty">Hasło jest wymagane</string>
     <string name="back_pressed_once">Naciśnij ponownie, aby wyjść</string>
     <string name="back_pressed_once_reviewer">Naciśnij ponownie przycisk wstecz by powrócić</string>
@@ -289,7 +289,7 @@
     <string name="migration_part_1_done_resume">Możesz wznowić korzystanie z AnkiDroid.
 \nMigracja pamięci masowej będzie kontynuowana w tle.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s nie jest poprawną paczką wtyczki JavaScript</string>
     <string name="could_not_create_dir">Nie można utworzyć katalogu %s</string>
     <string name="malicious_archive_entry_outside">Złośliwe archiwum. Zawiera wpis poza docelowym katalogiem: %s</string>
     <string name="malicious_archive_exceeds_limit">Złośliwe archiwum. Rozmiar przekracza %1$s lub zawiera więcej niż %2$d plików</string>
@@ -298,7 +298,7 @@
     <string name="expand_tag">Rozwiń tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Nie udało się uzyskać dostępu do kolekcji fiszek. Spróbuj ponownie!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Dodaj nowy typ notatki</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Ucz się mniej</string>
     <string name="intro_ankidroid_tagline_two">Pamiętaj więcej</string>
@@ -306,7 +306,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Rozpocznij</string>
     <string name="intro_sync_from_ankiweb">Synchronizacja z AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid nie został jeszcze zainicjowany. Otwórz AnkiDroid i spróbuj ponownie</string>
     <string name="already_logged_in">Już zalogowany!</string>
     <!-- Deck Creation -->
     <string name="deck_created">Utworzono talię</string>
@@ -326,10 +326,10 @@
     <string name="media_sync_required_title">Wymagana jest synchronizacja mediów</string>
     <string name="media_sync_unavailable_message">Synchronizacja multimediów jest wyłączona w ustawieniach. Proszę zsynchronizować i wykonać kopię zapasową multimediów, które nie zostały zsynchronizowane przed kontynuowaniem</string>
     <string name="audio_saved">Nagranie zostało zapisane</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="deleting_selected_notes">Usuwanie zaznaczonych notatek</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Dotknij głosu, aby słuchać
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Głos powinien być zainstalowany przed użyciem
     </string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Użyj mimo to
     </string>
