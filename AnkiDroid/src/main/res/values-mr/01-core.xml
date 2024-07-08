@@ -144,6 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे&#8230; \n यास काही वेळ लागू शकेल.</string>
     <string name="syncing_media">मीडिया सिंक करत आहे</string>
     <string name="export_deck">निर्यात डेक</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">काही नाही</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">कार्ड प्रकार</string>

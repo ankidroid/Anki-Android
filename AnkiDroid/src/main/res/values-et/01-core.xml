@@ -144,6 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Tühistan&#8230;\nSee võib võtta mõnda aega.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Ekspordi kaardipakk</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Mitte midagi</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kaarditüübid</string>

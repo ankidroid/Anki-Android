@@ -150,6 +150,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі&#8230;\nГэта можа заняць некаторы час.</string>
     <string name="syncing_media">Сінхранізацыя медыяфайлаў</string>
     <string name="export_deck">Экспартаваць калоду</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Нічога</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Тыпы картак</string>
