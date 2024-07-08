@@ -82,6 +82,7 @@
         <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
+        <item name="buriedColor">#FFCE7C</item>
         <item name="selectedColor">#FFFFBB99</item>
         <item name="markedColor">#D9B2E9</item>
         <!-- Note editor colors -->
