@@ -147,6 +147,7 @@
     Bi diat pòdere chèrrere unu pagu de tempus.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Esporta su matzu</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Nudda</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Castas de cartas</string>

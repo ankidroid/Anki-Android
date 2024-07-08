@@ -142,6 +142,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n這可能需要一點時間。</string>
     <string name="syncing_media">正在使媒體同步</string>
     <string name="export_deck">匯出牌組</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">無</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">卡片種類</string>

@@ -141,6 +141,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
     <string name="syncing_media">メディアを同期中</string>
     <string name="export_deck">デッキをエクスポート</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">カードタイプ</string>

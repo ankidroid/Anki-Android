@@ -144,6 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Չեղարկվում է&#8230;\n Սա կարող է որոշ ժամանակ տևել:</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Արտահանել կապուկը</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Ոչինչ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Քարտերի տեսակներ</string>
