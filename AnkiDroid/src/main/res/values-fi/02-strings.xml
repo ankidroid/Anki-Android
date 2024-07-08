@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kriittinen virhe: WebView-renderöijä kaatui. Syy: %s</string>
     <string name="webview_crash_loop_dialog_title">Järjestelmän WebView Renderöinti Epäonnistui</string>
     <string name="webview_crash_loop_dialog_content">Järjestelmän WebView ei pystynyt näyttämään korttia \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Kysymys</item>
-        <item>Lajittelukenttä</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Vastaus</item>
-        <item>Kortti</item>
-        <item>Pakka</item>
-        <item>Muistiinpano</item>
-        <item>Kysymys</item>
-        <item>Tunnisteet</item>
-        <item>Virheet</item>
-        <item>Kertaukset</item>
-        <item>Kertausväli</item>
-        <item>Helppous</item>
-        <item>Erääntynyt</item>
-        <item>Korttia Muokattu</item>
-        <item>Luotu</item>
-        <item>Muistilappua muokattu</item>
-    </string-array>
     <string name="filter_by_flags">Liput</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Muuta tämän päivän uusien korttien määrän ylärajaa</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Muokkaa muistiinpanoa</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Kortteja ei luotu. Täytä lisää kenttiä</string>
-    <string name="note_editor_no_first_field">Ensimmäinen kenttä on tyhjä</string>
-    <string name="note_editor_no_cloze_delations">Tämän muistiinpanotyypin täytyy sisältää aukkotehtävä</string>
     <string name="note_editor_no_cards_created_all_fields">Nykyistä muistiinpanotyyppiä käyttäviä kortteja ei ole.\nValitse toinen muistiinpanotyyppi tai valitse \"Kortit\" ja lisää korvaava kenttä.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Aukkotehtävät toimivat vain aukkotehtävätyyppisissä muistiinpanoissa</string>
     <string name="saving_facts">Tallennetaan muistiinpanoa</string>

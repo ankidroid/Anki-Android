@@ -76,31 +76,10 @@
     <string name="webview_crash_unknwon_detailed">これはWebViewの内部エラーによって引き起こされました。</string>
     <string name="webview_crash_oom">メモリ不足</string>
     <string name="webview_crash_oom_details">WebViewはシステムによって終了されました。これは通常、アプリケーションがメモリ不足時に発生します。多くの場合、データ量の多いフォントやメディアが原因です。</string>
-    <string name="webview_crash_nonfatal">WebView レンダラーがクラッシュしました。原因: %s</string>
-    <string name="webview_crash_fatal">重大なエラー: WebView レンダラーがクラッシュしました。原因: %s</string>
+    <string name="webview_crash_nonfatal">WebViewレンダラーがクラッシュしました。原因: %s</string>
+    <string name="webview_crash_fatal">重大なエラー: WebViewレンダラーがクラッシュしました。原因: %s</string>
     <string name="webview_crash_loop_dialog_title">システムのWebViewのレンダリング失敗</string>
-    <string name="webview_crash_loop_dialog_content">システム WebView はカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>質問</item>
-        <item>ソートフィールド</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>解答</item>
-        <item>カードタイプ</item>
-        <item>デッキ</item>
-        <item>ノートタイプ</item>
-        <item>質問</item>
-        <item>タグ</item>
-        <item>復習での忘却回数</item>
-        <item>学習回数</item>
-        <item>間隔</item>
-        <item>易しさ</item>
-        <item>期日</item>
-        <item>カード編集日</item>
-        <item>作成日</item>
-        <item>ノート編集日</item>
-    </string-array>
+    <string name="webview_crash_loop_dialog_content">AndroidシステムのWebViewがカード \'%1$s\' のレンダリングに失敗しました。\n %2$s</string>
     <string name="filter_by_flags">フラグ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">ノートを編集</string>
     <string name="discard">破棄</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
-    <string name="note_editor_no_first_field">最初のフィールドが空です</string>
-    <string name="note_editor_no_cloze_delations">このノートタイプのノートには穴埋め問題箇所が含まれている必要があります</string>
     <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードを生成できませんでした。\n別のノートタイプを選択するか、「カード」をタップしてフィールドを挿入してください。</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め問題箇所を示す文字列は、穴埋め問題型のノートタイプでのみ機能します</string>
     <string name="saving_facts">ノートを保存しています</string>
@@ -138,7 +115,7 @@
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
     <string name="note_editor_copy_note">ノートを複製</string>
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">導入順序を変更</string>
-    <string name="card_editor_reset_card">学習履歴をリセット</string>
+    <string name="card_editor_reset_card">新規カードにリセット</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Markdown形式でコピー</string>
@@ -162,7 +139,7 @@
     <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg か .colpkg ではありません。</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。Ankiファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
-    <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージ容量が不足している可能性があります）</string>
+    <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージの空き容量が不足している可能性があります）</string>
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
     <string name="export_preparation_in_progress">エクスポートの準備中&#8230;</string>
     <string name="export_ready_title">エクスポートの準備完了</string>

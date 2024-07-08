@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatal Error: WebView रेंडरर क्रैश हो गया। कारण: %s</string>
     <string name="webview_crash_loop_dialog_title">सिस्टम WebView रेंडरिंग विफलता</string>
     <string name="webview_crash_loop_dialog_content">सिस्टम WebView कार्ड रेंडर करने में विफल रहा \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>प्रश्न</item>
-        <item>सॉर्ट फ़ील्ड</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>उत्तर</item>
-        <item>पत्ता</item>
-        <item>डेक</item>
-        <item>नोट</item>
-        <item>प्रश्न</item>
-        <item>टैग</item>
-        <item>चूक</item>
-        <item>समीक्षाएँ</item>
-        <item>अंतराल</item>
-        <item>आसानी</item>
-        <item>देय</item>
-        <item>कार्ड संशोधित किया गया</item>
-        <item>बनाया गया</item>
-        <item>नोट संशोधित किया गया</item>
-    </string-array>
     <string name="filter_by_flags">झंडे</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आज की नई कार्ड सीमा को संशोधित करें</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">नोट संपादित करें</string>
     <string name="discard">खारिज</string>
     <string name="note_editor_no_cards_created">कोई कार्ड नहीं बनाया गया। कृपया अधिक फ़ील्ड भरें</string>
-    <string name="note_editor_no_first_field">पहला फील्ड खाली है</string>
-    <string name="note_editor_no_cloze_delations">इस नोट प्रकार में क्लॉज विलोपन होना चाहिए</string>
     <string name="note_editor_no_cards_created_all_fields">वर्तमान प्रलेख के प्रकार ने किसी भी कार्ड का निर्माण नहीं किया । कृपया एक और प्रलेख का प्रकार चुने , कृपया एक और प्रलेख का प्रकार चुनिये । या आप एक क्षेत्र का प्रतिस्थापन बढ़ाइये ।</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">क्लोज डिलीट केवल क्लोज नोट टाइप पर काम करेगा</string>
     <string name="saving_facts">नोट सहेजने</string>
@@ -358,12 +335,12 @@
     <string name="failed_to_copy">प्रतिलिपि बनाने में विफल</string>
     <string name="card_browser_unavailable_when_notes_mode">\'नोट्स\' मोड में अनुपलब्ध</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d कार्ड अनबियर किया गया</item>
+        <item quantity="other">%d कार्ड दफनाए नहीं गए</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">स्थान बदलने</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="start_recording">अभिलेख</string>
+    <string name="stop_recording">रुकना</string>
+    <string name="play_recording">खेल</string>
+    <string name="next_recording">अगला</string>
 </resources>

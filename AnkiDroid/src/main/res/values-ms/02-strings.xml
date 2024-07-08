@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Ralat Maut: Pemapar WebView ranap. Punca: %s</string>
     <string name="webview_crash_loop_dialog_title">Kegagalan Pemaparan Sistem WebView</string>
     <string name="webview_crash_loop_dialog_content">WebView Sistem gagal memapar kad \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Soalan</item>
-        <item>Susun medan</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Jawapan</item>
-        <item>Kad</item>
-        <item>Dek</item>
-        <item>Nota</item>
-        <item>Soalan</item>
-        <item>Tag</item>
-        <item>Cuaian</item>
-        <item>Semakan</item>
-        <item>Selang</item>
-        <item>Longgaran</item>
-        <item>Tunggak</item>
-        <item>Kad diubah</item>
-        <item>Dicipta</item>
-        <item>Nota diubah</item>
-    </string-array>
     <string name="filter_by_flags">Tanda</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah had kad baru hari ini</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Sunting nota</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Tiada kad dicipta. Sila isikan lebih banyak medan</string>
-    <string name="note_editor_no_first_field">Medan pertama kosong</string>
-    <string name="note_editor_no_cloze_delations">Jenis nota memerlukan penghapusan kloz</string>
     <string name="note_editor_no_cards_created_all_fields">Jenis nota ini tidak mencipta apa-apa kad.\nSila pilih jenis nota lain atau tekan \'Kad\' dan tambah medan penggantian.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Penghapusan kloz hanya akan berhasil dalam jenis nota Cloze.</string>
     <string name="saving_facts">Menyimpan nota</string>

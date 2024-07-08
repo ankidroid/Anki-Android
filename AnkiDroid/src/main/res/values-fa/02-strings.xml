@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">خطای وخیم: تنظیم‌کنندۀ ظاهر برنامه دچار مشکل شد. دلیل: %s</string>
     <string name="webview_crash_loop_dialog_title">مشکل در سیستم تنظیم‌کنندۀ ظاهر برنامه</string>
     <string name="webview_crash_loop_dialog_content">سیستم در تنظیم ظاهر کارت %1$s با خطا مواجه شد.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>سوال</item>
-        <item>مرتب کردن فیلد</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>پاسخ</item>
-        <item>کارت</item>
-        <item>مجموعه</item>
-        <item>یادداشت</item>
-        <item>پرسش</item>
-        <item>برچسب ها</item>
-        <item>دفعات اشتباه</item>
-        <item>بازبینی ها</item>
-        <item>بازه</item>
-        <item>سهولت</item>
-        <item>موعد مرور</item>
-        <item>زمان ویرایش کارت</item>
-        <item>ساخته شده</item>
-        <item>زمان ویرایش یادداشت</item>
-    </string-array>
     <string name="filter_by_flags">پرچم ها</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعیین محدودیت برای کارت جدید امروز</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">کارتی ساخته نشد. لطفاً فیلدهای بیشتری را پر کنید</string>
-    <string name="note_editor_no_first_field">فیلد نخست خالی است</string>
-    <string name="note_editor_no_cloze_delations">این نوع یادداشت باید حاوی کلوز باشد</string>
     <string name="note_editor_no_cards_created_all_fields">نوع یادداشت فعلی هیچ کارتی تولید نکرد.\nلطفاٌ نوع یادداشت دیگری را انتخاب کنید، یا روی \'کارت‌ها\' کلیک کرده یک فیلد جایگزین را وارد کنید</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">حذف نوع کلوز فقط برای یادداشت های نوع کلوز عمل می‌کند</string>
     <string name="saving_facts">ذخیره یادداشت</string>

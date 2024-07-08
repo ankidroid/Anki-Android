@@ -36,6 +36,7 @@ class RenameCardTemplateDialog {
             }
                 .input(
                     hint = CollectionManager.TR.actionsNewName(),
+                    displayKeyboard = true,
                     allowEmpty = false,
                     prefill = prefill,
                     waitForPositiveButton = true,

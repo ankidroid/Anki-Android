@@ -26,6 +26,7 @@ import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -46,7 +47,6 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.performClickIfEnabled
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -58,9 +58,9 @@ class PreviewerFragment :
     DispatchKeyEventListener {
 
     override val viewModel: PreviewerViewModel by viewModels {
-        val previewerIdsFile = requireNotNull(requireArguments().getSerializableCompat(CARD_IDS_FILE_ARG)) {
+        val previewerIdsFile = requireNotNull(BundleCompat.getParcelable(requireArguments(), CARD_IDS_FILE_ARG, PreviewerIdsFile::class.java)) {
             "$CARD_IDS_FILE_ARG is required"
-        } as PreviewerIdsFile
+        }
         val currentIndex = requireArguments().getInt(CURRENT_INDEX_ARG, 0)
         PreviewerViewModel.factory(previewerIdsFile, currentIndex, CardMediaPlayer())
     }
@@ -97,7 +97,7 @@ class PreviewerFragment :
         }
         /* ************************************* Menu items ************************************* */
         val menu = view.findViewById<Toolbar>(R.id.toolbar).menu
-        setFlagTitles(menu)
+        setupFlagMenu(menu)
 
         lifecycleScope.launch {
             viewModel.backSideOnly
@@ -123,6 +123,7 @@ class PreviewerFragment :
                 }
         }
 
+        // handle selection of a new flag
         lifecycleScope.launch {
             viewModel.flagCode
                 .flowWithLifecycle(lifecycle)
@@ -188,32 +189,31 @@ class PreviewerFragment :
         }
     }
 
+    private fun setupFlagMenu(menu: Menu) {
+        val submenu = menu.findItem(R.id.action_flag).subMenu
+        lifecycleScope.launch {
+            for ((flag, name) in Flag.queryDisplayNames()) {
+                submenu?.add(Menu.NONE, flag.id, Menu.NONE, name)
+                    ?.setIcon(flag.drawableRes)
+            }
+        }
+    }
+
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> editCard()
             R.id.action_mark -> viewModel.toggleMark()
             R.id.action_back_side_only -> viewModel.toggleBackSideOnly()
-            R.id.action_flag_zero -> viewModel.setFlag(Flag.NONE)
-            R.id.action_flag_one -> viewModel.setFlag(Flag.RED)
-            R.id.action_flag_two -> viewModel.setFlag(Flag.ORANGE)
-            R.id.action_flag_three -> viewModel.setFlag(Flag.GREEN)
-            R.id.action_flag_four -> viewModel.setFlag(Flag.BLUE)
-            R.id.action_flag_five -> viewModel.setFlag(Flag.PINK)
-            R.id.action_flag_six -> viewModel.setFlag(Flag.TURQUOISE)
-            R.id.action_flag_seven -> viewModel.setFlag(Flag.PURPLE)
+            R.id.flag_none -> viewModel.setFlag(Flag.NONE)
+            R.id.flag_red -> viewModel.setFlag(Flag.RED)
+            R.id.flag_orange -> viewModel.setFlag(Flag.ORANGE)
+            R.id.flag_green -> viewModel.setFlag(Flag.GREEN)
+            R.id.flag_blue -> viewModel.setFlag(Flag.BLUE)
+            R.id.flag_pink -> viewModel.setFlag(Flag.PINK)
+            R.id.flag_turquoise -> viewModel.setFlag(Flag.TURQUOISE)
+            R.id.flag_purple -> viewModel.setFlag(Flag.PURPLE)
         }
         return true
-    }
-
-    private fun setFlagTitles(menu: Menu) {
-        menu.findItem(R.id.action_flag_zero).title = Flag.NONE.displayName()
-        menu.findItem(R.id.action_flag_one).title = Flag.RED.displayName()
-        menu.findItem(R.id.action_flag_two).title = Flag.ORANGE.displayName()
-        menu.findItem(R.id.action_flag_three).title = Flag.GREEN.displayName()
-        menu.findItem(R.id.action_flag_four).title = Flag.BLUE.displayName()
-        menu.findItem(R.id.action_flag_five).title = Flag.PINK.displayName()
-        menu.findItem(R.id.action_flag_six).title = Flag.TURQUOISE.displayName()
-        menu.findItem(R.id.action_flag_seven).title = Flag.PURPLE.displayName()
     }
 
     private fun setBackSideOnlyButtonIcon(menu: Menu, isBackSideOnly: Boolean) {

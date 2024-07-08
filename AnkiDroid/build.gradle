@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.keeper)
     id 'idea'
 }
 
@@ -15,6 +16,12 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+keeper {
+    traceReferences {
+        // Silence missing definitions
+        arguments.set(["--map-diagnostics:MissingDefinitionsDiagnostic", "error", "none"])
+    }
+}
 
 idea {
     module {
@@ -35,11 +42,17 @@ static def gitCommitHash() {
 android {
     namespace "com.ichi2.anki"
 
-    compileSdk 34 // change api compileSdk at the same time
+    compileSdk libs.versions.compileSdk.get().toInteger()
 
     buildFeatures {
         buildConfig = true
         aidl = true
+    }
+
+    if (rootProject.testReleaseBuild) {
+        testBuildType "release"
+    } else {
+        testBuildType "debug"
     }
 
     defaultConfig {
@@ -74,20 +87,26 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21900100
-        versionName="2.19alpha0"
-        minSdk 23 // also in testlib/build.gradle.kts
+        versionCode=21900108
+        versionName="2.19alpha8"
+        minSdk libs.versions.minSdk.get().toInteger()
+
+        // Stays until this is in a release: https://github.com/google/desugar_jdk_libs/commit/c01a5446ca13586b801dbba4d83c6821337b3cc2
+        if (testReleaseBuild && minSdk < 24) {
+            minSdk 24
+        }
+
         // After #13695: change .tests_emulator.yml
-        targetSdk 33 // also in [api|testlib]/build.gradle.kts and ../robolectricDownloader.gradle
+        targetSdk libs.versions.targetSdk.get().toInteger()
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
     }
     signingConfigs {
         release {
-            storeFile file("${homePath}/src/android-keystore")
-            keyAlias "nrkeystorealias"
-            storePassword System.getenv("KSTOREPWD")
+            storeFile file(System.getenv("KEYSTOREPATH") ?: "${homePath}/src/android-keystore")
+            storePassword System.getenv("KEYSTOREPWD") ?: System.getenv("KSTOREPWD")
+            keyAlias System.getenv("KEYALIAS") ?: "nrkeystorealias"
             keyPassword System.getenv("KEYPWD")
         }
     }
@@ -129,9 +148,11 @@ android {
             resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
         }
         named('release') {
+            testCoverageEnabled = testReleaseBuild
             minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testProguardFile 'proguard-test-rules.pro'
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
 
             // syntax: assembleRelease -PcustomSuffix="suffix" -PcustomName="New name"
@@ -264,6 +285,16 @@ tasks.register('installGitHook', Copy) {
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
+tasks.register('copyTestLibIntoAndroidTest', Copy) {
+    into new File(rootProject.rootDir, 'AnkiDroid/src/androidTest/java/com/ichi2/testutils')
+    from new File(rootProject.rootDir, 'testlib/src/main/java/com/ichi2/testutils')
+    into ('common') {
+        from 'common'
+    }
+}
+tasks.named('preBuild').configure { dependsOn('copyTestLibIntoAndroidTest') }
+tasks.named('runKtlintCheckOverAndroidTestSourceSet').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
+
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
     doLast {
@@ -283,7 +314,7 @@ tasks.register('assertNonzeroAndroidTests') {
     }
 }
 afterEvaluate {
-    tasks.named('connectedPlayDebugAndroidTest').configure { finalizedBy('assertNonzeroAndroidTests') }
+    tasks.named(androidTestName).configure { finalizedBy('assertNonzeroAndroidTests') }
 }
 
 apply from: "./robolectricDownloader.gradle"
@@ -305,6 +336,9 @@ dependencies {
     compileOnly libs.jetbrains.annotations
     compileOnly libs.auto.service.annotations
     annotationProcessor libs.auto.service
+
+    // modules
+    implementation project(":common")
 
     implementation libs.androidx.activity
     implementation libs.androidx.annotation
@@ -342,7 +376,7 @@ dependencies {
         testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
     } else {
         implementation libs.ankiBackend.backend
-        implementation libs.ankiBackend.testing
+        testImplementation libs.ankiBackend.testing
     }
 
     // May need a resolution strategy for support libs to our versions
@@ -402,8 +436,12 @@ dependencies {
         exclude module: "protobuf-lite"
     }
     testImplementation libs.androidx.work.testing
+    // for testing flows
+    testImplementation libs.cashapp.turbine
 
-    androidTestImplementation project(':testlib')
+    // we should depend directly on the common testlib for androidTest, but we cannot
+    // until coverage-breaking issue is fixed https://issuetracker.google.com/issues/332746900
+    // androidTestImplementation project(':testlib')
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation libs.androidx.espresso.core

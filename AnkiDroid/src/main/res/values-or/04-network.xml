@@ -70,6 +70,7 @@
     <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ କରାଗଲା</string>
     <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସୀଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">ଆପଣଙ୍କର ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ଅଟେ। ସୀଙ୍କ୍ କରିବାକୁ ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ଆଗରୁ ଦୟାକରି ଏହାକୁ ଠିକ୍ କରିନିଅନ୍ତୁ।\n\nଆପଣଙ୍କର ଡାଟାବେସ୍ ମରାମତି ବିଷୟରେ ସୂଚନା ପାଇଁ %s ଦେଖନ୍ତୁ।</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ସ୍ଥାନୀୟ</string>

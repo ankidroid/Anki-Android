@@ -358,7 +358,10 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 menu.findItem(R.id.action_undo).title = col?.undoLabel()
             }
             // Set the back button listener
-            if (!fragmented) {
+            if (fragmented) {
+                // when the fragment is attached to deck picker on large screen, the "back" button had no purpose, so it should be removed
+                toolbar!!.navigationIcon = null
+            } else {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
                 icon!!.isAutoMirrored = true
                 toolbar!!.navigationIcon = icon

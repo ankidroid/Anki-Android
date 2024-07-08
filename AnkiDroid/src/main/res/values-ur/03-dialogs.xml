@@ -55,8 +55,8 @@
     <string name="reposition_card_dialog_message">شروع کی پوزیشن:</string>
     <string name="reposition_card_not_new_error">صرف نئے کارڈز کی جگہ تبدیل کی جا سکتی ہے۔</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d کارڈ دوبارہ ترتیب دیا گیا۔</item>
+        <item quantity="other">%d کارڈز کی جگہ بدل دی گئی۔</item>
     </plurals>
     <string name="reset_card_dialog_title">کارڈ کی پیشرفت کو دوبارہ ترتیب دیں۔</string>
     <plurals name="reset_cards_dialog_acknowledge">
@@ -65,39 +65,39 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card rescheduled</item>
+        <item quantity="one">%d کارڈ دوبارہ شیڈول کیا گیا۔</item>
         <item quantity="other">%d cards rescheduled</item>
     </plurals>
-    <string name="answering_error_title">Database error</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="answering_error_title">ڈیٹا بیس کی خرابی۔</string>
+    <string name="answering_error_message">مجموعہ پر لکھنا ناکام ہو گیا۔ ڈیٹا بیس کرپٹ ہو سکتا ہے یا ڈسک پر کافی جگہ خالی نہیں ہو سکتی۔\n\nاگر ایسا زیادہ ہوتا ہے تو ڈیٹا بیس کو چیک کرنے، جمع کو ٹھیک کرنے یا اسے بیک اپ سے بحال کرنے کی کوشش کریں۔ اس کے لیے \"اختیارات\" کو ٹچ کریں۔\n\یا یہ AnkiDroid بگ بھی ہو سکتا ہے۔ براہ کرم غلطی کی اطلاع دیں تاکہ ہم اسے چیک کر سکیں۔</string>
+    <string name="answering_error_report">غلطی کی اطلاع دیں۔</string>
+    <string name="storage_full_message">AnkiDroid کھولنے کے لیے کافی خالی جگہ نہیں ہے۔ جاری رکھنے کے لیے کچھ جگہ خالی کریں۔</string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
-    <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
-    <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
-    <string name="dialog_yes">Yes</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="intent_aedict_empty">زمرہ \"ڈیفالٹ\" خالی ہے۔</string>
+    <string name="intent_aedict_category">AnkiDroid میں کارڈز شامل کرنے کے لیے تمام نوٹ پیڈ کیٹیگریز کو ہٹا دیں یا \"ڈیفالٹ\" کے نام سے ایک شامل کریں۔</string>
+    <string name="custom_study_new_total_new">ڈیک میں نئے کارڈز: %d</string>
+    <string name="custom_study_rev_total_rev">ڈیک میں جائزے باقی ہیں: %d</string>
+    <string name="custom_study_new_extend">آج کی نئی کارڈ کی حد (\"-3\") میں اضافہ/کم کریں۔</string>
+    <string name="custom_study_rev_extend">آج کی نظرثانی کی حد میں اضافہ/کمی (\"-3\")</string>
+    <string name="custom_study_forgotten">پچھلے دنوں میں بھولے گئے کارڈز کا جائزہ لیں:</string>
+    <string name="custom_study_ahead">ایکس دنوں میں آگے کا جائزہ لیں:</string>
+    <string name="custom_study_random">ڈیک سے تصادفی طور پر ایکس کارڈز منتخب کریں:</string>
+    <string name="custom_study_preview">پچھلے x دنوں میں شامل کیے گئے نئے کارڈز کا جائزہ لیں:</string>
+    <string name="custom_study_rebuild_deck_corrupt">حسب ضرورت مطالعہ ڈیک کو دوبارہ نہیں بنایا جا سکا</string>
+    <string name="storage_full_title">اسٹوریج بھرا ہوا ہے</string>
+    <string name="storage_almost_full_title">اسٹوریج تقریباً بھر گیا ہے</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">کوئی جگہ نہیں</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid کو جاری رکھنے کے لیے %s مفت اسٹوریج کی جگہ درکار ہے۔ براہ کرم کچھ جگہ خالی کریں</string>
+    <string name="restore_backup_title">بیک اپ بحال کریں؟</string>
+    <string name="restore_backup">آپ کا مجموعہ ایک پرانی کاپی سے بدل دیا جائے گا۔ کوئی بھی غیر محفوظ شدہ پیش رفت ضائع ہو جائے گی</string>
+    <string name="restore_backup_choose_another">دوسرا انتخاب کریں۔</string>
+    <string name="dialog_cancel">منسوخ کریں</string>
+    <string name="dialog_ok">ٹھیک ہے</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">تصدیق کریں</string>
+    <string name="dialog_no">نہیں</string>
+    <string name="dialog_yes">جی ہاں</string>
+    <string name="dialog_keep">رکھو</string>
+    <string name="dialog_remove">دور</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_processing">Processing&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
@@ -108,6 +108,9 @@
     <string name="dialog_positive_repair">Repair</string>
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>
@@ -252,4 +255,10 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

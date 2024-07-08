@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Lỗi nghiêm trọng: Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_loop_dialog_title">Hệ thống hiển thị WebView không thành công</string>
     <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Câu hỏi</item>
-        <item>Sắp xếp trường</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Đáp án</item>
-        <item>Thẻ</item>
-        <item>Bộ thẻ</item>
-        <item>Ghi chú</item>
-        <item>Câu hỏi</item>
-        <item>Các đuôi</item>
-        <item>Lần sai</item>
-        <item>Lần ôn tập</item>
-        <item>Khoảng nghỉ</item>
-        <item>Độ khó</item>
-        <item>Hạn</item>
-        <item>Thẻ đã sửa đổi</item>
-        <item>Đã tạo</item>
-        <item>Ghi chú đã sửa đổi</item>
-    </string-array>
     <string name="filter_by_flags">Cờ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Sửa đổi giới hạn thẻ mới của ngày hôm nay</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
     <string name="discard">Loại bỏ</string>
     <string name="note_editor_no_cards_created">Không có thẻ nào được tạo. Vui lòng điền vào các trường khác</string>
-    <string name="note_editor_no_first_field">Trường đầu tiên trống</string>
-    <string name="note_editor_no_cloze_delations">Loại ghi chú này phải chứa đánh dấu cloze</string>
     <string name="note_editor_no_cards_created_all_fields">Loại ghi chú hiện tại không tạo ra bất kỳ thẻ nào. \nVui lòng chọn một loại ghi chú khác, hoặc nhấp vào \"Thẻ\" và thêm một trường thay thế</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Đánh dấu Cloze sẽ chỉ hoạt động trên loại ghi chú Cloze</string>
     <string name="saving_facts">Đang lưu ghi chú</string>

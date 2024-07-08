@@ -87,7 +87,7 @@
     <string name="redo">Tekrarla</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Konturu geri al</string>
     <string name="move_all_to_deck">Hepsini desteye taşı</string>
-    <string name="unbury">Gizlemeyi geri al</string>
+    <string name="unbury">Gömülenleri çıkar</string>
     <string name="rename_deck">Desteyi yeniden adlandır</string>
     <string name="create_shortcut">Kısayol oluştur</string>
     <string name="browse_cards">Kartları göz at</string>
@@ -96,21 +96,23 @@
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hesabı senkronize et</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
-    <string name="menu_bury_card">Kartı gizle</string>
-    <string name="menu_bury_note">Notu gizle</string>
+    <string name="menu_bury_card">Kartı göm</string>
+    <string name="menu_bury_note">Notu göm</string>
     <string name="menu_suspend_card">Kartı askıya al</string>
     <string name="menu_suspend_note">Notu Askıya Al</string>
-    <string name="menu_bury">Gizle</string>
+    <string name="menu_bury">Göm</string>
     <string name="menu_suspend">Askıya Al</string>
     <string name="menu_delete_note">Notu sil</string>
-    <string name="menu_flag">Bayrak</string>
+    <string name="menu_flag">Bayrakla işaretle</string>
+    <string name="rename_flag">Bayrakların adını değiştir</string>
     <string name="menu_flag_card">Kartı bayrakla işaretle</string>
     <string name="menu_edit_tags">Etiketleri düzenle</string>
     <string name="delete_note_message">Bu not ve bütün kartları gerçekten silinsin mi?\n%s</string>
     <string name="menu_search">%1$s\'de Ara</string>
     <string name="menu_mark_note">Notu işaretle</string>
     <string name="menu_unmark_note">İşareti kaldır</string>
-    <string name="menu_toggle_mic_tool_bar">Telaffuzu kontrol et</string>
+    <string name="menu_enable_voice_playback">Ses yeniden oynatmayı aç</string>
+    <string name="menu_disable_voice_playback">Ses yeniden oynatmayı kapat</string>
     <string name="new_deck">Deste oluştur</string>
     <string name="new_dynamic_deck">Filtreli deste oluştur</string>
     <string name="directory_inaccessible">AnkiDroid dizinine ulaşılamıyor</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deste Ara</string>
     <string name="invalid_deck_name">Geçersiz deste adı</string>
     <string name="studyoptions_congrats_finished">Tebrikler! Şimdilik bitirdiniz.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deste şimdilik bitti! %s</string>
     <string name="studyoptions_no_cards_due">Henüz sırası gelmiş kart yok</string>
     <string name="sd_card_not_mounted">Cihaz hafızası takılı değil</string>
     <string name="button_sync" comment="Text of the sync button">Senkronize et</string>
@@ -246,4 +249,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Bütün dosyalara erişim</string>
     <string name="image_occlusion">Resim Örtüsü</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Hesabı sil</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Anında kart</string>
 </resources>

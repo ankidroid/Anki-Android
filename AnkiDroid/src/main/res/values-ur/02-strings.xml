@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">مہلک خرابی: WebView پیش کنندہ کریش ہو گیا۔ وجہ: %s</string>
     <string name="webview_crash_loop_dialog_title">سسٹم ویب ویو رینڈرنگ میں ناکامی۔</string>
     <string name="webview_crash_loop_dialog_content">سسٹم WebView کارڈ \'%1$s\' رینڈر کرنے میں ناکام رہا۔\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>سوال</item>
-        <item>ترتیب دیں فیلڈ</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>جواب</item>
-        <item>کارڈ</item>
-        <item>ڈیک</item>
-        <item>نوٹ</item>
-        <item>سوال</item>
-        <item>ٹیگز</item>
-        <item>لیپس</item>
-        <item>جائزے</item>
-        <item>وقفہ</item>
-        <item>آسانی</item>
-        <item>بقایا</item>
-        <item>کارڈ میں ترمیم کی گئی</item>
-        <item>بنایا</item>
-        <item>ترمیم شدہ نوٹ</item>
-    </string-array>
     <string name="filter_by_flags">جھنڈے</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">آج کی نئی کارڈ کی حد میں ترمیم کریں۔</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">نوٹ میں ترمیم کریں</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">کوئی کارڈ نہیں بنایا۔ براہ کرم مزید فیلڈز پُر کریں۔</string>
-    <string name="note_editor_no_first_field">پہلا میدان خالی ہے۔</string>
-    <string name="note_editor_no_cloze_delations">اس نوٹ کی قسم میں بند حذف کرنا لازمی ہے۔</string>
     <string name="note_editor_no_cards_created_all_fields">موجودہ نوٹ کی قسم نے کوئی کارڈ تیار نہیں کیا۔\nبراہ کرم نوٹ کی کوئی اور قسم منتخب کریں، یا \'کارڈز\' پر کلک کریں اور ایک فیلڈ متبادل شامل کریں۔</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">کلوز کو حذف کرنا صرف کلوز نوٹ کی قسم پر کام کرے گا۔</string>
     <string name="saving_facts">نوٹ محفوظ کرنا</string>

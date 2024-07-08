@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Erreur Fatale : Plantage du moteur de rendu Webview. Cause : %s</string>
     <string name="webview_crash_loop_dialog_title">Échec de rendu du système WebView</string>
     <string name="webview_crash_loop_dialog_content">Le système WebView n\'a pas réussi à afficher la carte « %1$s ».\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Question</item>
-        <item>Trier</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Réponse</item>
-        <item>Carte</item>
-        <item>Paquet</item>
-        <item>Note</item>
-        <item>Question</item>
-        <item>Étiquettes</item>
-        <item>Erreurs</item>
-        <item>Révisions</item>
-        <item>Intervalle</item>
-        <item>Facilité</item>
-        <item>À faire</item>
-        <item>Carte modifiée</item>
-        <item>Créée</item>
-        <item>Note modifiée</item>
-    </string-array>
     <string name="filter_by_flags">Marqueurs</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifier la limite de nouvelles cartes d\'aujourd\'hui</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Modifier la note</string>
     <string name="discard">Jeter</string>
     <string name="note_editor_no_cards_created">Aucune carte créée. Veuillez remplir plus de champs</string>
-    <string name="note_editor_no_first_field">Le premier champ est vide</string>
-    <string name="note_editor_no_cloze_delations">Ce type de note doit contenir des textes à trous</string>
     <string name="note_editor_no_cards_created_all_fields">Le type de note actuel n’a produit aucune carte.\nVeuillez choisir un autre type de carte, ou cliquez sur « Cartes » et ajoutez un champ de substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Les textes à trous ne fonctionneront que sur une carte de type Cloze</string>
     <string name="saving_facts">Enregistrer la note</string>

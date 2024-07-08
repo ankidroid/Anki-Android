@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Erro fatal: o processador do \"WebView\" falhou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Falha no processamento do \"WebView\"</string>
     <string name="webview_crash_loop_dialog_content">O \"WebView\" de sistema falhou no processamento da ficha \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Pergunta</item>
-        <item>Ordenar campo</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Resposta</item>
-        <item>Ficha</item>
-        <item>Baralho</item>
-        <item>Nota</item>
-        <item>Pergunta</item>
-        <item>Etiquetas</item>
-        <item>Falhas</item>
-        <item>Revisões</item>
-        <item>Intervalo</item>
-        <item>Facilidade</item>
-        <item>Data limite</item>
-        <item>Ficha modificada</item>
-        <item>Criada</item>
-        <item>Data de Modificação da Nota</item>
-    </string-array>
     <string name="filter_by_flags">Sinalização</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o limite de novas fichas para hoje</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Editar nota</string>
     <string name="discard">Descartar</string>
     <string name="note_editor_no_cards_created">Nenhuma ficha criada. Por favor, preencha mais campos</string>
-    <string name="note_editor_no_first_field">O primeiro campo está vazio</string>
-    <string name="note_editor_no_cloze_delations">Este tipo de nota tem de conter omissões</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota actual não produziu nenhuma ficha.\nPor favor, escolha outro tipo de nota, ou seleccione \"Fichas\" e adicione um campo de substituição</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Omissões só funcionam em notas do tipo Omissão</string>
     <string name="saving_facts">A guardar nota</string>
@@ -158,7 +135,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá apagar a sua coleção existente substituindo-a pelos dados do ficheiro %s</string>
     <string name="import_dialog_message_add">Adicionar “%s” à colecção? Isto pode demorar bastante tempo.</string>
-    <string name="import_log_no_apkg">Isto não é um ficheiro de Anki válido.</string>
+    <string name="import_log_no_apkg">Isto não é um pacote de Anki válido.</string>
     <string name="import_title_error" comment="Title of error dialog">Erro</string>
     <string name="import_error_handle_exception">Falha ao importar ficheiro\n\n%s</string>
     <string name="import_error_not_apkg_extension">Ficheiro \"%s\" não tem nenhuma das extensões .apkg, nem .colpkg</string>
@@ -169,9 +146,9 @@
     <string name="export_preparation_in_progress">A preparar exportação&#8230;</string>
     <string name="export_ready_title">Exportação pronta</string>
     <string name="export_send_no_handlers">Não tem nenhuma aplicação para lidar com ficheiros .apkg. A guardar&#8230;</string>
-    <string name="export_save_apkg_successful">Ficheiro Anki guardado com sucesso</string>
-    <string name="export_save_apkg_unsuccessful">Falha ao guardar ficheiro Anki</string>
-    <string name="export_share_title">Enviar ficheiro Anki utilizando</string>
+    <string name="export_save_apkg_successful">Pacote Anki guardado com sucesso</string>
+    <string name="export_save_apkg_unsuccessful">Falha ao guardar pacote Anki</string>
+    <string name="export_share_title">Enviar pacote Anki utilizando</string>
     <string name="export_email_subject">Fichas exportadas pelo AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Olá!
         <br/><br/>
@@ -306,8 +283,8 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">O %s não é um pacote de JavaScript válido</string>
     <string name="could_not_create_dir">Não foi possível criar a pasta %s</string>
-    <string name="malicious_archive_entry_outside">Arquivo malicioso. Contém entradas fora da pasta de destino: %s</string>
-    <string name="malicious_archive_exceeds_limit">Arquivo malicioso. O tamanho excede %1$s ou contém mais do que %2$d ficheiros</string>
+    <string name="malicious_archive_entry_outside">Pacote malicioso. Contém entradas fora da pasta de destino: %s</string>
+    <string name="malicious_archive_exceeds_limit">Pacote malicioso. O tamanho excede %1$s ou contém mais do que %2$d ficheiros</string>
     <string name="file_extract_exceeds_storage_space">A extracção deste ficheiro excede o espaço disponível</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Expandir etiqueta \'%s\'</string>
@@ -332,9 +309,9 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Fichas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Alternar entre Fichas e Notas</string>
-    <string name="toggle_browser_mode_help">Alternar entre mostrar fichas e notas no navegador (\"browser\")</string>
-    <string name="truncate_content_help">Mostrar apenas as primeiras três linhas de conteúdo de cada uma das linhas do navegador (\"browser\")</string>
-    <string name="browser_options_dialog_heading">Opções do Navegador (\"Browser\")</string>
+    <string name="toggle_browser_mode_help">Alternar entre mostrar fichas e notas no explorador</string>
+    <string name="truncate_content_help">Mostrar apenas as primeiras três linhas de conteúdo, de cada uma das linhas do explorador.</string>
+    <string name="browser_options_dialog_heading">Opções do Explorador</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Esta funcionalidade está indiponível durante a migração dos dados
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toque  para iniciar a migração dos dados</string>

@@ -114,6 +114,9 @@
     <string name="dialog_positive_repair">Opravit</string>
     <string name="dialog_positive_replace">Nahradit</string>
     <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
+    <string name="dialog_invalid_custom_certificate">Zadaný text neposkytuje platný certifikát X509 v kódování PEM.</string>
+    <string name="dialog_invalid_custom_certificate_title">Chyba zpracování certifikátu</string>
+    <string name="dialog_updated_custom_certificate">Certifikát aktualizován</string>
     <!-- Media checking -->
     <string name="check_media_title">Zkontrolovat multimédia?</string>
     <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií</string>
@@ -268,4 +271,10 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Od</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
 </resources>

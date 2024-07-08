@@ -105,6 +105,9 @@
     <string name="dialog_positive_repair">修复</string>
     <string name="dialog_positive_replace">替换</string>
     <string name="dialog_collection_path_not_dir">指定的路径不是一个有效的目录</string>
+    <string name="dialog_invalid_custom_certificate">提供的文本无法解析为有效的 PEM 编码的 X509 证书</string>
+    <string name="dialog_invalid_custom_certificate_title">解析证书时发生错误</string>
+    <string name="dialog_updated_custom_certificate">证书已更新</string>
     <!-- Media checking -->
     <string name="check_media_title">是否检查媒体？</string>
     <string name="check_media_warning">如果媒体数据较多，检查媒体文件可能会需要较长的时间</string>
@@ -244,4 +247,10 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">从</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">到</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">需要Cloze类型笔记</string>
+    <string name="cloze_not_found_message">未找到Cloze类型笔记，打开笔记编辑器或添加Cloze类型笔记后重试。</string>
+    <string name="open">打开</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">系统 WebView 已过时。有些功能将无法正常工作。请更新它。\n\n已安装版本： %1$d\n所需最低版本： %2$d</string>
 </resources>

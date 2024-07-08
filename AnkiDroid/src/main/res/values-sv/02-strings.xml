@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kritiskt fel: WebViewern kraschade. Orsak: %s</string>
     <string name="webview_crash_loop_dialog_title">Systemfel hos WebViewern</string>
     <string name="webview_crash_loop_dialog_content">WebViewern kunde inte hämta kortet \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Fråga</item>
-        <item>Sortera fält</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Svar</item>
-        <item>Kort</item>
-        <item>Kortlek</item>
-        <item>Not</item>
-        <item>Fråga</item>
-        <item>Etiketter</item>
-        <item>Felsvar</item>
-        <item>Repetitioner</item>
-        <item>Intervall</item>
-        <item>Lätthet</item>
-        <item>Förfallodatum</item>
-        <item>Kort ändrat</item>
-        <item>Skapad</item>
-        <item>Not ändrad</item>
-    </string-array>
     <string name="filter_by_flags">Flaggor</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Redigera not</string>
     <string name="discard">Kasta</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
-    <string name="note_editor_no_first_field">Det första fältet är tomt</string>
-    <string name="note_editor_no_cloze_delations">Denna nottyp måste innehålla textluckor</string>
     <string name="note_editor_no_cards_created_all_fields">Den aktuella nottypen gav inga kort.\nVälj en annan nottyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Textluckor fungerar bara för nottypen Lucktext</string>
     <string name="saving_facts">Sparar not</string>

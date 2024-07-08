@@ -104,13 +104,15 @@
     <string name="menu_suspend">Keskeytä</string>
     <string name="menu_delete_note">Poista merkintä</string>
     <string name="menu_flag">Lippu</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Lisää lippu</string>
     <string name="menu_edit_tags">Muokkaa tageja</string>
     <string name="delete_note_message">Haluatko varmasti poistaa tämän merkinnän ja kaikki sen kortit?\n%s</string>
     <string name="menu_search">Haku %1$s</string>
     <string name="menu_mark_note">Merkitse merkintä</string>
     <string name="menu_unmark_note">Poista merkintä</string>
-    <string name="menu_toggle_mic_tool_bar">Tarkista ääntäminen</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Uusi pakka</string>
     <string name="new_dynamic_deck">Uusi suodatettu pakka</string>
     <string name="directory_inaccessible">AnkiDroidin hakemisto ei ole käytettävissä</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Hae pakkaa</string>
     <string name="invalid_deck_name">Virheellinen pakan nimi</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Kortteja ei tarvitse vielä kerrata</string>
     <string name="sd_card_not_mounted">Laitteen tallennustilaa ei ole kiinnitetty</string>
     <string name="button_sync" comment="Text of the sync button">Synkronoi</string>
@@ -246,4 +249,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Pääsy kaikkiin tiedostoihin</string>
     <string name="image_occlusion">Image Occlusion</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

@@ -108,6 +108,9 @@
     <string name="dialog_positive_repair">Onar</string>
     <string name="dialog_positive_replace">Değiştir</string>
     <string name="dialog_collection_path_not_dir">Belirtilen konum geçerli bir dizin değildi.</string>
+    <string name="dialog_invalid_custom_certificate">Verilen metin geçerli bir PEM-kodlanmış X509 sertifikasına çözümlenmiyor</string>
+    <string name="dialog_invalid_custom_certificate_title">Sertifika çözümlemesinde hata</string>
+    <string name="dialog_updated_custom_certificate">Sertifika güncellendi</string>
     <!-- Media checking -->
     <string name="check_media_title">Medya kontrol edilsin mi?</string>
     <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun sürebilir.</string>
@@ -252,4 +255,10 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">En erken</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">En geç</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Boşluklu Türden Not Gerekiyor</string>
+    <string name="cloze_not_found_message">Boşluklu türden not bulunmuyor, Not Düzenleyiciyi açın ya da Boşluklu türden bir not ekledikten sonra yeniden deneyin.</string>
+    <string name="open">Aç</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
 </resources>

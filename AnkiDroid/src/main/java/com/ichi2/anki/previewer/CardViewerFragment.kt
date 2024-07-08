@@ -36,7 +36,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.ViewerResourceHandler
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
@@ -87,9 +86,9 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 // allow videos to autoplay via our JavaScript eval
                 mediaPlaybackRequiresUserGesture = false
             }
-            val baseUrl = CollectionHelper.getMediaDirectory(requireContext()).toURI().toString()
+
             loadDataWithBaseURL(
-                baseUrl,
+                viewModel.baseUrl(),
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,

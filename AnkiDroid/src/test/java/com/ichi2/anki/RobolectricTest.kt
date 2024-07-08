@@ -44,6 +44,8 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
+import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
+import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -59,11 +61,13 @@ import org.junit.rules.TestName
 import org.robolectric.Robolectric
 import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.junit.rules.TimeoutRule
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
+import kotlin.test.assertNotNull
 
 open class RobolectricTest : AndroidTest {
 
@@ -93,12 +97,21 @@ open class RobolectricTest : AndroidTest {
     @get:Rule
     val failOnUnhandledExceptions = FailOnUnhandledExceptionRule()
 
+    @get:Rule
+    val timeoutRule: TimeoutRule = TimeoutRule.seconds(60)
+
     @Before
     @CallSuper
     open fun setUp() {
         println("""-- executing test "${testName.methodName}"""")
         TimeManager.resetWith(MockTime(2020, 7, 7, 7, 0, 0, 0, 10))
         throwOnShowError = true
+
+        // See the Android logging (from Timber)
+        ShadowLog.stream = System.out
+            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
+            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
+            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
 
         ChangeManager.clearSubscribers()
 
@@ -114,12 +127,6 @@ open class RobolectricTest : AndroidTest {
         CollectionManager.setColForTests(null)
 
         maybeSetupBackend()
-
-        // See the Android logging (from Timber)
-        ShadowLog.stream = System.out
-            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
-            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
-            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
 
         Storage.setUseInMemory(useInMemoryDatabase())
 
@@ -184,6 +191,7 @@ open class RobolectricTest : AndroidTest {
 
             TimeManager.reset()
         }
+        WorkManagerTestInitHelper.closeWorkDatabase()
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         println("""-- completed test "${testName.methodName}"""")
@@ -193,7 +201,7 @@ open class RobolectricTest : AndroidTest {
      * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
      */
     protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
-        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+        val dialog = getLatestAlertDialog()
 
         dialog.getButton(button).performClick()
         // Need to run UI thread tasks to actually run the onClickHandler
@@ -212,7 +220,7 @@ open class RobolectricTest : AndroidTest {
      * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
      */
     protected fun getAlertDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
-        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+        val dialog = getLatestAlertDialog()
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
@@ -436,7 +444,7 @@ open class RobolectricTest : AndroidTest {
 
     private fun validateRunWithAnnotationPresent() {
         try {
-            ApplicationProvider.getApplicationContext()
+            ApplicationProvider.getApplicationContext<Application>()
         } catch (e: IllegalStateException) {
             if (e.message != null && e.message!!.startsWith("No instrumentation registered!")) {
                 // Explicitly ignore the inner exception - generates line noise
@@ -476,3 +484,6 @@ open class RobolectricTest : AndroidTest {
         }
     }
 }
+
+private fun getLatestAlertDialog(): AlertDialog =
+    assertNotNull(ShadowDialog.getLatestDialog() as? AlertDialog, "A dialog should be displayed")

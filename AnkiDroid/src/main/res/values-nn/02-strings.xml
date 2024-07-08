@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kritisk feil: WebView-avspiller krasjet. Årsak: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Spørsmål</item>
-        <item>Sorter feltet</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Svar</item>
-        <item>Kort</item>
-        <item>Kortleik</item>
-        <item>Notat</item>
-        <item>Spørsmål</item>
-        <item>Etiketter</item>
-        <item>Feilsvar</item>
-        <item>Repetisjonar</item>
-        <item>Intervall</item>
-        <item>Lette</item>
-        <item>Forfaller</item>
-        <item>Kort endra</item>
-        <item>Laga</item>
-        <item>Notat endret</item>
-    </string-array>
     <string name="filter_by_flags">Flagg</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Endre grensa for nye kort i dag</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Rediger notat</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Ingen kort opprettet. Fyll ut flere felt</string>
-    <string name="note_editor_no_first_field">Det første feltet er tomt</string>
-    <string name="note_editor_no_cloze_delations">Denne notattypen kan ikke inneholde hulltekstfyll.</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Fylling av hulltekst fungerer ikke i en hulltekstnotat.</string>
     <string name="saving_facts">Lagrer notat</string>

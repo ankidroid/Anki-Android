@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">মারাত্মক ত্রুটি: ওয়েবভিউ রেনডারার ক্র্যাশ করেছে। কারণ: %s</string>
     <string name="webview_crash_loop_dialog_title">সিস্টেম ওয়েবভিউ রেন্ডারিং ব্যর্থ</string>
     <string name="webview_crash_loop_dialog_content">সিস্টেম ওয়েব-ভিউ \'%1$s\'.\n %2$s কার্ড রেন্ডার করতে ব্যর্থ হয়েছে</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>প্রশ্ন</item>
-        <item>ফিল্ড সাজান</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>উত্তর</item>
-        <item>কার্ড</item>
-        <item>ডেক</item>
-        <item>নোট</item>
-        <item>প্রশ্ন</item>
-        <item>টেগসমূহ</item>
-        <item>ভুলে যাওয়া</item>
-        <item>পরিদর্শন</item>
-        <item>বিরামকাল</item>
-        <item>সহজতা</item>
-        <item>ডিউ</item>
-        <item>কার্ড পরিবর্তন</item>
-        <item>রচিত</item>
-        <item>নোট পরিবর্তিত</item>
-    </string-array>
     <string name="filter_by_flags">নিশান</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">আজকের নতুন কার্ড সীমা বদল</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">নোট সম্পাদন</string>
     <string name="discard">বাতিল করুন</string>
     <string name="note_editor_no_cards_created">কোনও কার্ড বানানো যায়নি। আরো ক\'টি ফিল্ডে লিখুন।</string>
-    <string name="note_editor_no_first_field">প্রথম ফিল্ডটি খালি</string>
-    <string name="note_editor_no_cloze_delations">এই ধরনের নোটে অবশ্যই ক্লোজ ডিলিশন থাকতে হবে</string>
     <string name="note_editor_no_cards_created_all_fields">এই নোট টাইপ অনুসারে কোনও কার্ড তৈরি করা যায়নি। \nঅন্য নোটটাইপ দিয়ে করুন অথবা  ‘কার্ডসমূহ’ তে ক্লিক করে প্রতিস্থাপন ফিল্ড যোগ করুন</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ক্লোজ ডিলিশন শুধু ক্লোজ নোটটাইপ এ-ই কাজ করে</string>
     <string name="saving_facts">নোট সংরক্ষিত হচ্ছে</string>

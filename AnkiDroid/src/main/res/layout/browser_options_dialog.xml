@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -74,6 +75,41 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_flag"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="16dp" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:minHeight="?attr/listPreferredItemHeightSmall"
+            android:id="@+id/action_rename_flag"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginHorizontal="16dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_flag_transparent"
+                android:layout_height="match_parent"/>
+
+            <com.ichi2.ui.FixedTextView
+                android:layout_marginStart="4dp"
+                android:layout_width="match_parent"
+                android:text="@string/rename_flag"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

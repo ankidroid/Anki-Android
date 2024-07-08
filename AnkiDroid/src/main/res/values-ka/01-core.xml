@@ -104,13 +104,15 @@
     <string name="menu_suspend">გამოტოვება</string>
     <string name="menu_delete_note">შენიშვნის წაშლა</string>
     <string name="menu_flag">დროშა</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">დროშის მიმაგრება</string>
     <string name="menu_edit_tags">იარლიყის რედაქტირება</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>
     <string name="menu_search">მონახულება %1$s-ში</string>
     <string name="menu_mark_note">მონიშნე შენიშვნა</string>
     <string name="menu_unmark_note">შენიშვნის გაუქმება</string>
-    <string name="menu_toggle_mic_tool_bar">გამოთქმის შემოწმება</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">დასტის შექმნა</string>
     <string name="new_dynamic_deck">ფილტრირებული დასტის შექმნა</string>
     <string name="directory_inaccessible">AnkiDroid-ის ბიბლიოთეკა მიუწვდომელია</string>
@@ -131,6 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">დასტის ძიება</string>
     <string name="invalid_deck_name">დასტის სახელი არასწორია</string>
     <string name="studyoptions_congrats_finished">გილოცავთ! დღეისთვის სულ ეს იყო.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ჯერ ბარათები არ არის</string>
     <string name="sd_card_not_mounted">მოწყობილობის მეხსიერება არაა ჩაყენებული</string>
     <string name="button_sync" comment="Text of the sync button">სინქრონიზაცია</string>
@@ -246,4 +249,6 @@
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
     <string name="image_occlusion">სასურათე საფარველები</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

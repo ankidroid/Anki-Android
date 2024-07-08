@@ -28,6 +28,7 @@ import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.cardviewer.SingleCardSide
 import com.ichi2.anki.launchCatchingIO
+import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -67,6 +68,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     override var currentCard: Deferred<Card> = asyncIO {
         withCol { getCard(selectedCardIds[firstIndex]) }
     }
+    override val server = AnkiServer(this).also { it.start() }
 
     /* *********************************************************************************************
     ************************ Public methods: meant to be used by the View **************************

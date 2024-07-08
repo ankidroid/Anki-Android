@@ -62,6 +62,7 @@ object SyncPreferences {
     const val CURRENT_SYNC_URI = "currentSyncUri"
     const val CUSTOM_SYNC_URI = "syncBaseUrl"
     const val CUSTOM_SYNC_ENABLED = CUSTOM_SYNC_URI + VersatileTextWithASwitchPreference.SWITCH_SUFFIX
+    const val CUSTOM_SYNC_CERTIFICATE = "customSyncCertificate"
 
     // Used in the legacy schema path
     const val HOSTNUM = "hostNum"
@@ -79,6 +80,11 @@ interface SyncCompletionListener {
 
 fun DeckPicker.syncAuth(): SyncAuth? {
     val preferences = this.sharedPrefs()
+
+    // Grab custom sync certificate from preferences (default is the empty string) and set it in CollectionManager
+    val currentSyncCertificate = preferences.getString(SyncPreferences.CUSTOM_SYNC_CERTIFICATE, "") ?: ""
+    CollectionManager.updateCustomCertificate(currentSyncCertificate)
+
     val hkey = preferences.getString(SyncPreferences.HKEY, null)
     val resolvedEndpoint = getEndpoint(this)
     return hkey?.let {
@@ -238,7 +244,8 @@ private suspend fun handleNormalSync(
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
             // scheduler version may have changed
             withCol { _loadScheduler() }
-            deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
+            val message = if (syncMedia) R.string.col_synced_media_in_background else R.string.sync_database_acknowledge
+            deckPicker.showSyncLogMessage(message, output.serverMessage)
             deckPicker.refreshState()
             if (syncMedia) {
                 SyncMediaWorker.start(deckPicker, auth2)
@@ -365,7 +372,7 @@ suspend fun monitorMediaSync(
             .setPositiveButton(R.string.dialog_continue) { _, _ ->
                 scope.cancel()
             }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+            .setNegativeButton(TR.syncAbortButton()) { _, _ ->
                 cancelMediaSync(backend)
             }
             .show()

@@ -35,8 +35,8 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Screen
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
-import com.ichi2.testutils.Flaky
-import com.ichi2.testutils.OS
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat

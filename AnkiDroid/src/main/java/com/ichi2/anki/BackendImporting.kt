@@ -17,22 +17,25 @@
 package com.ichi2.anki
 
 import android.content.Intent
+import android.net.Uri
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesOnly
+import anki.import_export.ImportAnkiPackageRequest
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.buildSearchString
-import com.ichi2.libanki.importAnkiPackageRaw
+import com.ichi2.libanki.importAnkiPackage
 import com.ichi2.libanki.importCsvRaw
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 suspend fun importAnkiPackageUndoable(input: ByteArray): ByteArray {
+    val request = ImportAnkiPackageRequest.parseFrom(input)
+    val path = Uri.encode(request.packagePath, "/")
     return withContext(Dispatchers.Main) {
-        val output = withCol { this.importAnkiPackageRaw(input) }
-        val changes = OpChangesOnly.parseFrom(output)
-        undoableOp { changes }
-        output
+        val output = withCol { importAnkiPackage(path, request.options) }
+        undoableOp { output.changes }
+        output.toByteArray()
     }
 }
 

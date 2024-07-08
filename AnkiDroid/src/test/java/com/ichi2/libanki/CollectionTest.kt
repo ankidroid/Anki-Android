@@ -21,6 +21,9 @@ import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
@@ -205,5 +208,63 @@ class CollectionTest : JvmTest() {
     fun test_filterToValidCards() {
         val cid = addNoteUsingBasicModel("foo", "bar").firstCard().id
         assertEquals(ArrayList(setOf(cid)), col.filterToValidCards(longArrayOf(cid, cid + 1)))
+    }
+
+    @Test
+    fun `default card columns`() {
+        assertThat(
+            col.loadBrowserCardColumns(),
+            equalTo(
+                listOf("noteFld", "template", "cardDue", "deck")
+            )
+        )
+    }
+
+    @Test
+    fun `default note columns`() {
+        assertThat(
+            col.loadBrowserNoteColumns(),
+            equalTo(
+                listOf("noteFld", "note", "template", "noteTags")
+            )
+        )
+    }
+
+    @Test
+    fun `set note columns`() {
+        col.setBrowserNoteColumns(listOf("noteFld"))
+
+        assertThat(
+            col.loadBrowserNoteColumns(),
+            equalTo(
+                listOf("noteFld")
+            )
+        )
+    }
+
+    @Test
+    fun `set card columns`() {
+        col.setBrowserCardColumns(listOf("question"))
+
+        assertThat(
+            col.loadBrowserCardColumns(),
+            equalTo(
+                listOf("question")
+            )
+        )
+    }
+
+    @Test
+    fun `get browser column`() {
+        kotlin.test.assertNotNull(col.getBrowserColumn("question")).also {
+            assertThat(it.cardsModeLabel, equalTo("Question"))
+        }
+
+        assertThat(col.getBrowserColumn("invalid"), nullValue())
+    }
+
+    @Test
+    fun `get all columns`() {
+        assertThat(col.allBrowserColumns(), not(hasSize(0)))
     }
 }

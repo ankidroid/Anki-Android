@@ -27,6 +27,7 @@ TODO: Add a unit test
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/custom_buttons"
     android:key="@string/pref_app_bar_buttons_screen_key">
     <Preference
@@ -52,7 +53,7 @@ TODO: Add a unit test
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_schedule_card_key"
-            android:title="@string/card_editor_reschedule_card"
+            tools:title="Set due date"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="2"
@@ -122,7 +123,7 @@ TODO: Add a unit test
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_toggle_mic_toolbar_key"
-            android:title="@string/menu_toggle_mic_tool_bar"
+            android:title="@string/menu_enable_voice_playback"
             app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/menu_dismiss_note" >

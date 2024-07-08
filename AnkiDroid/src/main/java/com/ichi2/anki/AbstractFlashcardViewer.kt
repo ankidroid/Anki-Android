@@ -231,8 +231,6 @@ abstract class AbstractFlashcardViewer :
     @get:VisibleForTesting
     var cardContent: String? = null
         private set
-    private val baseUrl
-        get() = getMediaBaseUrl(CollectionHelper.getMediaDirectory(this).path)
 
     private var viewerUrl: String? = null
     private val fadeDuration = 300
@@ -1502,7 +1500,7 @@ abstract class AbstractFlashcardViewer :
         if (card != null) {
             card.settings.mediaPlaybackRequiresUserGesture = !cardMediaPlayer.config.autoplay
             card.loadDataWithBaseURL(
-                baseUrl,
+                server.baseUrl(),
                 content,
                 "text/html",
                 null,
@@ -2265,9 +2263,6 @@ abstract class AbstractFlashcardViewer :
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             pageRenderStopwatch.reset()
             pageFinishedFired = false
-            val script = "globalThis.ankidroid = globalThis.ankidroid || {};" +
-                "ankidroid.postBaseUrl = `${server.baseUrl()}`"
-            view?.evaluateJavascript(script, null)
         }
 
         override fun shouldInterceptRequest(

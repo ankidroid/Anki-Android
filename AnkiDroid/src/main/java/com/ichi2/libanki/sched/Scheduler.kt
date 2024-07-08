@@ -41,6 +41,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.EpochSeconds
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
@@ -114,6 +115,7 @@ open class Scheduler(val col: Collection) {
     }
 
     /** The time labels for the four answer buttons. */
+    @LibAnkiAlias("describe_next_states")
     fun describeNextStates(states: SchedulingStates): List<String> {
         return col.backend.describeNextStates(states)
     }
@@ -232,8 +234,10 @@ open class Scheduler(val col: Collection) {
      * @param ids Id of cards to suspend
      */
     open fun suspendCards(ids: Iterable<CardId>): OpChangesWithCount {
+        val cids = ids.toList()
+        Timber.i("suspending %d card(s)", cids.size)
         return col.backend.buryOrSuspendCards(
-            cardIds = ids.toList(),
+            cardIds = cids,
             noteIds = listOf(),
             mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
         )
@@ -251,8 +255,10 @@ open class Scheduler(val col: Collection) {
      * @param ids Id of cards to unsuspend
      */
     open fun unsuspendCards(ids: Iterable<CardId>): OpChanges {
+        val cids = ids.toList()
+        Timber.i("unsuspending %d card(s)", cids.size)
         return col.backend.restoreBuriedAndSuspendedCards(
-            cids = ids.toList()
+            cids = cids
         )
     }
 

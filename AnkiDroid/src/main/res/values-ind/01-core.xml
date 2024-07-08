@@ -101,13 +101,15 @@
     <string name="menu_suspend">Tangguhkan</string>
     <string name="menu_delete_note">Hapus catatan</string>
     <string name="menu_flag">Panji</string>
+    <string name="rename_flag">Ubah nama panji</string>
     <string name="menu_flag_card">Beri kartu panji</string>
     <string name="menu_edit_tags">Edit tag</string>
     <string name="delete_note_message">Yakin akan menghapus catatan ini dan semua kartunya?\n%s</string>
     <string name="menu_search">Pencarian di %1$s</string>
     <string name="menu_mark_note">Tandai catatan</string>
     <string name="menu_unmark_note">Batal tandai catatan</string>
-    <string name="menu_toggle_mic_tool_bar">Cek pelafalan</string>
+    <string name="menu_enable_voice_playback">Mengaktifkan pemutaran suara</string>
+    <string name="menu_disable_voice_playback">Menonaktifkan pemutaran suara</string>
     <string name="new_deck">Buat dek</string>
     <string name="new_dynamic_deck">Buat dek terfilter</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat diakses</string>
@@ -127,7 +129,8 @@
     <string name="empty_deck">Dek ini kosong</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pencarian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">Selamat! Anda telah selesai untuk saat ini.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Dek selesai untuk saat ini! %s</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
     <string name="button_sync" comment="Text of the sync button">Sinkronisasi</string>
@@ -136,7 +139,7 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronisasi dibatalkan</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Sinkronisasi media</string>
     <string name="export_deck">Ekspor dek</string>
     <string name="nothing">Tidak ada</string>
     <!-- Card template editor -->
@@ -227,7 +230,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Lanjutkan migrasi</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksi tidak dapat diakses</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Kami tidak dapat mengakses koleksi Anda setelah AnkiDroid dihapus akibat perubahan Kebijakan Play Store\n\nData Anda aman dan dapat dipulihkan. Data Anda berada di\n%s\n\nPilih salah satu opsi berikut untuk memulihkan:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android telah menghapus izin %1$s AnkiDroid karena aplikasi tidak aktif.\n\nData Anda aman dan dapat dipulihkan. Letaknya di \n%2$s\n\nPilih opsi di bawah ini untuk memulihkan:</string>
     <string name="restore_data_from_ankiweb">Pulihkan dari AnkiWeb (disarankan)</string>
     <string name="install_non_play_store_ankidroid_recommended">Pulihkan akses folder (disarankan)</string>
     <string name="install_non_play_store_ankidroid">Pulihkan akses folder (lanjutan)</string>
@@ -240,5 +243,7 @@
     <string name="storage_access_summary">Menyimpan koleksi Anda dalam tempat yang aman yang tidak akan terhapus jika aplikasi dicopot pemasangannya</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Akses semua berkas</string>
     <string name="image_occlusion">Oklusi Gambar</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Hapus akun</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Kartu instan</string>
 </resources>

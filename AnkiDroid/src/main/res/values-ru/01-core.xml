@@ -61,9 +61,9 @@
     <string name="collapse">Свернуть</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">Осталась %d минута</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">Осталось %d минут</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="few">Остались %d минуты</item>
+        <item quantity="many">Остались %d минут</item>
+        <item quantity="other">Осталось %d минуты</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
@@ -72,10 +72,10 @@
         <item quantity="other">Осталось %1$d часов %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Остался %1$d день %2$d</item>
+        <item quantity="few">Осталось %1$d дня %2$d</item>
+        <item quantity="many">Остались %1$d дней %2$d</item>
+        <item quantity="other">Осталось %1$d дней %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция пуста</string>
     <string name="no_cards_placeholder_description">Добавляйте карточки\nс помощью значка «+».</string>
@@ -110,13 +110,15 @@
     <string name="menu_suspend">Исключить</string>
     <string name="menu_delete_note">Удалить запись</string>
     <string name="menu_flag">Флажок</string>
+    <string name="rename_flag">Переименовать флажки</string>
     <string name="menu_flag_card">Поставить флажок</string>
     <string name="menu_edit_tags">Редактировать метки</string>
     <string name="delete_note_message">Удалить эту запись и все связанные карточки?\n%s</string>
     <string name="menu_search">Посмотреть в %1$s</string>
     <string name="menu_mark_note">Отметить запись</string>
     <string name="menu_unmark_note">Снять отметку</string>
-    <string name="menu_toggle_mic_tool_bar">Проверить произношение</string>
+    <string name="menu_enable_voice_playback">Включить воспроизведение голоса</string>
+    <string name="menu_disable_voice_playback">Выключить воспроизведение голоса</string>
     <string name="new_deck">Создать колоду</string>
     <string name="new_dynamic_deck">Создать фильтрованную колоду</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -136,7 +138,8 @@
     <string name="empty_deck">Эта колода пуста</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Поиск колоды</string>
     <string name="invalid_deck_name">Недопустимое название колоды</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_finished">Ура! На сегодня всё.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Колода закончилась! %s</string>
     <string name="studyoptions_no_cards_due">Нет карточек на сегодня</string>
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
@@ -254,6 +257,8 @@
     <string name="storage_access_title">Доступ к хранилищу</string>
     <string name="storage_access_summary">Сохраняет вашу коллекцию в безопасном месте, чтобы она не исчезла при удалении приложения</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ ко всем файлам</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="image_occlusion">Скрытие части изображений</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Удалить учетную запись</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Добавить</string>
 </resources>

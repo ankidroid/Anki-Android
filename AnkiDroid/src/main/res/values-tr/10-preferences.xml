@@ -219,6 +219,7 @@
         <a href="%s">Daha fazlasını öğren</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Senkronizasyon Url\'i</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Özel root sertifikası (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klavye</string>
     <string name="bluetooth">Bluetooth</string>

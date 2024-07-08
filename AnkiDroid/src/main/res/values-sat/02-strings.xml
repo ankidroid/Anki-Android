@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatal ᱵᱷᱩᱞ: WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="webview_crash_loop_dialog_title">ᱥᱤᱥᱴᱚᱢ WebView ᱨᱮᱱᱰᱚᱨᱤᱝ ᱯᱷᱮᱞ ᱮᱱᱟ</string>
     <string name="webview_crash_loop_dialog_content">ᱥᱤᱥᱴᱚᱢ WebView ᱠᱟᱨᱰ ᱨᱮᱱᱰᱚᱨᱤᱝ ᱡᱚᱠᱷᱟᱜ ᱯᱷᱮᱞ ᱮᱱᱟ \'%1$s\'.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>ᱯᱚᱨᱥᱚᱱ</item>
-        <item>ᱡᱟᱭᱛᱟ ᱥᱚᱨᱟᱴ ᱢᱮ</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>ᱛᱮᱞᱟ</item>
-        <item>ᱠᱟᱰ</item>
-        <item>ᱰᱮᱠ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ</item>
-        <item>ᱯᱚᱨᱥᱚᱱ</item>
-        <item>ᱴᱮᱜᱥ</item>
-        <item>ᱞᱮᱯᱥ</item>
-        <item>ᱥᱚᱢᱤᱠᱷᱭᱟ</item>
-        <item>ᱚᱸᱛᱨᱟᱞ</item>
-        <item>ᱥᱚᱦᱚᱡ</item>
-        <item>ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</item>
-        <item>ᱠᱟᱰ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
-        <item>ᱛᱮᱭᱟᱨ ᱮᱱᱟ</item>
-        <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
-    </string-array>
     <string name="filter_by_flags">ᱯᱚᱛᱠᱟ ᱠᱚ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
-    <string name="note_editor_no_first_field">ᱯᱨᱩᱛᱷᱩᱢ ᱡᱟᱭᱜᱟ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
-    <string name="note_editor_no_cloze_delations">ᱱᱚᱝᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮ cloze ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ </string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>

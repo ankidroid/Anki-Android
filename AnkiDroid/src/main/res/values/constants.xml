@@ -139,6 +139,8 @@
     <string name="link_ankidroid_privacy_policy">https://github.com/ankidroid/Anki-Android/wiki/Privacy-Policy</string>
     <string name="link_ankiweb_privacy_policy">https://ankiweb.net/account/privacy</string>
     <string name="link_ankiweb_terms_and_conditions">https://ankiweb.net/account/terms</string>
+    <string name="link_webview_update">https://github.com/ankidroid/Anki-Android/wiki/WebView-Detection-and-Package-Updates#outdated-webview</string>
+    <string name="link_legacy_webview_update">https://github.com/ankidroid/Anki-Android/wiki/WebView-Detection-and-Package-Updates#outdated-android-native-webview</string>
     <!-- Link is in the name of Glutanimate - server admin -->
     <string name="link_discord">https://discord.gg/qjzcRTx</string>
     <string name="link_facebook">https://www.facebook.com/AnkiDroid/</string>
@@ -298,4 +300,7 @@
     <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
     <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
     <string name="reset_onboarding_desc">Show all tutorials again</string>
+
+    <!-- Instant Editor -->
+    <string name="open_instant_editor">Open Instant Editor</string>
 </resources>

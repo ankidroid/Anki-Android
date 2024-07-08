@@ -63,22 +63,23 @@
     <string name="logged_as">Naka-login bilang</string>
     <string name="log_out">Mag log out</string>
     <string name="reset_password">I-reset ang password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">Nakalimutan ang email?</string>
+    <string name="sign_in">Naglo-login</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Mga opsiyon para sa XXX</string>
     <string name="sync_title">Pag-synchronize</string>
     <string name="sync_log_uploading_message">Buong pag-sync mula sa lokal</string>
     <string name="sync_database_acknowledge">Nai-sync na ang mga koleksyon</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Ang iyong database ay sira. Mangyaring ayusin ito bago muling subukan na i-sync.\n\n Tingnan ang %s para sa impormasyon tungkol sa pag-aayos ng iyong database.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Remote</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title">Isang-daanang pag-sync</string>
+    <string name="one_way_sync_confirmation">Hiniling ang isang-daanang pag-sync</string>
     <string name="full_sync_confirmation">Ang hiniling na pagbabago ay mangangailangan ng isang buong pag-upload ng database kapag susunod mong i-synchronize ang iyong koleksyon. Kung mayroon kang mga review o iba pang mga pagbabago na naghihintay sa iba pang mga device na hindi pa naka-synchronize dito, mawawala ang mga ito. Magpatuloy?</string>
     <string name="full_sync_confirmation_upgrade">Dahil sa isang bug sa naunang naka-install na bersyon ng AnkiDroid, inirerekumenda ang isang buong pag-sync.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">I-sync (isang-daanan)</string>
+    <string name="sync_menu_title_no_account">I-sync (maglog-in)</string>
 </resources>

@@ -93,24 +93,18 @@ fi
 
 # If any changes go in during the release process, pushing fails, so push immediately.
 # Worst case this burns a version number despite a failure later, and we have a version/tag
-# that never launched. That's better than having to manually patch up build.gradle and push a tag
+# that never launched. That's better than having to manually patch up build.gradle.kts and push a tag
 # for a release that did launch, but the push failed
 echo "Committing changelog and version bump via git"
 git add $GRADLEFILE $CHANGELOG
 git commit -m "Bumped version to $VERSION"
 git tag v"$VERSION"
 
-# Read the key passwords if needed
-if [ "$KSTOREPWD" == "" ]; then
-  read -rsp "Enter keystore password: " KSTOREPWD; echo
-  read -rsp "Enter key password: " KEYPWD; echo
-  export KSTOREPWD
-  export KEYPWD
-fi
+. tools/check-keystore.sh
 
 # Build signed APK using Gradle and publish to Play.
 # Do this before building universal of the play flavor so the universal is not uploaded to Play Store
-# Configuration for pushing to Play specified in build.gradle 'play' task
+# Configuration for pushing to Play specified in build.gradle.kts 'play' task
 echo "Running 'publishPlayReleaseApk' gradle target"
 ./gradlew --stop
 if ! ./gradlew publishPlayReleaseApk

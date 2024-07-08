@@ -223,6 +223,7 @@
         <a href="%s">Zjistit více</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronizovat url</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Vlastní kořenový certifikát (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>

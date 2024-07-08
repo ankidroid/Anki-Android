@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Fatale fout: WebView renderer is gecrasht. Oorzaak: %s</string>
     <string name="webview_crash_loop_dialog_title">Systeem WebView Rendering Mislukking.</string>
     <string name="webview_crash_loop_dialog_content">Systeem WebView kon de kaart \'%1$s\' niet renderen.\n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Vraag</item>
-        <item>Sorteerveld</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Antwoord</item>
-        <item>Kaart</item>
-        <item>Set</item>
-        <item>Memo</item>
-        <item>Vraag</item>
-        <item>Labels</item>
-        <item>Missers</item>
-        <item>Overhoringen</item>
-        <item>Interval</item>
-        <item>Gemak</item>
-        <item>Deadline</item>
-        <item>Kaart Gewijzigd</item>
-        <item>Gemaakt</item>
-        <item>Memo gewijzigd</item>
-    </string-array>
     <string name="filter_by_flags">Vlaggen </string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Nieuwe kaartenlimiet voor vandaag wijzigen</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Kaart bewerken</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Geen kaarten aangemaakt. Vul alstublieft meer velden in</string>
-    <string name="note_editor_no_first_field">Het eerste veld is leeg</string>
-    <string name="note_editor_no_cloze_delations">Dit type memo moet invuloefeningen bevatten.</string>
     <string name="note_editor_no_cards_created_all_fields">Het huidige type memo produceerde geen kaarten.\nKies alstublieft een ander type memo, of klik op \'Kaarten\' en voeg een veld substitutie toe.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Invuloefeningen werken slechts bij een memo van het type Cloze</string>
     <string name="saving_facts">Kaart opslaan</string>

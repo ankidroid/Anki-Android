@@ -217,6 +217,7 @@
         <a href="%s">了解更多</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同步地址</string>
+    <string name="custom_sync_certificate_title" maxLength="41">自定义根证书 (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">键盘</string>
     <string name="bluetooth">蓝牙</string>

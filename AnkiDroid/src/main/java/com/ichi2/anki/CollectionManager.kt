@@ -21,13 +21,13 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.backend.backendError
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
-import com.ichi2.utils.isRobolectric
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -40,7 +40,6 @@ import okio.withLock
 import timber.log.Timber
 import java.io.File
 import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
 
 object CollectionManager {
     /**
@@ -66,6 +65,8 @@ object CollectionManager {
     var emulateOpenFailure = false
 
     private val testMutex = ReentrantLock()
+
+    private var currentSyncCertificate: String = ""
 
     /**
      * Execute the provided block on a serial background queue, to ensure
@@ -400,5 +401,28 @@ object CollectionManager {
         // note: we avoid the call to .limitedParallelism() here,
         // as it does not seem to be compatible with the test scheduler
         queue = dispatcher
+    }
+
+    /**
+     * Update the custom TLS certificate used in the backend for its requests to the sync server.
+     *
+     * If the cert parameter hasn't changed from the cached sync certificate, then just return true.
+     * Otherwise, set the custom certificate in the backend and get the success value.
+     *
+     * If cert was a valid certificate, then cache it in currentSyncCertificate and return true.
+     * Otherwise, return false to indicate that a custom sync certificate was not applied.
+     *
+     * Passing in an empty string unsets any custom sync certificate in the backend.
+     */
+    fun updateCustomCertificate(cert: String): Boolean {
+        if (cert == currentSyncCertificate) {
+            return true
+        }
+
+        return getBackend().setCustomCertificate(cert).apply {
+            if (this) {
+                currentSyncCertificate = cert
+            }
+        }
     }
 }

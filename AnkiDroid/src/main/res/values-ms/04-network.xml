@@ -70,6 +70,7 @@
     <string name="sync_title">Penyegerakan</string>
     <string name="sync_log_uploading_message">Penyegerakan penuh daripada tempatan</string>
     <string name="sync_database_acknowledge">Koleksi telah disegerakkan</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Pangkalan data anda rosak. Sila membaikinya sebelum cuba penyegerakan lagi.\n\nLihat %s untuk maklumat tentang membaiki pangkalan data anda.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Tempatan</string>

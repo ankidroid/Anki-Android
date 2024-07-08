@@ -50,7 +50,7 @@
         <item quantity="one">%d ମି</item>
         <item quantity="other">%d ମି</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s ମିଲିସେକେଣ୍ଡ</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">କିଛି ପରିଣାମ ନାହିଁ</string>
     <!-- preferences.xml categories-->
@@ -219,6 +219,7 @@
         <a href="%s">ଅଧିକ ଜାଣନ୍ତୁ</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">ସୀଙ୍କ୍ url</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">କୀବୋର୍ଡ୍</string>
     <string name="bluetooth">Bluetooth</string>

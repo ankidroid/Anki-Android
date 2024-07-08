@@ -36,12 +36,16 @@ import anki.collection.OpChangesWithId
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.utils.ext.ifNotZero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 
 object ChangeManager {
+    // do not make this a 'fun interface' - lambdas may immediately be GCed
+    // due to the use of WeakReference
     interface Subscriber {
         /**
          * Called after a backend method invoked via col.op() or col.opWithProgress()
@@ -53,6 +57,8 @@ object ChangeManager {
 
     // Maybe fixes #16217 - CopyOnWriteArrayList makes this object thread-safe
     private val subscribers = CopyOnWriteArrayList(mutableListOf<WeakReference<Subscriber>>())
+
+    val subscriberCount get() = subscribers.size
 
     fun subscribe(subscriber: Subscriber) {
         subscribers.add(WeakReference(subscriber))
@@ -73,13 +79,15 @@ object ChangeManager {
                 ref.opExecuted(changes, handler)
             }
         }
+        expired.size.ifNotZero { size -> Timber.v("removing %d expired subscribers", size) }
         for (item in expired) {
             subscribers.remove(item)
         }
     }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun clearSubscribers() {
+        subscribers.size.ifNotZero { size -> Timber.d("clearing %d subscribers", size) }
         subscribers.clear()
     }
 

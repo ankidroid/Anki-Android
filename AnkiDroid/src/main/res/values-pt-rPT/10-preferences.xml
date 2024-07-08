@@ -79,9 +79,9 @@
     <string name="card_zoom" maxLength="41">Zoom da ficha</string>
     <string name="image_zoom" maxLength="41">Zoom da imagem</string>
     <string name="button_size" maxLength="41">Tamanho dos botões de resposta</string>
-    <string name="card_browser_font_size" maxLength="41">Dimensionamento do texto no navegador de fichas</string>
-    <string name="card_browser_hide_media" maxLength="41">Exibir nomes de arquivo no explorador de fichas</string>
-    <string name="card_browser_hide_media_summary">Mostrar os nomes dos ficheiros de multimédia nos campos de pergunta/resposta do navegador de fichas</string>
+    <string name="card_browser_font_size" maxLength="41">Escala do texto no Explorador de Fichas</string>
+    <string name="card_browser_hide_media" maxLength="41">Mostrar nome de ficheiros no explorador</string>
+    <string name="card_browser_hide_media_summary">Mostrar os nomes dos ficheiros de multimédia nos campos de pergunta/resposta do explorador de fichas.</string>
     <string name="col_path" maxLength="41">Diretoria do AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Modo de ecrã completo</string>
     <string name="full_screen_off">Desligado</string>
@@ -97,8 +97,8 @@
     <string name="gestures_summ">Atribuir gestos a ações tais como responder e editar fichas.</string>
     <string name="gestures_corner_touch" maxLength="41">Toque de 9 pontos</string>
     <string name="gestures_corner_touch_summary">Permitir gestos de toque nos cantos da tela</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Gaveta de navegação em tela cheia</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Abrir gaveta de navegação quando desliza pela direita de qualquer lugar da tela</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Painel de navegação no ecrã completo</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Abrir painel de navegação quando desliza para a direita de qualquer ponto do ecrã</string>
     <string name="gestures_none" maxLength="41">Nenhum</string>
     <string name="gestures_swipe_up" maxLength="41">Deslizar para cima</string>
     <string name="gestures_swipe_down" maxLength="41">Deslizar para baixo</string>
@@ -220,6 +220,7 @@
         <a href="%s">Descubra mais</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Sincronizar url</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Certificado de raiz próprio (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
@@ -258,7 +259,7 @@
     <string name="contributors_title">Colaboradores</string>
     <string name="about_contributors_description"><![CDATA[Estes são os nossos espectaculares <a href=\"%1$s\">colaboradores</a>. Também pode ajudar o AnkiDroid, ao programar, traduzir, doar ou <a href=\"%2$s\">doutras formas</a>!]]></string>
     <string name="license">Licença</string>
-    <string name="license_description"><![CDATA[O AnkiDroid é publicado sob as licenças <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a> , com o código-fonte disponível <a href=\"%3$s\">no GitHub</a>]]></string>
+    <string name="license_description"><![CDATA[O AnkiDroid é publicado sob as licenças <a href=\"%1$s\">GPL-3.0</a> e <a href=\"%2$s\">AGPL-3.0</a> , com o código-fonte disponível <a href=\"%3$s\">no GitHub</a>.]]></string>
     <string name="donate_description"><![CDATA[Pode apoiar o desenvolvimento do AnkiDroid ao <a href=\"%1$s\">doar</a>. Ficamos muito gratos independentemente do valor.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Adicionar gesto</string>
@@ -328,9 +329,9 @@
         <item quantity="other">%1$d ficheiros\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Excluir arquivos de média não utilizados</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Eliminar ficheiros de média inutilizados</string>
     <string name="pref__delete_unused_media_files__summary">Excluir imagens e outras multimédias que não são prefixas com _ e não são referenciadas por quaisquer notas</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Eliminar arquivos de multimédia não utilizados</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Eliminar ficheiros de multimédia não utilizados</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Eliminar cópias de segurança</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Eliminar cópias de segurança</string>

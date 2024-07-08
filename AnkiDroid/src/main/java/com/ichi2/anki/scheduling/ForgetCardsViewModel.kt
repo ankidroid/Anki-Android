@@ -19,7 +19,6 @@ package com.ichi2.anki.scheduling
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.pages.CardInfo
 import com.ichi2.libanki.CardId
 import kotlinx.coroutines.async
 import timber.log.Timber
@@ -52,7 +51,7 @@ class ForgetCardsViewModel : ViewModel() {
     /**
      * Set the review and failure counters back to zero.
      *
-     * This does not affect [CardInfo]/review history
+     * This does not affect CardInfo/review history
      */
     var resetRepetitionAndLapseCounts = false
         set(value) {

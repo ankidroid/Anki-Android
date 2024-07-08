@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Критик хата: WebView ябылды. Сәбәбе: %s</string>
     <string name="webview_crash_loop_dialog_title">Система WebViewының хатасы</string>
     <string name="webview_crash_loop_dialog_content">Система WebViewы \'%1$s\' кәртен ача алмады.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Сорау</item>
-        <item>Сортлау аланы</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Җәвап</item>
-        <item>Кәрт</item>
-        <item>Колода</item>
-        <item>Язу</item>
-        <item>Сорау</item>
-        <item>Тамгалар</item>
-        <item>Ялгышлар</item>
-        <item>Кабатлаулар</item>
-        <item>Интервал</item>
-        <item>Авырлык</item>
-        <item>Вакыт</item>
-        <item>Кәрт үзгәртелеше</item>
-        <item>Ясалган</item>
-        <item>Язу үзгәртелеше</item>
-    </string-array>
     <string name="filter_by_flags">Байраклар</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Бугенге кәрт лимитын үзгәртү</string>
@@ -114,8 +93,6 @@
     <string name="cardeditor_title_edit_card">Язуны үзгәртү</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Кәртләр ясалмаган. Кубрәк юлларны тутырыгыз</string>
-    <string name="note_editor_no_first_field">Беренче юл буш</string>
-    <string name="note_editor_no_cloze_delations">Бу кәрт төре эчендә бушлыклар белән күнегү булырга тиеш</string>
     <string name="note_editor_no_cards_created_all_fields">Хәзерге язу төре бернинди кәрт тә ясамады.\nЗинhар, башка язу төрен сайлагыз я \"Кәртләр\" төймәсенә басыгыз hәм юл кертегез</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Буш юллар белән күнегүләр буш юллар белән язулар төрендә генә эшләячәк</string>
     <string name="saving_facts">Язу саклана</string>

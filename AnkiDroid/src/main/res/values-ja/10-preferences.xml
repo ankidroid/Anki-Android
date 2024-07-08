@@ -191,10 +191,10 @@
     <string name="custom_buttons_setting_always_show">常に表示</string>
     <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
     <string name="custom_buttons_setting_menu_only">メニューでのみ表示</string>
-    <string name="reset_custom_buttons" maxLength="41">既定値にリセット</string>
-    <string name="reset_settings_to_default">規定値にリセットしますか？</string>
+    <string name="reset_custom_buttons" maxLength="41">初期設定にリセット</string>
+    <string name="reset_settings_to_default">初期設定にリセットしますか？</string>
     <string name="reset">リセット</string>
-    <string name="thirdparty_apps_title" maxLength="41">サードパーティ製APIアプリ</string>
+    <string name="thirdparty_apps_title" maxLength="41">サードパーティー製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
@@ -217,6 +217,7 @@
         <a href="%s">Learn more</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
+    <string name="custom_sync_certificate_title" maxLength="41">カスタムルート証明書 (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>

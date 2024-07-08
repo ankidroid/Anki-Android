@@ -108,6 +108,9 @@
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituir</string>
     <string name="dialog_collection_path_not_dir">O caminho especificado não era uma diretoria válida</string>
+    <string name="dialog_invalid_custom_certificate">O texto introduzido não é um certificado X509 no formato PEM.</string>
+    <string name="dialog_invalid_custom_certificate_title">Erro ao analisar certificado</string>
+    <string name="dialog_updated_custom_certificate">Certificado actualizado</string>
     <!-- Media checking -->
     <string name="check_media_title">Verificar multimédia?</string>
     <string name="check_media_warning">Isto pode demorar bastante tempo para coleções grandes de multimédia</string>
@@ -169,7 +172,7 @@
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Permissão de armazenamento em falta. Por favor, conceda esta permissão e volte a tentar.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Não foi possível carregar a aparência do Navegador de Fichas</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Não foi possível carregar a aparência do Explorador de Fichas.</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">Falha ao agendar lembretes</string>
     <string name="boot_service_too_many_notifications">Demasiados lembretes agendados. Alguns não aparecerão.</string>
@@ -217,7 +220,7 @@
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Abra a visão geral do baralho que contém o número de fichas que tem para ver hoje.</string>
     <string name="import_deck_package">Pacote de Baralhos (.apkg)</string>
-    <string name="import_collection_package">Arquivo de Colecção (.colpkg)</string>
+    <string name="import_collection_package">Pacote de Colecção (.colpkg)</string>
     <string name="import_csv">Ficheiro de Texto (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Não pode criar um sub-baralho para todos os baralhos</string>
@@ -252,4 +255,10 @@
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Desde</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Até</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Nota de tipo Virável Necessária</string>
+    <string name="cloze_not_found_message">Nenhuma nota de tipo Virável encontrada, abra o Editor de Notas ou tente novamente após adicionar uma nota de tipo Virável.</string>
+    <string name="open">Abrir</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">O sistema WebView está desatualizado. Alguns recursos não funcionarão corretamente. Atualize-o.\n\nVersão instalada: %1$d\nVersão mínima necessária: %2$d</string>
 </resources>
