@@ -91,7 +91,7 @@
     <string name="custom_study_limit_tags">Абмежаваць вызначанымі меткамі</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Рэдагаваць нататку</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Скасаваць</string>
     <string name="note_editor_no_cards_created">Карткі не створаныя. Калі ласка, запоўніце больш палёў.</string>
     <string name="note_editor_no_cards_created_all_fields">Бягучы тып нататкі не мае ніводнай карткі.\nВыберыце іншы тып нататкі або націсніце \"Карткі\" і дадайце поле падстаноўкі.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Заданні з пропускамі будуць працаваць толькі ў тыпе нататкі з пропускамі</string>
@@ -138,7 +138,7 @@
     <string name="import_title">Імпартаванне</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Дадаць</string>
     <string name="import_message_replace_confirm">Ваша бягучая калекцыя будзе выдаленая і яе заменяць даныя з файла %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Дадаць \"%s\" у калекцыю? Гэта можа заняць шмат часу</string>
     <string name="import_log_no_apkg">Пашкоджаны файл праграмы Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Памылка</string>
     <string name="import_error_handle_exception">Не атрымалася імпартаваць файл\n\n%s</string>
@@ -193,7 +193,7 @@
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Выберыце відарыс</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Вярнуцца да прадвызначаных</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
@@ -342,8 +342,8 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
     </string>
     <string name="shared_decks_login_required">Please log in to download more decks</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
+    <string name="deck_description_field_hint">Апісанне</string>
+    <string name="failed_to_copy">Не ўдалося скапіяваць</string>
     <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d card unburied</item>
@@ -351,9 +351,9 @@
         <item quantity="many">%d cards unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Перамясціць</string>
+    <string name="start_recording">Запіс</string>
+    <string name="stop_recording">Стоп</string>
+    <string name="play_recording">Прайграць</string>
     <string name="next_recording">Next</string>
 </resources>

@@ -52,7 +52,7 @@
         <item quantity="many">%d хвл</item>
         <item quantity="other">%d хвл</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Вынікі адсутнічаюць</string>
     <!-- preferences.xml categories-->
@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Дотык пасярэдзіне</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотык ніжняга левага вугла</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотык ніжняга правага вугла</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Падтрасіце прыладу</string>
     <string name="card_browser_enable_external_context_menu">Меню «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">Уключыць кантэкстнае меню «%s» у сістэме</string>
     <string name="double_scrolling_gap" maxLength="41">Падвоеная прагортка</string>
@@ -154,7 +154,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрацыя</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мігаценне святлодыёда</string>
     <string name="timeout_answer_text" maxLength="41">Аўтаматычна паказваць адказ</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Паказваць адказ аўтаматычна без удзелу карыстальніка. Наладжваецца з параметраў калоды.</string>
     <string name="select_locale_title">Выберыце мову</string>
     <string name="software_render" maxLength="41">Адключыць апаратны апрацоўшчык картак</string>
     <string name="software_render_summ">Апаратны апрацоўшчык працуе хутчэй, але можа выклікаць праблемы (асабліва ў АС Android 8/8.1). Паспрабуйце гэтыя налады, калі ў вас праблемы з адлюстраваннем картак у рэжыме паўтарэння.</string>
@@ -167,7 +167,7 @@
     <string name="vertical_centering_summ">Цэнтраваць змесціва картак вертыкальна</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтэрвал у падвойным дотыку (мілісек.)</string>
     <string name="pref_double_tap_time_interval_summary">Другі націск на кнопку адказу будзе праігнараваны, калі час яшчэ не мінуў. Гэта прадухіляе выпадковы двайны націск</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Працягласць націску для адказу</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Паказваць кнопку часу</string>
     <string name="show_estimates_summ">Паказваць наступны час паўтарэння над кнопкай адказу</string>
