@@ -144,6 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela&#8230;\nIto ay maaaring matagalan.</string>
     <string name="syncing_media">Sini-sync ang media</string>
     <string name="export_deck">I-export ang deck</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Wala</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Uri ng mga kard</string>

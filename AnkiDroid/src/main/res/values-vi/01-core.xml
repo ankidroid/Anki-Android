@@ -141,6 +141,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Đang huỷ&#8230;\nCó thể hơi lâu.</string>
     <string name="syncing_media">Đồng bộ hóa đa phương tiện</string>
     <string name="export_deck">Xuất bộ thẻ</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Không có gì</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Các loại thẻ</string>

@@ -150,6 +150,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена&#8230;\nЭто может занять некоторое время.</string>
     <string name="syncing_media">Синхронизация медиафайлов</string>
     <string name="export_deck">Экспортировать колоду</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Ничего</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типы карточек</string>

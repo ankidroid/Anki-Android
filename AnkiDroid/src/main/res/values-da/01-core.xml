@@ -144,6 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullerer&#8230;\nDette kan tage et stykke tid. </string>
     <string name="syncing_media">Synkroniserer medier</string>
     <string name="export_deck">Eksportér stak</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Intet</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Korttyper</string>

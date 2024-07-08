@@ -144,6 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ይቋረጽ&#8230;&#8230;\n ውሑድ ግዜ ክወስድ ይኽእል ኢዩ</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">ባይታ ስደድ</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">የለን</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ዓይነት ካርድ</string>

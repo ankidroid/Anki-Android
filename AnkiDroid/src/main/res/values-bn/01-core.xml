@@ -144,6 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis কিছু সময় লাগতে পারে।</string>
     <string name="syncing_media">মিডিয়া সিঙ্ক হচ্ছে</string>
     <string name="export_deck">ডেক রপ্তানি করুন</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">কিছুই না</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">কার্ডের ধরন</string>

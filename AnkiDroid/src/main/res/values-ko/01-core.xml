@@ -141,6 +141,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">취소하는 중&#8230;\n시간이 걸릴 수 있습니다.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">카드 묶음 내보내기</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">없음</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">카드 유형</string>
