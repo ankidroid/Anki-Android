@@ -98,6 +98,8 @@ class CardBrowserViewModel(
     private val manualInit: Boolean = false
 ) : ViewModel(), SharedPreferencesProvider by preferences {
 
+    val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
+
     /** A job which ensures that parallel searches do not occur */
     var searchJob: Job? = null
         private set

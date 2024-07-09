@@ -196,8 +196,14 @@ class BrowserMultiColumnAdapter(
 
         try {
             val (row, isSelected) = viewModel.transformBrowserRow(id)
-            holder.firstColumn = row.getCells(0).text
-            holder.secondColumn = row.getCells(1).text
+
+            // PERF: removeSounds only needs to be performed on QUESTION/ANSWER columns
+            fun renderColumn(columnIndex: Int): String = removeSounds(
+                input = row.getCells(columnIndex).text,
+                showMediaFilenames = viewModel.showMediaFilenames
+            )
+            holder.firstColumn = renderColumn(0)
+            holder.secondColumn = renderColumn(1)
             holder.setIsSelected(isSelected)
             holder.setColor(backendColorToColor(row.color))
             holder.setIsDeleted(false)
@@ -236,6 +242,17 @@ class BrowserMultiColumnAdapter(
     }
 
     companion object {
+        private val mediaFilenameRegex = Regex("\uD83D\uDD09(.*?)\uD83D\uDD09") // 🔉(.*?)🔉
+
+        /**
+         * Strips instances of '🔉filename.mp3🔉' if [showMediaFilenames] is not set
+         */
+        @VisibleForTesting
+        fun removeSounds(input: String, showMediaFilenames: Boolean): String {
+            if (showMediaFilenames) return input
+            return mediaFilenameRegex.replace(input, "")
+        }
+
         private const val DEFAULT_FONT_SIZE_RATIO = 100
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

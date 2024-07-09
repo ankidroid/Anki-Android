@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.browser
 
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
@@ -729,6 +730,31 @@ class CardBrowserViewModelTest : JvmTest() {
         }
     }
 
+    @Test
+    fun `sound tags regression test`() {
+        addNoteUsingBasicModel("[sound:david.mp3]")
+
+        showMediaFilenamesPreference = false
+
+        BrowserColumnCollection.update(AnkiDroidApp.sharedPreferencesProvider.sharedPrefs(), CardsOrNotes.CARDS) {
+            it[0] = QUESTION
+            return@update true
+        }
+
+        runViewModelTest {
+            waitForSearchResults()
+            val (row, _) = this.transformBrowserRow(this.cards.single())
+            val question = row.getCells(0)
+            assertThat(question.text, equalTo(EXPECTED_SOUND))
+        }
+    }
+
+    private var showMediaFilenamesPreference: Boolean
+        get() = AnkiDroidApp.sharedPreferencesProvider.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
+        set(value) = AnkiDroidApp.sharedPreferencesProvider.sharedPrefs().edit {
+            putBoolean("card_browser_show_media_filenames", value)
+        }
+
     private fun runViewModelNotesTest(
         notes: Int = 0,
         manualInit: Boolean = true,
@@ -778,6 +804,10 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     companion object {
+
+        const val EXPECTED_SOUND = "\uD83D\uDD09david.mp3\uD83D\uDD09"
+        const val EXPECTED_TTS = "\uD83D\uDCACTest\uD83D\uDCAC"
+
         private suspend fun viewModel(
             lastDeckId: DeckId? = null,
             intent: CardBrowserLaunchOptions? = null,
