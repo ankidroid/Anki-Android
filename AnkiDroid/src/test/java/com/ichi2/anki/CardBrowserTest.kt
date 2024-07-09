@@ -42,6 +42,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
@@ -1123,7 +1124,7 @@ class CardBrowserTest : RobolectricTest() {
             }
         val question = card.getColumnHeaderText(QUESTION)
 
-        assertThat(question, equalTo("\uD83D\uDCACTest\uD83D\uDCAC"))
+        assertThat(question, equalTo(CardBrowserViewModelTest.EXPECTED_TTS))
     }
 
     @Test
