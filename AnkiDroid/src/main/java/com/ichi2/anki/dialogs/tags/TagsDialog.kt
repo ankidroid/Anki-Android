@@ -27,6 +27,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.model.CardStateFilter
@@ -189,14 +190,15 @@ class TagsDialog : AnalyticsDialogFragment {
             dialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
             positiveText = getString(R.string.dialog_ok)
-            tagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { v ->
-                createAddTagDialog(v.tag as String)
-                true
-            }
+            tagsArrayAdapter!!.tagContextAndLongClickListener =
+                OnContextAndLongClickListener { v ->
+                    createAddTagDialog(v.tag as String)
+                    true
+                }
         } else {
             dialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
             positiveText = getString(R.string.select)
-            tagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { false }
+            tagsArrayAdapter!!.tagContextAndLongClickListener = OnContextAndLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
         dialog = AlertDialog.Builder(requireActivity())

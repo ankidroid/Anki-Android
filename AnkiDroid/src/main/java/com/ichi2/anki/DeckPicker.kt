@@ -43,7 +43,6 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewPropertyAnimator
 import android.widget.Filterable
 import android.widget.ImageButton
@@ -442,9 +441,13 @@ open class DeckPicker :
         }
     }
 
-    private val deckLongClickListener = OnLongClickListener { v ->
+    private val deckContextAndLongClickListener = OnContextAndLongClickListener { v ->
         val deckId = v.tag as DeckId
-        Timber.i("DeckPicker:: Long tapped on deck with id %d", deckId)
+        showDeckPickerContextMenu(deckId)
+        true
+    }
+
+    private fun showDeckPickerContextMenu(deckId: DeckId) {
         launchCatchingTask {
             val (deckName, isDynamic, hasBuriedInDeck) = withCol {
                 decks.select(deckId)
@@ -464,7 +467,6 @@ open class DeckPicker :
                 )
             )
         }
-        true
     }
 
     private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -558,7 +560,7 @@ open class DeckPicker :
             setDeckClickListener(deckClickListener)
             setCountsClickListener(countsClickListener)
             setDeckExpanderClickListener(deckExpanderClickListener)
-            setDeckLongClickListener(deckLongClickListener)
+            setDeckContextAndLongClickListener(deckContextAndLongClickListener)
             enablePartialTransparencyForBackground(hasDeckPickerBackground)
         }
         recyclerView.adapter = deckListAdapter

@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView
 import anki.decks.DeckTreeNode
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
+import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
@@ -179,7 +180,20 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
     }
 
-    private fun showSubDeckDialog(parentDeckPath: String) {
+    /**
+     * Displays a dialog to create a subdeck under the specified parent deck.
+     *
+     * If the `deckID` is equal to `DeckSpinnerSelection.ALL_DECKS_ID`, a toast message is shown
+     * indicating that a subdeck cannot be created for "All Decks," and the dialog is not displayed.
+     *
+     * @param parentDeckPath The path of the parent deck under which the subdeck will be created.
+     * @param deckID The ID of the deck where the subdeck should be created.
+     */
+    private fun showSubDeckDialog(parentDeckPath: String, deckID: DeckId) {
+        if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
+            context?.let { showThemedToast(it, R.string.cannot_create_subdeck_for_all_decks, true) }
+            return
+        }
         launchCatchingTask {
             val parentId = withCol { decks.id(parentDeckPath) }
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
@@ -265,12 +279,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 expander.setOnClickListener {
                     toggleExpansion(deckID)
                 }
-                deckHolder.setOnLongClickListener { // creating sub deck with parent deck path
-                    if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
-                        context?.let { showThemedToast(it, R.string.cannot_create_subdeck_for_all_decks, true) }
-                    } else {
-                        showSubDeckDialog(deckName)
-                    }
+                deckHolder.setOnContextAndLongClickListener {
+                    // creating sub deck with parent deck path
+                    showSubDeckDialog(deckName, deckID)
                     true
                 }
             }

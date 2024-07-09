@@ -78,6 +78,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -2232,7 +2233,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
             // Allow Ctrl + 1...Ctrl + 0 for item 10.
             v.tag = (visualIndex % 10).toString()
-            v.setOnLongClickListener {
+            v.setOnContextAndLongClickListener {
                 displayEditToolbarDialog(b)
                 true
             }
