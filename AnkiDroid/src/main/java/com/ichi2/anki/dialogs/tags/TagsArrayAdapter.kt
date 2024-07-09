@@ -25,6 +25,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.OnContextAndLongClickListener
+import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.CheckBoxTriStates
@@ -224,10 +226,10 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
     private val tagToIsExpanded: HashMap<String, Boolean>
 
     /**
-     * Long click listener for each tag item. Used to add a subtag for the clicked tag.
+     * Context and Long click listener for each tag item. Used to add a subtag for the clicked tag.
      * The full tag is passed through View.tag
      */
-    var tagLongClickListener: View.OnLongClickListener? = null
+    var tagContextAndLongClickListener: OnContextAndLongClickListener? = null
 
     fun sortData() {
         tags.sort()
@@ -266,8 +268,8 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
                 vh.checkBoxView.refreshDrawableState()
             }
         }
-        // long clicking a tag opens the add tag dialog with the current tag as the prefix
-        vh.itemView.setOnLongClickListener(tagLongClickListener)
+        // context and long clicking a tag opens the add tag dialog with the current tag as the prefix
+        vh.itemView.setOnContextAndLongClickListener(tagContextAndLongClickListener)
         return vh
     }
 
