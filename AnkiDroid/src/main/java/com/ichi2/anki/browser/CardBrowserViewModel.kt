@@ -96,6 +96,9 @@ class CardBrowserViewModel(
     private val manualInit: Boolean = false,
 ) : ViewModel(),
     SharedPreferencesProvider by preferences {
+    // TODO: abstract so we can use a `Context` and `pref_display_filenames_in_browser_key`
+    val showMediaFilenames = sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
+
     /** A job which ensures that parallel searches do not occur */
     var searchJob: Job? = null
         private set
@@ -111,9 +114,8 @@ class CardBrowserViewModel(
         private set
     private var restrictOnDeck: String = ""
 
-    // flowOfFilterQuery does not currently bind to the value in the UI and is only used for posting
-
     /** text in the search box (potentially unsubmitted) */
+    // this does not currently bind to the value in the UI and is only used for posting
     val flowOfFilterQuery = MutableSharedFlow<String>()
 
     /**
