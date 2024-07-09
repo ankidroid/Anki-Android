@@ -633,19 +633,28 @@ open class CardBrowser :
         viewModel.setDeckId(deckId)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        // NOTE: These are all active when typing in the search - doesn't matter as all need CTRL
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        // This method is called even when the user is typing in the search text field.
+        // So we must ensure that all shortcuts uses a modifier.
+        // A shortcut without modifier would be triggered while the user types, which is not what we want.
         when (keyCode) {
             KeyEvent.KEYCODE_A -> {
-                if (event.isCtrlPressed) {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+A - Show edit tags dialog")
+                    showEditTagsDialog()
+                    return true
+                } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+A - Select All")
                     viewModel.selectAll()
                     return true
                 }
             }
             KeyEvent.KEYCODE_E -> {
-                // Ctrl+Shift+E: Export (TODO)
-                if (event.isCtrlPressed) {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+E: Export selected cards")
+                    exportSelected()
+                    return true
+                } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+E: Add Note")
                     launchCatchingTask { addNoteFromCardBrowser() }
                     return true
@@ -675,7 +684,7 @@ open class CardBrowser :
                     return true
                 }
             }
-            KeyEvent.KEYCODE_FORWARD_DEL -> {
+            KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.KEYCODE_DEL -> {
                 Timber.i("Delete pressed - Delete Selected Note")
                 deleteSelectedNotes()
                 return true
@@ -694,8 +703,109 @@ open class CardBrowser :
                     return true
                 }
             }
+            KeyEvent.KEYCODE_N -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+N: Reset card progress")
+                    onResetProgress()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_T -> {
+                if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+T: Toggle cards/notes")
+                    showOptionsDialog()
+                } else {
+                    Timber.i("T: Show filter by tags dialog")
+                    showFilterByTagsDialog()
+                }
+                return true
+            }
+            KeyEvent.KEYCODE_S -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+S: Reposition selected cards")
+                    repositionSelectedCards()
+                    return true
+                } else if (event.isCtrlPressed && event.isAltPressed) {
+                    Timber.i("Ctrl+Alt+S: Show saved searches")
+                    showSavedSearches()
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+S: Save search")
+                    openSaveSearchView()
+                    return true
+                } else if (event.isAltPressed) {
+                    Timber.i("Alt+S: Show suspended cards")
+                    searchForSuspendedCards()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_J -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+J: Toggle bury cards")
+                    toggleBury()
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+J: Toggle suspended cards")
+                    toggleSuspendCards()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_I -> {
+                if (event.isCtrlPressed && event.isShiftPressed) {
+                    Timber.i("Ctrl+Shift+I: Card info")
+                    displayCardInfo()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_O -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+O: Show order dialog")
+                    changeDisplayOrder()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_M -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+M: Search marked notes")
+                    searchForMarkedNotes()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_Z -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+Z: Undo")
+                    onUndo()
+                    return true
+                }
+            }
+            KeyEvent.KEYCODE_ESCAPE -> {
+                Timber.i("ESC: Select none")
+                viewModel.selectNone()
+                return true
+            }
+            in KeyEvent.KEYCODE_1..KeyEvent.KEYCODE_7 -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Update flag")
+                    updateFlag(keyCode)
+                    return true
+                }
+            }
         }
-        return super.onKeyDown(keyCode, event)
+        return super.onKeyUp(keyCode, event)
+    }
+
+    private fun updateFlag(keyCode: Int) {
+        val flag = when (keyCode) {
+            KeyEvent.KEYCODE_1 -> Flag.RED
+            KeyEvent.KEYCODE_2 -> Flag.ORANGE
+            KeyEvent.KEYCODE_3 -> Flag.GREEN
+            KeyEvent.KEYCODE_4 -> Flag.BLUE
+            KeyEvent.KEYCODE_5 -> Flag.PINK
+            KeyEvent.KEYCODE_6 -> Flag.TURQUOISE
+            KeyEvent.KEYCODE_7 -> Flag.PURPLE
+            else -> return
+        }
+        updateFlagForSelectedRows(flag)
     }
 
     /** All the notes of the selected cards will be marked
@@ -1048,52 +1158,27 @@ open class CardBrowser :
                 return true
             }
             R.id.action_save_search -> {
-                val searchTerms = searchView!!.query.toString()
-                showDialogFragment(
-                    newInstance(
-                        null,
-                        mySearchesDialogListener,
-                        searchTerms,
-                        CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE
-                    )
-                )
+                openSaveSearchView()
                 return true
             }
             R.id.action_list_my_searches -> {
-                launchCatchingTask {
-                    val savedFilters = viewModel.savedSearches()
-                    showDialogFragment(
-                        newInstance(
-                            savedFilters,
-                            mySearchesDialogListener,
-                            "",
-                            CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST
-                        )
-                    )
-                }
-
+                showSavedSearches()
                 return true
             }
             R.id.action_sort_by_size -> {
-                showDialogFragment(
-                    // TODO: move this into the ViewModel
-                    CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
-                        dialog.dismiss()
-                        changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
-                    }
-                )
+                changeDisplayOrder()
                 return true
             }
 
             @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
-                launchCatchingTask { viewModel.searchForMarkedNotes() }
+                searchForMarkedNotes()
                 return true
             }
 
             @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
-                launchCatchingTask { viewModel.searchForSuspendedCards() }
+                searchForSuspendedCards()
                 return true
             }
             R.id.action_search_by_tag -> {
@@ -1148,31 +1233,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_reposition_cards -> {
-                Timber.i("CardBrowser:: Reposition button pressed")
-                if (warnUserIfInNotesOnlyMode()) return true
-                launchCatchingTask {
-                    val selectedCardIds = viewModel.queryAllSelectedCardIds()
-                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-                    if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
-                        showDialogFragment(
-                            SimpleMessageDialog.newInstance(
-                                title = getString(R.string.vague_error),
-                                message = getString(R.string.reposition_card_not_new_error),
-                                reload = false
-                            )
-                        )
-                        return@launchCatchingTask
-                    }
-                    val repositionDialog = IntegerDialog().apply {
-                        setArgs(
-                            title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                            prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                            digits = 5
-                        )
-                        setCallbackRunnable(::repositionCardsNoValidation)
-                    }
-                    showDialogFragment(repositionDialog)
-                }
+                repositionSelectedCards()
                 return true
             }
             R.id.action_edit_note -> {
@@ -1180,12 +1241,7 @@ open class CardBrowser :
                 return super.onOptionsItemSelected(item)
             }
             R.id.action_view_card_info -> {
-                launchCatchingTask {
-                    viewModel.queryCardInfoDestination()?.let { destination ->
-                        val intent: Intent = destination.toIntent(this@CardBrowser)
-                        startActivity(intent)
-                    }
-                }
+                displayCardInfo()
                 return true
             }
             R.id.action_edit_tags -> {
@@ -1199,6 +1255,94 @@ open class CardBrowser :
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * @see CardBrowserViewModel.searchForSuspendedCards
+     */
+    private fun searchForSuspendedCards() {
+        launchCatchingTask { viewModel.searchForSuspendedCards() }
+    }
+
+    /**
+     * @see CardBrowserViewModel.searchForMarkedNotes
+     */
+    private fun searchForMarkedNotes() {
+        launchCatchingTask { viewModel.searchForMarkedNotes() }
+    }
+
+    private fun changeDisplayOrder() {
+        showDialogFragment(
+            // TODO: move this into the ViewModel
+            CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
+                dialog.dismiss()
+                changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
+            }
+        )
+    }
+
+    private fun showSavedSearches() {
+        launchCatchingTask {
+            val savedFilters = viewModel.savedSearches()
+            showDialogFragment(
+                newInstance(
+                    savedFilters,
+                    mySearchesDialogListener,
+                    "",
+                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST
+                )
+            )
+        }
+    }
+
+    private fun openSaveSearchView() {
+        val searchTerms = searchView!!.query.toString()
+        showDialogFragment(
+            newInstance(
+                null,
+                mySearchesDialogListener,
+                searchTerms,
+                CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE
+            )
+        )
+    }
+
+    private fun repositionSelectedCards(): Boolean {
+        Timber.i("CardBrowser:: Reposition button pressed")
+        if (warnUserIfInNotesOnlyMode()) return false
+        launchCatchingTask {
+            val selectedCardIds = viewModel.queryAllSelectedCardIds()
+            // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+            if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+                showDialogFragment(
+                    SimpleMessageDialog.newInstance(
+                        title = getString(R.string.vague_error),
+                        message = getString(R.string.reposition_card_not_new_error),
+                        reload = false
+                    )
+                )
+                return@launchCatchingTask
+            }
+            val repositionDialog = IntegerDialog().apply {
+                setArgs(
+                    title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                    prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
+                    digits = 5
+                )
+                setCallbackRunnable(::repositionCardsNoValidation)
+            }
+            showDialogFragment(repositionDialog)
+        }
+        return true
+    }
+
+    private fun displayCardInfo() {
+        launchCatchingTask {
+            viewModel.queryCardInfoDestination()?.let { destination ->
+                val intent: Intent = destination.toIntent(this@CardBrowser)
+                startActivity(intent)
+            }
+        }
     }
 
     override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory
