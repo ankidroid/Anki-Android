@@ -650,12 +650,18 @@ class CardBrowserViewModel(
         launchSearchForCards(filterQuery)
     }
 
+    /**
+     * Searches for all marked notes and replaces the current search results with these marked notes.
+     */
     suspend fun searchForMarkedNotes() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
         setFilterQuery("tag:marked")
     }
 
+    /**
+     * Searches for all suspended cards and replaces the current search results with these suspended cards.
+     */
     suspend fun searchForSuspendedCards() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
