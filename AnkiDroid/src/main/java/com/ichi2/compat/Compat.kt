@@ -30,6 +30,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CheckResult
+import androidx.annotation.IdRes
+import com.ichi2.anki.AnkiActivity
 import java.io.*
 import java.util.*
 
@@ -77,6 +79,12 @@ interface Compat {
     fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
+
+    /** @see AnkiActivity.requireViewById*/
+    fun <T : View> requireViewById(activity: AnkiActivity, @IdRes id: Int): T
+
+    /** @see View.requireViewById*/
+    fun <T : View> requireViewById(view: View, @IdRes id: Int): T
 
     /**
      * Retrieve extended data from the intent.
@@ -223,3 +231,14 @@ interface Compat {
     @Suppress("PropertyName")
     val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int
 }
+
+// Delete this method when min SDK is 28. Then, use `requireViewById` instead.
+/**
+ * @see View.requireViewById
+ */
+fun <T : View> View.requireViewByID(@IdRes id: Int) = CompatHelper.compat.requireViewById<T>(this, id)
+
+/**
+ * @see View.findViewById The return value is considered as nullable by the type-checker.
+ */
+fun <T : View> View.findViewByID(@IdRes id: Int): T? = findViewById(id)

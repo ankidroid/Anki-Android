@@ -13,11 +13,16 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.AttrRes
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.annotation.UiThread
@@ -27,7 +32,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent.*
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
@@ -36,7 +43,8 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler
@@ -48,6 +56,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
+import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
@@ -298,6 +307,21 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(deckPicker)
     }
+
+    // Not overridden because Activity.requireViewById is final.
+    // Delete this implementation and replace all call by `RequireViewById` once minimal version is 28.
+    /**
+     * @return the view with [id].
+     * @throws IllegalArgumentException if no view with such id exists.
+     * @see Activity.requireViewById
+     */
+    fun <T : View> requireViewByID(@IdRes id: Int): T = CompatHelper.compat.requireViewById(this, id)
+
+    /**
+     * Same as [Activity.findViewById] but ensures the typer considers the result as nullable.
+     * @return the view with [id] or `null`.
+     */
+    fun <T : View> findViewByID(@IdRes id: Int): T? = findViewById(id)
 
     fun showProgressBar() {
         val progressBar = findViewById<ProgressBar>(R.id.progress_bar)

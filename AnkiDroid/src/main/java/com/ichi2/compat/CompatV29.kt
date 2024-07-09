@@ -30,7 +30,7 @@ import java.io.IOException
 
 /** Implementation of [Compat] for SDK level 29  */
 @TargetApi(29)
-open class CompatV29 : CompatV26(), Compat {
+open class CompatV29 : CompatV28(), Compat {
     override fun hasVideoThumbnail(path: String): Boolean? {
         return try {
             ThumbnailUtils.createVideoThumbnail(File(path), THUMBNAIL_MINI_KIND, null)

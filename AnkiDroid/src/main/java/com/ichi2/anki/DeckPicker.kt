@@ -127,6 +127,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
+import com.ichi2.compat.requireViewByID
 import com.ichi2.libanki.*
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
@@ -234,7 +235,7 @@ open class DeckPicker :
         }
     }
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
+        anchorView = requireViewByID<FloatingActionButton>(R.id.fab_main)
         addCallback(activeSnackbarCallback)
     }
 
@@ -439,10 +440,10 @@ open class DeckPicker :
 
         setContentView(R.layout.homescreen)
         handleStartup()
-        val mainView = findViewById<View>(android.R.id.content)
+        val mainView = requireViewByID<View>(android.R.id.content)
 
         // check, if tablet layout
-        studyoptionsFrame = findViewById(R.id.studyoptions_fragment)
+        studyoptionsFrame = findViewByID(R.id.studyoptions_fragment)
         // set protected variable from NavigationDrawerActivity
         fragmented = studyoptionsFrame != null && studyoptionsFrame!!.visibility == View.VISIBLE
 
@@ -456,9 +457,9 @@ open class DeckPicker :
         initNavigationDrawer(mainView)
         title = resources.getString(R.string.app_name)
 
-        deckPickerContent = findViewById(R.id.deck_picker_content)
-        recyclerView = findViewById(R.id.files)
-        noDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
+        deckPickerContent = requireViewByID(R.id.deck_picker_content)
+        recyclerView = requireViewByID(R.id.files)
+        noDecksPlaceholder = requireViewByID(R.id.no_decks_placeholder)
 
         deckPickerContent.visibility = View.GONE
         noDecksPlaceholder.visibility = View.GONE
@@ -474,7 +475,7 @@ open class DeckPicker :
         recyclerView.addItemDecoration(dividerDecorator)
 
         // Add background to Deckpicker activity
-        val view = if (fragmented) findViewById(R.id.deckpicker_xl_view) else findViewById<View>(R.id.root_layout)
+        val view = if (fragmented) requireViewByID(R.id.deckpicker_xl_view) else requireViewByID<View>(R.id.root_layout)
 
         var hasDeckPickerBackground = false
         try {
@@ -498,7 +499,7 @@ open class DeckPicker :
         }
         recyclerView.adapter = deckListAdapter
 
-        pullToSyncWrapper = findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {
+        pullToSyncWrapper = requireViewByID<SwipeRefreshLayout>(R.id.pull_to_sync_wrapper).apply {
             setDistanceToTriggerSync(SWIPE_TO_SYNC_TRIGGER_DISTANCE)
             setOnRefreshListener {
                 Timber.i("Pull to Sync: Syncing")
@@ -512,7 +513,7 @@ open class DeckPicker :
         // Setup the FloatingActionButtons, should work everywhere with min API >= 15
         floatingActionMenu = DeckPickerFloatingActionMenu(this, view, this)
 
-        reviewSummaryTextView = findViewById(R.id.today_stats_text_view)
+        reviewSummaryTextView = requireViewByID(R.id.today_stats_text_view)
 
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
@@ -744,7 +745,7 @@ open class DeckPicker :
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
     @Throws(OutOfMemoryError::class)
     private fun applyDeckPickerBackground(): Boolean {
-        val backgroundView = findViewById<ImageView>(R.id.background)
+        val backgroundView = requireViewByID<ImageView>(R.id.background)
         // Allow the user to clear data and get back to a good state if they provide an invalid background.
         if (!this.sharedPrefs().getBoolean("deckPickerBackground", false)) {
             Timber.d("No DeckPicker background preference")
@@ -809,7 +810,7 @@ open class DeckPicker :
 
         val syncItem = menu.findItem(R.id.action_sync)
         val progressIndicator = syncItem.actionView
-            ?.findViewById<LinearProgressIndicator>(R.id.progress_indicator)
+            ?.requireViewByID<LinearProgressIndicator>(R.id.progress_indicator)
 
         val workManager = WorkManager.getInstance(this)
         val flow = workManager.getWorkInfosForUniqueWorkFlow(UniqueWorkNames.SYNC_MEDIA)
@@ -872,10 +873,10 @@ open class DeckPicker :
                     .also { cachedMigrationProgressMenuItemActionView = it }
 
                 val progressIndicator = actionView
-                    .findViewById<CircularProgressIndicator>(R.id.progress_indicator)
+                    .requireViewByID<CircularProgressIndicator>(R.id.progress_indicator)
                     .apply { max = Int.MAX_VALUE }
 
-                actionView.findViewById<ImageButton>(R.id.button).also { button ->
+                actionView.requireViewByID<ImageButton>(R.id.button).also { button ->
                     button.setOnClickListener { warnNoSyncDuringMigration() }
                     TooltipCompat.setTooltipText(button, getText(R.string.show_migration_progress))
                 }
@@ -1579,7 +1580,7 @@ open class DeckPicker :
         text: CharSequence,
         duration: Int = Snackbar.LENGTH_LONG
     ) {
-        val view: View? = findViewById(R.id.root_layout)
+        val view: View? = findViewByID(R.id.root_layout)
         if (view != null) {
             view.post {
                 showSnackbar(text, duration)

@@ -30,7 +30,9 @@ import android.os.Environment
 import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.appcompat.widget.TooltipCompat
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
@@ -223,6 +225,20 @@ open class CompatV23 : Compat {
         flags: ResolveInfoFlagsCompat
     ): List<ResolveInfo> {
         return packageManager.queryIntentActivities(intent, flags.value.toInt())
+    }
+
+    // Until API 27. Also delete `AnkiActivity.requireViewById` when deleting this implementation.
+    override fun <T : View> requireViewById(activity: AnkiActivity, @IdRes id: Int): T {
+        val view = activity.findViewById<T>(id)
+            ?: throw IllegalArgumentException("ID does not reference a View inside this Activity")
+        return view
+    }
+
+    // Until API 27. Also delete `View.requireViewById` when deleting this implementation.
+    override fun <T : View> requireViewById(view: View, @IdRes id: Int): T {
+        val view = view.findViewById<T>(id)
+            ?: throw IllegalArgumentException("ID does not reference a View inside this Activity")
+        return view
     }
 
     // Until API 33
