@@ -15,9 +15,11 @@
  ****************************************************************************************/
 package com.ichi2.compat
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.CATEGORY_DEFAULT
+import android.content.IntentFilter
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
@@ -26,6 +28,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
+import androidx.core.content.ContextCompat
 import com.ichi2.compat.CompatHelper.Companion.compat
 import java.io.Serializable
 
@@ -164,5 +167,30 @@ class CompatHelper private constructor() {
         fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY): ResolveInfo? {
             return compat.resolveActivity(this, intent, flags)
         }
+
+        /**
+         * Register a broadcast receiver.
+         *
+         * @receiver Context to retrieve service from.
+         *
+         * @param receiver The BroadcastReceiver to handle the broadcast.
+         * @param filter Selects the Intent broadcasts to be received.
+         * @param flags – If this receiver is listening for broadcasts sent from other apps—even other
+         * apps that you own—use the [ContextCompat.RECEIVER_EXPORTED] flag.
+         *
+         * If instead this receiver is listening only for broadcasts sent by your app, or from the system,
+         * use the [ContextCompat.RECEIVER_NOT_EXPORTED] flag.
+         *
+         * @return The first sticky intent found that matches filter, or null if there are none.
+         *
+         * @see ContextCompat.registerReceiver
+         * @see Context.registerReceiver
+         */
+        fun Context.registerReceiverCompat(
+            receiver: BroadcastReceiver?,
+            filter: IntentFilter,
+            @ContextCompat.RegisterReceiverFlags flags: Int
+        ) =
+            ContextCompat.registerReceiver(this, receiver, filter, flags)
     }
 }
