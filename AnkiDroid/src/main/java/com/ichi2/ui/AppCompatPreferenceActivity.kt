@@ -28,9 +28,11 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
 import com.ichi2.utils.*
@@ -285,7 +287,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         }
         val iFilter = IntentFilter()
         iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(unmountReceiver, iFilter)
+        registerReceiverCompat(unmountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
     }
 
     protected abstract fun closeWithResult()
