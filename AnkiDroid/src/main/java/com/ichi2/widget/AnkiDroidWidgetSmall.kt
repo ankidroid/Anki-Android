@@ -25,6 +25,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
@@ -32,6 +33,7 @@ import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import kotlin.math.sqrt
@@ -120,7 +122,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                     val iFilter = IntentFilter()
                     iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED)
                     iFilter.addDataScheme("file")
-                    AnkiDroidApp.instance.registerReceiver(mMountReceiver, iFilter)
+                    AnkiDroidApp.instance.registerReceiverCompat(mMountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
                 }
             } else {
                 // If we do not have a cached version, always update.

@@ -34,6 +34,7 @@ import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.ThemeUtils
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
@@ -91,6 +92,7 @@ import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
+import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
@@ -2096,7 +2098,7 @@ open class CardBrowser :
             }
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(unmountReceiver, iFilter)
+            registerReceiverCompat(unmountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
         }
     }
 
