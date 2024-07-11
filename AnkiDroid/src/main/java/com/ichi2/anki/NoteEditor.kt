@@ -1050,24 +1050,26 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val oldModel = if (currentEditedCard == null) null else currentEditedCard!!.noteType(getColUnsafe)
             if (newModel != oldModel) {
                 reloadRequired = true
-                if (modelChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) || modelChangeCardMap!!.containsValue(
-                        null
-                    )
-                ) {
-                    // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
-                    val dialog = ConfirmationDialog()
-                    dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing))
-                    val confirm = Runnable {
-                        // Bypass the check once the user confirms
+                if (editorNote != null && modelChangeCardMap != null) {
+                    if (modelChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) || modelChangeCardMap!!.containsValue(
+                            null
+                        )
+                    ) {
+                        // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
+                        val dialog = ConfirmationDialog()
+                        dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing))
+                        val confirm = Runnable {
+                            // Bypass the check once the user confirms
+                            changeNoteType(oldModel!!, newModel!!)
+                        }
+                        dialog.setConfirm(confirm)
+                        showDialogFragment(dialog)
+                    } else {
+                        // Otherwise go straight to changing note type
                         changeNoteType(oldModel!!, newModel!!)
                     }
-                    dialog.setConfirm(confirm)
-                    showDialogFragment(dialog)
-                } else {
-                    // Otherwise go straight to changing note type
-                    changeNoteType(oldModel!!, newModel!!)
+                    return
                 }
-                return
             }
             // Regular changes in note content
             var modified = false
