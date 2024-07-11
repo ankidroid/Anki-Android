@@ -16,7 +16,6 @@
 package com.ichi2.anki.dialogs.customstudy
 
 import com.ichi2.anki.CollectionManager
-import com.ichi2.async.updateValuesFromDeck
 import timber.log.Timber
 
 class CreateCustomStudySessionListener(val callback: Callback) {
@@ -42,7 +41,6 @@ suspend fun rebuildCram(listener: CreateCustomStudySessionListener) {
     CollectionManager.withCol {
         Timber.d("doInBackground - rebuildCram()")
         sched.rebuildDyn(decks.selected())
-        updateValuesFromDeck()
     }
     listener.onPostExecute()
 }
