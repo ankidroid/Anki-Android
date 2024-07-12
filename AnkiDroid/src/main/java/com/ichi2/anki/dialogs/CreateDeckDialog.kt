@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.content.Context
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
@@ -90,6 +91,16 @@ class CreateDeckDialog(
             negativeButton(R.string.dialog_cancel)
             setView(R.layout.dialog_generic_text_input)
         }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
+            // defining the action of done button in keyboard
+            val inputField = dialog.getInputField()
+            inputField.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onPositiveButtonClicked()
+                    true
+                } else {
+                    false
+                }
+            }
             // we need the fully-qualified name for subdecks
             val maybeDeckName = fullyQualifyDeckName(dialogText = text)
             // if the name is empty, it seems distracting to show an error
@@ -147,6 +158,7 @@ class CreateDeckDialog(
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
             displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
         }
+        // AlertDialog should be dismissed after the Keyboard 'Done' or Deck 'Ok' button is pressed
         shownDialog?.dismiss()
     }
 
@@ -220,6 +232,8 @@ class CreateDeckDialog(
                 displayFeedback(e.localizedMessage ?: e.message ?: "", Snackbar.LENGTH_LONG)
             }
         }
+        // AlertDialog should be dismissed after the Keyboard 'Done' or Deck 'Ok' button is pressed
+        shownDialog?.dismiss()
     }
 
     private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
