@@ -48,7 +48,7 @@ import com.ichi2.annotations.NeedsTest
  *       Format `string` or `plurals` to be used as template to display the value in the preference summary.
  *       There must be ONLY ONE placeholder, which will be replaced by the preference value.
  * * app:displayValue (*optional*): whether to show the current preference value on a TextView
- *       by the end of the slider
+ *       by the end of the preference
  * * app:displayFormat (*optional*): Format string to be used as template to display the value by
  *       the end of the slider. There must be ONLY ONE placeholder,
  *       which will be replaced by the preference value.
@@ -137,7 +137,7 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
             summaryView.visibility = View.VISIBLE
         }
 
-        val displayValueTextView = holder.findViewById(R.id.valueDisplay) as TextView
+        val displayValueTextView = holder.findViewById(R.id.value_display) as TextView
         if (displayValue) {
             displayValueTextView.text = displayFormat?.let { String.format(it, value) }
                 ?: value.toString()
