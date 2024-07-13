@@ -314,9 +314,9 @@ class CardTemplateNotetype(val notetype: NotetypeJson) {
                 Timber.w(e, "Unable to load saved model file")
                 return null
             }
-            val model = CardTemplateNotetype(tempNotetypeJSON)
-            model.loadTemplateChanges(bundle)
-            return model
+            return CardTemplateNotetype(tempNotetypeJSON).apply {
+                loadTemplateChanges(bundle)
+            }
         }
 
         /**
