@@ -417,13 +417,13 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     private fun addNoteWithThreeCards() {
         val models = col.notetypes
-        var m: NotetypeJson? = models.copy(models.current())
-        m!!.put("name", "Three")
-        models.add(m)
-        m = models.byName("Three")
+        var notetype: NotetypeJson? = models.copy(models.current())
+        notetype!!.put("name", "Three")
+        models.add(notetype)
+        notetype = models.byName("Three")
 
-        cloneTemplate(models, m, "1")
-        cloneTemplate(models, m, "2")
+        cloneTemplate(models, notetype, "1")
+        cloneTemplate(models, notetype, "2")
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
@@ -433,8 +433,8 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    private fun cloneTemplate(notetypes: Notetypes, m: NotetypeJson?, extra: String) {
-        val tmpls = m!!.getJSONArray("tmpls")
+    private fun cloneTemplate(notetypes: Notetypes, notetype: NotetypeJson?, extra: String) {
+        val tmpls = notetype!!.getJSONArray("tmpls")
         val defaultTemplate = tmpls.getJSONObject(0)
 
         val newTemplate = defaultTemplate.deepClone()
@@ -444,7 +444,7 @@ class ReviewerTest : RobolectricTest() {
         newTemplate.put("name", cardName)
         newTemplate.put("qfmt", newTemplate.getString("qfmt") + extra)
 
-        notetypes.addTemplate(m, newTemplate)
+        notetypes.addTemplate(notetype, newTemplate)
     }
 
     @CheckResult
