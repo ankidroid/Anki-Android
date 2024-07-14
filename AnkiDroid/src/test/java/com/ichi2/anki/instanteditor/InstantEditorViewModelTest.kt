@@ -152,6 +152,21 @@ class InstantEditorViewModelTest : RobolectricTest() {
     }
 
     @Test
+    fun `test words with internal punctuation`() = runViewModelTest {
+        val text = "hello-world"
+        val result = buildClozeText(text)
+
+        assertEquals("{{c1::hello-world}}", result)
+    }
+
+    @Test
+    fun `test words with internal underscore punctuation`() = runViewModelTest {
+        val text = "hello_world"
+        val result = buildClozeText(text)
+        assertEquals("{{c1::hello_world}}", result)
+    }
+
+    @Test
     fun testSwitchingBetweenEditModes() = runViewModelTest {
         val word = "Word!"
         val expectedCloze = "{{c1::Word}}!"
