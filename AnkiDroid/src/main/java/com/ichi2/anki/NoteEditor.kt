@@ -1055,8 +1055,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         } else {
             // Check whether note type has been changed
             val newModel = currentlySelectedNotetype
-            val oldModel = if (currentEditedCard == null) null else currentEditedCard!!.noteType(getColUnsafe)
-            if (newModel != oldModel) {
+            val oldModel = currentEditedCard?.noteType(getColUnsafe)
+            if (newModel?.id != oldModel?.id) {
                 reloadRequired = true
                 if (modelChangeCardMap!!.size < editorNote!!.numberOfCards(getColUnsafe) || modelChangeCardMap!!.containsValue(
                         null
