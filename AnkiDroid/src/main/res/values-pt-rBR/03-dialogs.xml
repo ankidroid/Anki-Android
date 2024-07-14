@@ -51,21 +51,21 @@
     <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
     <string name="tts_no_tts">Não fale</string>
     <string name="unused_strings">\n\nArquivos não utilizados:\n</string>
-    <string name="reposition_card_dialog_title">Reposicionar novo card</string>
+    <string name="reposition_card_dialog_title">Reposicionar novo cartão</string>
     <string name="reposition_card_dialog_message">Posição inicial:</string>
-    <string name="reposition_card_not_new_error">Apenas novos cards podem ser reposicionados</string>
+    <string name="reposition_card_not_new_error">Apenas novos cartões podem ser reposicionados</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card reposicionado</item>
+        <item quantity="one">%d cartão reposicionado</item>
         <item quantity="other">%d cards reposicionados</item>
     </plurals>
-    <string name="reset_card_dialog_title">Redefinir progresso do card</string>
+    <string name="reset_card_dialog_title">Redefinir progresso do cartão</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">%d resetar card</item>
+        <item quantity="one">%d resetar cartão</item>
         <item quantity="other">%d resetar cards</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card reagendado</item>
+        <item quantity="one">%d cartão reagendado</item>
         <item quantity="other">%d cards reagendados</item>
     </plurals>
     <string name="answering_error_title">Erro de banco de dados</string>
@@ -74,8 +74,8 @@
     <string name="storage_full_message">Não há espaço suficiente livre para abrir o AnkiDroid. Libere espaço para continuar.</string>
     <string name="repair_deck_dialog">Você realmente deseja tentar reparar o banco de dados?\n\nAntes de iniciar a tentativa, uma cópia será criada na subpasta \"%s\".</string>
     <string name="intent_aedict_empty">Categoria \'padrão\' está vazia</string>
-    <string name="intent_aedict_category">Para adicionar cards ao AnkiDroid remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
-    <string name="custom_study_new_total_new">Novos cards no deck: %d</string>
+    <string name="intent_aedict_category">Para adicionar cartões ao AnkiDroid, remova todas as categorias das notas ou adicione uma com o nome \'default\'</string>
+    <string name="custom_study_new_total_new">Novos cartões no deck: %d</string>
     <string name="custom_study_rev_total_rev">Revisões pendentes no baralho: %d</string>
     <string name="custom_study_new_extend">Aumentar/diminuir (\"-3\") limite de novos cards de hoje.</string>
     <string name="custom_study_rev_extend">Aumentar/diminuir (\"-3\") o limite de revisões de hoje.</string>
@@ -108,9 +108,9 @@
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituir</string>
     <string name="dialog_collection_path_not_dir">O caminho especificado não era um diretório válido</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">O texto fornecido não corresponde a um certificado X509 codificado em PEM</string>
+    <string name="dialog_invalid_custom_certificate_title">Erro na análise do certificado.</string>
+    <string name="dialog_updated_custom_certificate">Certificado atualizado</string>
     <!-- Media checking -->
     <string name="check_media_title">Verificar mídia?</string>
     <string name="check_media_warning">Isto pode demorar muito tempo para coleções com grande quantidade de mídia</string>
@@ -256,9 +256,9 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">De</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Para</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="cloze_note_required">É necessário um cartão do tipo Omissão de palavras</string>
+    <string name="cloze_not_found_message">Não foi encontrado cartões do tipo Omissão de Palavras. Abra o Editor de Notas ou tente novamente após adicionar um cartão do tipo Omissão de palavras.</string>
+    <string name="open">Abrir</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">O sistema do WebView está desatualizado. Alguns recursos não funcionarão corretamente. Por favor, atualize-o.\n\nVersão instalada %1$d\nVersão mínima necessária: %2$d</string>
 </resources>

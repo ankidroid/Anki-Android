@@ -45,41 +45,41 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="youre_offline">Du er offline</string>
+    <string name="sync_error">Synkroniseringsfejl</string>
+    <string name="vague_error" comment="Network error dialog title">Fejl</string>
+    <string name="retry">Prøv igen</string>
+    <string name="menu_get_shared_decks">Få delte kortsæt</string>
+    <string name="connection_error_message">Der opstod en netværksfejl</string>
+    <string name="not_logged_in_title">Log ind på AnkiWeb</string>
+    <string name="login_create_account_message">For at synkronisere skal du logge ind på en tredjepartskonto. Du kan oprette en i næste trin.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
-    <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
-    <string name="log_out">Log out</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="username">E-mailadresse</string>
+    <string name="password">Adgangskode</string>
+    <string name="log_in">Log på</string>
+    <string name="sign_up_description">Har du endnu ikke en AnkiWeb-konto? Det er gratis!</string>
+    <string name="sign_up_not_affiliated">Bemærk: AnkiWeb er ikke forbundet med AnkiDroid</string>
+    <string name="sign_up">Tilmeld dig</string>
+    <string name="logged_as">Logget på som</string>
+    <string name="log_out">Log ud</string>
+    <string name="reset_password">Nulstil adgangskode</string>
+    <string name="lost_mail_instructions">Glemt e-mail?</string>
+    <string name="sign_in">Logger på</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_title">Synchronization</string>
-    <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_database_acknowledge">Collection synchronized</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="deckpreferences_title">Indstillinger for XXX</string>
+    <string name="sync_title">Synkronisering</string>
+    <string name="sync_log_uploading_message">Fuld synkronisering fra lokalt lager</string>
+    <string name="sync_database_acknowledge">Samling synkroniseret</string>
+    <string name="col_synced_media_in_background">Samling synkroniseret. Medier synkroniseres i baggrunden.</string>
+    <string name="sync_corrupt_database">Din database er beskadiget. Ret den, før du igen forsøger at synkronisere.\n\nSe %s for oplysninger om reparation af din database.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="sync_sanity_local">Lokal</string>
+    <string name="sync_sanity_remote">Ekstern</string>
+    <string name="one_way_sync_title">Envejs-synkronisering</string>
+    <string name="one_way_sync_confirmation">Envejs-synkronisering anmodet</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
-    <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
+    <string name="full_sync_confirmation_upgrade">Grundet en fejl i den tidligere installerede version af AnkiDroid, anbefales det at gennemtvinge en fuld synkronisering.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_one_way_sync">Synkronisering (envejs)</string>
+    <string name="sync_menu_title_no_account">Synkronisér (log på)</string>
 </resources>
