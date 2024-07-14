@@ -18,6 +18,8 @@ package com.ichi2.anki.pages
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
@@ -25,6 +27,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.undoableOp
@@ -60,7 +63,23 @@ class DeckOptions : PageFragment() {
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackSaveCallback)
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackCallback)
-        return PageWebViewClient().apply {
+
+        return object : PageWebViewClient() {
+            private val ankiManualHostRegex = Regex("^docs\\.ankiweb\\.net\$")
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                val host = request?.url?.host ?: return shouldOverrideUrlLoading(view, request)
+                return if (ankiManualHostRegex.matches(host)) {
+                    super.shouldOverrideUrlLoading(view, request)
+                } else {
+                    openUrl(request.url)
+                    true
+                }
+            }
+        }.apply {
             onPageFinishedCallback = OnPageFinishedCallback { view ->
                 Timber.v("canGoBack: %b", view.canGoBack())
                 onBackCallback.isEnabled = view.canGoBack()
