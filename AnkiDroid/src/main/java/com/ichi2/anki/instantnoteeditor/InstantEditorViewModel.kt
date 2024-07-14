@@ -441,4 +441,4 @@ private val punctuationPattern = Regex("""\p{Punct}+$""")
 private val spaceRegex = Regex("\\s+")
 
 /** Used to build cloze text here word is not null **/
-private val clozeBuilderPattern = "(\\w+)(\\p{Punct}*)".toRegex()
+private val clozeBuilderPattern = "([\\w\\p{Pd}\\p{Pc}]+)(\\p{Punct}*)".toRegex()
