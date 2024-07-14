@@ -319,6 +319,14 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         return combinedWords
     }
 
+    fun updateClozeNumber(word: String, newClozeNumber: Int): String {
+        return clozePattern.replace(word) { matchResult ->
+            val content = matchResult.groupValues[2]
+            val punctuation = matchResult.groupValues[3]
+            "{{c$newClozeNumber::$content}}$punctuation"
+        }
+    }
+
     /**
      * Removes the cloze deletion marker and surrounding delimiters from a word.
      *

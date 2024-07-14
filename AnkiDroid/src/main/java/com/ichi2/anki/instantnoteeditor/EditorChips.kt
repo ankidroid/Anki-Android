@@ -25,6 +25,10 @@ import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.IntegerDialog
+import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 /**
@@ -35,7 +39,7 @@ import timber.log.Timber
  * handle the creation and updating of cloze deletions.
  */
 // TODO: single chars have more margin in chip
-fun Context.setupChipGroup(viewModel: InstantEditorViewModel, clozeChipGroup: ChipGroup) {
+fun AnkiActivity.setupChipGroup(viewModel: InstantEditorViewModel, clozeChipGroup: ChipGroup) {
     Timber.d("Setting up chip group view")
     clozeChipGroup.removeAllViews()
 
@@ -61,16 +65,76 @@ fun Context.setupChipGroup(viewModel: InstantEditorViewModel, clozeChipGroup: Ch
 
         chip.setOnClickListener {
             val newWord = viewModel.buildClozeText(data.word)
-            data.word = newWord
-            val newClozeNumber = viewModel.getWordClozeNumber(newWord)
 
-            updateChipAndBadge(data.copy(clozeNumber = newClozeNumber))
+            updateChipData(data, newWord, chipsData, viewModel)
+        }
 
-            val modifiedSentence = chipsData.joinToString(separator = " ") { it.word }
-            viewModel.setClozeFieldText(modifiedSentence)
+        @NeedsTest("Test the functionality of the long click listener")
+        chip.setOnLongClickListener {
+            val oldClozeNumber = viewModel.getWordClozeNumber(data.word) ?: return@setOnLongClickListener true
+
+            displayUpdateClozeNumberDialog(oldClozeNumber) { userSelectedClozeNumber ->
+                if (oldClozeNumber == userSelectedClozeNumber) {
+                    Timber.d("Old cloze number equals new cloze number")
+                    return@displayUpdateClozeNumberDialog
+                }
+
+                val newWord = viewModel.updateClozeNumber(data.word, userSelectedClozeNumber)
+                updateChipData(data, newWord, chipsData, viewModel)
+            }
+
+            true
         }
         clozeChipGroup.addView(chip)
     }
+}
+
+/**
+ * Updates the chip data with a new word, updates the chip and badge with the new cloze number,
+ * and sets the modified sentence in the ViewModel.
+ *
+ * Example: If the initial list of chips represents the sentence "Hello world this is a test",
+ * and the word "world" is cloze i.e. {{c1::world}}, this method will update the chip and badge
+ * for "world", and update the entire sentence in the ViewModel.
+ *
+ * @param data The ChipData object containing the current chip and its associated data.
+ * @param newWord The new word to update the chip with.
+ * @param chipsData A list of all ChipData objects in the ChipGroup.
+ * @param viewModel The ViewModel managing the data and logic for the chips.
+ */
+private fun updateChipData(
+    data: ChipData,
+    newWord: String,
+    chipsData: List<ChipData>,
+    viewModel: InstantEditorViewModel
+) {
+    data.word = newWord
+    val newClozeNumber = viewModel.getWordClozeNumber(newWord)
+    updateChipAndBadge(data.copy(clozeNumber = newClozeNumber))
+
+    val modifiedSentence = chipsData.joinToString(separator = " ") { it.word }
+    viewModel.setClozeFieldText(modifiedSentence)
+}
+
+/**
+ * Display a dialog to allow the user to change the cloze number.
+ *
+ * @param clozeNumber The current cloze number.
+ * @param newClozeNumber A lambda function to be invoked with the new cloze number when the user confirms the change.
+ */
+private fun AnkiActivity.displayUpdateClozeNumberDialog(clozeNumber: Int, newClozeNumber: (Int) -> Unit) {
+    val repositionDialog = IntegerDialog().apply {
+        setArgs(
+            title = this@displayUpdateClozeNumberDialog.getString(R.string.change_cloze_number),
+            prompt = this@displayUpdateClozeNumberDialog.getString(R.string.cloze_number),
+            digits = 2,
+            defaultValue = clozeNumber.toString()
+        )
+        setCallbackRunnable {
+            newClozeNumber(it)
+        }
+    }
+    this.showDialogFragment(repositionDialog)
 }
 
 private fun updateChipAndBadge(data: ChipData) {
