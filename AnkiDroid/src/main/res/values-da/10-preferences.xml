@@ -48,16 +48,16 @@
     <string name="disabled">Disabled</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d minutter</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Ingen resultater</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Generelt</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
-    <string name="pref_cat_reviewing" maxLength="41">Reviewing</string>
+    <string name="pref_cat_reviewing" maxLength="41">Gennemgang</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Whiteboard</string>
@@ -144,7 +144,7 @@
     <string name="night_theme" maxLength="41">Night theme</string>
     <string name="language" maxLength="41">Language</string>
     <string name="language_system">System language</string>
-    <string name="notification_pref" maxLength="41">Notifications</string>
+    <string name="notification_pref" maxLength="41">Notifikationer</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
     <string name="never_notify">Never notify</string>
     <string name="notify_when_pending">Pending messages available</string>
@@ -202,7 +202,7 @@
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Tilgængelighed</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
@@ -255,12 +255,12 @@
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- About -->
     <string name="open_changelog">Open Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">Om</string>
     <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="about_contributors_description"><![CDATA[Disse er vores fantastiske <a href=\"%1$s\">bidragsydere</a>. Du kan også hjælpe AnkiDroid ved at programmere, oversætte, donere og <a href=\"%2$s\">mere</a>!]]></string>
     <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid er udgivet under <a href=\"%1$s\">GPL-3.0</a> og <a href=\"%2$s\">AGPL-3.0</a> licenser med kildekoden tilgængelig <a href=\"%3$s\">på GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[Du kan støtte AnkiDroid\'s udvikling ved at <a href=\"%1$s\">donere</a>. Ethvert bidrag er dybt værdsat.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Add gesture</string>
     <string name="binding_replace_gesture">Replace gesture</string>

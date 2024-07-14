@@ -45,17 +45,17 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Tjek database</string>
-    <string name="check_db_warning">This may take a long time</string>
+    <string name="check_db_warning">Dette kan tage lang tid</string>
     <string name="contextmenu_deckpicker_delete_deck">Slet Sæt</string>
     <string name="delete_deck_title">Slet Sæt</string>
     <string name="no_tts_available_message">Intet Tekst-Til-Tale sprog tilgængelig</string>
     <string name="tts_no_tts">Don’t speak</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Repositionér nyt kort</string>
+    <string name="reposition_card_dialog_message">Startposition:</string>
+    <string name="reposition_card_not_new_error">Udelukkende nye kort kan repositioneres</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
+        <item quantity="one">%d kort repositioneret</item>
         <item quantity="other">%d cards repositioned</item>
     </plurals>
     <string name="reset_card_dialog_title">Reset card progress</string>
@@ -71,7 +71,7 @@
     <string name="answering_error_title">Database fejl</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Report error</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Der er ikke nok ledig lagerplads til at åbne AnkiDroid. Frigør plads for at fortsætte. </string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
@@ -84,29 +84,29 @@
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Lagerplads opbrugt</string>
+    <string name="storage_almost_full_title">Lagerplads næsten fuld</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
-    <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid kræver %s ledig lagerplads for at fortsætte. Ryd venligst noget lagerplads</string>
+    <string name="restore_backup_title">Gendan sikkerhedskopi?</string>
+    <string name="restore_backup">Din samling vil blive erstattet med en ældre kopi. Alle ikke-gemte fremskridt vil gå tabt!</string>
+    <string name="restore_backup_choose_another">Vælg anden</string>
+    <string name="dialog_cancel">Annullér</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Bekræft</string>
+    <string name="dialog_no">Nej</string>
     <string name="dialog_yes">Ja</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_processing">Processing&#8230;</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="dialog_keep">Bevar</string>
+    <string name="dialog_remove">Fjern</string>
+    <string name="dialog_continue">Fortsæt</string>
+    <string name="dialog_processing">Behandler&#8230;</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Opret</string>
+    <string name="dialog_positive_delete">Slet</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Deaktivér</string>
+    <string name="dialog_positive_overwrite">Overskriv</string>
+    <string name="dialog_positive_repair">Reparér</string>
+    <string name="dialog_positive_replace">Erstat</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
@@ -129,11 +129,11 @@
         <item quantity="other">%d files deleted</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
+    <string name="tags_dialog_option_all_cards">Alle kort</string>
+    <string name="tags_dialog_option_new_cards">Ny</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
+    <string name="emtpy_cards_finding">Finder tomme kort&#8230;</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
     <string name="empty_cards_deleted">Cards deleted: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -189,7 +189,7 @@
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_opencollective_donate">Donér</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>
