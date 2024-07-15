@@ -26,10 +26,14 @@ import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.showImportDialog
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import org.jetbrains.annotations.Contract
@@ -40,7 +44,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */

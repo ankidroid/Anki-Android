@@ -23,7 +23,7 @@ import androidx.core.view.isVisible
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 import com.ichi2.utils.getInputField
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import kotlin.test.assertNotNull
 
 var AlertDialog.input

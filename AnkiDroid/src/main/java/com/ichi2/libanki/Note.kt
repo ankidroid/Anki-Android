@@ -29,7 +29,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import com.ichi2.utils.emptyStringArray
 import org.json.JSONObject
-import java.util.*
+import java.util.AbstractSet
 import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")

@@ -18,22 +18,37 @@
  ****************************************************************************************/
 package com.ichi2.anki.provider
 
-import android.content.*
+import android.content.ContentProvider
+import android.content.ContentUris
+import android.content.ContentValues
+import android.content.UriMatcher
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.utils.ext.description
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Sound.replaceWithSoundTags
-import com.ichi2.libanki.TemplateManager.*
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.*
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.DeckNode
@@ -49,7 +64,6 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 /**
  * Supported URIs:

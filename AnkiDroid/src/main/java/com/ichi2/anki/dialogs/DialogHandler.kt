@@ -19,7 +19,12 @@ package com.ichi2.anki.dialogs
 import android.os.Handler
 import android.os.Message
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionLoadingErrorDialog
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.MigrateStorageOnSyncSuccess
+import com.ichi2.anki.OneWaySyncDialog
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.ImportUtils

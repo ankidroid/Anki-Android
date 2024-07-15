@@ -20,7 +20,8 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import org.acra.util.IOUtils
 import java.io.File
-import java.util.*
+import java.util.NoSuchElementException
+import java.util.Scanner
 
 object FileUtil {
     /**

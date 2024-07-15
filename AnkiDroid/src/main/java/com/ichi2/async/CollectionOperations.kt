@@ -16,16 +16,17 @@
 
 package com.ichi2.async
 
-import com.ichi2.anki.*
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CardTemplateNotetype
+import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.browser.CardBrowserColumn
-import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.NotetypeJson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
-import java.util.*
 
 /**
  * Takes a list of media file names and removes them from the [Collection]

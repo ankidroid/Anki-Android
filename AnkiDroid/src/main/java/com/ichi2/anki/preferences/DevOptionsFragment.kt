@@ -20,10 +20,16 @@ import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
-import com.ichi2.anki.*
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.OnboardingUtils
+import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
+import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers

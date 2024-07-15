@@ -19,7 +19,7 @@ import anki.decks.DeckTreeNode
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.append
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Locale
 
 data class DeckNode(
     val node: DeckTreeNode,

@@ -21,15 +21,28 @@ import android.os.Build
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
+import com.ichi2.anki.canSync
+import com.ichi2.anki.isLoggedIn
+import com.ichi2.anki.millisecondsSinceLastSync
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall
 import com.ichi2.anki.servicelayer.ScopedStorageService.userIsPromptedToDeleteCollectionOnUninstall
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.*
+import com.ichi2.utils.Permissions
+import com.ichi2.utils.cancelable
+import com.ichi2.utils.checkBoxPrompt
+import com.ichi2.utils.create
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import timber.log.Timber
 
 /**

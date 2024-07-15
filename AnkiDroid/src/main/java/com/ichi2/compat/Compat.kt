@@ -30,8 +30,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CheckResult
-import java.io.*
-import java.util.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.io.Serializable
+import java.util.Locale
 
 /**
  * This interface defines a set of functions that are not available on all platforms.

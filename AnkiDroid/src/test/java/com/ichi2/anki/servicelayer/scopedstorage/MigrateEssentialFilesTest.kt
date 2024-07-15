@@ -30,7 +30,8 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.testutils.CollectionDBCorruption
 import com.ichi2.testutils.createTransientDirectory
 import net.ankiweb.rsdroid.BackendException
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.io.FileMatchers
 import org.junit.After

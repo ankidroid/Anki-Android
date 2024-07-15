@@ -26,10 +26,10 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import java.util.*
+import com.ichi2.anki.reviewer.MappableBinding.Screen
+import java.util.Arrays
 import java.util.function.BiFunction
 import java.util.stream.Collectors
 

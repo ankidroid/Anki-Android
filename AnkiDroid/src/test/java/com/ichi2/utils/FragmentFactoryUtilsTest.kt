@@ -21,7 +21,9 @@ import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 import org.junit.Assert
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
 
 class FragmentFactoryUtilsTest {

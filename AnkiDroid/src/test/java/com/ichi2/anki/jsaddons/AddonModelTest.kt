@@ -23,7 +23,9 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.FileOperation
-import junit.framework.TestCase.*
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.StringEndsWith.endsWith
 import org.junit.Before

@@ -16,13 +16,15 @@
 package com.ichi2.anki.dialogs.tags
 
 import com.ichi2.testutils.assertFalse
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
-import java.util.*
+import java.util.Collections
 
 class TagsListTest {
     lateinit var tagsList: TagsList

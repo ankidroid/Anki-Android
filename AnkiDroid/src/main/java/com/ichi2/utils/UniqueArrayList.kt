@@ -17,7 +17,9 @@ package com.ichi2.utils
 
 import androidx.annotation.RequiresApi
 import org.apache.commons.collections4.list.SetUniqueList
-import java.util.*
+import java.util.Arrays
+import java.util.Spliterator
+import java.util.TreeSet
 
 /**
  * A collection of items that doesn't allow duplicate items, and allows fast random access, lookup, maintaining order, and sorting.

@@ -21,7 +21,8 @@ import android.content.Context
 import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.NoteFieldsCheckResult.*
+import com.ichi2.anki.NoteFieldsCheckResult.Failure
+import com.ichi2.anki.NoteFieldsCheckResult.Success
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.libanki.Note
 import timber.log.Timber

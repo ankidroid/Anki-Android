@@ -24,10 +24,10 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
+import org.mockito.Mockito.any
+import org.mockito.Mockito.mock
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.kotlin.whenever
-import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class ActionButtonStatusTest : RobolectricTest() {

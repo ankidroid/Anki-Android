@@ -6,7 +6,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.PendingIntentCompat
-import com.ichi2.anki.*
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
