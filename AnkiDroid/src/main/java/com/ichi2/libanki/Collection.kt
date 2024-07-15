@@ -305,11 +305,11 @@ class Collection(
 
     /**
      * Return a new note with a specific model
-     * @param m The model to use for the new note
+     * @param notetype The model to use for the new note
      * @return The new note
      */
-    fun newNote(m: NotetypeJson): Note {
-        return Note.fromNotetypeId(m.id)
+    fun newNote(notetype: NotetypeJson): Note {
+        return Note.fromNotetypeId(notetype.id)
     }
 
     /**

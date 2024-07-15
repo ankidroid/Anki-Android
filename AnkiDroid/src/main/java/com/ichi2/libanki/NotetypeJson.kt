@@ -42,11 +42,7 @@ class NotetypeJson : JSONObject {
     constructor() : super()
 
     /**
-     * Creates a copy from [JSONObject] and use it as a string
-     *
-     * This function will perform deepCopy on the passed object
-     *
-     * @see NotetypeJson.from
+     * Creates a deep copy from [JSONObject].
      */
     constructor(json: JSONObject) : super() {
         json.deepClonedInto(this)
@@ -102,8 +98,6 @@ class NotetypeJson : JSONObject {
             put(k, updateFrom[k])
         }
     }
-
-    fun deepcopy(): NotetypeJson = NotetypeJson(this.deepClone())
 
     var flds: JSONArray
         get() = getJSONArray("flds")

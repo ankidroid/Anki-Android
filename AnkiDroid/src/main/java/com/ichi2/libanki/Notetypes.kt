@@ -82,13 +82,13 @@ class Notetypes(val col: Collection) {
     }
 
     /** Save changes made to provided note type. */
-    fun save(m: NotetypeJson) {
+    fun save(notetype: NotetypeJson) {
         // legacy code expects preserve_usn=false behaviour, but that
         // causes a backup entry to be created, which invalidates the
         // v2 review history. So we manually update the usn/mtime here
-        m.put("mod", TimeManager.time.intTime())
-        m.put("usn", col.usn())
-        update(m, preserve_usn_and_mtime = true)
+        notetype.put("mod", TimeManager.time.intTime())
+        notetype.put("usn", col.usn())
+        update(notetype, preserve_usn_and_mtime = true)
     }
 
     /*
@@ -153,8 +153,8 @@ class Notetypes(val col: Collection) {
         return get(all_names_and_ids().first().id)!!
     }
 
-    fun setCurrent(m: NotetypeJson) {
-        col.config.set("curModel", m.id)
+    fun setCurrent(notetype: NotetypeJson) {
+        col.config.set("curModel", notetype.id)
     }
 
     /*
@@ -226,8 +226,8 @@ class Notetypes(val col: Collection) {
     }
 
     /** Delete model, and all its cards/notes. */
-    fun rem(m: NotetypeJson) {
-        remove(m.id)
+    fun rem(notetype: NotetypeJson) {
+        remove(notetype.id)
     }
 
     /** Modifies schema. */
@@ -236,31 +236,31 @@ class Notetypes(val col: Collection) {
         col.backend.removeNotetype(id)
     }
 
-    fun add(m: NotetypeJson) {
-        save(m)
+    fun add(notetype: NotetypeJson) {
+        save(notetype)
     }
 
-    fun ensureNameUnique(m: NotetypeJson) {
-        val existingId = id_for_name(m.name)
+    fun ensureNameUnique(notetype: NotetypeJson) {
+        val existingId = id_for_name(notetype.name)
         existingId?.let {
-            if (it != m.id) {
+            if (it != notetype.id) {
                 // Python uses a float time, but it doesn't really matter, the goal is just a random id.
-                m.name += "-" + checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)
+                notetype.name += "-" + checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)
             }
         }
     }
 
     /** Add or update an existing model. Use .save() instead. */
-    fun update(m: NotetypeJson, preserve_usn_and_mtime: Boolean = true) {
-        _remove_from_cache(m.id)
-        ensureNameUnique(m)
-        m.id = col.backend.addOrUpdateNotetype(
-            json = to_json_bytes(m),
+    fun update(notetype: NotetypeJson, preserve_usn_and_mtime: Boolean = true) {
+        _remove_from_cache(notetype.id)
+        ensureNameUnique(notetype)
+        notetype.id = col.backend.addOrUpdateNotetype(
+            json = to_json_bytes(notetype),
             preserveUsnAndMtime = preserve_usn_and_mtime,
             skipChecks = preserve_usn_and_mtime
         )
-        setCurrent(m)
-        _mutate_after_write(m)
+        setCurrent(notetype)
+        _mutate_after_write(notetype)
     }
 
     private fun _mutate_after_write(nt: NotetypeJson) {
@@ -284,15 +284,15 @@ class Notetypes(val col: Collection) {
     }
 
     /** Number of note using M. */
-    fun useCount(m: NotetypeJson): Int {
-        return col.db.queryLongScalar("select count() from notes where mid = ?", m.id).toInt()
+    fun useCount(notetype: NotetypeJson): Int {
+        return col.db.queryLongScalar("select count() from notes where mid = ?", notetype.id).toInt()
     }
 
     @RustCleanup("not in libAnki any more - may not be needed")
-    fun tmplUseCount(m: NotetypeJson, ord: Int): Int {
+    fun tmplUseCount(notetype: NotetypeJson, ord: Int): Int {
         return col.db.queryScalar(
             "select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?",
-            m.id,
+            notetype.id,
             ord
         )
     }
@@ -305,8 +305,8 @@ class Notetypes(val col: Collection) {
     /** Copy, save and return.
      * This code is currently only used by unit tests. If the  GUI starts to use it, the signature
      * should be updated so that a translated name is passed in. */
-    fun copy(m: NotetypeJson): NotetypeJson {
-        val m2 = m.deepcopy()
+    fun copy(notetype: NotetypeJson): NotetypeJson {
+        val m2 = notetype.deepClone()
         m2.name = "${m2.name} copy"
         // m2.name = col.context.getString(R.string.copy_note_type_name, m2.name)
         m2.id = 0
@@ -329,28 +329,28 @@ class Notetypes(val col: Collection) {
     }
 
     /** Modifies schema */
-    fun add_field(m: NotetypeJson, field: Field) {
-        m.flds.append(field)
+    fun add_field(notetype: NotetypeJson, field: Field) {
+        notetype.flds.append(field)
     }
 
     /** Modifies schema. */
-    fun remove_field(m: NotetypeJson, field: Field) {
-        m.flds.remove(field)
+    fun remove_field(notetype: NotetypeJson, field: Field) {
+        notetype.flds.remove(field)
     }
 
     /** Modifies schema. */
-    fun reposition_field(m: NotetypeJson, field: Field, idx: Int) {
-        val oldidx = m.flds.index(field).get()
+    fun reposition_field(notetype: NotetypeJson, field: Field, idx: Int) {
+        val oldidx = notetype.flds.index(field).get()
         if (oldidx == idx) {
             return
         }
 
-        m.flds.remove(field)
-        m.flds.insert(idx, field)
+        notetype.flds.remove(field)
+        notetype.flds.insert(idx, field)
     }
 
-    fun rename_field(m: NotetypeJson, field: Field, new_name: String) {
-        assert(m.flds.jsonObjectIterable().contains(field))
+    fun rename_field(notetype: NotetypeJson, field: Field, new_name: String) {
+        assert(notetype.flds.jsonObjectIterable().contains(field))
         field["name"] = new_name
     }
 
@@ -366,26 +366,26 @@ class Notetypes(val col: Collection) {
 
     fun newField(name: String) = new_field(name)
 
-    fun addField(m: NotetypeJson, field: Field) {
-        add_field(m, field)
-        if (m.id != 0L) {
-            save(m)
+    fun addField(notetype: NotetypeJson, field: Field) {
+        add_field(notetype, field)
+        if (notetype.id != 0L) {
+            save(notetype)
         }
     }
 
-    fun remField(m: NotetypeJson, field: Field) {
-        remove_field(m, field)
-        save(m)
+    fun remField(notetype: NotetypeJson, field: Field) {
+        remove_field(notetype, field)
+        save(notetype)
     }
 
-    fun moveField(m: NotetypeJson, field: Field, idx: Int) {
-        reposition_field(m, field, idx)
-        save(m)
+    fun moveField(notetype: NotetypeJson, field: Field, idx: Int) {
+        reposition_field(notetype, field, idx)
+        save(notetype)
     }
 
-    fun renameField(m: NotetypeJson, field: Field, newName: String) {
-        rename_field(m, field, newName)
-        save(m)
+    fun renameField(notetype: NotetypeJson, field: Field, newName: String) {
+        rename_field(notetype, field, newName)
+        save(notetype)
     }
 
     /**
@@ -394,10 +394,10 @@ class Notetypes(val col: Collection) {
      * [ConfirmModSchemaException]
      */
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
-    fun addFieldInNewModel(m: NotetypeJson, field: JSONObject) {
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not")
+    fun addFieldInNewModel(notetype: NotetypeJson, field: JSONObject) {
+        Assert.that(isModelNew(notetype), "Model was assumed to be new, but is not")
         try {
-            _addField(m, field)
+            _addField(notetype, field)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             CrashReportService.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
@@ -405,13 +405,13 @@ class Notetypes(val col: Collection) {
         }
     }
 
-    fun addTemplateInNewModel(m: NotetypeJson, template: JSONObject) {
+    fun addTemplateInNewModel(notetype: NotetypeJson, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
-        Assert.that(isModelNew(m), "Model was assumed to be new, but is not")
+        Assert.that(isModelNew(notetype), "Model was assumed to be new, but is not")
 
         try {
-            _addTemplate(m, template)
+            _addTemplate(notetype, template)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             CrashReportService.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
@@ -419,19 +419,19 @@ class Notetypes(val col: Collection) {
         }
     }
 
-    fun addFieldModChanged(m: NotetypeJson, field: JSONObject) {
+    fun addFieldModChanged(notetype: NotetypeJson, field: JSONObject) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
-        _addField(m, field)
+        _addField(notetype, field)
     }
 
-    fun addTemplateModChanged(m: NotetypeJson, template: JSONObject) {
+    fun addTemplateModChanged(notetype: NotetypeJson, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
-        _addTemplate(m, template)
+        _addTemplate(notetype, template)
     }
 
     /*
@@ -451,45 +451,45 @@ class Notetypes(val col: Collection) {
     }
 
     /** Modifies schema. */
-    fun add_template(m: NotetypeJson, template: Template) {
-        m.tmpls.append(template)
+    fun add_template(notetype: NotetypeJson, template: Template) {
+        notetype.tmpls.append(template)
     }
 
     /** Modifies schema */
-    fun remove_template(m: NotetypeJson, template: Template) {
-        assert(len(m.tmpls) > 1)
-        m.tmpls.remove(template)
+    fun remove_template(notetype: NotetypeJson, template: Template) {
+        assert(len(notetype.tmpls) > 1)
+        notetype.tmpls.remove(template)
     }
 
     /** Modifies schema. */
-    fun reposition_template(m: NotetypeJson, template: Template, idx: Int) {
-        val oldidx = m.tmpls.index(template).get()
+    fun reposition_template(notetype: NotetypeJson, template: Template, idx: Int) {
+        val oldidx = notetype.tmpls.index(template).get()
         if (oldidx == idx) {
             return
         }
 
-        m.tmpls.remove(template)
-        m.tmpls.insert(idx, template)
+        notetype.tmpls.remove(template)
+        notetype.tmpls.insert(idx, template)
     }
 
     /** legacy */
     fun newTemplate(name: String): Template = new_template(name)
 
-    fun addTemplate(m: NotetypeJson, template: Template) {
-        add_template(m, template)
-        if (m.id != 0L) {
-            save(m)
+    fun addTemplate(notetype: NotetypeJson, template: Template) {
+        add_template(notetype, template)
+        if (notetype.id != 0L) {
+            save(notetype)
         }
     }
 
-    fun remTemplate(m: NotetypeJson, template: Template) {
-        remove_template(m, template)
-        save(m)
+    fun remTemplate(notetype: NotetypeJson, template: Template) {
+        remove_template(notetype, template)
+        save(notetype)
     }
 
-    fun moveTemplate(m: NotetypeJson, template: Template, idx: Int) {
-        reposition_template(m, template, idx)
-        save(m)
+    fun moveTemplate(notetype: NotetypeJson, template: Template, idx: Int) {
+        reposition_template(notetype, template, idx)
+        save(notetype)
     }
 
     /*
@@ -517,7 +517,7 @@ class Notetypes(val col: Collection) {
      * multiple notes at once.
      * */
     fun change(
-        m: NotetypeJson,
+        noteType: NotetypeJson,
         nid: NoteId,
         newModel: NotetypeJson,
         fmap: Map<Int, Int?>,
@@ -525,20 +525,20 @@ class Notetypes(val col: Collection) {
     ): OpChanges {
         val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
         val templateMap =
-            if (cmap.isEmpty() || m.type == MODEL_CLOZE || newModel.type == MODEL_CLOZE) {
+            if (cmap.isEmpty() || noteType.type == MODEL_CLOZE || newModel.type == MODEL_CLOZE) {
                 listOf()
             } else {
                 convertLegacyMap(cmap, newModel.templatesNames.size)
             }
-        val isCloze = newModel.isCloze || m.isCloze
+        val isCloze = newModel.isCloze || noteType.isCloze
         return col.backend.changeNotetype(
             noteIds = listOf(nid),
             newFields = fieldMap,
             newTemplates = templateMap,
-            oldNotetypeId = m.id,
+            oldNotetypeId = noteType.id,
             newNotetypeId = newModel.id,
             currentSchema = col.scm,
-            oldNotetypeName = m.name,
+            oldNotetypeName = noteType.name,
             isCloze = isCloze
         )
     }
@@ -559,12 +559,12 @@ class Notetypes(val col: Collection) {
      */
 
     /** Return a hash of the schema, to see if models are compatible. */
-    fun scmhash(m: NotetypeJson): String {
+    fun scmhash(notetype: NotetypeJson): String {
         var s = ""
-        for (f in m.flds.jsonObjectIterable()) {
+        for (f in notetype.flds.jsonObjectIterable()) {
             s += f["name"]
         }
-        for (t in m.tmpls.jsonObjectIterable()) {
+        for (t in notetype.tmpls.jsonObjectIterable()) {
             s += t["name"]
         }
         return checksum(s)
@@ -579,12 +579,12 @@ class Notetypes(val col: Collection) {
         return all_names_and_ids().count()
     }
 
-    fun _addTemplate(m: NotetypeJson, template: JSONObject) {
-        addTemplate(m, template)
+    fun _addTemplate(notetype: NotetypeJson, template: JSONObject) {
+        addTemplate(notetype, template)
     }
 
-    fun _addField(m: NotetypeJson, field: JSONObject) {
-        addField(m, field)
+    fun _addField(notetype: NotetypeJson, field: JSONObject) {
+        addField(notetype, field)
     }
 
     /**
@@ -635,8 +635,8 @@ class Notetypes(val col: Collection) {
                 )
 
         /** "Mapping of field name -> (ord, field).  */
-        fun fieldMap(m: NotetypeJson): Map<String, Pair<Int, JSONObject>> {
-            val flds = m.getJSONArray("flds")
+        fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, JSONObject>> {
+            val flds = notetype.getJSONArray("flds")
             // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
             val result: MutableMap<String, Pair<Int, JSONObject>> = HashUtil.hashMapInit(flds.length())
             for (f in flds.jsonObjectIterable()) {
@@ -646,12 +646,12 @@ class Notetypes(val col: Collection) {
         }
 
         // not in anki
-        fun isModelNew(m: NotetypeJson): Boolean {
-            return m.getLong("id") == 0L
+        fun isModelNew(notetype: NotetypeJson): Boolean {
+            return notetype.getLong("id") == 0L
         }
 
-        fun _updateTemplOrds(m: NotetypeJson) {
-            val tmpls = m.getJSONArray("tmpls")
+        fun _updateTemplOrds(notetype: NotetypeJson) {
+            val tmpls = notetype.getJSONArray("tmpls")
             for (i in 0 until tmpls.length()) {
                 val f = tmpls.getJSONObject(i)
                 f.put("ord", i)
