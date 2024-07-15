@@ -25,10 +25,13 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.createTransientFile
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.io.FileMatchers.*
-import org.junit.Assert.*
+import org.hamcrest.io.FileMatchers.aFileWithAbsolutePath
+import org.hamcrest.io.FileMatchers.anExistingFile
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder

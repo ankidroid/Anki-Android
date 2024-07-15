@@ -31,7 +31,10 @@
  */
 package com.ichi2.compat
 
-import android.content.pm.*
+import android.content.pm.ApplicationInfo
+import android.content.pm.ComponentInfo
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.os.UserManager
 import androidx.annotation.LongDef
 

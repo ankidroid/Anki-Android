@@ -17,7 +17,14 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.cardviewer.ViewerCommand.*
+import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_BLUE
+import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_GREEN
+import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_ORANGE
+import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_PINK
+import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_PURPLE
+import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_RED
+import com.ichi2.anki.cardviewer.ViewerCommand.TOGGLE_FLAG_TURQUOISE
+import com.ichi2.anki.cardviewer.ViewerCommand.UNSET_FLAG
 import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.libanki.Card
 import org.hamcrest.MatcherAssert.assertThat
@@ -27,7 +34,8 @@ import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.Mockito.*
+import org.mockito.Mockito.doAnswer
+import org.mockito.Mockito.mock
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric

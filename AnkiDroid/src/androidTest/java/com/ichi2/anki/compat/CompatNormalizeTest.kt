@@ -20,7 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.compat.CompatHelper
 import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.Locale

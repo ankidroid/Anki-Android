@@ -22,10 +22,14 @@ import androidx.annotation.CheckResult
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.reviewer.Binding.*
+import com.ichi2.anki.reviewer.Binding.AxisButtonBinding
+import com.ichi2.anki.reviewer.Binding.GestureInput
+import com.ichi2.anki.reviewer.Binding.KeyBinding
+import com.ichi2.anki.reviewer.Binding.KeyCode
+import com.ichi2.anki.reviewer.Binding.UnicodeCharacter
 import com.ichi2.utils.hash
 import timber.log.Timber
-import java.util.*
+import java.util.Objects
 import kotlin.collections.ArrayList
 
 /**

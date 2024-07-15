@@ -24,9 +24,9 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
+import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.Companion.PRIORITY_FILES
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.UserActionRequiredException
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes

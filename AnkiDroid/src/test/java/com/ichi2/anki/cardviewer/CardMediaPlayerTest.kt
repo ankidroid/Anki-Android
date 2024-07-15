@@ -19,7 +19,9 @@ package com.ichi2.anki.cardviewer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardUtils
 import com.ichi2.anki.cardviewer.SingleCardSide.BACK
-import com.ichi2.anki.cardviewer.SoundErrorBehavior.*
+import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
+import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
+import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
 import com.ichi2.libanki.AvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TemplateManager

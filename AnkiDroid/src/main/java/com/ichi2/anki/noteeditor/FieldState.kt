@@ -28,7 +28,7 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.json.JSONObject
-import java.util.*
+import java.util.ArrayList
 import kotlin.math.min
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations

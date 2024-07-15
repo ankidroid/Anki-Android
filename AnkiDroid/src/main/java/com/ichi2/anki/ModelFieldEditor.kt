@@ -53,7 +53,7 @@ import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected

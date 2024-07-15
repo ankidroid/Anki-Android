@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.ichi2.libanki.utils.Time
-import java.util.*
+import java.util.Calendar
 
 fun showThemedToast(context: Context, text: String, shortLength: Boolean) {
     Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()

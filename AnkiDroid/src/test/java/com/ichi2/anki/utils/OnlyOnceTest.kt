@@ -18,7 +18,7 @@ package com.ichi2.anki.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.utils.OnlyOnce.Method.*
+import com.ichi2.anki.utils.OnlyOnce.Method.UNIT_TEST
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope

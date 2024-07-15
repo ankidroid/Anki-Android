@@ -18,7 +18,7 @@
 package com.ichi2.utils
 
 import org.jetbrains.annotations.Contract
-import java.util.*
+import java.util.Locale
 import kotlin.math.min
 
 object StringUtil {

@@ -17,8 +17,8 @@ package com.ichi2.anki
 
 import com.ichi2.anki.CardBrowser.CardCollection
 import com.ichi2.anki.CardBrowser.PositionAware
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 
 class CardBrowserCardCollectionTest {

@@ -18,7 +18,7 @@ package com.ichi2.anki.jsaddons
 
 import timber.log.Timber
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
 import java.util.regex.Pattern
 
 object NpmUtils {

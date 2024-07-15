@@ -18,12 +18,18 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
-import com.ichi2.testutils.*
+import com.ichi2.testutils.TestException
+import com.ichi2.testutils.addTempFile
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.createTransientFile
+import com.ichi2.testutils.withTempFile
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.instanceOf
 import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
