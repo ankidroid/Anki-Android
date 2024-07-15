@@ -16,8 +16,10 @@
 
 package com.ichi2.compat
 
-import com.ichi2.testutils.*
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.createTransientFile
+import com.ichi2.testutils.withTempFile
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test

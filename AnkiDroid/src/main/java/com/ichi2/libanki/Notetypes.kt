@@ -45,7 +45,13 @@ import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.utils.*
+import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.libanki.utils.append
+import com.ichi2.libanki.utils.index
+import com.ichi2.libanki.utils.insert
+import com.ichi2.libanki.utils.len
+import com.ichi2.libanki.utils.remove
+import com.ichi2.libanki.utils.set
 import com.ichi2.utils.Assert
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.jsonObjectIterable

@@ -32,12 +32,25 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
-import com.ichi2.anki.*
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.R
+import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.*
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.LIMITS
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.STANDARD
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.DECK_OPTIONS
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.MORE_OPTIONS
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_FORGOT
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_NEW
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_PREVIEW
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_RANDOM
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_REV
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_TAGS
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
@@ -59,7 +72,7 @@ import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 

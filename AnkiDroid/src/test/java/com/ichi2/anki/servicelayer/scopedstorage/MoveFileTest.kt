@@ -18,10 +18,19 @@ package com.ichi2.anki.servicelayer.scopedstorage
 
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.FileConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.FileDirectoryConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MissingDirectoryException
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MissingDirectoryException.MissingFile
-import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.*
+import com.ichi2.testutils.FileUtil
+import com.ichi2.testutils.TestException
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.length
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasSize
@@ -224,7 +233,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         val source = addUntrackedMediaFile("hello-oo", listOf("hello.txt"))
         val destinationFile = source.file
 
-        val ex = assertFailsWith<EquivalentFileException> {
+        val ex = assertFailsWith<MigrateUserData.EquivalentFileException> {
             MoveFile(source, destinationFile)
                 .execute()
         }

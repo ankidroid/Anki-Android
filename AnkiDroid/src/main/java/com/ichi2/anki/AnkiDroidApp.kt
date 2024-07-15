@@ -62,9 +62,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import org.acra.BuildConfig
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
+import com.ichi2.anki.BuildConfig as AnkiBuildConfig
 
 /**
  * Application class.
@@ -124,7 +126,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
             LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
             LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
         }
-        if (BuildConfig.ENABLE_LEAK_CANARY) {
+        if (AnkiBuildConfig.ENABLE_LEAK_CANARY) {
             LeakCanaryConfiguration.setInitialConfigFor(this)
         } else {
             LeakCanaryConfiguration.disable()

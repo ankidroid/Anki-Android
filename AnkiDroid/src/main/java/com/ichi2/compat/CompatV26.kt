@@ -23,8 +23,17 @@ import android.os.Vibrator
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.NotificationChannels
-import java.io.*
-import java.nio.file.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.nio.file.DirectoryIteratorException
+import java.nio.file.DirectoryStream
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 
 /** Implementation of [Compat] for SDK level 26 and higher. Check  [Compat]'s for more detail.  */
 @TargetApi(26)

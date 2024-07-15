@@ -22,7 +22,10 @@ import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Media
 import com.ichi2.libanki.exception.EmptyMediaException
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.io.FileOutputStream

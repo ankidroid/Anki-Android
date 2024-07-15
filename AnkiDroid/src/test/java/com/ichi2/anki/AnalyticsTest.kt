@@ -17,8 +17,8 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.res.Resources
-import android.preference.*
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.brsanthu.googleanalytics.GoogleAnalytics
 import com.brsanthu.googleanalytics.GoogleAnalyticsBuilder
 import com.brsanthu.googleanalytics.request.ExceptionHit
@@ -29,7 +29,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.any
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.mockStatic
+import org.mockito.Mockito.spy
+import org.mockito.Mockito.validateMockitoUsage
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 

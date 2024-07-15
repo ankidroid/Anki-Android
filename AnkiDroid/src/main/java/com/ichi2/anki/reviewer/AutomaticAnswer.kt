@@ -22,7 +22,9 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.reviewer.AnswerButtons.*
+import com.ichi2.anki.reviewer.AnswerButtons.AGAIN
+import com.ichi2.anki.reviewer.AnswerButtons.GOOD
+import com.ichi2.anki.reviewer.AnswerButtons.HARD
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.secondsToShowAnswer
 import com.ichi2.anki.utils.ext.secondsToShowQuestion

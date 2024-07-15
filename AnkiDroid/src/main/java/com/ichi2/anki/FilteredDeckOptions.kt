@@ -19,10 +19,13 @@ package com.ichi2.anki
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.*
+import androidx.preference.CheckBoxPreference
+import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.Collection
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
 import com.ichi2.themes.Themes
@@ -216,7 +219,7 @@ class FilteredDeckOptions :
         } else {
             pref = DeckPreferenceHack()
             pref.registerOnSharedPreferenceChangeListener(this)
-            addPreferences(col)
+            // addPreferences(col)
             buildLists()
             updateSummaries()
         }
@@ -238,32 +241,32 @@ class FilteredDeckOptions :
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    @Suppress("deprecation") // Tracked as #5019 on github: addPreferencesFromResource
-    private fun addPreferences(col: Collection) {
-        addPreferencesFromResource(R.xml.cram_deck_options)
-        if (col.schedVer() != 1) {
-            Timber.d("sched v2: removing filtered deck custom study steps")
-            // getPreferenceScreen.removePreference didn't return true, so remove from the category
-            setupSecondFilterListener()
-            setupPreviewDelaysListener()
-            val category = findPreference("studyOptions") as PreferenceCategory
-            removePreference(category, "stepsOn")
-            removePreference(category, "steps")
-        }
-    }
+//    @Suppress("deprecation") // Tracked as #5019 on github: addPreferencesFromResource
+//    private fun addPreferences(col: Collection) {
+//        addPreferencesFromResource(R.xml.cram_deck_options)
+//        if (col.schedVer() != 1) {
+//            Timber.d("sched v2: removing filtered deck custom study steps")
+//            // getPreferenceScreen.removePreference didn't return true, so remove from the category
+//            setupSecondFilterListener()
+//            setupPreviewDelaysListener()
+//            val category = findPreference("studyOptions") as PreferenceCategory
+//            removePreference(category, "stepsOn")
+//            removePreference(category, "steps")
+//        }
+//    }
 
-    @Suppress("deprecation") // Tracked as #5019 on github: findPreference
-    private fun removePreference(category: PreferenceCategory?, key: String) {
-        val preference = findPreference(key)
-        if (category == null || preference == null) {
-            Timber.w("Failed to remove preference '%s'", key)
-            return
-        }
-        val result = category.removePreference(preference)
-        if (!result) {
-            Timber.w("Failed to remove preference '%s'", key)
-        }
-    }
+//    @Suppress("deprecation") // Tracked as #5019 on github: findPreference
+//    private fun removePreference(category: PreferenceCategory?, key: String) {
+//        val preference = findPreference(key)
+//        if (category == null || preference == null) {
+//            Timber.w("Failed to remove preference '%s'", key)
+//            return
+//        }
+//        val result = category.removePreference(preference)
+//        if (!result) {
+//            Timber.w("Failed to remove preference '%s'", key)
+//        }
+//    }
 
     override fun closeWithResult() {
         if (prefChanged) {

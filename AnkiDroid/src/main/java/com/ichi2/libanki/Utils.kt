@@ -21,14 +21,15 @@ package com.ichi2.libanki
 import androidx.core.text.HtmlCompat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
 import timber.log.Timber
-import java.io.*
+import java.io.UnsupportedEncodingException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.*
+import java.util.Locale
+import java.util.Random
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.math.*
+import kotlin.math.pow
 
 // TODO switch to standalone functions and properties and remove Utils container
 object Utils {

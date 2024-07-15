@@ -27,7 +27,12 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
-import android.view.*
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
@@ -48,7 +53,7 @@ import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
-import java.util.*
+import java.util.Objects
 import kotlin.math.ceil
 
 /**

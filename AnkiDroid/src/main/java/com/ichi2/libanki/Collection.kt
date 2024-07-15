@@ -55,8 +55,7 @@ import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
-import java.io.*
-import java.util.*
+import java.io.File
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not

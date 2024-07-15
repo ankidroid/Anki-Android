@@ -52,7 +52,10 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.empty
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.json.JSONArray
 import org.junit.Ignore
 import org.junit.Test

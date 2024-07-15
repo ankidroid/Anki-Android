@@ -19,13 +19,18 @@ import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filterable
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.CheckBoxTriStates
-import com.ichi2.ui.CheckBoxTriStates.State.*
+import com.ichi2.ui.CheckBoxTriStates.State.CHECKED
+import com.ichi2.ui.CheckBoxTriStates.State.INDETERMINATE
+import com.ichi2.ui.CheckBoxTriStates.State.UNCHECKED
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.TypedFilter
 import java.util.Locale
@@ -35,7 +40,9 @@ import java.util.TreeSet
 /**
  * @param tags A reference to the [TagsList]
  */
-class TagsArrayAdapter(private val tags: TagsList, private val resources: Resources) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(), Filterable {
+class TagsArrayAdapter(private val tags: TagsList, private val resources: Resources) :
+    RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(),
+    Filterable {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal lateinit var node: TagTreeNode
         internal val expandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)

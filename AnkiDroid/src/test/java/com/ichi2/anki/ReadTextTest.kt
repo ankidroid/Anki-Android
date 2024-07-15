@@ -22,13 +22,13 @@ import com.ichi2.anki.ReadText.initializeTts
 import com.ichi2.anki.ReadText.releaseTts
 import com.ichi2.anki.ReadText.textToSpeech
 import com.ichi2.anki.reviewer.CardSide
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
-import org.robolectric.Shadows.*
+import org.mockito.Mockito.mock
+import org.robolectric.Shadows.shadowOf
 
 @RunWith(AndroidJUnit4::class)
 class ReadTextTest : RobolectricTest() {

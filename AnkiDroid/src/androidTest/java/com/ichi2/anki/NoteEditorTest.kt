@@ -23,7 +23,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.testutil.GrantStoragePermission
 import com.ichi2.utils.KotlinCleanup
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Assume
 import org.junit.Before
 import org.junit.Rule

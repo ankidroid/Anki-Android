@@ -55,7 +55,8 @@ import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import androidx.core.os.BundleCompat
-import com.canhub.cropper.*
+import com.canhub.cropper.CropException
+import com.canhub.cropper.CropImageView
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DrawingActivity
@@ -63,7 +64,15 @@ import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.*
+import com.ichi2.utils.BitmapUtil
+import com.ichi2.utils.ExifUtil
+import com.ichi2.utils.FileUtil
+import com.ichi2.utils.ImageUtils
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException

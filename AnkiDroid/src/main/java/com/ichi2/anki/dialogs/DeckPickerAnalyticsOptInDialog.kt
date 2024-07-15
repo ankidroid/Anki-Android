@@ -22,7 +22,13 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.utils.*
+import com.ichi2.utils.cancelable
+import com.ichi2.utils.checkBoxPrompt
+import com.ichi2.utils.create
+import com.ichi2.utils.getCheckBoxPrompt
+import com.ichi2.utils.message
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.title
 
 class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {

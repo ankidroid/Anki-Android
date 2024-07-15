@@ -27,7 +27,8 @@ import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyCharacterMap.deviceHasKey
-import android.view.KeyEvent.*
+import android.view.KeyEvent.KEYCODE_PAGE_DOWN
+import android.view.KeyEvent.KEYCODE_PAGE_UP
 import androidx.core.content.ContextCompat
 import com.ichi2.compat.CompatHelper.Companion.compat
 import java.io.Serializable

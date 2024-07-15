@@ -24,7 +24,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
 import com.ichi2.anki.introduction.SetupCollectionFragment
-import com.ichi2.anki.introduction.SetupCollectionFragment.*
+import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest

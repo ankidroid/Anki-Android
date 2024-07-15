@@ -37,7 +37,16 @@ import androidx.lifecycle.LifecycleOwner
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
-import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
+import com.ichi2.anki.multimediacard.fields.BasicImageFieldController
+import com.ichi2.anki.multimediacard.fields.BasicMediaClipFieldController
+import com.ichi2.anki.multimediacard.fields.BasicTextFieldController
+import com.ichi2.anki.multimediacard.fields.EFieldType
+import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.fields.IFieldController
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.showThemedToast
 import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.isAudioRecordingSaved

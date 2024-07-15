@@ -19,7 +19,9 @@ package com.ichi2.anki.model
 import com.ichi2.testutils.addTempFile
 import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.nullValue
 import org.junit.Test
 import java.io.File
 

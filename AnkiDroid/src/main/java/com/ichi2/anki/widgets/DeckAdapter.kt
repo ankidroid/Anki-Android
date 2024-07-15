@@ -22,7 +22,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
@@ -36,12 +41,13 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.*
 
 @KotlinCleanup("lots to do")
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
-class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) :
+    RecyclerView.Adapter<DeckAdapter.ViewHolder>(),
+    Filterable {
     private var deckTree: DeckNode? = null
 
     /** The non-collapsed subset of the deck tree that matches the current search. */

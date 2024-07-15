@@ -13,7 +13,10 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
@@ -27,7 +30,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent.*
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
@@ -36,7 +41,8 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler

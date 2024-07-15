@@ -21,7 +21,7 @@ import androidx.annotation.WorkerThread
 import com.google.protobuf.kotlin.toByteString
 import com.ichi2.libanki.exception.EmptyMediaException
 import timber.log.Timber
-import java.io.*
+import java.io.File
 
 /**
  * Media manager - handles the addition and removal of media files from the media directory (collection.media) and
