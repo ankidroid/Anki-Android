@@ -834,6 +834,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @KotlinCleanup("convert KeyUtils to extension functions")
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         if (toolbar.onKeyUp(keyCode, event)) {
+            // Toolbar was able to handle this key event. No need to handle it in NoteEditor too.
             return true
         }
         when (keyCode) {
@@ -841,20 +842,25 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // disable it in case of image occlusion
                 if (allowSaveAndPreview()) {
                     launchCatchingTask { saveNote() }
+                    return true
                 }
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
                     launchCatchingTask { deckSpinnerSelection!!.displayDeckSelectionDialog() }
+                    return true
                 }
             KeyEvent.KEYCODE_L -> if (event.isCtrlPressed) {
                 showCardTemplateEditor()
+                return true
             }
             KeyEvent.KEYCODE_N -> if (event.isCtrlPressed && noteTypeSpinner != null) {
                 noteTypeSpinner!!.performClick()
+                return true
             }
             KeyEvent.KEYCODE_T -> if (event.isCtrlPressed && event.isShiftPressed) {
                 showTagsDialog()
+                return true
             }
             KeyEvent.KEYCODE_C -> {
                 if (event.isCtrlPressed && event.isShiftPressed) {
@@ -863,6 +869,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     if (!isClozeType) {
                         showSnackbar(R.string.note_editor_insert_cloze_no_cloze_note_type)
                     }
+                    return true
                 }
             }
             KeyEvent.KEYCODE_P -> {
@@ -870,19 +877,20 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     Timber.i("Ctrl+P: Preview Pressed")
                     if (allowSaveAndPreview()) {
                         launchCatchingTask { performPreview() }
+                        return true
                     }
                 }
             }
-            else -> {}
         }
 
         // 7573: Ctrl+Shift+[Num] to select a field
         if (event.isCtrlPressed && event.isShiftPressed) {
-            // map: '0' -> 9; '1' to 0
-            KeyUtils.getDigit(event)?.let { digit ->
-                val indexBase10 = ((digit - 1) % 10 + 10) % 10
-                selectFieldIndex(indexBase10)
-            }
+            val digit = KeyUtils.getDigit(event) ?: return super.onKeyUp(keyCode, event)
+            // '0' is after '9' on the keyboard, so a user expects '10'
+            val humanReadableDigit = if (digit == 0) 10 else digit
+            // Subtract 1 to map to field index. '1' is the first field (index 0)
+            selectFieldIndex(humanReadableDigit - 1)
+            return true
         }
         return super.onKeyUp(keyCode, event)
     }

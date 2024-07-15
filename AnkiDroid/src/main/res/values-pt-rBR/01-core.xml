@@ -104,15 +104,15 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Excluir nota</string>
     <string name="menu_flag">Sinalização</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Renomear sinalizações</string>
     <string name="menu_flag_card">Sinalizar card</string>
     <string name="menu_edit_tags">Editar tags</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>
     <string name="menu_search">Pesquisar em %1$s</string>
     <string name="menu_mark_note">Marcar nota</string>
     <string name="menu_unmark_note">Desmarcar nota</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">Ativar reprodução de voz</string>
+    <string name="menu_disable_voice_playback">Desativar reprodução de voz</string>
     <string name="new_deck">Criar baralho</string>
     <string name="new_dynamic_deck">Criar baralho com filtros</string>
     <string name="directory_inaccessible">Diretório do AnkiDroid está inacessível</string>
@@ -133,7 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>
     <string name="invalid_deck_name">Nome do baralho inválido</string>
     <string name="studyoptions_congrats_finished">Parabéns! Você terminou por enquanto.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Baralho terminado por enquanto! %s</string>
     <string name="studyoptions_no_cards_due">Sem cartões programados por enquanto.</string>
     <string name="sd_card_not_mounted">Armazenamento do dispositivo não montado</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
@@ -144,7 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelando&#8230;\nPode levar algum tempo.</string>
     <string name="syncing_media">Sincronizando mídia</string>
     <string name="export_deck">Exportar baralho</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Exportar coleção</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de cartões</string>
@@ -251,5 +251,5 @@
     <string name="image_occlusion">Oclusão de imagem</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remover conta</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Cartão instantâneo</string>
 </resources>
