@@ -376,8 +376,12 @@ open class DeckPicker :
         ActivityResultContracts.StartActivityForResult(),
         DeckPickerActivityResultCallback {
             if (it.resultCode == RESULT_OK) {
-                lifecycleScope.launch(Dispatchers.IO) {
-                    onSelectedPackageToImport(it.data!!)
+                lifecycleScope.launch {
+                    withProgress(message = getString(R.string.import_preparing_file)) {
+                        withContext(Dispatchers.IO) {
+                            onSelectedPackageToImport(it.data!!)
+                        }
+                    }
                 }
             }
         }
