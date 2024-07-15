@@ -1744,7 +1744,7 @@ abstract class AbstractFlashcardViewer :
     override val baseSnackbarBuilder: SnackbarBuilder = {
         // Configure the snackbar to avoid the bottom answer buttons
         if (answerButtonsPosition == "bottom") {
-            anchorView = findViewById<View>(R.id.answer_options_layout)
+            anchorView = findViewById(R.id.answer_options_layout)
         }
     }
 

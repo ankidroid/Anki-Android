@@ -204,8 +204,10 @@ open class DeckPicker :
     private var backButtonPressedToExit = false
     private lateinit var deckPickerContent: RelativeLayout
 
-    @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
-    var progressDialog: android.app.ProgressDialog? = null
+    // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
+    @Suppress("Deprecation")
+    private var progressDialog: android.app.ProgressDialog? = null
+
     private var studyoptionsFrame: View? = null // not lateInit - can be null
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var recyclerView: RecyclerView
@@ -213,8 +215,7 @@ open class DeckPicker :
     private lateinit var deckListAdapter: DeckAdapter
     lateinit var exportingDelegate: ActivityExportingDelegate
     private lateinit var noDecksPlaceholder: LinearLayout
-    lateinit var pullToSyncWrapper: SwipeRefreshLayout
-        private set
+    private lateinit var pullToSyncWrapper: SwipeRefreshLayout
 
     private lateinit var reviewSummaryTextView: TextView
 
@@ -278,7 +279,7 @@ open class DeckPicker :
 
     private var toolbarSearchItem: MenuItem? = null
     private var toolbarSearchView: SearchView? = null
-    internal lateinit var customStudyDialogFactory: CustomStudyDialogFactory
+    private lateinit var customStudyDialogFactory: CustomStudyDialogFactory
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
 
@@ -1879,7 +1880,7 @@ open class DeckPicker :
      * modify the filter settings before being shown the fragment. The fragment itself will handle
      * rebuilding the deck if the settings change.
      */
-    fun loadStudyOptionsFragment(withDeckOptions: Boolean) {
+    private fun loadStudyOptionsFragment(withDeckOptions: Boolean) {
         val details = StudyOptionsFragment.newInstance(withDeckOptions)
         supportFragmentManager.commit {
             replace(R.id.studyoptions_fragment, details)
@@ -1928,7 +1929,7 @@ open class DeckPicker :
         startActivity(intent)
     }
 
-    internal fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
+    private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
@@ -2192,7 +2193,7 @@ open class DeckPicker :
         ExportDialogFragment.newInstance(did).show(supportFragmentManager, "exportOptions")
     }
 
-    fun createIcon(context: Context, did: DeckId) {
+    private fun createIcon(context: Context, did: DeckId) {
         // This code should not be reachable with lower versions
         val shortcut = ShortcutInfoCompat.Builder(this, did.toString())
             .setIntent(
@@ -2221,7 +2222,7 @@ open class DeckPicker :
     }
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
-    fun disableDeckAndChildrenShortcuts(did: DeckId) {
+    private fun disableDeckAndChildrenShortcuts(did: DeckId) {
         val childDids = dueTree?.find(did)?.filterAndFlatten(null)?.map { it.did.toString() } ?: listOf()
         val deckTreeDids = listOf(did.toString(), *childDids.toTypedArray())
         val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
@@ -2285,7 +2286,7 @@ open class DeckPicker :
         }
     }
 
-    fun emptyFiltered(did: DeckId) {
+    private fun emptyFiltered(did: DeckId) {
         getColUnsafe.decks.select(did)
         launchCatchingTask {
             withProgress {
@@ -2359,7 +2360,7 @@ open class DeckPicker :
         }
     }
 
-    fun createSubDeckDialog(did: DeckId) {
+    private fun createSubDeckDialog(did: DeckId) {
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, did)
         createDeckDialog.onNewDeckCreated = {
             // a deck was created

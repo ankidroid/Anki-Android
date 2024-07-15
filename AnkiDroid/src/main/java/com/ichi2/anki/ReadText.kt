@@ -53,7 +53,7 @@ object ReadText {
     private var mOrd = 0
     var questionAnswer: CardSide? = null
         private set
-    const val NO_TTS = "0"
+    private const val NO_TTS = "0"
     private val mTtsParams = Bundle()
     private var mCompletionListener: ReadTextListener? = null
 
@@ -273,6 +273,7 @@ object ReadText {
                         }
                     }
 
+                    @Suppress("DeprecatedCallableAddReplaceWith")
                     @Deprecated("")
                     override fun onError(utteranceId: String) {
                         // required for UtteranceProgressListener, but also deprecated
