@@ -45,7 +45,7 @@ class SharedDecksActivity : AnkiActivity() {
 
     private var shouldHistoryBeCleared = false
 
-    private val allowedHosts = listOf<Regex>(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
+    private val allowedHosts = listOf(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
 
     /**
      * Handle condition when page finishes loading and history needs to be cleared.
