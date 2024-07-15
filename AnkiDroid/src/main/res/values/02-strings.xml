@@ -148,6 +148,7 @@
     </string>
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
