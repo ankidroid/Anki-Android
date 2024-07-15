@@ -59,7 +59,7 @@ class TemplateManager {
                 return PartiallyRenderedCard(qnodes, anodes)
             }
 
-            fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
+            private fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
                 val results: TemplateReplacementList = mutableListOf()
                 for (node in nodes) {
                     if (node.valueCase == anki.card_rendering.RenderedTemplateNode.ValueCase.TEXT) {
@@ -81,7 +81,7 @@ class TemplateManager {
                 return results
             }
 
-            fun avTagToNative(tag: anki.card_rendering.AVTag): AvTag {
+            private fun avTagToNative(tag: anki.card_rendering.AVTag): AvTag {
                 val value = tag.valueCase
                 return if (value == anki.card_rendering.AVTag.ValueCase.SOUND_OR_VIDEO) {
                     SoundOrVideoTag(filename = tag.soundOrVideo)
@@ -196,7 +196,7 @@ class TemplateManager {
             )
         }
 
-        fun partiallyRender(col: Collection): PartiallyRenderedCard {
+        private fun partiallyRender(col: Collection): PartiallyRenderedCard {
             val proto = col.run {
                 if (_template != null) {
                     // card layout screen
@@ -229,7 +229,7 @@ class TemplateManager {
         }
 
         /** Complete rendering by applying any pending custom filters. */
-        fun applyCustomFilters(
+        private fun applyCustomFilters(
             rendered: TemplateReplacementList,
             ctx: TemplateRenderContext,
             frontSide: String?

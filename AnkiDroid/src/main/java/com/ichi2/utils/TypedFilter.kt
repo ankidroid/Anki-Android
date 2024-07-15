@@ -22,7 +22,7 @@ import android.widget.Filter
 abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Filter() {
     constructor(items: List<T>) : this({ items })
 
-    var lastConstraint: CharSequence? = null
+    private var lastConstraint: CharSequence? = null
 
     fun refresh() {
         filter(lastConstraint)

@@ -142,7 +142,7 @@ class Toolbar : FrameLayout {
         return super.onKeyUp(keyCode, event)
     }
 
-    fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, block: () -> Unit): AppCompatImageButton {
+    private fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, block: () -> Unit): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
         val themeContext: Context = ContextThemeWrapper(context, R.style.Theme_Light)
@@ -304,7 +304,7 @@ class Toolbar : FrameLayout {
      * The listener determines the appropriate selection of text to be formatted and handles
      * selection changes
      */
-    fun onFormat(formatter: TextFormatter) {
+    private fun onFormat(formatter: TextFormatter) {
         formatListener?.performFormat(formatter)
     }
 

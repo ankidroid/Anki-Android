@@ -95,6 +95,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
+import com.ichi2.anki.dialogs.makeLinksClickable
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.export.ExportDialogsFactory
@@ -141,7 +142,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import makeLinksClickable
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONException
 import timber.log.Timber

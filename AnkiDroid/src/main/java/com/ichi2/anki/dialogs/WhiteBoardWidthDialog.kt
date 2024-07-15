@@ -29,7 +29,7 @@ import java.util.function.Consumer
 
 class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWidth: Int) {
     private var strokeWidthText: FixedTextView? = null
-    var onStrokeWidthChanged: Consumer<Int>? = null
+    private var onStrokeWidthChanged: Consumer<Int>? = null
     private val seekBarChangeListener: OnSeekBarChangeListener = object : OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, value: Int, b: Boolean) {
             wbStrokeWidth = value

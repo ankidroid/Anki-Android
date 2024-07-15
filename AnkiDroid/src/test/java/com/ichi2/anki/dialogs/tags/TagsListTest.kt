@@ -25,8 +25,8 @@ import org.mockito.Mockito
 import java.util.*
 
 class TagsListTest {
-    lateinit var tagsList: TagsList
-    lateinit var tagsListWithIndeterminate: TagsList
+    private lateinit var tagsList: TagsList
+    private lateinit var tagsListWithIndeterminate: TagsList
 
     @Before
     @Throws(Exception::class)

@@ -19,7 +19,6 @@ package com.ichi2.anki.dialogs
 import androidx.appcompat.app.AlertDialog
 import androidx.core.text.parseAsHtml
 import com.ichi2.anki.R
-import makeLinksClickable
 import org.intellij.lang.annotations.Language
 
 /**

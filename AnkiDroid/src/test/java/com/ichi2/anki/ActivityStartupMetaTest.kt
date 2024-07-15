@@ -36,6 +36,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
         val manifestActivities = packageInfo.activities
         val testedActivityClassNames = ActivityList.allActivitiesAndIntents().map { it.className }.toSet()
         val manifestActivityNames = manifestActivities
+            .asSequence()
             .map { it.name }
             .filter { it != "com.ichi2.anki.TestCardTemplatePreviewer" }
             .filter { it != "com.ichi2.anki.AnkiCardContextMenuAction" }
@@ -43,6 +44,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
             .filter { !it.startsWith("androidx") }
             .filter { !it.startsWith("org.acra") }
             .filter { !it.startsWith("leakcanary.internal") }
+            .toList()
             .toTypedArray()
         MatcherAssert.assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
     }

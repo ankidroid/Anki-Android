@@ -273,7 +273,13 @@ object ReadText {
                         }
                     }
 
-                    @Deprecated("")
+                    @Deprecated(
+                        "",
+                        ReplaceWith(
+                            "Timber.e(\"onError(string) should not have been called\")",
+                            "timber.log.Timber"
+                        )
+                    )
                     override fun onError(utteranceId: String) {
                         // required for UtteranceProgressListener, but also deprecated
                         Timber.e("onError(string) should not have been called")

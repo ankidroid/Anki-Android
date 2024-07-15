@@ -1135,7 +1135,7 @@ abstract class AbstractFlashcardViewer :
      * And allows keyboard shortcuts to go to the default handlers.
      */
     private fun focusAnswerCompletionField() = runOnUiThread {
-        // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
+        // This does not handle mUseInputTag (the WebView contains an input field with a tappable answer).
         // In this case, the user can use touch to focus the field if necessary.
         if (typeAnswer?.autoFocusEditText() == true) {
             answerField?.focusWithKeyboard()
@@ -1472,7 +1472,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /**
-     * Shows the dialogue for selecting TTS for the current card and cardside.
+     * Shows the dialogue for selecting TTS for the current card and card side.
      */
     protected fun showSelectTtsDialogue() {
         if (ttsInitialized) {
@@ -1744,7 +1744,7 @@ abstract class AbstractFlashcardViewer :
     override val baseSnackbarBuilder: SnackbarBuilder = {
         // Configure the snackbar to avoid the bottom answer buttons
         if (answerButtonsPosition == "bottom") {
-            anchorView = findViewById<View>(R.id.answer_options_layout)
+            anchorView = findViewById(R.id.answer_options_layout)
         }
     }
 
@@ -2307,7 +2307,7 @@ abstract class AbstractFlashcardViewer :
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
-        @NeedsTest("integration test with typechangetext")
+        @NeedsTest("integration test with changeability")
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
                 launchCatchingTask {
@@ -2315,12 +2315,12 @@ abstract class AbstractFlashcardViewer :
                 }
                 return true
             }
-            if (url.startsWith("videoended:")) {
+            if (url.startsWith("video ended:")) {
                 // note: 'q:0' is provided
                 cardMediaPlayer.onVideoFinished()
                 return true
             }
-            if (url.startsWith("videopause:")) {
+            if (url.startsWith("video pause:")) {
                 // note: 'q:0' is provided
                 cardMediaPlayer.onVideoPaused()
                 return true
@@ -2336,7 +2336,7 @@ abstract class AbstractFlashcardViewer :
             if (url.startsWith("file") || url.startsWith("data:")) {
                 return false // Let the webview load files, i.e. local images.
             }
-            if (url.startsWith("typechangetext:")) {
+            if (url.startsWith("changeability:")) {
                 // Store the text the javascript has sent us…
                 typeAnswer!!.input = decodeUrl(url.replaceFirst("typechangetext:".toRegex(), ""))
                 return true

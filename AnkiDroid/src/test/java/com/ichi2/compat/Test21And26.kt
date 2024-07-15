@@ -88,7 +88,7 @@ abstract class Test21And26 {
          * This run test, ensuring that [newDirectoryStream] throws on [directory].
          * This is useful in the case where we can't directly access the directory or compat
          */
-        fun <T> runWithPermissionDenied(test: () -> T): T = runUsingCompat(compat, test)
+        private fun <T> runWithPermissionDenied(test: () -> T): T = runUsingCompat(compat, test)
 
         /** Runs a provided action having [CompatHelper.compat] return the provided compat */
         private fun <T> runUsingCompat(compatOverride: Compat, test: () -> T): T {

@@ -70,7 +70,7 @@ object WidgetStatus {
         }
     }
 
-    suspend fun updateStatus(context: Context) {
+    private suspend fun updateStatus(context: Context) {
         if (!AnkiDroidApp.isSdCardMounted) {
             return
         }
