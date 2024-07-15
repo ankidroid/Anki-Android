@@ -20,13 +20,16 @@ import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsIterableContainingInOrder
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.never
-import java.util.*
+import java.util.Collections
 
 class UniqueArrayListTest {
     private val dupData = listOf(

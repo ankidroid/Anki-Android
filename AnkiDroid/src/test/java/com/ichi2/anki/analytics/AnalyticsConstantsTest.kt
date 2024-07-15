@@ -14,14 +14,14 @@ package com.ichi2.anki.analytics
 
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Assert
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import java.lang.RuntimeException
-import java.util.*
 import kotlin.Throws
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.javaField

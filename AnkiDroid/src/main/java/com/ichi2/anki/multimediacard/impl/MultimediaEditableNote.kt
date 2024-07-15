@@ -23,7 +23,7 @@ import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.libanki.NoteTypeId
 import org.acra.util.IOUtils
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Implementation of the editable note.

@@ -15,7 +15,11 @@
 package com.ichi2.anki.ui.preferences.screens
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -26,7 +30,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.ui.windows.managespace.*
+import com.ichi2.anki.ui.windows.managespace.CollectionDirectoryProvider
+import com.ichi2.anki.ui.windows.managespace.collectionDirectoryExists
+import com.ichi2.anki.ui.windows.managespace.ensureCanWriteToOrCreateCollectionDirectory
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.preferences.HtmlHelpPreference
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat

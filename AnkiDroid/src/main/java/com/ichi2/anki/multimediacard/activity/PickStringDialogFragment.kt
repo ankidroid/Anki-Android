@@ -27,7 +27,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.ichi2.utils.KotlinCleanup
-import java.util.*
+import java.util.ArrayList
 
 /**
  * This dialog fragment support a choice from a list of strings.

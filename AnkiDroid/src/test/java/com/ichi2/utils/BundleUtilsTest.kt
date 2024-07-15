@@ -19,7 +19,11 @@ import android.os.Bundle
 import com.ichi2.utils.BundleUtils.getNullableLong
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.eq
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
 import kotlin.random.Random
 import kotlin.test.assertNull

@@ -27,8 +27,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.preference.Preference
-import com.ichi2.anki.*
+import com.ichi2.anki.BackupManager
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
+import com.ichi2.anki.R
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.SettingsFragment
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.snackbar.showSnackbar
@@ -36,11 +40,16 @@ import com.ichi2.anki.ui.dialogs.tools.AsyncDialogBuilder.CheckedItems
 import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
 import com.ichi2.anki.utils.getUserFriendlyErrorText
+import com.ichi2.anki.withProgress
 import com.ichi2.async.deleteMedia
 import com.ichi2.preferences.TextWidgetPreference
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.system.exitProcess
 
 sealed interface Size {

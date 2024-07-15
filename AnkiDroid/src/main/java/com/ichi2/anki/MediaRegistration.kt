@@ -26,7 +26,11 @@ import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileUtil.getFileNameAndExtension
 import timber.log.Timber
-import java.io.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * RegisterMediaForWebView is used for registering media in temp path,

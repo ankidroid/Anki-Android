@@ -44,7 +44,9 @@ import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.getString
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.contains
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith

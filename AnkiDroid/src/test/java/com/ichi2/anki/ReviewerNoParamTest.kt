@@ -40,7 +40,8 @@ import com.ichi2.testutils.common.OS
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

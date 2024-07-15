@@ -19,7 +19,9 @@ package com.ichi2.anki
 import anki.config.Preferences.BackupLimits
 import com.ichi2.anki.BackupManager.Companion.getLatestBackup
 import com.ichi2.testutils.MockTime
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.ArrayMatching.arrayContainingInAnyOrder
 import org.hamcrest.io.FileMatchers.anExistingFile

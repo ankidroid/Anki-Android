@@ -40,7 +40,7 @@ import com.ichi2.anki.reviewer.screenBuilder
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 import kotlin.collections.ArrayList
 
 private typealias VersionIdentifier = Int

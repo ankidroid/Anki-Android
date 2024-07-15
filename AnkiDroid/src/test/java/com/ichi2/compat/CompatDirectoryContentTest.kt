@@ -17,8 +17,12 @@
 package com.ichi2.compat
 
 import android.annotation.SuppressLint
-import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.*
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.createTransientFile
+import com.ichi2.testutils.withTempFile
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.io.FileNotFoundException

@@ -17,7 +17,9 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
-import com.ichi2.utils.*
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.deepClonedInto
+import com.ichi2.utils.toStringList
 import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONObject

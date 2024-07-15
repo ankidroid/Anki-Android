@@ -20,7 +20,8 @@ import com.ichi2.utils.TagsUtil.getTagAncestors
 import com.ichi2.utils.TagsUtil.getTagRoot
 import com.ichi2.utils.UniqueArrayList
 import com.ichi2.utils.UniqueArrayList.Companion.from
-import java.util.*
+import java.util.ArrayList
+import java.util.TreeSet
 
 /**
  * A container class that keeps track of tags and their status, handling of tags are done in a case insensitive matter.

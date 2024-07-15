@@ -24,10 +24,14 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.TranslatableException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
-import java.util.*
+import java.util.UUID
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 

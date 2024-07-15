@@ -1,4 +1,4 @@
-package com.ichi2.anki
+@file:Suppress("DEPRECATION") // #3625 android.preference deprecation
 
 /****************************************************************************************
  * Copyright (c) 2009 Casey Link <unnamedrambler@gmail.com>                             *
@@ -17,9 +17,15 @@ package com.ichi2.anki
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+package com.ichi2.anki
+
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.*
+import android.preference.CheckBoxPreference
+import android.preference.EditTextPreference
+import android.preference.ListPreference
+import android.preference.Preference
+import android.preference.PreferenceCategory
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection

@@ -21,7 +21,11 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.FileConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.FileConflictResolutionFailedException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.FileDirectoryConflictException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.operationCompleted
 import com.ichi2.compat.CompatHelper

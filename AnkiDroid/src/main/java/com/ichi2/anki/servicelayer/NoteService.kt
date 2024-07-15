@@ -26,7 +26,12 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
-import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
+import com.ichi2.anki.multimediacard.fields.EFieldType
+import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection

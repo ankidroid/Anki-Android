@@ -26,7 +26,7 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import java.util.*
+import java.util.Locale
 
 /**
  * An annotation which marks a test as flaky so it will be skipped if run under CI

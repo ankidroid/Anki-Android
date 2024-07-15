@@ -29,12 +29,14 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import timber.log.Timber
-import java.util.*
+import java.util.Calendar
 
 @RunWith(AndroidJUnit4::class)
 class FinderTest : JvmTest() {
