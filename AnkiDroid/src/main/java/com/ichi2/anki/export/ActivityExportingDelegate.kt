@@ -30,13 +30,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -143,13 +147,19 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     private fun saveFileCallback(result: ActivityResult) {
-        val isSuccessful = exportToProvider(result.data!!)
+        activity.launchCatchingTask {
+            activity.withProgress(activity.getString(R.string.export_saving_exported_collection)) {
+                val isSuccessful = withContext(Dispatchers.IO) {
+                    exportToProvider(result.data!!)
+                }
 
-        if (isSuccessful) {
-            activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
-            saveSuccessfulCollectionExportIfRelevant()
-        } else {
-            activity.showSnackbar(R.string.export_save_apkg_unsuccessful)
+                if (isSuccessful) {
+                    activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
+                    saveSuccessfulCollectionExportIfRelevant()
+                } else {
+                    activity.showSnackbar(R.string.export_save_apkg_unsuccessful)
+                }
+            }
         }
     }
 
