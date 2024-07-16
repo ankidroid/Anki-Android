@@ -28,6 +28,7 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import java.util.function.Consumer
 
+// TODO: Pass optional validation condition i.e. Positive button not enabled if condition is true
 open class IntegerDialog : AnalyticsDialogFragment() {
     private var consumer: Consumer<Int>? = null
     fun setCallbackRunnable(consumer: Consumer<Int>?) {
@@ -35,12 +36,13 @@ open class IntegerDialog : AnalyticsDialogFragment() {
     }
 
     /** use named arguments with this method for clarity */
-    fun setArgs(title: String?, prompt: String?, digits: Int, content: String? = null) {
+    fun setArgs(title: String?, prompt: String?, digits: Int, content: String? = null, defaultValue: String? = null) {
         val args = Bundle()
         args.putString("title", title)
         args.putString("prompt", prompt)
         args.putInt("digits", digits)
         args.putString("content", content)
+        args.putString("defaultValue", defaultValue)
         arguments = args
     }
 
@@ -56,6 +58,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
             hint = requireArguments().getString("prompt"),
             inputType = InputType.TYPE_CLASS_NUMBER,
             maxLength = requireArguments().getInt("digits"),
+            prefill = requireArguments().getString("defaultValue"),
             displayKeyboard = true
         ) { _, text: CharSequence ->
             consumer!!.accept(text.toString().toInt())
