@@ -134,7 +134,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
 
     private fun imageFieldWithData(): IField {
         val field = emptyImageField()
-        field.imagePath = targetContext.cacheDir.toString() + "/temp-photos/test"
+        field.mediaPath = targetContext.cacheDir.toString() + "/temp-photos/test"
         return field
     }
 

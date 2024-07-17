@@ -43,14 +43,12 @@ class ImageField : FieldBase(), IField {
     override val isModified: Boolean
         get() = thisModified
 
-    override var imagePath: String?
+    override var mediaPath: String?
         get() = extraImagePathRef
         set(value) {
             extraImagePathRef = value
             setThisModified()
         }
-
-    override var audioPath: String? = null
 
     override var text: String? = null
 
@@ -64,7 +62,7 @@ class ImageField : FieldBase(), IField {
 
     override val formattedValue: String
         get() {
-            val file = File(imagePath!!)
+            val file = File(mediaPath!!)
             return formatImageFileName(file)
         }
 

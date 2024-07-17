@@ -142,7 +142,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 return@setOnClickListener
             }
 
-            field.imagePath = viewModel.currentImagePath
+            field.mediaPath = viewModel.currentImagePath
             field.hasTemporaryMedia = true
 
             val resultData = Intent().apply {

@@ -294,7 +294,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
             val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
             val field = extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD) ?: return@NoteEditorActivityResultCallback
-            if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
+            if (field.type != EFieldType.TEXT && (field.mediaPath == null)) {
                 Timber.i("field imagePath and audioPath are both null")
                 return@NoteEditorActivityResultCallback
             }
@@ -1788,7 +1788,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             ?: return
 
         // Process successful result only if field has data
-        if (field.type != EFieldType.TEXT || field.imagePath != null || field.audioPath != null) {
+        if (field.type != EFieldType.TEXT || field.mediaPath != null) {
             addMediaFileToField(index, field)
         } else {
             Timber.i("field imagePath and audioPath are both null")

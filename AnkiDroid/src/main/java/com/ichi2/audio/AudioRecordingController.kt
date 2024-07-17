@@ -113,7 +113,7 @@ class AudioRecordingController :
         this.state = initialState
         audioRecorder = AudioRecorder()
         if (inEditField) {
-            val origAudioPath = this._field.audioPath
+            val origAudioPath = this._field.mediaPath
             var bExist = false
             if (origAudioPath != null) {
                 val f = File(origAudioPath)
@@ -583,7 +583,7 @@ class AudioRecordingController :
     }
 
     private fun saveRecording() {
-        _field.audioPath = tempAudioPath
+        _field.mediaPath = tempAudioPath
         _field.hasTemporaryMedia = true
     }
 
