@@ -19,6 +19,7 @@ import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
+import com.ichi2.testutils.AnkiAssert.assertEqualsArrayList
 import com.ichi2.testutils.JvmTest
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.hamcrest.MatcherAssert.assertThat
@@ -96,56 +97,50 @@ class DecksTest : JvmTest() {
         }
     }
 
-    /* TODO: maybe implement. We don't drag and drop here anyway, so buggy implementation is okay
-     @Test public void test_renameForDragAndDrop() throws DeckRenameException {
-     // TODO: upstream does not return "default", remove it
-     Collection col = getCol();
+    @Test fun test_reparent() {
+        val languages_did = addDeck("Languages")
+        val chinese_did = addDeck("Chinese")
+        val hsk_did = addDeck("Chinese::HSK")
 
-     long languages_did = addDeck("Languages");
-     long chinese_did = addDeck("Chinese");
-     long hsk_did = addDeck("Chinese::HSK");
+        // Renaming also renames children
+        col.decks.reparent(listOf(chinese_did), languages_did)
+        assertEqualsArrayList(arrayOf("Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"), col.decks.allNamesAndIds().map { it.name })
 
-     // Renaming also renames children
-     col.getDecks().renameForDragAndDrop(chinese_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+        // Dragging a col onto itself is a no-op
+        col.decks.reparent(listOf(languages_did), languages_did)
+        assertEqualsArrayList(arrayOf("Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"), col.decks.allNamesAndIds().map { it.name })
 
-     // Dragging a col onto itself is a no-op
-     col.getDecks().renameForDragAndDrop(languages_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+        // Dragging a col onto its parent is a no-op
+        col.decks.reparent(listOf(hsk_did), chinese_did)
+        assertEqualsArrayList(arrayOf("Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"), col.decks.allNamesAndIds().map { it.name })
 
-     // Dragging a col onto its parent is a no-op
-     col.getDecks().renameForDragAndDrop(hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+        // Dragging a col onto a descendant is a no-op
+        col.decks.reparent(listOf(languages_did), hsk_did)
+        assertEqualsArrayList(arrayOf("Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"), col.decks.allNamesAndIds().map { it.name })
 
-     // Dragging a col onto a descendant is a no-op
-     col.getDecks().renameForDragAndDrop(languages_did, hsk_did);
-     // TODO: real problem to correct, even if we don't have drag and drop
-     // assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+        // Can drag a grandchild onto its grandparent.  It becomes a child
+        col.decks.reparent(listOf(hsk_did), languages_did)
+        assertEqualsArrayList(arrayOf("Default", "Languages", "Languages::Chinese", "Languages::HSK"), col.decks.allNamesAndIds().map { it.name })
 
-     // Can drag a grandchild onto its grandparent.  It becomes a child
-     col.getDecks().renameForDragAndDrop(hsk_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::HSK"}, col.getDecks().allSortedNames());
+        // Can drag a col onto its sibling
+        col.decks.reparent(listOf(hsk_did), chinese_did)
+        assertEqualsArrayList(arrayOf("Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"), col.decks.allNamesAndIds().map { it.name })
 
-     // Can drag a col onto its sibling
-     col.getDecks().renameForDragAndDrop(hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+        // Can drag a col back to the top level
+        col.decks.reparent(listOf(chinese_did), 0)
+        assertEqualsArrayList(arrayOf("Chinese", "Chinese::HSK", "Default", "Languages"), col.decks.allNamesAndIds().map { it.name })
 
-     // Can drag a col back to the top level
-     col.getDecks().renameForDragAndDrop(chinese_did, null);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, col.getDecks().allSortedNames());
+        // Dragging a top level col to the top level is a no-op
+        col.decks.reparent(listOf(chinese_did), 0)
+        assertEqualsArrayList(arrayOf("Chinese", "Chinese::HSK", "Default", "Languages"), col.decks.allNamesAndIds().map { it.name })
 
-     // Dragging a top level col to the top level is a no-op
-     col.getDecks().renameForDragAndDrop(chinese_did, null);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, col.getDecks().allSortedNames());
+        // decks are renamed if necessary
+        val newHskDid = addDeck("hsk")
+        col.decks.reparent(listOf(newHskDid), chinese_did)
+        assertEqualsArrayList(arrayOf("Chinese", "Chinese::HSK", "Chinese::hsk+", "Default", "Languages"), col.decks.allNamesAndIds().map { it.name })
+        col.decks.remove(listOf(newHskDid))
+    }
 
-     // decks are renamed if necessary«
-     long new_hsk_did = addDeck("hsk");
-     col.getDecks().renameForDragAndDrop(new_hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Chinese::hsk+", "Languages"}, col.getDecks().allSortedNames());
-     col.getDecks().rem(new_hsk_did);
-
-     }
-     */
     @Test
     fun curDeckIsLong() {
         // Regression for #8092
