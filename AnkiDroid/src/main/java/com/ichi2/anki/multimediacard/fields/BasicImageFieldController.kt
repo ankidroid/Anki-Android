@@ -404,7 +404,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private fun revertToPreviousImage() {
         viewModel.deleteImagePath()
         viewModel = ImageViewModel(previousImagePath, previousImageUri)
-        _field.imagePath = previousImagePath
+        _field.mediaPath = previousImagePath
         previousImagePath = null
         previousImageUri = null
     }
@@ -575,7 +575,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
                 Timber.w("rotateAndCompress() delete of pre-compressed image failed %s", imagePath)
             }
             viewModel = imageViewModel.rotateAndCompressTo(outFile.absolutePath, getUriForFile(outFile))
-            _field.imagePath = outFile.absolutePath
+            _field.mediaPath = outFile.absolutePath
             Timber.d("rotateAndCompress out path %s has size %d", outFile.absolutePath, outFile.length())
         } catch (e: FileNotFoundException) {
             Timber.w(e, "rotateAndCompress() File not found for image compression %s", imagePath)
@@ -700,7 +700,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     private fun setTemporaryMedia(imagePath: String) {
         _field.apply {
-            this.imagePath = imagePath
+            this.mediaPath = imagePath
             hasTemporaryMedia = true
         }
     }
@@ -730,7 +730,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             Timber.i("handleCropResult() appears to have an invalid file, reverting")
             return
         }
-        Timber.d("handleCropResult() = image path now %s", _field.imagePath)
+        Timber.d("handleCropResult() = image path now %s", _field.mediaPath)
     }
 
     private fun rotateAndCompress(): Boolean {
@@ -864,7 +864,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             var newImagePath = imagePath
             var newImageUri = imageUri
             if (newImagePath == null) {
-                newImagePath = field.imagePath
+                newImagePath = field.mediaPath
             }
             if (newImageUri == null && newImagePath != null) {
                 newImageUri = getUriForFile(File(newImagePath), context)

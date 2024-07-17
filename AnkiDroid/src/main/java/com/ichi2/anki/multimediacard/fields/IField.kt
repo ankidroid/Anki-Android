@@ -30,13 +30,8 @@ interface IField : Serializable {
 
     val isModified: Boolean
 
-    // For image type. Resets type.
-    // Makes no sense to call when type is not image.
-    // the same for other groups below.
-    var imagePath: String?
-
-    // For Audio type
-    var audioPath: String?
+    // Path of the folder containing media used by AnkiDroid.
+    var mediaPath: String?
 
     // For Text type
     var text: String?

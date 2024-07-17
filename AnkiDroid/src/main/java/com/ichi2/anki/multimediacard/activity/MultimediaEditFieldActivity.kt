@@ -249,30 +249,20 @@ class MultimediaEditFieldActivity :
     @KotlinCleanup("rename: bChangeToText")
     private fun done() {
         var bChangeToText = false
-        if (field.type === EFieldType.IMAGE) {
-            if (field.imagePath == null) {
+        if (field.type === EFieldType.IMAGE || (field.type === EFieldType.AUDIO_RECORDING && isAudioRecordingSaved)) {
+            if (field.mediaPath == null) {
                 bChangeToText = true
             }
             if (!bChangeToText) {
-                val f = File(field.imagePath!!)
+                val f = File(field.mediaPath!!)
                 if (!f.exists()) {
                     bChangeToText = true
-                } else {
+                } else if (field.type === EFieldType.IMAGE) {
                     val length = f.length()
                     if (length > IMAGE_LIMIT) {
                         showLargeFileCropDialog((1.0 * length / IMAGE_LIMIT).toFloat())
                         return
                     }
-                }
-            }
-        } else if (field.type === EFieldType.AUDIO_RECORDING && isAudioRecordingSaved) {
-            if (field.audioPath == null) {
-                bChangeToText = true
-            }
-            if (!bChangeToText) {
-                val f = File(field.audioPath!!)
-                if (!f.exists()) {
-                    bChangeToText = true
                 }
             }
         }
