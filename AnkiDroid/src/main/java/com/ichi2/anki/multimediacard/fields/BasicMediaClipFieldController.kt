@@ -73,10 +73,10 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         }
         layout.addView(btnVideo, ViewGroup.LayoutParams.MATCH_PARENT)
         tvAudioClip = FixedTextView(_activity)
-        if (_field.audioPath == null) {
+        if (_field.mediaPath == null) {
             tvAudioClip.visibility = View.GONE
         } else {
-            tvAudioClip.text = _field.audioPath
+            tvAudioClip.text = _field.mediaPath
             tvAudioClip.visibility = View.VISIBLE
         }
         layout.addView(tvAudioClip, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -181,7 +181,7 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
 
                 // If everything worked, hand off the information
                 _field.hasTemporaryMedia = true
-                _field.audioPath = clipCopy.absolutePath
+                _field.mediaPath = clipCopy.absolutePath
                 tvAudioClip.text = clipCopy.name
                 tvAudioClip.visibility = View.VISIBLE
             }

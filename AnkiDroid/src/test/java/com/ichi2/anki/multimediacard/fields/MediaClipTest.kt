@@ -35,7 +35,7 @@ class MediaClipTest {
             it.createNewFile()
             it.deleteOnExit()
         }
-        mediaClipField.audioPath = mediaFile.path
+        mediaClipField.mediaPath = mediaFile.path
 
         assertThat(mediaClipField.formattedValue, equalTo("[sound:foo]"))
     }

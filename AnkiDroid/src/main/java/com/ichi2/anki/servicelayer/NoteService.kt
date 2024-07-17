@@ -130,8 +130,7 @@ object NoteService {
     fun importMediaToDirectory(col: Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
-            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
-            EFieldType.IMAGE -> tmpMediaPath = field.imagePath
+            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> tmpMediaPath = field.mediaPath
             EFieldType.TEXT -> {
             }
         }
@@ -147,8 +146,7 @@ object NoteService {
                         inFile.delete()
                     }
                     when (field.type) {
-                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> field.audioPath = outFile.absolutePath
-                        EFieldType.IMAGE -> field.imagePath = outFile.absolutePath
+                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaPath = outFile.absolutePath
                         else -> {
                         }
                     }
