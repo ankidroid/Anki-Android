@@ -103,8 +103,8 @@
     <string name="menu_bury">Enterrar</string>
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Eliminar nota</string>
-    <string name="menu_flag">Sinalização</string>
-    <string name="rename_flag">Renomear sinalização</string>
+    <string name="menu_flag">Bandeira</string>
+    <string name="rename_flag">Renomear bandeiras</string>
     <string name="menu_flag_card">Sinalizar ficha</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">Deseja realmente eliminar esta nota e todas as suas fichas?\n%s</string>
@@ -144,7 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">A cancelar&#8230;\nPode demorar algum tempo.</string>
     <string name="syncing_media">A sincronizar ficheiros de multimédia</string>
     <string name="export_deck">Exportar baralho</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Exportar Colecção</string>
     <string name="nothing">Nada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipos de ficha</string>
