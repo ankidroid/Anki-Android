@@ -101,7 +101,7 @@
     <string name="gestures_corner_touch_summary">Povoliť dotykové gestá v rohoch obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigačné menu v režime celej obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otvoriť navigačné menu, keď sa tiahne doprava kdekoľvek na obrazovke</string>
-    <string name="gestures_none" maxLength="41">Žiadne</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Žiadne</string>
     <string name="gestures_swipe_up" maxLength="41">Posun hore</string>
     <string name="gestures_swipe_down" maxLength="41">Posun dole</string>
     <string name="gestures_swipe_left" maxLength="41">Posun doľava</string>
@@ -367,4 +367,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
+    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
 </resources>

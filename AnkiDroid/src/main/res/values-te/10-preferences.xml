@@ -99,7 +99,7 @@
     <string name="gestures_corner_touch_summary">స్క్రీన్ మూలల్లో టచ్ సంజ్ఞలను అనుమతించండి</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">పూర్తి స్క్రీన్ నావిగేషన్ డ్రాయర్</string>
     <string name="gestures_fullscreen_nav_drawer_summary">స్క్రీన్‌పై ఎక్కడి నుండైనా కుడివైపుకు స్వైప్ చేస్తున్నప్పుడు నావిగేషన్ డ్రాయర్‌ను తెరవండి</string>
-    <string name="gestures_none" maxLength="41">ఏదీ లేదు</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">ఏదీ లేదు</string>
     <string name="gestures_swipe_up" maxLength="41">పైకి స్వైప్ చేయండి</string>
     <string name="gestures_swipe_down" maxLength="41">క్రిందకి లాగండి</string>
     <string name="gestures_swipe_left" maxLength="41">ఎడమకు స్వైప్ చేయండి</string>
@@ -357,4 +357,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">పొందుతోంది&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">లెక్కింపు&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">సేకరణ ఉనికిలో లేదు</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
+    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
 </resources>
