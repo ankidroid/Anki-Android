@@ -1829,8 +1829,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     }
 
-    private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote?, imageUri: Uri? = null) {
-        val field = note!!.getField(index)!!
+    private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote, imageUri: Uri? = null) {
+        val field = note.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
         editCard.putExtra(MultimediaEditFieldActivity.INTENT_IMAGE_URI, imageUri)
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
