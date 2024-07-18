@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">Elülső</string>
     <string name="back_field_name">Hátsó</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Szöveg</string>
-    <string name="extra_field_name_new">Hátlap extra mező</string>
-    <string name="field_to_ask_front_name">Fordított hozzáadása</string>
-    <!--Note type-->
-    <string name="basic_model_name">Általános</string>
-    <string name="cloze_model_name">Kitöltés</string>
-    <string name="basic_typing_model_name">Alapvető (típus a válaszoknál)</string>
-    <string name="forward_reverse_model_name">Alapvető (és fordított kártya)</string>
-    <string name="forward_optional_reverse_model_name">Alapvető (lehetséges fordított kártya)</string>
 </resources>

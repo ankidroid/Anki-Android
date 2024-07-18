@@ -132,6 +132,7 @@
     <string name="delete_deck">Leerset verwijderen&#8230;\nEven wachten.</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
     <string name="import_title">Importeren</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
     <string name="import_dialog_message_add">“%s” aan de collectie toevoegen? Dit kan lang duren</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Delen</string>
     <string name="export_choice_save_to">Opslaan in</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studieopties</string>

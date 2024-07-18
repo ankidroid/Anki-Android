@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">Davant</string>
     <string name="back_field_name">Darrere</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name_new">Doble cara</string>
-    <string name="field_to_ask_front_name">Afegir revers</string>
-    <!--Note type-->
-    <string name="basic_model_name">Bàsic</string>
-    <string name="cloze_model_name">Parcial</string>
-    <string name="basic_typing_model_name">Bàsic (escriu la resposta)</string>
-    <string name="forward_reverse_model_name">Bàsic (i carta girada)</string>
-    <string name="forward_optional_reverse_model_name">Bàsic (carta girada opcional)</string>
 </resources>

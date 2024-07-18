@@ -108,9 +108,9 @@
     <string name="dialog_positive_repair">सुधारें</string>
     <string name="dialog_positive_replace">की जगह</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ कोई मांय निर्देशिका नहीं है</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">प्रदान किया गया पाठ वैध PEM-एन्कोडेड X509 प्रमाणपत्र का समाधान नहीं करता है</string>
+    <string name="dialog_invalid_custom_certificate_title">प्रमाणपत्र पार्स करने में त्रुटि</string>
+    <string name="dialog_updated_custom_certificate">प्रमाणपत्र अद्यतन किया गया</string>
     <!-- Media checking -->
     <string name="check_media_title">मीडिया की जांच करें?</string>
     <string name="check_media_warning">यह बड़े मीडिया संग्रह के साथ एक लंबा समय लग सकता है</string>
@@ -256,9 +256,9 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">से</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">को</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="cloze_note_required">क्लोज़ टाइप नोट आवश्यक</string>
+    <string name="cloze_not_found_message">कोई क्लोज़ प्रकार का नोट नहीं मिला, नोट संपादक खोलें या क्लोज़ प्रकार का नोट जोड़ने के बाद पुनः प्रयास करें।</string>
+    <string name="open">खोलें</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">सिस्टम WebView पुराना हो चुका है. कुछ सुविधाएं ठीक से काम नहीं करेंगी. कृपया इसे अपडेट करें।\n\nस्थापित संस्करण: %1$d\nन्यूनतम आवश्यक संस्करण: %2$d</string>
 </resources>

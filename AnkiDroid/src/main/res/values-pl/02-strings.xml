@@ -136,6 +136,7 @@
     <string name="delete_deck">Usuwanie talii&#8230;\nProszę czekać&#8230;</string>
     <string name="info_rate">Oceń AnkiDroid</string>
     <string name="import_title">Importowanie</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
     <string name="import_dialog_message_add">Dodać \"%s\" do kolekcji? Może to zająć dłuższą chwilę</string>
@@ -163,6 +164,7 @@
         ]]></string>
     <string name="export_choice_share">Udostępnij</string>
     <string name="export_choice_save_to">Zapisz do</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>
     <string name="menu__deck_options">Opcje talii</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcje nauki</string>

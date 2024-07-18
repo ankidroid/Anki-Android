@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">Fronto</string>
     <string name="back_field_name">Dorso</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Teksto</string>
-    <string name="extra_field_name_new">Dorso (plia)</string>
-    <string name="field_to_ask_front_name">Aldoni malan direkton</string>
-    <!--Note type-->
-    <string name="basic_model_name">Baza</string>
-    <string name="cloze_model_name">Truteksto</string>
-    <string name="basic_typing_model_name">Baza (enigi respondon)</string>
-    <string name="forward_reverse_model_name">Baza (en ambaŭ direktoj)</string>
-    <string name="forward_optional_reverse_model_name">Baza (en unu aŭ ambaŭ direktoj)</string>
 </resources>

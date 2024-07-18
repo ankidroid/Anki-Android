@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">समोर</string>
     <string name="back_field_name">मागे</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">मजकूर</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">उलट जोडा</string>
-    <!--Note type-->
-    <string name="basic_model_name">मूलभूत</string>
-    <string name="cloze_model_name">क्लोज</string>
-    <string name="basic_typing_model_name">मूलभूत (उत्तर टाइप करा)</string>
-    <string name="forward_reverse_model_name">मूलभूत (आणि उलट कार्ड)</string>
-    <string name="forward_optional_reverse_model_name">मूलभूत (पर्यायी उलट कार्ड)</string>
 </resources>

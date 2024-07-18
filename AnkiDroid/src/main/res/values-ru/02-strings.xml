@@ -136,6 +136,7 @@
     <string name="delete_deck">Колода удаляется&#8230;</string>
     <string name="info_rate">Оценить AnkiDroid</string>
     <string name="import_title">Импорт</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
     <string name="import_dialog_message_add">Добавить \"%s\" в коллекцию? Может потребоваться немало времени </string>
@@ -163,6 +164,7 @@
         ]]></string>
     <string name="export_choice_share">Поделиться</string>
     <string name="export_choice_save_to">Сохранить в</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>

@@ -132,6 +132,7 @@
     <string name="delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
     <string name="import_title">ଆମଦାନି ଚାଲିଛି</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ବିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ବିଲୋପ କରିଦେଇ ଏହାକୁ %s ଫାଇଲ୍‌ର ତଥ୍ୟ ସହିତ ପ୍ରତିସ୍ଥାପିତ କରିବ</string>
     <string name="import_dialog_message_add">ସଂଗ୍ରହରେ “%s”କୁ ଯୋଡ଼ିବେ ତ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">ଅଂଶୀଦାର କରିବା</string>
     <string name="export_choice_save_to">ଏଠାରେ ସଞ୍ଚୟ କରିବା</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ଵିକଳ୍ପ</string>
     <string name="menu__deck_options">ତାସଖଣ୍ଡ ଵିକଳ୍ପ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ଵିକଳ୍ପ</string>

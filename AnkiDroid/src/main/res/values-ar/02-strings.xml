@@ -140,6 +140,7 @@
     <string name="delete_deck">يجري حذف الرزمة...</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="import_title">استيراد</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
     <string name="import_dialog_message_add">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
@@ -167,6 +168,7 @@
         ]]></string>
     <string name="export_choice_share">مشاركة</string>
     <string name="export_choice_save_to">حفظ في</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
     <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
