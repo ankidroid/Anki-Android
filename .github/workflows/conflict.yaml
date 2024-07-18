@@ -25,6 +25,7 @@ jobs:
                     repo: context.repo.repo,
                     state: 'open',
                     sort: 'created',
+                    per_page: 100,
                 });
             }
 
