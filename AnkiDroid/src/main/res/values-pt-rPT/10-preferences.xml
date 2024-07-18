@@ -172,7 +172,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
     <string name="show_large_answer_buttons_summ">Mostrar o botão de resposta em duas linhas</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
-    <string name="show_top_bar_summ">Mostrar contagem de fichas, sinalizações e marcas na barra superior</string>
+    <string name="show_top_bar_summ">Mostrar contagem de fichas, bandeiras e marcas na barra superior</string>
     <string name="show_progress" maxLength="41">Mostrar restantes</string>
     <string name="show_progress_summ">Mostrar o contador de fichas restantes</string>
     <string name="show_eta" maxLength="41">Mostrar estimativa de tempo restante</string>
