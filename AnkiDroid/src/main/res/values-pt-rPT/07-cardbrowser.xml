@@ -67,7 +67,7 @@
     <string name="card_browser_show_marked">Filtro marcado</string>
     <string name="card_browser_show_suspended">Filtro suspenso</string>
     <string name="card_browser_search_by_tag">Filtrar por etiqueta</string>
-    <string name="card_browser_search_by_flag">Filtrar por sinalização</string>
+    <string name="card_browser_search_by_flag">Filtrar por bandeira</string>
     <string name="card_browser_list_my_searches">Minhas procuras</string>
     <string name="card_browser_list_my_searches_save">Guardar procura</string>
     <string name="card_browser_list_my_searches_title">Escolher uma procura guardada</string>

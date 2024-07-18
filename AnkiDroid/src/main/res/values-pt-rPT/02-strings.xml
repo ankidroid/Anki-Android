@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Erro fatal: o processador do \"WebView\" falhou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Falha no processamento do \"WebView\"</string>
     <string name="webview_crash_loop_dialog_content">O \"WebView\" de sistema falhou no processamento da ficha \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Sinalização</string>
+    <string name="filter_by_flags">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o limite de novas fichas para hoje</string>
     <string name="custom_study_increase_review_limit">Modificar o limite de revisões para hoje</string>
