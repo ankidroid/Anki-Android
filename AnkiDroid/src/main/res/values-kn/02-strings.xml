@@ -132,6 +132,7 @@
     <string name="delete_deck">ಡೆಕ್ ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="info_rate">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ರೇಟ್ ಮಾಡಿ</string>
     <string name="import_title">ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ಸೇರಿಸಿ</string>
     <string name="import_message_replace_confirm">ಇದು ನಿಮ್ಮ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಸಂಗ್ರಹವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಅದನ್ನು%s ಫೈಲ್‌ನ ಡೇಟಾದೊಂದಿಗೆ ಬದಲಾಯಿಸುತ್ತದೆ</string>
     <string name="import_dialog_message_add">ಸಂಗ್ರಹಣೆಗೆ \"%s\" ಅನ್ನು ಸೇರಿಸುವುದೇ? ಇದು ಬಹಳ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">ಹಂಚಿರಿ</string>
     <string name="export_choice_save_to">ಗೆ ಉಳಿಸಿ</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ಆಯ್ಕೆಗಳು</string>
     <string name="menu__deck_options">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ಅಧ್ಯಯನ ಆಯ್ಕೆಗಳು</string>

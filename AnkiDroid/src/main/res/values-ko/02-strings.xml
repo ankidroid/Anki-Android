@@ -131,6 +131,7 @@
     <string name="delete_deck">카드 묶음 삭제 중&#8230;\n 잠시만 기다리세요.</string>
     <string name="info_rate">AnkiDroid 평가하기</string>
     <string name="import_title">가져오는 중</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -160,6 +161,7 @@
 Context | Request Context    [1]</string>
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">설정</string>
     <string name="menu__deck_options">덱 옵션</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">학습 옵션</string>

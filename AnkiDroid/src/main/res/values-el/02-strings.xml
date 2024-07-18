@@ -132,6 +132,7 @@
     <string name="delete_deck">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>
     <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>
     <string name="import_title">Εισαγωγή</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Προσθήκη</string>
     <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
     <string name="import_dialog_message_add">Προσθήκη \"%s\" στη συλλογή; Μπορεί να διαρκέσει πολύ χρόνο</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Κοινοποίηση</string>
     <string name="export_choice_save_to">Αποθήκευση σε</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Επιλογές</string>
     <string name="menu__deck_options">Επιλογές τράπουλας</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Επιλογές μελέτης</string>

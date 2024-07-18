@@ -130,6 +130,7 @@
     <string name="delete_deck">刪除牌組中&#8230;\n請稍候</string>
     <string name="info_rate">評價 AnkiDroid</string>
     <string name="import_title">正在匯入&#8230;&#8230;</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -157,6 +158,7 @@
         ]]></string>
     <string name="export_choice_share">分享</string>
     <string name="export_choice_save_to">儲存到&#8230;</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
     <string name="menu__deck_options">牌組選項</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>

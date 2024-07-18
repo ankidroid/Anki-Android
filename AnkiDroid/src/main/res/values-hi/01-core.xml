@@ -104,15 +104,15 @@
     <string name="menu_suspend">निलंबित</string>
     <string name="menu_delete_note">नोट हटाएँ</string>
     <string name="menu_flag">ध्वज</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">झंडों का नाम बदलें</string>
     <string name="menu_flag_card">कार्ड को ध्वजांकित करें</string>
     <string name="menu_edit_tags">टैग संपादित करें</string>
     <string name="delete_note_message">वास्तव में इस नोट और उसके सभी cards?\n%s को हटाना</string>
     <string name="menu_search">लुकअप में %1$s</string>
     <string name="menu_mark_note">नोट चिह्नित करें</string>
     <string name="menu_unmark_note">नोट अचिह्नित करें</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">ध्वनि प्लेबैक सक्षम करें</string>
+    <string name="menu_disable_voice_playback">ध्वनि प्लेबैक अक्षम करें</string>
     <string name="new_deck">डेक बनाने</string>
     <string name="new_dynamic_deck">फ़िल्टर्ड डेक बनाएं</string>
     <string name="directory_inaccessible">AnkiDroid निर्देशिका पहुंच योग्य नहीं है</string>
@@ -133,7 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">डेक खोज</string>
     <string name="invalid_deck_name">अमान्य डेक नाम</string>
     <string name="studyoptions_congrats_finished">बधाई हो! आपने अभी के लिए समाप्त कर लिया है.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">अभी के लिए डेक समाप्त हो गया! %s</string>
     <string name="studyoptions_no_cards_due">कोई कार्ड अभी तक देय नहीं है</string>
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
     <string name="button_sync" comment="Text of the sync button">सिंक</string>
@@ -144,7 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द कर रहा है&#8230;\n कुछ समय लग सकता है ।</string>
     <string name="syncing_media">सिंकिंग मीडिया</string>
     <string name="export_deck">निर्यात डेक</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">निर्यात संग्रह</string>
     <string name="nothing">कुछ नहीं</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">कार्ड के प्रकार</string>
@@ -254,5 +254,5 @@ Back - बैक</string>
     <string name="image_occlusion">छवि अवरोधन</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">खाता हटाएं</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">तत्काल कार्ड</string>
 </resources>

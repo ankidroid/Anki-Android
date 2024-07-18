@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">წინა მხარე</string>
     <string name="back_field_name">უკანა მხარე</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ტექსტი</string>
-    <string name="extra_field_name_new">უკანა მხარე (დამატებითი)</string>
-    <string name="field_to_ask_front_name">გადმობრუნებული ბარათის დამატება</string>
-    <!--Note type-->
-    <string name="basic_model_name">ზოგადი</string>
-    <string name="cloze_model_name">გამოტოვებული ადგილ(ებ)ით</string>
-    <string name="basic_typing_model_name">ზოგადი (პასუხის აკრეფა)</string>
-    <string name="forward_reverse_model_name">ზოგადი (და გადმობრუნებული ბარათი)</string>
-    <string name="forward_optional_reverse_model_name">ზოგადი (და არასავალდებულო გადმობრუნებული ბარათი)</string>
 </resources>

@@ -132,6 +132,7 @@
     <string name="delete_deck">A eliminar o baralho&#8230;</string>
     <string name="info_rate">Classificar AnkiDroid</string>
     <string name="import_title">A importar</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá apagar a sua coleção existente substituindo-a pelos dados do ficheiro %s</string>
     <string name="import_dialog_message_add">Adicionar “%s” à colecção? Isto pode demorar bastante tempo.</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Partilhar</string>
     <string name="export_choice_save_to">Guardar em</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
     <string name="menu__deck_options">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>

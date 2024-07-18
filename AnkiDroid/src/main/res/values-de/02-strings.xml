@@ -132,6 +132,7 @@
     <string name="delete_deck">Lösche Stapel&#8230;</string>
     <string name="info_rate">AnkiDroid bewerten</string>
     <string name="import_title">Importieren</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_dialog_message_add">\"%s\" zu Ihrer Sammlung hinzufügen? Das könnte etwas Zeit beanspruchen.</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Teilen</string>
     <string name="export_choice_save_to">Speichern unter</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optionen</string>
     <string name="menu__deck_options">Stapeloptionen</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Lernoptionen</string>

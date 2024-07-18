@@ -52,7 +52,7 @@
     <string name="CardEditorModel">قسم:</string>
     <string name="CardEditorTags">ٹیگز: %1$s</string>
     <string name="CardEditorCards">کارڈ: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">مواقع میں ترمیم کریں</string>
     <string name="tag_name">ٹیگ کا نام</string>
     <string name="add_new_filter_tags">شامل/فلٹر کریں ٹیگ</string>
     <string name="add_tag">ٹیگ شامل کریں</string>
@@ -91,7 +91,7 @@
     <string name="custom_study_limit_tags">مخصوص ٹیگز تک محدود</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">نوٹ میں ترمیم کریں</string>
-    <string name="discard">Discard</string>
+    <string name="discard">رد کر دیں</string>
     <string name="note_editor_no_cards_created">کوئی کارڈ نہیں بنایا۔ براہ کرم مزید فیلڈز پُر کریں۔</string>
     <string name="note_editor_no_cards_created_all_fields">موجودہ نوٹ کی قسم نے کوئی کارڈ تیار نہیں کیا۔\nبراہ کرم نوٹ کی کوئی اور قسم منتخب کریں، یا \'کارڈز\' پر کلک کریں اور ایک فیلڈ متبادل شامل کریں۔</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">کلوز کو حذف کرنا صرف کلوز نوٹ کی قسم پر کام کرے گا۔</string>
@@ -102,7 +102,7 @@
     <string name="select">منتخب کریں</string>
     <string name="field_remapping">%1$s (\"%2$s\" سے)</string>
     <string name="confirm_map_cards_to_nothing">کسی بھی کارڈ کو کچھ بھی نہیں پر میپ کیا جائے گا حذف کر دیا جائے گا۔ اگر کسی نوٹ میں کوئی کارڈ باقی نہیں ہے، تو وہ کھو جائے گا۔ کیا آپ واقعی جاری رکھنا چاہتے ہیں؟</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">نوٹ کی کوئی قسم نہیں ملی</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ٹائم باکس پہنچ گیا۔</string>
     <plurals name="timebox_reached">
@@ -120,7 +120,7 @@
     <string name="card_editor_reset_card">پیشرفت کو دوبارہ ترتیب دیں۔</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">دوبارہ شیڈول</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نظارہ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">مارک ڈاؤن کے بطور کاپی کریں</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d میں سے %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">نام تبدیل کریں</string>
     <string name="checks_action">چیک کریں</string>
@@ -132,6 +132,7 @@
     <string name="delete_deck">ڈیک کو حذف کیا جا رہا ہے&#8230;</string>
     <string name="info_rate">AnkiDroid کی درجہ بندی کریں</string>
     <string name="import_title">درآمد</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">شامل کریں</string>
     <string name="import_message_replace_confirm">یہ آپ کے موجودہ مجموعہ کو حذف کر دے گا اور اسے فائل کے ڈیٹا سے بدل دے گا %s</string>
     <string name="import_dialog_message_add">مجموعہ میں \"%s\" شامل کریں؟ اس میں کافی وقت لگ سکتا ہے۔</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">بانٹیں</string>
     <string name="export_choice_save_to">محفوظ کریں</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">اختیارات</string>
     <string name="menu__deck_options">ڈیک کے اختیارات</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">مطالعہ کے اختیارات</string>
@@ -182,13 +184,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">سسٹم میں کوئی ایپ انسٹال نہیں ہے جو اس کارروائی کو انجام دے سکے۔</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[کیمرے کی تصاویر بڑی ہو سکتی ہیں۔ آپ میڈیا ڈائرکٹری میں تصاویر کو سکیڑنا اور ان کا سائز تبدیل کرنا چاہتے ہیں۔]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">لنک کو کھولنے کے لیے کوئی براؤزر نہیں ملا: %s</string>
     <string name="web_page_error">صفحہ لوڈ کرنے میں خرابی: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">پس منظر</string>
     <string name="choose_an_image">تصویر منتخب کریں۔</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">پس منظر ہٹائیں؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ڈیفالٹ بحال کریں۔</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
@@ -243,7 +245,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">ایک درست ای میل درج کریں</string>
     <string name="password_empty">پاس ورڈ درکار ہے</string>
     <string name="back_pressed_once">باہر نکلنے کے لیے دوبارہ دبائیں۔</string>
     <string name="back_pressed_once_reviewer">واپس آنے کے لیے دوبارہ دبائیں</string>
@@ -282,7 +284,7 @@
     <string name="migration_part_1_done_resume">آپ AnkiDroid کا استعمال دوبارہ شروع کر سکتے ہیں۔
 \nذخیرہ کی منتقلی پس منظر میں جاری رہے گی۔</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s ایک درست جاوا اسکرپٹ ایڈون پیکج نہیں ہے۔</string>
     <string name="could_not_create_dir">ڈائرکٹری %s نہیں بن سکی</string>
     <string name="malicious_archive_entry_outside">بدنیتی پر مبنی محفوظ شدہ دستاویزات۔ ہدف سے باہر اندراج پر مشتمل ہے: %s</string>
     <string name="malicious_archive_exceeds_limit">بدنیتی پر مبنی محفوظ شدہ دستاویزات۔ سائز %1$s سے زیادہ ہے یا %2$d سے زیادہ فائلوں پر مشتمل ہے۔</string>
@@ -291,7 +293,7 @@
     <string name="expand_tag">ٹیگ \'%s\' کو پھیلائیں</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">مجموعہ تک رسائی حاصل کرنے میں ناکام۔ دوبارہ کوشش کریں!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">نوٹ کی ایک نئی قسم شامل کریں</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">کم مطالعہ کریں</string>
     <string name="intro_ankidroid_tagline_two">مزید یاد رکھیں</string>
@@ -299,7 +301,7 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">شروع کرنے کے</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb سے مطابقت پذیری کریں۔</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid ابھی شروع نہیں ہوا ہے۔ براہ کرم AnkiDroid کھولیں اور دوبارہ کوشش کریں</string>
     <string name="already_logged_in">پہلے سے لاگ ان</string>
     <!-- Deck Creation -->
     <string name="deck_created">ڈیک بنایا گیا</string>
@@ -318,32 +320,32 @@
     <string name="media_sync_required_title">میڈیا کی مطابقت پذیری کی ضرورت ہے</string>
     <string name="media_sync_unavailable_message">میڈیا کی مطابقت پذیری ترتیبات میں غیر فعال ہے۔ براہ کرم کسی بھی میڈیا کو مطابقت پذیر اور بیک اپ کریں جو جاری رکھنے سے پہلے مطابقت پذیر نہیں ہوا ہے</string>
     <string name="audio_saved">ریکارڈنگ محفوظ ہو گئی</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
+    <string name="deleting_selected_notes">منتخب نوٹوں کو حذف کیا جا رہا ہے</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        سننے کے لیے آواز کو تھپتھپائیں
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">آواز کو استعمال کرنے سے پہلے انسٹال کرنا چاہیے
     </string>
-    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Use anyway
+    <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">بہرحال استعمال کریں
     </string>
-    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">Text to speech error (%s)</string>
+    <string name="tts_voices_playback_error_new" comment="an error occurred when playing a text to speech voice. The parameter is a technical error code such as \'ERROR_NOT_INSTALLED_YET\' or \'ERROR_NETWORK_TIMEOUT\'">ٹیکسٹ ٹو اسپیچ کی خرابی (%s)</string>
     <!-- Chips should probably be in a separate file, due to the additional length req -->
-    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        Internet
+    <string name="tts_voices_chip_filter_to_internet" comment="     Filters a list of text to speech voices, to enable/disable voices which require the internet to     function.     This is on a chip control, so keep the text short, ideally one word">        انٹرنیٹ
     </string>
-    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Install
+    <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        انسٹال کریں
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        متن سے اسپیچ کی ترتیبات کو کھولنے میں ناکام
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="shared_decks_login_required">مزید ڈیک ڈاؤن لوڈ کرنے کے لیے براہ کرم لاگ ان کریں</string>
+    <string name="deck_description_field_hint">تفصیل</string>
+    <string name="failed_to_copy">کاپی کرنے میں ناکام</string>
+    <string name="card_browser_unavailable_when_notes_mode">\'نوٹس\' موڈ میں دستیاب نہیں ہے</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d کارڈ کو دفن کیا گیا</item>
+        <item quantity="other">%d کارڈز کو دفن کیا گیا</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">ریپوزیشن</string>
+    <string name="start_recording">ریکارڈ کریں</string>
+    <string name="stop_recording">بند کریں</string>
+    <string name="play_recording">چلائیں</string>
+    <string name="next_recording">اگلے</string>
 </resources>

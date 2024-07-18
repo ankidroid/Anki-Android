@@ -136,6 +136,7 @@
     <string name="delete_deck">Balíček sa odstraňuje&#8230;</string>
     <string name="info_rate">Ohodnotiť AnkiDroid</string>
     <string name="import_title">Importuje sa</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridať</string>
     <string name="import_message_replace_confirm">Týmto vymažete vašu existujúcu zbierku a nahradíte ju dátami zo súboru %s. Ste si istý?</string>
     <string name="import_dialog_message_add">Pridať „%s\" do zbierky? Môže to chvíľu trvať.</string>
@@ -163,6 +164,7 @@
         ]]></string>
     <string name="export_choice_share">Zdieľať</string>
     <string name="export_choice_save_to">Uložiť</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Možnosti balíčka</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti štúdia</string>
