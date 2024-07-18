@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">Hadapan</string>
     <string name="back_field_name">Belakang</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Teks</string>
-    <string name="extra_field_name_new">Belakang Tambahan</string>
-    <string name="field_to_ask_front_name">Tambah Terbalik</string>
-    <!--Note type-->
-    <string name="basic_model_name">Asas</string>
-    <string name="cloze_model_name">Kloz</string>
-    <string name="basic_typing_model_name">Asas (taipkan jawapan)</string>
-    <string name="forward_reverse_model_name">Asas (dan kad terbalik)</string>
-    <string name="forward_optional_reverse_model_name">Asas (dan kad terbalik pilihan)</string>
 </resources>

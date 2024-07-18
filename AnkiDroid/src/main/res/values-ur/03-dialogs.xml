@@ -72,7 +72,7 @@
     <string name="answering_error_message">مجموعہ پر لکھنا ناکام ہو گیا۔ ڈیٹا بیس کرپٹ ہو سکتا ہے یا ڈسک پر کافی جگہ خالی نہیں ہو سکتی۔\n\nاگر ایسا زیادہ ہوتا ہے تو ڈیٹا بیس کو چیک کرنے، جمع کو ٹھیک کرنے یا اسے بیک اپ سے بحال کرنے کی کوشش کریں۔ اس کے لیے \"اختیارات\" کو ٹچ کریں۔\n\یا یہ AnkiDroid بگ بھی ہو سکتا ہے۔ براہ کرم غلطی کی اطلاع دیں تاکہ ہم اسے چیک کر سکیں۔</string>
     <string name="answering_error_report">غلطی کی اطلاع دیں۔</string>
     <string name="storage_full_message">AnkiDroid کھولنے کے لیے کافی خالی جگہ نہیں ہے۔ جاری رکھنے کے لیے کچھ جگہ خالی کریں۔</string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
+    <string name="repair_deck_dialog">کیا آپ واقعی ڈیٹا بیس کو ٹھیک کرنے کی کوشش کرنا چاہتے ہیں؟\n\nکوشش شروع کرنے سے پہلے، ذیلی فولڈر \"%s\" میں ایک کاپی بنائی جائے گی۔</string>
     <string name="intent_aedict_empty">زمرہ \"ڈیفالٹ\" خالی ہے۔</string>
     <string name="intent_aedict_category">AnkiDroid میں کارڈز شامل کرنے کے لیے تمام نوٹ پیڈ کیٹیگریز کو ہٹا دیں یا \"ڈیفالٹ\" کے نام سے ایک شامل کریں۔</string>
     <string name="custom_study_new_total_new">ڈیک میں نئے کارڈز: %d</string>
@@ -98,68 +98,68 @@
     <string name="dialog_yes">جی ہاں</string>
     <string name="dialog_keep">رکھو</string>
     <string name="dialog_remove">دور</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_processing">Processing&#8230;</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="dialog_continue">جاری رکھیں</string>
+    <string name="dialog_processing">پراسیس کر رہا ہے&#8230;</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">بنائیں</string>
+    <string name="dialog_positive_delete">حذف کریں</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">غیر فعال کریں</string>
+    <string name="dialog_positive_overwrite">اووررائٹ</string>
+    <string name="dialog_positive_repair">مرمت</string>
+    <string name="dialog_positive_replace">بدل دیں</string>
+    <string name="dialog_collection_path_not_dir">بیان کردہ راستہ درست ڈائریکٹری نہیں تھی</string>
+    <string name="dialog_invalid_custom_certificate">فراہم کردہ متن ایک درست PEM-انکوڈ شدہ X509 سرٹیفکیٹ کو حل نہیں کرتا ہے</string>
+    <string name="dialog_invalid_custom_certificate_title">سرٹیفکیٹ کو پارس کرنے میں خرابی</string>
+    <string name="dialog_updated_custom_certificate">سرٹیفکیٹ اپ ڈیٹ ہو گیا</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
-    <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_acknowledge">Media checked</string>
-    <string name="check_media_invalid">Files with invalid encoding: %d</string>
-    <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-    <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-    <string name="check_media_no_unused_missing">No unused or missing files found</string>
-    <string name="check_media_db_updated">Media database rebuilt</string>
-    <string name="check_media_delete_unused">Delete unused</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="check_media_title">میڈیا چیک کریں؟</string>
+    <string name="check_media_warning">میڈیا کے بڑے مجموعوں کے ساتھ اس میں کافی وقت لگ سکتا ہے</string>
+    <string name="check_media_message">میڈیا کو چیک کیا جا رہا ہے&#8230;</string>
+    <string name="check_media_acknowledge">میڈیا چیک کیا</string>
+    <string name="check_media_invalid">غلط انکوڈنگ والی فائلیں: %d</string>
+    <string name="check_media_unused">فائلیں میڈیا فولڈر میں ہیں لیکن کسی بھی کارڈ کے ذریعے استعمال نہیں کی گئی: %d</string>
+    <string name="check_media_nohave">کارڈز پر استعمال ہونے والی فائلیں لیکن میڈیا فولڈر میں نہیں: %d</string>
+    <string name="check_media_no_unused_missing">کوئی غیر استعمال شدہ یا گم شدہ فائلیں نہیں ملی</string>
+    <string name="check_media_db_updated">میڈیا ڈیٹا بیس کو دوبارہ بنایا گیا</string>
+    <string name="check_media_delete_unused">غیر استعمال شدہ کو حذف کریں</string>
+    <string name="delete_media_message">میڈیا کو حذف کیا جا رہا ہے&#8230;</string>
+    <string name="delete_media_result_title">حذف کرنے کا نتیجہ</string>
     <plurals name="delete_media_result_message">
-        <item quantity="one">%d file deleted</item>
-        <item quantity="other">%d files deleted</item>
+        <item quantity="one">%d فائل حذف کر دی گئی</item>
+        <item quantity="other">%d فائلیں حذف ہو گئیں</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_all_cards">تمام کارڈز</string>
+    <string name="tags_dialog_option_new_cards">نئی</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">بقایا</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-    <string name="empty_cards_count">Cards to delete: %d</string>
-    <string name="empty_cards_deleted">Cards deleted: %d</string>
+    <string name="emtpy_cards_finding">خالی کارڈز تلاش کیے جا رہے ہیں&#8230;</string>
+    <string name="empty_cards_count">حذف کرنے کے لیے کارڈز: %d</string>
+    <string name="empty_cards_deleted">کارڈز حذف کر دیے گئے: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">مائیکروفون کی اجازت حاصل نہیں کی جا سکی۔</string>
+    <string name="multimedia_editor_camera_permission_refused">کیمرے کی اجازت حاصل نہیں کی جا سکی۔ فعالیت کو غیر فعال کر دیا گیا ہے۔</string>
+    <string name="multimedia_editor_failed">ملٹی میڈیا ایڈیٹر کھولنے میں ناکام</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="multimedia_editor_audio_permission_denied">آڈیو ریکارڈنگ کی اجازت مسترد کر دی گئی</string>
+    <string name="mutimedia_editor_assertion_failed">ایڈوانسڈ ایڈیٹر کی نمائش میں نامعلوم خرابی پیش آگئی</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_startup_title">AnkiDroid کو اپ گریڈ کیا گیا۔</string>
+    <string name="integrity_check_startup_content">AnkiDroid کو اپ گریڈ کر دیا گیا ہے۔ اس اپ گریڈ میں ممکنہ ڈیٹا بیس کے مسائل کے لیے اصلاحات شامل ہیں، اور ہم آپ کو مشورہ دیتے ہیں کہ اب چیک ڈیٹا بیس چلائیں۔</string>
+    <string name="integrity_check_continue_anyway">بہرحال جاری رکھیں</string>
+    <string name="integrity_check_insufficient_space">چیک ڈیٹا بیس بڑی مقدار میں عارضی اسٹوریج استعمال کرتا ہے۔\n\nیہ پرزور مشورہ دیا جاتا ہے کہ جاری رکھنے سے پہلے آپ کے آلے پر کم از کم %s خالی جگہ موجود ہو۔</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nآپ کے پاس فی الحال %s مفت ہے۔</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
+    <string name="card_viewer_url_decode_error">کارڈ سے ڈیٹا کو ڈی کوڈ کرنے میں خرابی</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="database_locked_title">ڈیٹا بیس مقفل</string>
+    <string name="database_locked_summary">AnkiDroid ڈیٹا بیس ایک اور ایپلیکیشن کے زیر استعمال ہے۔ براہ کرم دوسری ایپلیکیشن بند کریں پھر AnkiDroid کو دوبارہ کھولیں۔</string>
+    <string name="incompatible_database_version_title">غیر مطابقت پذیر ڈیٹا بیس ورژن</string>
+    <string name="incompatible_database_version_summary">ڈیٹا بیس AnkiDroid کے اس ورژن سے زیادہ جدید ورژن ہے جس کے ساتھ کام کیا جا سکتا ہے۔ AnkiDroid کو اپ گریڈ کریں یا اسے کھولنے کے لیے ڈیٹا بیس کو ڈاؤن گریڈ کریں\n\nتعاون یافتہ ورژن: %1$d\nڈیٹا بیس ورژن: %2$d\n\n درج ذیل بحالی کے اختیارات آپ کے موجودہ مجموعہ کو اوور رائٹ کر دیں گے، ممکنہ طور پر ایک مطابقت پذیر ڈیٹا بیس ورژن کے ساتھ:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
+    <string name="background_image_applied">پس منظر کی تصویر لاگو کر دی گئی</string>
     <string name="background_image_removed">Background image removed</string>
     <string name="no_image_selected">No image selected</string>
     <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
@@ -221,44 +221,44 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">ٹیکسٹ فائل (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">آپ تمام ڈیکوں کے لیے سب ڈیک نہیں بنا سکتے</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="backup_your_collection">اپنے کلیکشن کا بیک اپ لیں</string>
+    <string name="backup_collection_message">آپ نے تھوڑی دیر میں اپنے مجموعہ کا بیک اپ نہیں لیا ہے۔ ڈیٹا کے نقصان کو روکنے کے لیے آپ کو ابھی یہ کرنا چاہیے</string>
+    <string name="button_backup">بیک اپ</string>
+    <string name="button_disable_reminder">یاد دہانی کو غیر فعال کریں</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">بعد میں</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">دوبارہ نہ دکھائیں</string>
+    <string name="dismiss_backup_warning_title">ڈیٹا ضائع ہونے کی وارننگ</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="deck_already_exists">ڈیک پہلے سے موجود ہے</string>
+    <string name="create_deck_numeric_hint">اگر آپ کو ڈیک آرڈر کرنے کے مسائل ہیں (جیسے \'10\' \'2\' سے پہلے ظاہر ہوتا ہے)، \'2\' کو \'02\' سے بدل دیں</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">وقفہ کو اسی قدر پر سیٹ کریں</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">میں کارڈ دکھائیں</item>
+        <item quantity="other">میں کارڈ دکھائیں</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">رینج میں کارڈ دکھائیں</item>
+        <item quantity="other">رینج میں کارڈ دکھائیں</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">دن</item>
+        <item quantity="other">دن</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">سے</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">کرنا</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="cloze_note_required">کلوز ٹائپ نوٹ درکار ہے</string>
+    <string name="cloze_not_found_message">کوئی کلوز ٹائپ نوٹ نہیں ملا، نوٹ ایڈیٹر کھولیں یا کلوز ٹائپ نوٹ شامل کرنے کے بعد دوبارہ کوشش کریں۔</string>
+    <string name="open">جاری</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">WebView سسٹم پرانا ہے۔ کچھ خصوصیات صحیح طریقے سے کام نہیں کریں گی۔ براہ کرم اسے اپ ڈیٹ کریں۔\n\nانسٹال شدہ ورژن: %1$d\nکم از کم مطلوبہ ورژن: %2$d</string>
 </resources>

@@ -132,6 +132,7 @@
     <string name="delete_deck">S\'està suprimint el paquet&#8230;\nUn moment si us plau.</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
     <string name="import_title">S\'està important</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcions d\'estudi</string>
     <string name="menu__deck_options">Opcions de paquet</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcions d\'estudi</string>

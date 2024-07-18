@@ -132,6 +132,7 @@
     <string name="delete_deck">Raderar kortlek&#8230;</string>
     <string name="info_rate">Betygsätt AnkiDroid</string>
     <string name="import_title">Importera</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lägg till</string>
     <string name="import_message_replace_confirm">Detta kommer att ta bort din befintliga samling och ersätta den med datan i filen %s. Är du säker?</string>
     <string name="import_dialog_message_add">Lägg till “%s” i samlingen? Det kan ta lång tid</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Dela</string>
     <string name="export_choice_save_to">Spara till</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>
     <string name="menu__deck_options">Kortleksalternativ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeringsalternativ</string>

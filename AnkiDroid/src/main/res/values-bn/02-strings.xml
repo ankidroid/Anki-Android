@@ -132,6 +132,7 @@
     <string name="delete_deck">ডেক মুছছি&#8230;</string>
     <string name="info_rate">আনকি-ড্রয়েডকে রেটিং দিন</string>
     <string name="import_title">আমদানি হচ্ছে</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">যোগ কর</string>
     <string name="import_message_replace_confirm">এর ফলে আপনার বর্তমান সংগ্রহ মুছে যাবে এবং %s ফাইলের ডেটা দ্বারা প্রতিস্থাপিত হবে।</string>
     <string name="import_dialog_message_add">\"%s\"কে সংগ্রহে যোগ করবেন? অনেক সময় প্রয়োজন হতে পারে</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

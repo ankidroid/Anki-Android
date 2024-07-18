@@ -132,6 +132,7 @@
     <string name="delete_deck">ഡെക്ക് ഇല്ലാതാക്കുന്നു&#8230;</string>
     <string name="info_rate">അങ്കിഡ്രോയിഡ് റേറ്റുചെയ്യുക</string>
     <string name="import_title">ഇറക്കുമതി ചെയ്യുന്നു</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ചേർക്കുക</string>
     <string name="import_message_replace_confirm">ഇത് നിങ്ങളുടെ നിലവിലുള്ള ശേഖരം ഇല്ലാതാക്കുകയും %s ഫയലിന്റെ ഡാറ്റ ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കുകയും ചെയ്യും</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ഓപ്ഷനുകൾ</string>
     <string name="menu__deck_options">ഡെക്ക് ഓപ്ഷനുകൾ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">പഠന ഓപ്ഷനുകൾ</string>

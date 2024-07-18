@@ -130,6 +130,7 @@
     <string name="delete_deck">Колода бетерелә&#8230;</string>
     <string name="info_rate">AnkiDroidны бәяләгез</string>
     <string name="import_title">Импортлау</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Кушу</string>
     <string name="import_message_replace_confirm">Бу сезнең хәзерге коллекцияне бетерер hәм аны %s файлы белән алыштырыр</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -158,6 +159,7 @@
         ]]></string>
     <string name="export_choice_share">Уртаклашу</string>
     <string name="export_choice_save_to">Save to</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Көйләүләр</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

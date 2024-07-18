@@ -132,6 +132,7 @@
     <string name="delete_deck">Tinatanggal ang deck&#8230;</string>
     <string name="info_rate">I-rate ang AnkiDroid</string>
     <string name="import_title">Nag-aangkat</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Magdagdag</string>
     <string name="import_message_replace_confirm">Buburahin nito ang iyong umiiral na tipon at papalitan nito ng data mula sa file na %s</string>
     <string name="import_dialog_message_add">Idagdag ang \"%s\" sa tipon? Maaaring matagalan ito</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Ibahagi</string>
     <string name="export_choice_save_to">I-save sa</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Mga Opsiyon</string>
     <string name="menu__deck_options">Mga Opsiyon ng Deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Mga Opsiyon sa Pag-aaral</string>

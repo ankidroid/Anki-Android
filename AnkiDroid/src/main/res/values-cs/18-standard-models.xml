@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">Líc</string>
     <string name="back_field_name">Rub</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name_new">Zadní strana (poznámky)</string>
-    <string name="field_to_ask_front_name">Přidat rub</string>
-    <!--Note type-->
-    <string name="basic_model_name">Základní</string>
-    <string name="cloze_model_name">Doplňovačka</string>
-    <string name="basic_typing_model_name">Základní (psát odpověď)</string>
-    <string name="forward_reverse_model_name">Základní (a obrácená karta)</string>
-    <string name="forward_optional_reverse_model_name">Základní (volitelná obrácená karta)</string>
 </resources>

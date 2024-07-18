@@ -28,13 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">മുന്നിൽ</string>
     <string name="back_field_name">തിരികെ</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">വാചകം</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">വിപരീതം ചേർക്കുക</string>
-    <!--Note type-->
-    <string name="basic_model_name">അടിസ്ഥാനം</string>
-    <string name="cloze_model_name">അടയ്ക്കുക</string>
-    <string name="basic_typing_model_name">അടിസ്ഥാനം (ഉത്തരം ടൈപ്പ് ചെയ്യുക)</string>
-    <string name="forward_reverse_model_name">അടിസ്ഥാന (വിപരീത കാർഡും)</string>
-    <string name="forward_optional_reverse_model_name">അടിസ്ഥാന (ഓപ്‌ഷണൽ വിപരീത കാർഡ്)</string>
 </resources>

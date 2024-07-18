@@ -132,6 +132,7 @@
     <string name="delete_deck">Suppression du paquet&#8230;</string>
     <string name="info_rate">Noter AnkiDroid</string>
     <string name="import_title">Importation en cours</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
     <string name="import_dialog_message_add">Ajouter \"%s\" à la collection ? Cela peut prendre beaucoup de temps</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Partager</string>
     <string name="export_choice_save_to">Enregistrer sous</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Options du deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>

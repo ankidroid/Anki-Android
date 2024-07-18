@@ -132,6 +132,7 @@
     <string name="delete_deck">Eliminando mazo&#8230;\nPor favor aguarde.</string>
     <string name="info_rate">Puntúe AnkiDroid</string>
     <string name="import_title">Importando</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Añadir</string>
     <string name="import_message_replace_confirm">Esta operación eliminará la colección existente y la reemplazará con los datos del archivo %s. ¿Está seguro?</string>
     <string name="import_dialog_message_add">¿Añadir \"%s\" a la colección? Esto puede llevar mucho tiempo</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Compartir</string>
     <string name="export_choice_save_to">Guardar en</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>
     <string name="menu__deck_options">Opciones de mazo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>

@@ -132,6 +132,7 @@
     <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
     <string name="info_rate">امتیازدهی به AnkiDroid</string>
     <string name="import_title">درحال وارد کردن</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد</string>
     <string name="import_dialog_message_add">آیا میخواهید \"%s\" را به مجموعه اضافه کنید؟ این ممکن است زمان زیادی طول بکشد</string>
@@ -159,6 +160,7 @@
                 ]]></string>
     <string name="export_choice_share">اشتراک گزاری</string>
     <string name="export_choice_save_to">ذخیره به</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
     <string name="menu__deck_options">گزینه های دسته</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">گزینه‌های مطالعه</string>

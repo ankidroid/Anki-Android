@@ -132,6 +132,7 @@
     <string name="delete_deck">Deleting deck&#8230;</string>
     <string name="info_rate">Beoardiel AnkiDroid</string>
     <string name="import_title">Importing</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>

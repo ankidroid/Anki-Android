@@ -132,6 +132,7 @@
     <string name="delete_deck">Eliminazione mazzo in corso&#8230;</string>
     <string name="info_rate">Valuta AnkiDroid</string>
     <string name="import_title">Importazione in corso</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aggiungi</string>
     <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
     <string name="import_dialog_message_add">Aggiungere “%s” alla collezione? Potrebbe richiedere molto tempo</string>
@@ -159,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Condividi</string>
     <string name="export_choice_save_to">Salva su</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opzioni</string>
     <string name="menu__deck_options">Opzioni di mazzo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opzioni di studio</string>
