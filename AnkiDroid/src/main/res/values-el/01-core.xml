@@ -60,16 +60,16 @@
     <string name="expand">Ανάπτυξη</string>
     <string name="collapse">Σύμπτυξη</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Απομένει %d λεπτό</item>
+        <item quantity="other">Απομένουν %d λεπτά</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Απομένει %1$d ώρα %2$d</item>
+        <item quantity="other">Απομένουν %1$d ώρες %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Απομένει %1$d ημέρα %2$d</item>
+        <item quantity="other">Απομένουν %1$d ημέρες %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Η συλλογή είναι κενή</string>
     <string name="no_cards_placeholder_description">Αρχίστε να προσθέτετε κάρτες πατώντας το + εικονίδιο.</string>
@@ -91,7 +91,7 @@
     <string name="rename_deck">Μετονομασία τράπουλας</string>
     <string name="create_shortcut">Δημιουργία συντόμευσης</string>
     <string name="browse_cards">Περιήγηση καρτών</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Επεξεργασία περιγραφής</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Προσθήκη</string>
     <string name="menu_add_note">Προσθήκη σημείωσης</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Συγχρονισμός λογαριασμού</string>
@@ -104,15 +104,15 @@
     <string name="menu_suspend">Αναστολή</string>
     <string name="menu_delete_note">Διαγραφή Σημείωσης</string>
     <string name="menu_flag">Σήμανση</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Μετονομασία σημαιών</string>
     <string name="menu_flag_card">Σήμανση κάρτας</string>
     <string name="menu_edit_tags">Επεξεργασία ετικετών</string>
     <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
     <string name="menu_search">Αναζήτηση στο %1$s</string>
     <string name="menu_mark_note">Μαρκάρισμα σημείωσης</string>
     <string name="menu_unmark_note">Ξεμαρκάρισμα σημείωσης</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">Ενεργοποίηση αναπαραγωγής φωνής</string>
+    <string name="menu_disable_voice_playback">Απενεργοποίηση αναπαραγωγής φωνής</string>
     <string name="new_deck">Δημιουργία τράπουλας</string>
     <string name="new_dynamic_deck">Δημιουργία φιλτραρισμένης τράπουλας</string>
     <string name="directory_inaccessible">Η τοποθεσία τού AnkiDroid είναι μη προσβάσιμη</string>
@@ -132,8 +132,8 @@
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Αναζήτηση</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">Συγχαρητήρια! Έχετε τελειώσει για τώρα.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Η τράπουλα τελείωσε για τώρα! %s</string>
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
     <string name="button_sync" comment="Text of the sync button">Συγχρονισμός</string>
@@ -142,9 +142,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Συνέχεια συγχρονισμού</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Ο συγχρονισμός ακυρώθηκε</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Ακύρωση&#8230;\nΑυτό μπορεί να διαρκέσει κάποιο χρόνο.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Συγχρονισμός πολυμέσων</string>
     <string name="export_deck">Εξαγωγή τράπουλας</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Εξαγωγή συλλογής</string>
     <string name="nothing">Τίποτε</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Τύποι κάρτας</string>
@@ -215,17 +215,17 @@
         <br><br>
         <a href="%2$s">Μάθετε περισσότερα και λάβετε βοήθεια</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Η μετακίνηση αρχείων πολυμέσων τίθεται σε παύση μετά από αποτυχία με το σφάλμα: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Οι αλλαγές <i>δεν</i> επανήλθαν.
+        Αν και δε θα πρέπει να έχουν χαθεί δεδομένα,
+        τα αρχεία πολυμέσων ενδέχεται να χωριστούν μεταξύ του παλιού και του νέου φακέλου.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Παρακαλώ δοκιμάστε να εκτελέσετε ξανά τη μετεγκατάσταση.
+        Για να επιλύσετε το πρόβλημα, ίσως χρειαστεί να ελευθερώσετε χώρο στο δίσκο,
+        ή επανασυνδέστε τον αφαιρούμενο χώρο αποθήκευσης που περιέχει τη συλλογή σας.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Μάθετε περισσότερα και λάβετε βοήθεια</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Η μετανάστευση αποθήκευσης είναι σε παύση μετά αποτυχία με το σφάλμα: %1$s.
         <br><br>
@@ -234,7 +234,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Συνέχιση μετεγκατάστασης</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Μη προσβάσιμη συλλογή</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Δεν είναι δυνατή η πρόσβαση στη συλλογή σας μετά την απεγκατάσταση του AnkiDroid λόγω αλλαγής στην Πολιτική Play Store\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να αποκατασταθούν. Βρίσκονται στο\n%s\n\nΕπιλέξτε μια παρακάτω επιλογή για επαναφορά:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Το Android έχει αφαιρέσει την άδεια %1$s του AnkiDroid λόγω αδράνειας εφαρμογών.\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να επαναφερθούν. Βρίσκεται στο\n%2$s\n\nΕπιλέξτε μια επιλογή παρακάτω για επαναφορά:</string>
     <string name="restore_data_from_ankiweb">Επαναφορά από AnkiWeb (συνιστάται)</string>
     <string name="install_non_play_store_ankidroid_recommended">Επαναφορά πρόσβασης φακέλου (συνιστάται)</string>
     <string name="install_non_play_store_ankidroid">Επαναφορά πρόσβασης φακέλου (προχωρημένο)</string>
@@ -247,7 +247,7 @@
     <string name="storage_access_summary">Αποθηκεύει τη συλλογή σας σε ασφαλές μέρος που δεν θα διαγραφεί αν η εφαρμογή απεγκατασταθεί</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Πρόσβαση σε όλα τα αρχεία</string>
     <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Αφαίρεση λογαριασμού</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Άμεση κάρτα</string>
 </resources>

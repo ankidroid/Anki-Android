@@ -104,7 +104,7 @@
     <string name="menu_suspend">გამოტოვება</string>
     <string name="menu_delete_note">შენიშვნის წაშლა</string>
     <string name="menu_flag">დროშა</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">დროშების სახელების გადარქმევა</string>
     <string name="menu_flag_card">დროშის მიმაგრება</string>
     <string name="menu_edit_tags">იარლიყის რედაქტირება</string>
     <string name="delete_note_message">ნამდვილად წავშალო ეს შენიშვნა და ყველა მისი ბარათი?\n%s</string>
@@ -144,7 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">გაუქმება\&#8230;\nამან შეიძლება ცოტა დრო წაიღოს.</string>
     <string name="syncing_media">Syncing media</string>
     <string name="export_deck">დასტის ექსპორტი</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">კოლექციის ექსპორტი</string>
     <string name="nothing">არაფერი</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ბარათის ტიპები</string>
@@ -249,7 +249,7 @@
     <string name="storage_access_summary">თქვენი კოლექცია შეინახება უსაფრთხო ადგილას, რომელიც აპლიკაციის დეინსტალაციის შემთხვევაში არ წაიშლება</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">წვდომა ყველა ფაილზე</string>
     <string name="image_occlusion">სასურათე საფარველები</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ანგარიშის წაშლა</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>
