@@ -3,7 +3,6 @@ compileSdk = "34"
 minSdk = "23"  # also in testlib/build.gradle.kts
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
 acra = '5.11.3'
-amazonappstorepublisher = "0.1.0"
 androidGradlePlugin = "8.5.1"
 androidxActivity = "1.9.0"
 androidxAnnotation = "1.8.0"
@@ -162,8 +161,6 @@ cashapp-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine"
 
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-amazonappstorepublisher = { id = "app.brant.amazonappstorepublisher", version.ref = "amazonappstorepublisher" }
-
 
 tripletPlay = { id = "com.github.triplet.play", version.ref = "triplet" }
 
