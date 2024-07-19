@@ -77,6 +77,7 @@
         <ignore path="res/values-ind/" />
         <ignore path="res/values-is/" />
         <ignore path="res/values-it/" />
+        <ignore path="res/values-iw/" /> <!-- iw is special-cased: 0f795cea363ace67bd55ec56775c5beae73c7c9e -->
         <ignore path="res/values-ja/" />
         <ignore path="res/values-jv/" />
         <ignore path="res/values-ka/" />
