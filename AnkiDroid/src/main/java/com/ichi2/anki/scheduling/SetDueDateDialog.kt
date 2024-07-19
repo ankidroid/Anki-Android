@@ -42,6 +42,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.requireAnkiActivity
@@ -287,15 +288,7 @@ private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this@An
         showThemedToast(R.string.something_wrong, true)
         return@launchCatchingTask
     }
-
-    showSnackbar(
-        resources.getQuantityString(
-            R.plurals.reschedule_cards_dialog_acknowledge,
-            cardsUpdated,
-            cardsUpdated
-        ),
-        Snackbar.LENGTH_SHORT
-    )
+    showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
 }
 
 context (DialogFragment)

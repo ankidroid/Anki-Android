@@ -18,6 +18,7 @@ package com.ichi2.anki.servicelayer
 
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
@@ -31,14 +32,7 @@ suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int
         }
     }
     val count = cardIds.size
-    showSnackbar(
-        resources.getQuantityString(
-            R.plurals.reschedule_cards_dialog_acknowledge,
-            count,
-            count
-        ),
-        Snackbar.LENGTH_SHORT
-    )
+    showSnackbar(TR.schedulingSetDueDateDone(count), Snackbar.LENGTH_SHORT)
 }
 
 suspend fun FragmentActivity.resetCards(
