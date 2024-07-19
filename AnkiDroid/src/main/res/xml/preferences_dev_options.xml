@@ -70,9 +70,6 @@
         android:title="@string/reset_onboarding"
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
-    <Preference
-        android:title="@string/open_instant_editor"
-        android:key="@string/pref_open_instant_editor"/>
     <SwitchPreferenceCompat
         android:title="@string/new_multimedia_ui"
         android:key="@string/pref_new_multimedia_ui"
