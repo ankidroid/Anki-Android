@@ -109,8 +109,8 @@
     <string name="dialog_positive_replace">ჩანაცვლება</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate_title">შეცდომა სერტიფიკატის პარსინგისას</string>
+    <string name="dialog_updated_custom_certificate">სერტიფიკატი განახლდა</string>
     <!-- Media checking -->
     <string name="check_media_title">შემოწმდეს მედიაფაილები?</string>
     <string name="check_media_warning">ამას დიდი ზომის მედია-კოლექციების შემთხვევაში შეიძლება დიდი ხანი დასჭირდეს</string>
@@ -249,8 +249,8 @@
         <item quantity="other">Show cards in range</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">დღეში</item>
+        <item quantity="other">დღეში</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>

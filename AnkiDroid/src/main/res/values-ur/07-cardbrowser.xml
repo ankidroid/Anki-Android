@@ -46,21 +46,21 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card shown</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="one">%d کارڈ دکھایا گیا۔</item>
+        <item quantity="other">%d کارڈ دکھائے گئے</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d نوٹ دکھایا گیا</item>
+        <item quantity="other">%d نوٹس دکھائے گئے</item>
     </plurals>
     <string name="card_browser_all_decks">تمام ڈیک</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">کارڈ حذف کریں</item>
+        <item quantity="other">کارڈز کو حذف کریں۔</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">نوٹ حذف کریں</item>
+        <item quantity="other">نوٹ حذف کریں</item>
     </plurals>
     <string name="card_browser_change_deck">ڈیک کو تبدیل کریں</string>
     <string name="delete_card_title">نوٹ حذف کریں?</string>
@@ -74,42 +74,42 @@
     <string name="card_browser_list_my_searches_new_name">موجودہ تلاش کا نام</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">آپ نام کے بغیر تلاش کو محفوظ نہیں کرسکتے ہیں</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">نام موجود ہے</string>
-    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
+    <string name="card_browser_list_my_searches_remove_content">\"%1$s\" کو حذف کریں؟</string>
     <string name="card_browser_change_display_order">ڈسپلے آرڈر کو تبدیل کریں</string>
-    <string name="card_browser_change_display_order_title">Choose display order</string>
+    <string name="card_browser_change_display_order_title">ڈسپلے آرڈر کا انتخاب کریں</string>
     <string name="card_details_tags">ٹیگز</string>
     <string-array name="card_browser_order_labels">
-        <item>No sorting (faster)</item>
+        <item>کوئی چھانٹ نہیں (تیز)</item>
         <item>ترتیب کے میدان کے لحاظ سے</item>
-        <item>By created time</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
-        <item>By due time</item>
-        <item>By interval</item>
-        <item>By ease</item>
-        <item>By reviews</item>
-        <item>By lapses</item>
+        <item>تخلیق شدہ وقت سے</item>
+        <item>نوٹ میں ترمیم کے وقت کی طرف سے</item>
+        <item>کارڈ میں ترمیم کے وقت کی طرف سے</item>
+        <item>مقررہ وقت پر</item>
+        <item>وقفہ سے</item>
+        <item>آسانی سے</item>
+        <item>جائزوں سے</item>
+        <item>کوتاہیوں سے</item>
     </string-array>
     <string name="card_browser_select_all">تمام منتخب کریں</string>
     <string name="card_browser_select_none">کچھ نہ چنیں</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(نئی)</string>
+    <string name="card_browser_due_filtered_card">(فلٹر شدہ)</string>
+    <string name="card_browser_interval_learning_card">(سیکھنا)</string>
+    <string name="card_browser_no_cards_in_deck">ڈیک \'%s\' میں کوئی کارڈ نہیں ملا</string>
+    <string name="card_browser_search_all_decks">تمام ڈیک تلاش کریں</string>
     <string name="card_browser_unknown_deck_name">نامعلوم</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">مواد کو چھوٹا کریں۔</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">آج \'0 %1$s\' ہے، کل \'1 %2$s\' ہے، وغیرہ&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">ایکسپورٹ کارڈ</item>
+        <item quantity="other">کارڈ برآمد کریں</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">نوٹ برآمد کریں</item>
+        <item quantity="other">نوٹ برآمد کریں</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d کارڈ حذف ہو گیا۔</item>
+        <item quantity="other">%d کارڈز حذف ہو گئے</item>
     </plurals>
 </resources>
