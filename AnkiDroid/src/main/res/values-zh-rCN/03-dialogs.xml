@@ -251,6 +251,8 @@
     <string name="cloze_note_required">需要Cloze类型笔记</string>
     <string name="cloze_not_found_message">未找到Cloze类型笔记，打开笔记编辑器或添加Cloze类型笔记后重试。</string>
     <string name="open">打开</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">系统 WebView 已过时。有些功能将无法正常工作。请更新它。\n\n已安装版本： %1$d\n所需最低版本： %2$d</string>
 </resources>
