@@ -46,5 +46,35 @@ class ControlsSettingsFragment : SettingsFragment() {
         findPreference<ControlPreference>(getString(R.string.reschedule_command_key))?.let {
             it.title = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
         }
+        findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
+            it.title = getString(R.string.gesture_toggle_whiteboard).toSentenceCase(R.string.sentence_gesture_toggle_whiteboard)
+        }
+        findPreference<ControlPreference>(getString(R.string.abort_and_sync_command_key))?.let {
+            it.title = getString(R.string.gesture_abort_sync).toSentenceCase(R.string.sentence_gesture_abort_sync)
+        }
+        findPreference<ControlPreference>(getString(R.string.flag_red_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_red).toSentenceCase(R.string.sentence_gesture_flag_red)
+        }
+        findPreference<ControlPreference>(getString(R.string.flag_orange_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_orange).toSentenceCase(R.string.sentence_gesture_flag_orange)
+        }
+        findPreference<ControlPreference>(getString(R.string.flag_green_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_green).toSentenceCase(R.string.sentence_gesture_flag_green)
+        }
+        findPreference<ControlPreference>(getString(R.string.flag_blue_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_blue).toSentenceCase(R.string.sentence_gesture_flag_blue)
+        }
+        findPreference<ControlPreference>(getString(R.string.flag_pink_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_pink).toSentenceCase(R.string.sentence_gesture_flag_pink)
+        }
+        findPreference<ControlPreference>(getString(R.string.flag_turquoise_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_turquoise).toSentenceCase(R.string.sentence_gesture_flag_turquoise)
+        }
+        findPreference<ControlPreference>(getString(R.string.flag_purple_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_purple).toSentenceCase(R.string.sentence_gesture_flag_purple)
+        }
+        findPreference<ControlPreference>(getString(R.string.remove_flag_command_key))?.let {
+            it.title = getString(R.string.gesture_flag_remove).toSentenceCase(R.string.sentence_gesture_flag_remove)
+        }
     }
 }

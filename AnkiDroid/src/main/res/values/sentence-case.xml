@@ -26,8 +26,19 @@ col.undoLabel()
 col.redoLabel()
 undoActionUndone()
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
     <string name="sentence_toggle_suspend">Toggle suspend</string>
     <string name="sentence_toggle_bury">Toggle bury</string>
     <string name="sentence_set_due_date">Set due date</string>
+    <string name="sentence_gesture_flag_red">Toggle red flag</string>
+    <string name="sentence_gesture_flag_orange">Toggle orange flag</string>
+    <string name="sentence_gesture_flag_green">Toggle green flag</string>
+    <string name="sentence_gesture_flag_blue">Toggle blue flag</string>
+    <string name="sentence_gesture_flag_pink">Toggle pink flag</string>
+    <string name="sentence_gesture_flag_turquoise">Toggle turquoise flag</string>
+    <string name="sentence_gesture_flag_purple">Toggle purple flag</string>
+    <string name="sentence_gesture_flag_remove">Remove flag</string>
+    <string name="sentence_gesture_abort_sync">Abort learning and sync</string>
+    <string name="sentence_gesture_toggle_whiteboard">Toggle whiteboard</string>
+
 </resources>
