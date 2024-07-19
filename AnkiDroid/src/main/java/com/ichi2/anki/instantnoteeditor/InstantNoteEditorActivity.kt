@@ -57,6 +57,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.themes.setTransparentBackground
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.AssetHelper.TEXT_PLAIN
 import com.ichi2.utils.jsonObjectIterable
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -117,12 +118,13 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         setContentView(R.layout.activity_instant_note_editor)
 
         onBackPressedDispatcher.addCallback(this, dialogBackCallback)
-        // TODO: enable it back when done and remove the direct call
-//        if (Intent.ACTION_SEND == intent.action && intent.type != null && "text/plain" == intent.type) {
-//            handleSharedText(intent)
-//        }
-        handleSharedText(intent)
 
+        if (Intent.ACTION_SEND != intent.action && intent.type == null && TEXT_PLAIN != intent.type) {
+            Timber.i("Intent type is not supported")
+            return
+        }
+
+        handleSharedText(intent)
         setupErrorListeners()
         prepareEditorDialog()
     }
@@ -174,10 +176,8 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     /** Handles the shared text received through an Intent. **/
     private fun handleSharedText(receivedIntent: Intent) {
-        val sharedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT) ?: intent.getStringExtra(
-            EXTRA_TEXT_KEY
-        )
-
+        val sharedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT) ?: return
+        Timber.d("Setting cloze field text to $sharedText")
         viewModel.setClozeFieldText(sharedText)
     }
 
@@ -447,6 +447,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     }
 
     private fun setupErrorListeners() {
+        Timber.d("Setting up error listeners")
         viewModel.onError.flowWithLifecycle(lifecycle).onEach { errorMessage ->
             AlertDialog.Builder(this).setTitle(R.string.vague_error).setMessage(errorMessage)
                 .show()
@@ -563,7 +564,8 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     }
 
     private fun intentTextChanged(): Boolean {
-        return intent.getStringExtra(EXTRA_TEXT_KEY) != clozeFieldText
+        Timber.d("Checking if the original text was changed")
+        return intent.getStringExtra(Intent.EXTRA_TEXT) != clozeFieldText
     }
 
     private fun showDiscardChangesDialog() {
@@ -625,10 +627,5 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
         /** Indicates that the editor dialog should be shown. **/
         SHOW_EDITOR_DIALOG
-    }
-
-    companion object {
-        // TODO: Not needed once we are out of dev option
-        const val EXTRA_TEXT_KEY = "extra_text_key"
     }
 }
