@@ -1038,6 +1038,15 @@ open class DeckPicker :
         }
     }
 
+    private suspend fun updateUndoMenuState() {
+        withOpenColOrNull {
+            optionsMenuState = optionsMenuState?.copy(
+                undoLabel = undoLabel(),
+                undoAvailable = undoAvailable()
+            )
+        }
+    }
+
     private fun updateSearchVisibilityFromState(menu: Menu) {
         optionsMenuState?.run {
             menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
@@ -2132,7 +2141,7 @@ open class DeckPicker :
                 }
                 onDecksLoaded(deckDueTree, collectionHasNoCards)
 
-                updateMenuState()
+                updateUndoMenuState()
             }
         }
     }
