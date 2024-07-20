@@ -67,13 +67,6 @@
         <item quantity="many">%d картки скинуті</item>
         <item quantity="other">%d картки скинуті</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d картку переплановано</item>
-        <item quantity="few">%d карток переплановано</item>
-        <item quantity="many">%d карток переплановано</item>
-        <item quantity="other">%d картки переплановано</item>
-    </plurals>
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється частіше, будь ласка, спробуйте перевірити базу даних, полагодити колекцію, або відновити її з резервної копії. Для цього натисніть на «налаштування».\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
     <string name="answering_error_report">Повідомити про помилку</string>

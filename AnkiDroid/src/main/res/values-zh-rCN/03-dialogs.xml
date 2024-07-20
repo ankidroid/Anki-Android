@@ -61,10 +61,6 @@
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d 张卡牌已重置</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="other">%d 张卡牌已重新安排</item>
-    </plurals>
     <string name="answering_error_title">数据库错误</string>
     <string name="answering_error_message">写入集合时出错。可能是数据库损坏，或者磁盘空间不足。\n\n如果频繁发生此错误，请检查数据库，修复集合或从备份中恢复。点击\"选项\"按钮以执行上述操作。\n\n当然，也可能只是 AnkiDroid 的 bug，请报告这个错误，我们会尽力解决。</string>
     <string name="answering_error_report">报告错误</string>
@@ -251,8 +247,8 @@
     <string name="cloze_note_required">需要Cloze类型笔记</string>
     <string name="cloze_not_found_message">未找到Cloze类型笔记，打开笔记编辑器或添加Cloze类型笔记后重试。</string>
     <string name="open">打开</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="change_cloze_number">更改填充测验题数</string>
+    <string name="cloze_number">填充测验题数：</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">系统 WebView 已过时。有些功能将无法正常工作。请更新它。\n\n已安装版本： %1$d\n所需最低版本： %2$d</string>
 </resources>

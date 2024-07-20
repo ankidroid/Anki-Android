@@ -63,11 +63,6 @@
         <item quantity="one">Rivendosja e %d kartës</item>
         <item quantity="other">Rivendosja e %d kartave</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d kartë u riplanifikua</item>
-        <item quantity="other">%d karta u riplanifikuan</item>
-    </plurals>
     <string name="answering_error_title">Gabim në bazën e të dhënave</string>
     <string name="answering_error_message">Shkrimi në koleksion dështoi. Baza e të dhënave mund të jetë e dëmtuar ose mund të mos ketë hapësirë ​​boshe të mjaftueshme në disk.\n\nNëse kjo ndodh më shpesh, provo të kontrollosh bazën e të dhënave, të riparosh koleksionin ose ta rivendosësh atë nga një kopje rezervë. Prekni \"opsionet\" për këtë.\n\Ose mund të jetë edhe një gabim i AnkiDroid; ju lutemi raportoni gabimin në mënyrë që ta kontrollojmë këtë.</string>
     <string name="answering_error_report">Raportoni gabimin</string>

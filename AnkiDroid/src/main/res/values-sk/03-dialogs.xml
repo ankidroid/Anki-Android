@@ -67,13 +67,6 @@
         <item quantity="many">%d resetovaných kartičiek</item>
         <item quantity="other">%d resetovaných kartičiek</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d preplánovaná kartička</item>
-        <item quantity="few">%d preplánované kartičky</item>
-        <item quantity="many">%d preplánovaných kartičiek</item>
-        <item quantity="other">%d preplánovaných kartičiek</item>
-    </plurals>
     <string name="answering_error_title">Chyba databázy</string>
     <string name="answering_error_message">Zápis zbierky zlyhal. Databáza môže byť poškodená alebo na úložisku nie je dostatok miesta.\n\nAk sa to stáva častejšie, skontrolujte databázu, opravte zbierku alebo ju obnovte zo zálohy. Ak to chcete urobiť, stlačte  „možnosti” .\n\Môže ísť aj o chybu aplikácie; prosím oznámte túto chybu aby sme to mohli skontrolovať.</string>
     <string name="answering_error_report">Nahlásiť chybu</string>

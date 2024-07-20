@@ -67,13 +67,6 @@
         <item quantity="many">%d כרטיסים אופסו</item>
         <item quantity="other">%d כרטיסים אופסו</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d כרטיס תוזמן מחדש</item>
-        <item quantity="two">%d כרטיסים תוזמנו מחדש</item>
-        <item quantity="many">%d כרטיסים תוזמנו מחדש</item>
-        <item quantity="other">%d כרטיסים תוזמנו מחדש</item>
-    </plurals>
     <string name="answering_error_title">שגיאת מסד נתונים</string>
     <string name="answering_error_message">כתיבה לאוסף נכשלה. מאגר המידע אולי שבור או שאין מספיק מקום בדיסק.\n\n אם זה קורה שוב ושוב, אפשר לבדוק את מאגר המידע, לתקן את האוסף או לשחזר אותו מגיבוי. לחץ \'אפשרויות\' עבור כך. \n כמו כן ייתכן שזוהי תקלה בAnkiDroid. נא לדווח את השגיאה כדי שנוכל לבדוק זאת.</string>
     <string name="answering_error_report">דיווח על שגיאה</string>

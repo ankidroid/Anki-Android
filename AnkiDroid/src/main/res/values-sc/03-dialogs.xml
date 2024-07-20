@@ -63,11 +63,6 @@
         <item quantity="one">%d carta resetada</item>
         <item quantity="other">%d cartas resetadas</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d carta torrada a pranificare</item>
-        <item quantity="other">%d cartas torradas a pranificare</item>
-    </plurals>
     <string name="answering_error_title">Faddina de sa base de datos</string>
     <string name="answering_error_message">Iscritura in sa colletzione fallida. Sa base de datos diat pòdere èssere corrùmpida o bi diat pòdere no èssere logu bastante in su discu.\n
                                              \n

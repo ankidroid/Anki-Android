@@ -89,4 +89,6 @@
     <string name="select_image_failed">"Impossible selezionare l\'immagine, si prega di riprovare"</string>
     <string name="activity_result_unexpected">L\'applicazione ha restituito un valore inatteso. Potrebbe essere necessario utilizzare un\'altra applicazione</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenuti del campo</string>
+    <string name="no_image_preview">No image selected, select an image to proceed.</string>
+    <string name="restart">Restart</string>
 </resources>
