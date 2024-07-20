@@ -67,13 +67,6 @@
         <item quantity="many">%d kart zresetowano</item>
         <item quantity="other">%d kart zresetowano</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d karta ponownie zaplanowana</item>
-        <item quantity="few">%d karty ponownie zaplanowane</item>
-        <item quantity="many">%d kart ponownie zaplanowano</item>
-        <item quantity="other">%d kart ponownie zaplanowano</item>
-    </plurals>
     <string name="answering_error_title">Błąd bazy danych</string>
     <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
     <string name="answering_error_report">Zgłoś błąd</string>

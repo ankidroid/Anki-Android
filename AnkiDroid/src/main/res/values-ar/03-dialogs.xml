@@ -71,15 +71,6 @@
         <item quantity="many">تم تصفير %d بطاقة</item>
         <item quantity="other">تم تصفير %d بطاقة</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="zero">تمت إعادة جدولة %d بطاقة</item>
-        <item quantity="one">تمت إعادة جدولة %d بطاقة</item>
-        <item quantity="two">تمت إعادة جدولة %d بطاقة</item>
-        <item quantity="few">تمت إعادة جدولة %d بطاقات</item>
-        <item quantity="many">تمت إعادة جدولة %d بطاقات</item>
-        <item quantity="other">تمت إعادة جدولة %d بطاقة</item>
-    </plurals>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>

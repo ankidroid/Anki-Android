@@ -63,11 +63,6 @@
         <item quantity="one">%d ಕಾರ್ಡ್ ಅನ್ನು ಮರುಹೊಂದಿಸಿ</item>
         <item quantity="other">%d ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುಹೊಂದಿಸಲಾಗಿದೆ</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d ಕಾರ್ಡ್ ಅನ್ನು ಮರುಹೊಂದಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುನಿಗದಿಪಡಿಸಲಾಗಿದೆ</item>
-    </plurals>
     <string name="answering_error_title">ಡೇಟಾಬೇಸ್ ದೋಷ</string>
     <string name="answering_error_message">ಸಂಗ್ರಹಣೆಗೆ ಬರೆಯುವುದು ವಿಫಲವಾಗಿದೆ. ಡೇಟಾಬೇಸ್ ದೋಷಪೂರಿತವಾಗಿರಬಹುದು ಅಥವಾ ಡಿಸ್ಕ್‌ನಲ್ಲಿ ಸಾಕಷ್ಟು ಖಾಲಿ ಜಾಗವಿಲ್ಲದಿರಬಹುದು.\n\nಇದು ಹೆಚ್ಚಾಗಿ ಸಂಭವಿಸಿದರೆ, ಡೇಟಾಬೇಸ್ ಅನ್ನು ಪರಿಶೀಲಿಸಲು ಪ್ರಯತ್ನಿಸಿ, ಸಂಗ್ರಹಣೆಯನ್ನು ಸರಿಪಡಿಸಲು ಅಥವಾ ಬ್ಯಾಕಪ್‌ನಿಂದ ಅದನ್ನು ಮರುಸ್ಥಾಪಿಸಲು. ಅದಕ್ಕಾಗಿ \"ಆಯ್ಕೆಗಳನ್ನು\" ಸ್ಪರ್ಶಿಸಿ.\n\ಅಥವಾ ಇದು AnkiDroid ದೋಷವೂ ಆಗಿರಬಹುದು; ದಯವಿಟ್ಟು ದೋಷವನ್ನು ವರದಿ ಮಾಡಿ ಇದರಿಂದ ನಾವು ಇದನ್ನು ಪರಿಶೀಲಿಸಬಹುದು.</string>
     <string name="answering_error_report">ದೋಷವನ್ನು ವರದಿ ಮಾಡಿ</string>

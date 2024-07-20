@@ -63,13 +63,6 @@
         <item quantity="one">%d కార్డ్ రీసెట్</item>
         <item quantity="other">%d కార్డ్‌లు రీసెట్ చేయబడ్డాయి</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">ఒకటి
-%d కార్డ్ రీషెడ్యూల్ చేయబడింది</item>
-        <item quantity="other">ఒకటి
-%d కార్డ్ రీషెడ్యూల్ చేయబడింది</item>
-    </plurals>
     <string name="answering_error_title">డేటాబేస్ లోపం</string>
     <string name="answering_error_message">సేకరణకు వ్రాయడంలో విఫలమైంది. డేటాబేస్ పాడైపోయి ఉండవచ్చు లేదా డిస్క్‌లో తగినంత ఖాళీ స్థలం ఉండకపోవచ్చు.\n\nఇది తరచుగా జరిగితే, డేటాబేస్‌ని తనిఖీ చేయడం, సేకరణను రిపేర్ చేయడం లేదా బ్యాకప్ నుండి పునరుద్ధరించడం వంటివి ప్రయత్నించండి. దాని కోసం \"ఎంపికలు\" తాకండి.\n\లేదా అది AnkiDroid బగ్ కావచ్చు; దయచేసి లోపాన్ని నివేదించండి, తద్వారా మేము దాన్ని తనిఖీ చేయవచ్చు.</string>
     <string name="answering_error_report">నివేదన లోపం</string>

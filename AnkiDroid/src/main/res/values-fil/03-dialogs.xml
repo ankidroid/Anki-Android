@@ -63,11 +63,6 @@
         <item quantity="one">%d card ang na-reset</item>
         <item quantity="other">%d mga card ang na-reset</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d card ang naiskedyul muli</item>
-        <item quantity="other">%d mga card ang naiskedyul muli</item>
-    </plurals>
     <string name="answering_error_title">Database error</string>
     <string name="answering_error_message">Ang pagsulat sa koleksyon ay nabigo. Maaaring sira ang database o di kaya`y hindi sapat ang bakanteng space sa disk. \n\n Kung ito ay nangyayari ng madalas, subukang tignan ang database, ayusin ang koleksyon o ibalik ito mula sa isang backup. Pindutin ang \"mga opsyon\" para diyan. \n\Maaaring ito rin ay isang AnkiDroid bug; i-ulat ang mali upang maiayos namin ito.</string>
     <string name="answering_error_report">Maling ulat</string>

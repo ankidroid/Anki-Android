@@ -63,11 +63,6 @@
         <item quantity="one">%d ficha reinicializada</item>
         <item quantity="other">%d fichas reinicializadas</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d ficha reagendada</item>
-        <item quantity="other">%d fichas reagendadas</item>
-    </plurals>
     <string name="answering_error_title">Erro na base de dados</string>
     <string name="answering_error_message">Falha ao gravar na colecção. A base de dados pode estar corrompida ou pode não haver espaço suficiente no disco.\n\nSe isto acontecer frequentemente, tente \"Verificar a Base de Dados\", \"Reparar a Colecção\", ou \"Restaurar uma Cópia de Segurança\". Toque em \"opções\" para realizar uma destas acções.\n\nOu então pode ser um erro no AnkiDroid, reporte-o para que possa ser analisado.</string>
     <string name="answering_error_report">Comunicar erro</string>

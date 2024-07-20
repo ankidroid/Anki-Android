@@ -89,4 +89,6 @@
     <string name="select_image_failed">"Memilih gambar gagal, coba lagi"</string>
     <string name="activity_result_unexpected">Aplikasi mengembalikan nilai tak terduga. Kamu bisa menggunakan aplikasi lain</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Konten Kolom</string>
+    <string name="no_image_preview">No image selected, select an image to proceed.</string>
+    <string name="restart">Restart</string>
 </resources>

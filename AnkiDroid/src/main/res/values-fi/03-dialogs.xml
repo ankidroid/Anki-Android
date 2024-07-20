@@ -63,11 +63,6 @@
         <item quantity="one">%d alusta kortti</item>
         <item quantity="other">%d alusta kortit</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d kortti ajastettu uudelleen</item>
-        <item quantity="other">%d korttia ajastettu uudelleen</item>
-    </plurals>
     <string name="answering_error_title">Tietokantavirhe</string>
     <string name="answering_error_message">Kirjoittaminen kokoelmaan epäonnistui. Tietokanta voi olla vioittunut tai levyllä ei ole tarpeeksi tyhjää tilaa.\n\nJos näin tapahtuu useammin, tarkista tietokanta, korjaa kokoelma tai palauta se varmuuskopiosta. Löydät tämän asetuksista.\n\Mahdollisesti kyseessä voi olla myös AnkiDroidin virhe; ilmoita virheestä, jotta voimme tarkistaa sen.</string>
     <string name="answering_error_report">Ilmoita viasta</string>

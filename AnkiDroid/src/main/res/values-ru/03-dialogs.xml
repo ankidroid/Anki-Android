@@ -67,13 +67,6 @@
         <item quantity="many">%d карточек сброшены</item>
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d карточка перепланирована</item>
-        <item quantity="few">%d карточки перепланированы</item>
-        <item quantity="many">%d карточек перепланированы</item>
-        <item quantity="other">%d карточек перепланированы</item>
-    </plurals>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
