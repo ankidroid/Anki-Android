@@ -63,11 +63,6 @@
         <item quantity="one">%d કાર્ડ રીસેટ</item>
         <item quantity="other">%d કાર્ડ રીસેટ</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d કાર્ડ ફરીથી શેડ્યૂલ કર્યું</item>
-        <item quantity="other">%d કાર્ડ ફરીથી શેડ્યૂલ કર્યા</item>
-    </plurals>
     <string name="answering_error_title">ડેટાબેઝ ભૂલ</string>
     <string name="answering_error_message">સંગ્રહમાં લખવાનું નિષ્ફળ થયું. ડેટાબેઝ દૂષિત હોઈ શકે છે અથવા ડિસ્ક પર પૂરતી ખાલી જગ્યા ન હોઈ શકે.\n\nજો આવું વધુ વખત થાય, તો ડેટાબેઝને તપાસવાનો, સંગ્રહને રિપેર કરવાનો અથવા તેને બેકઅપમાંથી પુનઃસ્થાપિત કરવાનો પ્રયાસ કરો. તેના માટે \"વિકલ્પો\" ને ટચ કરો.\n\અથવા તે AnkiDroid બગ પણ હોઈ શકે છે; કૃપા કરીને ભૂલની જાણ કરો જેથી અમે આ તપાસી શકીએ.</string>
     <string name="answering_error_report">ભૂલની જાણ કરો</string>
@@ -144,9 +139,9 @@
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
     <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
+    <string name="integrity_check_startup_title">AnkiDroid અપગ્રેડ કર્યું</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">કોઈપણ રીતે ચાલુ રાખો</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
     <!-- Card Browser -->

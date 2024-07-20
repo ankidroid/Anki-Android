@@ -63,11 +63,6 @@
         <item quantity="one">%dകാർഡ് പുന സജ്ജമാക്കുക</item>
         <item quantity="other">%dകാർഡുകൾ പുന സജ്ജമാക്കുക</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d കാർഡ് വീണ്ടും ഷെഡ്യൂൾ ചെയ്‌തു</item>
-        <item quantity="other">%d കാർഡുകൾ വീണ്ടും ഷെഡ്യൂൾ ചെയ്‌തു</item>
-    </plurals>
     <string name="answering_error_title">ഡാറ്റാബേസ് പിശക്</string>
     <string name="answering_error_message">ശേഖരത്തിലേക്ക് എഴുതുന്നത് പരാജയപ്പെട്ടു. ഡാറ്റാബേസ് കേടായതാകാം അല്ലെങ്കിൽ ഡിസ്കിൽ വേണ്ടത്ര ശൂന്യമായ ഇടം ഉണ്ടാകണമെന്നില്ല. \n\n ഇത് പലപ്പോഴും സംഭവിക്കുകയാണെങ്കിൽ, ഡാറ്റാബേസ് പരിശോധിക്കാനോ ശേഖരം നന്നാക്കാനോ ബാക്കപ്പിൽ നിന്ന് പുന സ്ഥാപിക്കാനോ ശ്രമിക്കുക. അതിനായി “ഓപ്ഷനുകൾ” സ്‌പർശിക്കുക. \n\ അല്ലെങ്കിൽ ഇത് ഒരു അങ്കിഡ്രോയിഡ് ബഗ് ആകാം; പിശക് റിപ്പോർട്ടുചെയ്യുക, അതുവഴി ഞങ്ങൾക്ക് ഇത് പരിശോധിക്കാൻ കഴിയും.</string>
     <string name="answering_error_report">റിപ്പോർട്ട് പിശക്</string>

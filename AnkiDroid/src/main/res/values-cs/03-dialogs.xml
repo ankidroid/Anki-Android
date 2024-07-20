@@ -67,13 +67,6 @@
         <item quantity="many">%d karty obnoveno</item>
         <item quantity="other">%d karet obnoveno</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d karta přeplánována</item>
-        <item quantity="few">%d karty přeplánovány</item>
-        <item quantity="many">%d karty přeplánováno</item>
-        <item quantity="other">%d karet přeplánováno</item>
-    </plurals>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>

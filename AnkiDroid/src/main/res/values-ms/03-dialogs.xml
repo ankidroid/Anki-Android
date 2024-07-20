@@ -61,10 +61,6 @@
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d kad ditetap semula</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="other">%d kad telah dijadual semula</item>
-    </plurals>
     <string name="answering_error_title">Ralat pangkalan data</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Pangkalan data mungkin rosak atau kehabisan ruang kosong pada cakera.\n\nJika ini berlaku kerap, cuba periksa pangkalan data, baiki koleksi atau pulih dari suatu sandaran. Sentuh \"tetapan\" untuk lakukannya.\n\Atau ia mungkin pepijat AnkiDroid; sila laporkannya agar kami boleh memeriksa ralat tersebut.</string>
     <string name="answering_error_report">Lapor ralat</string>

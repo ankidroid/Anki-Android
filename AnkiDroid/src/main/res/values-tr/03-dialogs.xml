@@ -63,11 +63,6 @@
         <item quantity="one">%d kart sıfırlandı</item>
         <item quantity="other">%d kart sıfırlandı</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d kart yeniden planlandı</item>
-        <item quantity="other">%d kartın zamanı değiştirildi</item>
-    </plurals>
     <string name="answering_error_title">Veritabanı hatası</string>
     <string name="answering_error_message">Koleksiyona yazılamadı. Veritabanı bozuk olabilir veya diskte yeterli boş alan olmayabilir.\n\nBu daha sık oluyorsa, veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin. Bunun için \"seçenekler\"e dokunun.\n\Veya bu bir AnkiDroid hatası da olabilir; Bunu kontrol edebilmemiz için lütfen hatayı bildirin.</string>
     <string name="answering_error_report">Hatayı bildir</string>

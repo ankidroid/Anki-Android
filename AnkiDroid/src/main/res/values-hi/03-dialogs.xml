@@ -63,11 +63,6 @@
         <item quantity="one">%d कार्ड रीसेट हुआ</item>
         <item quantity="other">%d कार्ड रीसेट हुआ</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d पत्ता पुनर्निर्धारित</item>
-        <item quantity="other">%d पत्ता पुनर्निर्धारित</item>
-    </plurals>
     <string name="answering_error_title">डेटाबेस त्रुटि</string>
     <string name="answering_error_message">संग्रह में लेखन विफल रहा। डेटाबेस दूषित हो सकता है या डिस्क पर पर्याप्त खाली स्थान नहीं हो सकता है। \n\n यदि यह अधिक बार होता है, तो डेटाबेस की जाँच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। इसके लिए \"विकल्प\" स्पर्श करें। \n या यह एक एंकॉइड बग भी हो सकता है; कृपया त्रुटि रिपोर्ट करें ताकि हम इसकी जांच कर सकें।</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>

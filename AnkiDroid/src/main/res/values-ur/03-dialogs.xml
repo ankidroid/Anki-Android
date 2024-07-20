@@ -63,11 +63,6 @@
         <item quantity="one">%d کارڈ ری سیٹ</item>
         <item quantity="other">%d cards reset</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d کارڈ دوبارہ شیڈول کیا گیا۔</item>
-        <item quantity="other">%d cards rescheduled</item>
-    </plurals>
     <string name="answering_error_title">ڈیٹا بیس کی خرابی۔</string>
     <string name="answering_error_message">مجموعہ پر لکھنا ناکام ہو گیا۔ ڈیٹا بیس کرپٹ ہو سکتا ہے یا ڈسک پر کافی جگہ خالی نہیں ہو سکتی۔\n\nاگر ایسا زیادہ ہوتا ہے تو ڈیٹا بیس کو چیک کرنے، جمع کو ٹھیک کرنے یا اسے بیک اپ سے بحال کرنے کی کوشش کریں۔ اس کے لیے \"اختیارات\" کو ٹچ کریں۔\n\یا یہ AnkiDroid بگ بھی ہو سکتا ہے۔ براہ کرم غلطی کی اطلاع دیں تاکہ ہم اسے چیک کر سکیں۔</string>
     <string name="answering_error_report">غلطی کی اطلاع دیں۔</string>
