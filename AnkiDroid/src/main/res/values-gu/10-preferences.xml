@@ -125,21 +125,21 @@
     <string name="tts_summ">જો કોઈ ધ્વનિ ફાઇલ શામેલ ન હોય તો પ્રશ્ન અને જવાબ વાંચે છે</string>
     <!-- Sync -->
     <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
-    <string name="sync_account" maxLength="41">AnkiWeb account</string>
+    <string name="sync_account" maxLength="41">AnkiWeb એકાઉન્ટ</string>
     <string name="sync_account_summ_logged_out">લૉગ ઇન નથી</string>
-    <string name="automatic_sync_choice" maxLength="41">Automatic synchronization</string>
+    <string name="automatic_sync_choice" maxLength="41">આપોઆપ સિંક્રનાઇઝેશન</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
     <string name="sync_media_only_unmetered">માત્ર મીટર વગરના જોડાણો પર</string>
     <string name="sync_media_never">ક્યારેય</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="sync_status_badge" maxLength="41">સિંક્રનાઇઝેશન સ્થિતિ દર્શાવો</string>
+    <string name="sync_status_badge_summ">જ્યારે ફેરફારો અપલોડ કરી શકાય ત્યારે સમન્વયન આયકન બદલો</string>
+    <string name="metered_sync_title" maxLength="41">મીટર કરેલ કનેક્શન પર સમન્વય કરવાની મંજૂરી આપો</string>
+    <string name="metered_sync_summary">જો અક્ષમ હોય, તો જો તમે મીટર કરેલ કનેક્શન પર સમન્વયિત કરવાનો પ્રયાસ કરશો તો તમને ચેતવણી આપવામાં આવશે</string>
+    <string name="backup_limits_frequency">આવર્તન</string>
+    <string name="backup_limits_lifetime">આજીવન</string>
+    <string name="app_theme" maxLength="41">થીમ</string>
     <string name="day_theme" maxLength="41">દિવસની થીમ</string>
     <string name="night_theme" maxLength="41">નાઇટ થીમ</string>
     <string name="language" maxLength="41">ભાષા</string>
@@ -158,14 +158,14 @@
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">સેફ ડિસ્પ્લે મોડ</string>
     <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">સિંગલ-ફીલ્ડ એડિટ મોડને અક્ષમ કરો</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">કેન્દ્રમાં સંરેખિત કરો</string>
     <string name="vertical_centering_summ">કાર્ડ્સની સામગ્રીને ઊભી રીતે કેન્દ્રમાં રાખો</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ડબલ ટેપ સમય અંતરાલ (મિલિસેકન્ડ)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">જવાબ લાંબો સમય દબાવવાનો સમય બતાવો</string>
     <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">સમય બતાવો બટન</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
@@ -173,13 +173,13 @@
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">ટોચની પટ્ટી બતાવો</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
-    <string name="show_progress" maxLength="41">Show remaining</string>
-    <string name="show_progress_summ">Show remaining card count</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
+    <string name="show_progress" maxLength="41">બાકીના બતાવો</string>
+    <string name="show_progress_summ">બાકીના કાર્ડની સંખ્યા બતાવો</string>
+    <string name="show_eta" maxLength="41">ETA બતાવો</string>
     <string name="show_eta_summ">બાકીનો સમય બતાવો</string>
     <string name="use_current" maxLength="41">નવા કાર્ડ માટે ડેક</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
-    <string name="time_limit" maxLength="41">Timebox time limit</string>
+    <string name="time_limit" maxLength="41">ટાઈમબોક્સ સમય મર્યાદા</string>
     <string name="day_offset_with_description" maxLength="41">બીજા દિવસની શરૂઆત</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d hour past midnight</item>
@@ -189,7 +189,7 @@
     <string name="pref_keep_screen_on_summ">સ્ક્રીન સમયસમાપ્તિ અક્ષમ કરો</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ને સક્ષમ કરો</string>
     <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
-    <string name="custom_buttons" maxLength="41">App bar buttons</string>
+    <string name="custom_buttons" maxLength="41">એપ્લિકેશન બાર બટનો</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
     <string name="custom_buttons_setting_always_show">હંમેશા બતાવો</string>
     <string name="custom_buttons_setting_if_room">જો રૂમ બતાવો</string>
@@ -262,14 +262,14 @@
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">હાવભાવ ઉમેરો</string>
+    <string name="binding_replace_gesture">હાવભાવ બદલો</string>
+    <string name="binding_add_key">કી ઉમેરો</string>
+    <string name="binding_replace_key">કી બદલો</string>
+    <string name="key_picker_default_press_key">એક કી દબાવો</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions" maxLength="41">વપરાશકર્તા ક્રિયાઓ</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="41">વપરાશકર્તા ક્રિયા 1</string>
     <string name="user_action_2" maxLength="41">વપરાશકર્તા ક્રિયા 2</string>
@@ -278,18 +278,18 @@
     <string name="user_action_5" maxLength="41">વપરાશકર્તા ક્રિયા 5</string>
     <string name="user_action_6" maxLength="41">વપરાશકર્તા ક્રિયા 6</string>
     <string name="user_action_7" maxLength="41">વપરાશકર્તા ક્રિયા 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action_8" maxLength="41">વપરાશકર્તા ક્રિયા 8</string>
+    <string name="user_action_9" maxLength="41">વપરાશકર્તા ક્રિયા 9</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
+    <string name="card_side_selection_title">કાર્ડ બાજુ પસંદ કરો</string>
+    <string name="card_side_question">પ્રશ્ન</string>
     <string name="card_side_answer">Answer</string>
     <string name="card_side_both">Question &amp; Answer</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">આ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' દૂર કરો</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
@@ -329,15 +329,15 @@
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ન વપરાયેલ મીડિયા ફાઇલો કાઢી નાખો</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">ન વપરાયેલ મીડિયા ફાઇલો કાઢી નાખો</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">બેકઅપ કાઢી નાખો</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">બેકઅપ્સ કાઢી નાખો</string>
+    <string name="progress__deleting_backups">બેકઅપ કાઢી રહ્યું છે&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">સંગ્રહ કાઢી નાખો</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
@@ -361,11 +361,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">સિસ્ટમ બાર છુપાવો</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
     <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">નેવિગેશન બાર</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">બધા</string>
+    <string name="ignore_display_cutout" maxLength="41">ડિસ્પ્લે કટઆઉટને અવગણો</string>
+    <string name="hide_answer_buttons" maxLength="41">જવાબ બટનો છુપાવો</string>
 </resources>
