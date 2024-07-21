@@ -55,13 +55,25 @@ class BrowserRowCollection(
 
     suspend fun queryCardIds(): List<CardId> =
         when (this.cardsOrNotes) {
-            // TODO: This is slower than necessary
+            // TODO: This is slower than necessary and not perform SQL queries in a loop
             CardsOrNotes.NOTES ->
                 requireNoteIdList().flatMap { nid ->
                     CollectionManager.withCol {
                         cardIdsOfNote(
                             nid = nid,
                         )
+                    }
+                }
+            CardsOrNotes.CARDS -> requireCardIdList()
+        }
+
+    suspend fun queryOneCardIdPerRow(): List<CardId> =
+        when (this.cardsOrNotes) {
+            // TODO: This is slower than necessary and not perform SQL queries in a loop
+            CardsOrNotes.NOTES ->
+                requireNoteIdList().map { nid ->
+                    CollectionManager.withCol {
+                        cardIdsOfNote(nid = nid).first()
                     }
                 }
             CardsOrNotes.CARDS -> requireCardIdList()
