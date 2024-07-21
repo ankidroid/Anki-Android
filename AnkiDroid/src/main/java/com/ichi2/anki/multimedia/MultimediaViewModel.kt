@@ -28,14 +28,14 @@ class MultimediaViewModel : ViewModel() {
     /** Errors or Warnings related to the edit fields that might occur when trying to save note */
     val multimediaAction = MutableSharedFlow<MultimediaBottomSheet.MultimediaAction>()
 
-    private var prevImagePath: String? = null
-    private var prevImageUri: Uri? = null
+    private var prevMultimediaPath: String? = null
+    private var prevMultimediaUri: Uri? = null
 
-    var currentImageUri: Uri? = null
+    var currentMultimediaUri: Uri? = null
 
-    var currentImagePath: String? = null
+    var currentMultimediaPath: String? = null
 
-    var selectedImageLength: Long = 0
+    var selectedMediaFileSize: Long = 0
 
     fun setMultimediaAction(action: MultimediaBottomSheet.MultimediaAction) {
         viewModelScope.launch {
@@ -43,12 +43,12 @@ class MultimediaViewModel : ViewModel() {
         }
     }
 
-    fun getImageLength(): Long {
-        return selectedImageLength
+    fun getMultimediaFileSize(): Long {
+        return selectedMediaFileSize
     }
 
-    fun saveImageForRevert(imagePath: String?, imageUri: Uri?) {
-        prevImagePath = imagePath
-        prevImageUri = imageUri
+    fun saveMultimediaForRevert(imagePath: String?, imageUri: Uri?) {
+        prevMultimediaPath = imagePath
+        prevMultimediaUri = imageUri
     }
 }
