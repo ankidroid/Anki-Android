@@ -30,8 +30,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.Group
 import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuItemCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager.TR
@@ -40,10 +42,8 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Utils
 import com.ichi2.ui.RtlCompliantActionProvider
@@ -71,15 +71,17 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
      * UI elements for "Study Options" view
      */
     private var studyOptionsView: View? = null
-    private lateinit var deckInfoLayout: View
+    private lateinit var deckInfoLayout: Group
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
     private lateinit var textDeckDescription: TextView
-    private lateinit var textTodayNew: TextView
-    private lateinit var textTodayLrn: TextView
-    private lateinit var textTodayRev: TextView
-    private lateinit var textNewTotal: TextView
-    private lateinit var textTotal: TextView
+    private lateinit var buryInfoLabel: TextView
+    private lateinit var newCountText: TextView
+    private lateinit var newBuryText: TextView
+    private lateinit var learningCountText: TextView
+    private lateinit var learningBuryText: TextView
+    private lateinit var reviewCountText: TextView
+    private lateinit var reviewBuryText: TextView
     private var toolbar: Toolbar? = null
 
     private var createMenuJob: Job? = null
@@ -201,22 +203,30 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     }
 
     private fun initAllContentViews(studyOptionsView: View) {
-        if (fragmented) {
-            studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
-        }
-        deckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
+        studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility =
+            if (fragmented) View.VISIBLE else View.GONE
+        deckInfoLayout = studyOptionsView.findViewById(R.id.group_counts)
         textDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
         textDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
         textDeckDescription.movementMethod = LinkMovementMethod.getInstance()
-        buttonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
+        buryInfoLabel = studyOptionsView.findViewById<TextView>(R.id.studyoptions_bury_counts_label).apply {
+            // TODO see if we could further improve the display and discoverability of buried cards here
+            text = TR.studyingCountsDiffer()
+        }
         // Code common to both fragmented and non-fragmented view
-        textTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
-        textTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
-        textTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
-        textNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
-        textTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
-        buttonStart.setOnClickListener(buttonClickListener)
+        newCountText = studyOptionsView.findViewById(R.id.studyoptions_new_count)
+        studyOptionsView.findViewById<TextView>(R.id.studyoptions_new_count_label).text = TR.actionsNew()
+        newBuryText = studyOptionsView.findViewById(R.id.studyoptions_new_bury)
+        learningCountText = studyOptionsView.findViewById(R.id.studyoptions_learning_count)
+        studyOptionsView.findViewById<TextView>(R.id.studyoptions_learning_count_label).text = TR.schedulingLearning()
+        learningBuryText = studyOptionsView.findViewById(R.id.studyoptions_learning_bury)
+        reviewCountText = studyOptionsView.findViewById(R.id.studyoptions_review_count)
+        studyOptionsView.findViewById<TextView>(R.id.studyoptions_review_count_label).text = TR.studyingToReview()
+        reviewBuryText = studyOptionsView.findViewById(R.id.studyoptions_review_bury)
+        buttonStart = studyOptionsView.findViewById<Button?>(R.id.studyoptions_start).apply {
+            setOnClickListener(buttonClickListener)
+        }
     }
 
     /**
@@ -296,7 +306,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
             withCol {
                 Timber.d("doInBackground - RebuildCram")
                 sched.rebuildDyn(decks.selected())
-                updateValuesFromDeck(this@withCol)
+                fetchStudyOptionsData()
             }
         }
         rebuildUi(result, true)
@@ -308,7 +318,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
             withCol {
                 Timber.d("doInBackgroundEmptyCram")
                 sched.emptyDyn(decks.selected())
-                updateValuesFromDeck(this@withCol)
+                fetchStudyOptionsData()
             }
         }
         rebuildUi(result, true)
@@ -486,7 +496,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
         // Load the deck counts for the deck from Collection asynchronously
         updateValuesFromDeckJob = launchCatchingTask {
             if (CollectionManager.isOpenUnsafe()) {
-                val result = withCol { updateValuesFromDeck(this@withCol) }
+                val result = withCol { fetchStudyOptionsData() }
                 rebuildUi(result, resetDecklist)
             }
         }
@@ -505,10 +515,11 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
          * The number of review card to see today in a deck, including subdecks.
          */
         val revCardsToday: Int,
-        /**
-         * The number of new cards in this decks, and subdecks.
-         */
-        val numberOfNewCardsInDeck: Int,
+
+        val buriedNew: Int,
+        val buriedLearning: Int,
+        val buriedReview: Int,
+
         /**
          * Number of cards in this decks and its subdecks.
          */
@@ -552,7 +563,6 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
      *                        to reflect the latest values.
      * @param result the new DeckStudyData using which UI is to be rebuilt
      */
-    // TODO: Make this a suspend function and move string operations and db-query to a background dispatcher
     private fun rebuildUi(result: DeckStudyData?, refreshDecklist: Boolean) {
         dismissProgressDialog()
         if (result != null) {
@@ -632,40 +642,17 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
             }
 
             // Set new/learn/review card counts
-            textTodayNew.text = result.newCardsToday.toString()
-            textTodayLrn.text = result.lrnCardsToday.toString()
-            textTodayRev.text = result.revCardsToday.toString()
-
-            // Set the total number of new cards in deck
-            if (result.numberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
-                // if it hasn't been truncated by libanki then just set it usually
-                textNewTotal.text = result.numberOfNewCardsInDeck.toString()
-            } else {
-                // if truncated then make a thread to allow full count to load
-                textNewTotal.text = ">1000"
-                if (fullNewCountThread != null) {
-                    // a thread was previously made -- interrupt it
-                    fullNewCountThread!!.interrupt()
-                }
-                fullNewCountThread = Thread {
-                    // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
-                    val query = "SELECT count(*) FROM cards WHERE did IN " +
-                        Utils.ids2str(col.decks.active()) +
-                        " AND queue = " + Consts.QUEUE_TYPE_NEW
-                    val fullNewCount = col.db.queryScalar(query)
-                    if (fullNewCount > 0) {
-                        val setNewTotalText = Runnable { textNewTotal.text = fullNewCount.toString() }
-                        if (!Thread.currentThread().isInterrupted) {
-                            textNewTotal.post(setNewTotalText)
-                        }
-                    }
-                }.apply {
-                    start()
-                }
-            }
-
-            // Set total number of cards
-            textTotal.text = result.numberOfCardsInDeck.toString()
+            newCountText.text = result.newCardsToday.toString()
+            learningCountText.text = result.lrnCardsToday.toString()
+            reviewCountText.text = result.revCardsToday.toString()
+            // set bury numbers
+            buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
+            newBuryText.text = getString(R.string.studyoptions_buried_count, result.buriedNew)
+            newBuryText.isVisible = result.buriedNew != 0
+            learningBuryText.text = getString(R.string.studyoptions_buried_count, result.buriedLearning)
+            learningBuryText.isVisible = result.buriedLearning != 0
+            reviewBuryText.text = getString(R.string.studyoptions_buried_count, result.buriedReview)
+            reviewBuryText.isVisible = result.buriedReview != 0
             // Rebuild the options menu
             configureToolbar()
         }
@@ -674,6 +661,32 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
         if (fragmented && refreshDecklist) {
             listener.onRequireDeckListUpdate()
         }
+    }
+
+    /**
+     * See https://github.com/ankitects/anki/blob/b05c9d15986ab4e33daa2a47a947efb066bb69b6/qt/aqt/overview.py#L226-L272
+     */
+    private fun Collection.fetchStudyOptionsData(): DeckStudyData {
+        val deckId = decks.current().id
+        val counts = sched.counts()
+        var buriedNew = 0
+        var buriedLearning = 0
+        var buriedReview = 0
+        val tree = sched.deckDueTree(deckId)
+        if (tree != null) {
+            buriedNew = tree.newCount - counts.new
+            buriedLearning = tree.learnCount - counts.lrn
+            buriedReview = tree.reviewCount - counts.rev
+        }
+        return DeckStudyData(
+            newCardsToday = counts.new,
+            lrnCardsToday = counts.lrn,
+            revCardsToday = counts.rev,
+            buriedNew = buriedNew,
+            buriedLearning = buriedLearning,
+            buriedReview = buriedReview,
+            numberOfCardsInDeck = decks.cardCount(deckId, includeSubdecks = true)
+        )
     }
 
     companion object {
@@ -695,9 +708,6 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
         private const val CONTENT_STUDY_OPTIONS = 0
         private const val CONTENT_CONGRATS = 1
         private const val CONTENT_EMPTY = 2
-
-        // Threshold at which the total number of new cards is truncated by libanki
-        private const val NEW_CARD_COUNT_TRUNCATE_THRESHOLD = 99999
 
         /**
          * Get a new instance of the fragment.

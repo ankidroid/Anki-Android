@@ -453,16 +453,16 @@ open class Scheduler(val col: Collection) {
     }
 
     /**
-     * Returns a tree of decks with counts. If [deckId] is provided, only the according subtree is
+     * Returns a tree of decks with counts. If [topDeckId] is provided, only the according subtree is
      * returned.
      *
      * // TODO look into combining this method with parameterless deckDueTree
      */
     @LibAnkiAlias("deck_due_tree")
-    fun deckDueTree(deckId: DeckId? = null): DeckTreeNode? {
+    fun deckDueTree(topDeckId: DeckId? = null): DeckTreeNode? {
         val tree = col.backend.deckTree(now = time.intTime())
-        if (deckId != null) {
-            return col.decks.findDeckInTree(tree, deckId)
+        if (topDeckId != null) {
+            return col.decks.findDeckInTree(tree, topDeckId)
         }
         return tree
     }

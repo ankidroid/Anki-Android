@@ -18,7 +18,6 @@ package com.ichi2.async
 
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CardTemplateNotetype
-import com.ichi2.anki.StudyOptionsFragment
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NotetypeJson
@@ -36,28 +35,6 @@ fun deleteMedia(col: Collection, unused: List<String>): Int {
     // FIXME: this provides progress info that is not currently used
     col.media.removeFiles(unused)
     return unused.size
-}
-
-// TODO: Once [com.ichi2.async.CollectionTask.RebuildCram] and [com.ichi2.async.CollectionTask.EmptyCram]
-// are migrated to Coroutines, move this function to [com.ichi2.anki.StudyOptionsFragment]
-fun updateValuesFromDeck(col: Collection): StudyOptionsFragment.DeckStudyData? {
-    Timber.d("doInBackgroundUpdateValuesFromDeck")
-    return try {
-        val sched = col.sched
-        val counts = sched.counts()
-        val totalNewCount = sched.totalNewForCurrentDeck()
-        val totalCount = sched.cardCount()
-        StudyOptionsFragment.DeckStudyData(
-            counts.new,
-            counts.lrn,
-            counts.rev,
-            totalNewCount,
-            totalCount
-        )
-    } catch (e: RuntimeException) {
-        Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
-        null
-    }
 }
 
 suspend fun renderBrowserQA(
