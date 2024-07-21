@@ -2327,6 +2327,7 @@ open class DeckPicker :
      */
     fun deleteDeck(did: DeckId): Job {
         return launchCatchingTask {
+            val deckName = withCol { decks.get(did)!!.name }
             val changes = withProgress(resources.getString(R.string.delete_deck)) {
                 undoableOp {
                     decks.remove(listOf(did))
@@ -2335,7 +2336,7 @@ open class DeckPicker :
             // After deletion: decks.current() reverts to Default, necessitating `focusedDeck`
             // to match and avoid unnecessary scrolls in `renderPage()`.
             focusedDeck = Consts.DEFAULT_DECK_ID
-            showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
+            showSnackbar(TR.browsingCardsDeletedWithDeckname(changes.count, deckName), Snackbar.LENGTH_SHORT) {
                 setAction(R.string.undo) { undo() }
             }
         }
