@@ -18,9 +18,15 @@
 package com.ichi2.anki.multimedia
 
 import android.os.Bundle
+import android.text.format.Formatter
+import android.view.MenuItem
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
@@ -30,6 +36,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
 import timber.log.Timber
+import java.io.File
 
 /**
  * Abstract base class for fragments that handle multimedia operations.
@@ -39,6 +46,7 @@ import timber.log.Timber
  *
  * @param layout The layout resource ID to be inflated by this fragment.
  */
+// TODO: show discard dialog in case there are changes
 abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
 
     abstract val title: String
@@ -65,6 +73,22 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
         }
     }
+
+    fun setMenuItemIcon(menuItem: MenuItem, @DrawableRes icon: Int) {
+        menuItem.icon = ContextCompat.getDrawable(requireContext(), icon)
+    }
+
+    /**
+     * Attaches a `MenuProvider` to the activity for creating its menu.
+     *
+     * @param menuProvider An instance of the `MenuProvider` class that will be responsible for inflating and configuring the menu.
+     */
+    // TODO: move this to requireAnkiActivity().addMenuProvider()
+    fun setupMenu(menuProvider: MenuProvider) {
+        (requireActivity() as MenuHost).addMenuProvider(menuProvider)
+    }
+
+    fun File.toHumanReadableSize(): String = Formatter.formatFileSize(requireContext(), this.length())
 
     /**
      * Shows a Snackbar at the bottom of the screen with a predefined

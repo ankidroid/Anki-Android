@@ -20,9 +20,8 @@
 
     <item
         android:id="@+id/action_restart"
-        android:title="@string/restart"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_restart"/>
+        android:title="@string/reselect"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_crop"

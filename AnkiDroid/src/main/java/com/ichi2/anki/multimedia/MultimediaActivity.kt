@@ -29,6 +29,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
@@ -37,16 +38,14 @@ import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
 /**
- * A typealias representing a data structure used to hold extra information for multimedia activities.
+ * Required information for multimedia activities.
  *
- * This typealias combines three elements into a single unit: Index, IField and IMultimediaEditableNote.
+ * This combines three elements into a single unit: Index, IField and IMultimediaEditableNote.
  *  - `Int`: The index of the field within the multimedia note that the multimedia content is associated with.
  *  @see IField
  *  @see IMultimediaEditableNote
  */
 // TODO: move it to a better data model (remove IField & IMultimediaEditableNote)
-// typealias MultimediaActivityExtra = Triple<Int, IField, IMultimediaEditableNote>
-
 data class MultimediaActivityExtra(
     val index: Int,
     val field: IField,
@@ -57,6 +56,12 @@ data class MultimediaActivityExtra(
  * Multimedia activity that allows users to attach media files to an input field in NoteEditor.
  */
 class MultimediaActivity : AnkiActivity() {
+
+    private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
+        get() = extras?.getSerializableCompat(MULTIMEDIA_ARGS_EXTRA)
+
+    private val Intent.mediaOptionsExtra: Serializable?
+        get() = getSerializableExtraCompat(EXTRA_MEDIA_OPTIONS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -78,15 +83,10 @@ class MultimediaActivity : AnkiActivity() {
                 "'$MULTIMEDIA_FRAGMENT_NAME_EXTRA' extra should be provided"
             }
 
-//        val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
-//            arguments = bundleOf(
-//                MULTIMEDIA_ARGS_EXTRA to intent.extras?.getSerializableCompat<MultimediaActivityExtra>(MULTIMEDIA_ARGS_EXTRA)
-//            )
-//        }
-
         val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
             arguments = bundleOf(
-                MULTIMEDIA_ARGS_EXTRA to intent.extras?.getSerializableCompat<MultimediaActivityExtra>(MULTIMEDIA_ARGS_EXTRA)
+                MULTIMEDIA_ARGS_EXTRA to intent.multimediaArgsExtra,
+                EXTRA_MEDIA_OPTIONS to intent.mediaOptionsExtra
             )
         }
 
@@ -107,14 +107,19 @@ class MultimediaActivity : AnkiActivity() {
         const val MULTIMEDIA_RESULT = "multimedia_result"
         const val MULTIMEDIA_RESULT_FIELD_INDEX = "multimedia_result_index"
 
+        /** used in case a fragment supports more than media operations **/
+        const val EXTRA_MEDIA_OPTIONS = "extra_media_options"
+
         fun getIntent(
             context: Context,
             fragmentClass: KClass<out Fragment>,
-            arguments: MultimediaActivityExtra? = null
+            arguments: MultimediaActivityExtra? = null,
+            mediaOptions: Serializable
         ): Intent {
             return Intent(context, MultimediaActivity::class.java).apply {
                 putExtra(MULTIMEDIA_ARGS_EXTRA, arguments)
                 putExtra(MULTIMEDIA_FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
+                putExtra(EXTRA_MEDIA_OPTIONS, mediaOptions)
             }
         }
     }

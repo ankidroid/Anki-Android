@@ -21,6 +21,8 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MultimediaViewModel : ViewModel() {
@@ -28,14 +30,16 @@ class MultimediaViewModel : ViewModel() {
     /** Errors or Warnings related to the edit fields that might occur when trying to save note */
     val multimediaAction = MutableSharedFlow<MultimediaBottomSheet.MultimediaAction>()
 
-    private var prevImagePath: String? = null
-    private var prevImageUri: Uri? = null
+    private var prevMultimediaPath: String? = null
+    private var prevMultimediaUri: Uri? = null
 
-    var currentImageUri: Uri? = null
+    private val _currentMultimediaUri = MutableStateFlow<Uri?>(null)
+    val currentMultimediaUri: StateFlow<Uri?> get() = _currentMultimediaUri
 
-    var currentImagePath: String? = null
+    private val _currentMultimediaPath = MutableStateFlow<String?>(null)
+    val currentMultimediaPath: StateFlow<String?> get() = _currentMultimediaPath
 
-    var selectedImageLength: Long = 0
+    var selectedMediaFileSize: Long = 0
 
     fun setMultimediaAction(action: MultimediaBottomSheet.MultimediaAction) {
         viewModelScope.launch {
@@ -43,12 +47,21 @@ class MultimediaViewModel : ViewModel() {
         }
     }
 
-    fun getImageLength(): Long {
-        return selectedImageLength
+    fun saveMultimediaForRevert(imagePath: String?, imageUri: Uri?) {
+        prevMultimediaPath = imagePath
+        prevMultimediaUri = imageUri
     }
 
-    fun saveImageForRevert(imagePath: String?, imageUri: Uri?) {
-        prevImagePath = imagePath
-        prevImageUri = imageUri
+    fun restoreMultimedia() {
+        _currentMultimediaUri.value = prevMultimediaUri
+        _currentMultimediaPath.value = prevMultimediaPath
+    }
+
+    fun updateCurrentMultimediaUri(uri: Uri?) {
+        _currentMultimediaUri.value = uri
+    }
+
+    fun updateCurrentMultimediaPath(path: String?) {
+        _currentMultimediaPath.value = path
     }
 }
