@@ -68,6 +68,18 @@ class BrowserRowCollection(
             CardsOrNotes.CARDS -> requireCardIdList()
         }
 
+    suspend fun queryOneCardIdPerRow(): List<CardId> =
+        when (this.cardsOrNotes) {
+            // TODO: This is slower than necessary
+            CardsOrNotes.NOTES ->
+                requireNoteIdList().map { nid ->
+                    CollectionManager.withCol {
+                        cardIdsOfNote(nid = nid).first()
+                    }
+                }
+            CardsOrNotes.CARDS -> requireCardIdList()
+        }
+
     private fun requireNoteIdList(): List<NoteId> {
         require(cardsOrNotes == CardsOrNotes.NOTES)
         return cardOrNoteIdList.map { it.cardOrNoteId }
