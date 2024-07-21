@@ -94,6 +94,7 @@
     <attr name="learnCountColor" format="color"/>
     <attr name="reviewCountColor" format="color"/>
     <attr name="zeroCountColor" format="color"/>
+    <attr name="buryCountColor" format="color"/>
     <!-- Reviewer button backgrounds -->
     <attr name="answerButtonBackground" format="color"/>
     <attr name="againButtonBackground" format="color"/>
