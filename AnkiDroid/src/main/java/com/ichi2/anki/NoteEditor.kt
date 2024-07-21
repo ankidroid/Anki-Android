@@ -89,6 +89,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaActivityExtra
@@ -275,11 +276,13 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         NoteEditorActivityResultCallback { result ->
             if (result.resultCode == RESULT_CANCELED) {
                 Timber.d("Multimedia result canceled")
+                val index = result.data?.extras?.getInt(MULTIMEDIA_RESULT_FIELD_INDEX) ?: return@NoteEditorActivityResultCallback
+                handleMultimediaActions(index)
                 return@NoteEditorActivityResultCallback
             }
 
             Timber.d("Getting multimedia result")
-            val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
+            val extras = result.data?.extras ?: return@NoteEditorActivityResultCallback
             handleMultimediaResult(extras)
         }
     )
@@ -1749,7 +1752,16 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                     }
 
                     MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_FILE -> {
-                        // TODO("Not yet implemented")
+                        Timber.i("Selected audio clip option")
+                        val field = MediaClipField()
+                        note.setField(fieldIndex, field)
+                        val mediaIntent = AudioVideoFragment.getIntent(
+                            requireContext(),
+                            MultimediaActivityExtra(fieldIndex, field, note),
+                            AudioVideoFragment.MediaOption.AUDIO_CLIP
+                        )
+
+                        multimediaFragmentLauncher.launch(mediaIntent)
                     }
 
                     MultimediaBottomSheet.MultimediaAction.OPEN_DRAWING -> {
@@ -1761,7 +1773,16 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                     }
 
                     MultimediaBottomSheet.MultimediaAction.SELECT_VIDEO_FILE -> {
-                        // TODO("Not yet implemented")
+                        Timber.i("Selected video clip option")
+                        val field = MediaClipField()
+                        note.setField(fieldIndex, field)
+                        val mediaIntent = AudioVideoFragment.getIntent(
+                            requireContext(),
+                            MultimediaActivityExtra(fieldIndex, field, note),
+                            AudioVideoFragment.MediaOption.VIDEO_CLIP
+                        )
+
+                        multimediaFragmentLauncher.launch(mediaIntent)
                     }
 
                     MultimediaBottomSheet.MultimediaAction.OPEN_CAMERA -> {
