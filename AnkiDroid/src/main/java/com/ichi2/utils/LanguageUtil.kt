@@ -25,8 +25,6 @@ import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.preferences.sharedPrefs
 import net.ankiweb.rsdroid.BackendFactory
-import java.text.DateFormat
-import java.util.Date
 import java.util.Locale
 
 /**
@@ -346,12 +344,6 @@ object LanguageUtil {
             // 繁體中文
             "zh-TW",
         )
-
-    fun getShortDateFormatFromMs(ms: Long): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(ms))
-
-    fun getShortDateFormatFromS(s: Long): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
-
-    fun getShortDateFormatFromS(s: Int): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
 
     fun getLocaleCompat(resources: Resources): Locale? = ConfigurationCompat.getLocales(resources.configuration)[0]
 

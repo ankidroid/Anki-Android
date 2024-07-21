@@ -22,25 +22,19 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.TypedValue
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
-import android.widget.CheckBox
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
-import androidx.annotation.ColorInt
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
@@ -56,7 +50,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.browser.BrowserMultiColumnAdapter
-import com.ichi2.anki.browser.BrowserMultiColumnAdapter.Companion.LINES_VISIBLE_WHEN_COLLAPSED
 import com.ichi2.anki.browser.BrowserRowCollection
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
@@ -96,30 +89,19 @@ import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
 import com.ichi2.anki.scheduling.registerOnForgetHandler
-import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.anki.servicelayer.NoteService.isMarked
-import com.ichi2.anki.servicelayer.avgIntervalOfNote
-import com.ichi2.anki.servicelayer.totalLapsesOfNote
-import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.toSentenceCase
-import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.showDialogFragment
-import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
-import com.ichi2.libanki.CardType
-import com.ichi2.libanki.CardType.Unknown
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
@@ -127,15 +109,8 @@ import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.SortOrder
-import com.ichi2.libanki.Sound
-import com.ichi2.libanki.TemplateManager
-import com.ichi2.libanki.Utils
-import com.ichi2.libanki.stripAvRefs
 import com.ichi2.libanki.undoableOp
-import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.Themes
 import com.ichi2.ui.CardBrowserSearchView
-import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
@@ -151,7 +126,6 @@ import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
-import kotlin.math.abs
 
 @Suppress("LeakingThis")
 // The class is only 'open' due to testing
@@ -194,8 +168,6 @@ open class CardBrowser :
     private var mySearchesItem: MenuItem? = null
     private var previewItem: MenuItem? = null
     private var undoSnackbar: Snackbar? = null
-
-    private var renderBrowserQAJob: Job? = null
 
     private lateinit var exportingDelegate: ActivityExportingDelegate
 
@@ -527,7 +499,6 @@ open class CardBrowser :
             when (searchState) {
                 SearchState.Initializing -> { }
                 SearchState.Searching -> {
-                    invalidate()
                     if ("" != viewModel.searchTerms && searchView != null) {
                         searchView!!.setQuery(viewModel.searchTerms, false)
                         searchItem!!.expandActionView()
@@ -896,7 +867,6 @@ open class CardBrowser :
     }
 
     override fun onDestroy() {
-        invalidate()
         super.onDestroy()
     }
 
@@ -1612,10 +1582,6 @@ open class CardBrowser :
         searchCards(savedInstanceState.getString("mSearchTerms", ""))
     }
 
-    private fun invalidate() {
-        renderBrowserQAJob?.cancel()
-    }
-
     private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
         if (useSearchTextValue && searchView != null) {
             searchCards(searchView!!.query.toString())
@@ -1666,6 +1632,15 @@ open class CardBrowser :
         deckSpinnerSelection.notifyDataSetChanged()
         onSelectionChanged()
         updatePreviewMenuItem()
+    }
+
+    @NeedsTest("select 1, check title, select 2, check title")
+    private fun onSelectionChanged() {
+        Timber.d("onSelectionChanged")
+        updateMultiselectMenu()
+        actionBarMenu?.findItem(R.id.action_select_all)?.isVisible = !hasSelectedAllCards()
+        actionBarMenu?.findItem(R.id.action_select_none)?.isVisible = viewModel.hasSelectedAnyRows()
+        notifyDataSetChanged()
     }
 
     /**
@@ -1820,130 +1795,6 @@ open class CardBrowser :
         finish()
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    inner class MultiColumnListAdapter(
-        context: Context?,
-        private val resource: Int,
-        private var fromKeys: Array<CardBrowserColumn>,
-        private val toIds: IntArray,
-        private val fontSizeScalePcent: Int,
-    ) : BaseAdapter() {
-        private var originalTextSize = -1.0f
-        private val inflater: LayoutInflater
-
-        override fun getView(
-            position: Int,
-            convertView: View?,
-            parent: ViewGroup,
-        ): View {
-            // Get the main container view if it doesn't already exist, and call bindView
-            val v: View
-            if (convertView == null) {
-                v = inflater.inflate(resource, parent, false)
-                val count = toIds.size
-                val columns = arrayOfNulls<View>(count)
-                for (i in 0 until count) {
-                    columns[i] = v.findViewById(toIds[i])
-                }
-                v.tag = columns
-            } else {
-                v = convertView
-            }
-            bindView(position, v)
-            return v
-        }
-
-        private fun bindView(
-            position: Int,
-            v: View,
-        ) {
-            // Draw the content in the columns
-            val card = getItem(position)
-            (v.tag as Array<*>)
-                .forEachIndexed { i, column ->
-                    setFont(column as TextView) // set font for column
-                    column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
-                }
-            // set card's background color
-            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser)
-            v.setBackgroundColor(backgroundColor)
-            // setup checkbox to change color in multi-select mode
-            val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
-            // if in multi-select mode, be sure to show the checkboxes
-            if (viewModel.isInMultiSelectMode) {
-                checkBox.visibility = View.VISIBLE
-                TODO()
-                // checkBox.isChecked = viewModel.selectedRows.contains(card)
-                // this prevents checkboxes from showing an animation from selected -> unselected when
-                // checkbox was selected, then selection mode was ended and now restarted
-                // checkBox.jumpDrawablesToCurrentState()
-            } else {
-                checkBox.isChecked = false
-                checkBox.visibility = View.GONE
-            }
-            // change bg color on check changed
-            checkBox.setOnClickListener { viewModel.toggleRowSelectionAtPosition(position) }
-            val column1 = v.findViewById<FixedTextView>(R.id.card_sfld)
-            val column2 = v.findViewById<FixedTextView>(R.id.card_column2)
-
-            if (viewModel.isTruncated) {
-                column1.maxLines = LINES_VISIBLE_WHEN_COLLAPSED
-                column2.maxLines = LINES_VISIBLE_WHEN_COLLAPSED
-                column1.ellipsize = TextUtils.TruncateAt.END
-                column2.ellipsize = TextUtils.TruncateAt.END
-            } else {
-                column1.maxLines = Integer.MAX_VALUE
-                column2.maxLines = Integer.MAX_VALUE
-            }
-        }
-
-        private fun setFont(v: TextView) {
-            // Set the font and font size for a TextView v
-            val currentSize = v.textSize
-            if (originalTextSize < 0) {
-                originalTextSize = v.textSize
-            }
-            // do nothing when pref is 100% and apply scaling only once
-            if (fontSizeScalePcent != 100 && abs(originalTextSize - currentSize) < 0.1) {
-                // getTextSize returns value in absolute PX so use that in the setter
-                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, originalTextSize * (fontSizeScalePcent / 100.0f))
-            }
-        }
-
-        private var fromMapping: Array<CardBrowserColumn>
-            get() = fromKeys
-            set(from) {
-                fromKeys = from
-                notifyDataSetChanged()
-            }
-
-        fun updateMapping(fn: (Array<CardBrowserColumn>) -> Unit) {
-            val fromMap = fromMapping
-            fn(fromMap)
-            // this doesn't need to be run on the UI thread: this calls notifyDataSetChanged()
-            fromMapping = fromMap
-        }
-
-        override fun getCount(): Int = viewModel.rowCount
-
-        override fun getItem(position: Int): CardCache = TODO()
-
-        override fun getItemId(position: Int): Long = position.toLong()
-
-        init {
-            inflater = LayoutInflater.from(context)
-        }
-    }
-
-    @NeedsTest("select 1, check title, select 2, check title")
-    private fun onSelectionChanged() {
-        Timber.d("onSelectionChanged")
-        updateMultiselectMenu()
-        actionBarMenu?.findItem(R.id.action_select_all)?.isVisible = !hasSelectedAllCards()
-        actionBarMenu?.findItem(R.id.action_select_none)?.isVisible = viewModel.hasSelectedAnyRows()
-        notifyDataSetChanged()
-    }
-
     /**
      * Implementation of `by viewModels()` for use in [onCreate]
      *
@@ -1960,242 +1811,6 @@ open class CardBrowser :
             ),
             defaultViewModelCreationExtras,
         )[CardBrowserViewModel::class.java]
-
-    // This could be better: use a wrapper class PositionAware<T> to store the position so it's
-    // no longer a responsibility of CardCache and we can guarantee it's consistent just by using this collection
-
-    /** A position-aware collection to ensure consistency between the position of items and the collection  */
-    class CardCollection<T : PositionAware?> : Iterable<T> {
-        var wrapped: MutableList<T> = ArrayList(0)
-            private set
-
-        fun size(): Int = wrapped.size
-
-        operator fun get(index: Int): T = wrapped[index]
-
-        fun reset() {
-            wrapped = ArrayList(0)
-        }
-
-        fun replaceWith(value: MutableList<T>) {
-            wrapped = value
-        }
-
-        fun reverse() {
-            wrapped.reverse()
-            wrapped.forEachIndexed { pos, card -> card!!.position = pos }
-        }
-
-        override fun iterator(): MutableIterator<T> = wrapped.iterator()
-
-        fun clear() {
-            wrapped.clear()
-        }
-    }
-
-    @VisibleForTesting
-    interface PositionAware {
-        var position: Int
-    }
-
-    class CardCache :
-        Card.Cache,
-        PositionAware {
-        var isLoaded = false
-            private set
-        private var qa: Pair<String, String>? = null
-        override var position: Int
-
-        private val inCardMode: Boolean
-        constructor(id: CardId, col: Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
-            this.position = position
-            this.inCardMode = cardsOrNotes == CARDS
-        }
-
-        constructor(cache: CardCache, position: Int) : super(cache) {
-            isLoaded = cache.isLoaded
-            qa = cache.qa
-            this.position = position
-            this.inCardMode = cache.inCardMode
-        }
-
-        /** clear all values except ID. */
-        override fun reload() {
-            super.reload()
-            isLoaded = false
-            qa = null
-        }
-
-        /**
-         * Get the background color of items in the card list based on the Card
-         * @return index into TypedArray specifying the background color
-         */
-        @ColorInt
-        fun getBackgroundColor(context: Context): Int {
-            val flagColor = card.userFlag().browserColorRes
-            if (flagColor != null) {
-                return context.getColor(flagColor)
-            }
-            val colorAttr =
-                if (isMarked(col, card.note(col))) {
-                    R.attr.markedColor
-                } else if (card.queue == QueueType.Suspended) {
-                    R.attr.suspendedColor
-                } else {
-                    android.R.attr.colorBackground
-                }
-            return Themes.getColorFromAttr(context, colorAttr)
-        }
-
-        fun getColumnHeaderText(key: CardBrowserColumn): String? =
-            when (key) {
-                CardBrowserColumn.SFLD -> card.note(col).sFld(col)
-                CardBrowserColumn.DECK -> col.decks.name(card.did)
-                CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
-                CardBrowserColumn.CARD ->
-                    if (inCardMode) {
-                        card
-                            .template(
-                                col,
-                            ).jsonObject
-                            .optString("name")
-                    } else {
-                        "${card.note(col).numberOfCards(col)}"
-                    }
-                CardBrowserColumn.DUE -> dueString(col, card)
-                CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
-                CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())
-                CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
-                CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
-                CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
-                CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
-                CardBrowserColumn.NOTE_TYPE -> card.noteType(col).optString("name")
-                CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
-                CardBrowserColumn.QUESTION -> {
-                    updateSearchItemQA()
-                    qa!!.first
-                }
-                CardBrowserColumn.ORIGINAL_POSITION -> card.originalPosition?.toString().orEmpty()
-                CardBrowserColumn.ANSWER -> {
-                    updateSearchItemQA()
-                    qa!!.second
-                }
-                CardBrowserColumn.FSRS_DIFFICULTY,
-                CardBrowserColumn.FSRS_RETRIEVABILITY,
-                CardBrowserColumn.FSRS_STABILITY,
-                -> null
-            }
-
-        private fun getEaseForCards(): String =
-            when (card.type) {
-                CardType.New -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-                CardType.Lrn, CardType.Rev, CardType.Relearning, is Unknown -> "${card.factor / 10}%"
-            }
-
-        private fun getAvgEaseForNotes(): String {
-            val avgEase = NoteService.avgEase(col, card.note(col))
-
-            return if (avgEase == null) {
-                AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-            } else {
-                "$avgEase%"
-            }
-        }
-
-        private fun queryIntervalForCards(): String =
-            when (card.type) {
-                CardType.New -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-                CardType.Lrn -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
-                CardType.Rev,
-                CardType.Relearning, is Unknown,
-                -> roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * SECONDS_PER_DAY)
-            }
-
-        private fun queryAvgIntervalForNotes(): String {
-            val avgInterval = card.avgIntervalOfNote(col)
-
-            return if (avgInterval == null) {
-                "" // upstream does not display interval for notes with new or learning cards
-            } else {
-                roundedTimeSpanUnformatted(AnkiDroidApp.instance, avgInterval * SECONDS_PER_DAY)
-            }
-        }
-
-        /** pre compute the note and question/answer.  It can safely
-         * be called twice without doing extra work.  */
-        fun load(
-            reload: Boolean,
-            column1: CardBrowserColumn,
-            column2: CardBrowserColumn,
-        ) {
-            if (reload) {
-                reload()
-            }
-            card.note(col)
-            // First column can not be the answer. If it were to change, this code should also be changed.
-            if (column1 == CardBrowserColumn.QUESTION || arrayOf(CardBrowserColumn.QUESTION, CardBrowserColumn.ANSWER).contains(column2)) {
-                updateSearchItemQA()
-            }
-            isLoaded = true
-        }
-
-        /**
-         * Reload question and answer. Use browser format. If it's empty
-         * uses non-browser format. If answer starts by question, remove
-         * question.
-         */
-        private fun updateSearchItemQA() {
-            if (qa != null) {
-                return
-            }
-            // render question and answer
-            val qa = card.renderOutput(col, reload = true, browser = true)
-            // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-            if (qa.questionText.isEmpty() || qa.answerText.isEmpty()) {
-                val (questionText, answerText) =
-                    card.renderOutput(
-                        col,
-                        reload = true,
-                        browser = false,
-                    )
-                if (qa.questionText.isEmpty()) {
-                    qa.questionText = questionText
-                }
-                if (qa.answerText.isEmpty()) {
-                    qa.answerText = answerText
-                }
-            }
-            // update the original hash map to include rendered question & answer
-            var q = qa.questionText
-            var a = qa.answerText
-            // remove the question from the start of the answer if it exists
-            if (a.startsWith(q)) {
-                a = a.substring(q.length)
-            }
-            a = formatQA(a, qa, AnkiDroidApp.instance)
-            q = formatQA(q, qa, AnkiDroidApp.instance)
-            this.qa = Pair(q, a)
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-            if (other == null) {
-                return false
-            }
-            return if (javaClass != other.javaClass) {
-                false
-            } else {
-                id == (other as CardCache).id
-            }
-        }
-
-        override fun hashCode(): Int =
-            java.lang.Long
-                .valueOf(id)
-                .hashCode()
-    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun filterByTag(vararg tags: String) {
@@ -2284,84 +1899,6 @@ open class CardBrowser :
             context: Context,
             viewModel: CardBrowserViewModel,
         ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
-
-        @CheckResult
-        private fun formatQA(
-            text: String,
-            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
-            context: Context,
-        ): String {
-            val showFilenames =
-                context.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
-            return formatQAInternal(text, qa, showFilenames)
-        }
-
-        /**
-         * @param txt The text to strip HTML, comments, tags and media from
-         * @param showFileNames Whether [sound:foo.mp3] should be rendered as " foo.mp3 " or  " "
-         * @return The formatted string
-         */
-        @VisibleForTesting
-        @CheckResult
-        fun formatQAInternal(
-            txt: String,
-            qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
-            showFileNames: Boolean,
-        ): String {
-            // Strips all formatting from the string txt for use in displaying question/answer in browser
-            var s = txt
-            s = s.replace("<!--.*?-->".toRegex(), "")
-            s = s.replace("<br>", " ")
-            s = s.replace("<br />", " ")
-            s = s.replace("<div>", " ")
-            s = s.replace("\n", " ")
-            // we use " " as often users won't leave a space between the '[sound:] tag
-            // and continuation of the content
-            s = if (showFileNames) Sound.replaceWithFileNames(s, qa) else stripAvRefs(s, " ")
-            s = s.replace("\\[\\[type:[^]]+]]".toRegex(), "")
-            s = if (showFileNames) Utils.stripHTMLMedia(s) else Utils.stripHTMLMedia(s, " ")
-            s = s.trim { it <= ' ' }
-            return s
-        }
-
-        fun dueString(
-            col: Collection,
-            card: Card,
-        ): String {
-            var t = nextDue(col, card)
-            if (card.queue.buriedOrSuspended()) {
-                t = "($t)"
-            }
-            return t
-        }
-
-        @VisibleForTesting
-        fun nextDue(
-            col: Collection,
-            card: Card,
-        ): String {
-            val date: Long
-            val due = card.due
-            date =
-                if (card.isInDynamicDeck) {
-                    return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
-                } else if (card.queue == QueueType.Lrn) {
-                    due.toLong()
-                } else if (card.queue == QueueType.New || card.type == CardType.New) {
-                    return due.toString()
-                } else if (card.queue == QueueType.Rev ||
-                    card.queue == QueueType.DayLearnRelearn ||
-                    card.type == CardType.Rev &&
-                    card.queue.buriedOrSuspended()
-                ) {
-                    val time = TimeManager.time.intTime()
-                    val nbDaySinceCreation = due - col.sched.today
-                    time + nbDaySinceCreation * SECONDS_PER_DAY
-                } else {
-                    return ""
-                }
-            return LanguageUtil.getShortDateFormatFromS(date)
-        } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
     }
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
