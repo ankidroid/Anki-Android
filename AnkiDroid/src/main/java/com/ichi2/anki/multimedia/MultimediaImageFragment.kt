@@ -23,10 +23,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.format.Formatter
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -34,13 +30,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropException
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
@@ -48,12 +44,15 @@ import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImageUtils
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -65,33 +64,110 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         get() = resources.getString(R.string.multimedia_editor_popup_image)
 
     private lateinit var imagePreview: ImageView
+    private lateinit var imageFileSize: TextView
 
     private val viewModel: MultimediaViewModel by viewModels()
+
+    private lateinit var selectedImageOptions: ImageOptions
 
     /**
      * Launches an activity to pick an image from the device's gallery.
      * This launcher is registered using `ActivityResultContracts.StartActivityForResult()`.
      */
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            view?.findViewById<TextView>(R.id.no_image_textview)?.visibility =
-                View.GONE
-            handleSelectImageIntent(result.data)
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                Activity.RESULT_CANCELED -> {
+                    if (viewModel.currentMultimediaUri.value == null) {
+                        val resultData = Intent().apply {
+                            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                        }
+                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
+                        requireActivity().finish()
+                    }
+                }
+
+                Activity.RESULT_OK -> {
+                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
+                    handleSelectImageIntent(result.data)
+                }
+            }
         }
-    }
 
     /**
      * Launches the device's camera to take a picture.
      * This launcher is registered using `ActivityResultContracts.TakePicture()`.
      */
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
-        if (isPictureTaken) {
-            Timber.d("Image successfully captured")
-            view?.findViewById<TextView>(R.id.no_image_textview)?.visibility =
-                View.GONE
-            handleTakePictureResult(viewModel.currentImagePath)
-        } else {
-            Timber.d("Camera aborted or some interruption")
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
+            when {
+                !isPictureTaken && viewModel.currentMultimediaUri.value == null -> {
+                    val resultData = Intent().apply {
+                        putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                    }
+                    requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
+                    requireActivity().finish()
+                }
+
+                isPictureTaken -> {
+                    Timber.d("Image successfully captured")
+                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
+                    handleTakePictureResult(viewModel.currentMultimediaPath.value)
+                }
+
+                else -> {
+                    Timber.d("Camera aborted or some interruption, restoring multimedia data")
+                    viewModel.restoreMultimedia()
+                }
+            }
+        }
+
+    /**
+     * Lazily initialized instance of MultimediaMenu.
+     * The instance is created only when first accessed.
+     */
+    private val multimediaMenu by lazy {
+        MultimediaMenuProvider(
+            menuResId = R.menu.multimedia_menu,
+            onCreateMenuCondition = { menu ->
+
+                setMenuItemIcon(menu.findItem(R.id.action_restart), R.drawable.ic_replace_image)
+                lifecycleScope.launch {
+                    viewModel.currentMultimediaUri.collectLatest { uri ->
+                        menu.findItem(R.id.action_crop).isVisible = uri != null
+                    }
+                }
+            }
+        ) { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_crop -> {
+                    viewModel.saveMultimediaForRevert(
+                        imagePath = viewModel.currentMultimediaPath.value,
+                        imageUri = viewModel.currentMultimediaUri.value
+                    )
+                    requestCrop()
+                    true
+                }
+
+                R.id.action_restart -> {
+                    when (selectedImageOptions) {
+                        ImageOptions.GALLERY -> {
+                            openGallery()
+                        }
+
+                        ImageOptions.CAMERA -> {
+                            viewModel.saveMultimediaForRevert(
+                                imagePath = viewModel.currentMultimediaPath.value,
+                                imageUri = viewModel.currentMultimediaUri.value
+                            )
+                            dispatchCamera()
+                        }
+                    }
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 
@@ -99,16 +175,21 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         super.onCreate(savedInstanceState)
         ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(requireContext(), "temp-photos")
         if (ankiCacheDirectory == null) {
-            showSomethingWentWrong()
+            showErrorDialog()
             Timber.e("createUI() failed to get cache directory")
             return
+        }
+
+        arguments?.let {
+            selectedImageOptions = it.getSerializableCompat<ImageOptions>(EXTRA_MEDIA_OPTIONS) as ImageOptions
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupMenu()
+        setupMenu(multimediaMenu)
         imagePreview = view.findViewById(R.id.image_preview)
+        imageFileSize = view.findViewById(R.id.image_size_textview)
         handleSelectedImageOptions()
         setupDoneButton()
     }
@@ -123,26 +204,22 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 dispatchCamera()
                 Timber.d("MultimediaImageFragment:: Launching camera")
             }
-            ImageOptions.UNKNOWN -> {
-                showErrorDialog()
-                Timber.w("MultimediaImageFragment:: Error occurred, showing error dialog")
-            }
         }
     }
 
     private fun setupDoneButton() {
         view?.findViewById<MaterialButton>(R.id.action_done)?.setOnClickListener {
             Timber.d("MultimediaImageFragment:: Done button pressed")
-            if (viewModel.getImageLength() == 0L) {
+            if (viewModel.selectedMediaFileSize == 0L) {
                 Timber.d("Image length is not valid")
                 return@setOnClickListener
             }
-            if (viewModel.getImageLength() > MultimediaUtils.IMAGE_LIMIT) {
-                showLargeFileCropDialog((1.0 * viewModel.getImageLength() / MultimediaEditFieldActivity.IMAGE_LIMIT).toFloat())
+            if (viewModel.selectedMediaFileSize > MultimediaUtils.IMAGE_LIMIT) {
+                showLargeFileCropDialog((1.0 * viewModel.selectedMediaFileSize / MultimediaEditFieldActivity.IMAGE_LIMIT).toFloat())
                 return@setOnClickListener
             }
 
-            field.mediaPath = viewModel.currentImagePath
+            field.mediaPath = viewModel.currentMultimediaPath.value
             field.hasTemporaryMedia = true
 
             val resultData = Intent().apply {
@@ -168,8 +245,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
 
         photoFile?.let {
-            viewModel.currentImagePath = it.absolutePath
-            // viewModel.saveCurrentImagePath(it.absolutePath)
+            viewModel.updateCurrentMultimediaPath(it.absolutePath)
             val photoURI: Uri = FileProvider.getUriForFile(
                 requireContext(),
                 requireActivity().applicationContext.packageName + ".apkgfileprovider",
@@ -186,24 +262,23 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             return
         }
 
-        displayImageSize(imagePath)
+        updateAndDisplayImageSize(imagePath)
         val photoFile = File(imagePath)
         val imageUri: Uri = FileProvider.getUriForFile(
             requireContext(),
             requireActivity().applicationContext.packageName + ".apkgfileprovider",
             photoFile
         )
-        viewModel.currentImageUri = imageUri
+        viewModel.updateCurrentMultimediaUri(imageUri)
         imagePreview.setImageURI(imageUri)
 
         showCropDialog(getString(R.string.crop_image))
     }
 
-    private fun displayImageSize(imagePath: String) {
+    private fun updateAndDisplayImageSize(imagePath: String) {
         val file = File(imagePath)
-        viewModel.selectedImageLength = file.length()
-        val size = Formatter.formatFileSize(requireContext(), file.length())
-        view?.findViewById<TextView>(R.id.image_size_textview)?.text = size
+        viewModel.selectedMediaFileSize = file.length()
+        imageFileSize.text = file.toHumanReadableSize()
     }
 
     private fun showLargeFileCropDialog(length: Float) {
@@ -214,7 +289,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun showCropDialog(message: String) {
-        if (viewModel.currentImageUri == null) {
+        if (viewModel.currentMultimediaUri.value == null) {
             Timber.w("showCropDialog called with null URI or Path")
             return
         }
@@ -247,13 +322,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         } else {
             // reset the no preview text
             view?.findViewById<TextView>(R.id.no_image_textview)?.apply {
-                text = resources.getString(R.string.no_image_preview)
+                text = null
                 visibility = View.GONE
             }
         }
 
         imagePreview.setImageURI(selectedImage)
-        viewModel.currentImageUri = selectedImage
+        viewModel.updateCurrentMultimediaUri(selectedImage)
 
         if (selectedImage == null) {
             Timber.w("handleSelectImageIntent() selectedImage was null")
@@ -273,12 +348,12 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
         val imagePath = internalizedPick.absolutePath
 
-        viewModel.currentImagePath = imagePath
-        displayImageSize(imagePath)
+        viewModel.updateCurrentMultimediaPath(imagePath)
+        updateAndDisplayImageSize(imagePath)
     }
 
     private fun requestCrop() {
-        val imageUri = viewModel.currentImageUri ?: return
+        val imageUri = viewModel.currentMultimediaUri.value ?: return
         ImageUtils.cropImage(requireActivity().activityResultRegistry, imageUri) { cropResult ->
             if (cropResult == null) {
                 Timber.d("Image crop result was null")
@@ -288,10 +363,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             if (cropResult.isSuccessful) {
                 cropResult.getUriFilePath(requireActivity(), true)
                     ?.let { path ->
-                        displayImageSize(path)
-                        viewModel.currentImagePath = path
+                        updateAndDisplayImageSize(path)
+                        viewModel.updateCurrentMultimediaPath(path)
                     }
-                viewModel.currentImageUri = cropResult.uriContent
+                viewModel.updateCurrentMultimediaUri(cropResult.uriContent)
                 imagePreview.setImageURI(cropResult.uriContent)
             } else {
                 // cropImage can give us more information. Not sure it is actionable so for now just log it.
@@ -349,77 +424,25 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         return uri
     }
 
-    private fun setupMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(MultimediaMenu())
-    }
-
-    /**
-     * Inner class that implements the MenuProvider interface to provide a menu for multimedia options.
-     */
-    inner class MultimediaMenu : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menu.clear()
-            menuInflater.inflate(R.menu.multimedia_menu, menu)
-
-            menu.findItem(R.id.action_crop).isVisible = viewModel.currentImageUri != null
-        }
-
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.itemId) {
-                R.id.action_crop -> {
-                    viewModel.saveImageForRevert(
-                        imagePath = viewModel.currentImagePath,
-                        imageUri = viewModel.currentImageUri
-                    )
-                    requestCrop()
-                    true
-                }
-
-                R.id.action_restart -> {
-                    when (selectedImageOptions) {
-                        ImageOptions.GALLERY -> {
-                            openGallery()
-                        }
-
-                        ImageOptions.CAMERA -> {
-                            dispatchCamera()
-                        }
-
-                        ImageOptions.UNKNOWN -> {
-                            Timber.w("MultimediaImageFragment:: Error occurred, showing error dialog")
-                            showErrorDialog()
-                        }
-                    }
-                    true
-                }
-
-                else -> false
-            }
-        }
-    }
-
     companion object {
-
-        private var selectedImageOptions: ImageOptions = ImageOptions.UNKNOWN
 
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
             imageOptions: ImageOptions
         ): Intent {
-            selectedImageOptions = imageOptions
             return MultimediaActivity.getIntent(
                 context,
                 MultimediaImageFragment::class,
-                multimediaExtra
+                multimediaExtra,
+                imageOptions
             )
         }
     }
 
-    /** Enum class that represents image options that a user choose from the bottom sheet  **/
+    /** Image options that a user choose from the bottom sheet which [MultimediaImageFragment] uses **/
     enum class ImageOptions {
         GALLERY,
-        CAMERA,
-        UNKNOWN
+        CAMERA
     }
 }

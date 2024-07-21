@@ -447,4 +447,8 @@ dependencies {
     androidTestImplementation libs.kotlin.test
     androidTestImplementation libs.kotlin.test.junit
     androidTestImplementation libs.androidx.fragment.testing
+
+    implementation libs.androidx.media3.exoplayer
+    implementation libs.androidx.media3.exoplayer.dash
+    implementation libs.androidx.media3.ui
 }
