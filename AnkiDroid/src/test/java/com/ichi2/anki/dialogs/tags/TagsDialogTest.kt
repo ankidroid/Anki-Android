@@ -344,6 +344,7 @@ class TagsDialogTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.LINUX, "unknown cause. Works if only the class is executed")
     fun test_AddNewTag_newHierarchicalTag_willUniformHierarchicalTag() {
         val type = TagsDialog.DialogType.EDIT_TAGS
         val allTags = listOf("common")
