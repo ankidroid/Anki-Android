@@ -289,8 +289,7 @@ open class RobolectricTest :
         }
 
         /** This can probably be implemented in a better manner  */
-        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
-        protected fun waitForAsyncTasksToComplete() {
+        internal fun waitForAsyncTasksToComplete() {
             advanceRobolectricLooperWithSleep()
         }
 
