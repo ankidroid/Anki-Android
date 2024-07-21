@@ -22,7 +22,6 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.utils.Time
 import java.text.SimpleDateFormat
 import java.util.Locale
-import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.time.Duration
@@ -92,58 +91,6 @@ fun remainingTime(
         )
     }
 }
-
-/**
- * Return a proper string for a time value in seconds
- *
- * Similar to Anki anki/utils.py's fmtTimeSpan.
- *
- * @param context The application's environment.
- * @param time_s The time to format, in seconds
- * @return The formatted, localized time string. The time is always a float. E.g. "27.0 days"
- */
-fun roundedTimeSpanUnformatted(
-    context: Context,
-    time_s: Long,
-): String {
-    // As roundedTimeSpan, but without tags; for place where you don't use HTML
-    return roundedTimeSpan(context, time_s).replace("<b>", "").replace("</b>", "")
-}
-
-/**
- * Return a proper string for a time value in seconds
- *
- * Similar to Anki anki/utils.py's fmtTimeSpan.
- *
- * @param context The application's environment.
- * @param time_s The time to format, in seconds
- * @return The formatted, localized time string. The time is always a float. E.g. "**27.0** days"
- */
-fun roundedTimeSpan(
-    context: Context,
-    time_s: Long,
-): String =
-    if (abs(time_s) < TIME_DAY) {
-        context.resources.getString(
-            R.string.stats_overview_hours,
-            time_s / TIME_HOUR,
-        )
-    } else if (abs(time_s) < TIME_MONTH) {
-        context.resources.getString(
-            R.string.stats_overview_days,
-            time_s / TIME_DAY,
-        )
-    } else if (abs(time_s) < TIME_YEAR) {
-        context.resources.getString(
-            R.string.stats_overview_months,
-            time_s / TIME_MONTH,
-        )
-    } else {
-        context.resources.getString(
-            R.string.stats_overview_years,
-            time_s / TIME_YEAR,
-        )
-    }
 
 fun getTimestamp(time: Time): String = SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
 

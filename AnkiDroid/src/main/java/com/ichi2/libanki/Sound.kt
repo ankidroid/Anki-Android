@@ -201,17 +201,6 @@ object Sound {
         }
 
     /**
-     * Replaces `[anki:play:q:0]` with ` example.mp3 `
-     */
-    fun replaceWithFileNames(
-        content: String,
-        renderOutput: TemplateRenderOutput,
-    ): String =
-        replaceAvRefsWith(content, renderOutput) { tag, _ ->
-            if (tag !is SoundOrVideoTag) null else " ${tag.filename} "
-        }
-
-    /**
      * Replaces [AvRef]s using the provided [processTag] function
      *
      * @param renderOutput context
