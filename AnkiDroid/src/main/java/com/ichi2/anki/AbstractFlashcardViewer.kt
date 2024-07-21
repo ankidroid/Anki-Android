@@ -73,6 +73,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
@@ -1748,6 +1749,11 @@ abstract class AbstractFlashcardViewer :
                 true
             }
 
+            ViewerCommand.TOGGLE_AUTO_ADVANCE -> {
+                toggleAutoAdvance()
+                true
+            }
+
             ViewerCommand.CLEAR_WHITEBOARD -> {
                 clearWhiteboard()
                 true
@@ -1793,6 +1799,22 @@ abstract class AbstractFlashcardViewer :
 
     protected open fun toggleWhiteboard() {
         // intentionally blank
+    }
+
+    protected open fun toggleAutoAdvance() {
+        val preferences = sharedPrefs()
+        val timeoutAnswer = preferences.getBoolean("timeoutAnswer", false)
+        preferences.edit {
+            putBoolean("timeoutAnswer", !timeoutAnswer)
+        }
+        Timber.i("timeoutAnswer value has changed to %b", !timeoutAnswer)
+        // Toggling auto advance will reset the timer, and if enabled while audio is playing, the timer will start immediately
+        launchCatchingTask {
+            withCol {
+                automaticAnswer = AutomaticAnswer.createInstance(this@AbstractFlashcardViewer, preferences, this)
+            }
+        }
+        displayCardAnswer()
     }
 
     protected open fun clearWhiteboard() {

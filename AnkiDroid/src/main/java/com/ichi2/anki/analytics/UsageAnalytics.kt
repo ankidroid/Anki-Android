@@ -507,6 +507,7 @@ object UsageAnalytics {
         "binding_EXIT",
         "binding_BURY_NOTE",
         "binding_SUSPEND_NOTE",
+        "binding_TOGGLE_AUTO_ADVANCE",
         "binding_TOGGLE_FLAG_RED",
         "binding_TOGGLE_FLAG_ORANGE",
         "binding_TOGGLE_FLAG_GREEN",
