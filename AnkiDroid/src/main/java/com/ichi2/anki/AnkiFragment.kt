@@ -17,7 +17,6 @@ package com.ichi2.anki
 
 import android.content.BroadcastReceiver
 import android.net.Uri
-import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.annotation.AttrRes
@@ -65,11 +64,6 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout) {
      */
     protected open fun onCollectionLoaded(col: Collection) {
         hideProgressBar()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().window.statusBarColor = ThemeUtils.getThemeAttrColor(requireContext(), R.attr.appBarColor)
-        super.onViewCreated(view, savedInstanceState)
     }
 
     // Helper functions: These make fragment code shorter
