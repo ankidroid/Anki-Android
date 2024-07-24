@@ -658,6 +658,8 @@ open class CardBrowser :
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             launchCatchingTask {
                 val clickedCardId = viewModel.queryCardIdAtPosition(position)
+                // set selected position
+                cardsAdapter.selectedPosition = position
                 if (viewModel.isInMultiSelectMode) {
                     // click on whole cell triggers select
                     val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
@@ -679,6 +681,8 @@ open class CardBrowser :
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             launchCatchingTask {
                 currentCardId = viewModel.queryCardIdAtPosition(position)
+                // set selected position
+                cardsAdapter.selectedPosition = position
                 if (viewModel.isInMultiSelectMode) {
                     viewModel.selectRowsBetweenPositions(lastSelectedPosition, position)
                 } else {
@@ -1705,7 +1709,7 @@ open class CardBrowser :
         val isDeckEmpty = viewModel.rowCount == 0
         // Hide note editor frame if deck is empty and fragmented
         noteEditorFrame?.visibility = if (fragmented && !isDeckEmpty) {
-            currentCardId = viewModel.cards[0].id
+            currentCardId = viewModel.cards[cardsAdapter.selectedPosition].id
             loadNoteEditorFragmentIfFragmented(editNoteLauncher)
             View.VISIBLE
         } else {
@@ -2049,6 +2053,7 @@ open class CardBrowser :
     ) : BaseAdapter() {
         private var originalTextSize = -1.0f
         private val inflater: LayoutInflater
+        var selectedPosition: Int = 0
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
             val v: View
@@ -2076,8 +2081,10 @@ open class CardBrowser :
                     setFont(column as TextView) // set font for column
                     column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
+            // check whether the view is selected
+            val isHighLight = position == selectedPosition
             // set card's background color
-            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser)
+            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser, isHighLight)
             v.setBackgroundColor(backgroundColor)
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
@@ -2259,12 +2266,14 @@ open class CardBrowser :
          * @return index into TypedArray specifying the background color
          */
         @ColorInt
-        fun getBackgroundColor(context: Context): Int {
+        fun getBackgroundColor(context: Context, isHighlight: Boolean): Int {
             val flagColor = Flag.fromCode(card.userFlag()).browserColorRes
             if (flagColor != null) {
                 return context.getColor(flagColor)
             }
-            val colorAttr = if (isMarked(col, card.note(col))) {
+            val colorAttr = if (isHighlight) {
+                R.attr.currentDeckBackgroundColor
+            } else if (isMarked(col, card.note(col))) {
                 R.attr.markedColor
             } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                 R.attr.suspendedColor
