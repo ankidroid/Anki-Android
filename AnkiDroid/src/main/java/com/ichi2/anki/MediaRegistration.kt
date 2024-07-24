@@ -15,14 +15,17 @@
  */
 package com.ichi2.anki
 
+import android.content.ClipDescription
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
 import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileUtil.getFileNameAndExtension
 import timber.log.Timber
@@ -47,7 +50,7 @@ class MediaRegistration(private val context: Context) {
      * @return HTML referring to the loaded image
      */
     @Throws(IOException::class)
-    fun loadMediaIntoCollection(uri: Uri): String? {
+    fun loadMediaIntoCollection(uri: Uri, description: ClipDescription): String? {
         val fileName: String
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
@@ -59,9 +62,12 @@ class MediaRegistration(private val context: Context) {
         }
         var clipCopy: File
         var bytesWritten: Long
+        val isImage = ClipboardUtil.hasImage(description)
+        val isSVG = ClipboardUtil.hasSVG(description)
+
         openInputStreamWithURI(uri).use { copyFd ->
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd)) {
+            if (!isSVG && isImage && shouldConvertToJPG(fileNameAndExtension.value, copyFd)) {
                 clipCopy = File.createTempFile(fileName, ".jpg")
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
@@ -85,7 +91,11 @@ class MediaRegistration(private val context: Context) {
             File(tempFilePath).delete()
             return null
         }
-        val field = ImageField()
+        val field = if (isImage) {
+            ImageField()
+        } else {
+            MediaClipField()
+        }
         field.hasTemporaryMedia = true
         field.mediaPath = tempFilePath
         return field.formattedValue
@@ -129,11 +139,11 @@ class MediaRegistration(private val context: Context) {
         return fileNameAndExtension.key.length <= 3
     }
 
-    fun onPaste(uri: Uri): String? {
+    fun onPaste(uri: Uri, description: ClipDescription): String? {
         return try {
             // check if cache already holds registered file or not
             if (!pastedMediaCache.containsKey(uri.toString())) {
-                pastedMediaCache[uri.toString()] = loadMediaIntoCollection(uri)
+                pastedMediaCache[uri.toString()] = loadMediaIntoCollection(uri, description)
             }
             pastedMediaCache[uri.toString()]
         } catch (ex: NullPointerException) {
