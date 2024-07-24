@@ -17,6 +17,7 @@
 
 package com.ichi2.compat
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -30,6 +31,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CheckResult
+import androidx.core.view.OnReceiveContentListener
+import androidx.draganddrop.DropHelper
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -200,6 +203,19 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
+
+    /**
+     * If possible, configures a [View] for drag and drop operations, including highlighting that
+     * indicates the view is a drop target. Sets a listener that enables the view to handle dropped data.
+     *
+     * @see DropHelper.configureView
+     */
+    fun configureView(
+        activity: Activity,
+        view: View,
+        options: DropHelper.Options,
+        onReceiveContentListener: OnReceiveContentListener
+    )
 
     /**
      * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)

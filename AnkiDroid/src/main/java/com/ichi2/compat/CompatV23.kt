@@ -16,6 +16,7 @@
 
 package com.ichi2.compat
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -31,6 +32,8 @@ import android.os.Vibrator
 import android.provider.MediaStore
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.OnReceiveContentListener
+import androidx.draganddrop.DropHelper
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
@@ -145,6 +148,16 @@ open class CompatV23 : Compat {
                 return paths[mOrd++]
             }
         }
+    }
+
+    // Until API 24
+    override fun configureView(
+        activity: Activity,
+        view: View,
+        options: DropHelper.Options,
+        onReceiveContentListener: OnReceiveContentListener
+    ) {
+        // No implementation possible.
     }
 
     // Until API 26

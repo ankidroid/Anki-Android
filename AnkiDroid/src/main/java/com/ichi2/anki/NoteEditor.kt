@@ -23,6 +23,7 @@ import android.app.Activity
 import android.app.Activity.RESULT_CANCELED
 import android.content.BroadcastReceiver
 import android.content.ClipData
+import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -67,7 +68,11 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.util.component1
+import androidx.core.util.component2
+import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.isVisible
+import androidx.draganddrop.DropHelper
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import anki.config.ConfigKey
@@ -126,6 +131,7 @@ import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.libanki.Card
@@ -142,6 +148,8 @@ import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.ClipboardUtil
+import com.ichi2.utils.ClipboardUtil.hasMedia
+import com.ichi2.utils.ClipboardUtil.items
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.ImageUtils
 import com.ichi2.utils.ImportUtils
@@ -329,6 +337,37 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             }
         }
     )
+
+    /**
+     * Listener for handling content received via drag and drop or copy and paste.
+     * This listener processes URIs contained in the payload and attempts to paste the content into the target EditText view.
+     */
+    private val onReceiveContentListener = OnReceiveContentListener { view, payload ->
+        val (uriContent, remaining) = payload.partition { item -> item.uri != null }
+
+        if (uriContent == null) {
+            return@OnReceiveContentListener remaining
+        }
+
+        val clip = uriContent.clip
+        val description = clip.description
+
+        if (!hasMedia(description)) {
+            return@OnReceiveContentListener remaining
+        }
+
+        for (uri in clip.items().map { it.uri }) {
+            try {
+                onPaste(view as EditText, uri, description)
+            } catch (e: Exception) {
+                Timber.w(e)
+                CrashReportService.sendExceptionReport(e, "NoteEditor::onReceiveContent")
+                return@OnReceiveContentListener remaining
+            }
+        }
+
+        return@OnReceiveContentListener remaining
+    }
 
     private inner class NoteEditorActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
@@ -1594,12 +1633,23 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
             val newEditText = editLineView.editText
-            newEditText.setPasteListener { editText: EditText?, uri: Uri? ->
+            newEditText.setPasteListener { editText: EditText?, uri: Uri?, description: ClipDescription? ->
                 onPaste(
                     editText!!,
-                    uri!!
+                    uri!!,
+                    description!!
                 )
             }
+            CompatHelper.compat.configureView(
+                requireActivity(),
+                editLineView,
+                DropHelper.Options.Builder()
+                    .setHighlightColor(R.color.material_lime_green_A700)
+                    .setHighlightCornerRadiusPx(0)
+                    .addInnerEditTexts(newEditText)
+                    .build(),
+                onReceiveContentListener
+            )
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
                 if (i == 0) {
                     findViewById<View>(R.id.note_deck_spinner).nextFocusForwardId = newEditText.id
@@ -1837,8 +1887,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
     }
 
-    private fun onPaste(editText: EditText, uri: Uri): Boolean {
-        val mediaTag = mediaRegistration!!.onPaste(uri) ?: return false
+    private fun onPaste(editText: EditText, uri: Uri, description: ClipDescription): Boolean {
+        val mediaTag = mediaRegistration!!.onPaste(uri, description) ?: return false
         insertStringInField(editText, mediaTag)
         return true
     }
