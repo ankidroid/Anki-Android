@@ -111,6 +111,7 @@ import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.pages.ImageOcclusion
@@ -156,13 +157,11 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil
 import com.ichi2.utils.NoteFieldDecorator
 import com.ichi2.utils.TextViewUtil
-import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
-import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.flow.first
@@ -179,7 +178,6 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import androidx.appcompat.widget.Toolbar as MainToolbar
-import com.ichi2.anki.noteeditor.Toolbar as Toolbar
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -663,7 +661,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 // TODO: Support all extensions
                 //  See https://github.com/ankitects/anki/blob/6f3550464d37aee1b8b784e431cbfce8382d3ce7/rslib/src/image_occlusion/imagedata.rs#L154
                 if (ClipboardUtil.hasImage(clipboard)) {
-                    val uri = ClipboardUtil.getImageUri(clipboard)
+                    val uri = ClipboardUtil.getUri(clipboard)
                     val i = Intent().apply {
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         clipData = ClipData.newUri(requireActivity().contentResolver, uri.toString(), uri)
@@ -1629,8 +1627,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
             val newEditText = editLineView.editText
-            newEditText.setImagePasteListener { editText: EditText?, uri: Uri? ->
-                onImagePaste(
+            newEditText.setPasteListener { editText: EditText?, uri: Uri? ->
+                onPaste(
                     editText!!,
                     uri!!
                 )
@@ -1847,9 +1845,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
     }
 
-    private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
-        val imageTag = mediaRegistration!!.onImagePaste(uri) ?: return false
-        insertStringInField(editText, imageTag)
+    private fun onPaste(editText: EditText, uri: Uri): Boolean {
+        val mediaTag = mediaRegistration!!.onPaste(uri) ?: return false
+        insertStringInField(editText, mediaTag)
         return true
     }
 

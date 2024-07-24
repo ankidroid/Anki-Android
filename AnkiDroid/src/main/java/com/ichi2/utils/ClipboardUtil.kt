@@ -54,7 +54,7 @@ object ClipboardUtil {
         ?.takeIf { it.itemCount > 0 }
         ?.getItemAt(0)
 
-    fun getImageUri(clipboard: ClipboardManager?): Uri? {
+    fun getUri(clipboard: ClipboardManager?): Uri? {
         return getFirstItem(clipboard)?.uri
     }
 
