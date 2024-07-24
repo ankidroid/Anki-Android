@@ -167,6 +167,13 @@ open class CardBrowser :
     ExportDialogsFactoryProvider {
 
     /**
+     * Provides an instance of NoteEditorLauncher for adding a note
+     */
+    @get:VisibleForTesting
+    val addNoteLauncher: NoteEditorLauncher
+        get() = createAddNoteLauncher(viewModel)
+
+    /**
      * Provides an instance of NoteEditorLauncher for editing a note
      */
     private val editNoteLauncher: NoteEditorLauncher
@@ -657,6 +664,8 @@ open class CardBrowser :
                     // load up the card selected on the list
                     val clickedCardId = viewModel.queryCardIdAtPosition(position)
                     saveScrollingState(position)
+                    // set selected position
+                    cardsAdapter.selectedPosition = position
                     openNoteEditorForCard(clickedCardId)
                 }
             }
@@ -1339,13 +1348,6 @@ open class CardBrowser :
         showDialogFragment(dialog)
     }
 
-    /**
-     * Provides an instance of NoteEditorLauncher for adding a note
-     */
-    @get:VisibleForTesting
-    val addNoteLauncher: NoteEditorLauncher
-        get() = createAddNoteLauncher(viewModel)
-
     private fun addNoteFromCardBrowser() {
         if (fragmented) {
             loadNoteEditorFragmentIfFragmented(addNoteLauncher)
@@ -1849,6 +1851,7 @@ open class CardBrowser :
     ) : BaseAdapter() {
         private var originalTextSize = -1.0f
         private val inflater: LayoutInflater
+        var selectedPosition: Int = 0
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
             val v: View
@@ -1876,8 +1879,10 @@ open class CardBrowser :
                     setFont(column as TextView) // set font for column
                     column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
+            // check whether the view is selected
+            val isHighLight = position == selectedPosition
             // set card's background color
-            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser)
+            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser, isHighLight)
             v.setBackgroundColor(backgroundColor)
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
@@ -2059,12 +2064,14 @@ open class CardBrowser :
          * @return index into TypedArray specifying the background color
          */
         @ColorInt
-        fun getBackgroundColor(context: Context): Int {
+        fun getBackgroundColor(context: Context, isHighlight: Boolean): Int {
             val flagColor = Flag.fromCode(card.userFlag()).browserColorRes
             if (flagColor != null) {
                 return context.getColor(flagColor)
             }
-            val colorAttr = if (isMarked(col, card.note(col))) {
+            val colorAttr = if (isHighlight) {
+                R.attr.currentDeckBackgroundColor
+            } else if (isMarked(col, card.note(col))) {
                 R.attr.markedColor
             } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                 R.attr.suspendedColor
