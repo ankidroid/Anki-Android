@@ -16,6 +16,7 @@
 
 package com.ichi2.anki
 
+import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -25,25 +26,18 @@ import android.os.LocaleList
 import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
-import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputConnection
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
-import androidx.core.view.ContentInfoCompat
-import androidx.core.view.OnReceiveContentListener
-import androidx.core.view.ViewCompat
-import androidx.core.view.inputmethod.EditorInfoCompat
-import androidx.core.view.inputmethod.InputConnectionCompat
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES
+import com.ichi2.utils.ClipboardUtil.getDescription
 import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.getUri
-import com.ichi2.utils.ClipboardUtil.hasImage
+import com.ichi2.utils.ClipboardUtil.hasMedia
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
@@ -100,49 +94,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         this.pasteListener = pasteListener
     }
 
-    @KotlinCleanup("add extension method to iterate clip items")
-    override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection? {
-        val inputConnection = super.onCreateInputConnection(editorInfo) ?: return null
-        EditorInfoCompat.setContentMimeTypes(editorInfo, IMAGE_MIME_TYPES)
-        ViewCompat.setOnReceiveContentListener(
-            this,
-            IMAGE_MIME_TYPES,
-            object : OnReceiveContentListener {
-                override fun onReceiveContent(view: View, payload: ContentInfoCompat): ContentInfoCompat? {
-                    val pair = payload.partition { item -> item.uri != null }
-                    val uriContent = pair.first
-                    val remaining = pair.second
-
-                    if (pasteListener == null || uriContent == null) {
-                        return remaining
-                    }
-
-                    val clip = uriContent.clip
-                    val description = clip.description
-
-                    if (!hasImage(description)) {
-                        return remaining
-                    }
-
-                    for (i in 0 until clip.itemCount) {
-                        val uri = clip.getItemAt(i).uri
-                        try {
-                            onPaste(uri)
-                        } catch (e: Exception) {
-                            Timber.w(e)
-                            CrashReportService.sendExceptionReport(e, "NoteEditor::onImage")
-                            return remaining
-                        }
-                    }
-
-                    return remaining
-                }
-            }
-        )
-
-        return InputConnectionCompat.createWrapper(this, inputConnection, editorInfo)
-    }
-
     override fun onSelectionChanged(selStart: Int, selEnd: Int) {
         if (selectionChangeListener != null) {
             try {
@@ -192,9 +143,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     override fun onTextContextMenuItem(id: Int): Boolean {
         // The current function is called both by Ctrl+V and pasting from the context menu
+        // It does not deal with drag and drop
         if (id == android.R.id.paste) {
-            if (hasImage(clipboard)) {
-                return onPaste(getUri(clipboard))
+            if (hasMedia(clipboard)) {
+                return onPaste(getUri(clipboard), getDescription(clipboard))
             }
             return pastePlainText()
         }
@@ -215,11 +167,11 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    private fun onPaste(mediaUri: Uri?): Boolean {
+    private fun onPaste(mediaUri: Uri?, description: ClipDescription?): Boolean {
         return if (mediaUri == null) {
             false
         } else {
-            pasteListener!!.onPaste(this, mediaUri)
+            pasteListener!!.onPaste(this, mediaUri, description)
         }
     }
 
@@ -252,7 +204,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     fun interface PasteListener {
-        fun onPaste(editText: EditText, uri: Uri?): Boolean
+        fun onPaste(editText: EditText, uri: Uri?, description: ClipDescription?): Boolean
     }
 
     companion object {

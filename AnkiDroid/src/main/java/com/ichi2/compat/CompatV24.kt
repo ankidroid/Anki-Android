@@ -17,9 +17,14 @@
 package com.ichi2.compat
 
 import android.annotation.TargetApi
+import android.app.Activity
 import android.icu.util.ULocale
 import android.view.MotionEvent
+import android.view.View
+import androidx.core.view.OnReceiveContentListener
+import androidx.draganddrop.DropHelper
 import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import timber.log.Timber
 import java.util.Locale
 
@@ -38,6 +43,21 @@ open class CompatV24 : CompatV23(), Compat {
             Timber.w("Failed to normalize locale %s", locale, e)
             locale
         }
+    }
+
+    override fun configureView(
+        activity: Activity,
+        view: View,
+        options: DropHelper.Options,
+        onReceiveContentListener: OnReceiveContentListener
+    ) {
+        DropHelper.configureView(
+            activity,
+            view,
+            MEDIA_MIME_TYPES,
+            options,
+            onReceiveContentListener
+        )
     }
 
     override val AXIS_RELATIVE_X: Int = MotionEvent.AXIS_RELATIVE_X

@@ -21,6 +21,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto">
+
+<!--    At the time of writing, ankidroid minSdk is 23. This library requires API 24.-->
+<!--    In order to use it, we use <uses-sdk tools:overrideLibrary instead of-->
+<!--    <uses-feature android:name. We must ensure this is never called when running on API 23.-->
+    <uses-sdk tools:overrideLibrary="androidx.draganddrop"/>
+
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <uses-feature android:name="android.hardware.audio.output" android:required="false" />
