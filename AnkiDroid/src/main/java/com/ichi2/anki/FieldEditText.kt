@@ -41,8 +41,8 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES
-import com.ichi2.utils.ClipboardUtil.getImageUri
 import com.ichi2.utils.ClipboardUtil.getPlainText
+import com.ichi2.utils.ClipboardUtil.getUri
 import com.ichi2.utils.ClipboardUtil.hasImage
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.parcelize.Parcelize
@@ -55,7 +55,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     override var ord = 0
     private var origBackground: Drawable? = null
     private var selectionChangeListener: TextSelectionListener? = null
-    private var imageListener: ImagePasteListener? = null
+    private var pasteListener: PasteListener? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var clipboard: ClipboardManager? = null
@@ -96,8 +96,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         setDefaultStyle()
     }
 
-    fun setImagePasteListener(imageListener: ImagePasteListener?) {
-        this.imageListener = imageListener
+    fun setPasteListener(pasteListener: PasteListener) {
+        this.pasteListener = pasteListener
     }
 
     @KotlinCleanup("add extension method to iterate clip items")
@@ -113,7 +113,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
                     val uriContent = pair.first
                     val remaining = pair.second
 
-                    if (imageListener == null || uriContent == null) {
+                    if (pasteListener == null || uriContent == null) {
                         return remaining
                     }
 
@@ -127,7 +127,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
                     for (i in 0 until clip.itemCount) {
                         val uri = clip.getItemAt(i).uri
                         try {
-                            onImagePaste(uri)
+                            onPaste(uri)
                         } catch (e: Exception) {
                             Timber.w(e)
                             CrashReportService.sendExceptionReport(e, "NoteEditor::onImage")
@@ -191,10 +191,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     override fun onTextContextMenuItem(id: Int): Boolean {
-        // This handles both CTRL+V and "Paste"
+        // The current function is called both by Ctrl+V and pasting from the context menu
         if (id == android.R.id.paste) {
             if (hasImage(clipboard)) {
-                return onImagePaste(getImageUri(clipboard))
+                return onPaste(getUri(clipboard))
             }
             return pastePlainText()
         }
@@ -215,11 +215,11 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    private fun onImagePaste(imageUri: Uri?): Boolean {
-        return if (imageUri == null) {
+    private fun onPaste(mediaUri: Uri?): Boolean {
+        return if (mediaUri == null) {
             false
         } else {
-            imageListener!!.onImagePaste(this, imageUri)
+            pasteListener!!.onPaste(this, mediaUri)
         }
     }
 
@@ -251,8 +251,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         fun onSelectionChanged(selStart: Int, selEnd: Int)
     }
 
-    fun interface ImagePasteListener {
-        fun onImagePaste(editText: EditText, uri: Uri?): Boolean
+    fun interface PasteListener {
+        fun onPaste(editText: EditText, uri: Uri?): Boolean
     }
 
     companion object {

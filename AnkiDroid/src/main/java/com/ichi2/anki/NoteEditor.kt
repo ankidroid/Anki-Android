@@ -623,7 +623,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 // TODO: Support all extensions
                 //  See https://github.com/ankitects/anki/blob/6f3550464d37aee1b8b784e431cbfce8382d3ce7/rslib/src/image_occlusion/imagedata.rs#L154
                 if (ClipboardUtil.hasImage(clipboard)) {
-                    val uri = ClipboardUtil.getImageUri(clipboard)
+                    val uri = ClipboardUtil.getUri(clipboard)
                     val i = Intent().apply {
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         clipData = ClipData.newUri(requireActivity().contentResolver, uri.toString(), uri)
@@ -1594,8 +1594,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             val editLineView = editLines[i]
             customViewIds.add(editLineView.id)
             val newEditText = editLineView.editText
-            newEditText.setImagePasteListener { editText: EditText?, uri: Uri? ->
-                onImagePaste(
+            newEditText.setPasteListener { editText: EditText?, uri: Uri? ->
+                onPaste(
                     editText!!,
                     uri!!
                 )
@@ -1837,9 +1837,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
     }
 
-    private fun onImagePaste(editText: EditText, uri: Uri): Boolean {
-        val imageTag = mediaRegistration!!.onImagePaste(uri) ?: return false
-        insertStringInField(editText, imageTag)
+    private fun onPaste(editText: EditText, uri: Uri): Boolean {
+        val mediaTag = mediaRegistration!!.onPaste(uri) ?: return false
+        insertStringInField(editText, mediaTag)
         return true
     }
 
