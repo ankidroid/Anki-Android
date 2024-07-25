@@ -53,7 +53,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
+            android:id="@+id/set_due_date_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
