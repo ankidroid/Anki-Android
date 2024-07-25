@@ -144,7 +144,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         slidingTabLayout = findViewById(R.id.sliding_tabs)
-        viewPager = findViewById(R.id.pager)
+        viewPager = findViewById(R.id.card_template_editor_pager)
         setNavigationBarColor(R.attr.appBarColor)
 
         // Disable the home icon

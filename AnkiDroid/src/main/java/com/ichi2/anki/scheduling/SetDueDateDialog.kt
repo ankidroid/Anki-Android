@@ -125,7 +125,7 @@ class SetDueDateDialog : DialogFragment() {
                 viewModel.isValidFlow.collect { isValid -> positiveButton.isEnabled = isValid }
             }
             // setup viewpager + tabs
-            val viewPager = findViewById<ViewPager2>(R.id.pager)!!
+            val viewPager = findViewById<ViewPager2>(R.id.set_due_date_pager)!!
             viewPager.adapter = DueDateStateAdapter(this@SetDueDateDialog)
             val tabLayout = findViewById<TabLayout>(R.id.tab_layout)!!
             TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
