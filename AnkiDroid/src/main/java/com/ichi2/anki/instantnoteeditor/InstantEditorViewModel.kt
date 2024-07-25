@@ -62,6 +62,10 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
     // List to store the cloze integers
     private val intClozeList = mutableListOf<Int>()
 
+    /** The number of words which are marked as cloze deletions */
+    @VisibleForTesting
+    val clozeDeletionCount get() = intClozeList.size
+
     private val _currentClozeMode = MutableStateFlow(InstantNoteEditorActivity.ClozeMode.INCREMENT)
 
     val currentClozeMode: StateFlow<InstantNoteEditorActivity.ClozeMode> = _currentClozeMode.asStateFlow()
@@ -178,14 +182,14 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
     }
 
     private fun shouldResetClozeNumber(number: Int) {
-        val index = intClozeList.indexOf(number)
-        if (index != -1) {
-            intClozeList.removeAt(index)
-        }
+        intClozeList.remove(number)
 
         // Reset cloze number if the list is empty
         if (intClozeList.isEmpty()) {
             _currentClozeNumber.value = 1
+        } else {
+            // not null for sure
+            _currentClozeNumber.value = intClozeList.maxOrNull()!! + 1
         }
     }
 
@@ -248,7 +252,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         if (currentClozeMode.value == InstantNoteEditorActivity.ClozeMode.INCREMENT) {
             incrementClozeNumber()
         }
-        intClozeList.add(currentClozeNumber)
+        intClozeList.add(clozeNumber)
 
         val punctuation: String? = matcher?.groups?.get(2)?.value
         if (!punctuation.isNullOrEmpty()) {
