@@ -23,6 +23,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.instantnoteeditor.InstantEditorViewModel
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.instantnoteeditor.SaveNoteResult
+import com.ichi2.testutils.TestClass
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -87,22 +88,6 @@ class InstantEditorViewModelTest : RobolectricTest() {
     }
 
     @Test
-    fun `buildClozeText handles punctuation at end`() = runViewModelTest {
-        val text = "test,"
-        val result = buildClozeText(text)
-
-        assertEquals("{{c1::test}},", result)
-    }
-
-    @Test
-    fun `buildClozeText handles cloze punctuation at end`() = runViewModelTest {
-        val text = "{{c1::test}},"
-        val result = buildClozeText(text)
-
-        assertEquals("test,", result)
-    }
-
-    @Test
     fun buildClozeTextTest() = runViewModelTest {
         val text = "test"
         val result = buildClozeText(text)
@@ -142,7 +127,8 @@ class InstantEditorViewModelTest : RobolectricTest() {
             "{{c1::word}}" to "word",
             "{{c2::another}}" to "another",
             "{{c4::help}}!!" to "help!!",
-            "no cloze" to "no cloze"
+            "no cloze" to "no cloze",
+            "[{{c6::word}}]" to "[word]"
         )
 
         testCases.forEach { (input, expected) ->
@@ -183,10 +169,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
     private fun runViewModelTest(
         initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
         testBody: suspend InstantEditorViewModel.() -> Unit
-    ) = runTest {
-        val viewModel = initViewModel()
-        testBody(viewModel)
-    }
+    ) = runInstantEditorViewModelTest(initViewModel, testBody)
 
     private fun saveNoteResult(result: SaveNoteResult): String? {
         return when (result) {
@@ -198,6 +181,17 @@ class InstantEditorViewModelTest : RobolectricTest() {
             }
 
             is SaveNoteResult.Warning -> result.message
+        }
+    }
+
+    companion object {
+        context (TestClass)
+        fun runInstantEditorViewModelTest(
+            initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
+            testBody: suspend InstantEditorViewModel.() -> Unit
+        ) = runTest {
+            val viewModel = initViewModel()
+            testBody(viewModel)
         }
     }
 }

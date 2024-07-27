@@ -250,13 +250,12 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         }
         intClozeList.add(currentClozeNumber)
 
-        val punctuation: String? = matcher?.groups?.get(2)?.value
-        if (!punctuation.isNullOrEmpty()) {
-            val capturedWord = matcher.groups[1]?.value
-            clozeText = "{{c$clozeNumber::$capturedWord}}$punctuation"
-        } else {
-            clozeText = "{{c$clozeNumber::$text}}"
-        }
+        // Extract the first, second, and third regex groups from the matcher
+        val punctuationAtStart: String? = matcher?.groups?.get(1)?.value
+        val capturedWord: String? = matcher?.groups?.get(2)?.value
+        val punctuationAtEnd: String? = matcher?.groups?.get(4)?.value
+
+        clozeText = "$punctuationAtStart{{c$clozeNumber::$capturedWord}}$punctuationAtEnd"
 
         return clozeText
     }
@@ -274,7 +273,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      */
     fun getWordClozeNumber(word: String): Int? {
         val matcher = clozePattern.find(word)
-        return matcher?.groups?.get(1)?.value?.toIntOrNull()
+        return matcher?.groups?.get(2)?.value?.toIntOrNull()
     }
 
     fun getWordsFromFieldText(): List<String> {
@@ -321,9 +320,10 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
 
     fun updateClozeNumber(word: String, newClozeNumber: Int): String {
         return clozePattern.replace(word) { matchResult ->
-            val content = matchResult.groupValues[2]
-            val punctuation = matchResult.groupValues[3]
-            "{{c$newClozeNumber::$content}}$punctuation"
+            val punctutationAtStart = matchResult.groupValues[1]
+            val content = matchResult.groupValues[3]
+            val punctutationAtEnd = matchResult.groupValues[4]
+            "$punctutationAtStart{{c$newClozeNumber::$content}}$punctutationAtEnd"
         }
     }
 
@@ -337,7 +337,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
     fun getCleanClozeWords(word: String): String {
         val regex = clozePattern
         return regex.replace(word) { matchResult ->
-            (matchResult.groups[2]?.value ?: "") + (matchResult.groups[3]?.value ?: "")
+            (matchResult.groups[1]?.value ?: "") + (matchResult.groups[3]?.value ?: "") + (matchResult.groups[4]?.value ?: "")
         }
     }
 
@@ -352,7 +352,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      */
     private fun processClozeUndo(text: String): String? {
         val matchResult = clozePattern.find(text)
-        val capturedClozeNumber = matchResult?.groups?.get(1)?.value
+        val capturedClozeNumber = matchResult?.groups?.get(2)?.value
         if (capturedClozeNumber != null && currentClozeNumber - capturedClozeNumber.toInt() == 1) {
             decrementClozeNumber()
         }
@@ -362,12 +362,13 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
             return null
         }
 
-        matchResult.groups[1]?.value?.toInt()?.let { shouldResetClozeNumber(it) }
+        matchResult.groups[2]?.value?.toInt()?.let { shouldResetClozeNumber(it) }
 
-        if (matchResult.groups[3]?.value != null) {
-            return matchResult.groups[2]?.value + matchResult.groups[3]?.value
-        }
-        return matchResult.groups[2]?.value
+        val punctuationAtStart: String? = matchResult?.groups?.get(1)?.value ?: ""
+        val capturedWord: String? = matchResult?.groups?.get(3)?.value ?: ""
+        val punctuationAtEnd: String? = matchResult?.groups?.get(4)?.value ?: ""
+
+        return punctuationAtStart + capturedWord + punctuationAtEnd
     }
 
     fun setEditorMode(mode: InstantNoteEditorActivity.EditMode) {
@@ -441,7 +442,7 @@ sealed class SaveNoteResult {
  * used in educational materials. The pattern follows the format:
  * {{c`number`::`content`}} (optional punctuation)
  */
-val clozePattern = Regex("""\{\{c(\d+)::([^}]+?)\}\}(\p{Punct}+)?""")
+val clozePattern = Regex("""(\p{Punct}+)?\{\{c(\d+)::([^}]+?)\}\}(\p{Punct}+)?""")
 
 private val punctuationPattern = Regex("""\p{Punct}+$""")
 
@@ -449,4 +450,4 @@ private val punctuationPattern = Regex("""\p{Punct}+$""")
 private val spaceRegex = Regex("\\s+")
 
 /** Used to build cloze text here word is not null **/
-private val clozeBuilderPattern = "([\\w\\p{Pd}\\p{Pc}]+)(\\p{Punct}*)".toRegex()
+private val clozeBuilderPattern = "(\\p{Punct}*)((?:\\w|\\p{Pd}|\\p{Pc}|'|(\\(\\w+\\)))+)(\\p{Punct}*)".toRegex()
