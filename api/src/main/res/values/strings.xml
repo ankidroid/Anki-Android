@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ProviderAPI</string>
+    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_message">Deleting this card type would leave some notes without any cards. Please ensure each note has at least one card type before deleting.</string>
+
 </resources>
+
