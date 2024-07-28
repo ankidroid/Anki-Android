@@ -674,11 +674,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         // TODO: Use withCol {} instead
-        fun deleteCardTemplate() {
-            val col = templateEditor.getColUnsafe
-            val tempModel = templateEditor.tempModel
-            val ordinal = templateEditor.viewPager.currentItem
-            val template = tempModel!!.getTemplate(ordinal)
+       fun deleteCardTemplate() {
+        val col = templateEditor.getColUnsafe
+        val tempModel = templateEditor.tempModel
+        val ordinal = templateEditor.viewPager.currentItem
+        val template = tempModel!!.getTemplate(ordinal)
             // Don't do anything if only one template
             if (tempModel.templateCount < 2) {
                 templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_cant_delete))
@@ -686,8 +686,10 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
 
             if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
+                showOrphanNoteDialog() ///
                 return
             }
+
 
             // Show confirmation dialog
             val numAffectedCards = if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel, ordinal)) {
@@ -698,6 +700,17 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
             confirmDeleteCards(template, tempModel.notetype, numAffectedCards)
         }
+            //The showOrphanNoteDialog method is responsible for displaying a
+            //dialog to the user when they attempt to delete a card type that
+            //would leave some notes without any cards (orphan notes).
+           private fun showOrphanNoteDialog() {
+            AlertDialog.Builder(templateEditor.requireContext())
+            .setTitle(R.string.orphan_note_title)
+            .setMessage(R.string.orphan_note_message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
+            }
+
 
         fun openBrowserAppearance(): Boolean {
             val currentTemplate = getCurrentTemplate()
@@ -855,7 +868,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             return requireArguments().getInt(CARD_INDEX)
         }
 
-        private fun deletionWouldOrphanNote(col: Collection, tempModel: CardTemplateNotetype?, position: Int): Boolean {
+       private fun deletionWouldOrphanNote(col: Collection, tempModel: CardTemplateNotetype?, position: Int): Boolean {
             // For existing templates, make sure we won't leave orphaned notes if we delete the template
             //
             // Note: we are in-memory, so the database is unaware of previous but unsaved deletes.
@@ -863,13 +876,13 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             // template delete queued up, we check the database to see if this delete in combo with any other
             // pending deletes could orphan cards
             if (!CardTemplateNotetype.isOrdinalPendingAdd(tempModel!!, position)) {
-                val currentDeletes = tempModel.getDeleteDbOrds(position)
+               val currentDeletes = tempModel.getDeleteDbOrds(position)
                 // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
                 if (col.notetypes.getCardIdsForModel(tempModel.modelId, currentDeletes) == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
                     // not already have cards generated making it safe will see this error message:
-                    templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_would_delete_note))
+                    // templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_would_delete_note)) ///I have 
                     return true
                 }
             }
