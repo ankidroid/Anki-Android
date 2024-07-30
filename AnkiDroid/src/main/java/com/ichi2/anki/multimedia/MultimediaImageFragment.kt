@@ -30,6 +30,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropException
@@ -44,7 +45,6 @@ import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImageUtils
 import com.ichi2.utils.message
@@ -68,7 +68,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private val viewModel: MultimediaViewModel by viewModels()
 
-    private lateinit var selectedImageOptions: ImageOptions
+    private lateinit var selectedImageOptions: MediaFragmentOptions
 
     /**
      * Launches an activity to pick an image from the device's gallery.
@@ -151,16 +151,21 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
                 R.id.action_restart -> {
                     when (selectedImageOptions) {
-                        ImageOptions.GALLERY -> {
-                            openGallery()
-                        }
-
-                        ImageOptions.CAMERA -> {
+                        MediaFragmentOptions.CameraFragment -> {
                             viewModel.saveMultimediaForRevert(
                                 imagePath = viewModel.currentMultimediaPath.value,
                                 imageUri = viewModel.currentMultimediaUri.value
                             )
                             dispatchCamera()
+                        }
+                        MediaFragmentOptions.DrawingFragment -> {
+                            // TODO: yet to implement
+                        }
+                        MediaFragmentOptions.ImageFragment -> {
+                            openGallery()
+                        }
+                        else -> {
+                            // do nothing
                         }
                     }
                     true
@@ -181,7 +186,19 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
 
         arguments?.let {
-            selectedImageOptions = it.getSerializableCompat<ImageOptions>(EXTRA_MEDIA_OPTIONS) as ImageOptions
+            val options = BundleCompat.getParcelable(
+                it,
+                EXTRA_MEDIA_OPTIONS,
+                MediaFragmentOptions::class.java
+            )
+
+            if (options == null) {
+                Timber.e("Failed to get MediaFragmentOptions")
+                showErrorDialog()
+                return
+            }
+
+            selectedImageOptions = options
         }
     }
 
@@ -196,13 +213,19 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun handleSelectedImageOptions() {
         when (selectedImageOptions) {
-            ImageOptions.GALLERY -> {
+            MediaFragmentOptions.CameraFragment -> {
+                dispatchCamera()
+                Timber.d("MultimediaImageFragment:: Launching camera")
+            }
+            MediaFragmentOptions.DrawingFragment -> {
+                // TODO: yet to implement
+            }
+            MediaFragmentOptions.ImageFragment -> {
                 Timber.d("MultimediaImageFragment:: Opening gallery")
                 openGallery()
             }
-            ImageOptions.CAMERA -> {
-                dispatchCamera()
-                Timber.d("MultimediaImageFragment:: Launching camera")
+            else -> {
+                // do nothing
             }
         }
     }
@@ -429,7 +452,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
-            imageOptions: ImageOptions
+            imageOptions: MediaFragmentOptions
         ): Intent {
             return MultimediaActivity.getIntent(
                 context,
@@ -438,11 +461,5 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 imageOptions
             )
         }
-    }
-
-    /** Image options that a user choose from the bottom sheet which [MultimediaImageFragment] uses **/
-    enum class ImageOptions {
-        GALLERY,
-        CAMERA
     }
 }

@@ -93,6 +93,7 @@ import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaActivityExtra
 import com.ichi2.anki.multimedia.MultimediaBottomSheet
+import com.ichi2.anki.multimedia.MultimediaFragment
 import com.ichi2.anki.multimedia.MultimediaImageFragment
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaViewModel
@@ -1744,7 +1745,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                         val imageIntent = MultimediaImageFragment.getIntent(
                             requireContext(),
                             MultimediaActivityExtra(fieldIndex, field, note),
-                            MultimediaImageFragment.ImageOptions.GALLERY
+                            MultimediaFragment.MediaFragmentOptions.ImageFragment
                         )
 
                         multimediaFragmentLauncher.launch(imageIntent)
@@ -1757,7 +1758,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                         val mediaIntent = AudioVideoFragment.getIntent(
                             requireContext(),
                             MultimediaActivityExtra(fieldIndex, field, note),
-                            AudioVideoFragment.MediaOption.AUDIO_CLIP
+                            MultimediaFragment.MediaFragmentOptions.AudioFragment
                         )
 
                         multimediaFragmentLauncher.launch(mediaIntent)
@@ -1778,7 +1779,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                         val mediaIntent = AudioVideoFragment.getIntent(
                             requireContext(),
                             MultimediaActivityExtra(fieldIndex, field, note),
-                            AudioVideoFragment.MediaOption.VIDEO_CLIP
+                            MultimediaFragment.MediaFragmentOptions.VideoFragment
                         )
 
                         multimediaFragmentLauncher.launch(mediaIntent)
@@ -1792,7 +1793,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                         val imageIntent = MultimediaImageFragment.getIntent(
                             requireContext(),
                             MultimediaActivityExtra(fieldIndex, field, note),
-                            MultimediaImageFragment.ImageOptions.CAMERA
+                            MultimediaFragment.MediaFragmentOptions.CameraFragment
                         )
 
                         multimediaFragmentLauncher.launch(imageIntent)

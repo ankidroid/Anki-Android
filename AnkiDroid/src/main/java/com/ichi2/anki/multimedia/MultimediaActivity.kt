@@ -20,6 +20,7 @@ package com.ichi2.anki.multimedia
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.content.IntentCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -29,7 +30,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
@@ -60,8 +60,8 @@ class MultimediaActivity : AnkiActivity() {
     private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
         get() = extras?.getSerializableCompat(MULTIMEDIA_ARGS_EXTRA)
 
-    private val Intent.mediaOptionsExtra: Serializable?
-        get() = getSerializableExtraCompat(EXTRA_MEDIA_OPTIONS)
+    private val Intent.mediaOptionsExtra: MultimediaFragment.MediaFragmentOptions?
+        get() = IntentCompat.getParcelableExtra(this, EXTRA_MEDIA_OPTIONS, MultimediaFragment.MediaFragmentOptions::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -114,12 +114,12 @@ class MultimediaActivity : AnkiActivity() {
             context: Context,
             fragmentClass: KClass<out Fragment>,
             arguments: MultimediaActivityExtra? = null,
-            mediaOptions: Serializable
+            mediaFragmentOptions: MultimediaFragment.MediaFragmentOptions? = null
         ): Intent {
             return Intent(context, MultimediaActivity::class.java).apply {
                 putExtra(MULTIMEDIA_ARGS_EXTRA, arguments)
                 putExtra(MULTIMEDIA_FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
-                putExtra(EXTRA_MEDIA_OPTIONS, mediaOptions)
+                putExtra(EXTRA_MEDIA_OPTIONS, mediaFragmentOptions)
             }
         }
     }

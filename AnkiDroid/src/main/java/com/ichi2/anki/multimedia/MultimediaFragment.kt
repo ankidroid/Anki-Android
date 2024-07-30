@@ -18,6 +18,7 @@
 package com.ichi2.anki.multimedia
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.format.Formatter
 import android.view.MenuItem
 import android.view.View
@@ -35,6 +36,7 @@ import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.File
 
@@ -110,5 +112,27 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 requireActivity().finish()
             }
         }
+    }
+
+    /**
+     * Class representing different types of media fragment options that are displayed to user.
+     * This class is `Parcelable` to allow easy passing between Android components.
+     */
+    @Parcelize
+    sealed class MediaFragmentOptions : Parcelable {
+        @Parcelize
+        data object AudioFragment : MediaFragmentOptions()
+
+        @Parcelize
+        data object VideoFragment : MediaFragmentOptions()
+
+        @Parcelize
+        data object ImageFragment : MediaFragmentOptions()
+
+        @Parcelize
+        data object CameraFragment : MediaFragmentOptions()
+
+        @Parcelize
+        data object DrawingFragment : MediaFragmentOptions()
     }
 }

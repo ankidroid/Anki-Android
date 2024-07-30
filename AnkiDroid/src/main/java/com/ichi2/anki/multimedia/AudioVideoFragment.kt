@@ -30,6 +30,7 @@ import androidx.annotation.OptIn
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.viewModels
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
@@ -38,14 +39,12 @@ import androidx.media3.ui.PlayerView
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.multimedia.AudioVideoFragment.MediaOption.AUDIO_CLIP
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.ExceptionUtil.executeSafe
 import com.ichi2.utils.FileUtil
 import timber.log.Timber
@@ -53,7 +52,7 @@ import java.io.File
 
 /** Handles the Multimedia Audio and Video attachment in the NoteEditor */
 class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
-    private lateinit var selectedMediaOptions: MediaOption
+    private lateinit var selectedMediaOptions: MediaFragmentOptions
 
     override val title: String
         get() = getTitleForFragment(selectedMediaOptions, requireContext())
@@ -93,7 +92,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
             onCreateMenuCondition = { menu ->
                 setMenuItemIcon(
                     menu.findItem(R.id.action_restart),
-                    if (selectedMediaOptions == AUDIO_CLIP) R.drawable.ic_replace_audio else R.drawable.ic_replace_video
+                    if (selectedMediaOptions == MediaFragmentOptions.AudioFragment) R.drawable.ic_replace_audio else R.drawable.ic_replace_video
                 )
                 menu.findItem(R.id.action_crop).isVisible = false
             }
@@ -123,7 +122,19 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         }
 
         arguments?.let {
-            selectedMediaOptions = it.getSerializableCompat<MediaOption>(EXTRA_MEDIA_OPTIONS) as MediaOption
+            val options = BundleCompat.getParcelable(
+                it,
+                EXTRA_MEDIA_OPTIONS,
+                MediaFragmentOptions::class.java
+            )
+
+            if (options == null) {
+                Timber.e("Failed to get MediaFragmentOptions")
+                showErrorDialog()
+                return
+            }
+
+            selectedMediaOptions = options
         }
     }
 
@@ -141,7 +152,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
 
     private fun handleSelectedMediaOptions() {
         when (selectedMediaOptions) {
-            MediaOption.AUDIO_CLIP -> {
+            MediaFragmentOptions.AudioFragment -> {
                 Timber.d("Opening chooser for audio file")
                 openMediaChooser(
                     "audio/*",
@@ -149,14 +160,16 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                     R.string.multimedia_editor_popup_audio_clip
                 )
             }
-
-            MediaOption.VIDEO_CLIP -> {
+            MediaFragmentOptions.VideoFragment -> {
                 Timber.d("Opening chooser for video file")
                 openMediaChooser(
                     "video/*",
                     emptyArray(),
                     R.string.multimedia_editor_popup_video_clip
                 )
+            }
+            else -> {
+                // do nothing
             }
         }
     }
@@ -171,7 +184,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         mediaFileSize = requireView().findViewById(R.id.media_size_textview)
         playerView.setControllerAnimationEnabled(true)
 
-        if (selectedMediaOptions == MediaOption.AUDIO_CLIP) {
+        if (selectedMediaOptions == MediaFragmentOptions.AudioFragment) {
             Timber.d("Media file is of audio type, setting default artwork")
             playerView.defaultArtwork =
                 ContextCompat.getDrawable(requireContext(), R.drawable.round_audio_file_24)
@@ -375,21 +388,15 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
-            mediaOptions: MediaOption
+            mediaFragmentOptions: MediaFragmentOptions
         ): Intent {
             return MultimediaActivity.getIntent(
                 context,
                 AudioVideoFragment::class,
                 multimediaExtra,
-                mediaOptions
+                mediaFragmentOptions
             )
         }
-    }
-
-    /** The supported media types that a user choose from the bottom sheet which [AudioVideoFragment] uses */
-    enum class MediaOption {
-        AUDIO_CLIP,
-        VIDEO_CLIP
     }
 
     /**
@@ -399,10 +406,11 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      * @param context Context The context to use for accessing string resources.
      * @return String The title string corresponding to the current media option.
      */
-    private fun getTitleForFragment(mediaOption: MediaOption, context: Context): String {
+    private fun getTitleForFragment(mediaOption: MediaFragmentOptions, context: Context): String {
         return when (mediaOption) {
-            MediaOption.AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)
-            MediaOption.VIDEO_CLIP -> context.getString(R.string.multimedia_editor_popup_video_clip)
+            MediaFragmentOptions.AudioFragment -> context.getString(R.string.multimedia_editor_popup_audio_clip)
+            MediaFragmentOptions.VideoFragment -> context.getString(R.string.multimedia_editor_popup_video_clip)
+            else -> throw IllegalArgumentException("Unsupported media option: $mediaOption")
         }
     }
 }
