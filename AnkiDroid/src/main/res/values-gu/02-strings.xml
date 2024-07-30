@@ -160,7 +160,7 @@
         ]]></string>
     <string name="export_choice_share">શેર કરો</string>
     <string name="export_choice_save_to">આના પર સાચવો</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">નિકાસ કરેલી ફાઇલ સાચવી રહ્યું છે&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">વિકલ્પો</string>
     <string name="menu__deck_options">ડેક વિકલ્પો</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">અભ્યાસ વિકલ્પો</string>
@@ -265,17 +265,17 @@
     <string name="home">ઘર</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">કાર્ડ દફનાવવામાં આવ્યું હતું.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d કાર્ડ સસ્પેન્ડ.</item>
+        <item quantity="other">%d કાર્ડ સસ્પેન્ડ કર્યા.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">ફીલ્ડ %s ને સ્ટીકી બનાવો</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
+    <string name="scoped_storage_learn_more">વધુ શીખો</string>
+    <string name="scoped_storage_postpone">મુલતવી રાખવું</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
@@ -308,21 +308,19 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">કાર્ડ</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">નોંધો</string>
+    <string name="toggle_cards_notes">કાર્ડ્સ/નોટ્સ ટૉગલ કરો</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
+    <string name="browser_options_dialog_heading">બ્રાઉઝર વિકલ્પો</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">સ્ટોરેજ ટ્રાન્સફર દરમિયાન આ કાર્યક્ષમતા અનુપલબ્ધ છે</string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="audio_saved">Recording saved</string>
-    <string name="deleting_selected_notes">Deleting selected notes</string>
-    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
-    </string>
+    <string name="audio_saved">રેકોર્ડિંગ સાચવ્યું</string>
+    <string name="deleting_selected_notes">પસંદ કરેલી નોંધો કાઢી નાખી રહ્યાં છીએ</string>
+    <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">સાંભળવા માટે અવાજ પર ટૅપ કરો</string>
     <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">ઉપયોગ કરતા પહેલા વૉઇસ ઇન્સ્ટોલ થવો જોઈએ
     </string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">કોઈપણ રીતે ઉપયોગ કરો

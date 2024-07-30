@@ -79,7 +79,7 @@
     <string name="card_template_editor_deck_override_on">ડેક ઓવરરાઇડ (ચાલુ)</string>
     <string name="card_template_editor_deck_override_off">ડેક ઓવરરાઇડ (બંધ)</string>
     <string name="model_manager_deck_override_added_message">\'%1$s\' ડિફોલ્ટ ડેકને \'%2$s\' પર સેટ કરો</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="model_manager_deck_override_removed_message">\'%s\' માટે ડિફોલ્ટ ડેક દૂર કર્યો</string>
+    <string name="deck_override_explanation">નવા \'%s\' કાર્ડ્સ મૂકવા માટે ડેક પસંદ કરો</string>
+    <string name="deck_picker_dialog_filter_decks">ફિલ્ટર ડેક્સ</string>
 </resources>

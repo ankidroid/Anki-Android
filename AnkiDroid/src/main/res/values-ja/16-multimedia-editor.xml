@@ -89,6 +89,6 @@
     <string name="select_image_failed">"画像の選択に失敗しました。もう一度試してください"</string>
     <string name="activity_result_unexpected">予期しないエラーが発生しました。別のアプリを使用する必要があるかもしれません。</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">フィールドの内容</string>
-    <string name="no_image_preview">No image selected, select an image to proceed.</string>
-    <string name="restart">Restart</string>
+    <string name="no_image_preview">画像が選択されませんでした。作業を続行するには画像を選択してください。</string>
+    <string name="restart">再選択</string>
 </resources>

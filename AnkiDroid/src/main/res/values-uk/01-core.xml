@@ -110,15 +110,15 @@
     <string name="menu_suspend">Призупинити</string>
     <string name="menu_delete_note">Видалити запис</string>
     <string name="menu_flag">Прапорець</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Перейменувати прапорці</string>
     <string name="menu_flag_card">Додати прапорець</string>
     <string name="menu_edit_tags">Редагувати примітки</string>
     <string name="delete_note_message">Дійсно видалити цей запис разом з усіма його картками?\n%s</string>
     <string name="menu_search">Пошук у %1$s</string>
     <string name="menu_mark_note">Позначити запис</string>
     <string name="menu_unmark_note">Зняти позначку запису</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">Увімкнути відтворення голосу</string>
+    <string name="menu_disable_voice_playback">Вимкнути відтворення голосу</string>
     <string name="new_deck">Створити колоду</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
     <string name="directory_inaccessible">Папка AnkiDroid недоступна</string>
@@ -139,7 +139,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Колоду завершено! %s</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
     <string name="button_sync" comment="Text of the sync button">Синхронізувати</string>
@@ -150,7 +150,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Скасування&#8230;\nЦе триватиме деякий час.</string>
     <string name="syncing_media">Синхронізація медіа</string>
     <string name="export_deck">Експортувати колоду</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Експортувати колекцію</string>
     <string name="nothing">Нічого</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типи карток</string>
@@ -262,5 +262,5 @@
     <string name="image_occlusion">Оклюзія зображення</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Видалити обліковий запис</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Миттєве додання картки</string>
 </resources>

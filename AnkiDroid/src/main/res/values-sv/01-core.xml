@@ -104,7 +104,7 @@
     <string name="menu_suspend">Lås</string>
     <string name="menu_delete_note">Ta bort not</string>
     <string name="menu_flag">Flagga</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Byt namn på flaggor</string>
     <string name="menu_flag_card">Flagga kort</string>
     <string name="menu_edit_tags">Redigera taggar</string>
     <string name="delete_note_message">Vill du verkligen ta bort den här noten och alla dess kort?\n%s</string>
@@ -133,7 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kortlekssökning</string>
     <string name="invalid_deck_name">Ogiltigt kortleksnamn</string>
     <string name="studyoptions_congrats_finished">Grattis! Du är klar för stunden.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Kortlek är klar för stunden! %s</string>
     <string name="studyoptions_no_cards_due">Inga kort i kö.</string>
     <string name="sd_card_not_mounted">Lagringsenhet ej monterad</string>
     <string name="button_sync" comment="Text of the sync button">Synkronisera</string>
@@ -144,7 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter&#8230;\nDetta kan ta en stund.</string>
     <string name="syncing_media">Synkroniserar media</string>
     <string name="export_deck">Exportera kortlek</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Exportera samling</string>
     <string name="nothing">Inget</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Korttyper</string>
@@ -248,7 +248,7 @@
     <string name="storage_access_summary">Sparar din samling på en säker plats som inte raderas om appen avinstalleras</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Åtkomst till alla filer</string>
     <string name="image_occlusion">Bildövertäckning</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Ta bort konto</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>
