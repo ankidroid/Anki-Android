@@ -62,8 +62,8 @@
     <string name="updated_version">Αναβαθμίστηκε στην εκδοχή %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Αποθήκευση πίνακα</string>
-    <string name="enable_stylus">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="enable_stylus">Ενεργοποίηση γραψίματος με γραφίδα</string>
+    <string name="disable_stylus">Απενεργοποίηση γραψίματος με γραφίδα</string>
     <string name="enable_whiteboard">Ενεργοποίηση πίνακα</string>
     <string name="disable_whiteboard">Απενεργοποίηση πίνακα</string>
     <string name="show_whiteboard">Εμφάνιση πίνακα</string>
@@ -76,10 +76,10 @@
     <string name="webview_crash_unknwon_detailed">Αυτό προκλήθηκε από ένα εσωτερικό σφάλμα στο WebView</string>
     <string name="webview_crash_oom">Η μνήμη εξαντλήθηκε</string>
     <string name="webview_crash_oom_details">Το WebView τερματίστηκε από το σύστημα. Αυτό συμβαίνει συνήθως όταν η εφαρμογή δεν έχει αρκετή μνήμη, συχνά λόγω μεγάλων γραμματοσειρών ή πολυμέσων.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_nonfatal">WebView renderer κατέρρευσε. Αιτία: %s</string>
     <string name="webview_crash_fatal">Μοιραίο σφάλμα: Η συσκευή αναπαραγωγής WebView κατέρρευσε. Αιτία: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_loop_dialog_title">Αποτυχία Απόδοσης WebView Συστήματος</string>
+    <string name="webview_crash_loop_dialog_content">Το σύστημα WebView απέτυχε να αποδώσει την κάρτα \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags">Σημαίες</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Τροποποίηση σημερινού ορίου νέων καρτών</string>
@@ -183,13 +183,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Το σύστημα δεν έχει εγκατεστημένη εφαρμογή που μπορεί να εκτελέσει αυτήν την ενέργεια.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Οι εικόνες της φωτογραφικής μηχανής μπορεί να είναι μεγάλες. Μπορεί να θέλετε να συμπιέσετε και να αλλάξετε το μέγεθος των εικόνων στον κατάλογο πολυμέσων]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Δε βρέθηκε περιηγητής για το άνοιγμα του συνδέσμου: %s</string>
     <string name="web_page_error">Σφάλμα φόρτωσης σελίδας: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Φόντο</string>
     <string name="choose_an_image">Επιλέξτε εικόνα</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Αφαίρεση ταπετσαρίας;</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Επαναφορά προεπιλογής</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Κενό</string>
@@ -202,7 +202,7 @@
     <!-- JS api -->
     <string name="api_version_developer_contact">Αυτή η κάρτα χρησιμοποιεί μη υποστηριζόμενες δυνατότητες του  AnkiDroid. Επικοινωνήστε με τον προγραμματιστή %1$s, ή δείτε το wiki. %2$s</string>
     <string name="invalid_json_data">Η κάρτα παρείχε μη έγκυρα δεδομένα. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="valid_js_api_version">Μη έγκυρη έκδοση AnkiDroid JS API. Επικοινωνήστε με τον προγραμματιστή %s, ή δείτε το wiki</string>
     <string name="update_js_api_version">Διαθέσιμη ενημέρωση του AnkiDroid JS API. Επικοινωνήστε με τον προγραμματιστή %sή δείτε το wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Προβολή</string>
     <string name="anki_js_error_code">(Κωδικός σφάλματος: %d)</string>
@@ -222,16 +222,16 @@
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="insert_horizontal_line">Εισαγωγή Οριζόντιας Γραμμής</string>
+    <string name="insert_heading">Εισαγωγή Επικεφαλίδας</string>
     <string name="format_font_size">Αλλαγή μεγέθους γραμματοσειράς</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_mathjax">Εισαγωγή Εξίσωσης MathJax</string>
     <string name="note_editor_toolbar_icon">Κείμενο κουμπιού</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
+    <string name="before_text">HTML Πριν Την Επιλογή</string>
+    <string name="after_text">HTML Μετά Την Επιλογή</string>
     <string name="add_toolbar_item">Δημιουργία Αντικειμένου Γραμμής Εργαλείων</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Επεξεργασία Αντικειμένου Γραμμής Εργαλείων</string>
+    <string name="toolbar_item_explain_edit_or_remove">Εισάγετε το HTML που θα εισαχθεί πριν και μετά το επιλεγμένο κείμενο\n\nΠατήστε παρατεταμένα ένα αντικείμενο γραμμής εργαλείων για να το επεξεργαστείτε ή να το αφαιρέσετε</string>
     <string name="remove_toolbar_item">Αφαίρεση Αντικειμένου Γραμμής Εργαλείων;</string>
     <string name="note_editor_paste_too_large">Η εικόνα είναι πολύ μεγάλη για επικόλληση, παρακαλώ εισάγετε την εικόνα χειροκίνητα</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Αντίγραφο ασφαλείας Android σε εξέλιξη. Παρακαλώ προσπαθήστε ξανά</string>
@@ -259,13 +259,13 @@
     <string name="something_wrong">Κάτι πήγε στραβά, παρακαλώ προσπαθήστε ξανά</string>
     <string name="download_failed">Αποτυχία λήψης</string>
     <string name="deck_download_progress_message">Μπορείτε να χρησιμοποιήσετε άλλες εφαρμογές ενώ εκτελείται η λήψη</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="check_network">Παρακαλώ ελέγξτε τη σύνδεσή σας στο δίκτυο</string>
     <string name="search_using_deck_name">Αναζήτηση με το όνομα τράπουλας</string>
     <string name="external_storage_unavailable">Η λήψη ματαιώθηκε, ο εξωτερικός χώρος αποθήκευσης δεν είναι διαθέσιμος</string>
     <string name="home">Αρχική</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Η κάρτα θάφτηκε.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d κάρτα σε αναστολή.</item>
         <item quantity="other">%d κάρτες σε αναστολή.</item>

@@ -254,8 +254,8 @@
     <string name="cloze_note_required">Boşluklu Türden Not Gerekiyor</string>
     <string name="cloze_not_found_message">Boşluklu türden not bulunmuyor, Not Düzenleyiciyi açın ya da Boşluklu türden bir not ekledikten sonra yeniden deneyin.</string>
     <string name="open">Aç</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="change_cloze_number">Boşluk numarasını değiştir</string>
+    <string name="cloze_number">Boşluk numarası:</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
 </resources>

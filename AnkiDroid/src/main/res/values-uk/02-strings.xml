@@ -69,7 +69,7 @@
     <string name="show_whiteboard">Показати дошку</string>
     <string name="hide_whiteboard">Заховати дошку</string>
     <string name="clear_whiteboard">Очистити дошку</string>
-    <string name="replay_audio">Повторити звук</string>
+    <string name="replay_audio">Повторити аудіо</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="webview_crash_unknown">Невідома помилка</string>
@@ -136,7 +136,7 @@
     <string name="delete_deck">Видалення колоди&#8230;\n Будь ласка, зачекайте.</string>
     <string name="info_rate">Оцініть AnkiDroid</string>
     <string name="import_title">Імпортування</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">Файл готується для імпорту&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <string name="import_dialog_message_add">Додати \"%s\" до колекції? Це може зайняти багато часу</string>
@@ -164,7 +164,7 @@
         ]]></string>
     <string name="export_choice_share">Поділитись</string>
     <string name="export_choice_save_to">Зберегти до</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">Збереження експортованого файлу&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
     <string name="menu__deck_options">Параметри колоди</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>
@@ -224,7 +224,7 @@
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Розмір шрифту</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показати панель інструментів</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показувати панель інструментів</string>
     <string name="format_insert_bold">Форматувати як жирний</string>
     <string name="format_insert_italic">Форматувати як курсив</string>
     <string name="format_insert_underline">Форматувати як підкреслений</string>

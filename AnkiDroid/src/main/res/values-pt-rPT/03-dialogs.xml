@@ -255,7 +255,7 @@
     <string name="cloze_not_found_message">Nenhuma nota de tipo Virável encontrada, abra o Editor de Notas ou tente novamente após adicionar uma nota de tipo Virável.</string>
     <string name="open">Abrir</string>
     <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="cloze_number">Número de Omissão;</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema WebView está desatualizado. Alguns recursos não funcionarão corretamente. Atualize-o.\n\nVersão instalada: %1$d\nVersão mínima necessária: %2$d</string>
 </resources>

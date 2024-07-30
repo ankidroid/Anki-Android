@@ -91,7 +91,7 @@
     <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
-    <string name="discard">Discard</string>
+    <string name="discard">صرف‌نظر کردن</string>
     <string name="note_editor_no_cards_created">کارتی ساخته نشد. لطفاً فیلدهای بیشتری را پر کنید</string>
     <string name="note_editor_no_cards_created_all_fields">نوع یادداشت فعلی هیچ کارتی تولید نکرد.\nلطفاٌ نوع یادداشت دیگری را انتخاب کنید، یا روی \'کارت‌ها\' کلیک کرده یک فیلد جایگزین را وارد کنید</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">حذف نوع کلوز فقط برای یادداشت های نوع کلوز عمل می‌کند</string>
@@ -102,7 +102,7 @@
     <string name="select">انتخاب</string>
     <string name="field_remapping">%1$s (از \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">نوع یادداشتی یافت نشد</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">جعبه زمان رسیده</string>
     <plurals name="timebox_reached">
@@ -120,7 +120,7 @@
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">برنامه ریزی مجدد</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نمایش</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">کپی markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d از %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">تغییر نام</string>
     <string name="checks_action">بررسی</string>
@@ -132,7 +132,7 @@
     <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
     <string name="info_rate">امتیازدهی به AnkiDroid</string>
     <string name="import_title">درحال وارد کردن</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">آماده‌سازی فایل برای وارد کردن&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد</string>
     <string name="import_dialog_message_add">آیا میخواهید \"%s\" را به مجموعه اضافه کنید؟ این ممکن است زمان زیادی طول بکشد</string>
@@ -160,7 +160,7 @@
                 ]]></string>
     <string name="export_choice_share">اشتراک گزاری</string>
     <string name="export_choice_save_to">ذخیره به</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">در حال ذخیره فایل صادر شده&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
     <string name="menu__deck_options">گزینه های دسته</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">گزینه‌های مطالعه</string>
@@ -183,13 +183,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">دستگاه شما نرم افزار قادر به انجام این عمل را ندارد.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[تصاویر دوربین ممکن است بزرگ باشند. در صورت لزوم تغییر اندازۀ تصویر یا کاهش حجم آن از مسیر رسانه استفاده کنید]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">مرورگری برای باز کردن لینک یافت نشد: %s</string>
     <string name="web_page_error">خطای بارگذاری صفحه: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">پس زمینه</string>
     <string name="choose_an_image">انتخاب تصویر</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">حذف پس‌زمینه؟</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">بازنشانی پیش‌فرض</string>
     <string name="reviewer_tts_cloze_spoken_replacement">خالی</string>
@@ -197,13 +197,13 @@
     <string name="white_board_image_save_failed">ذخیرۀ تصویر تخته سفید با مشکل مواجه شد. %s</string>
     <string name="white_board_image_saved">تصویر تخته سفید در %s ذخیره شد</string>
     <string name="title_whiteboard_pen_color">رنگ ماژیک تخته سفید</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="title_whiteboard_editor">ویرایشگر تخته صفید</string>
+    <string name="user_is_a_robot">تست خودکار شناسایی شد. اگر شما انسان هستید، با پشتیبانی AnkiDroid ارتباط برقرار کنید</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
+    <string name="api_version_developer_contact">این کارت از امکانات پشتیبانی نشده AnkiDroid استفاده میکند. با توسعه دهنده %1$s ارتباط برقرار کنید، یا این wiki را ببینید. %2$s</string>
+    <string name="invalid_json_data">کارت اطلاعات نامعتبر ارائه کرد. %s</string>
+    <string name="valid_js_api_version">نسخه رابط های برنامه نویسی کاربردی جاوا اسکریپت AnkiDroid نامعتبر است. با توسعه دهنده %s ارتباط برقرار کنید، یا wiki را ببینید.</string>
+    <string name="update_js_api_version">به روز رسانی رابط های برنامه نویسی کاربردی جاوا اسکریپت AnkiDRoid در دسترس است. با توسعه دهنده %s ارتباط برقرار کنید، یا wiki را ببینید</string>
     <string name="reviewer_invalid_api_version_visit_documentation">نما</string>
     <string name="anki_js_error_code">(شماره خطا: %d)</string>
     <!-- About AnkiDroid screen -->
@@ -244,13 +244,13 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">لطفا یک آدرس ایمیل معتبر وارد کنید</string>
     <string name="password_empty">رمز عبور لازم است</string>
     <string name="back_pressed_once">برای خروج، دکمه بازگشت را مجددا فشار دهید</string>
     <string name="back_pressed_once_reviewer">برای بازگشت، دکمه بازگشت را مجددا فشار دهید</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
+    <string name="download_deck">دانلود دسته</string>
     <string name="try_again">دوباره تلاش کنید</string>
     <string name="cancel_download">لغو دانلود</string>
     <string name="cancel_download_question_title">لغو دانلود؟</string>
@@ -276,13 +276,13 @@
     <string name="scoped_storage_title">مهاجرت انبار</string>
     <string name="scoped_storage_learn_more">بیشتر بدانید</string>
     <string name="scoped_storage_postpone">به تعویق انداختن</string>
-    <string name="scoped_storage_migrate">مهاجرت</string>
+    <string name="scoped_storage_migrate">انتقال</string>
     <string name="search_card_js_api_no_results">جست و جوی شما نتیجه‌ای نداشت</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">انکی‌دروید نیاز دارد که حافظه خود را برای تطبیق با قوانین امنیتی اندروید ۱۰، مهاجرت بدهد. \n\nاین کار باعث بهبود عملیات سینک مدیا خواهد شد.&lt;br&gt;&lt;br&gt;در زمان مهاجرت شما نمی‌توانید سینک انجام دهید و برخی از تنظیمات نیز غیرفعال خواهند شد. یکبار سینک کردن مدیا قبل از مهاجرت، باعث خواهد شد که اطلاعات شما امن بمانند.&lt;br&gt;&lt;br&gt;بستن انکی‌دروید در حین انجام این فرآیند خطری ندارد.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">انکی‌دروید نیاز دارد که حافظه خود را برای تطبیق با قوانین امنیتی اندروید ۱۰، انتقال بدهد. \n\nاین کار باعث بهبود عملیات همگام سازی رسانه ها خواهد شد.&lt;br&gt;&lt;br&gt;در زمان انتقال شما نمی‌توانید همگام سازی انجام دهید و برخی از تنظیمات نیز غیرفعال خواهند شد. یکبار همگام کردن رسانه قبل از مهاجرت، باعث خواهد شد که اطلاعات شما امن بمانند.&lt;br&gt;&lt;br&gt;بستن انکی‌دروید در حین انجام این فرآیند خطری ندارد.</string>
     <string name="start_migration_progress_message">مهاجرت حافظه شروع شد. به زودی می‌توانید دوباره از انکی‌دروید استفاده کنید.</string>
     <string name="migration_part_1_done_resume">شما می‌توانید از انکی‌دروید استفاده کنید.\nمهاجرت حافظه در پس‌زمینه ادامه خواهد داشت.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s یک بسته افزونه جاوا اسکریپت معتبر نیست</string>
     <string name="could_not_create_dir">ساخت فهرست %s ناموفق بود</string>
     <string name="malicious_archive_entry_outside">آرشیو خطرناک. حاوی ورودی خارج از فهرست هدف است: %s</string>
     <string name="malicious_archive_exceeds_limit">ارشیو خطرناک. حجم آن از %1$s بیشتر است یا شامل بیشتر از %2$d فایل است</string>
@@ -291,15 +291,15 @@
     <string name="expand_tag">گسترش برچسب \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">دسترسی به مجموعه ناموقف بود. لطفا دوباره تلاش کنید</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">افزودن یک نوع یادداشت جدید</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">کمتر مطالعه کنید</string>
     <string name="intro_ankidroid_tagline_two">بیشتر به خاطر بسپارید</string>
     <string name="intro_short_ankidroid_explanation">برنامه زمانی کارت‌های انکی، با تقویت مواردی که فراموش کرده‌اید و گذر از مواردی که به یاد دارید، زمان شما را ذخیره خواهد کرد.</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">از اول شروع کنید</string>
-    <string name="intro_sync_from_ankiweb">سینک از انکی‌وب</string>
+    <string name="intro_sync_from_ankiweb">با AnkiWeb همگام سازی کن</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">انکی‌دروید هنوز راه‌اندازی نشده است. لطفاً انکی‌دروید را باز کرده و دوباره تلاش کنید</string>
     <string name="already_logged_in">قبلاً وارد شده‌اید</string>
     <!-- Deck Creation -->
     <string name="deck_created">دسته ایجاد شد</string>
@@ -314,9 +314,9 @@
     <string name="truncate_content_help">ارتفاع هر ردیف از مرورگر را کوتاه کنید تا فقط 3 خط اول محتوا نشان داده شود</string>
     <string name="browser_options_dialog_heading">تنظیمات نمایشگر</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        این عملکرد، در زمان مهاجرت حافظه، در دسترس نیست    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">برای شروع مهاجرت حافظه، ضربه بزنید</string>
-    <string name="media_sync_required_title">نیازمند سینک مدیاها</string>
-    <string name="media_sync_unavailable_message">سینک مدیاها در بخش تنظیمات، غیرفعال شده است. لطفاً هر مدیایی که سینک و پشتیبان‌گیری نشده است را قبل از ادامه دادن، سینک کنید</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">برای شروع انتقال حافظه، ضربه بزنید.</string>
+    <string name="media_sync_required_title">همگام سازی رسانه ها نیاز است</string>
+    <string name="media_sync_unavailable_message">همگام سازی رسانه ها در بخش تنظیمات، غیرفعال شده است. لطفاً هر رسانه ای که همگام سازی نشده است را قبل از ادامه دادن، همگام و پشتیبان گیری کنید</string>
     <string name="audio_saved">مورد ضبط شده ذخیره شد</string>
     <string name="deleting_selected_notes">در حال حذف یادداشت های انتخاب شده</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">                برای گوش دادن روی صدا ضربه بزنید
@@ -334,16 +334,16 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">                باز کردن تنظیمات متن به گفتار ناموفق بود
         </string>
     <string name="shared_decks_login_required">لطفا وارد حساب کاربری خود شوید که دسته های بیشتری را دانلود کنید</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="deck_description_field_hint">توضیحات</string>
+    <string name="failed_to_copy">کپی کردن ناموفق بود</string>
+    <string name="card_browser_unavailable_when_notes_mode">در حالت \'یادداشت‌ها\' در دسترس نیست</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d کارت از حالت مخفی خارج شد</item>
+        <item quantity="other">%d کارت دفن نشده است</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">جابجا کردن</string>
+    <string name="start_recording">ضبط</string>
+    <string name="stop_recording">توقف</string>
+    <string name="play_recording">پخش</string>
+    <string name="next_recording">بعدی</string>
 </resources>

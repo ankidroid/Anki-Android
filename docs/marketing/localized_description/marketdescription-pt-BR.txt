@@ -1,36 +1,36 @@
 Memorize qualquer coisa com AnkiDroid!
 
-AnkiDroid te ajuda a aprender flashcards de maneira eficiente, mostrando-os pouco antes que você os esqueça. Ele é totalmente compatível com o software de repetição espaçada Anki (incluindo a sincronização), que está disponível para Windows, Linux e MacOS.
+AnkiDroid permite que aprenda flashcards de forma muito eficiente, mostrando-os antes que você os esqueça. É totalmente compatível com o aplicativo de repetição espaçada — Anki (incluindo sincronização), disponível para Windows, Linux e MacOS.
 
-Estude qualquer tipo de coisa, onde e quando quiser. Faça bom uso do tempo livre esperando em filas, em ônibus ou em qualquer outro momento!
+Estude qualquer tipo de coisa, onde e quando quiser. Aproveite bem os tempos ociosos em viagens de ônibus, em filas de supermercado ou em qualquer outra situação de espera!
 
-Crie seus baralhos de flashcards ou baixe-os prontos! Há para vários idiomas e assuntos (+6000 disponíveis).
+Crie seus próprios baralhos de flashcards ou baixe baralhos gratuitos compilados para vários idiomas e tópicos (mais de 6.000 disponíveis).
 
-Adicione cards pelo Anki de PC ou diretamente pelo AnkiDroid. O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
+Adicione material através do aplicativo de computador — Anki ou diretamente através do AnkiDroid. O aplicativo ainda suporta adicionar material automaticamente a partir de um dicionário!
 
 ★ Principais características:
-• conteúdos suportados nos flashcards: texto, imagens, sons, LaTeX
+• conteúdo de flashcard suportado: texto, imagens, sons, LaTeX
 • repetição espaçada (algoritmo do supermemo 2)
 • integração de texto-para-voz
-• +6000 baralhos pré-prontos
+• mais de 6.000 baralhos disponíveis
 • widget de progresso
 • estatísticas detalhadas
 • sincronização com AnkiWeb
 • código aberto
 
 ★ Características adicionais:
-• escreva as respostas (opcional)
+• escrever respostas (opcional)
 • quadro branco
-• editor/criador de cards
-• navegador de cards
+• editor/criador de cartões
+• navegador de cartões
 • layout para tablet
-• importa arquivos de coleções existentes (via Anki Desktop)
-• adiciona cards pela interação com outros aplicativos, como dicionários
+• importar arquivos de coleção existentes (via Anki)
+• adiciona cartões pela interação com outros aplicativos, como dicionários
 • suporte a fonte personalizada
 • sistema de backup completo
 • navegação por deslize, toque
 • personalizável
-• manuseio de decks dinâmico
+• manuseio dinâmico do baralho
 • modo noturno
 • 27 idiomas
 • Todas as versões anteriores do AnkiDroid podem ser baixadas pelo site

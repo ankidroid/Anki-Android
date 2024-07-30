@@ -135,7 +135,7 @@
     <string name="sync_status_badge" maxLength="41">Synchronisatiestatus weergeven</string>
     <string name="sync_status_badge_summ">Verander het synchronisatie-icoon wanneer wijzigingen kunnen worden geüpload</string>
     <string name="metered_sync_title" maxLength="41">Synchroniseren bij verbinding met datalimieten toestaan</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_summary">Als deze optie is uitgeschakeld, wordt u gewaarschuwd als u probeert te synchroniseren via een verbinding met een datalimiet</string>
     <string name="backup_limits_frequency">Frequentie</string>
     <string name="backup_limits_lifetime">Levenslang</string>
     <string name="app_theme" maxLength="41">Thema</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Trillen</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Licht knipperen</string>
     <string name="timeout_answer_text" maxLength="41">Automatisch het antwoord tonen</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Toon het antwoord automatisch zonder input van de gebruiker. Configureer vanaf setopties.</string>
     <string name="select_locale_title">Taal selecteren</string>
     <string name="software_render" maxLength="41">Hardware render kaart uitschakelen</string>
     <string name="software_render_summ">Hardware render is sneller maar kan problemen hebben, met name op Android 8/8.1. Als u delen van de gebruikersinterface voor de beoordeling van de kaart niet kunt zien, probeer dan deze instelling.</string>
@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Dubbele aanraking tijdsinterval (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Een tweede aanraking op de antwoordknoppen wordt genegeerd als deze tijd nog niet voorbij is gegaan. Dit voorkomt dubbele aanrakingen.</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Toon antwoord lange indruktijd</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimale druktijd voordat de knop voor het tonen van een antwoord een aanraking registreert.</string>
     <string name="show_estimates" maxLength="41">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
     <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
@@ -174,8 +174,8 @@
     <string name="show_top_bar_summ">Toon aantal kaarten, vlag en markering in de bovenste balk</string>
     <string name="show_progress" maxLength="41">Resterende weergeven</string>
     <string name="show_progress_summ">Toon resterend aantal kaarten</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">ETA weergeven</string>
+    <string name="show_eta_summ">Resterende tijd weergeven</string>
     <string name="use_current" maxLength="41">Set voor nieuwe kaarten</string>
     <string name="learn_cutoff" maxLength="41">Max vooruit leren</string>
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
@@ -200,7 +200,7 @@
     <string name="thirdparty_apps_summary">Raadpleeg de lijst van applicaties die gebruik maken van de AnkiDroid API zoals woordenboeken, hulpprogramma\'s.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Settitel weergeven</string>
     <string name="accessibility" maxLength="41">Toegankelijkheid</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Plak klembord afbeeldingen als PNG</string>
@@ -213,13 +213,13 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Aangepaste synchronisatie-server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Niet gebruikt</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        Als alternatief voor synchronisatie met AnkiWeb,
+        U kunt uw eigen server gebruiken voor synchronisatie.
+        Als dit niet is ingesteld, wordt in plaats daarvan de standaard AnkiWeb-server gebruikt.
+        <a href="%s">Meer informatie</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL synchroniseren</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Aangepast root-certificaat (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Toetsenbord</string>
     <string name="bluetooth">Bluetooth</string>
@@ -242,8 +242,8 @@
     <string name="deck_conf_cram_reschedule_summ">Karaten opnieuw inplannen op basis van mijn antwoorden in deze set</string>
     <string name="deck_conf_cram_filter_2_check">Tweede filter inschakelen</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Aangepaste stapgroottes definiëren</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Vertragingen bij voorvertoning</string>
+    <string name="deck_conf_cram_preview_delays_summ">Vertragingen zijn in seconden. 0 Retourneert de kaart naar de oorspronkelijke stapel.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help AnkiDroid te verbeteren!</string>
     <string name="analytics_title" maxLength="41">Gebruik van functies delen</string>
@@ -258,27 +258,27 @@
     <string name="contributors_title">Bijdragers</string>
     <string name="about_contributors_description"><![CDATA[Dit zijn onze geweldige <a href=\"%1$s\">medewerkers</a>. U kunt AnkiDroid ook helpen door te programmeren, te vertalen, te doneren en <a href=\"%2$s\">meer</a>!]]></string>
     <string name="license">Licentie</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid is vrijgegeven onder de <a href=\"%1$s\">GPL-3.0</a> en <a href=\"%2$s\">AGPL-3.0</a> licenties, met de broncode beschikbaar <a href=\"%3$s\">op GitHub</a>]]></string>
+    <string name="donate_description"><![CDATA[U kunt de ontwikkeling van AnkiDroid steunen door te <a href="%1$s">doneren</a>. Elk bedrag wordt zeer op prijs gesteld.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Gebaar toevoegen</string>
     <string name="binding_replace_gesture">Gebaar vervangen</string>
     <string name="binding_add_key">Sleutel toevoegen</string>
     <string name="binding_replace_key">Vervang sleutel</string>
     <string name="key_picker_default_press_key">Druk op een toets</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">Joystick/bewegingscontroller toevoegen</string>
+    <string name="axis_picker_move_joystick">Joystick/bewegingscontroller bewegen</string>
+    <string name="user_actions" maxLength="41">Gebruikersacties</string>
+    <string name="user_actions_summary" maxLength="41">Activeer JavaScript vanuit het beoordelingsscherm</string>
+    <string name="user_action_1" maxLength="41">Gebruikersactie 1</string>
+    <string name="user_action_2" maxLength="41">Gebruikersactie 2</string>
+    <string name="user_action_3" maxLength="41">Gebruikersactie 3</string>
+    <string name="user_action_4" maxLength="41">Gebruikersactie 4</string>
+    <string name="user_action_5" maxLength="41">Gebruikersactie 5</string>
+    <string name="user_action_6" maxLength="41">Gebruikersactie 6</string>
+    <string name="user_action_7" maxLength="41">Gebruikersactie 7</string>
+    <string name="user_action_8" maxLength="41">Gebruikersactie 8</string>
+    <string name="user_action_9" maxLength="41">Gebruikersactie 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecteer kaart zijde</string>
     <string name="card_side_question">Vraag</string>
@@ -292,37 +292,37 @@
     <string name="bindings_already_bound">Reeds gekoppeld aan %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimenteel</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid heeft een beter TTS-mechanisme geïntroduceerd dat compatibel is met andere Anki-clients en meer stemmen en verbeteringen in het afspelen van talen bevat!nnUpgrade zo snel mogelijk, want deze instelling wordt binnenkort verwijderd</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Upgrade naar de nieuwe tekst-naar-spraak-indeling</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opties voor ontwikkelaars</string>
     <string name="dev_options_enabled_pref" maxLength="41">Opties voor ontwikkelaars inschakelen</string>
     <string name="disable_dev_options">Ontwikkelaarsopties uitschakelen</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="dev_options_warning">        Zorg ervoor dat u zeker bent voordat u de ontwikkelaarsopties inschakelt. Deze opties zijn gevaarlijk en kunnen de app kapot maken of je collectie beschadigen.\n\nMerk op dat deze opties niet geschikt zijn voor de meeste gebruikers en daarom niet vertaald zijn, dus in het Engels zijn.
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid maakt periodiek een back-up van uw verzameling.
+        Nadat back-ups meer dan twee dagen oud zijn,
+        zal AnkiDroid beginnen met het verwijderen van een aantal van hen om schijfruimte vrij te maken.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Houd er rekening mee dat er geen back-up van mediabestanden wordt gemaakt.
+        Synchroniseer voor de zekerheid regelmatig uw collectie of maak een back-up van de export ervan.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        U kunt uw verzameling herstellen vanaf een back-up en exporteren in het menu met de setlijst.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minuten tussen automatische backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Dagelijkse back-ups om te bewaren</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Wekelijkse back-ups om te bewaren</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Maandelijkse back-ups om te bewaren</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Ruimte beheren</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Foutmelding</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">berekenen\n&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d bestand\n%2$s</item>
         <item quantity="other">%1$d bestanden\n%2$s</item>
@@ -360,11 +360,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Ophalen&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Berekenen&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collectie bestaat niet</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Systeembalken verbergen</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Geen</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Statusbalk</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigatiebalk</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Alle</string>
+    <string name="ignore_display_cutout" maxLength="41">Schermuitsparing negeren</string>
+    <string name="hide_answer_buttons" maxLength="41">Antwoordknoppen verbergen</string>
 </resources>

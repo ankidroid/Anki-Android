@@ -52,7 +52,7 @@
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Kenmerken: %1$s</string>
     <string name="CardEditorCards">Kaarten: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">Occlusies bewerken</string>
     <string name="tag_name">Labelnaam</string>
     <string name="add_new_filter_tags">Labels toevoegen/filteren</string>
     <string name="add_tag">Label toevoegen</string>
@@ -91,7 +91,7 @@
     <string name="custom_study_limit_tags">Beperken tot bepaalde tags</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Kaart bewerken</string>
-    <string name="discard">Discard</string>
+    <string name="discard">Weggooien</string>
     <string name="note_editor_no_cards_created">Geen kaarten aangemaakt. Vul alstublieft meer velden in</string>
     <string name="note_editor_no_cards_created_all_fields">Het huidige type memo produceerde geen kaarten.\nKies alstublieft een ander type memo, of klik op \'Kaarten\' en voeg een veld substitutie toe.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Invuloefeningen werken slechts bij een memo van het type Cloze</string>
@@ -102,7 +102,7 @@
     <string name="select">Selecteren</string>
     <string name="field_remapping">%1$s (van “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">De kaarten toegewezen aan niets zullen worden verwijderd. Als een memo resterende kaarten heeft, zullen zij verloren gaan. Weet u zeker dat u wilt doorgaan?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Geen notitietype gevonden</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Timebox bereikt</string>
     <plurals name="timebox_reached">
@@ -120,7 +120,7 @@
     <string name="card_editor_reset_card">Vooruitgang resetten</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Opnieuw inplannen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Voorbeeld</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopiëren als Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d van %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Naam wijzigen</string>
     <string name="checks_action">Controleren</string>
@@ -132,7 +132,7 @@
     <string name="delete_deck">Leerset verwijderen&#8230;\nEven wachten.</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
     <string name="import_title">Importeren</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">Bestand voorbereiden voor importeren&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
     <string name="import_dialog_message_add">“%s” aan de collectie toevoegen? Dit kan lang duren</string>
@@ -160,7 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Delen</string>
     <string name="export_choice_save_to">Opslaan in</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">Geëxporteerd bestand opslaan&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studieopties</string>
@@ -183,13 +183,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Het systeem heeft geen app geïnstalleerd die deze actie kan uitvoeren.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera-afbeeldingen kunnen groot zijn. Het kan zijn dat u afbeeldingen wilt comprimeren & het formaat wilt wijzigen in de mediamap.]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Geen browser gevonden voor het openen van de link: %s</string>
     <string name="web_page_error">Fout bij het laden van de pagina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Achtergrond</string>
     <string name="choose_an_image">Kies een afbeelding</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">Achtergrond verwijderen?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Herstel Standaardinstellingen</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Leeg</string>
@@ -244,7 +244,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Voer een geldig e-mailadres in</string>
     <string name="password_empty">Wachtwoord is vereist</string>
     <string name="back_pressed_once">Druk nogmaals op \'terug\' om af te sluiten</string>
     <string name="back_pressed_once_reviewer">Druk nogmaals op terug om terug te keren</string>
@@ -267,8 +267,8 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kaart begraven.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d kaart opgeschort.</item>
+        <item quantity="other">%d kaarten opgeschort.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Pin veld %s</string>
@@ -278,12 +278,12 @@
     <string name="scoped_storage_postpone">Stel uit</string>
     <string name="scoped_storage_migrate">Migreren</string>
     <string name="search_card_js_api_no_results">Zoekopdracht heeft geen resultaten opgeleverd</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid moet zijn opslag migreren om te voldoen aan de Android 10 beveiligingsvereisten.\n\nDit verbetert de synchronisatie van de media.&lt;br&gt;&lt;br&gt;Tijdens de migratie kunt u niet synchroniseren en sommige instellingen worden uitgeschakeld. Mediasynchronisatie zal plaatsvinden voordat de migratie uw gegevens veilig gaat houden.&lt;br&gt;&lt;br&gt;Tijdens dit proces is het veilig om AnkiDroid te gebruiken of te sluiten.</string>
     <string name="start_migration_progress_message">Beginnen met opslagmigratie. Je kunt snel doorgaan met AnkiDroid gebruiken.</string>
     <string name="migration_part_1_done_resume">U kunt doorgaan met gebruik van AnkiDroid.
 \nOpslagmigratie zal op de achtergrond worden voortgezet.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s is geen geldig JavaScript-addon-pakket</string>
     <string name="could_not_create_dir">Kon de map %s niet creëeren </string>
     <string name="malicious_archive_entry_outside">Schadelijk archief. Bevat item buiten de doelmap: %s</string>
     <string name="malicious_archive_exceeds_limit">Schadelijk archief. Grootte overschrijdt %1$s of bevat meer dan %2$d bestanden</string>
@@ -292,7 +292,7 @@
     <string name="expand_tag">Label \'%s \' uitklappen</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Toegang tot verzameling mislukt. Probeer het opnieuw!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Nieuw notitietype toevoegen</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studeer minder</string>
     <string name="intro_ankidroid_tagline_two">Meer onthouden</string>
@@ -300,19 +300,19 @@
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Aan de slag</string>
     <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
+    <string name="app_not_initialized_new">AnkiDroid is nog niet geïnitialiseerd. Open AnkiDroid en probeer het opnieuw</string>
     <string name="already_logged_in">Reeds ingelogd</string>
     <!-- Deck Creation -->
     <string name="deck_created">Leerset aanmaken</string>
     <string name="deck_renamed">Setnaam wijzigen</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Set is verwijderd. Verwijder de snelkoppeling</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kaarten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Opmerkingen</string>
     <string name="toggle_cards_notes">Kaarten/notities in-/uitschakelen</string>
     <string name="toggle_browser_mode_help">Kaarten of notities in-/uitschakelen in browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Kort de hoogte van elke rij van de browser af om alleen de eerste 3 regels inhoud weer te geven</string>
     <string name="browser_options_dialog_heading">Browser opties</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Deze functionaliteit is niet beschikbaar tijdens een opslagmigratie
     </string>
@@ -323,7 +323,7 @@
     <string name="deleting_selected_notes">Geselecteerde notities verwijderen</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tik op een stem om
     te luisteren    </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Stem moet voor gebruik worden geïnstalleerd
     </string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Toch gebruiken
     </string>
@@ -333,19 +333,19 @@
     </string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Installeren
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Tekst-naar-spraak-instellingen kunnen niet worden geopend
     </string>
-    <string name="shared_decks_login_required">Please log in to download more decks</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <string name="shared_decks_login_required">Log in om meer sets te downloaden</string>
+    <string name="deck_description_field_hint">Beschrijving</string>
+    <string name="failed_to_copy">Kopiëren mislukt</string>
+    <string name="card_browser_unavailable_when_notes_mode">Niet beschikbaar in \'Notitie\' modus</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d card unburied</item>
-        <item quantity="other">%d cards unburied</item>
+        <item quantity="one">%d kaart onbegraven</item>
+        <item quantity="other">%d kaarten onbegraven</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
-    <string name="next_recording">Next</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Verplaatsen</string>
+    <string name="start_recording">Opnemen</string>
+    <string name="stop_recording">Stoppen</string>
+    <string name="play_recording">Afspelen</string>
+    <string name="next_recording">Volgende</string>
 </resources>

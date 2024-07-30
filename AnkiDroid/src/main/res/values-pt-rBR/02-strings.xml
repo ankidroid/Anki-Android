@@ -94,7 +94,7 @@
     <string name="discard">Descartar</string>
     <string name="note_editor_no_cards_created">Nenhum card criado. Por favor, preencha mais campos</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota atual não produziu nenhum card.\nPor favor, escolha outro tipo de nota, ou clique em \'Cards\' e adicione uma substituição de campo</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Ocultar somente funcionará em notas do tipo Ocultar.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Omissões podem apenas ser usadas no tipo de nota \"Omissão de palavras\".</string>
     <string name="saving_facts">Salvando nota</string>
     <string name="saving_model">Salvando tipo de nota</string>
     <string name="save">Salvar</string>
@@ -132,7 +132,7 @@
     <string name="delete_deck">Excluindo baralho&#8230;</string>
     <string name="info_rate">Avalie o AnkiDroid</string>
     <string name="import_title">Importando</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">Preparando arquivo para importação&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Adicionar</string>
     <string name="import_message_replace_confirm">Isto irá excluir sua coleção atual e substituí-la pelo conteúdo do arquivo %s</string>
     <string name="import_dialog_message_add">Adicionar “%s” à coleção? Isso pode levar muito tempo</string>
@@ -160,7 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Compartilhar</string>
     <string name="export_choice_save_to">Salvar em</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">Salvando arquivo exportado&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
     <string name="menu__deck_options">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>

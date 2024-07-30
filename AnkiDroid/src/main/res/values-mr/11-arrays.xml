@@ -81,7 +81,7 @@
     <!-- gestures_labels -->
     <string name="answer_again">पुन्हा उत्तर द्या</string>
     <string name="answer_hard">कठोर उत्तर द्या</string>
-    <string name="answer_good">Answer good</string>
+    <string name="answer_good">छान उत्तर द्या</string>
     <string name="answer_easy">सहज उत्तर द्या</string>
     <string name="gesture_play">मीडिया प्ले करा</string>
     <string name="gesture_abort_learning">शिक्षण रद्द करा</string>
