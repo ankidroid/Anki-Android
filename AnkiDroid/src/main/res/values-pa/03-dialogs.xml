@@ -44,13 +44,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_title">Delete deck?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="check_db_title">ਡੇਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ?</string>
+    <string name="check_db_warning">ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
+    <string name="contextmenu_deckpicker_delete_deck">ਡੇਕ ਨੂੰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="delete_deck_title">ਡੈੱਕ ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</string>
+    <string name="no_tts_available_message">ਕੋਈ ਟੈਕਸਟ-ਟੂ-ਸਪੀਚ ਭਾਸ਼ਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
+    <string name="tts_no_tts">ਨਾ ਬੋਲੋ</string>
+    <string name="unused_strings">\n\nਅਣਵਰਤੀਆਂ ਫਾਈਲਾਂ:\n</string>
     <string name="reposition_card_dialog_title">Reposition new card</string>
     <string name="reposition_card_dialog_message">Start position:</string>
     <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
@@ -85,22 +85,22 @@
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="restore_backup_choose_another">ਕੋਈ ਹੋਰ ਚੁਣੋ</string>
+    <string name="dialog_cancel">ਰੱਦ ਕਰੋ</string>
     <string name="dialog_ok">ٹھیک اے</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">ਪੁਸ਼ਟੀ ਕਰੋ</string>
     <string name="dialog_no">نہیں</string>
     <string name="dialog_yes">ਹਾ</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
-    <string name="dialog_continue">Continue</string>
+    <string name="dialog_keep">ਰੱਖੋ</string>
+    <string name="dialog_remove">ਹਟਾਓ</string>
+    <string name="dialog_continue">ਜਾਰੀ ਰੱਖੋ</string>
     <string name="dialog_processing">Processing&#8230;</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ਬਣਾਓ</string>
+    <string name="dialog_positive_delete">ਮਿਟਾਓ</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">ਕਰਨ ਲਈ ਅਸਮਰੱਥ</string>
+    <string name="dialog_positive_overwrite">ਓਵਰਰਾਈਟ ਕਰੋ</string>
+    <string name="dialog_positive_repair">ਮੁਰੰਮਤ</string>
     <string name="dialog_positive_replace">Replace</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
@@ -128,9 +128,9 @@
     <string name="tags_dialog_option_new_cards">New</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-    <string name="empty_cards_count">Cards to delete: %d</string>
-    <string name="empty_cards_deleted">Cards deleted: %d</string>
+    <string name="emtpy_cards_finding">ਖਾਲੀ ਕਾਰਡ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ&#8230;</string>
+    <string name="empty_cards_count">ਮਿਟਾਉਣ ਲਈ ਕਾਰਡ: %d</string>
+    <string name="empty_cards_deleted">ਕਾਰਡ ਮਿਟਾਏ ਗਏ: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
     <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
@@ -180,11 +180,11 @@
     <string name="help_item_anki_manual">Anki Manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_item_mailing_list">ਮੇਲਿੰਗ ਸੂਚੀ</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_opencollective_donate">ਦਾਨ ਕਰੋ</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Other</string>
@@ -231,25 +231,25 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="deck_already_exists">ਡੇਕ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ</string>
+    <string name="create_deck_numeric_hint">ਜੇਕਰ ਤੁਹਾਡੇ ਕੋਲ ਡੈੱਕ ਆਰਡਰਿੰਗ ਸਮੱਸਿਆਵਾਂ ਹਨ (ਜਿਵੇਂ ਕਿ \'10\' \'2\' ਤੋਂ ਪਹਿਲਾਂ ਦਿਖਾਈ ਦਿੰਦਾ ਹੈ), \'2\' ਨੂੰ \'02\' ਨਾਲ ਬਦਲੋ</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ਅੰਤਰਾਲ ਨੂੰ ਉਸੇ ਮੁੱਲ \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">ਵਿੱਚ ਕਾਰਡ ਦਿਖਾਓ</item>
+        <item quantity="other">ਵਿੱਚ ਕਾਰਡ ਦਿਖਾਓ</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">ਰੇਂਜ ਵਿੱਚ ਕਾਰਡ ਦਿਖਾਓ</item>
+        <item quantity="other">ਰੇਂਜ ਵਿੱਚ ਕਾਰਡ ਦਿਖਾਓ</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">ਦਿਨ</item>
+        <item quantity="other">ਦਿਨ</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">ਤੋਂ</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">ਨੂੰ</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>

@@ -86,9 +86,9 @@
     <string name="crop_image">શું તમે આ છબી કાપવા માંગો છો?</string>
     <string name="crop_button">છબીને કાપો</string>
     <string name="save_dialog_content">વર્તમાન છબીનું કદ %sMB છે. ડિફૉલ્ટ છબી કદ મર્યાદા 1MB છે. શું તમે તેને કાપવા માંગો છો?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
+    <string name="select_image_failed">"છબી પસંદ કરવામાં નિષ્ફળ, કૃપા કરીને ફરી પ્રયાસ કરો"</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="no_image_preview">No image selected, select an image to proceed.</string>
-    <string name="restart">Restart</string>
+    <string name="no_image_preview">કોઈ છબી પસંદ કરેલ નથી, આગળ વધવા માટે એક છબી પસંદ કરો.</string>
+    <string name="restart">પુનઃપ્રારંભ</string>
 </resources>

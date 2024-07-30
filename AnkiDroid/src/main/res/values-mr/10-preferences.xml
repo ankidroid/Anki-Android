@@ -91,15 +91,15 @@
     <string-array name="answer_buttons_position_labels">
         <item>शीर्ष</item>
         <item>तळ</item>
-        <item>None</item>
+        <item>काहीही नाही</item>
     </string-array>
     <string name="gestures" maxLength="41">जेश्चर सक्षम करा</string>
     <string name="gestures_summ">उत्तर देणे आणि संपादन कार्ड यासारख्या क्रियांना जेश्चर नियुक्त करा.</string>
     <string name="gestures_corner_touch" maxLength="41">9-बिंदू स्पर्श</string>
     <string name="gestures_corner_touch_summary">स्क्रीन कोपर्यात स्पर्श जेश्चरला अनुमती द्या</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41" comment="No gestures">None</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">पूर्ण स्क्रीन नेव्हिगेशन ड्रॉवर</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">स्क्रीनवर कुठूनही थेट स्वाइप करून नेव्हिगेशन ड्रॉवर उघडा</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">काहीही नाही</string>
     <string name="gestures_swipe_up" maxLength="41">स्वाइप अप</string>
     <string name="gestures_swipe_down" maxLength="41">खाली स्वाइप करा</string>
     <string name="gestures_swipe_left" maxLength="41">डावीकडे स्वाइप करा</string>
@@ -124,7 +124,7 @@
     <string name="tts" maxLength="41">मजकूर ते भाषण</string>
     <string name="tts_summ">कोणतीही ध्वनी फाइल समाविष्ट नसल्यास प्रश्न आणि उत्तर वाचते</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
+    <string name="sync_fetch_missing_media" maxLength="41">सिंक करण्यासाठी मीडिया आणा</string>
     <string name="sync_account" maxLength="41">अंकीवेब खाते</string>
     <string name="sync_account_summ_logged_out">लॉग इन नाही</string>
     <string name="automatic_sync_choice" maxLength="41">स्वयंचलित सिंक्रोनाइझेशन</string>
@@ -199,7 +199,7 @@
     <string name="thirdparty_apps_title" maxLength="41">तृतीय-पक्ष API ॲप्स</string>
     <string name="thirdparty_apps_summary">AnkiDroid API वापरणाऱ्या अनुप्रयोगांची सूची पहा, जसे की शब्दकोश, उपयुक्तता.</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">समीक्षक</string>
     <string name="show_deck_title" maxLength="41">डेक शीर्षक दर्शवा</string>
     <string name="accessibility" maxLength="41">प्रवेशयोग्यता</string>
     <!-- Paste clipboard image as png option -->
@@ -213,11 +213,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">सानुकूल समक्रमण सर्व्हर</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">न वापरलेले</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
-        ]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[AnkiWeb सह सिंक्रोनाइझ करण्याचा पर्याय म्हणून,
+        सिंक्रोनाइझेशनसाठी तुम्ही तुमचा स्वतःचा सर्व्हर वापरू शकता.
+        सेट न केल्यास, त्याऐवजी डीफॉल्ट AnkiWeb सर्व्हर वापरला जाईल.
+        <a href="%s">अधिक जाणून घ्या</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">url समक्रमित करा</string>
     <string name="custom_sync_certificate_title" maxLength="41">कस्टम रूट प्रमाणपत्र (PEM)</string>
     <!-- Key Bindings -->
@@ -255,11 +254,11 @@
     <!-- About -->
     <string name="open_changelog">चेंजलॉग उघडा</string>
     <string name="pref_cat_about_title" maxLength="41">बद्दल</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="contributors_title">योगदानकर्ते</string>
+    <string name="about_contributors_description"><![CDATA[हे आमचे उत्कृष्ट <a href=\"%1$s\">योगदानकर्ते</a> आहेत. तुम्ही प्रोग्रामिंग, भाषांतर, देणगी आणि <a href=\"%2$s\">अधिक</a> करून देखील AnkiDroid ला मदत करू शकता!]]></string>
     <string name="license">परवाना</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="license_description"><![CDATA[AnkiDroid <a href=\"%1$s\">GPL-3.0</a> आणि <a href=\"%2$s\">AGPL-3.0</a> परवान्याखाली रिलीझ केले आहे. स्रोत कोड <a href=\"%3$s\">GitHub</a> वर उपलब्ध आहे]]></string>
+    <string name="donate_description"><![CDATA[तुम्ही <a href=\"%1$s\">दान</a> करून AnkiDroid च्या विकासाला समर्थन देऊ शकता. कोणतीही रक्कम खूप कौतुकास्पद आहे.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">एक जेश्चर जोडा</string>
     <string name="binding_replace_gesture">जेश्चर बदला</string>
@@ -289,30 +288,28 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' काढा</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="bindings_already_bound">आधीच \'%s\' ला बांधलेले आहे</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">प्रायोगिक</string>
+    <string name="readtext_deprecation_warn">AnkiDroid ने एक चांगली TTS यंत्रणा सादर केली आहे जी इतर Anki क्लायंटशी सुसंगत आहे आणि त्यात अधिक आवाज आणि भाषा प्लेबॅक सुधारणा समाविष्ट आहेत!\n\nकृपया शक्य तितक्या लवकर अपग्रेड करा, कारण ही सेटिंग लवकरच काढली जाईल.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">कृपया नवीन टेक्स्ट टू स्पीच फॉरमॅटमध्ये अपग्रेड करा</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">विकसक पर्याय</string>
     <string name="dev_options_enabled_pref" maxLength="41">विकसक पर्याय सक्षम करा</string>
     <string name="disable_dev_options">विकसक पर्याय अक्षम करा</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="dev_options_warning">कृपया विकसक पर्याय सक्षम करण्यापूर्वी खात्री करा. हे पर्याय धोकादायक आहेत आणि ॲप खंडित करू शकतात किंवा तुमचे संग्रहण खराब करू शकतात.\n\nलक्षात ठेवा की हे पर्याय बहुतेक वापरकर्त्यांसाठी योग्य नाहीत आणि म्हणून भाषांतरित केलेले नाहीत, म्हणून ते इंग्रजीमध्ये आहेत.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[AnkiDroid वेळोवेळी तुमच्या संग्रहाचा बॅकअप घेते.
+        बॅकअप दोन दिवसांपेक्षा जुना झाल्यानंतर,
+        AnkiDroid डिस्क जागा मोकळी करण्यासाठी त्यापैकी काही काढण्यास सुरुवात करेल.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        लक्षात घ्या की मीडिया फाइल्सचा बॅकअप घेतला जात नाही.
+        सुरक्षित राहण्यासाठी, कृपया तुमचे संग्रहण वेळोवेळी सिंक्रोनाइझ करा किंवा त्याच्या निर्यातीचा बॅकअप घ्या.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
-    ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+        आपण बॅकअपमधून पुनर्संचयित करू शकता आणि डेक सूची मेनूमध्ये आपला संग्रह निर्यात करू शकता.]]></string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">स्वयंचलित बॅकअप दरम्यान मिनिटे</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">ठेवण्यासाठी दैनिक बॅकअप</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">ठेवण्यासाठी साप्ताहिक बॅकअप</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">ठेवण्यासाठी मासिक बॅकअप</string>
@@ -360,11 +357,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">गणना करत आहे&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">संग्रह अस्तित्वात नाही</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">सिस्टम बार लपवा</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">स्टेटस बार</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">नेव्हिगेशन बार</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">सर्व</string>
+    <string name="ignore_display_cutout" maxLength="41">डिस्प्ले कटआउटकडे दुर्लक्ष करा</string>
+    <string name="hide_answer_buttons" maxLength="41">उत्तर बटणे लपवा</string>
 </resources>

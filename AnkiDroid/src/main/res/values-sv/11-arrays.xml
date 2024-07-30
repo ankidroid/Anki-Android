@@ -61,7 +61,7 @@
     <string name="cram_deck_conf_order_relative_overdueness">Relativ försening innan repetition</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Använd nuvarande kortlek</string>
-    <string name="add_to_deck_decide_by_note_type">Välj efter nottyp</string>
+    <string name="add_to_deck_decide_by_note_type">Välj efter anteckningstyp</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Följ systemet</string>
     <!-- day_theme_labels -->
