@@ -104,7 +104,7 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Excluir nota</string>
     <string name="menu_flag">Sinalização</string>
-    <string name="rename_flag">Renomear sinalizadores</string>
+    <string name="rename_flag">Renomear bandeiras</string>
     <string name="menu_flag_card">Sinalizar cartão</string>
     <string name="menu_edit_tags">Editar etiquetas</string>
     <string name="delete_note_message">Deseja realmente excluir esta nota e todos seus cartões?\n%s</string>

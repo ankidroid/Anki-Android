@@ -140,9 +140,9 @@
     <string name="mutimedia_editor_assertion_failed">એડવાન્સ્ડ એડિટર પ્રદર્શિત કરતી વખતે એક અજાણી ભૂલ આવી</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid અપગ્રેડ કર્યું</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
+    <string name="integrity_check_startup_content">AnkiDroid ને અપગ્રેડ કરવામાં આવ્યું છે. આ અપગ્રેડમાં સંભવિત ડેટાબેઝ સમસ્યાઓ માટેના ફિક્સેસનો સમાવેશ થાય છે, અને અમે તમને હમણાં જ ડેટાબેઝ ચેક કરવા માટે સલાહ આપીએ છીએ.</string>
     <string name="integrity_check_continue_anyway">કોઈપણ રીતે ચાલુ રાખો</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
+    <string name="integrity_check_insufficient_space">ચેક ડેટાબેઝ મોટી માત્રામાં અસ્થાયી સ્ટોરેજનો ઉપયોગ કરે છે.\n\nતેની ભારપૂર્વક ભલામણ કરવામાં આવે છે કે ચાલુ રાખતા પહેલા તમારી પાસે તમારા ઉપકરણ પર ઓછામાં ઓછી %s ખાલી જગ્યા હોય.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nતમારી પાસે હાલમાં %s મફત છે.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
@@ -152,7 +152,7 @@
     <string name="database_locked_title">ડેટાબેઝ લોક</string>
     <string name="database_locked_summary">AnkiDroid ડેટાબેઝનો ઉપયોગ અન્ય એપ્લિકેશનો દ્વારા થાય છે. કૃપા કરીને બીજી એપ્લિકેશન બંધ કરો પછી AnkiDroid ફરીથી ખોલો.</string>
     <string name="incompatible_database_version_title">અસંગત ડેટાબેઝ સંસ્કરણ</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="incompatible_database_version_summary">ડેટાબેઝ એ AnkiDroid ના આ વર્ઝન સાથે કામ કરી શકે છે તેના કરતાં વધુ અદ્યતન સંસ્કરણ છે. AnkiDroid ને અપગ્રેડ કરો અથવા તેને ખોલવા માટે ડેટાબેઝને ડાઉનગ્રેડ કરો\n\nઆધારિત સંસ્કરણ: %1$d\nડેટાબેઝ સંસ્કરણ: %2$d\n\nનીચેના પુનઃસ્થાપિત વિકલ્પો તમારા વર્તમાન સંગ્રહને ઓવરરાઈટ કરશે, સંભવતઃ સુસંગત ડેટાબેઝ સંસ્કરણ સાથે:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">પૃષ્ઠભૂમિ છબી લાગુ કરી</string>
     <string name="background_image_removed">પૃષ્ઠભૂમિ છબી દૂર કરી</string>
@@ -162,18 +162,18 @@
     <string name="failed_to_apply_background_image">પૃષ્ઠભૂમિ છબી %s લાગુ કરવામાં નિષ્ફળ</string>
     <string name="background_image_too_large">ડેક પીકર પૃષ્ઠભૂમિ વિશાળ છે</string>
     <string name="image_max_size_allowed">મહત્તમ ઇમેજ સાઇઝ %d MB છે</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">છબીના પરિમાણો ખૂબ મોટા છે (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">જરૂરી સંગ્રહ પરવાનગી ખૂટે છે. કૃપા કરીને સ્ટોરેજની પરવાનગી આપો પછી તમારી ક્રિયાનો ફરી પ્રયાસ કરો.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">કાર્ડ બ્રાઉઝર દેખાવ લોડ કરી શકાયો નથી</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">રીમાઇન્ડર્સ શેડ્યૂલ કરવામાં નિષ્ફળ</string>
     <string name="boot_service_too_many_notifications">ઘણા રીમાઇન્ડર્સ સુનિશ્ચિત થયેલ છે. કેટલાક દેખાશે નહીં</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">ભાષા સેટ કરો</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_summary">કેટલાક બહુભાષી કીબોર્ડ, જેમ કે GBoard ટેક્સ્ટને સંપાદિત કરતી વખતે ભાષા બદલવાનું સમર્થન કરે છે\n\nજો તમારું કીબોર્ડ ભાષા બદલતું નથી, તો કૃપા કરીને તમારા કીબોર્ડ ઉત્પાદક પાસેથી “setImeHintLocales” સુવિધાની વિનંતી કરો.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid નો ઉપયોગ કરવો</string>
     <string name="help_item_ankidroid_manual">AnkiDroid મેન્યુઅલ</string>
@@ -184,7 +184,7 @@
     <string name="help_item_reddit">રેડિટ</string>
     <string name="help_item_report_bug">બગની જાણ કરો</string>
     <string name="help_title_support_ankidroid">AnkiDroid ને સપોર્ટ કરો</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_opencollective_donate">દાન કરો</string>
     <string name="help_item_support_develop_ankidroid">વિકાસ</string>
     <string name="help_item_support_rate_ankidroid">દર</string>
     <string name="help_item_support_other_ankidroid">અન્ય</string>
@@ -203,17 +203,17 @@
     <string name="help_dialog_exception_report_sent">રિપોર્ટ મોકલવામાં આવ્યો હતો!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">An automatic sync may be triggered in %d second</item>
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="one">સ્વચાલિત સમન્વયન %d સેકન્ડમાં ટ્રિગર થઈ શકે છે</item>
+        <item quantity="other">સ્વચાલિત સિંક્રનાઇઝેશન %d સેકન્ડમાં ટ્રિગર થઈ શકે છે</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
+    <string name="metered_sync_data_warning">તમારા ઇન્ટરનેટ પ્રદાતા ડેટાના ઉપયોગ માટે પૈસા વસૂલ કરી શકે છે</string>
+    <string name="deck_picker_new">આજે આ ડેકમાં જોવા માટે નવા કાર્ડ્સની સંખ્યા.</string>
     <string name="deck_picker_rev">આજે આ ડેકમાં બાકી રહેલા કાર્ડ્સની સંખ્યા.</string>
     <string name="deck_picker_lrn">આ ડેકમાં લર્નિંગ કાર્ડ્સની સંખ્યા.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="deck_picker_counts">આજે જોવા માટે કાર્ડ્સની સંખ્યા ધરાવતું ડેક વિહંગાવલોકન પૃષ્ઠ ખોલો.</string>
     <string name="import_deck_package">ડેક પેકેજ (.apkg)</string>
     <string name="import_collection_package">સંગ્રહ પેકેજ (.colpkg)</string>
     <string name="import_csv">ટેક્સ્ટ ફાઇલ (.txt, .csv)</string>
@@ -221,18 +221,18 @@
     <string name="cannot_create_subdeck_for_all_decks">તમે બધા ડેક માટે સબડેક બનાવી શકતા નથી</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">તમારા સંગ્રહનો બેકઅપ લો</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="backup_collection_message">તમે થોડા સમયથી તમારા સંગ્રહનું બેકઅપ લીધું નથી. ડેટા નુકશાન અટકાવવા માટે તમારે આ હવે કરવું જોઈએ</string>
     <string name="button_backup">બેકઅપ</string>
     <string name="button_disable_reminder">રીમાઇન્ડર્સ અક્ષમ કરો</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">પાછળથી</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ફરી બતાવશો નહીં</string>
     <string name="dismiss_backup_warning_title">ડેટા નુકશાન ચેતવણી</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="dismiss_backup_warning_new_user">        એન્ડ્રોઇડ ગોપનીયતા ફેરફારોને કારણે, જો એપ્લિકેશન અનઇન્સ્ટોલ કરવામાં આવશે તો તમારો ડેટા અને સ્વચાલિત બેકઅપ તમારા ફોનમાંથી કાઢી નાખવામાં આવશે
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        એન્ડ્રોઇડ ગોપનીયતા ફેરફારોને કારણે, જો એપ્લિકેશન અનઇન્સ્ટોલ કરવામાં આવે તો તમારો ડેટા અને સ્વચાલિત બેકઅપ અગમ્ય હશે
     </string>
     <string name="deck_already_exists">ડેક પહેલેથી જ અસ્તિત્વમાં છે</string>
-    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <string name="create_deck_numeric_hint">જો તમને ડેક ઓર્ડરિંગ સમસ્યાઓ છે (દા.ત. \'10\' \'2\' પહેલાં દેખાય છે), તો \'2\' ને \'02\' સાથે બદલો</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">અંતરાલને સમાન મૂલ્ય પર સેટ કરો</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
@@ -240,8 +240,8 @@
         <item quantity="other">માં કાર્ડ બતાવો</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">શ્રેણીમાં કાર્ડ્સ બતાવો</item>
+        <item quantity="other">શ્રેણીમાં કાર્ડ્સ બતાવો</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
         <item quantity="one">દિવસ</item>
@@ -251,11 +251,11 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">થી</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">પ્રતિ</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="cloze_note_required">બંધ પ્રકાર નોંધ જરૂરી</string>
+    <string name="cloze_not_found_message">કોઈ ક્લોઝ પ્રકારની નોંધ મળી નથી, નોંધ સંપાદક ખોલો અથવા ક્લોઝ પ્રકારની નોંધ ઉમેર્યા પછી ફરીથી પ્રયાસ કરો.</string>
     <string name="open">ખુલ્લા</string>
     <string name="change_cloze_number">કલમ નંબર બદલો</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="cloze_number">બંધ નંબર:</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">WebView સિસ્ટમ જૂની છે. કેટલીક સુવિધાઓ યોગ્ય રીતે કામ કરશે નહીં. કૃપા કરીને તેને અપડેટ કરો.\n\nઇન્સ્ટોલ કરેલ સંસ્કરણ: %1$d\nન્યૂનતમ આવશ્યક સંસ્કરણ: %2$d</string>
 </resources>

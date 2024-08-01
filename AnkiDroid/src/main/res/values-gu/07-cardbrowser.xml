@@ -88,7 +88,7 @@
         <item>અંતરાલ દ્વારા</item>
         <item>સરળતા દ્વારા</item>
         <item>સમીક્ષાઓ દ્વારા</item>
-        <item>By lapses</item>
+        <item>ક્ષતિઓ દ્વારા</item>
     </string-array>
     <string name="card_browser_select_all">બધા પસંદ કરો</string>
     <string name="card_browser_select_none">કોઈ પસંદ કરો</string>
@@ -98,18 +98,18 @@
     <string name="card_browser_no_cards_in_deck">ડેક \'%s\' માં કોઈ કાર્ડ મળ્યા નથી</string>
     <string name="card_browser_search_all_decks">બધા ડેક શોધો</string>
     <string name="card_browser_unknown_deck_name">અજ્ઞાત</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">સામગ્રી કાપો</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">આજે ‘0 %1$s’ છે, આવતીકાલે ‘1 %2$s’ છે, વગેરે&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">નિકાસ કાર્ડ</item>
+        <item quantity="other">નિકાસ કાર્ડ્સ</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">નિકાસ નોંધ</item>
+        <item quantity="other">નોંધો નિકાસ કરો</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d કાર્ડ કાઢી નાખ્યું</item>
+        <item quantity="other">%d કાર્ડ કાઢી નાખ્યા</item>
     </plurals>
 </resources>

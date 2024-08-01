@@ -59,7 +59,7 @@
     <string name="model_field_editor_language_hint">Definir idioma do teclado</string>
     <string name="model_field_editor_reposition_menu">Campo de reposição</string>
     <string name="model_field_editor_reposition">Reposicionar campo (digite um valor %1$d–%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Lembrar última entrada ao adicionar</string>
+    <string name="model_field_editor_toggle_sticky">Lembrar da última entrada ao adicionar</string>
     <string name="model_field_editor_changing">Atualizando os campos</string>
     <string name="model_field_editor_sort_field">Ordenar por esse campo</string>
     <!--Warnings-->
