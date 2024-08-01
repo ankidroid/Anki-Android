@@ -650,6 +650,9 @@ open class CardBrowser :
                     Timber.i("Ctrl+E: Add Note")
                     launchCatchingTask { addNoteFromCardBrowser() }
                     return true
+                } else {
+                    Timber.i("E: Edit note")
+                    openNoteEditorForCurrentlySelectedNote()
                 }
             }
             KeyEvent.KEYCODE_D -> {
@@ -718,10 +721,31 @@ open class CardBrowser :
         viewModel.endMultiSelectMode()
     }
 
+    /**
+     * In case of selection, the first card that was selected, otherwise the first card of the list.
+     */
+    private suspend fun getCardIdForNoteEditor(): CardId {
+        // Just select the first one if there's a multiselect occurring.
+        return if (viewModel.isInMultiSelectMode) {
+            viewModel.querySelectedCardIdAtPosition(0)
+        } else {
+            viewModel.getRowAtPosition(0).id
+        }
+    }
+
     private fun openNoteEditorForCurrentlySelectedNote() = launchCatchingTask {
+        // Check whether the deck is empty
+        if (viewModel.rowCount == 0) {
+            showSnackbar(
+                R.string.no_note_to_edit,
+                Snackbar.LENGTH_LONG
+            )
+            return@launchCatchingTask
+        }
+
         try {
-            // Just select the first one. It doesn't particularly matter if there's a multiselect occurring.
-            openNoteEditorForCard(viewModel.querySelectedCardIdAtPosition(0))
+            val cardId = getCardIdForNoteEditor()
+            openNoteEditorForCard(cardId)
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
             showSnackbar(
