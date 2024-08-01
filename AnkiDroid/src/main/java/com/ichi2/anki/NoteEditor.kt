@@ -58,7 +58,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
@@ -97,15 +96,10 @@ import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaImageFragment
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaViewModel
-import com.ichi2.anki.multimediacard.IMultimediaEditableNote
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
-import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.anki.multimediacard.fields.MediaClipField
-import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
@@ -145,7 +139,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.load
 import com.ichi2.libanki.note
 import com.ichi2.libanki.undoableOp
-import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.ImageUtils
@@ -156,13 +149,11 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil
 import com.ichi2.utils.NoteFieldDecorator
 import com.ichi2.utils.TextViewUtil
-import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
-import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.flow.first
@@ -284,42 +275,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             Timber.d("Getting multimedia result")
             val extras = result.data?.extras ?: return@NoteEditorActivityResultCallback
             handleMultimediaResult(extras)
-        }
-    )
-
-    // TODO: remove this once we migrate to the new multimedia UI
-    private val requestMultiMediaEditLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
-        NoteEditorActivityResultCallback { result ->
-
-            if (result.resultCode == RESULT_CANCELED) return@NoteEditorActivityResultCallback
-            val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
-
-            val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
-            val field = extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD) ?: return@NoteEditorActivityResultCallback
-            if (field.type != EFieldType.TEXT && (field.mediaPath == null)) {
-                Timber.i("field imagePath and audioPath are both null")
-                return@NoteEditorActivityResultCallback
-            }
-
-            lifecycleScope.launch {
-                val note = getCurrentMultimediaEditableNote()
-                note?.setField(index, field)
-                val fieldEditText = editFields!![index]
-                // Import field media
-                // This goes before setting formattedValue to update
-                // media paths with the checksum when they have the same name
-                withCol { NoteService.importMediaFileToDirectory(field) }
-                // Completely replace text for text fields (because current text was passed in)
-                val formattedValue = field.formattedValue
-                if (field.type === EFieldType.TEXT) {
-                    fieldEditText!!.setText(formattedValue)
-                } else if (fieldEditText!!.text != null) {
-                    insertStringInField(fieldEditText, formattedValue)
-                }
-                changed = true
-            }
         }
     )
 
@@ -546,7 +501,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             Timber.w("Note is null, returning")
             return
         }
-        startMultimediaFieldEditor(0, note, imageUri)
+        // TODO: start the MultimediaImageFragment with the image intent
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -1849,66 +1804,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         return true
     }
 
-    private fun setMMButtonListener(mediaButton: ImageButton, index: Int) {
-        mediaButton.setOnClickListener { v: View ->
-            Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
-            if (editorNote!!.items()[index][1].isNotEmpty()) {
-                // If the field already exists then we start the field editor, which figures out the type
-                // automatically
-                lifecycleScope.launch {
-                    val note: IMultimediaEditableNote? = getCurrentMultimediaEditableNote()
-                    if (note == null) {
-                        Timber.w("Note is null, returning")
-                        return@launch
-                    }
-                    startMultimediaFieldEditor(index, note)
-                }
-            } else {
-                // Otherwise we make a popup menu allowing the user to choose between audio/image/text field
-                val popup = PopupMenu(requireContext(), v)
-                val inflater = popup.menuInflater
-                inflater.inflate(R.menu.popupmenu_multimedia_options, popup.menu)
-
-                (popup.menu as? MenuBuilder)?.let { menu ->
-                    menu.setOptionalIconsVisible(true)
-                    increaseHorizontalPaddingOfOverflowMenuIcons(menu)
-                    tintOverflowMenuIcons(menu)
-                }
-
-                popup.setOnMenuItemClickListener { item: MenuItem ->
-                    when (item.itemId) {
-                        R.id.menu_multimedia_audio -> {
-                            Timber.i("NoteEditor:: Record audio button pressed")
-                            startMultimediaFieldEditorForField(index, AudioRecordingField())
-                            return@setOnMenuItemClickListener true
-                        }
-                        R.id.menu_multimedia_audio_clip, R.id.menu_multimedia_video_clip -> {
-                            Timber.i("NoteEditor:: Add audio clip button pressed")
-                            startMultimediaFieldEditorForField(index, MediaClipField())
-                            return@setOnMenuItemClickListener true
-                        }
-                        R.id.menu_multimedia_photo -> {
-                            Timber.i("NoteEditor:: Add image button pressed")
-                            startMultimediaFieldEditorForField(index, ImageField())
-                            return@setOnMenuItemClickListener true
-                        }
-                        R.id.menu_multimedia_text -> {
-                            Timber.i("NoteEditor:: Advanced editor button pressed")
-                            startAdvancedTextEditor(index)
-                            return@setOnMenuItemClickListener true
-                        }
-                    }
-                    false
-                }
-                if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
-                    popup.menu.findItem(R.id.menu_multimedia_photo).isVisible = false
-                    popup.menu.findItem(R.id.menu_multimedia_text).isVisible = false
-                }
-                popup.show()
-            }
-        }
-    }
-
     @NeedsTest("If a field is sticky after synchronization, the toggleStickyButton should be activated.")
     private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton?, index: Int) {
         if (currentFields.getJSONObject(index).getBoolean("sticky")) {
@@ -1965,16 +1860,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         setFieldValueFromUi(index, "")
     }
 
-    private fun startMultimediaFieldEditorForField(index: Int, field: IField) = lifecycleScope.launch {
-        val note: IMultimediaEditableNote? = getCurrentMultimediaEditableNote()
-        note?.setField(index, field)
-        if (note == null) {
-            Timber.w("Note is null, returning")
-            return@launch
-        }
-        startMultimediaFieldEditor(index, note)
-    }
-
     private fun setRemapButtonListener(remapButton: ImageButton?, newFieldIndex: Int) {
         remapButton!!.setOnClickListener { v: View? ->
             Timber.i("NoteEditor:: Remap button pressed for new field %d", newFieldIndex)
@@ -2015,14 +1900,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             }
             popup.show()
         }
-    }
-
-    private fun startMultimediaFieldEditor(index: Int, note: IMultimediaEditableNote?, imageUri: Uri? = null) {
-        val field = note!!.getField(index)!!
-        val editCard = Intent(requireContext(), MultimediaEditFieldActivity::class.java)
-        editCard.putExtra(MultimediaEditFieldActivity.INTENT_IMAGE_URI, imageUri)
-        editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
-        requestMultiMediaEditLauncher.launch(editCard)
     }
 
     private fun initFieldEditText(editText: FieldEditText?, index: Int, enabled: Boolean) {
@@ -2620,13 +2497,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
     private val isClozeType: Boolean
         get() = currentlySelectedNotetype!!.isCloze
-
-    @VisibleForTesting
-    fun startAdvancedTextEditor(index: Int) {
-        val field = TextField()
-        field.text = getCurrentFieldText(index)
-        startMultimediaFieldEditorForField(index, field)
-    }
 
     @VisibleForTesting
     fun setFieldValueFromUi(i: Int, newText: String?) {

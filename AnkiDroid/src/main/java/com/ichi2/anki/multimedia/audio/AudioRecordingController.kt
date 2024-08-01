@@ -36,11 +36,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
+import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.ImmediatePlayback
 import com.ichi2.anki.multimediacard.AudioRecorder
-import com.ichi2.anki.multimediacard.fields.FieldControllerBase
-import com.ichi2.anki.multimediacard.fields.IFieldController
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.OnHoldListener
@@ -60,9 +60,12 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 // TODO : stop audio time view flickering
-class AudioRecordingController :
-    FieldControllerBase(),
-    IFieldController,
+class AudioRecordingController(
+    val context: Context,
+    val layout: LinearLayout? = null,
+    val viewModel: MultimediaViewModel? = null,
+    val note: IMultimediaEditableNote? = null
+) :
     AudioTimer.OnTimerTickListener,
     AudioTimer.OnAudioTickListener {
     private lateinit var audioRecorder: AudioRecorder
@@ -86,7 +89,6 @@ class AudioRecordingController :
     private lateinit var rewindAudioButton: MaterialButton
     private lateinit var audioWaveform: AudioWaveform
     private lateinit var audioProgressBar: LinearProgressIndicator
-    lateinit var context: Context
     private val isCleared
         get() = state == AppendToRecording.CLEARED || state == ImmediatePlayback.CLEARED
     private val isRecordingPaused
@@ -102,7 +104,13 @@ class AudioRecordingController :
     // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
     private var orientationEventListener: OrientationEventListener? = null
 
-    override fun createUI(context: Context, layout: LinearLayout) {
+    init {
+        if (layout != null) {
+            createUI(context, layout)
+        }
+    }
+
+    private fun createUI(context: Context, layout: LinearLayout) {
         createUI(context, layout, AppendToRecording.CLEARED, R.layout.activity_audio_recording)
     }
 
@@ -115,7 +123,7 @@ class AudioRecordingController :
         this.state = initialState
         audioRecorder = AudioRecorder()
         if (inEditField) {
-            val origAudioPath = this._field.mediaPath
+            val origAudioPath = viewModel?.currentMultimediaPath?.value
             var bExist = false
             if (origAudioPath != null) {
                 val f = File(origAudioPath)
@@ -125,7 +133,7 @@ class AudioRecordingController :
                 }
             }
             if (!bExist) {
-                tempAudioPath = generateTempAudioFile(_activity)
+                tempAudioPath = generateTempAudioFile(context)
             }
         }
 
@@ -150,20 +158,22 @@ class AudioRecordingController :
                 label.gravity = Gravity.CENTER_HORIZONTAL
                 previewLayout.addView(label)
                 var hasTextContents = false
-                for (i in 0 until _note.initialFieldCount) {
-                    val field = _note.getInitialField(i)
-                    FixedTextView(this).apply {
-                        text = field?.text
-                        textSize = 16f
-                        setPadding(16, 0, 16, 24)
-                        previewLayout.addView(this)
+
+                if (note != null) {
+                    for (i in 0 until note.initialFieldCount) {
+                        val field = note.getInitialField(i)
+                        FixedTextView(this).apply {
+                            text = field?.text
+                            textSize = 16f
+                            setPadding(16, 0, 16, 24)
+                            previewLayout.addView(this)
+                        }
+                        hasTextContents = hasTextContents or !field?.text.isNullOrBlank()
                     }
-                    hasTextContents = hasTextContents or !field?.text.isNullOrBlank()
+                    label.isVisible = hasTextContents
                 }
-                label.isVisible = hasTextContents
             }
         }
-        this.context = context
         recordButton = layout.findViewById(R.id.action_start_recording)
         audioTimeView = layout.findViewById(R.id.audio_time_track)
         audioWaveform = layout.findViewById(R.id.audio_waveform_view)
@@ -585,8 +595,7 @@ class AudioRecordingController :
     }
 
     private fun saveRecording() {
-        _field.mediaPath = tempAudioPath
-        _field.hasTemporaryMedia = true
+        viewModel?.updateCurrentMultimediaPath(tempAudioPath)
     }
 
     fun stopAndSaveRecording() {
@@ -629,16 +638,12 @@ class AudioRecordingController :
         isRecording = false
     }
 
-    override fun onDone() {
-        // do nothing
-    }
-
-    override fun onFocusLost() {
+    fun onFocusLost() {
         audioRecorder.release()
         audioPlayer!!.release()
     }
 
-    override fun onDestroy() {
+    fun onDestroy() {
         audioRecorder.release()
     }
 
