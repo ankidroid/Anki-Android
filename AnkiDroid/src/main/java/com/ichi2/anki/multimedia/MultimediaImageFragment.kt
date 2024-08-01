@@ -39,9 +39,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
+import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_LIMIT
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -214,8 +214,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 Timber.d("Image length is not valid")
                 return@setOnClickListener
             }
-            if (viewModel.selectedMediaFileSize > MultimediaUtils.IMAGE_LIMIT) {
-                showLargeFileCropDialog((1.0 * viewModel.selectedMediaFileSize / MultimediaEditFieldActivity.IMAGE_LIMIT).toFloat())
+            if (viewModel.selectedMediaFileSize > IMAGE_LIMIT) {
+                showLargeFileCropDialog((1.0 * viewModel.selectedMediaFileSize / IMAGE_LIMIT).toFloat())
                 return@setOnClickListener
             }
 

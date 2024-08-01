@@ -32,7 +32,6 @@ import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.annotations.DuplicatedCode
@@ -65,22 +64,6 @@ class NoteEditorTest : RobolectricTest() {
     fun verifyCardsList() {
         val n = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
         assertThat("Cards list is correct", (n.requireView().findViewById<TextView>(R.id.CardEditorCardsButton)).text.toString(), equalTo("Cards: Card 1"))
-    }
-
-    @Test
-    fun whenEditingMultimediaEditUsesCurrentValueOfFields() {
-        // Arrange
-        val fieldIndex = 0
-        val n = getNoteEditorEditingExistingBasicNote("Hello", "World", REVIEWER)
-        enterTextIntoField(n, fieldIndex, "Good Afternoon")
-
-        // Act
-        openAdvancedTextEditor(n, fieldIndex)
-
-        // Assert
-        val intent = shadowOf(n.requireActivity()).nextStartedActivityForResult
-        val actualField = MultimediaEditFieldActivity.getFieldFromIntent(intent.intent)!!
-        assertThat("Provided value should be the updated value", actualField.second.formattedValue, equalTo("Good Afternoon"))
     }
 
     @Test
@@ -504,14 +487,6 @@ class NoteEditorTest : RobolectricTest() {
             }
             NoteType.IMAGE_OCCLUSION -> col.notetypes.byName("Image Occlusion")
         }
-    }
-
-    private fun openAdvancedTextEditor(n: NoteEditor, fieldIndex: Int) {
-        n.startAdvancedTextEditor(fieldIndex)
-    }
-
-    private fun enterTextIntoField(n: NoteEditor, i: Int, newText: String) {
-        n.setFieldValueFromUi(i, newText)
     }
 
     private fun getNoteEditorAddingNote(from: FromScreen): NoteEditor {
