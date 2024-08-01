@@ -99,13 +99,14 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     /**
-     * Creates and shows an AlertDialog with a predefined error message
+     * Creates and shows an AlertDialog with an error message
      * from the application's resources. The dialog includes an "OK" button that,
      * when clicked, finishes the current activity.
      */
-    fun showErrorDialog() {
+    fun showErrorDialog(errorMessage: String? = null) {
+        val message = errorMessage ?: resources.getString(R.string.something_wrong)
         AlertDialog.Builder(requireContext()).show {
-            setMessage(getString(R.string.something_wrong))
+            setMessage(message)
             setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
                 requireActivity().finish()
             }
