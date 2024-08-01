@@ -17,6 +17,8 @@
 
 package com.ichi2.anki.multimedia
 
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.format.Formatter
 import android.view.MenuItem
@@ -25,10 +27,12 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
@@ -56,6 +60,7 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     protected var indexValue: Int = 0
     protected lateinit var field: IField
     protected lateinit var note: IMultimediaEditableNote
+    protected var imageUri: Uri? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,8 +75,35 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 indexValue = multimediaActivityExtra.index
                 field = multimediaActivityExtra.field
                 note = multimediaActivityExtra.note
+                if (multimediaActivityExtra.imageUri != null) {
+                    imageUri = Uri.parse(multimediaActivityExtra.imageUri)
+                }
             }
         }
+    }
+
+    /**
+     * Get Uri based on current image path
+     *
+     * @param file the file to get URI for
+     * @return current image path's uri
+     */
+    fun getUriForFile(file: File): Uri {
+        Timber.d("getUriForFile() %s", file)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                return FileProvider.getUriForFile(
+                    requireActivity(),
+                    requireActivity().applicationContext.packageName + ".apkgfileprovider",
+                    file
+                )
+            }
+        } catch (e: Exception) {
+            // #6628 - What would cause this? Is the fallback is effective? Telemetry to diagnose more:
+            Timber.w(e, "getUriForFile failed on %s - attempting fallback", file)
+            CrashReportService.sendExceptionReport(e, "MultimediaFragment", "Unexpected getUriForFile failure on $file", true)
+        }
+        return Uri.fromFile(file)
     }
 
     fun setMenuItemIcon(menuItem: MenuItem, @DrawableRes icon: Int) {

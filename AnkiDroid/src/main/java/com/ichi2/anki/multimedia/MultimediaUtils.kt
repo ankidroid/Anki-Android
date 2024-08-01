@@ -33,6 +33,20 @@ import java.io.File
 import java.io.IOException
 
 object MultimediaUtils {
+    /**
+     * Creates a new temporary image file in the specified cache directory.
+     *
+     * @param extension The desired file extension (default: "jpg").
+     * @return The newly created image file.
+     * @throws IOException If an error occurs while creating the file.
+     */
+    @Throws(IOException::class)
+    fun createNewCacheImageFile(extension: String = "jpg", directory: String?): File {
+        val storageDir = File(directory!!)
+        return File.createTempFile("img", ".$extension", storageDir)
+    }
+
+    const val IMAGE_SAVE_MAX_WIDTH = 1920
 
     /**
      * https://cs.android.com/android/platform/superproject/+/master:packages/providers/DownloadProvider/src/com/android/providers/downloads/MediaStoreDownloadsHelper.java;l=24
