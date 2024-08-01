@@ -637,7 +637,7 @@ open class Reviewer :
             setEditorStatus(false)
             if (!isAudioUIInitialized) {
                 try {
-                    audioRecordingController = AudioRecordingController()
+                    audioRecordingController = AudioRecordingController(this)
                     audioRecordingController?.createUI(
                         this,
                         micToolBarLayer,
