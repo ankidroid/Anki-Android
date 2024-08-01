@@ -57,6 +57,10 @@ class MultimediaViewModel : ViewModel() {
         _currentMultimediaPath.value = prevMultimediaPath
     }
 
+    fun updateMediaFileLength(length: Long) {
+        selectedMediaFileSize = length
+    }
+
     fun updateCurrentMultimediaUri(uri: Uri?) {
         _currentMultimediaUri.value = uri
     }

@@ -49,14 +49,14 @@ class AudioRecordingControllerAndroidTest : RobolectricTest() {
     @Ignore("does not fail when expected under Robolectric")
     fun `Voice Playback handles onPause`() = withVoicePlayback {
         Timber.v("start recording")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording).performClick()
+        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
         Timber.v("stop recording")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording).performClick()
+        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
         Timber.v(" playback recording")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording).performClick()
+        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
         onViewFocusChanged()
         Timber.v("playback recording again")
-        layout.findViewById<MaterialButton?>(R.id.action_start_recording).performClick()
+        layout.findViewById<MaterialButton?>(R.id.action_start_recording)?.performClick()
     }
 
     /** Applies [block] to a [AudioRecordingController] generated for the [Reviewer] */
@@ -65,7 +65,7 @@ class AudioRecordingControllerAndroidTest : RobolectricTest() {
         val layout = LinearLayout(targetContext)
         Themes.setTheme(targetContext)
         this.layout = layout
-        AudioRecordingController().apply {
+        AudioRecordingController(targetContext, layout).apply {
             // this shouldn't be here
             AudioRecordingController.tempAudioPath = AudioRecordingController.generateTempAudioFile(targetContext)
             AudioRecordingController.setEditorStatus(inEditField = false)

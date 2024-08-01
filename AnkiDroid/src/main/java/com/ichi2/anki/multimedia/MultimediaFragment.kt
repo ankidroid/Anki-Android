@@ -104,9 +104,8 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
      * when clicked, finishes the current activity.
      */
     fun showErrorDialog(errorMessage: String? = null) {
-        val message = errorMessage ?: resources.getString(R.string.something_wrong)
         AlertDialog.Builder(requireContext()).show {
-            setMessage(message)
+            setMessage(errorMessage ?: resources.getString(R.string.something_wrong))
             setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
                 requireActivity().finish()
             }

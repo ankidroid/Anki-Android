@@ -62,7 +62,7 @@ import kotlin.time.Duration.Companion.milliseconds
 // TODO : stop audio time view flickering
 class AudioRecordingController(
     val context: Context,
-    val layout: LinearLayout? = null,
+    val linearLayout: LinearLayout? = null,
     val viewModel: MultimediaViewModel? = null,
     val note: IMultimediaEditableNote? = null
 ) :
@@ -105,13 +105,10 @@ class AudioRecordingController(
     private var orientationEventListener: OrientationEventListener? = null
 
     init {
-        if (layout != null) {
-            createUI(context, layout)
+        Timber.d("Initializing the audio recorder UI")
+        if (linearLayout != null) {
+            createUI(context, linearLayout, AppendToRecording.CLEARED, R.layout.activity_audio_recording)
         }
-    }
-
-    private fun createUI(context: Context, layout: LinearLayout) {
-        createUI(context, layout, AppendToRecording.CLEARED, R.layout.activity_audio_recording)
     }
 
     fun createUI(
@@ -441,6 +438,7 @@ class AudioRecordingController(
 
     private fun discardAudio() {
         vibrate(20.milliseconds)
+        viewModel?.updateCurrentMultimediaPath(null)
         setUiState(state.clear())
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
         stopAudioPlayer()
@@ -474,6 +472,7 @@ class AudioRecordingController(
         Timber.i("recording completed")
         if (vibrate) vibrate(20.milliseconds)
         stopAndSaveRecording()
+        // TODO: discuss if we want to keep the snackbar here
         // show this snackbar only in the edit field/multimedia activity
         if (inEditField) (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
         prepareAudioPlayer()
@@ -596,6 +595,10 @@ class AudioRecordingController(
 
     private fun saveRecording() {
         viewModel?.updateCurrentMultimediaPath(tempAudioPath)
+        val file = tempAudioPath?.let { File(it) }
+        if (file != null) {
+            viewModel?.updateMediaFileLength(file.length())
+        }
     }
 
     fun stopAndSaveRecording() {
@@ -634,6 +637,7 @@ class AudioRecordingController(
         audioTimer.stop()
         setUiState(state.clear())
         audioRecorder.stopRecording()
+        viewModel?.updateCurrentMultimediaPath(null)
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
         isRecording = false
     }
@@ -717,7 +721,7 @@ class AudioRecordingController(
         }
 
         fun setEditorStatus(inEditField: Boolean) {
-            Companion.inEditField = inEditField
+            this.inEditField = inEditField
         }
 
         /** File of the temporary mic record  */
