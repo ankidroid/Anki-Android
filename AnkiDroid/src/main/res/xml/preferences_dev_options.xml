@@ -70,10 +70,6 @@
         android:title="@string/reset_onboarding"
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
-    <SwitchPreferenceCompat
-        android:title="@string/new_multimedia_ui"
-        android:key="@string/pref_new_multimedia_ui"
-        android:defaultValue="false"/>
     <PreferenceCategory
         android:title="Create fake media"
         >
