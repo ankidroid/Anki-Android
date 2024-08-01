@@ -39,16 +39,21 @@
 
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
     <string name="deck_picker_widget_description">Deck Picker Widget</string>
+    <string name="card_analysis_extra_widget_description">Card Analysis </string>
 
     <!-- Strings to explain out usage in Deck Picker and Card Analysis Extra Widget Configuration screen -->
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Mark as Favorite</string>
     <string name="no_favourite_deck_placeholder_title" comment="Placeholder title when no decks are marked as favorites">No decks are marked as favorites</string>
     <string name="no_favourite_deck_placeholder_description" comment="Description for starting to mark decks as favorites">Start marking decks as favorites using the + icon.</string>
-    <string name="deck_limit_reached" comment="Message when the deck limit is reached">Only 5 decks can be marked favorite.</string>
+    <string name="deck_limit_reached" comment="Message when the deck limit is reached in Deck Picker Widget Configuration screen">Only 5 decks can be marked favorite.</string>
+    <string name="deck_limit_reached_card_analysis" comment="Message when the deck limit is reached in Card Analysis Extra Widget Configuration screen">Only 1 deck can be marked favourite.</string>
 
     <!-- Sample deck names and properties for Deck Picker Widget layout in widget picker screen -->
     <string name="deck1Name_deck_picker_widget" comment="Sample deck name for Deck 1 for Deck Picker Widget layout in widget picker">Chemistry</string>
     <string name="deck2Name_deck_picker_widget" comment="Sample deck name for Deck 2 for Deck Picker Widget layout in widget picker">Physics</string>
     <string name="deck3Name_deck_picker_widget" comment="Sample deck name for Deck 3 for Deck Picker Widget layout in widget picker">Math</string>
+
+    <!--  Sample deck name for Card Analysis Extra Widget layout in widget picker screen -->
+    <string name="deckName_card_analysis_extra_widget" comment="Sample deck name for Deck in Card Analysis Extra Widget layout in widget picker">Default</string>
 
 </resources>

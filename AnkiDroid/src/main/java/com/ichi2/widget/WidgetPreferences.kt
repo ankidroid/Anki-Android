@@ -27,6 +27,7 @@ import androidx.core.content.edit
 class WidgetPreferences(context: Context) {
 
     private val deckPickerSharedPreferences = context.getSharedPreferences("DeckPickerWidgetPrefs", Context.MODE_PRIVATE)
+    private val cardAnalysisSharedPreferences = context.getSharedPreferences("CardAnalysisExtraPrefs", Context.MODE_PRIVATE)
 
     // Deletes the stored data for a specific widget for DeckPickerWidget
     fun deleteDeckPickerWidgetData(appWidgetId: Int) {
@@ -36,7 +37,7 @@ class WidgetPreferences(context: Context) {
     }
 
     // Get selected deck IDs from shared preferences for DeckPickerWidget
-    fun getSelectedDeckIdsFromPreferencesDeckPickerWidget(appWidgetId: Int): LongArray {
+    fun getSelectedDeckIdsFromPreferencesDeckPickerWidgetData(appWidgetId: Int): LongArray {
         val selectedDecksString = deckPickerSharedPreferences.getString("deck_picker_widget_selected_decks_$appWidgetId", "")
         return if (!selectedDecksString.isNullOrEmpty()) {
             selectedDecksString.split(",").map { it.toLong() }.toLongArray()
@@ -46,9 +47,30 @@ class WidgetPreferences(context: Context) {
     }
 
     // Save selected deck IDs to shared preferences for DeckPickerWidget
-    fun saveSelectedDecks(appWidgetId: Int, selectedDecks: List<String>) {
+    fun saveSelectedDecksDeckPickerWidgetData(appWidgetId: Int, selectedDecks: List<String>) {
         deckPickerSharedPreferences.edit {
             putString("deck_picker_widget_selected_decks_$appWidgetId", selectedDecks.joinToString(","))
+        }
+    }
+
+    fun deleteCardAnalysisExtraData(appWidgetId: Int) {
+        cardAnalysisSharedPreferences.edit {
+            remove("card_analysis_extra_widget_selected_decks_$appWidgetId")
+        }
+    }
+
+    fun getSelectedDeckIdsFromPreferencesCardAnalysisExtraData(appWidgetId: Int): LongArray {
+        val selectedDecksString = cardAnalysisSharedPreferences.getString("card_analysis_extra_widget_selected_decks_$appWidgetId", "")
+        return if (!selectedDecksString.isNullOrEmpty()) {
+            selectedDecksString.split(",").map { it.toLong() }.toLongArray()
+        } else {
+            longArrayOf()
+        }
+    }
+
+    fun saveSelectedDecksCardAnalysisExtraData(appWidgetId: Int, selectedDecks: List<String>) {
+        cardAnalysisSharedPreferences.edit {
+            putString("card_analysis_extra_widget_selected_decks_$appWidgetId", selectedDecks.joinToString(","))
         }
     }
 }

@@ -331,6 +331,7 @@
     <string name="deck2Learn_deck_picker_widget">10</string>
     <string name="deck3Learn_deck_picker_widget">5</string>
 
+
     <!-- Multimedia UI -->
     <string name="new_multimedia_ui">New multimedia UI</string>
 </resources>

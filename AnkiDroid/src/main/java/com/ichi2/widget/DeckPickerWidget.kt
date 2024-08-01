@@ -16,12 +16,9 @@
 
 package com.ichi2.widget
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
 import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp.Companion.applicationScope
 import com.ichi2.anki.CollectionManager.withCol
@@ -30,7 +27,6 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.time.Duration.Companion.seconds
 
 /**
  * Data class representing the data for a deck displayed in the widget.
@@ -58,7 +54,7 @@ data class DeckPickerWidgetData(
  * It can be resized vertically & horizontally.
  * No user actions can be performed from this widget as of now; it is for display purposes only.
  */
-class DeckPickerWidget : AnalyticsWidgetProvider() {
+class DeckPickerWidget : WidgetAlarm() {
 
     companion object {
         const val ACTION_APPWIDGET_UPDATE = AppWidgetManager.ACTION_APPWIDGET_UPDATE
@@ -98,62 +94,6 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 appWidgetManager.updateAppWidget(widgetId, remoteViews)
             }
         }
-
-        /**
-         * Sets a recurring alarm to update the widget every minute.
-         *
-         * @param context the context of the application
-         * @param appWidgetId the ID of the widget
-         */
-        private fun setRecurringAlarm(context: Context, appWidgetId: Int) {
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, DeckPickerWidget::class.java).apply {
-                action = ACTION_UPDATE_WIDGET
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            }
-            val pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE)
-
-            /**
-             * When onUpdate is called, the code checks if an existing alarm PendingIntent
-             * is already set for the widget .If an Alarm Already Exists: PendingIntent.getBroadcast
-             * returns the existing PendingIntent, and pendingIntent is not null.
-             * The if block is skipped, and no new alarm is set.
-             */
-
-            if (pendingIntent != null) {
-                Timber.v("Recurring alarm PendingIntent already exists for widget ID: $appWidgetId")
-                return
-            }
-
-            Timber.v("Creating a new recurring alarm PendingIntent for widget ID: $appWidgetId")
-            val newPendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-
-            // Set alarm to trigger every minute
-            val ONE_MINUTE_MILLIS = 60.seconds.inWholeMilliseconds
-            alarmManager.setRepeating(
-                AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + ONE_MINUTE_MILLIS,
-                ONE_MINUTE_MILLIS,
-                newPendingIntent
-            )
-        }
-
-        /**
-         * Cancels the recurring alarm for the widget.
-         *
-         * @param context the context of the application
-         * @param appWidgetId the ID of the widget
-         */
-        private fun cancelRecurringAlarm(context: Context, appWidgetId: Int) {
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, DeckPickerWidget::class.java).apply {
-                action = ACTION_UPDATE_WIDGET
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            }
-            val pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-            Timber.d("Canceling recurring alarm for widget ID: $appWidgetId")
-            alarmManager.cancel(pendingIntent)
-        }
     }
 
     override fun performUpdate(
@@ -165,11 +105,11 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         val widgetPreferences = WidgetPreferences(context)
 
         for (widgetId in appWidgetIds) {
-            val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidget(widgetId)
+            val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidgetData(widgetId)
             if (selectedDeckIds.isNotEmpty()) {
                 updateWidget(context, appWidgetManager, intArrayOf(widgetId), selectedDeckIds)
+                setRecurringAlarm(context, widgetId, DeckPickerWidget::class.java)
             }
-            setRecurringAlarm(context, widgetId)
         }
     }
 
@@ -196,7 +136,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 val appWidgetManager = AppWidgetManager.getInstance(context)
                 val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
                 if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-                    val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidget(appWidgetId)
+                    val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidgetData(appWidgetId)
                     if (selectedDeckIds.isNotEmpty()) {
                         updateWidget(context, appWidgetManager, intArrayOf(appWidgetId), selectedDeckIds)
                     }
@@ -214,7 +154,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
     override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
         super.onDeleted(context, appWidgetIds)
         appWidgetIds?.forEach { widgetId ->
-            cancelRecurringAlarm(context!!, widgetId)
+            cancelRecurringAlarm(context!!, widgetId, DeckPickerWidget::class.java)
         }
     }
 }
