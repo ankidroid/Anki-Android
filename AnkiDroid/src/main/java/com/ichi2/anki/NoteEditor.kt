@@ -1671,13 +1671,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 // Use media editor button if not changing note type
                 mediaButton.setBackgroundResource(R.drawable.ic_attachment)
 
-                if (sharedPrefs().getBoolean(getString(R.string.pref_new_multimedia_ui), false)) {
-                    mediaButton.setOnClickListener {
-                        @NeedsTest("Ensure bottom sheet fragment is shown")
-                        handleMultimediaActions(i)
-                    }
-                } else {
-                    setMMButtonListener(mediaButton, i)
+                mediaButton.setOnClickListener {
+                    @NeedsTest("Ensure bottom sheet fragment is shown")
+                    handleMultimediaActions(i)
                 }
 
                 if (addNote) {

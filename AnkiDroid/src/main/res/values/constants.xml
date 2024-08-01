@@ -320,6 +320,4 @@
     <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
     <string name="reset_onboarding_desc">Show all tutorials again</string>
 
-    <!-- Multimedia UI -->
-    <string name="new_multimedia_ui">New multimedia UI</string>
 </resources>

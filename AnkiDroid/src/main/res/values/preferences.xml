@@ -202,6 +202,4 @@
     <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
     <string name="hide_answer_buttons_key">hideAnswerButtons</string>
 
-    <string name="pref_new_multimedia_ui">newMultimediaUI</string>
-
 </resources>
