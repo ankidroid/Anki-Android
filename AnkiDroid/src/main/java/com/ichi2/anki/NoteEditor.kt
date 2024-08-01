@@ -88,6 +88,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.multimedia.AudioRecordingFragment
 import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
@@ -96,6 +97,7 @@ import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaImageFragment
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaViewModel
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.multimediacard.fields.ImageField
@@ -1720,7 +1722,15 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                     }
 
                     MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING -> {
-                        // TODO("Not yet implemented")
+                        Timber.i("Selected audio recording option")
+                        val field = AudioRecordingField()
+                        note.setField(fieldIndex, field)
+                        val audioRecordingIntent = AudioRecordingFragment.getIntent(
+                            requireContext(),
+                            MultimediaActivityExtra(fieldIndex, field, note)
+                        )
+
+                        multimediaFragmentLauncher.launch(audioRecordingIntent)
                     }
 
                     MultimediaBottomSheet.MultimediaAction.SELECT_VIDEO_FILE -> {

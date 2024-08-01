@@ -114,7 +114,7 @@ class MultimediaActivity : AnkiActivity() {
             context: Context,
             fragmentClass: KClass<out Fragment>,
             arguments: MultimediaActivityExtra? = null,
-            mediaOptions: Serializable
+            mediaOptions: Serializable? = null
         ): Intent {
             return Intent(context, MultimediaActivity::class.java).apply {
                 putExtra(MULTIMEDIA_ARGS_EXTRA, arguments)
