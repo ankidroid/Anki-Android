@@ -37,6 +37,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.Serializable
 import java.util.Locale
+import kotlin.time.Duration
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -77,7 +78,7 @@ import java.util.Locale
 interface Compat {
     fun setupNotificationChannel(context: Context)
     fun setTooltipTextByContentDescription(view: View)
-    fun vibrate(context: Context, durationMillis: Long)
+    fun vibrate(context: Context, duration: Duration)
     fun getMediaRecorder(context: Context): MediaRecorder
     fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
@@ -228,3 +229,6 @@ interface Compat {
     @Suppress("PropertyName")
     val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int
 }
+
+context (Context)
+fun Compat.vibrate(duration: Duration) = vibrate(this@Context, duration)
