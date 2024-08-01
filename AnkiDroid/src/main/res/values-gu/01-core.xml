@@ -104,15 +104,15 @@
     <string name="menu_suspend">સસ્પેન્ડ</string>
     <string name="menu_delete_note">નોંધ કાયમ માટે કાઢી નાખો</string>
     <string name="menu_flag">ધ્વજ</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">ફ્લેગોનું નામ બદલો</string>
     <string name="menu_flag_card">કાર્ડને ચિહ્નિત કરો</string>
     <string name="menu_edit_tags">ચિહ્નો બદલો </string>
     <string name="delete_note_message">આ નોંધ અને તેના તમામ કાડઁ ખરેખર કાઢી નાખીએ ?\n%s</string>
     <string name="menu_search">%1$s માં જુઓ </string>
     <string name="menu_mark_note">નોંધ ચિહ્નિત કરો</string>
     <string name="menu_unmark_note">ચિહ્નિત નોંધોમાથી કાઢો</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">વૉઇસ પ્લેબેક સક્ષમ કરો</string>
+    <string name="menu_disable_voice_playback">વૉઇસ પ્લેબેક અક્ષમ કરો</string>
     <string name="new_deck">થપ્પી ઉમેરો </string>
     <string name="new_dynamic_deck">ફિલ્ટર કરેલ ડેક બનાવો</string>
     <string name="directory_inaccessible">AnkiDroid શબ્દાવલિ પહોંચ બહાર છે</string>
@@ -133,7 +133,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ડેક શોધ</string>
     <string name="invalid_deck_name">અમાન્ય ડેક નામ</string>
     <string name="studyoptions_congrats_finished">અભિનંદન! તમે હમણાં માટે સમાપ્ત કર્યું છે.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ડેક હમણાં માટે સમાપ્ત! %s</string>
     <string name="studyoptions_no_cards_due">હજુ સુધી કોઈ કાર્ડ બાકી નથી</string>
     <string name="sd_card_not_mounted">ઉપકરણ સંગ્રહ માઉન્ટ થયેલ નથી</string>
     <string name="button_sync" comment="Text of the sync button">સમન્વયન</string>
@@ -144,7 +144,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">રદ કરી રહ્યું છે&#8230;\nઆમાં થોડો સમય લાગી શકે છે.</string>
     <string name="syncing_media">મીડિયા સમન્વયિત કરી રહ્યું છે</string>
     <string name="export_deck">નિકાસ ડેક</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">નિકાસ સંગ્રહ</string>
     <string name="nothing">કંઈ નહીં</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">કાર્ડ પ્રકારો</string>
@@ -236,11 +236,11 @@
     <string name="migration__resume_after_failed_dialog__button_positive">સ્થળાંતર ફરી શરૂ કરો</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">અપ્રાપ્ય સંગ્રહ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">પ્લે સ્ટોર નીતિમાં ફેરફારને કારણે AnkiDroid અનઇન્સ્ટોલ થયા પછી અમે તમારા સંગ્રહને ઍક્સેસ કરવામાં અસમર્થ છીએ\n\nતમારો ડેટા સુરક્ષિત છે અને તેને પુનઃસ્થાપિત કરી શકાય છે. તે\n%s પર સ્થિત છે\n\nપુનઃસ્થાપિત કરવા માટે નીચેનો વિકલ્પ પસંદ કરો:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ઍપ નિષ્ક્રિયતાને કારણે Android એ AnkiDroid ની %1$s પરવાનગી કાઢી નાખી છે.\n\nતમારો ડેટા સુરક્ષિત છે અને તેને પુનઃસ્થાપિત કરી શકાય છે. તે\n%2$s પર સ્થિત છે\n\nપુનઃસ્થાપિત કરવા માટે નીચેનો વિકલ્પ પસંદ કરો:</string>
+    <string name="restore_data_from_ankiweb">AnkiWeb માંથી પુનઃસ્થાપિત કરો (ભલામણ કરેલ)</string>
+    <string name="install_non_play_store_ankidroid_recommended">ફોલ્ડર ઍક્સેસ પુનઃસ્થાપિત કરો (ભલામણ કરેલ)</string>
+    <string name="install_non_play_store_ankidroid">ફોલ્ડર એક્સેસ પુનઃસ્થાપિત કરો (અદ્યતન)</string>
+    <string name="restore_data_from_backup">.colpkg બેકઅપમાંથી પુનઃસ્થાપિત કરો (અદ્યતન)</string>
     <string name="create_new_collection">એક નવો સંગ્રહ બનાવો</string>
     <string name="new_unsafe_collection">જો તમે AnkiDroid ને અનઇન્સ્ટોલ કરશો તો તમારા ફોનમાંથી નવો સંગ્રહ કાઢી નાખવામાં આવશે</string>
     <!-- Permissions screen -->
@@ -248,8 +248,8 @@
     <string name="storage_access_title">સ્ટોરેજ ઍક્સેસ</string>
     <string name="storage_access_summary">તમારા સંગ્રહને સુરક્ષિત જગ્યાએ સાચવે છે જે જો એપ્લિકેશન અનઇન્સ્ટોલ કરવામાં આવે તો કાઢી નાખવામાં આવશે નહીં</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">બધી ફાઇલો ઍક્સેસ</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">છબી અવરોધ</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">એકાઉન્ટ દૂર કરો</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">ઇન્સ્ટન્ટ કાર્ડ</string>
 </resources>

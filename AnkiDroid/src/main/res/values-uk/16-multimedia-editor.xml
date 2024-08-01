@@ -89,6 +89,5 @@
     <string name="select_image_failed">"Не вдалося обрати зображення. Будь ласка, спробуйте ще"</string>
     <string name="activity_result_unexpected">Додаток повернув неочікуване значення. Можливо, потрібне використання іншого додатку</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Вміст поля</string>
-    <string name="no_image_preview">Зображення не вибрано, виберіть зображення для продовження.</string>
-    <string name="restart">Перезапустити</string>
+    <string name="reselect">Reselect</string>
 </resources>

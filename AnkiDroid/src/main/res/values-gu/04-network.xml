@@ -71,7 +71,7 @@
     <string name="sync_log_uploading_message">સ્થાનિક તરફથી સંપૂર્ણ સમન્વયન</string>
     <string name="sync_database_acknowledge">સમન્વયિત સંગ્રહ</string>
     <string name="col_synced_media_in_background">સમન્વયિત સંગ્રહ. મીડિયા પૃષ્ઠભૂમિમાં સમન્વયિત થઈ રહ્યું છે.</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="sync_corrupt_database">તમારો ડેટાબેઝ દૂષિત છે. કૃપા કરીને સમન્વય કરવાનો ફરી પ્રયાસ કરતા પહેલા તેને ઠીક કરો.\n\nતમારા ડેટાબેઝને રિપેર કરવા વિશેની માહિતી માટે %s જુઓ.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">સ્થાનિક</string>
     <string name="sync_sanity_remote">દૂરસ્થ</string>
