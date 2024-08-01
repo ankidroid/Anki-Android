@@ -97,6 +97,7 @@ import com.ichi2.anki.multimedia.MultimediaBottomSheet
 import com.ichi2.anki.multimedia.MultimediaImageFragment
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaViewModel
+import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.AudioRecordingField
 import com.ichi2.anki.multimediacard.fields.EFieldType
 import com.ichi2.anki.multimediacard.fields.IField
@@ -503,7 +504,12 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             Timber.w("Note is null, returning")
             return
         }
-        // TODO: start the MultimediaImageFragment with the image intent
+        openMultimediaImageFragment(
+            fieldIndex = 0,
+            field = ImageField(),
+            multimediaNote = note,
+            imageUri = imageUri
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -1695,13 +1701,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                         Timber.i("Selected Image option")
                         val field = ImageField()
                         note.setField(fieldIndex, field)
-                        val imageIntent = MultimediaImageFragment.getIntent(
-                            requireContext(),
-                            MultimediaActivityExtra(fieldIndex, field, note),
-                            MultimediaImageFragment.ImageOptions.GALLERY
-                        )
-
-                        multimediaFragmentLauncher.launch(imageIntent)
+                        openMultimediaImageFragment(fieldIndex = fieldIndex, field, note)
                     }
 
                     MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_FILE -> {
@@ -1718,7 +1718,17 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                     }
 
                     MultimediaBottomSheet.MultimediaAction.OPEN_DRAWING -> {
-                        // TODO("Not yet implemented")
+                        Timber.i("Selected Drawing option")
+                        val field = ImageField()
+                        note.setField(fieldIndex, field)
+
+                        val drawingIntent = MultimediaImageFragment.getIntent(
+                            requireContext(),
+                            MultimediaActivityExtra(fieldIndex, field, note),
+                            MultimediaImageFragment.ImageOptions.DRAWING
+                        )
+
+                        multimediaFragmentLauncher.launch(drawingIntent)
                     }
 
                     MultimediaBottomSheet.MultimediaAction.SELECT_AUDIO_RECORDING -> {
@@ -1763,6 +1773,23 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 true
             }
         }
+    }
+
+    private fun openMultimediaImageFragment(
+        fieldIndex: Int,
+        field: IField,
+        multimediaNote: IMultimediaEditableNote,
+        imageUri: Uri? = null
+    ) {
+        val multimediaExtra = MultimediaActivityExtra(fieldIndex, field, multimediaNote, imageUri?.toString())
+
+        val imageIntent = MultimediaImageFragment.getIntent(
+            requireContext(),
+            multimediaExtra,
+            MultimediaImageFragment.ImageOptions.GALLERY
+        )
+
+        multimediaFragmentLauncher.launch(imageIntent)
     }
 
     private fun handleMultimediaResult(extras: Bundle) {

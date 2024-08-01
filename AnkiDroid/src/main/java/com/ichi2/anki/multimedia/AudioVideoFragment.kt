@@ -44,6 +44,7 @@ import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.ExceptionUtil.executeSafe
@@ -87,6 +88,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      * Lazily initialized instance of MultimediaMenu.
      * The instance is created only when first accessed.
      */
+    @NeedsTest("The menu drawable icon shoule be correctly set")
     private val multimediaMenu by lazy {
         MultimediaMenuProvider(
             menuResId = R.menu.multimedia_menu,

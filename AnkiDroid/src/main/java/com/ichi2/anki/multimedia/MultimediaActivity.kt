@@ -49,7 +49,8 @@ import kotlin.reflect.jvm.jvmName
 data class MultimediaActivityExtra(
     val index: Int,
     val field: IField,
-    val note: IMultimediaEditableNote
+    val note: IMultimediaEditableNote,
+    val imageUri: String? = null
 ) : Serializable
 
 /**
