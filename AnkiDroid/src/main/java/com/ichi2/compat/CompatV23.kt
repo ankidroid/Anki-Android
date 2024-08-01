@@ -42,6 +42,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.Serializable
 import java.util.Locale
+import kotlin.time.Duration
 
 /** Baseline implementation of [Compat]. Check [Compat]'s for more detail.  */
 @KotlinCleanup("add extension method logging file.delete() failure" + "Fix Deprecation")
@@ -57,9 +58,9 @@ open class CompatV23 : Compat {
     }
 
     // Until API 26 just specify time, after that specify effect also
-    override fun vibrate(context: Context, durationMillis: Long) {
+    override fun vibrate(context: Context, duration: Duration) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
-        vibratorManager?.vibrate(durationMillis)
+        vibratorManager?.vibrate(duration.inWholeMilliseconds)
     }
 
     // Until API 26 do the copy using streams

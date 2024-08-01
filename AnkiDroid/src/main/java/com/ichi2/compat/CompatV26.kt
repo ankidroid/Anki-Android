@@ -35,6 +35,7 @@ import java.nio.file.NoSuchFileException
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
+import kotlin.time.Duration
 
 /** Implementation of [Compat] for SDK level 26 and higher. Check  [Compat]'s for more detail.  */
 @TargetApi(26)
@@ -51,10 +52,10 @@ open class CompatV26 : CompatV24(), Compat {
     }
 
     @Suppress("DEPRECATION") // VIBRATOR_SERVICE => VIBRATOR_MANAGER_SERVICE handled in CompatV31
-    override fun vibrate(context: Context, durationMillis: Long) {
+    override fun vibrate(context: Context, duration: Duration) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         if (vibratorManager != null) {
-            val effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE)
+            val effect = VibrationEffect.createOneShot(duration.inWholeMilliseconds, VibrationEffect.DEFAULT_AMPLITUDE)
             vibratorManager.vibrate(effect)
         }
     }

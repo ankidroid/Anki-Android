@@ -48,7 +48,8 @@ import com.ichi2.anki.utils.formatAsString
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.audio.AudioRecordingController.RecordingState.ImmediatePlayback
-import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.Compat
+import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.UiUtil
@@ -56,6 +57,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 // TODO : stop audio time view flickering
 class AudioRecordingController :
@@ -428,7 +430,7 @@ class AudioRecordingController :
     }
 
     private fun discardAudio() {
-        CompatHelper.compat.vibrate(context, 20)
+        vibrate(20.milliseconds)
         setUiState(state.clear())
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
         stopAudioPlayer()
@@ -460,7 +462,7 @@ class AudioRecordingController :
 
     fun toggleSave(vibrate: Boolean = true) {
         Timber.i("recording completed")
-        if (vibrate) CompatHelper.compat.vibrate(context, 20)
+        if (vibrate) vibrate(20.milliseconds)
         stopAndSaveRecording()
         // show this snackbar only in the edit field/multimedia activity
         if (inEditField) (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
@@ -507,7 +509,7 @@ class AudioRecordingController :
                 }
             }
         }
-        CompatHelper.compat.vibrate(context, 20)
+        vibrate(20.milliseconds)
     }
 
     private fun resetAudioPlayer() {
@@ -619,7 +621,7 @@ class AudioRecordingController :
     }
 
     private fun clearRecording() {
-        CompatHelper.compat.vibrate(context, 20)
+        vibrate(20.milliseconds)
         audioTimer.stop()
         setUiState(state.clear())
         audioRecorder.stopRecording()
@@ -686,6 +688,11 @@ class AudioRecordingController :
             Timber.d("Audio recorder interrupted")
         }
     }
+
+    /**
+     * @see Compat.vibrate
+     */
+    private fun vibrate(duration: Duration) = compat.vibrate(context, duration)
 
     companion object {
         var isRecording = false
