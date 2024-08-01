@@ -89,6 +89,5 @@
     <string name="select_image_failed">"చిత్రాన్ని ఎంచుకోవడంలో విఫలమైంది, దయచేసి మళ్లీ ప్రయత్నించండి"</string>
     <string name="activity_result_unexpected">యాప్ ఊహించని విలువను అందించింది. మీరు వేరే యాప్‌ని ఉపయోగించాల్సి రావచ్చు</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ఫీల్డ్ విషయాలు</string>
-    <string name="no_image_preview">No image selected, select an image to proceed.</string>
-    <string name="restart">Restart</string>
+    <string name="reselect">Reselect</string>
 </resources>

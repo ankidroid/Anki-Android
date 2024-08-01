@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
     <string name="show_large_answer_buttons_summ">Mostrar botão de resposta em 2 linhas</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
-    <string name="show_top_bar_summ">Mostrar contagem de cards, sinalização e marca na barra superior</string>
+    <string name="show_top_bar_summ">Mostrar contagem de cartas, bandeira e marcações na barra superior</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contagem de cards restantes</string>
     <string name="show_eta" maxLength="41">Mostrar tempo restante estimado</string>

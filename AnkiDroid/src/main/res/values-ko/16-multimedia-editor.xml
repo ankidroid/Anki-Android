@@ -89,6 +89,5 @@
     <string name="select_image_failed">"이미지 선택 실패, 재시도하세요"</string>
     <string name="activity_result_unexpected">앱이 예상치 못한 값을 리턴했습니다. 다른 앱을 사용해 주세요</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">필드 내용</string>
-    <string name="no_image_preview">No image selected, select an image to proceed.</string>
-    <string name="restart">Restart</string>
+    <string name="reselect">Reselect</string>
 </resources>

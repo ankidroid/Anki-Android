@@ -72,7 +72,7 @@
     <string name="card_template_browser_appearance_question_format">質問欄テンプレート</string>
     <string name="card_template_browser_appearance_answer_format">解答欄テンプレート</string>
     <string name="card_template_browser_appearance_restore_default_dialog">既定値を復元しますか？</string>
-    <string name="card_template_browser_appearance_saving_note">変更内容は、カードテンプレートが保存された後に適用されます</string>
+    <string name="card_template_browser_appearance_saving_note">この画面での変更は、一つ手前の画面でカードテンプレートを保存した後にカードブラウザに適用されます。</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">デッキ選択を上書き (指定済み)</string>
     <string name="card_template_editor_deck_override_off">デッキ選択を上書き (未指定)</string>

@@ -311,7 +311,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Alternar Cards/Notas</string>
-    <string name="toggle_browser_mode_help">Mostrando cards ou notas no navegador</string>
+    <string name="toggle_browser_mode_help">Alternar exibição de cartões ou notas no navegador</string>
     <string name="truncate_content_help">Truncar a altura de cada linha do navegador para mostrar apenas as 3 primeiras linhas de conteúdo</string>
     <string name="browser_options_dialog_heading">Opções do Navegador</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Esta funcionalidade não está disponível durante a migração de armazenamento.

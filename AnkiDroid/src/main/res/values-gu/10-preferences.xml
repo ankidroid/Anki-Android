@@ -78,7 +78,7 @@
     <string name="reset_confirmation">બધા રાજ્યો રીસેટ કરો</string>
     <string name="card_zoom" maxLength="41">કાર્ડ ઝૂમ</string>
     <string name="image_zoom" maxLength="41">છબી ઝૂમ</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
+    <string name="button_size" maxLength="41">જવાબ આપો બટનનું કદ</string>
     <string name="card_browser_font_size" maxLength="41">કાર્ડ બ્રાઉઝર ફોન્ટ સ્કેલિંગ</string>
     <string name="card_browser_hide_media" maxLength="41">કાર્ડ બ્રાઉઝરમાં ફાઇલનામો દર્શાવો</string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
@@ -124,12 +124,11 @@
     <string name="tts" maxLength="41">ટેક્સ્ટ ટુ સ્પીચ</string>
     <string name="tts_summ">જો કોઈ ધ્વનિ ફાઇલ શામેલ ન હોય તો પ્રશ્ન અને જવાબ વાંચે છે</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
+    <string name="sync_fetch_missing_media" maxLength="41">સમન્વયન પર મીડિયા મેળવો</string>
     <string name="sync_account" maxLength="41">AnkiWeb એકાઉન્ટ</string>
     <string name="sync_account_summ_logged_out">લૉગ ઇન નથી</string>
     <string name="automatic_sync_choice" maxLength="41">આપોઆપ સિંક્રનાઇઝેશન</string>
-    <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
-        minutes ago.</string>
+    <string name="automatic_sync_choice_summ">જો છેલ્લું સમન્વયન 10 થી વધુ હોય તો એપ્લિકેશન પ્રારંભ/બહાર નીકળવા પર આપમેળે સમન્વયિત થાય છે</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
     <string name="sync_media_only_unmetered">માત્ર મીટર વગરના જોડાણો પર</string>
     <string name="sync_media_never">ક્યારેય</string>
@@ -178,17 +177,17 @@
     <string name="show_eta" maxLength="41">ETA બતાવો</string>
     <string name="show_eta_summ">બાકીનો સમય બતાવો</string>
     <string name="use_current" maxLength="41">નવા કાર્ડ માટે ડેક</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
+    <string name="learn_cutoff" maxLength="41">આગળની મર્યાદા જાણો</string>
     <string name="time_limit" maxLength="41">ટાઈમબોક્સ સમય મર્યાદા</string>
     <string name="day_offset_with_description" maxLength="41">બીજા દિવસની શરૂઆત</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">મધ્યરાત્રિ પછી %d કલાક</item>
+        <item quantity="other">મધ્યરાત્રિ પછી %d કલાક</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">સ્ક્રીન ચાલુ રાખો</string>
     <string name="pref_keep_screen_on_summ">સ્ક્રીન સમયસમાપ્તિ અક્ષમ કરો</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ને સક્ષમ કરો</string>
-    <string name="enable_api_summary">Let other apps connect to AnkiDroid and read / write data without your intervention</string>
+    <string name="enable_api_summary">અન્ય એપ્લિકેશનોને તમારા હસ્તક્ષેપ વિના AnkiDroid સાથે કનેક્ટ થવા દો અને ડેટા વાંચવા/લખવા દો</string>
     <string name="custom_buttons" maxLength="41">એપ્લિકેશન બાર બટનો</string>
     <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
     <string name="custom_buttons_setting_always_show">હંમેશા બતાવો</string>
@@ -204,8 +203,8 @@
     <string name="show_deck_title" maxLength="41">ડેક શીર્ષક બતાવો</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
+    <string name="paste_as_png" maxLength="41">ક્લિપબોર્ડ છબીઓને PNG તરીકે પેસ્ટ કરો</string>
+    <string name="paste_as_png_summary">ડિફૉલ્ટ રીતે અંકી ડિસ્ક સ્પેસ બચાવવા માટે JPG ફાઇલો તરીકે ક્લિપબોર્ડ પર છબીઓ પેસ્ટ કરે છે. તમે તેના બદલે PNG છબીઓ તરીકે પેસ્ટ કરવા માટે આ વિકલ્પનો ઉપયોગ કરી શકો છો.</string>
     <string name="exit_via_double_tap_back" maxLength="41">પાછા જવા/બહાર જવા માટે બે વાર પાછા દબાવો</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
