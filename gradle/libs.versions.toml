@@ -1,6 +1,6 @@
 [versions]
 compileSdk = "34"
-media3Exoplayer = "1.3.1"
+media3Exoplayer = "1.4.0"
 media3ExoplayerDash = "1.3.1"
 media3Ui = "1.3.1"
 minSdk = "23"  # also in testlib/build.gradle.kts
