@@ -340,19 +340,19 @@ class Notetypes(val col: Collection) {
 
     /** Modifies schema */
     @LibAnkiAlias("add_field")
-    fun add_field(notetype: NotetypeJson, field: Field) {
+    fun addField(notetype: NotetypeJson, field: Field) {
         notetype.flds.append(field)
     }
 
     /** Modifies schema. */
     @LibAnkiAlias("remove_field")
-    fun remove_field(notetype: NotetypeJson, field: Field) {
+    fun removeField(notetype: NotetypeJson, field: Field) {
         notetype.flds.remove(field)
     }
 
     /** Modifies schema. */
     @LibAnkiAlias("reposition_field")
-    fun reposition_field(notetype: NotetypeJson, field: Field, idx: Int) {
+    fun repositionField(notetype: NotetypeJson, field: Field, idx: Int) {
         val oldidx = notetype.flds.index(field).get()
         if (oldidx == idx) {
             return
@@ -363,7 +363,7 @@ class Notetypes(val col: Collection) {
     }
 
     @LibAnkiAlias("rename_field")
-    fun rename_field(notetype: NotetypeJson, field: Field, new_name: String) {
+    fun renameField(notetype: NotetypeJson, field: Field, new_name: String) {
         assert(notetype.flds.jsonObjectIterable().contains(field))
         field["name"] = new_name
     }
@@ -378,26 +378,29 @@ class Notetypes(val col: Collection) {
     /*
      legacy
      */
-
-    fun addField(notetype: NotetypeJson, field: Field) {
-        add_field(notetype, field)
+    @RustCleanup("legacy")
+    fun addFieldLegacy(notetype: NotetypeJson, field: Field) {
+        addField(notetype, field)
         if (notetype.id != 0L) {
             save(notetype)
         }
     }
 
-    fun remField(notetype: NotetypeJson, field: Field) {
-        remove_field(notetype, field)
+    @RustCleanup("legacy")
+    fun remFieldLegacy(notetype: NotetypeJson, field: Field) {
+        removeField(notetype, field)
         save(notetype)
     }
 
-    fun moveField(notetype: NotetypeJson, field: Field, idx: Int) {
-        reposition_field(notetype, field, idx)
+    @RustCleanup("legacy")
+    fun moveFieldLegacy(notetype: NotetypeJson, field: Field, idx: Int) {
+        repositionField(notetype, field, idx)
         save(notetype)
     }
 
-    fun renameField(notetype: NotetypeJson, field: Field, newName: String) {
-        rename_field(notetype, field, newName)
+    @RustCleanup("legacy")
+    fun renameFieldLegacy(notetype: NotetypeJson, field: Field, newName: String) {
+        renameField(notetype, field, newName)
         save(notetype)
     }
 
@@ -410,7 +413,7 @@ class Notetypes(val col: Collection) {
     fun addFieldInNewModel(notetype: NotetypeJson, field: JSONObject) {
         Assert.that(isModelNew(notetype), "Model was assumed to be new, but is not")
         try {
-            addField(notetype, field)
+            addFieldLegacy(notetype, field)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             CrashReportService.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
@@ -437,7 +440,7 @@ class Notetypes(val col: Collection) {
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
-        addField(notetype, field)
+        addFieldLegacy(notetype, field)
     }
 
     fun addTemplateModChanged(notetype: NotetypeJson, template: JSONObject) {

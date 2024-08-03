@@ -131,7 +131,7 @@ class NotetypeTest : JvmTest() {
         col.addNote(note)
         val m = col.notetypes.current()
         // make sure renaming a field updates the templates
-        col.notetypes.renameField(m, m.getJSONArray("flds").getJSONObject(0), "NewFront")
+        col.notetypes.renameFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), "NewFront")
         assertThat(
             m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
             containsString("{{NewFront}}")
@@ -139,7 +139,7 @@ class NotetypeTest : JvmTest() {
         val h = col.notetypes.scmhash(m)
         // add a field
         var field: JSONObject? = col.notetypes.newField("foo")
-        col.notetypes.addField(m, field!!)
+        col.notetypes.addFieldLegacy(m, field!!)
         assertEquals(
             listOf("1", "2", ""),
             col.getNote(
@@ -151,10 +151,10 @@ class NotetypeTest : JvmTest() {
         assertNotEquals(h, col.notetypes.scmhash(m))
         // rename it
         field = m.getJSONArray("flds").getJSONObject(2)
-        col.notetypes.renameField(m, field, "bar")
+        col.notetypes.renameFieldLegacy(m, field, "bar")
         assertEquals("", col.getNote(col.notetypes.nids(m)[0]).getItem("bar"))
         // delete back
-        col.notetypes.remField(m, m.getJSONArray("flds").getJSONObject(1))
+        col.notetypes.remFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1))
         assertEquals(
             listOf("1", ""),
             col.getNote(
@@ -164,7 +164,7 @@ class NotetypeTest : JvmTest() {
             ).fields
         )
         // move 0 -> 1
-        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertEquals(
             listOf("", "1"),
             col.getNote(
@@ -174,7 +174,7 @@ class NotetypeTest : JvmTest() {
             ).fields
         )
         // move 1 -> 0
-        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(1), 0)
+        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1), 0)
         assertEquals(
             listOf("1", ""),
             col.getNote(
@@ -185,7 +185,7 @@ class NotetypeTest : JvmTest() {
         )
         // add another and put in middle
         field = col.notetypes.newField("baz")
-        col.notetypes.addField(m, field)
+        col.notetypes.addFieldLegacy(m, field)
         note = col.getNote(col.notetypes.nids(m)[0])
         note.setItem("baz", "2")
         note.flush()
@@ -198,7 +198,7 @@ class NotetypeTest : JvmTest() {
             ).fields
         )
         // move 2 -> 1
-        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(2), 1)
+        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(2), 1)
         assertEquals(
             listOf("1", "2", ""),
             col.getNote(
@@ -208,7 +208,7 @@ class NotetypeTest : JvmTest() {
             ).fields
         )
         // move 0 -> 2
-        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 2)
+        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 2)
         assertEquals(
             listOf("2", "", "1"),
             col.getNote(
@@ -218,7 +218,7 @@ class NotetypeTest : JvmTest() {
             ).fields
         )
         // move 0 -> 1
-        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertEquals(
             listOf("", "2", "1"),
             col.getNote(
