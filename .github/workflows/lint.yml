@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lintDebug:
-    name: Lint Debug
+  lintKotlin:
+    name: Lint Kotlin
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
@@ -55,13 +55,31 @@ jobs:
         # "lintVitalFullRelease": if `main` resources are only used in `androidTest` (#15741)
         run: ./gradlew lintPlayDebug :api:lintDebug ktLintCheck lintVitalFullRelease lint-rules:test --daemon
 
+  lintJavascript:
+    name: Lint Javascript
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
         # Handled under the pre-commit hook: ./gradlew installGitHook
 
         # To run manually, run the following inside folder: Anki-Android
         # npm install --location=global prettier
         # prettier --check AnkiDroid/**/*.js
-      - name: Prettify code
+      - name: Prettify AnkiDroid javascript code
         uses: creyD/prettier_action@v4.3
         with:
           prettier_options: --check AnkiDroid/**/*.js
           dry: True
+
+      - name: Install Localization
+        run: cd tools/localization && yarn
+
+      - name: Lint Localization
+        run: cd tools/localization && yarn lint
+
+      - name: Format Localization
+        run: cd tools/localization && yarn checkformat
