@@ -191,11 +191,13 @@ export async function updateI18nFiles() {
                 break;
         }
 
-        androidLanguages.map(async androidLanguage => {
+        androidLanguages.map(async (androidLanguage) => {
             console.log(
                 "\nCopying language files from " + language + " to " + androidLanguage,
             );
-            const valuesDirectory = path.join(RES_VALUES_LANG_DIR + androidLanguage + "/");
+            const valuesDirectory = path.join(
+                RES_VALUES_LANG_DIR + androidLanguage + "/",
+            );
             createDirIfNotExisting(valuesDirectory);
 
             // Copy localization files, mask chars and append gnu/gpl licence
