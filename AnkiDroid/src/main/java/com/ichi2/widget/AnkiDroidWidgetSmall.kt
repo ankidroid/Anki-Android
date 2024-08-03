@@ -97,8 +97,8 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                 updateViews.setViewVisibility(R.id.widget_due, View.INVISIBLE)
                 updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                 updateViews.setViewVisibility(R.id.ankidroid_widget_small_finish_layout, View.GONE)
-                if (mMountReceiver == null) {
-                    mMountReceiver = object : BroadcastReceiver() {
+                if (mountReceiver == null) {
+                    mountReceiver = object : BroadcastReceiver() {
                         @KotlinCleanup("Change parameter context name below, should not be used")
                         override fun onReceive(context: Context, intent: Intent) {
                             // baseContext() is null, applicationContext() throws a NPE,
@@ -109,8 +109,8 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                                 if (remounted) {
                                     WidgetStatus.updateInBackground(AnkiDroidApp.instance)
                                     remounted = false
-                                    if (mMountReceiver != null) {
-                                        AnkiDroidApp.instance.unregisterReceiver(mMountReceiver)
+                                    if (mountReceiver != null) {
+                                        AnkiDroidApp.instance.unregisterReceiver(mountReceiver)
                                     }
                                 } else {
                                     remounted = true
@@ -121,7 +121,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     val iFilter = IntentFilter()
                     iFilter.addAction(Intent.ACTION_MEDIA_MOUNTED)
                     iFilter.addDataScheme("file")
-                    AnkiDroidApp.instance.registerReceiverCompat(mMountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
+                    AnkiDroidApp.instance.registerReceiverCompat(mountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
                 }
             } else {
                 // If we do not have a cached version, always update.
@@ -178,7 +178,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
     }
 
     companion object {
-        private var mMountReceiver: BroadcastReceiver? = null
+        private var mountReceiver: BroadcastReceiver? = null
         private var remounted = false
         private fun updateWidgetDimensions(context: Context, updateViews: RemoteViews, cls: Class<*>) {
             val manager = getAppWidgetManager(context) ?: return
