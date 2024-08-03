@@ -101,7 +101,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                     // start ModelFieldEditor activity
                     val intent = Intent()
                     intent.putExtra("title", modelName)
-                    intent.putExtra("noteTypeID", col.notetypes.id_for_name(modelName)!!)
+                    intent.putExtra("noteTypeID", col.notetypes.idForName(modelName)!!)
                     val modelFieldEditor = startActivityNormallyOpenCollectionWithIntent(
                         this@ModelFieldEditorTest,
                         ModelFieldEditor::class.java,

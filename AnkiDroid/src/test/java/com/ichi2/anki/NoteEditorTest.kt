@@ -420,7 +420,7 @@ class NoteEditorTest : RobolectricTest() {
             editor.saveNote()
         }
 
-        col.notetypes._clear_cache()
+        col.notetypes.clearCache()
 
         assertThat("a note was added", col.noteCount(), equalTo(1))
         assertThat("note type deck is updated", col.notetypes.byName("Basic")!!.did, equalTo(reversedDeckId))

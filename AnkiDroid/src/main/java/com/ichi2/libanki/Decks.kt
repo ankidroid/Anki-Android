@@ -90,7 +90,7 @@ class Decks(private val col: Collection) {
     @LibAnkiAlias("add_deck_legacy")
     private fun addDeckLegacy(deck: Deck): OpChangesWithId {
         val changes = col.backend.addDeckLegacy(
-            json = BackendUtils.to_json_bytes(deck)
+            json = BackendUtils.toJsonBytes(deck)
         )
         deck.id = changes.id
         return changes
@@ -137,7 +137,7 @@ class Decks(private val col: Collection) {
     @RustCleanup("rename once we've removed this")
     fun get(did: DeckId): Deck? {
         return try {
-            Deck(BackendUtils.from_json_bytes(col.backend.getDeckLegacy(did)))
+            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
             null
         }
@@ -173,7 +173,7 @@ class Decks(private val col: Collection) {
 
     @LibAnkiAlias("new_deck_legacy")
     private fun newDeckLegacy(filtered: Boolean): Deck {
-        val deck = BackendUtils.from_json_bytes(col.backend.newDeckLegacy(filtered))
+        val deck = BackendUtils.fromJsonBytes(col.backend.newDeckLegacy(filtered))
         return Deck(
             if (filtered) {
                 // until migrating to the dedicated method for creating filtered decks,
@@ -241,7 +241,7 @@ class Decks(private val col: Collection) {
     @Suppress("unused", "unused_parameter")
     private fun get(did: DeckId, default: Boolean = true): Deck? {
         return try {
-            Deck(BackendUtils.from_json_bytes(col.backend.getDeckLegacy(did)))
+            Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
             null
         }
@@ -326,13 +326,13 @@ class Decks(private val col: Collection) {
     @LibAnkiAlias("config_dict_for_deck_id")
     fun configDictForDeckId(did: DeckId): DeckConfig {
         val conf = get(did)?.conf ?: 1
-        return DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(conf)))
+        return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
     /* Reverts to default if provided id missing */
     @LibAnkiAlias("get_config")
     fun getConfig(confId: DeckConfigId): DeckConfig =
-        DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(confId)))
+        DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(confId)))
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("update_config")
@@ -372,7 +372,7 @@ class Decks(private val col: Collection) {
     @NotInLibAnki
     @RustCleanup("inline")
     private fun newDeckConfigLegacy(): DeckConfig {
-        return DeckConfig(BackendUtils.from_json_bytes(col.backend.newDeckConfigLegacy()))
+        return DeckConfig(BackendUtils.fromJsonBytes(col.backend.newDeckConfigLegacy()))
     }
 
     @RustCleanup("implement and make public")

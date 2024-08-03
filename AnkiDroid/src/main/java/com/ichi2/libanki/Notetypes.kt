@@ -43,8 +43,9 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
+import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.append
@@ -89,7 +90,7 @@ class Notetypes(val col: Collection) {
         // v2 review history. So we manually update the usn/mtime here
         notetype.put("mod", TimeManager.time.intTime())
         notetype.put("usn", col.usn())
-        update(notetype, preserve_usn_and_mtime = true)
+        update(notetype, preserveUsnAndMtime = true)
     }
 
     /*
@@ -101,27 +102,32 @@ class Notetypes(val col: Collection) {
     # access the cache directly!
      */
 
-    private fun _update_cache(nt: NotetypeJson) {
+    @LibAnkiAlias("_update_cache")
+    private fun updateCache(nt: NotetypeJson) {
         _cache[nt.id] = nt
     }
 
-    private fun _remove_from_cache(ntid: int) {
+    @LibAnkiAlias("_remove_from_cache")
+    private fun removeFromCache(ntid: int) {
         _cache.remove(ntid)
     }
 
-    private fun _get_cached(ntid: int): NotetypeJson? {
+    @LibAnkiAlias("_get_cached")
+    private fun getCached(ntid: int): NotetypeJson? {
         return _cache[ntid]
     }
 
     @NeedsTest("14827: styles are updated after syncing style changes")
-    fun _clear_cache() = _cache.clear()
+    @LibAnkiAlias("_clear_cache")
+    fun clearCache() = _cache.clear()
 
     /*
     # Listing note types
     #############################################################
      */
 
-    fun all_names_and_ids(): Sequence<NoteTypeNameID> {
+    @LibAnkiAlias("all_names_and_ids")
+    fun allNamesAndIds(): Sequence<NoteTypeNameID> {
         return col.backend.getNotetypeNames().map {
             NoteTypeNameID(it.name, it.id)
         }.asSequence()
@@ -130,11 +136,11 @@ class Notetypes(val col: Collection) {
     /* legacy */
 
     fun ids(): Set<int> {
-        return all_names_and_ids().map { it.id }.toSet()
+        return allNamesAndIds().map { it.id }.toSet()
     }
 
     // only used by importing code
-    fun have(id: int): Boolean = all_names_and_ids().any { it.id == id }
+    fun have(id: int): Boolean = allNamesAndIds().any { it.id == id }
 
     /*
     # Current note type
@@ -151,7 +157,7 @@ class Notetypes(val col: Collection) {
         if (m != null) {
             return m
         }
-        return get(all_names_and_ids().first().id)!!
+        return get(allNamesAndIds().first().id)!!
     }
 
     fun setCurrent(notetype: NotetypeJson) {
@@ -163,7 +169,8 @@ class Notetypes(val col: Collection) {
     #############################################################
      */
 
-    fun id_for_name(name: String): Long? {
+    @LibAnkiAlias("id_for_name")
+    fun idForName(name: String): Long? {
         return try {
             col.backend.getNotetypeIdByName(name)
         } catch (e: BackendNotFoundException) {
@@ -181,15 +188,15 @@ class Notetypes(val col: Collection) {
         if (id == null) {
             return null
         }
-        var nt = _get_cached(id)
+        var nt = getCached(id)
         if (nt == null) {
             try {
                 nt = NotetypeJson(
-                    BackendUtils.from_json_bytes(
+                    BackendUtils.fromJsonBytes(
                         col.backend.getNotetypeLegacy(id)
                     )
                 )
-                _update_cache(nt)
+                updateCache(nt)
             } catch (e: BackendNotFoundException) {
                 return null
             }
@@ -199,12 +206,12 @@ class Notetypes(val col: Collection) {
 
     /** Get all models */
     fun all(): List<NotetypeJson> {
-        return all_names_and_ids().map { get(it.id)!! }.toMutableList()
+        return allNamesAndIds().map { get(it.id)!! }.toMutableList()
     }
 
     /** Get model with NAME. */
     fun byName(name: String): NotetypeJson? {
-        val id = id_for_name(name)
+        val id = idForName(name)
         return id?.let { get(it) }
     }
 
@@ -220,7 +227,7 @@ class Notetypes(val col: Collection) {
 
     fun newBasicNotetype(): NotetypeJson {
         return NotetypeJson(
-            BackendUtils.from_json_bytes(
+            BackendUtils.fromJsonBytes(
                 col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
             )
         )
@@ -233,7 +240,7 @@ class Notetypes(val col: Collection) {
 
     /** Modifies schema. */
     fun remove(id: int) {
-        _remove_from_cache(id)
+        removeFromCache(id)
         col.backend.removeNotetype(id)
     }
 
@@ -242,7 +249,7 @@ class Notetypes(val col: Collection) {
     }
 
     fun ensureNameUnique(notetype: NotetypeJson) {
-        val existingId = id_for_name(notetype.name)
+        val existingId = idForName(notetype.name)
         existingId?.let {
             if (it != notetype.id) {
                 // Python uses a float time, but it doesn't really matter, the goal is just a random id.
@@ -252,19 +259,20 @@ class Notetypes(val col: Collection) {
     }
 
     /** Add or update an existing model. Use .save() instead. */
-    fun update(notetype: NotetypeJson, preserve_usn_and_mtime: Boolean = true) {
-        _remove_from_cache(notetype.id)
+    fun update(notetype: NotetypeJson, preserveUsnAndMtime: Boolean = true) {
+        removeFromCache(notetype.id)
         ensureNameUnique(notetype)
         notetype.id = col.backend.addOrUpdateNotetype(
-            json = to_json_bytes(notetype),
-            preserveUsnAndMtime = preserve_usn_and_mtime,
-            skipChecks = preserve_usn_and_mtime
+            json = toJsonBytes(notetype),
+            preserveUsnAndMtime = preserveUsnAndMtime,
+            skipChecks = preserveUsnAndMtime
         )
         setCurrent(notetype)
-        _mutate_after_write(notetype)
+        mutateAfterWrite(notetype)
     }
 
-    private fun _mutate_after_write(nt: NotetypeJson) {
+    @LibAnkiAlias("_mutate_after_write")
+    private fun mutateAfterWrite(nt: NotetypeJson) {
         // existing code expects the note type to be mutated to reflect
         // the changes made when adding, such as ordinal assignment :-(
         val updated = get(nt.id)!!
@@ -321,7 +329,8 @@ class Notetypes(val col: Collection) {
      */
 
     @RustCleanup("Check JSONObject.NULL")
-    fun new_field(name: String): Field {
+    @LibAnkiAlias("new_field")
+    fun newField(name: String): Field {
         val nt = newBasicNotetype()
         val field = nt.flds.getJSONObject(0)
         field.put("name", name)
@@ -330,16 +339,19 @@ class Notetypes(val col: Collection) {
     }
 
     /** Modifies schema */
+    @LibAnkiAlias("add_field")
     fun add_field(notetype: NotetypeJson, field: Field) {
         notetype.flds.append(field)
     }
 
     /** Modifies schema. */
+    @LibAnkiAlias("remove_field")
     fun remove_field(notetype: NotetypeJson, field: Field) {
         notetype.flds.remove(field)
     }
 
     /** Modifies schema. */
+    @LibAnkiAlias("reposition_field")
     fun reposition_field(notetype: NotetypeJson, field: Field, idx: Int) {
         val oldidx = notetype.flds.index(field).get()
         if (oldidx == idx) {
@@ -350,13 +362,15 @@ class Notetypes(val col: Collection) {
         notetype.flds.insert(idx, field)
     }
 
+    @LibAnkiAlias("rename_field")
     fun rename_field(notetype: NotetypeJson, field: Field, new_name: String) {
         assert(notetype.flds.jsonObjectIterable().contains(field))
         field["name"] = new_name
     }
 
     /** Modifies schema. */
-    fun set_sort_index(nt: NotetypeJson, idx: Int) {
+    @LibAnkiAlias("set_sort_index")
+    fun setSortIndex(nt: NotetypeJson, idx: Int) {
         assert(0 <= idx && idx < len(nt.flds))
         nt.sortf = idx
     }
@@ -364,8 +378,6 @@ class Notetypes(val col: Collection) {
     /*
      legacy
      */
-
-    fun newField(name: String) = new_field(name)
 
     fun addField(notetype: NotetypeJson, field: Field) {
         add_field(notetype, field)
@@ -398,7 +410,7 @@ class Notetypes(val col: Collection) {
     fun addFieldInNewModel(notetype: NotetypeJson, field: JSONObject) {
         Assert.that(isModelNew(notetype), "Model was assumed to be new, but is not")
         try {
-            _addField(notetype, field)
+            addField(notetype, field)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             CrashReportService.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
@@ -412,7 +424,7 @@ class Notetypes(val col: Collection) {
         Assert.that(isModelNew(notetype), "Model was assumed to be new, but is not")
 
         try {
-            _addTemplate(notetype, template)
+            addTemplate(notetype, template)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             CrashReportService.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
@@ -425,14 +437,14 @@ class Notetypes(val col: Collection) {
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
-        _addField(notetype, field)
+        addField(notetype, field)
     }
 
     fun addTemplateModChanged(notetype: NotetypeJson, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
-        _addTemplate(notetype, template)
+        addTemplate(notetype, template)
     }
 
     /*
@@ -441,7 +453,8 @@ class Notetypes(val col: Collection) {
      */
 
     @RustCleanup("Check JSONObject.NULL")
-    fun new_template(name: String): Template {
+    @LibAnkiAlias("new_template")
+    fun newTemplate(name: String): Template {
         val nt = newBasicNotetype()
         val template = nt.tmpls.getJSONObject(0)
         template["name"] = name
@@ -452,18 +465,21 @@ class Notetypes(val col: Collection) {
     }
 
     /** Modifies schema. */
+    @LibAnkiAlias("add_template")
     fun add_template(notetype: NotetypeJson, template: Template) {
         notetype.tmpls.append(template)
     }
 
     /** Modifies schema */
-    fun remove_template(notetype: NotetypeJson, template: Template) {
+    @LibAnkiAlias("remove_template")
+    fun removeTemplate(notetype: NotetypeJson, template: Template) {
         assert(len(notetype.tmpls) > 1)
         notetype.tmpls.remove(template)
     }
 
     /** Modifies schema. */
-    fun reposition_template(notetype: NotetypeJson, template: Template, idx: Int) {
+    @LibAnkiAlias("reposition_template")
+    fun repositionTemplate(notetype: NotetypeJson, template: Template, idx: Int) {
         val oldidx = notetype.tmpls.index(template).get()
         if (oldidx == idx) {
             return
@@ -474,7 +490,6 @@ class Notetypes(val col: Collection) {
     }
 
     /** legacy */
-    fun newTemplate(name: String): Template = new_template(name)
 
     fun addTemplate(notetype: NotetypeJson, template: Template) {
         add_template(notetype, template)
@@ -484,12 +499,12 @@ class Notetypes(val col: Collection) {
     }
 
     fun remTemplate(notetype: NotetypeJson, template: Template) {
-        remove_template(notetype, template)
+        removeTemplate(notetype, template)
         save(notetype)
     }
 
     fun moveTemplate(notetype: NotetypeJson, template: Template, idx: Int) {
-        reposition_template(notetype, template, idx)
+        repositionTemplate(notetype, template, idx)
         save(notetype)
     }
 
@@ -577,15 +592,7 @@ class Notetypes(val col: Collection) {
      */
 
     fun count(): Int {
-        return all_names_and_ids().count()
-    }
-
-    fun _addTemplate(notetype: NotetypeJson, template: JSONObject) {
-        addTemplate(notetype, template)
-    }
-
-    fun _addField(notetype: NotetypeJson, field: JSONObject) {
-        addField(notetype, field)
+        return allNamesAndIds().count()
     }
 
     /**
