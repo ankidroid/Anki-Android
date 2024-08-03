@@ -26,8 +26,8 @@ class Counts(var new: Int = 0, var lrn: Int = 0, var rev: Int = 0) {
         NEW, LRN, REV
     }
 
-    fun addNew(new_: Int) {
-        new += new_
+    fun addNew(new: Int) {
+        this.new += new
     }
 
     fun addLrn(lrn: Int) {
