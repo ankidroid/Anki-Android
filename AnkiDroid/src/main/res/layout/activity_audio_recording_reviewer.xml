@@ -23,7 +23,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:keepScreenOn="true"
-    tools:context="com.ichi2.audio.AudioRecordingController">
+    tools:context=".multimedia.audio.AudioRecordingController">
 
     <RelativeLayout
         android:id="@+id/record_buttons_layout"
@@ -36,7 +36,7 @@
         android:background="@drawable/bg_rounded_drop_shadow"
         android:orientation="horizontal">
 
-        <com.ichi2.audio.AudioWaveform
+        <com.ichi2.anki.multimedia.audio.AudioWaveform
             android:id="@+id/audio_waveform_view"
             android:layout_height="40dp"
             android:layout_width="match_parent"
