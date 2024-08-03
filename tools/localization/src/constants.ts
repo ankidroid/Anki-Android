@@ -22,7 +22,6 @@ export const credentialsConst: Credentials = {
 };
 
 export const PROJECT_ID = 720;
-export const TITLE_STR = "AnkiDroid Flashcards";
 
 const RES_DIR = "../../../AnkiDroid/src/main/res";
 const DOCS_MARKET_DIR = "../../../docs/marketing/localized_description";

@@ -18,11 +18,8 @@ import {
     credentialsConst,
     I18N_FILES,
     I18N_FILES_DIR,
-    TEMP_DIR,
-    TITLE_STR,
     MARKET_DESC_FILE,
 } from "./constants";
-import path from "path";
 
 // initialization of crowdin client
 const { uploadStorageApi, sourceFilesApi } = new crowdin(credentialsConst);
