@@ -128,10 +128,10 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     private fun createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
-        val m = BackendUtils.from_json_bytes(
+        val m = BackendUtils.fromJsonBytes(
             col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
         ).apply { set("name", name) }
-        col.addNotetypeLegacy(BackendUtils.to_json_bytes(m))
+        col.addNotetypeLegacy(BackendUtils.toJsonBytes(m))
         return col.notetypes.byName(name)!!
     }
 

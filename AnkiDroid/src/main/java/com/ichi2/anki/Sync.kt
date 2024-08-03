@@ -166,7 +166,7 @@ fun DeckPicker.handleNewSync(
             updateLogin(baseContext, "", "")
             throw exc
         }
-        withCol { notetypes._clear_cache() }
+        withCol { notetypes.clearCache() }
         setLastSyncTimeToNow()
         refreshState()
     }
