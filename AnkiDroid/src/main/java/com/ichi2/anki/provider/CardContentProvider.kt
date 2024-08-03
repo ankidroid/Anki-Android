@@ -901,7 +901,7 @@ class CardContentProvider : ContentProvider() {
                         ?: throw IllegalArgumentException("field name missing for model: $mid")
                     val field: JSONObject = notetypes.newField(name)
                     try {
-                        notetypes.addField(existingModel, field)
+                        notetypes.addFieldLegacy(existingModel, field)
 
                         val flds: JSONArray = existingModel.getJSONArray("flds")
                         return ContentUris.withAppendedId(uri, (flds.length() - 1).toLong())

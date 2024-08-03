@@ -108,7 +108,7 @@ interface TestClass {
     fun addField(notetype: NotetypeJson, name: String) {
         val models = col.notetypes
         try {
-            models.addField(notetype, models.newField(name))
+            models.addFieldLegacy(notetype, models.newField(name))
         } catch (e: ConfirmModSchemaException) {
             throw RuntimeException(e)
         }
