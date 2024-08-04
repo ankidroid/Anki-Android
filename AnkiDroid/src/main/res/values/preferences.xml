@@ -201,5 +201,6 @@
     <string name="hide_system_bars_key">hideSystemBars</string>
     <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
     <string name="hide_answer_buttons_key">hideAnswerButtons</string>
+    <string name="hide_hard_and_easy_key">hideHardAndEasy</string>
 
 </resources>
