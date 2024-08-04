@@ -1,0 +1,16 @@
+<!--The width(W) and height(H) constraints are set such as the static layout is
+    fitting in the range of  3 W * 2H
+    -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/card_analysis_extra_widget_description"
+    android:initialKeyguardLayout="@layout/widget_card_analysis_extra"
+    android:initialLayout="@layout/widget_card_analysis_extra"
+    android:configure="com.ichi2.widget.CardAnalysisExtraWidgetConfig"
+    android:minWidth="230dp"
+    android:minHeight="120dp"
+    android:previewImage="@drawable/widget_card_analysis_extra_drawable"
+    android:previewLayout="@layout/widget_card_analysis_extra_drawable_v31"
+    android:targetCellHeight="2"
+    android:targetCellWidth="3"
+    android:widgetCategory="home_screen"
+    />

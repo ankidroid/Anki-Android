@@ -1,0 +1,22 @@
+    <!--The width(W) and height(H) constraints are set as per the following sizes
+        3 W * 2H Default
+        4 W * 5H Size we maximum width
+        3 W * 1H Size with minimum height -->
+
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/deck_picker_widget_description"
+    android:initialKeyguardLayout="@layout/widget_deck_picker_large"
+    android:initialLayout="@layout/widget_deck_picker_large"
+    android:configure="com.ichi2.widget.DeckPickerWidgetConfig"
+    android:minWidth="203dp"
+    android:minHeight="50dp"
+    android:minResizeWidth="203dp"
+    android:minResizeHeight="50dp"
+    android:maxResizeWidth="273dp"
+    android:maxResizeHeight="190dp"
+    android:previewImage="@drawable/widget_deck_picker_drawable"
+    android:previewLayout="@layout/widget_deck_picker_drawable_v31"
+    android:resizeMode="horizontal|vertical"
+    android:targetCellHeight="2"
+    android:targetCellWidth="4"
+    android:widgetCategory="home_screen" />

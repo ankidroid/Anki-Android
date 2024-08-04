@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayoutCardAnalysisExtra"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimaryInverse"
+    android:orientation="vertical"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+
+    <LinearLayout
+        android:id="@+id/cardAnalysisExtraDataHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryContainer"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/deckNew_card_analysis_extra_widget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="85"
+            android:textColor="@color/flag_reviewer_blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/deckDue_card_analysis_extra_widget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="38"
+            android:textColor="@color/flag_reviewer_red"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/deckLearn_card_analysis_extra_widget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="84"
+            android:textColor="@color/flag_reviewer_green"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/deckNameCardAnalysisExtra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:paddingBottom="5dp"
+        android:text="@string/deckName_card_analysis_extra_widget"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="24sp" />
+
+</LinearLayout>

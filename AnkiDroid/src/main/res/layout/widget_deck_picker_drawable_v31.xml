@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?attr/colorPrimaryContainer"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/deckName1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:height="48dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:text="@string/deck1Name_deck_picker_widget"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/deckNew1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck1New_deck_picker_widget"
+            android:textColor="@color/flag_reviewer_blue"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/deckDue1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck1Due_deck_picker_widget"
+            android:textColor="@color/material_red_A700"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/deckLearn1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck1Learn_deck_picker_widget"
+            android:textColor="@color/flag_reviewer_green"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/deckName2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:height="48dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:text="@string/deck2Name_deck_picker_widget"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/deckNew2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck2New_deck_picker_widget"
+            android:textColor="@color/flag_reviewer_blue"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/deckDue2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck2Due_deck_picker_widget"
+            android:textColor="@color/material_red_A700"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/deckLearn2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck2Learn_deck_picker_widget"
+            android:textColor="@color/flag_reviewer_green"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/deckName3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:height="48dp"
+            android:paddingBottom="4dp"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
+            android:text="@string/deck3Name_deck_picker_widget"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/deckNew3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck3New_deck_picker_widget"
+            android:textColor="@color/flag_reviewer_blue"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/deckDue3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck3Due_deck_picker_widget"
+            android:textColor="@color/material_red_A700"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/deckLearn3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="5dp"
+            android:text="@string/deck3Learn_deck_picker_widget"
+            android:textColor="@color/flag_reviewer_green"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
