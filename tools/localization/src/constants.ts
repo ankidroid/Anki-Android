@@ -94,6 +94,7 @@ export const LANGUAGES = [
     "da",
     "de",
     "el",
+    "en-GB",
     "eo",
     "es-AR",
     "es-ES",
@@ -176,7 +177,7 @@ export const LANGUAGES = [
 ];
 
 // languages which are localized for more than one region
-export const LOCALIZED_REGIONS = ["es", "pt", "zh"];
+export const LOCALIZED_REGIONS = ["en", "es", "pt", "zh"];
 
 export const XML_LICENSE_HEADER = `<?xml version="1.0" encoding="utf-8"?> 
  <!--

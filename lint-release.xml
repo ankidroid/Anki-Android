@@ -55,6 +55,7 @@
         <ignore path="res/values-da/" />
         <ignore path="res/values-de/" />
         <ignore path="res/values-el/" />
+        <ignore path="res/values-en/" />
         <ignore path="res/values-eo/" />
         <ignore path="res/values-es-rAR/" />
         <ignore path="res/values-es-rES/" />
