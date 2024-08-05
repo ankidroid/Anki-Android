@@ -17,7 +17,6 @@ package com.ichi2.anki
 
 import android.app.Activity
 import android.os.Looper.getMainLooper
-import com.canhub.cropper.CropImageActivity
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.testutils.ActivityList
@@ -50,7 +49,6 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
 
     @Before
     fun before() {
-        notYetHandled(CropImageActivity::class.java.simpleName, "cannot implemented - activity from canhub.cropper")
         notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")

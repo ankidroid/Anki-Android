@@ -415,11 +415,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.canhub.cropper.CropImageActivity"
-            android:exported="true"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <activity
             android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
             android:theme="@android:style/Theme.DeviceDefault.Dialog"
             android:process=":acra"

@@ -19,7 +19,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.CheckResult
-import com.canhub.cropper.CropImageActivity
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWER_FORMAT
@@ -75,7 +74,6 @@ object ActivityList {
             get(Reviewer::class.java),
             get(MyAccount::class.java),
             get(Preferences::class.java),
-            get(CropImageActivity::class.java),
             get(FilteredDeckOptions::class.java),
             get(DrawingActivity::class.java),
             // Info has unhandled intents
