@@ -63,6 +63,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.BundleCompat
@@ -127,6 +128,9 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
+import com.ichi2.imagecropper.ImageCropper
+import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
+import com.ichi2.imagecropper.ImageCropperLauncher
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -144,7 +148,6 @@ import com.ichi2.libanki.note
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.HashUtil
-import com.ichi2.utils.ImageUtils
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.KeyUtils
@@ -778,15 +781,33 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             }
         }
 
-    private fun startCrop(imageUri: Uri) {
-        ImageUtils.cropImage(requireActivity().activityResultRegistry, imageUri) { result ->
-            if (result != null && result.isSuccessful) {
-                val uriFilePath = result.getUriFilePath(requireContext())
-                uriFilePath?.let { setupImageOcclusionEditor(it) }
-            } else {
-                Timber.v("Unable to crop the image")
+    /** Launches an activity to crop the image, using the [ImageCropper] */
+    private val cropImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                Activity.RESULT_OK -> {
+
+                    result.data?.let {
+                        val cropResultData = IntentCompat.getParcelableExtra(
+                            it,
+                            CROP_IMAGE_RESULT,
+                            ImageCropper.CropResultData::class.java
+                        )
+                        Timber.d("Cropped image data: $cropResultData")
+                        if (cropResultData?.uriPath == null) return@registerForActivityResult
+                        setupImageOcclusionEditor(cropResultData.uriPath)
+                    }
+                }
+
+                else -> {
+                    Timber.v("Unable to crop the image")
+                }
             }
         }
+
+    private fun startCrop(imageUri: Uri) {
+        val intent = ImageCropperLauncher.ImageUri(imageUri).getIntent(requireContext())
+        cropImageLauncher.launch(intent)
     }
 
     private fun dispatchCameraEvent() {
