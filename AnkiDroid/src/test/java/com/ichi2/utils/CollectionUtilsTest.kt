@@ -15,13 +15,14 @@
  */
 package com.ichi2.utils
 
+import com.ichi2.utils.CollectionUtils.average
 import com.ichi2.utils.CollectionUtils.combinations
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class CollectionUtilsTest {
-    var testList = arrayListOf(1, 2, 3)
+    private var testList = arrayListOf(1, 2, 3)
 
     @Test
     fun testCombinations() {
@@ -35,5 +36,20 @@ class CollectionUtilsTest {
 
         val seq3 = listOf(1).combinations().toList()
         assertThat("singleton list returns nothing", seq3.size, equalTo(0))
+    }
+
+    @Test
+    fun testAverage() {
+        val avg1 = listOf(1, 2, 3, 4, 5).average { it }
+        assertThat(avg1, equalTo(3.0))
+
+        val avg2 = listOf<Int>().average { it }
+        assertThat(avg2, equalTo(null))
+
+        val avg3 = listOf(7).average { it }
+        assertThat(avg3, equalTo(7.0))
+
+        val avg4 = listOf(4, 4, 4, 4).average { it }
+        assertThat(avg4, equalTo(4.0))
     }
 }
