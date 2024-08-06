@@ -74,7 +74,7 @@ Join Us On
 <a href="https://discord.gg/qjzcRTx"><img src="docs/graphics/logos/discord_logo_color.png" height="50px"/></a>
 <a href="https://www.reddit.com/r/Anki"><img src="docs/graphics/logos/reddit_logo_color.png" height="50px"/></a>
 <a href="https://www.facebook.com/AnkiDroid/"><img src="docs/graphics/logos/facebook_logo_color.png" height="50px"/></a>
-<a href="https://twitter.com/ankidroid"><img src="docs/graphics/logos/twitter_logo_color.png" height="50px"/></a>
+<a href="https://x.com/ankidroid"><img src="docs/graphics/logos/x_logo_color.png" height="50px"/></a>
 <a href="https://forums.ankiweb.net/"><img src="/docs/graphics/logos/anki_forums_logo.png" height="50px"/></a>
 
 ## Credits
