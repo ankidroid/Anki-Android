@@ -48,6 +48,10 @@
     <string name="check_db_warning">Mungkin mengambil masa lama</string>
     <string name="contextmenu_deckpicker_delete_deck">Padam dek</string>
     <string name="delete_deck_title">Padam dek?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Teks-ke-ucapan bahasa tiada</string>
     <string name="tts_no_tts">Jangan bercakap</string>
     <string name="unused_strings">\n\nFail tidak digunakan:\n</string>
@@ -134,7 +138,6 @@
     <string name="multimedia_editor_failed">Gagal membuka Penyunting Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Kebenaran rakam audio ditolak</string>
-    <string name="mutimedia_editor_assertion_failed">Ralat tidak diketahui berlaku semasa memaparkan Penyunting Lanjutan</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Dinaik Taraf</string>
     <string name="integrity_check_startup_content">AnkiDroid telah dinaik taraf. Naik taraf ini mungkin termasuk pembaikan kesulitan pangkalan data, dan kami nasihatkan anda lakukan pemeriksaan pangkalan data sekarang.</string>

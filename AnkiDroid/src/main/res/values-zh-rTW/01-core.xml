@@ -51,14 +51,14 @@
     <string name="settings">設定</string>
     <string name="help">幫助</string>
     <string name="drawing">繪圖</string>
-    <string name="send_feedback">傳送問題回報</string>
-    <string name="studyoptions_due_today">今天到期:</string>
-    <string name="studyoptions_new_total">新卡片總數:</string>
+    <string name="send_feedback">傳送建議</string>
+    <string name="studyoptions_due_today">今日到期卡牌:</string>
+    <string name="studyoptions_new_total">卡片總數:</string>
     <string name="studyoptions_total_cards">卡片總數:</string>
     <string name="studyoptions_start">開始學習</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
-    <string name="collapse">收回</string>
+    <string name="collapse">摺疊</string>
     <plurals name="reviewer_window_title">
         <item quantity="other">剩下%d分鐘</item>
     </plurals>
@@ -68,15 +68,15 @@
     <plurals name="reviewer_window_title_days_new">
         <item quantity="other">剩餘 %1$d 天 %2$d 小時</item>
     </plurals>
-    <string name="no_cards_placeholder_title">牌組是空的</string>
+    <string name="no_cards_placeholder_title">空牌組</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n
 開始新增卡片</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">輸入答案</string>
-    <string name="show_answer">看答案</string>
+    <string name="show_answer">顯示答案</string>
     <string name="hide_answer">隱藏答案</string>
-    <string name="ease_button_again">再一次</string>
+    <string name="ease_button_again">再次</string>
     <string name="ease_button_hard">難</string>
     <string name="ease_button_good">中等</string>
     <string name="ease_button_easy">簡單</string>
@@ -91,18 +91,18 @@
     <string name="browse_cards">瀏覽卡片</string>
     <string name="edit_deck_description" comment="edit the deck description">編輯描述</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">新增</string>
-    <string name="menu_add_note">新增筆記</string>
+    <string name="menu_add_note">增加筆記</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">同步帳戶</string>
-    <string name="menu_dismiss_note">隱藏/刪除</string>
-    <string name="menu_bury_card">暫時隱藏卡片</string>
-    <string name="menu_bury_note">暫時隱藏筆記</string>
-    <string name="menu_suspend_card">長久擱置卡片</string>
-    <string name="menu_suspend_note">長久擱置筆記</string>
-    <string name="menu_bury">隱藏</string>
-    <string name="menu_suspend">長久擱置</string>
-    <string name="menu_delete_note">刪除筆記</string>
+    <string name="menu_dismiss_note">隐藏/删除</string>
+    <string name="menu_bury_card">暫時隱藏卡片 </string>
+    <string name="menu_bury_note">暫時隱藏筆記 </string>
+    <string name="menu_suspend_card">暫停卡片 </string>
+    <string name="menu_suspend_note">長久擱置筆記 </string>
+    <string name="menu_bury">埋葬</string>
+    <string name="menu_suspend">擱置</string>
+    <string name="menu_delete_note">刪除筆記 </string>
     <string name="menu_flag">標記</string>
-    <string name="rename_flag">重新命名標記</string>
+    <string name="rename_flag">重新命名 flags</string>
     <string name="menu_flag_card">標記卡片</string>
     <string name="menu_edit_tags">編輯標籤</string>
     <string name="delete_note_message">真的要刪除這個筆記跟它的卡片嗎？\n%s</string>
@@ -142,7 +142,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n這可能需要一點時間。</string>
     <string name="syncing_media">正在使媒體同步</string>
     <string name="export_deck">匯出牌組</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">匯出集合</string>
     <string name="nothing">無</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">卡片種類</string>
@@ -197,7 +197,7 @@
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">移轉成功</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        您的數據已經成功轉移。
         AnkiDroid 已經恢復正常工作，你可以進行同步。</string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">轉移失敗</string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">遷移失敗</string>
     <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        複製數據出現問題，錯誤：%1$s
         <br><br>
         所有更改沒有还原
@@ -226,20 +226,21 @@
     <string name="migration__resume_after_failed_dialog__button_positive">重新遷移</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">無法存取收藏</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroid 被卸載後，由於 Google Play 政策有改動，我們不能讀取你的收藏\n\n您的資料安全有能修復. 您的資料置於\n%s\n\n選擇以下一項選項以修復資料：</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android 已移除 AnkiDroid 的 %1$s 權限，原因是應用程式不活動。
+您的資料是安全的，並且可以還原。它位於 %2$s 選擇下面的選項進行還原：</string>
     <string name="restore_data_from_ankiweb">從 AnkiWeb 回復 (推薦)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
+    <string name="install_non_play_store_ankidroid_recommended">還原資料夾存取權限 (建議)</string>
+    <string name="install_non_play_store_ankidroid">還原資料夾存取權限 (進階)</string>
     <string name="restore_data_from_backup">從 .colpkg 備份中回復 (進階使用者)</string>
     <string name="create_new_collection">建立新的收藏</string>
     <string name="new_unsafe_collection">這個新牌組會在解除安裝 AnkiDroid 後刪除</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="permissions_screen_headline">AnkiDroid 需要一些權限才能運作</string>
+    <string name="storage_access_title">存取儲存空間</string>
+    <string name="storage_access_summary">將收藏儲存到安全的地方，即使應用程式卸載也不會被刪除</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">存取所有檔案</string>
+    <string name="image_occlusion">圖像遮蔽</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">移除帳戶</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">即時卡片</string>
 </resources>

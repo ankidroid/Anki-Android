@@ -48,6 +48,11 @@
     <string name="check_db_warning">దీనికి కొంత సమయం పడుతుంది, దయచేసి వేచి వుండండి</string>
     <string name="contextmenu_deckpicker_delete_deck">డెక్ను త్వలిగించు</string>
     <string name="delete_deck_title">డెక్ను త్వలిగించాల?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">టెక్స్ట్-టు-స్పీచ్ లాంగ్వేజ్ అందుబాటులో లేదు</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>
     <string name="unused_strings">\n\nఉపయోగించని ఫైళ్లు:\n</string>
@@ -103,9 +108,9 @@
     <string name="dialog_positive_repair">బాగు చేయు</string>
     <string name="dialog_positive_replace">పునఃస్థాపించుము</string>
     <string name="dialog_collection_path_not_dir">పేర్కొన్న మార్గం చెల్లుబాటు అయ్యే డైరెక్టరీ కాదు</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">అందించిన వచనం చెల్లుబాటు అయ్యే PEM-ఎన్‌కోడ్ చేసిన X509 ప్రమాణపత్రానికి పరిష్కారం కాదు</string>
+    <string name="dialog_invalid_custom_certificate_title">సర్టిఫికెట్‌ని అన్వయించడంలో లోపం</string>
+    <string name="dialog_updated_custom_certificate">సర్టిఫికేట్ నవీకరించబడింది</string>
     <!-- Media checking -->
     <string name="check_media_title">మీడియా తనిఖీ చేయాలా?</string>
     <string name="check_media_warning">పెద్ద మీడియా సేకరణలతో ఇది ఎక్కువ సమయం పట్టవచ్చు</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">మల్టీమీడియా ఎడిటర్‌ని తెరవడంలో విఫలమైంది</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ఆడియో రికార్డింగ్ అనుమతి నిరాకరించబడింది</string>
-    <string name="mutimedia_editor_assertion_failed">అధునాతన ఎడిటర్‌ని ప్రదర్శిస్తున్నప్పుడు తెలియని లోపం సంభవించింది</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid అప్‌గ్రేడ్ చేయబడింది</string>
     <string name="integrity_check_startup_content">AnkiDroid అప్‌గ్రేడ్ చేయబడింది. ఈ అప్‌గ్రేడ్ సాధ్యమయ్యే డేటాబేస్ సమస్యలకు పరిష్కారాలను కలిగి ఉంది మరియు డేటాబేస్‌ను ఇప్పుడే తనిఖీ చేయమని మేము మీకు సలహా ఇస్తున్నాము.</string>
@@ -191,7 +195,7 @@
     <string name="multimedia_editor_trans_translate">అనువదించు</string>
     <string name="help_title_community">సంఘం</string>
     <string name="help_item_anki_forums">అంకి ఫోరమ్స్</string>
-    <string name="help_item_discord">Discord</string>
+    <string name="help_item_discord">అసమ్మతి</string>
     <string name="help_item_facebook">ఫేస్బుక్</string>
     <string name="help_item_twitter">ట్విట్టర్</string>
     <string name="help_title_privacy">గోప్యత</string>
@@ -249,11 +253,11 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">నుండి</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">కు</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="cloze_note_required">క్లోజ్ టైప్ నోట్ అవసరం</string>
+    <string name="cloze_not_found_message">క్లోజ్ టైప్ నోట్ కనుగొనబడలేదు, నోట్ ఎడిటర్‌ని తెరవండి లేదా క్లోజ్ టైప్ నోట్‌ని జోడించిన తర్వాత మళ్లీ ప్రయత్నించండి.</string>
+    <string name="open">తెరవండి</string>
+    <string name="change_cloze_number">క్లోజ్ సంఖ్యను మార్చండి</string>
+    <string name="cloze_number">క్లోజ్ నంబర్:</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">సిస్టమ్ WebView పాతది. కొన్ని ఫీచర్‌లు సరిగ్గా పని చేయవు. దయచేసి దీన్ని అప్‌డేట్ చేయండి.\n\nఇన్‌స్టాల్ చేసిన వెర్షన్: %1$d\nకనీసం అవసరమైన వెర్షన్: %2$d</string>
 </resources>

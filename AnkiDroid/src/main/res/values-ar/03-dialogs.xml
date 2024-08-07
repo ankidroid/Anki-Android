@@ -48,6 +48,15 @@
     <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا</string>
     <string name="contextmenu_deckpicker_delete_deck">حذف الرزمة</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
+    <plurals name="delete_deck_message">
+        <item quantity="zero">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="two">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="tts_no_tts">لا تنطق</string>
     <string name="unused_strings">\n\nملفات عير مستخدمة:\n</string>
@@ -149,7 +158,6 @@
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>
-    <string name="mutimedia_editor_assertion_failed">حدث خطأ غير معروف عند عرض المحرر المتقدم</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث أنكيدرويد</string>
     <string name="integrity_check_startup_content">تم تحديث أنكيدرويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>

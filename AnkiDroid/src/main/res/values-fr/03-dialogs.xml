@@ -48,6 +48,11 @@
     <string name="check_db_warning">Cela peut prendre du temps</string>
     <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Aucun langage de synthèse vocale disponible</string>
     <string name="tts_no_tts">Ne pas parler</string>
     <string name="unused_strings">\n\nFichiers inutilisés :\n</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">Impossible d’ouvrir l’éditeur multimédia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permission d\'enregistrement audio refusée</string>
-    <string name="mutimedia_editor_assertion_failed">Une erreur inconnue s\'est produite lors de l\'affichage de l\'éditeur avancé</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid mis à jour</string>
     <string name="integrity_check_startup_content">AnkiDroid a été mis à jour. Cette mise à jour inclut des corrections pour d\'éventuels problèmes de base de données, et nous vous conseillons d\'exécuter une vérification de la base de données immédiatement.</string>

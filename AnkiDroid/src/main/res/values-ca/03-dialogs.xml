@@ -48,6 +48,11 @@
     <string name="check_db_warning">Això pot trigar molt de temps</string>
     <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
     <string name="delete_deck_title">Suprimeix el paquet</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
     <string name="tts_no_tts">No parlis</string>
     <string name="unused_strings">\n\Fitxers no usats:\n</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">No s\'ha pogut obrir l\'editor multimèdia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">S\'ha denegat el permís de gravació d\'àudio</string>
-    <string name="mutimedia_editor_assertion_failed">S\'ha produït un error desconegut al mostrar l\'editor avançat</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">S\'ha actualitzat l\'Ankidroid</string>
     <string name="integrity_check_startup_content">AnkiDroid s\'ha actualitzat. Aquesta actualització inclou solucions per a possibles problemes de bases de dades i us recomanem que executeu ara la comprovació de la base de dades.</string>

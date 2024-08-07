@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Legg til lydklipp</string>
     <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">Ta opp lyd</string>
-    <string name="multimedia_editor_popup_text">Advanced editor</string>
     <string name="multimedia_editor_popup_cloze">Fyll hulltekst</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Tekst</string>
-    <string name="multimedia_editor_field_editing_image">Bilde</string>
     <string name="multimedia_editor_field_editing_audio">Lydopptak</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Lydklipp</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Ferdig</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Tøm</string>
-    <string name="multimedia_editor_text_field_editing_clone">Clone from</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Take from</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,22 +56,17 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galleri</string>
     <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Noe gikk galt</string>
     <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
-    <string name="multimedia_editor_attach_media">Attach media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
     <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editing field</string>
     <!-- Crop function-->
     <string name="crop_image">Do you want to crop this image?</string>
     <string name="crop_button">Crop image</string>

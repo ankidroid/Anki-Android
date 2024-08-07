@@ -48,6 +48,11 @@
     <string name="check_db_warning">Սա կարող է երկար ժամանակ տևել</string>
     <string name="contextmenu_deckpicker_delete_deck">Ջնջել</string>
     <string name="delete_deck_title">Ջնջե՞լ։</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="tts_no_tts">Չխոսել</string>
     <string name="unused_strings">\n\nՉօգտագործվող ֆայլեր`\n</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid-ը թարմացվել է</string>
     <string name="integrity_check_startup_content">Այս թարմացումը ունի շտեմարանի հնարավոր խնդիրների շտկումներ, և մենք խորհուրդ ենք տալիս գործարկել բազայի ստուգումը։</string>
