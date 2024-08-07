@@ -883,7 +883,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
                     // not already have cards generated making it safe will see this error message:
-                    //   templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_would_delete_note)) // Implemented in the deleteCardTemplate
                     return true
                 }
             }
