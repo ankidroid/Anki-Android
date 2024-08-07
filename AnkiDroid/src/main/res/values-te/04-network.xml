@@ -70,7 +70,7 @@
     <string name="sync_title">సమకాలీకరణ</string>
     <string name="sync_log_uploading_message">స్థానికం నుండి పూర్తి సమకాలీకరణ</string>
     <string name="sync_database_acknowledge">సేకరణ సమకాలీకరించబడింది</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">సేకరణ సమకాలీకరించబడింది. ఈ నేపథ్యంలో మీడియా సమకాలీకరించబడుతోంది.</string>
     <string name="sync_corrupt_database">మీ డేటాబేస్ అవినీతి ఉంది. దయచేసి మళ్లీ సమకాలీకరించడానికి ప్రయత్నించే ముందు దాన్ని పరిష్కరించండి.\n\n మీ డేటాబేస్ను సరిచేయడానికి సమాచారం కోసం %s వీక్షించండి.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">స్థానిక</string>

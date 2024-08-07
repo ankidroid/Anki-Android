@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Додати запис звуку</string>
     <string name="multimedia_editor_popup_video_clip">Додати відео</string>
     <string name="multimedia_editor_popup_audio">Записати звук</string>
-    <string name="multimedia_editor_popup_text">Розширений редактор</string>
     <string name="multimedia_editor_popup_cloze">Завдання з пропусками</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Текст</string>
-    <string name="multimedia_editor_field_editing_image">Зображення</string>
     <string name="multimedia_editor_field_editing_audio">Запис звуку</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Аудіокліп</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Зроблено</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Очистити</string>
-    <string name="multimedia_editor_text_field_editing_clone">Клонувати з</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Візьміть з </string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,22 +56,17 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Галерея</string>
     <string name="multimedia_editor_image_field_editing_photo">Камера</string>
-    <string name="multimedia_editor_import_audio">Аудіо</string>
-    <string name="multimedia_editor_import_video">Відео</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Щось пішло не так</string>
     <string name="multimedia_editor_svg_preview">SVG формат недоступний для попереднього перегляду</string>
     <string name="multimedia_editor_png_paste_error">Помилка перетворення зображення з буферу обміну в png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Прикріпити мультимедійний вміст до %1$s поля</string>
-    <string name="multimedia_editor_attach_media">Прикріпити медіа</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Не вдалося записати</string>
     <string name="multimedia_editor_audio_view_playing_failed">Не вдалося відтворити</string>
     <string name="multimedia_editor_audio_view_create_failed">Не вдається створити панель інструментів аудіозапису</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Поле для редагування</string>
     <!-- Crop function-->
     <string name="crop_image">Обрізати це зображення?</string>
     <string name="crop_button">Обрізати зображення</string>

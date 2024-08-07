@@ -48,6 +48,11 @@
     <string name="check_db_warning">Può richiedere molto tempo</string>
     <string name="contextmenu_deckpicker_delete_deck">Elimina il mazzo</string>
     <string name="delete_deck_title">Elimina il mazzo</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
     <string name="tts_no_tts">Non parlare</string>
     <string name="unused_strings">\n\nFile inutilizzati:\n</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">Apertura dell\'editore multimediale fallita</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permesso registrazione audio negato</string>
-    <string name="mutimedia_editor_assertion_failed">Si è verificato un errore sconosciuto durante la visualizzazione dell\'editore avanzato</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aggiornato</string>
     <string name="integrity_check_startup_content">AnkiDroid è stato aggiornato. Questo aggiornamento include correzioni per eventuali problemi nella banca dati e ti consigliamo di eseguire ora il controllo della banca dati.</string>

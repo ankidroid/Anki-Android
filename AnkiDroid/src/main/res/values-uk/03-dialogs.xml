@@ -48,6 +48,13 @@
     <string name="check_db_warning">Це може зайняти багато часу</string>
     <string name="contextmenu_deckpicker_delete_deck">Видалити колоду</string>
     <string name="delete_deck_title">Видалити колоду?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
@@ -143,7 +150,6 @@
     <string name="multimedia_editor_failed">Не вдалося відкрити мультимедійний редактор</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Відхилено доступ до запису звуку</string>
-    <string name="mutimedia_editor_assertion_failed">Невідома помилка під час відображення розширеного редактора</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid оновлено</string>
     <string name="integrity_check_startup_content">AnkiDroid оновлено. Оновлення включає в себе виправлення можливих проблем з базою даних, і ми радимо Вам запустити перевірку бази даних.</string>

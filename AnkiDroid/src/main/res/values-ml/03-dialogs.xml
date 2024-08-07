@@ -48,6 +48,11 @@
     <string name="check_db_warning">ഇതിന് വളരെയധികം സമയമെടുത്തേക്കാം</string>
     <string name="contextmenu_deckpicker_delete_deck">ഡെക്ക് ഇല്ലാതാക്കുക</string>
     <string name="delete_deck_title">ഡെക്ക് ഇല്ലാതാക്കുക?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">ടെക്സ്റ്റ്-ടു-സ്പീച്ച് ഭാഷ ലഭ്യമല്ല</string>
     <string name="tts_no_tts">സംസാരിക്കരുത്</string>
     <string name="unused_strings">\n\nUnused files:\n</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">മൾട്ടിമീഡിയ എഡിറ്റർ തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ഓഡിയോ റെക്കോർഡിംഗ് അനുമതി നിരസിച്ചു</string>
-    <string name="mutimedia_editor_assertion_failed">വിപുലമായ എഡിറ്റർ പ്രദർശിപ്പിക്കുന്നതിൽ അജ്ഞാത പിശക് സംഭവിച്ചു</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid അപ്‌ഗ്രേഡുചെയ്‌തു</string>
     <string name="integrity_check_startup_content">AnkiDroid അപ്‌ഗ്രേഡുചെയ്‌തു. ഈ അപ്‌ഗ്രേഡിൽ സാധ്യമായ ഡാറ്റാബേസ് പ്രശ്‌നങ്ങൾക്കുള്ള പരിഹാരങ്ങൾ ഉൾപ്പെടുന്നു, ഇപ്പോൾ ചെക്ക് ഡാറ്റാബേസ് പ്രവർത്തിപ്പിക്കാൻ ഞങ്ങൾ നിങ്ങളെ ഉപദേശിക്കുന്നു.</string>

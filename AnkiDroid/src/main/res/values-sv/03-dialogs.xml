@@ -48,6 +48,11 @@
     <string name="check_db_warning">Det här kan ta lång tid</string>
     <string name="contextmenu_deckpicker_delete_deck">Radera kortlek</string>
     <string name="delete_deck_title">Radera kortlek?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Det finns inget språk för text-till-tal</string>
     <string name="tts_no_tts">Tala inte</string>
     <string name="unused_strings">\n\nOanvända filer:\n</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">Det gick inte att öppna Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Behörighet för ljudinspelning nekad</string>
-    <string name="mutimedia_editor_assertion_failed">Okänt fel uppstod vid visning av Avancerad redigerare</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid uppgraderat</string>
     <string name="integrity_check_startup_content">AnkiDroid har uppgraderats. Denna uppgradering innehåller rättelser för eventuella databasproblem, och vi rekommenderar dig att köra databaskontrollen nu.</string>
