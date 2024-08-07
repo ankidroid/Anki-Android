@@ -27,8 +27,6 @@
 <!--    <uses-feature android:name. We must ensure this is never called when running on API 23.-->
     <uses-sdk tools:overrideLibrary="androidx.draganddrop"/>
 
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <uses-feature android:name="android.hardware.audio.output" android:required="false" />
     <uses-feature android:name="android.software.app_widgets" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
