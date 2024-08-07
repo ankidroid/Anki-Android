@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Afegeix clip d\'àudio</string>
     <string name="multimedia_editor_popup_video_clip">Afegiu un vídeo</string>
     <string name="multimedia_editor_popup_audio">Gravar àudio</string>
-    <string name="multimedia_editor_popup_text">Editor avançat</string>
     <string name="multimedia_editor_popup_cloze">Blancs per omplir</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
-    <string name="multimedia_editor_field_editing_image">Imatge</string>
     <string name="multimedia_editor_field_editing_audio">Enregistrament d\'audio</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Clip d\'àudio</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Fet</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Buida</string>
-    <string name="multimedia_editor_text_field_editing_clone">Clonar de</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Prendre de</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,22 +56,17 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galeria</string>
     <string name="multimedia_editor_image_field_editing_photo">Càmera</string>
-    <string name="multimedia_editor_import_audio">Àudio</string>
-    <string name="multimedia_editor_import_video">Vídeo</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Alguna cosa ha anat malament</string>
     <string name="multimedia_editor_svg_preview">No hi ha cap imatge SVG per a previsualitzar</string>
     <string name="multimedia_editor_png_paste_error">Error en convertir la imatge del porta-retalls a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Adjuntar contingut multimèdia al camp %1$s</string>
-    <string name="multimedia_editor_attach_media">Adjuntar multimèdia</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">La gravació ha fracassat</string>
     <string name="multimedia_editor_audio_view_playing_failed">La reproducció ha fallat</string>
     <string name="multimedia_editor_audio_view_create_failed">No es pot crear la barra d\'eines de gravació</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Camp d\'edició</string>
     <!-- Crop function-->
     <string name="crop_image">Voleu retallar aquesta imatge?</string>
     <string name="crop_button">Retalla la imatge</string>

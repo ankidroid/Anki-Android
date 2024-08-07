@@ -48,6 +48,11 @@
     <string name="check_db_warning">Isto poderá demorar bastante tempo</string>
     <string name="contextmenu_deckpicker_delete_deck">Eliminar baralho</string>
     <string name="delete_deck_title">Eliminar baralho?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Nenhuma língua disponível para o sistema de conversão de texto para fala</string>
     <string name="tts_no_tts">Não falar</string>
     <string name="unused_strings">\n\nFicheiros não utilizados:\n</string>
@@ -137,7 +142,6 @@
     <string name="multimedia_editor_failed">Falha ao abrir o Editor de Multimédia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permissão para gravar áudio recusada</string>
-    <string name="mutimedia_editor_assertion_failed">Ocorreu um erro desconhecido ao exibir o Editor Avançado</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Melhorado</string>
     <string name="integrity_check_startup_content">O AnkiDroid foi melhorado. Esta melhoria inclui correcções para possíveis erros na base de dados. Aconselhamos a que execute \"Verificar Base de Dados\" agora.</string>
@@ -254,7 +258,7 @@
     <string name="cloze_note_required">Nota de tipo Virável Necessária</string>
     <string name="cloze_not_found_message">Nenhuma nota de tipo Virável encontrada, abra o Editor de Notas ou tente novamente após adicionar uma nota de tipo Virável.</string>
     <string name="open">Abrir</string>
-    <string name="change_cloze_number">Change cloze number</string>
+    <string name="change_cloze_number">Alterar Número da Omissão</string>
     <string name="cloze_number">Número de Omissão;</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema WebView está desatualizado. Alguns recursos não funcionarão corretamente. Atualize-o.\n\nVersão instalada: %1$d\nVersão mínima necessária: %2$d</string>

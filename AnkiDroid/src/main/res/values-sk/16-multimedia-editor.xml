@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">Pridať zvukovú stopu</string>
     <string name="multimedia_editor_popup_video_clip">Add video clip</string>
     <string name="multimedia_editor_popup_audio">Nahrať zvuk</string>
-    <string name="multimedia_editor_popup_text">Rozšírený editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
-    <string name="multimedia_editor_field_editing_image">Obrázok</string>
     <string name="multimedia_editor_field_editing_audio">Nahrávanie zvuku</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Zvuková stopa</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hotovo</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Vyčistiť</string>
-    <string name="multimedia_editor_text_field_editing_clone">Klonovať z</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Z</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,22 +56,17 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galéria</string>
     <string name="multimedia_editor_image_field_editing_photo">Fotoaparát</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Niečo sa pokazilo</string>
     <string name="multimedia_editor_svg_preview">SVG nie je v náhľade dostupné</string>
     <string name="multimedia_editor_png_paste_error">Chyba pri konvertovaní obrázku na png zo schránky: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Pripojte obsah multimédií do poľa %1$s</string>
-    <string name="multimedia_editor_attach_media">Pridať multimédia</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Nahrávanie zlyhalo</string>
     <string name="multimedia_editor_audio_view_playing_failed">Prehrávanie zlyhalo</string>
     <string name="multimedia_editor_audio_view_create_failed">Nepodarilo sa vytvoriť lištu nahrávania</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Pole úprav</string>
     <!-- Crop function-->
     <string name="crop_image">Chcete tento obrázok orezať?</string>
     <string name="crop_button">Orezať obrázok</string>

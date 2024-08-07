@@ -91,7 +91,7 @@
     <string name="custom_study_limit_tags">నిర్దిష్ట ట్యాగ్లకు పరిమితం చేయండి</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
-    <string name="discard">Discard</string>
+    <string name="discard">విస్మరించండి</string>
     <string name="note_editor_no_cards_created">కార్డులు సృష్టించబడలేదు. దయచేసి మరిన్ని ఫీల్డ్‌లను పూరించండి</string>
     <string name="note_editor_no_cards_created_all_fields">ప్రస్తుత గమనిక రకం ఏ కార్డ్‌లను రూపొందించలేదు.\nదయచేసి మరొక గమనిక రకాన్ని ఎంచుకోండి లేదా \'కార్డ్‌లు\' క్లిక్ చేసి ఫీల్డ్ ప్రత్యామ్నాయాన్ని జోడించండి</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">క్లోజ్ డిలీట్‌లు క్లోజ్ నోట్ రకంపై మాత్రమే పని చేస్తాయి</string>
@@ -132,7 +132,7 @@
     <string name="delete_deck">డెక్ను తొలగిస్తోంది&#8230;</string>
     <string name="info_rate">రేట్ AnkiDroid</string>
     <string name="import_title">దిగుమతి</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">దిగుమతి కోసం ఫైల్‌ను సిద్ధం చేస్తోంది&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">చేర్చు</string>
     <string name="import_message_replace_confirm">ఇది మీ ప్రస్తుత సేకరణను తొలగిస్తుంది మరియు ఫైల్ యొక్క డేటాను భర్తీ చేస్తుంది %s</string>
     <string name="import_dialog_message_add">సేకరణకు \"%s\"ని జోడించాలా? దీనికి చాలా సమయం పట్టవచ్చు</string>
@@ -160,7 +160,7 @@
         ]]></string>
     <string name="export_choice_share">దానిని పంచు</string>
     <string name="export_choice_save_to">కు సేవ్ చేయండి</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">ఎగుమతి చేసిన ఫైల్‌ను సేవ్ చేస్తోంది&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ఎంపికలు</string>
     <string name="menu__deck_options">డెక్ ఎంపికలు</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">అధ్యయన ఎంపికలు</string>

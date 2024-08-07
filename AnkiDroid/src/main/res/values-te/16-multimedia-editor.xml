@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">ఆడియో క్లిప్‌ని జోడించండి</string>
     <string name="multimedia_editor_popup_video_clip">వీడియో క్లిప్‌ని జోడించండి</string>
     <string name="multimedia_editor_popup_audio">రికార్డ్ ఆడియో</string>
-    <string name="multimedia_editor_popup_text">అధునాతన ఎడిటర్</string>
     <string name="multimedia_editor_popup_cloze">క్లోజ్ తొలగింపు</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">టెక్స్ట్</string>
-    <string name="multimedia_editor_field_editing_image">చిత్రం</string>
     <string name="multimedia_editor_field_editing_audio">ఆడియో రికార్డింగ్</string>
-    <string name="multimedia_editor_field_editing_audio_clip">ఆడియో క్లిప్</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">అయింది</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">ప్రశాంతంగా</string>
-    <string name="multimedia_editor_text_field_editing_clone">నుండి క్లోన్</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">నుంచి తీసుకో</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,22 +56,17 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">గ్యాలరీ</string>
     <string name="multimedia_editor_image_field_editing_photo">కెమెరా</string>
-    <string name="multimedia_editor_import_audio">ఆడియో</string>
-    <string name="multimedia_editor_import_video">వీడియో</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">ఎక్కడో పొరపాటయింది</string>
     <string name="multimedia_editor_svg_preview">ప్రివ్యూ కోసం SVGలు అందుబాటులో లేవు</string>
     <string name="multimedia_editor_png_paste_error">క్లిప్‌బోర్డ్ చిత్రాన్ని pngకి మార్చడంలో లోపం: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s క్షేత్రానికి మల్టీమీడియా విషయాన్ని అటాచ్ చేయండి</string>
-    <string name="multimedia_editor_attach_media">మీడియాను జోడించండి</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">రికార్డింగ్ విఫలమైంది</string>
     <string name="multimedia_editor_audio_view_playing_failed">ప్లే చేయడం విఫలమైంది</string>
     <string name="multimedia_editor_audio_view_create_failed">రికార్డర్ టూల్‌బార్‌ని సృష్టించడం సాధ్యపడలేదు</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ఎడిటింగ్ ఫీల్డ్</string>
     <!-- Crop function-->
     <string name="crop_image">మీరు ఈ చిత్రాన్ని కత్తిరించాలనుకుంటున్నారా?</string>
     <string name="crop_button">చిత్రాన్ని కత్తిరించండి</string>
@@ -89,5 +74,5 @@
     <string name="select_image_failed">"చిత్రాన్ని ఎంచుకోవడంలో విఫలమైంది, దయచేసి మళ్లీ ప్రయత్నించండి"</string>
     <string name="activity_result_unexpected">యాప్ ఊహించని విలువను అందించింది. మీరు వేరే యాప్‌ని ఉపయోగించాల్సి రావచ్చు</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">ఫీల్డ్ విషయాలు</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect">మళ్లీ ఎంచుకోండి</string>
 </resources>

@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">აუდიოკლიპის დამატება</string>
     <string name="multimedia_editor_popup_video_clip">ვიდეოკლიპის დამატება</string>
     <string name="multimedia_editor_popup_audio">აუდიოს ჩაწერა</string>
-    <string name="multimedia_editor_popup_text">გაფართოებული რედაქტორი</string>
     <string name="multimedia_editor_popup_cloze">გამოტოვებული ადგილი</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ტექსტი</string>
-    <string name="multimedia_editor_field_editing_image">სურათი</string>
     <string name="multimedia_editor_field_editing_audio">აუდიოჩანაწერი</string>
-    <string name="multimedia_editor_field_editing_audio_clip">აუდიოკლიპი</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">მზადაა</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">გასუფთავება</string>
-    <string name="multimedia_editor_text_field_editing_clone">კოპირება</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">გადმოღება</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,22 +56,17 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">გალერეა</string>
     <string name="multimedia_editor_image_field_editing_photo">კამერა</string>
-    <string name="multimedia_editor_import_audio">აუდიო</string>
-    <string name="multimedia_editor_import_video">ვიდეო</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">რაღაც შეცდომა მოხდა</string>
     <string name="multimedia_editor_svg_preview">SVG ფაილების წინასწარი გადახედვა შეუძლებელია</string>
     <string name="multimedia_editor_png_paste_error">შეცდომა გაცვლის ბუფერში არსებული სურათის PNG-დ გარდაქმნისას: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">მულტიმედია შიგთავსის მიმაგრება %1$s ველთან</string>
-    <string name="multimedia_editor_attach_media">მედიაფაილების დართვა</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">ჩაწერა ვერ შესრულდა</string>
     <string name="multimedia_editor_audio_view_playing_failed">დაკვრა ვერ შესრულდა</string>
     <string name="multimedia_editor_audio_view_create_failed">ჩამწერის ხელსაწყოთა ზოლი ვერ შეიქმნა</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ველის რედაქტირება</string>
     <!-- Crop function-->
     <string name="crop_image">გსურთ ამ სურათის ჩამოჭრა?</string>
     <string name="crop_button">სურათის ჩამოჭრა</string>

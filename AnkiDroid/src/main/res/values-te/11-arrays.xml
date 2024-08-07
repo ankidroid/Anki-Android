@@ -84,7 +84,7 @@
     <string name="answer_good">సమాధానం బాగుంది</string>
     <string name="answer_easy">సులభంగా సమాధానం ఇవ్వండి</string>
     <string name="gesture_play">మీడియాను ప్లే చేయండి</string>
-    <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_abort_learning">అభ్యాసాన్ని నిలిపివేయండి</string>
     <string name="gesture_flag_red">ఎరుపు జెండాను టోగుల్ చేయండి</string>
     <string name="gesture_flag_orange">నారింజ జెండాను టోగుల్ చేయండి</string>
     <string name="gesture_flag_green">ఆకుపచ్చ జెండాను టోగుల్ చేయండి</string>

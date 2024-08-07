@@ -44,21 +44,11 @@
     <string name="multimedia_editor_popup_audio_clip">آڈیو کلپ شامل کریں۔</string>
     <string name="multimedia_editor_popup_video_clip">ویڈیو کلپ شامل کریں</string>
     <string name="multimedia_editor_popup_audio">آڈیو ریکارڈ کریں۔</string>
-    <string name="multimedia_editor_popup_text">اعلی درجے کی ایڈیٹر</string>
     <string name="multimedia_editor_popup_cloze">بند حذف کرنا</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">متن</string>
-    <string name="multimedia_editor_field_editing_image">تصویر</string>
     <string name="multimedia_editor_field_editing_audio">آڈیو ریکارڈنگ</string>
-    <string name="multimedia_editor_field_editing_audio_clip">آڈیو کلپ</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ہو گیا</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">صاف</string>
-    <string name="multimedia_editor_text_field_editing_clone">سے کلون</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">سے لیں</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,22 +56,17 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">گیلری</string>
     <string name="multimedia_editor_image_field_editing_photo">کیمرے</string>
-    <string name="multimedia_editor_import_audio">آڈیو</string>
-    <string name="multimedia_editor_import_video">ویڈیو</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">کچھ غلط ہو گیا</string>
     <string name="multimedia_editor_svg_preview">SVGs پیش نظارہ کے لیے دستیاب نہیں ہیں</string>
     <string name="multimedia_editor_png_paste_error">کلپ بورڈ تصویر کو png میں تبدیل کرنے میں خرابی: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">ملٹی میڈیا مواد کو %1$s فیلڈ میں منسلک کریں۔</string>
-    <string name="multimedia_editor_attach_media">میڈیا منسلک کریں</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">ریکارڈنگ ناکام ہوگئی</string>
     <string name="multimedia_editor_audio_view_playing_failed">کھیلنا ناکام ہوگیا</string>
     <string name="multimedia_editor_audio_view_create_failed">ریکارڈر ٹول بار بنانے سے قاصر</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">ایڈیٹنگ فیلڈ</string>
     <!-- Crop function-->
     <string name="crop_image">کیا آپ اس تصویر کو تراشنا چاہتے ہیں؟</string>
     <string name="crop_button">تصویر کو تراشیں</string>
