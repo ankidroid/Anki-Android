@@ -125,7 +125,6 @@
 
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
     <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
 
     <!-- Multimedia - Audio View -->
