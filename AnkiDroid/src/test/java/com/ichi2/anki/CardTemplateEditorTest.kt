@@ -266,7 +266,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         assertEquals(
             "Did not show dialog about deleting only card?",
-            getResourceString(R.string.card_template_editor_would_delete_note),
+            getResourceString(R.string.orphan_note_message),
             getAlertDialogText(true)
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
