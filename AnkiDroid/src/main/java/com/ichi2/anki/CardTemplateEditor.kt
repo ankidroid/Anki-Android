@@ -36,6 +36,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
@@ -686,6 +687,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
 
             if (deletionWouldOrphanNote(col, tempModel, ordinal)) {
+                showOrphanNoteDialog()
                 return
             }
 
@@ -697,6 +699,18 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 0
             }
             confirmDeleteCards(template, tempModel.notetype, numAffectedCards)
+        }
+
+        /* showOrphanNoteDialog shows a AlertDialog if the deletionWouldOrphanNote returns true
+        * it displays a warning for the user when they attempt to delete a card type that
+            would leave some notes without any cards (orphan notes) */
+        private fun showOrphanNoteDialog() {
+            val builder = AlertDialog.Builder(requireContext())
+                .setTitle(R.string.orphan_note_title)
+                .setMessage(R.string.orphan_note_message)
+                .setPositiveButton(android.R.string.ok, null)
+
+            builder.show()
         }
 
         fun openBrowserAppearance(): Boolean {
@@ -869,7 +883,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
                     // not already have cards generated making it safe will see this error message:
-                    templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_would_delete_note))
+                    //   templateEditor.showSimpleMessageDialog(resources.getString(R.string.card_template_editor_would_delete_note)) // Implemented in the deleteCardTemplate
                     return true
                 }
             }
