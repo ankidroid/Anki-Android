@@ -40,6 +40,8 @@ androidxTestUiAutomator = "2.3.0"
 androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.11.0"
+# https://developer.android.com/jetpack/androidx/releases/work
+androidxWork = "2.9.0"
 annotations = "24.1.0"
 ankiBackend = '0.1.39-anki24.06.2'
 autoService = "1.1.1"
@@ -89,7 +91,6 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 triplet = "3.10.1"
 turbine = "1.1.0"
-workRuntimeKtx = "2.9.0"
 
 [libraries]
 acra-limiter = { module = "ch.acra:acra-limiter", version.ref = "acra" }
@@ -146,7 +147,7 @@ search-preference = { module = "com.github.ByteHamster:SearchPreference", versio
 seismic = { module = "com.squareup:seismic", version.ref = "seismic" }
 slf4j-timber = { module = "com.arcao:slf4j-timber", version.ref = "slf4jTimber" }
 jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
-androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidxWork" }
 
 
 #testing libs
@@ -158,7 +159,7 @@ androidx-test-junit = { module = "androidx.test.ext:junit", version.ref = "andro
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTest" }
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidxTest" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidxTest" }
-androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "workRuntimeKtx" }
+androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "androidxWork" }
 commons-exec = { module = "org.apache.commons:commons-exec", version.ref = "commonsExec" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
 hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "hamcrest" }
