@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">ప్రస్తుత శోధన కోసం పేరు</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">మీరు పేరు లేకుండా శోధనను సేవ్ చేయలేరు</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">పేరు ఉంది</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">తొలగించు\"%1$s\"?</string>
     <string name="card_browser_change_display_order">ప్రదర్శన క్రమం మార్చండి</string>
     <string name="card_browser_change_display_order_title">ప్రదర్శన క్రమాన్ని ఎంచుకోండి</string>

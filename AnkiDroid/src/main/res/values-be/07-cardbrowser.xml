@@ -82,6 +82,7 @@
     <string name="card_browser_list_my_searches_new_name">Назва запыту пошуку</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельга захаваць пошук без назвы</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такая назва ўжо існуе</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Змяніць парадак адлюстравання</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>

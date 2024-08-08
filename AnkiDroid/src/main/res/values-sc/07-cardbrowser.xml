@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Nùmene pro sa chirca atuale</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes sarvare una chirca chene unu nùmene</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Su nùmene esistit giai</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Iscantzellare “%1$s”?</string>
     <string name="card_browser_change_display_order">Modìfica s\'òrdine de visualizatzione</string>
     <string name="card_browser_change_display_order_title">Issèbera s\'òrdine de visualizatzione</string>

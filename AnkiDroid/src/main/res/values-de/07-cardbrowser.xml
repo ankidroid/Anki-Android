@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Name für die aktuelle Suche</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Sie können keine unbenannte Suche speichern</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Name bereits vorhanden</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
     <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
     <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>

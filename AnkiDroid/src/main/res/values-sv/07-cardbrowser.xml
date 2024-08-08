@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Namn på aktuell sökning</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Du kan inte spara en sökning utan ett namn</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Namnet finns</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Ta bort ”%1$s”?</string>
     <string name="card_browser_change_display_order">Ändra visningsordning</string>
     <string name="card_browser_change_display_order_title">Välj visningsordning</string>

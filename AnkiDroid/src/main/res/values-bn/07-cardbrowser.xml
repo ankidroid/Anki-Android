@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">এ অনুসন্ধানের নাম</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">নামহীন অনুসন্ধান সংরক্ষণ করা যাবেনা</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">নামটি আগের থেকেই আছে</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” মুছব?</string>
     <string name="card_browser_change_display_order">প্রদর্শন-ক্রম বদলাও</string>
     <string name="card_browser_change_display_order_title">প্রদর্শন-ক্রম বাছুন</string>
