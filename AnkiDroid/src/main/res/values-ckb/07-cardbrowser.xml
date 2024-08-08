@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">ناو بۆ گەڕانی ئێستا</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ناتوانیت گەڕانێک بەبێ ناو تۆماربکەیت</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ناوەکە پێشتر بوونی هەیە</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" بسڕێتەوە؟</string>
     <string name="card_browser_change_display_order">ڕیزی نواندن بگۆڕە</string>
     <string name="card_browser_change_display_order_title">ڕیزی نواندن هەڵبژێرە</string>

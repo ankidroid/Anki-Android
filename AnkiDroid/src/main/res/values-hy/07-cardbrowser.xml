@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Որոնման անվանումը</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Որոնումը չի կարելի պահպանել առանց անվանման</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Անվանումը արդեն կա</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Ջնջե՞լ «%1$s»</string>
     <string name="card_browser_change_display_order">Փոխել ցուցադրման հերթականությունը</string>
     <string name="card_browser_change_display_order_title">Ընտրեք ցուցադրման հերթականությունը</string>

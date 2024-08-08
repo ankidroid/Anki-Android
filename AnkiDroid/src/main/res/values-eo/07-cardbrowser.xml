@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Nomo por la nuna serĉo</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Ne povas konservi serĉon sen nomo</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nomo jam ekzistas</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Ĉu forigi “%1$s”?</string>
     <string name="card_browser_change_display_order">Ŝanĝi ordon de vidigo</string>
     <string name="card_browser_change_display_order_title">Elekti ordon de vidigo</string>

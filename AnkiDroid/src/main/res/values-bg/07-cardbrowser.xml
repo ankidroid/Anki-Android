@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Име за текущото търсене</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можете да запишете търсене без име</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Името съществува</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Изтриване на \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Промяна реда на показване</string>
     <string name="card_browser_change_display_order_title">Изберете ред на показване</string>

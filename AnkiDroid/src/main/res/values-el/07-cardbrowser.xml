@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Όνομα για την τρέχουσα αναζήτηση</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Δεν μπορείτε να αποθηκεύσετε μια αναζήτηση χωρίς όνομα</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Το όνομα υπάρχει</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Διαγραφή του «%1$s»;</string>
     <string name="card_browser_change_display_order">Αλλαγή σειράς εμφάνισης</string>
     <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>

@@ -82,6 +82,7 @@
     <string name="card_browser_list_my_searches_new_name">Nazwa bieżącego wyszukiwania</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nie można zapisać wyszukiwania bez nazwy</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nazwa już istnieje</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Usunąć \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Zmień kolejność wyświetlania</string>
     <string name="card_browser_change_display_order_title">Wybierz kolejność wyświetlania</string>

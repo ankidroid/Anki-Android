@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">वर्तमान खोज का नाम</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">आप नाम के बिना खोज सहेज नहीं सकते</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">नाम मौजूद है</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" को मिटाएँ?</string>
     <string name="card_browser_change_display_order">प्रदर्शन क्रम बदलें</string>
     <string name="card_browser_change_display_order_title">प्रदर्शन क्रम बदलें</string>
