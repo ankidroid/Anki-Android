@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">Nama untuk pencarian sekarang</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Anda tidak dapat menyimpan pencarian tanpa nama</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nama sudah ada</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Hapus \" %1$s \"?</string>
     <string name="card_browser_change_display_order">Ubah urutan tampilan</string>
     <string name="card_browser_change_display_order_title">Pilih urutan tampilan</string>

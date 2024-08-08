@@ -90,6 +90,7 @@
     <string name="card_browser_list_my_searches_new_name">اسم عبارة البحث الحالية</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">لا يمكنك حفظ عبارة بحث بدون اسم</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">الاسم موجود</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">هل تريد حذف “%1$s”؟</string>
     <string name="card_browser_change_display_order">تغيير ترتيب العرض</string>
     <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>

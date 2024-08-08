@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">სახელი მიმდინარე ძიებისთვის</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">უსათაურო ძიებას ვერ შეინახავთ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">სახელი უკვე არსებობს</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">„%1$s“ წაიშალოს?</string>
     <string name="card_browser_change_display_order">ჩვენების თანმიმდევრობის შეცვლა</string>
     <string name="card_browser_change_display_order_title">ჩვენების თანმიმდევრობის არჩევა</string>

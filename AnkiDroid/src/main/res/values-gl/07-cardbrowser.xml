@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Nome para a busca actual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes gardar unha busca sen lle poñer un nome</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">O nome xa existe</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Eliminar “%1$s”?</string>
     <string name="card_browser_change_display_order">Mudar a orde de presentación</string>
     <string name="card_browser_change_display_order_title">Seleccionar orde de presentación</string>

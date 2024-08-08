@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">ಪ್ರಸ್ತುತ ಹುಡುಕಾಟದ ಹೆಸರು</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ಹೆಸರಿಲ್ಲದೆ ನೀವು ಹುಡುಕಾಟವನ್ನು ಉಳಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ಹೆಸರು ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" ಅಳಿಸುವುದೇ?</string>
     <string name="card_browser_change_display_order">ಪ್ರದರ್ಶನ ಕ್ರಮವನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="card_browser_change_display_order_title">ಪ್ರದರ್ಶನ ಮೋಡ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
