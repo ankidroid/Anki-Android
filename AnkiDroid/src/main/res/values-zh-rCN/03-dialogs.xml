@@ -49,9 +49,9 @@
     <string name="contextmenu_deckpicker_delete_deck">删除牌组</string>
     <string name="delete_deck_title">删除该牌组？</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">删除%1$s的所有卡片吗？它包含%2$d张卡片。</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">删除筛选过的牌组 %s 并将所有卡片发回原牌组？</string>
     <string name="no_tts_available_message">没有可用的文字转语音（TTS）语言</string>
     <string name="tts_no_tts">不要朗读</string>
     <string name="unused_strings">\n\n未使用的文件：\n</string>

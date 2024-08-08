@@ -74,5 +74,5 @@
     <string name="select_image_failed">"Resim seçilemedi, Lütfen tekrar deneyin"</string>
     <string name="activity_result_unexpected">Uygulama beklenmeyen bir değer döndürdü. Farklı bir uygulama kullanmanız gerekebilir</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Alan İçeriği</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect">Yeniden seç</string>
 </resources>
