@@ -45,9 +45,13 @@ ankiBackend = '0.1.39-anki24.06.2'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 colorpicker = "1.2.0"
+# https://commons.apache.org/proper/commons-collections/changes-report.html
 commonsCollections4 = "4.4"
+# https://commons.apache.org/proper/commons-compress/changes-report.html
 commonsCompress = "1.26.2"
+# https://commons.apache.org/proper/commons-exec/changes-report.html
 commonsExec = "1.4.0"
+# https://commons.apache.org/proper/commons-io/changes-report.html
 commonsIo = "2.16.1"
 coroutines = '1.8.1'
 desugar-jdk-libs-nio = "2.0.4"
