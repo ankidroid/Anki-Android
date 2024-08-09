@@ -68,36 +68,37 @@ class CustomStudyDialogTest : RobolectricTest() {
             .withArguments(CustomStudyDialog.ContextMenuOption.STUDY_AHEAD, 1)
             .arguments
         val factory = CustomStudyDialogFactory({ this.col }, mockListener)
-        val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
-        scenario.moveToState(Lifecycle.State.RESUMED)
-        scenario.onFragment { f: CustomStudyDialog ->
-            val dialog = assertNotNull(f.dialog as AlertDialog?)
-            dialog.performPositiveClick()
+        FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory).use { scenario ->
+            scenario.moveToState(Lifecycle.State.RESUMED)
+            scenario.onFragment { f: CustomStudyDialog ->
+                val dialog = assertNotNull(f.dialog as AlertDialog?)
+                dialog.performPositiveClick()
+            }
+            val customStudy = col.decks.current()
+            MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isFiltered)
+            MatcherAssert.assertThat("could not find deck: Custom study session", customStudy, notNullValue())
+            customStudy.remove("id")
+            customStudy.remove("mod")
+            customStudy.remove("name")
+            val expected = "{" +
+                "\"browserCollapsed\":false," +
+                "\"collapsed\":false," +
+                "\"delays\":null," +
+                "\"desc\":\"\"," +
+                "\"dyn\":1," +
+                "\"lrnToday\":[0,0]," +
+                "\"newToday\":[0,0]," +
+                "\"previewDelay\":0," +
+                "\"previewAgainSecs\":60,\"previewHardSecs\":600,\"previewGoodSecs\":0," +
+                "\"resched\":true," +
+                "\"revToday\":[0,0]," +
+                "\"separate\":true," +
+                "\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]]," +
+                "\"timeToday\":[0,0]," +
+                "\"usn\":-1" +
+                "}"
+            MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
         }
-        val customStudy = col.decks.current()
-        MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isFiltered)
-        MatcherAssert.assertThat("could not find deck: Custom study session", customStudy, notNullValue())
-        customStudy.remove("id")
-        customStudy.remove("mod")
-        customStudy.remove("name")
-        val expected = "{" +
-            "\"browserCollapsed\":false," +
-            "\"collapsed\":false," +
-            "\"delays\":null," +
-            "\"desc\":\"\"," +
-            "\"dyn\":1," +
-            "\"lrnToday\":[0,0]," +
-            "\"newToday\":[0,0]," +
-            "\"previewDelay\":0," +
-            "\"previewAgainSecs\":60,\"previewHardSecs\":600,\"previewGoodSecs\":0," +
-            "\"resched\":true," +
-            "\"revToday\":[0,0]," +
-            "\"separate\":true," +
-            "\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]]," +
-            "\"timeToday\":[0,0]," +
-            "\"usn\":-1" +
-            "}"
-        MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
     }
 
     @Test
@@ -118,12 +119,13 @@ class CustomStudyDialogTest : RobolectricTest() {
         whenever(mockCollection.sched).thenReturn(mockSched)
         whenever(mockSched.newCount()).thenReturn(0)
         val factory = CustomStudyDialogFactory({ mockCollection }, mockListener)
-        val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: CustomStudyDialog ->
-            val dialog = f.dialog as AlertDialog?
-            MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-            onView(withText(R.string.custom_study_increase_new_limit)).inRoot(isDialog()).check(doesNotExist())
+        FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory).use { scenario ->
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onFragment { f: CustomStudyDialog ->
+                val dialog = f.dialog as AlertDialog?
+                MatcherAssert.assertThat(dialog, IsNull.notNullValue())
+                onView(withText(R.string.custom_study_increase_new_limit)).inRoot(isDialog()).check(doesNotExist())
+            }
         }
     }
 }
