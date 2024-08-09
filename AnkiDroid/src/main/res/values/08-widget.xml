@@ -38,4 +38,20 @@
     </plurals>
 
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <string name="deck_picker_widget_description">Deck Picker Widget</string>
+
+    <!-- Strings to explain usage in Deck Picker Widget Configuration screen -->
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select decks</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected ">Select decks to display in the widgets</string>
+    <string name="no_selected_deck_placeholder_description" comment="Description for starting to mark decks ">Select decks with the + icon.</string>
+    <plurals name="deck_limit_reached">
+        <item quantity="one">You can select up to %d decks.</item>
+        <item quantity="other">You can select up to %d decks.</item>
+    </plurals>
+
+    <!-- Sample deck names and properties for Deck Picker Widget layout in widget picker screen -->
+    <string name="deck1Name_deck_picker_widget" comment="Sample deck name for Deck 1 in Deck Picker Widget layout in widget picker">English</string>
+    <string name="deck2Name_deck_picker_widget" comment="Sample deck name for Deck 2 in Deck Picker Widget layout in widget picker">Español</string>
+    <string name="deck3Name_deck_picker_widget" comment="Sample deck name for Deck 3 in Deck Picker Widget layout in widget picker">日本語</string>
+
 </resources>
