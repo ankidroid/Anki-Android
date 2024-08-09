@@ -437,6 +437,11 @@ abstract class NavigationDrawerActivity :
 
         const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"
 
+        // Currently, we use dynamic shortcuts because:
+        // * to use static shortcut, the package name must be given in res/shortcuts.xml. See https://developer.android.com/develop/ui/views/launch/shortcuts/creating-shortcuts#static
+        // * AnkiDroid package name is not constant. For example in debug variant, it is com.ichi2.anki.debug
+        // * having variables in shortcuts used to be doable with https://plugins.gradle.org/plugin/de.timfreiheit.resourceplaceholders, however
+        // * after manually testing it, and looking at open issue https://github.com/timfreiheit/ResourcePlaceholdersPlugin/issues/13 , it seems this was broken with recent version of gradle
         fun enablePostShortcut(context: Context) {
             if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
                 Timber.w("No storage access, not enabling shortcuts")
