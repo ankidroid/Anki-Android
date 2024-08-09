@@ -207,7 +207,7 @@ class AutomaticAnswer(
     }
 
     fun isEnabled(): Boolean {
-        return settings.useTimer
+        return !isDisabled
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

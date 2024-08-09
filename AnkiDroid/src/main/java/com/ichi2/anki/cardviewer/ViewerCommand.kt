@@ -76,6 +76,7 @@ enum class ViewerCommand(val resourceId: Int) {
 
     // TODO: CollectionManager.TR.actionsSetDueDate()
     RESCHEDULE_NOTE(R.string.card_editor_reschedule_card),
+    TOGGLE_AUTO_ADVANCE(R.string.toggle_auto_advance),
     USER_ACTION_1(R.string.user_action_1),
     USER_ACTION_2(R.string.user_action_2),
     USER_ACTION_3(R.string.user_action_3),
@@ -187,6 +188,7 @@ enum class ViewerCommand(val resourceId: Int) {
                 TOGGLE_FLAG_PINK -> listOf(keyCode(KeyEvent.KEYCODE_5, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_5, CardSide.BOTH, ctrl()))
                 TOGGLE_FLAG_TURQUOISE -> listOf(keyCode(KeyEvent.KEYCODE_6, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_6, CardSide.BOTH, ctrl()))
                 TOGGLE_FLAG_PURPLE -> listOf(keyCode(KeyEvent.KEYCODE_7, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_7, CardSide.BOTH, ctrl()))
+                TOGGLE_AUTO_ADVANCE -> listOf(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH, shift()))
                 SHOW_HINT -> listOf(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
                 SHOW_ALL_HINTS -> listOf(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
                 ADD_NOTE -> listOf(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
