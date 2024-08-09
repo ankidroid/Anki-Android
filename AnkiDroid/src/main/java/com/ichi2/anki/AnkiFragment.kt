@@ -20,6 +20,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.ProgressBar
 import androidx.annotation.AttrRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
@@ -110,7 +111,10 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout) {
     /**
      * Hides progress bar.
      */
-    private fun hideProgressBar() = ankiActivity.hideProgressBar()
+    private fun hideProgressBar() {
+        val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+        progressBar.visibility = View.GONE
+    }
 
     /**
      * Shows progress bar.
