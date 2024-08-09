@@ -656,6 +656,9 @@ class CardBrowserViewModel(
         setFilterQuery("tag:marked")
     }
 
+    /**
+     * Searches for all suspended cards and replaces the current search results with these suspended cards.
+     */
     suspend fun searchForSuspendedCards() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
