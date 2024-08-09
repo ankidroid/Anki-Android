@@ -239,8 +239,17 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val parentFragment = parentFragment
             if (parentFragment is DeckSelectionListener) {
                 return parentFragment
+            } else {
+                // try to find inside the activity an active fragment that is a DeckSelectionListener
+                val foundAvailableFragments = parentFragmentManager.fragments.filter {
+                    it.isResumed && it is DeckSelectionListener
+                }
+                if (foundAvailableFragments.isNotEmpty()) {
+                    // if we found at least one resumed candidate fragment use it
+                    return foundAvailableFragments[0] as DeckSelectionListener
+                }
             }
-            throw IllegalStateException("Neither activity or parent fragment were a selection listener")
+            throw IllegalStateException("Neither activity or any fragment in the activity were a selection listener")
         }
 
     var deckCreationListener: DeckCreationListener? = null
