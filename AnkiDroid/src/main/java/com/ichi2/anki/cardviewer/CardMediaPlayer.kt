@@ -33,6 +33,7 @@ import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
+import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
@@ -282,7 +283,7 @@ class CardMediaPlayer : Closeable {
                 is SoundOrVideoTag -> soundTagPlayer.play(tag, soundErrorListener)
                 is TTSTag -> {
                     awaitTtsPlayer(isAutomaticPlayback)?.play(tag)?.error?.let {
-                        soundErrorListener?.onTtsError(it, isAutomaticPlayback)
+                        soundErrorListener?.onTtsError(it, isAutomaticPlayback, tag)
                     }
                 }
                 else -> Timber.w("unknown audio: ${tag.javaClass}")
@@ -400,7 +401,7 @@ interface SoundErrorListener {
 
     @CheckResult
     fun onMediaPlayerError(mp: MediaPlayer?, which: Int, extra: Int, uri: Uri): SoundErrorBehavior
-    fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean)
+    fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean, tag: TTSTag? = null)
 }
 
 enum class SoundErrorBehavior {
@@ -438,9 +439,13 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
             return onError(uri)
         }
 
-        override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
+        override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean, tag: TTSTag?) {
             AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
-                activity.showSnackbar(error.localizedErrorMessage(activity))
+                if (error.localizedErrorMessage(baseContext) == TtsErrorCode.APP_MISSING_VOICE.developerString) {
+                    activity.showDialogFragment(TtsPlaybackErrorDialog(tag))
+                } else {
+                    activity.showSnackbar(error.localizedErrorMessage(activity))
+                }
             }
         }
 

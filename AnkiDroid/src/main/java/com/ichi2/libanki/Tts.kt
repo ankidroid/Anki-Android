@@ -28,7 +28,6 @@ open class TtsVoice(
     val name: String,
     val lang: String
 ) {
-
     override fun toString(): String {
         var out = "{{tts $lang voices=$name}}"
         if (unavailable()) {

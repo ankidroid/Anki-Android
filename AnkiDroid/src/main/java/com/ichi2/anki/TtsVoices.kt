@@ -58,6 +58,8 @@ object TtsVoices {
     /** A job which populates [availableLocaleData] */
     private var buildLocalesJob: Job? = null
 
+    private lateinit var ttsEngine: String
+
     /**
      * Returns the list of available locales for use in TTS
      *
@@ -188,6 +190,7 @@ object TtsVoices {
             textToSpeech = TextToSpeech(context) { status ->
                 if (status == TextToSpeech.SUCCESS) {
                     Timber.v("TTS creation success")
+                    ttsEngine = textToSpeech?.defaultEngine!!
                     continuation.resume(textToSpeech)
                 } else {
                     Timber.e("TTS creation failed. status: %d", status)
@@ -196,6 +199,10 @@ object TtsVoices {
                 }
             }
         }
+
+    fun getTtsEngine(): String {
+        return ttsEngine
+    }
 }
 
 /**

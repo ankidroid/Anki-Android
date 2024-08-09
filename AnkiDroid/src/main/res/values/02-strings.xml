@@ -423,4 +423,10 @@ opening the system text to speech settings fails">
     <string name="play_recording">Play</string>
     <string name="next_recording">Next</string>
 
+    <string name="tts_error_dialog_title" translatable="false">TTS Error: Missing Language Support</string>
+    <string name="tts_error_dialog_reason_text" translatable="false"><b>%1$s</b> engine does not support language : <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text" translatable="false">Change engine</string>
+    <string name="tts_error_dialog_show_supported_voices_button_text" translatable="false">Voices Options</string>
+    <string name="tts_error_dialog_help_text" translatable="false">Help?</string>
+
 </resources>

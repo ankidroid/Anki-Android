@@ -33,6 +33,7 @@ import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
+import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.note
 import kotlinx.coroutines.Deferred
@@ -175,7 +176,11 @@ abstract class CardViewerViewModel(
                 return onError(uri)
             }
 
-            override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
+            override fun onTtsError(
+                error: TtsPlayer.TtsError,
+                isAutomaticPlayback: Boolean,
+                tag: TTSTag?
+            ) {
                 mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
                     viewModelScope.launch { onTtsError.emit(error) }
                 }
