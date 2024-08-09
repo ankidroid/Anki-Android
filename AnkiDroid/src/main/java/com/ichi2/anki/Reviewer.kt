@@ -137,6 +137,7 @@ open class Reviewer :
     private var prefFullscreenReview = false
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
+    private var stopTimerWithTimebox = false
 
     // A flag that determines if the SchedulingStates in CurrentQueueState are
     // safe to persist in the database when answering a card. This is used to
@@ -1095,15 +1096,24 @@ open class Reviewer :
         val nMins = timebox.secs / 60
         val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
         val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+        stopTimerWithTimebox = true
         AlertDialog.Builder(this).show {
             title(R.string.timebox_reached_title)
             message(text = timeboxMessage)
-            positiveButton(R.string.dialog_continue) {}
+            positiveButton(R.string.dialog_continue) {
+                stopTimerWithTimebox = false
+                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
+            }
             negativeButton(text = CollectionManager.TR.studyingFinish()) {
+                stopTimerWithTimebox = false
+                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
                 finish()
             }
             cancelable(true)
-            setOnCancelListener { }
+            setOnCancelListener {
+                stopTimerWithTimebox = false
+                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
+            }
         }
     }
 
@@ -1111,6 +1121,7 @@ open class Reviewer :
         statesMutated = false
         // show timer, if activated in the deck's preferences
         answerTimer.setupForCard(getColUnsafe, currentCard!!)
+        if (stopTimerWithTimebox)answerTimer.pause()
         delayedHide(100)
         super.displayCardQuestion()
     }
