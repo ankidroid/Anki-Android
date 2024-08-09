@@ -15,14 +15,17 @@
  */
 package com.ichi2.anki
 
+import android.content.ClipDescription
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
 import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileUtil.getFileNameAndExtension
 import timber.log.Timber
@@ -39,15 +42,15 @@ import java.io.InputStream
  */
 class MediaRegistration(private val context: Context) {
     // Use the same HTML if the same image is pasted multiple times.
-    private val pastedImageCache = HashMap<String, String?>()
+    private val pastedMediaCache = HashMap<String, String?>()
 
     /**
-     * Loads an image into the collection.media directory and returns a HTML reference
+     * Loads media into the collection.media directory and returns a HTML reference
      * @param uri The uri of the image to load
      * @return HTML referring to the loaded image
      */
     @Throws(IOException::class)
-    fun loadImageIntoCollection(uri: Uri): String? {
+    fun loadMediaIntoCollection(uri: Uri, description: ClipDescription): String? {
         val fileName: String
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
@@ -59,9 +62,12 @@ class MediaRegistration(private val context: Context) {
         }
         var clipCopy: File
         var bytesWritten: Long
+        val isImage = ClipboardUtil.hasImage(description)
+        val isSVG = ClipboardUtil.hasSVG(description)
+
         openInputStreamWithURI(uri).use { copyFd ->
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd)) {
+            if (!isSVG && isImage && shouldConvertToJPG(fileNameAndExtension.value, copyFd)) {
                 clipCopy = File.createTempFile(fileName, ".jpg")
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
@@ -81,13 +87,17 @@ class MediaRegistration(private val context: Context) {
         Timber.d("File was %d bytes", bytesWritten)
         if (bytesWritten > MEDIA_MAX_SIZE) {
             Timber.w("File was too large: %d bytes", bytesWritten)
-            showThemedToast(context, context.getString(R.string.note_editor_paste_too_large), false)
+            showThemedToast(context, context.getString(R.string.note_editor_media_too_large), false)
             File(tempFilePath).delete()
             return null
         }
-        val field = ImageField()
+        val field = if (isImage) {
+            ImageField()
+        } else {
+            MediaClipField()
+        }
         field.hasTemporaryMedia = true
-        field.extraImagePathRef = tempFilePath
+        field.mediaPath = tempFilePath
         return field.formattedValue
     }
 
@@ -129,13 +139,13 @@ class MediaRegistration(private val context: Context) {
         return fileNameAndExtension.key.length <= 3
     }
 
-    fun onImagePaste(uri: Uri): String? {
+    fun onPaste(uri: Uri, description: ClipDescription): String? {
         return try {
             // check if cache already holds registered file or not
-            if (!pastedImageCache.containsKey(uri.toString())) {
-                pastedImageCache[uri.toString()] = loadImageIntoCollection(uri)
+            if (!pastedMediaCache.containsKey(uri.toString())) {
+                pastedMediaCache[uri.toString()] = loadMediaIntoCollection(uri, description)
             }
-            pastedImageCache[uri.toString()]
+            pastedMediaCache[uri.toString()]
         } catch (ex: NullPointerException) {
             // Tested under FB Messenger and GMail, both apps do nothing if this occurs.
             // This typically works if the user copies again - don't know the exact cause
@@ -143,28 +153,28 @@ class MediaRegistration(private val context: Context) {
             //  java.lang.SecurityException: Permission Denial: opening provider
             //  org.chromium.chrome.browser.util.ChromeFileProvider from ProcessRecord{80125c 11262:com.ichi2.anki/u0a455}
             //  (pid=11262, uid=10455) that is not exported from UID 10057
-            Timber.w(ex, "Failed to paste image")
+            Timber.w(ex, "Failed to paste media")
             null
         } catch (ex: SecurityException) {
-            Timber.w(ex, "Failed to paste image")
+            Timber.w(ex, "Failed to paste media")
             null
         } catch (e: Exception) {
             // NOTE: This is happy path coding which works on Android 9.
             CrashReportService.sendExceptionReport("File is invalid issue:8880", "RegisterMediaForWebView:onImagePaste URI of file:$uri")
-            Timber.w(e, "Failed to paste image")
+            Timber.w(e, "Failed to paste media")
             showThemedToast(context, context.getString(R.string.multimedia_editor_something_wrong), false)
             null
         }
     }
 
     @CheckResult
-    fun registerMediaForWebView(imagePath: String?): Boolean {
-        if (imagePath == null) {
+    fun registerMediaForWebView(mediaPath: String?): Boolean {
+        if (mediaPath == null) {
             // Nothing to register - continue with execution.
             return true
         }
-        Timber.i("Adding media to collection: %s", imagePath)
-        val f = File(imagePath)
+        Timber.i("Adding media to collection: %s", mediaPath)
+        val f = File(mediaPath)
         return try {
             CollectionManager.getColUnsafe().media.addFile(f)
             true

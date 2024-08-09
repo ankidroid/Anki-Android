@@ -16,6 +16,8 @@ androidxBrowser = "1.8.0"
 androidxConstraintlayout = "2.1.4"
 # https://developer.android.com/jetpack/androidx/releases/core
 androidxCoreKtx = "1.13.1"
+# https://developer.android.com/jetpack/androidx/releases/draganddrop
+androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
 androidxExifinterface = "1.3.7"
 # https://developer.android.com/jetpack/androidx/releases/fragment
@@ -106,6 +108,7 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidxFragmentKtx" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidxExifinterface" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtx" }
+androidx-draganddrop = { module = "androidx.draganddrop:draganddrop", version.ref = "androidxDragAndDrop" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidxBrowser" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppCompat" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidxAnnotation" }
