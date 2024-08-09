@@ -54,10 +54,6 @@ object Permissions {
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
 
-    fun canUseCamera(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.CAMERA)
-    }
-
     fun canRecordAudio(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.RECORD_AUDIO)
     }

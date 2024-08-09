@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.multimedia
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -55,7 +54,6 @@ import com.ichi2.utils.BitmapUtil
 import com.ichi2.utils.ExifUtil
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImageUtils
-import com.ichi2.utils.Permissions
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -143,6 +141,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      * Launches the device's camera to take a picture.
      * This launcher is registered using `ActivityResultContracts.TakePicture()`.
      */
+    @NeedsTest("Works fine without permission as we use Camera as feature")
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
             when {
@@ -240,35 +239,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         imagePreview = view.findViewById(R.id.image_preview)
         imageFileSize = view.findViewById(R.id.image_size_textview)
 
-        if (selectedImageOptions == ImageOptions.CAMERA) {
-            if (!hasCameraPermission()) {
-                return
-            }
-        }
-
         handleImageUri()
         setupDoneButton()
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Timber.d("Camera permission granted")
-            handleSelectedImageOptions()
-        } else {
-            Timber.d("Camera permission denied")
-            showErrorDialog(resources.getString(R.string.multimedia_editor_camera_permission_refused))
-        }
-    }
-
-    private fun hasCameraPermission(): Boolean {
-        if (!Permissions.canRecordAudio(requireContext())) {
-            Timber.i("Requesting Audio Permissions")
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-            return false
-        }
-        return true
     }
 
     private fun handleImageUri() {
