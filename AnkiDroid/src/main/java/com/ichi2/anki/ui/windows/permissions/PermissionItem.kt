@@ -82,7 +82,18 @@ class PermissionItem(context: Context, attrs: AttributeSet) : FrameLayout(contex
                 }
             }
         }
+        setOnClickListener {
+            if (!isGranted) {
+                Timber.i("Permission item clicked, requesting permission")
+                listener?.invoke()
+            } else {
+                switch.isChecked = !switch.isChecked
+            }
+        }
+        updateSwitchCheckedStatus()
     }
+
+    private var listener: (() -> Unit)? = null
 
     /**
      * Checks the switch if the permission is granted,
@@ -97,6 +108,7 @@ class PermissionItem(context: Context, attrs: AttributeSet) : FrameLayout(contex
      * The listener isn't invoked if the permission is already granted
      * */
     fun setOnSwitchClickListener(listener: () -> Unit) {
+        this.listener = listener
         switch.setOnClickListener {
             if (!isGranted) {
                 Timber.i("permission switch pressed")
