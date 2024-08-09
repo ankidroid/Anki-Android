@@ -215,6 +215,11 @@ class ReviewerFragment :
                 answerButtonsLayout.isVisible = false
             }
         }
+
+        if (sharedPrefs().getBoolean(getString(R.string.hide_hard_and_easy_key), false)) {
+            hardButton.isVisible = false
+            easyButton.isVisible = false
+        }
     }
 
     private fun setupCounts(view: View) {
