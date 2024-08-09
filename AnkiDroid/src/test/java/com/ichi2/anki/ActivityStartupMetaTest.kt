@@ -43,6 +43,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
             .filter { !it.startsWith("androidx") }
             .filter { !it.startsWith("org.acra") }
             .filter { !it.startsWith("leakcanary.internal") }
+            .filter { it != "com.canhub.cropper.CropImageActivity" }
             .toTypedArray()
         MatcherAssert.assertThat(testedActivityClassNames, Matchers.containsInAnyOrder(*manifestActivityNames))
     }
