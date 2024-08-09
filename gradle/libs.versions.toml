@@ -3,6 +3,13 @@ compileSdk = "34"
 minSdk = "23"  # also in testlib/build.gradle.kts
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
 acra = '5.11.3'
+# AGP is included in Android Studio and changelogs are not well maintained/at a stable URL
+# Open https://developer.android.com/build/releases/gradle-plugin#patch-releases
+# Maybe select a "bug fixes" link ->
+# https://developer.android.com/studio/releases/fixed-bugs/studio/2024.1.1
+#
+# Old changelogs - See 'Table of Contents' in sidebar
+# https://developer.android.com/build/releases/past-releases
 androidGradlePlugin = "8.5.2"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.1"
