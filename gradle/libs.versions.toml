@@ -3,7 +3,7 @@ compileSdk = "34"
 minSdk = "23"  # also in testlib/build.gradle.kts
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
 acra = '5.11.3'
-androidGradlePlugin = "8.5.1"
+androidGradlePlugin = "8.5.2"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/annotation
