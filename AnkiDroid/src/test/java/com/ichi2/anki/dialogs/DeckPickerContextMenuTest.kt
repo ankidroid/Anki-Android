@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.FragmentScenario.Companion.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -31,19 +32,35 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import timber.log.Timber
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest {
+
+    private val scenariosForCleanup = ArrayList<FragmentScenario<*>>()
+
     @Before
     fun before() {
         val context = ApplicationProvider.getApplicationContext<AnkiDroidApp>()
         context.sharedPrefs().edit { putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true) }
         setupSpaceForBackup(context)
+    }
+
+    @After
+    fun after() {
+        for (scenario in scenariosForCleanup) {
+            try {
+                scenario.close()
+            } catch (e: Exception) {
+                Timber.e(e, "ignored")
+            }
+        }
     }
 
     @Test
@@ -80,16 +97,12 @@ class DeckPickerContextMenuTest {
                 DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false
             }
         }
-        launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light)
+        launch(arguments)
     }
 
     @Test
     fun `Shows standard options`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments()).onFragment { fragment ->
             fragment.assertOptionPresent(R.string.menu_add)
             fragment.assertOptionPresent(R.string.browse_cards)
             fragment.assertOptionPresent(R.string.rename_deck)
@@ -112,11 +125,7 @@ class DeckPickerContextMenuTest {
     fun `DELETE_DECK is the last option in the menu(issue 10283)`() {
         // "Delete deck" was previously close to "Custom study" which caused misclicks.
         // This is less likely at the bottom of the list
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments()).onFragment { fragment ->
             MatcherAssert.assertThat(
                 "'Delete deck' should be last item in the menu",
                 fragment.foundOptions().last(),
@@ -127,11 +136,7 @@ class DeckPickerContextMenuTest {
 
     @Test
     fun `Shows options to empty and rebuild when deck is dynamic`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(isDynamic = true),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments(isDynamic = true)).onFragment { fragment ->
             assertTrue(
                 fragment.foundOptions().contains(fragment.getString(R.string.empty_cram_label)),
                 "'Empty' should be present when deck is dynamic"
@@ -145,11 +150,7 @@ class DeckPickerContextMenuTest {
 
     @Test
     fun `Shows option to create subdeck when deck is not dynamic`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments()).onFragment { fragment ->
             assertTrue(
                 fragment.foundOptions().contains(fragment.getString(R.string.create_subdeck)),
                 "'Create subdeck' should be present when deck is not dynamic"
@@ -159,16 +160,16 @@ class DeckPickerContextMenuTest {
 
     @Test
     fun `Shows option to unbury if deck has buried cards`() {
-        launch(
-            DeckPickerContextMenu::class.java,
-            withArguments(hasBuriedCards = true),
-            R.style.Theme_Light
-        ).onFragment { fragment ->
+        launch(withArguments(hasBuriedCards = true)).onFragment { fragment ->
             assertTrue(
                 fragment.foundOptions().contains(fragment.getString(R.string.unbury)),
                 "'Unbury' should be present when deck has buried cards"
             )
         }
+    }
+
+    private fun launch(arguments: Bundle) = launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light).also {
+        scenariosForCleanup.add(it)
     }
 
     private fun DeckPickerContextMenu.foundOptions(): List<String> {

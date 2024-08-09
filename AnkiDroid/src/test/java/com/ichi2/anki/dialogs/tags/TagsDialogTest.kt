@@ -36,8 +36,6 @@ import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.testutils.HamcrestUtils.containsInAnyOrder
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
-import com.ichi2.testutils.common.Flaky
-import com.ichi2.testutils.common.OS
 import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.utils.ListUtil
 import org.hamcrest.MatcherAssert.assertThat
@@ -51,8 +49,6 @@ import timber.log.Timber
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
-// inheriting from RobolectricTest is required for @Flaky
-@Flaky(OS.WINDOWS, "16404: tests in this class occasionally hang")
 class TagsDialogTest : RobolectricTest() {
     @Test
     fun testTagsDialogCustomStudyOptionInterface() {
@@ -60,12 +56,10 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("1", "2", "3", "4")
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, ArrayList(), allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -85,10 +79,8 @@ class TagsDialogTest : RobolectricTest() {
         val allTags = listOf("1", "2", "3", "4")
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, ArrayList(), allTags)
-            .arguments
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+            .requireArguments()
+        runTagsDialogScenario(args) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
             val returnedList = AtomicReference<List<String>?>()
@@ -121,12 +113,10 @@ class TagsDialogTest : RobolectricTest() {
         val checkedTags = listOf("a", "b")
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -156,12 +146,10 @@ class TagsDialogTest : RobolectricTest() {
         val checkedTags = listOf("a", "b")
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -194,12 +182,10 @@ class TagsDialogTest : RobolectricTest() {
         val expectedIndeterminate = listOf("b")
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, uncheckedTags, expectedAllTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -249,12 +235,10 @@ class TagsDialogTest : RobolectricTest() {
         )
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -296,12 +280,10 @@ class TagsDialogTest : RobolectricTest() {
         val checkedTags = listOf("common::speak::daily", "common::sport::tennis")
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -350,12 +332,10 @@ class TagsDialogTest : RobolectricTest() {
         val checkedTags = listOf("common")
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -398,12 +378,10 @@ class TagsDialogTest : RobolectricTest() {
         )
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -439,12 +417,10 @@ class TagsDialogTest : RobolectricTest() {
         val checkedTags = emptyList<String>()
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -486,12 +462,10 @@ class TagsDialogTest : RobolectricTest() {
         val checkedTags = emptyList<String>()
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
 
@@ -605,12 +579,10 @@ class TagsDialogTest : RobolectricTest() {
         val checkedTags = emptyList<String>()
         val args = TagsDialog(ParametersUtils.whatever())
             .withTestArguments(type, checkedTags, allTags)
-            .arguments
+            .requireArguments()
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f: TagsDialog ->
+        runTagsDialogScenario(args, factory) { f: TagsDialog ->
             val dialog = f.dialog as AlertDialog?
             assertThat(dialog, IsNull.notNullValue())
             val editText = f.getSearchView()!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)!!
@@ -707,6 +679,19 @@ class TagsDialogTest : RobolectricTest() {
                 allTags = allTags
             )
         }
+
+    private fun runTagsDialogScenario(
+        args: Bundle,
+        factory: TagsDialogFactory? = null,
+        block: (TagsDialog) -> Unit
+    ) {
+        FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory).use { scenario ->
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onFragment { tagsDialog: TagsDialog ->
+                block(tagsDialog)
+            }
+        }
+    }
 
     companion object {
         private fun mockLifecycleOwner(): LifecycleOwner {
