@@ -24,13 +24,18 @@ data class SearchParameters(
     val userInput: String,
     val deckIds: Set<DeckId>,
     val tags: Set<String>,
-    val flags: Set<Flag>
+    val flags: Set<Flag>,
+    val states: Set<State>
 ) : Parcelable {
-    val isEmpty get() = userInput.isEmpty() && deckIds.isEmpty() && tags.isEmpty() && flags.isEmpty()
+    val isEmpty get() = userInput.isEmpty() &&
+        deckIds.isEmpty() &&
+        tags.isEmpty() &&
+        flags.isEmpty() &&
+        states.isEmpty()
     val isNotEmpty get() = !isEmpty
 
     companion object {
-        val EMPTY = SearchParameters("", emptySet(), emptySet(), emptySet())
+        val EMPTY = SearchParameters("", emptySet(), emptySet(), emptySet(), emptySet())
     }
 }
 
@@ -39,7 +44,8 @@ fun SearchParameters.toQuery() =
         userInput,
         deckIds.joinToString(" OR ") { "did:$it" },
         tags.joinToString(" OR ") { """"tag:$it"""" },
-        flags.joinToString(" OR ") { "flag:${it.code}" }
+        flags.joinToString(" OR ") { "flag:${it.code}" },
+        states.joinToString(" OR ") { it.search }
     )
         .filter { it.isNotEmpty() }
         .joinToString(" ") { "($it)" }

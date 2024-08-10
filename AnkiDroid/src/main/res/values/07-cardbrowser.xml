@@ -90,6 +90,8 @@
         <item quantity="other">%d cards deleted</item>
     </plurals>
 
+    <string name="browser_card_state" comment="A short word, to use on a chip control">State</string>
+
     <string name="chip_filter_multiple_selections" comment="Arg 1: Selected filter ('Red Flag')
     Arg 2: Number of additional selected filters (2: Green and Blue Flags)
     Example shown to use: 'Red +2'

@@ -14,7 +14,6 @@
 
 package com.ichi2.anki.browser
 
-import android.content.DialogInterface
 import androidx.fragment.app.activityViewModels
 import com.ichi2.anki.Flag
 import com.ichi2.anki.R
@@ -54,14 +53,6 @@ class FlagsSheetFragment : BottomSheetFragment() {
             sourceItems = sourceItems,
             checkedItemIds = searchParameters.flags.map { it.code.toLong() }.toSet()
         )
-    }
-
-    override fun onCancel(dialog: DialogInterface) {
-        super.onCancel(dialog)
-        // refresh the 'clear filter' item
-        //   The DiffCallback animation on adding/removing the first item does not look pleasant
-        //   so we don't add "Clear Filter" while the dialog is open
-        launchCatchingTask { onPrepareAdapter() }
     }
 
     override fun onItemsSelected(ids: Set<Long>) {

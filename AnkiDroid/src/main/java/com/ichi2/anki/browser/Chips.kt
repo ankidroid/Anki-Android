@@ -27,6 +27,12 @@ fun CardBrowser.setupChips(chips: ChipGroup) {
             (chip as Chip).isChecked = !chip.isChecked
             FlagsSheetFragment().show(supportFragmentManager, FlagsSheetFragment.TAG)
         }
+
+    chips.findViewById<Chip>(R.id.chip_state)
+        .setOnClickListener { chip ->
+            (chip as Chip).isChecked = !chip.isChecked
+            CardStateSheetFragment().show(supportFragmentManager, CardStateSheetFragment.TAG)
+        }
 }
 
 // TODO: Context Parameter
@@ -46,6 +52,16 @@ suspend fun CardBrowser.updateChips(
             // text shows "Red + 1" if there are multiple flags, so show the first flag icon
             val firstFlagOrDefault = newSearchParameters.flags.firstOrNull() ?: Flag.NONE
             chip.setChipIconResource(firstFlagOrDefault.drawableRes)
+        }
+    }
+
+    if (oldSearchParameters.states != newSearchParameters.states) {
+        chips.findViewById<Chip>(R.id.chip_state).let { chip ->
+            chip.update(
+                activeItems = newSearchParameters.states,
+                inactiveText = baseContext.getString(R.string.browser_card_state),
+                activeTextGetter = { state -> state.label }
+            )
         }
     }
 }

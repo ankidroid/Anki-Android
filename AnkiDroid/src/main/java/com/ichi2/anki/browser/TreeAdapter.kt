@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -49,8 +50,9 @@ abstract class TreeAdapter(val context: Context) : RecyclerView.Adapter<TreeAdap
 
     data class Item(
         val id: Long,
-        val icon: Int,
+        @DrawableRes val icon: Int?,
         val text: CharSequence,
+        val subtitle: String?,
         val checked: Checked
     )
 
@@ -89,6 +91,7 @@ abstract class TreeAdapter(val context: Context) : RecyclerView.Adapter<TreeAdap
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         val icon: ImageView = view.findViewById(R.id.icon)
         val text: TextView = view.findViewById(R.id.text)
+        val subtitle: TextView = view.findViewById(R.id.subtitle)
         val checkbox: CheckBox = view.findViewById(R.id.checkbox)
 
         init {
@@ -105,7 +108,12 @@ abstract class TreeAdapter(val context: Context) : RecyclerView.Adapter<TreeAdap
         fun fullBind(item: Item) {
             text.text = item.text
 
-            icon.setImageDrawable(AppCompatResources.getDrawable(context, item.icon))
+            subtitle.text = item.subtitle
+            subtitle.isVisible = !subtitle.text.isNullOrEmpty()
+
+            item.icon?.let { iconToUse ->
+                icon.setImageDrawable(AppCompatResources.getDrawable(context, iconToUse))
+            }
 
             checkbox.isVisible = item.checked != Checked.NotCheckable
             checkbox.isChecked = item.checked == Checked.Yes

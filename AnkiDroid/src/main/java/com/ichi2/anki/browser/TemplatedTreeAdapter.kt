@@ -15,6 +15,7 @@
 package com.ichi2.anki.browser
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 
 class TemplatedTreeAdapter(context: Context) : TreeAdapter(context) {
     /**
@@ -25,9 +26,10 @@ class TemplatedTreeAdapter(context: Context) : TreeAdapter(context) {
         /** @see TreeAdapter.Item.id */
         val id: Long,
         /** @see TreeAdapter.Item.icon */
-        val icon: Int,
+        @DrawableRes val icon: Int?,
         /** @see TreeAdapter.Item.text */
         val text: CharSequence,
+        val subtitle: String? = null,
         /** Defines the possible values of [TreeAdapter.Item.checked] */
         val checkable: Boolean
     )
@@ -48,7 +50,7 @@ class TemplatedTreeAdapter(context: Context) : TreeAdapter(context) {
                 else -> Checked.No
             }
 
-            items.add(Item(item.id, item.icon, item.text, checked))
+            items.add(Item(item.id, item.icon, item.text, item.subtitle, checked))
         }
 
         this.sourceItems = usedSourceItems
