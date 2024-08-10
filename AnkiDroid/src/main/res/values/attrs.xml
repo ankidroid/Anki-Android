@@ -177,4 +177,12 @@
     <attr name="checkMediaListForeground" format="color" />
 
     <attr name="progressDialogButtonTextColor" format="color"/>
+
+    <attr name="bottomSheetFilterBackgroundColor" format="color|reference"/>
+
+    <attr name="chipInactiveStrokeColor" format="color"/>
+    <attr name="chipInactiveTextAndIconColor" format="color"/>
+    <attr name="chipActiveBackgroundColor" format="color"/>
+    <attr name="chipActiveTextAndIconColor" format="color"/>
+
 </resources>
