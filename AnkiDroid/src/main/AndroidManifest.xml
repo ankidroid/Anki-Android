@@ -523,6 +523,8 @@
             </intent-filter>
         </receiver>
 
+        <!-- This widget displays a total due cards count and eta(estimated time of arrival).
+             This is similar to the AnkiDroidSmall Widget.-->
         <receiver
             android:name="com.ichi2.widget.CardsDueWidget"
             android:exported="false"
