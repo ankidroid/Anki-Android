@@ -80,6 +80,11 @@ enum class Flag(
         }
 
         /**
+         * Usage:
+         * ```kotlin
+         * Flag.queryDisplayNames().map { (flag, displayName) -> ... }
+         * ```
+         *
          * @return A mapping from each [Flag] to its display name (optionally user-defined)
          */
         suspend fun queryDisplayNames(): Map<Flag, String> {

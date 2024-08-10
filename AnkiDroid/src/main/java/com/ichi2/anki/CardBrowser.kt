@@ -72,8 +72,10 @@ import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SearchParameters
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.getLabel
+import com.ichi2.anki.browser.setupChips
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toQuery
+import com.ichi2.anki.browser.updateChips
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
@@ -146,6 +148,8 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -430,6 +434,7 @@ open class CardBrowser :
         }
         onboarding.onCreate()
 
+        setupChips(findViewById(R.id.chip_group))
         setupFlows()
     }
 
@@ -460,10 +465,16 @@ open class CardBrowser :
                 .setSelection(COLUMN2_KEYS.indexOf(column))
         }
 
-        fun onFilterQueryChanged(filterQuery: SearchParameters) {
-            // setQuery before expand does not set the view's value
-            searchItem!!.expandActionView()
-            searchView!!.setQuery(filterQuery.userInput, submit = false)
+        suspend fun onFilterQueryChanged(params: Pair<SearchParameters, SearchParameters>) {
+            val (oldParameters, newParameters) = params
+            // TODO; Confirm this logic
+            // don't open the actionView if a chip was pressed
+            if (newParameters.userInput.isNotEmpty()) {
+                // setQuery before expand does not set the view's value
+                searchItem?.expandActionView()
+                searchView?.setQuery(newParameters.userInput, submit = false)
+            }
+            updateChips(findViewById(R.id.chip_group), oldParameters, newParameters)
         }
         suspend fun onDeckIdChanged(deckId: DeckId?) {
             if (deckId == null) return
@@ -572,7 +583,12 @@ open class CardBrowser :
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfColumn1.launchCollectionInLifecycleScope(::onColumn1Changed)
         viewModel.flowOfColumn2.launchCollectionInLifecycleScope(::onColumn2Changed)
-        viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
+        viewModel.flowOfFilterQuery.runningFold(
+            initial = Pair(SearchParameters.EMPTY, SearchParameters.EMPTY),
+            operation = { accumulator, new -> Pair(accumulator.second, new) }
+        )
+            .filterNotNull()
+            .launchCollectionInLifecycleScope(::onFilterQueryChanged)
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
@@ -926,10 +942,6 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
-            menu.findItem(R.id.action_search_by_flag).subMenu?.let {
-                    subMenu ->
-                setupFlags(subMenu, Mode.SINGLE_SELECT)
-            }
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
@@ -983,9 +995,8 @@ open class CardBrowser :
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
-            menu.findItem(R.id.action_flag).subMenu?.let {
-                    subMenu ->
-                setupFlags(subMenu, Mode.MULTI_SELECT)
+            menu.findItem(R.id.action_flag).subMenu?.let { subMenu ->
+                setupFlags(subMenu)
             }
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -1004,23 +1015,10 @@ open class CardBrowser :
         return super.onCreateOptionsMenu(menu)
     }
 
-    /**
-     * Representing different selection modes.
-     */
-    enum class Mode(val value: Int) {
-        SINGLE_SELECT(1000),
-        MULTI_SELECT(1001)
-    }
-
-    private fun setupFlags(subMenu: SubMenu, mode: Mode) {
+    private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
-            val groupId = when (mode) {
-                Mode.SINGLE_SELECT -> mode.value
-                Mode.MULTI_SELECT -> mode.value
-            }
-
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                subMenu.add(groupId, flag.ordinal, Menu.NONE, displayName)
+                subMenu.add(MULTI_SELECT_FLAG, flag.ordinal, Menu.NONE, displayName)
                     .setIcon(flag.drawableRes)
             }
         }
@@ -1142,8 +1140,7 @@ open class CardBrowser :
 
         Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
             when (item.groupId) {
-                Mode.SINGLE_SELECT.value -> filterByFlag(flag)
-                Mode.MULTI_SELECT.value -> updateFlagForSelectedRows(flag)
+                MULTI_SELECT_FLAG -> updateFlagForSelectedRows(flag)
                 else -> return@let
             }
             return true
@@ -1710,10 +1707,6 @@ open class CardBrowser :
         launchCatchingTask {
             viewModel.filterByTags(selectedTags, cardState)
         }
-
-    /** Updates search terms to only show cards with selected flag.  */
-    @VisibleForTesting
-    fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cardIds] list
@@ -2382,6 +2375,8 @@ open class CardBrowser :
          */
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
         private const val DEFAULT_FONT_SIZE_RATIO = 100
+
+        private const val MULTI_SELECT_FLAG = 1001
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val LINES_VISIBLE_WHEN_COLLAPSED = 3

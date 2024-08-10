@@ -43,7 +43,6 @@
     <string name="card_browser_show_marked">Filter marked</string>
     <string name="card_browser_show_suspended">Filter suspended</string>
     <string name="card_browser_search_by_tag">Filter by tag</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
     <string name="card_browser_list_my_searches">My searches</string>
     <string name="card_browser_list_my_searches_save">Save search</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
@@ -90,4 +89,10 @@
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
+
+    <string name="chip_filter_multiple_selections" comment="Arg 1: Selected filter ('Red Flag')
+    Arg 2: Number of additional selected filters (2: Green and Blue Flags)
+    Example shown to use: 'Red +2'
+    When displaying a chip control for a filter, if one element is selected, we display it
+If more than one element is selected, we also show the count of extra filters">%1$s +%2$d</string>
 </resources>

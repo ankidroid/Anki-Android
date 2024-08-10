@@ -37,7 +37,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.EASE
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
-import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.model.CardsOrNotes.CARDS
@@ -1317,11 +1316,6 @@ suspend fun CardBrowser.searchCardsSync(query: String) {
 suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
     filterByTag(*tags)
     viewModel.searchJob?.join()
-}
-
-suspend fun CardBrowserViewModel.setFlagFilterSync(flag: Flag) {
-    setFlagFilter(flag)
-    searchJob?.join()
 }
 
 fun TestClass.flagCardForNote(n: Note, flag: Flag) {
