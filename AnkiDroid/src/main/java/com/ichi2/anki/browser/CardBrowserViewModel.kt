@@ -35,7 +35,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
-import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
@@ -665,23 +664,18 @@ class CardBrowserViewModel(
         launchSearchForCards(searchTerms.copy(userInput = "tag:marked"))
     }
 
-    /**
-     * Searches for all suspended cards and replaces the current search results with these suspended cards.
-     */
     suspend fun searchForSuspendedCards() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
         launchSearchForCards(searchTerms.copy(userInput = "is:suspended"))
     }
 
-    suspend fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
-        val sb = StringBuilder(cardState.toSearch)
+    suspend fun filterByTags(selectedTags: List<String>) {
         // join selectedTags as "tag:$tag" with " or " between them
         val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
-        if (selectedTags.isNotEmpty()) {
-            sb.append("($tagsConcat)") // Only if we added anything to the tag list
-        }
-        launchSearchForCards(searchTerms.copy(userInput = sb.toString()))
+        // Only if we added anything to the tag list
+        val tagFilter = if (selectedTags.isEmpty()) "" else "($tagsConcat)"
+        launchSearchForCards(searchTerms.copy(userInput = tagFilter))
     }
 
     /** Previewing */

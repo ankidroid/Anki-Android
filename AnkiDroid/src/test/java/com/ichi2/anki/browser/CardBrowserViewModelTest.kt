@@ -780,6 +780,10 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 }
 
+private suspend fun CardBrowserViewModel.searchForSuspendedCards() {
+    launchSearchForCards(searchTerms.copy(states = setOf(State.Suspended)))?.join()
+}
+
 @Suppress("SameParameterValue")
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
     for (pos in positions) {

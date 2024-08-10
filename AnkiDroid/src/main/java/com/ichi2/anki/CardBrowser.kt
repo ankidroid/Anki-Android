@@ -1173,12 +1173,6 @@ open class CardBrowser :
                 searchForMarkedNotes()
                 return true
             }
-
-            @NeedsTest("filter-suspended query needs testing")
-            R.id.action_show_suspended -> {
-                searchForSuspendedCards()
-                return true
-            }
             R.id.action_search_by_tag -> {
                 showFilterByTagsDialog()
                 return true
@@ -1675,7 +1669,7 @@ open class CardBrowser :
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
         when (tagsDialogListenerAction) {
-            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, stateFilter)
+            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags)
             TagsDialogListenerAction.EDIT_TAGS -> launchCatchingTask {
                 editSelectedCardsTags(selectedTags, indeterminateTags)
             }
@@ -1703,9 +1697,9 @@ open class CardBrowser :
         }
     }
 
-    private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) =
+    private fun filterByTags(selectedTags: List<String>) =
         launchCatchingTask {
-            viewModel.filterByTags(selectedTags, cardState)
+            viewModel.filterByTags(selectedTags)
         }
 
     /**
@@ -2342,7 +2336,7 @@ open class CardBrowser :
     fun filterByTag(vararg tags: String) {
         tagsDialogListenerAction = TagsDialogListenerAction.FILTER
         onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
-        filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
+        filterByTags(tags.toList())
     }
 
     @VisibleForTesting

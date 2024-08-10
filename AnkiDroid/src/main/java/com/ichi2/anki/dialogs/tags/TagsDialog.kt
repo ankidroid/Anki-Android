@@ -25,6 +25,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.OnContextAndLongClickListener
@@ -178,16 +179,17 @@ class TagsDialog : AnalyticsDialogFragment {
         if (tags!!.isEmpty) {
             noTagsTextView?.visibility = View.VISIBLE
         }
-        val optionsGroup = tagsDialogView.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
-        for (i in 0 until optionsGroup.childCount) {
-            optionsGroup.getChildAt(i).id = i
+        tagsDialogView.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup).also { options ->
+            for (i in 0 until options.childCount) {
+                options.getChildAt(i).id = i
+            }
+            options.check(0)
+            selectedOption = radioButtonIdToCardState(options.checkedRadioButtonId)
+            options.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = radioButtonIdToCardState(checkedId) }
+            options.isVisible = type == DialogType.CUSTOM_STUDY_TAGS
         }
-        optionsGroup.check(0)
-        selectedOption = radioButtonIdToCardState(optionsGroup.checkedRadioButtonId)
-        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = radioButtonIdToCardState(checkedId) }
         if (type == DialogType.EDIT_TAGS) {
             dialogTitle = resources.getString(R.string.card_details_tags)
-            optionsGroup.visibility = View.GONE
             positiveText = getString(R.string.dialog_ok)
             tagsArrayAdapter!!.tagContextAndLongClickListener =
                 OnContextAndLongClickListener { v ->
