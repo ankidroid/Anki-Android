@@ -37,5 +37,8 @@
         <item quantity="other">%d minutes remaining</item>
     </plurals>
 
+    <!-- Strings for Cards Due -->
+    <string name="cards_due_widget" comment="Cards Due Widget description">Cards Due</string>
+
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>

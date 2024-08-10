@@ -1,0 +1,15 @@
+<!--The width(W) and height(H) constraints are set such as the static layout is
+    fitting in the range of  3 W * 2H
+    -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/cards_due_widget"
+    android:initialKeyguardLayout="@layout/widget_cards_due"
+    android:initialLayout="@layout/widget_cards_due"
+    android:minWidth="230dp"
+    android:minHeight="120dp"
+    android:previewImage="@drawable/widget_cards_due_drawable"
+    android:previewLayout="@layout/widget_cards_due_drawable_v31"
+    android:targetCellHeight="2"
+    android:targetCellWidth="3"
+    android:widgetCategory="home_screen"
+    />
