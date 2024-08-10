@@ -157,6 +157,23 @@
         <item name="android:tint">@color/black</item>
     </style>
 
+    <style name="Chip.WithIcon" parent="Widget.Material3.Chip.Suggestion">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Chip</item>
+        <item name="chipIconVisible">true</item>
+        <item name="chipIconTint">@color/m3_chip_text_color</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:maxWidth">200dp</item>
+    </style>
+    <style name="ThemeOverlay.App.Chip" parent="">
+        <item name="colorOutline">?attr/chipInactiveStrokeColor</item>
+        <item name="colorOnSurfaceVariant">?attr/chipInactiveTextAndIconColor</item>
+        <item name="colorSecondaryContainer">?attr/chipActiveBackgroundColor</item>
+        <item name="colorOnSecondaryContainer">?attr/chipActiveTextAndIconColor</item>
+        <item name="colorSurface">@color/transparent</item> <!-- Container background -->
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
+    </style>
+
     <style name="reviewer_whiteboard_editor_button_style">
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">40dp</item>
