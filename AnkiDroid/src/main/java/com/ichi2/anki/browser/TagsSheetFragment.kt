@@ -111,7 +111,7 @@ class TagsSheetFragment : BottomSheetFragment() {
 }
 
 private val allTagsSourceItem = TemplatedTreeAdapter.SourceItem(
-    id = ALL_ITEMS_ID,
+    id = CLEAR_SEARCH_ID,
     icon = R.drawable.close_icon,
     text = "Clear filter",
     indent = -1,

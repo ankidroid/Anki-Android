@@ -48,7 +48,13 @@ open class BottomSheetFragment : BottomSheetDialogFragmentFix() {
 
         adapter.onItemCheckedListener = { _ -> onItemsSelected(adapter.checkedItemIds) }
         adapter.onItemClickedListener = { id ->
-            onItemsSelected(if (id == ALL_ITEMS_ID) emptySet() else setOf(id))
+            val newSelection = when (id) {
+                CLEAR_SEARCH_ID -> emptySet()
+                // If the item is selected and tapped again, deselect it
+                adapter.checkedItemIds.singleOrNull() -> emptySet()
+                else -> setOf(id)
+            }
+            onItemsSelected(newSelection)
             dismiss()
         }
 
@@ -98,4 +104,4 @@ private fun EditText.addOnChangeListener(listener: (before: String, after: Strin
     })
 }
 
-const val ALL_ITEMS_ID = -123L
+const val CLEAR_SEARCH_ID = -123L

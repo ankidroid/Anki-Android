@@ -58,7 +58,7 @@ class CardStateSheetFragment : BottomSheetFragment() {
 }
 
 private val clearFilterSourceItem = TemplatedTreeAdapter.SourceItem(
-    id = ALL_ITEMS_ID,
+    id = CLEAR_SEARCH_ID,
     icon = R.drawable.ic_clear_white,
     text = "Clear filter",
     indent = -1,

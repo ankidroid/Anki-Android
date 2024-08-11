@@ -42,7 +42,7 @@ class FlagsSheetFragment : BottomSheetFragment() {
         } else {
             flagsSourceItems.withItemPrepended(
                 TemplatedTreeAdapter.SourceItem(
-                    id = ALL_ITEMS_ID,
+                    id = CLEAR_SEARCH_ID,
                     icon = R.drawable.ic_clear_white,
                     text = "Clear filter",
                     indent = -1,
