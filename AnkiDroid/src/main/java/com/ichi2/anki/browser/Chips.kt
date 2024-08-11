@@ -22,23 +22,29 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 
 fun CardBrowser.setupChips(chips: ChipGroup) {
-    chips.findViewById<Chip>(R.id.chip_tag)
-        .setOnClickListener { chip ->
+    chips.findViewById<Chip>(R.id.chip_tag).apply {
+        text = TR.browsingSidebarTags()
+        setOnClickListener { chip ->
             (chip as Chip).isChecked = !chip.isChecked
             TagsSheetFragment().show(supportFragmentManager, TagsSheetFragment.TAG)
         }
+    }
 
-    chips.findViewById<Chip>(R.id.chip_flag)
-        .setOnClickListener { chip ->
+    chips.findViewById<Chip>(R.id.chip_flag).apply {
+        text = TR.browsingFlag()
+        setOnClickListener { chip ->
             (chip as Chip).isChecked = !chip.isChecked
             FlagsSheetFragment().show(supportFragmentManager, FlagsSheetFragment.TAG)
         }
+    }
 
-    chips.findViewById<Chip>(R.id.chip_state)
-        .setOnClickListener { chip ->
+    chips.findViewById<Chip>(R.id.chip_state).apply {
+        text = baseContext.getString(R.string.browser_card_state)
+        setOnClickListener { chip ->
             (chip as Chip).isChecked = !chip.isChecked
             CardStateSheetFragment().show(supportFragmentManager, CardStateSheetFragment.TAG)
         }
+    }
 }
 
 // TODO: Context Parameter
@@ -78,6 +84,9 @@ suspend fun CardBrowser.updateChips(
                 inactiveText = baseContext.getString(R.string.browser_card_state),
                 activeTextGetter = { state -> state.label }
             )
+            // display the icon associated with the first selected state
+            val firstSelection = newSearchParameters.states.firstOrNull()
+            chip.setChipIconResource(firstSelection?.icon ?: R.drawable.ic_card_state)
         }
     }
 }

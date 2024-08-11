@@ -48,9 +48,9 @@
                     style="@style/Chip.WithIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Flags"
                     app:chipIcon="@drawable/ic_flag_transparent"
                     app:chipIconTint="@null"
+                    tools:text="Flags"
                     />
 
                 <com.google.android.material.chip.Chip
@@ -58,8 +58,9 @@
                     style="@style/Chip.WithIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/browser_card_state"
                     app:chipIcon="@drawable/ic_card_state"
+                    app:chipIconTint="@null"
+                    android:text="@string/browser_card_state"
                     />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
