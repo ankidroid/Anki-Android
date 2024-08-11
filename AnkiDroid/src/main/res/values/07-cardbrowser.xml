@@ -40,8 +40,6 @@
     </plurals>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="delete_card_title">Delete note?</string>
-    <string name="card_browser_show_marked">Filter marked</string>
-    <string name="card_browser_search_by_tag">Filter by tag</string>
     <string name="card_browser_list_my_searches">My searches</string>
     <string name="card_browser_list_my_searches_save">Save search</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
@@ -91,6 +89,8 @@
 
     <string name="browser_card_state" comment="A short word, to use on a chip control">State</string>
 
+    <!-- Bottom sheets -->
+    <string name="filter_hint_search_tags"><i>Search tags</i></string>
     <string name="chip_filter_multiple_selections" comment="Arg 1: Selected filter ('Red Flag')
     Arg 2: Number of additional selected filters (2: Green and Blue Flags)
     Example shown to use: 'Red +2'

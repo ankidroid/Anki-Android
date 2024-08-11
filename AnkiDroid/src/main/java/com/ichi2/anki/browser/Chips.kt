@@ -22,6 +22,12 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 
 fun CardBrowser.setupChips(chips: ChipGroup) {
+    chips.findViewById<Chip>(R.id.chip_tag)
+        .setOnClickListener { chip ->
+            (chip as Chip).isChecked = !chip.isChecked
+            TagsSheetFragment().show(supportFragmentManager, TagsSheetFragment.TAG)
+        }
+
     chips.findViewById<Chip>(R.id.chip_flag)
         .setOnClickListener { chip ->
             (chip as Chip).isChecked = !chip.isChecked
@@ -52,6 +58,16 @@ suspend fun CardBrowser.updateChips(
             // text shows "Red + 1" if there are multiple flags, so show the first flag icon
             val firstFlagOrDefault = newSearchParameters.flags.firstOrNull() ?: Flag.NONE
             chip.setChipIconResource(firstFlagOrDefault.drawableRes)
+        }
+    }
+
+    if (oldSearchParameters.tags != newSearchParameters.tags) {
+        chips.findViewById<Chip>(R.id.chip_tag).let { chip ->
+            chip.update(
+                activeItems = newSearchParameters.tags,
+                inactiveText = TR.browsingSidebarTags(),
+                activeTextGetter = { tag -> tag.substringAfterLast("::") }
+            )
         }
     }
 

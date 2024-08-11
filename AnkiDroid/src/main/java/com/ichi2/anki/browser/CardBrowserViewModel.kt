@@ -655,29 +655,6 @@ class CardBrowserViewModel(
     private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
         this.filter { initCompleted }
 
-    /**
-     * Searches for all marked notes and replaces the current search results with these marked notes.
-     */
-    suspend fun searchForMarkedNotes() {
-        // only intended to be used if the user has no selection
-        if (hasSelectedAnyRows()) return
-        launchSearchForCards(searchTerms.copy(userInput = "tag:marked"))
-    }
-
-    suspend fun searchForSuspendedCards() {
-        // only intended to be used if the user has no selection
-        if (hasSelectedAnyRows()) return
-        launchSearchForCards(searchTerms.copy(userInput = "is:suspended"))
-    }
-
-    suspend fun filterByTags(selectedTags: List<String>) {
-        // join selectedTags as "tag:$tag" with " or " between them
-        val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
-        // Only if we added anything to the tag list
-        val tagFilter = if (selectedTags.isEmpty()) "" else "($tagsConcat)"
-        launchSearchForCards(searchTerms.copy(userInput = tagFilter))
-    }
-
     /** Previewing */
     suspend fun queryPreviewIntentData(): PreviewerDestination {
         // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop

@@ -32,6 +32,7 @@ class CardStateSheetFragment : BottomSheetFragment() {
                 icon = state.icon,
                 text = state.label,
                 subtitle = state.subtitle,
+                indent = 0,
                 checkable = true
             )
         }
@@ -60,6 +61,7 @@ private val clearFilterSourceItem = TemplatedTreeAdapter.SourceItem(
     id = ALL_ITEMS_ID,
     icon = R.drawable.ic_clear_white,
     text = "Clear filter",
+    indent = -1,
     checkable = false
 )
 

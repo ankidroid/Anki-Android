@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +33,15 @@
                 android:layout_height="wrap_content"
                 android:elevation="0dp"
                 app:singleLine="true" >
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_tag"
+                    style="@style/Chip.WithIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipIcon="@drawable/ic_tag"
+                    tools:text="Tags"
+                    />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_flag"

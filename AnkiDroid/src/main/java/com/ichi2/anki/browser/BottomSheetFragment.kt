@@ -18,12 +18,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ichi2.anki.R
 import kotlinx.coroutines.runBlocking
 
 open class BottomSheetFragment : BottomSheetDialogFragmentFix() {
     open val layoutResource = R.layout.bottom_sheet_list_without_filter
+    open val filterHintResource: Int? = null
 
     protected lateinit var adapter: TemplatedTreeAdapter
 
@@ -48,12 +54,48 @@ open class BottomSheetFragment : BottomSheetDialogFragmentFix() {
 
         listRecyclerView.adapter = adapter
 
+        val filterEditText = layout.findViewById<EditText?>(R.id.filter)
+        if (filterEditText != null) {
+            val behavior = (dialog as BottomSheetDialog).behavior
+
+            val clearFilterButton = layout.findViewById<ImageButton>(R.id.clear_filter)
+            clearFilterButton.setOnClickListener { filterEditText.setText("") }
+
+            filterEditText.addOnChangeListener { before, after ->
+                onFilterInputChanged(after)
+
+                when {
+                    before.isEmpty() && after.isNotEmpty() ->
+                        clearFilterButton.animate().rotation(90f).alpha(1f).start()
+                    before.isNotEmpty() && after.isEmpty() ->
+                        clearFilterButton.animate().rotation(-90f).alpha(0f).start()
+                }
+            }
+
+            filterEditText.setOnFocusChangeListener { _, focus -> if (focus) behavior.state = STATE_EXPANDED }
+            filterEditText.setOnClickListener { behavior.state = STATE_EXPANDED }
+
+            filterHintResource?.let { filterEditText.hint = requireContext().getText(it) }
+        }
+
         return layout
     }
 
     open suspend fun onPrepareAdapter() {}
 
+    open fun onFilterInputChanged(filterInput: String) {}
+
     open fun onItemsSelected(ids: Set<Long>) {}
+}
+
+private fun EditText.addOnChangeListener(listener: (before: String, after: String) -> Unit) {
+    var previousText = text?.toString() ?: ""
+
+    addTextChangedListener(afterTextChanged = {
+        val currentText = it?.toString() ?: ""
+        listener(previousText, currentText)
+        previousText = currentText
+    })
 }
 
 const val ALL_ITEMS_ID = -123L

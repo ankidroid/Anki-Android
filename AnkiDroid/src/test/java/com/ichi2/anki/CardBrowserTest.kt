@@ -1314,8 +1314,7 @@ suspend fun CardBrowser.searchCardsSync(query: String) {
     viewModel.searchJob?.join()
 }
 suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
-    filterByTag(*tags)
-    viewModel.searchJob?.join()
+    viewModel.launchSearchForCards(viewModel.searchTerms.copy(tags = tags.toSet()))?.join()
 }
 
 fun TestClass.flagCardForNote(n: Note, flag: Flag) {

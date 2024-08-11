@@ -32,6 +32,7 @@ class FlagsSheetFragment : BottomSheetFragment() {
                     id = flag.code.toLong(),
                     icon = flag.drawableRes,
                     text = displayName,
+                    indent = 0,
                     checkable = true
                 )
             }
@@ -44,6 +45,7 @@ class FlagsSheetFragment : BottomSheetFragment() {
                     id = ALL_ITEMS_ID,
                     icon = R.drawable.ic_clear_white,
                     text = "Clear filter",
+                    indent = -1,
                     checkable = false
                 )
             )

@@ -1,0 +1,25 @@
+<!--
+  ~  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<vector android:autoMirrored="true" android:height="24dp"
+    android:viewportHeight="6.35" android:viewportWidth="6.35"
+    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tint="?attr/toolbarIconColor">
+    <path android:fillColor="#00000000"
+        android:pathData="M2.732,0.8719C2.8646,0.8482 3.562,2.2041 3.6844,2.2602 3.8039,2.315 5.2531,1.9405 5.3151,2.0564 5.3786,2.1752 4.3046,3.2574 4.289,3.3912 4.2738,3.5218 5.0779,4.7843 4.9868,4.8791 4.8935,4.9762 3.5323,4.2892 3.4003,4.3157 3.2714,4.3416 2.3191,5.4965 2.2008,5.4391 2.0796,5.3804 2.3124,3.8735 2.2464,3.7562 2.1819,3.6416 0.7893,3.0928 0.8073,2.9625 0.8257,2.8291 2.3307,2.5849 2.422,2.4858 2.511,2.3891 2.6026,0.895 2.732,0.8719Z"
+        android:strokeColor="#000000" android:strokeLineCap="round"
+        android:strokeLineJoin="round" android:strokeWidth="0.529167"/>
+</vector>

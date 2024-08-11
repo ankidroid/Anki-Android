@@ -23,13 +23,16 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:focusable="true"
     android:clickable="true"
-    android:layoutDirection="locale"
-    android:paddingStart="14dp">
+    android:layoutDirection="locale">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        android:minWidth="?attr/minTouchTargetSize"
+        android:minHeight="?attr/minTouchTargetSize"
+        >
 
         <ImageView
             android:id="@+id/chevron"
@@ -37,9 +40,8 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:visibility="gone"
             app:srcCompat="@drawable/ic_chevron_right_black"
             />
 
@@ -48,6 +50,7 @@
             android:layout_width="24dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="12dp"
             tools:src="@drawable/ic_flag_transparent"
             />
@@ -85,7 +88,8 @@
         android:textAlignment="gravity"
         android:layout_marginTop="-8dp"
         android:paddingEnd="48dp"
-        tools:text="This is a long subtitle explaining really important things"
+        android:visibility="gone"
         android:paddingBottom="4dp"
+        tools:text="This is a long subtitle explaining really important things"
         />
 </LinearLayout>

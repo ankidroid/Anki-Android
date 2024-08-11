@@ -174,7 +174,7 @@ open class CardBrowser :
     }
 
     private enum class TagsDialogListenerAction {
-        FILTER, EDIT_TAGS
+        EDIT_TAGS
     }
 
     lateinit var viewModel: CardBrowserViewModel
@@ -731,9 +731,6 @@ open class CardBrowser :
                 if (event.isCtrlPressed && event.isAltPressed) {
                     Timber.i("Ctrl+Alt+T: Toggle cards/notes")
                     showOptionsDialog()
-                } else {
-                    Timber.i("T: Show filter by tags dialog")
-                    showFilterByTagsDialog()
                 }
                 return true
             }
@@ -749,10 +746,6 @@ open class CardBrowser :
                 } else if (event.isCtrlPressed) {
                     Timber.i("Ctrl+S: Save search")
                     openSaveSearchView()
-                    return true
-                } else if (event.isAltPressed) {
-                    Timber.i("Alt+S: Show suspended cards")
-                    searchForSuspendedCards()
                     return true
                 }
             }
@@ -778,13 +771,6 @@ open class CardBrowser :
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+O: Show order dialog")
                     changeDisplayOrder()
-                    return true
-                }
-            }
-            KeyEvent.KEYCODE_M -> {
-                if (event.isCtrlPressed) {
-                    Timber.i("Ctrl+M: Search marked notes")
-                    searchForMarkedNotes()
                     return true
                 }
             }
@@ -1167,16 +1153,6 @@ open class CardBrowser :
                 changeDisplayOrder()
                 return true
             }
-
-            @NeedsTest("filter-marked query needs testing")
-            R.id.action_show_marked -> {
-                searchForMarkedNotes()
-                return true
-            }
-            R.id.action_search_by_tag -> {
-                showFilterByTagsDialog()
-                return true
-            }
             R.id.action_delete_card -> {
                 deleteSelectedNotes()
                 return true
@@ -1247,20 +1223,6 @@ open class CardBrowser :
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    /**
-     * @see CardBrowserViewModel.searchForSuspendedCards
-     */
-    private fun searchForSuspendedCards() {
-        launchCatchingTask { viewModel.searchForSuspendedCards() }
-    }
-
-    /**
-     * @see CardBrowserViewModel.searchForMarkedNotes
-     */
-    private fun searchForMarkedNotes() {
-        launchCatchingTask { viewModel.searchForMarkedNotes() }
     }
 
     private fun changeDisplayOrder() {
@@ -1526,17 +1488,6 @@ open class CardBrowser :
         }
     }
 
-    private fun showFilterByTagsDialog() {
-        tagsDialogListenerAction = TagsDialogListenerAction.FILTER
-        val dialog = tagsDialogFactory.newTagsDialog().withArguments(
-            context = this@CardBrowser,
-            type = TagsDialog.DialogType.FILTER_BY_TAG,
-            checkedTags = ArrayList(0),
-            allTags = getColUnsafe.tags.all()
-        )
-        showDialogFragment(dialog)
-    }
-
     private fun showOptionsDialog() {
         val dialog = BrowserOptionsDialog(viewModel.cardsOrNotes, viewModel.isTruncated)
         dialog.show(supportFragmentManager, "browserOptionsDialog")
@@ -1669,11 +1620,12 @@ open class CardBrowser :
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
         when (tagsDialogListenerAction) {
-            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags)
             TagsDialogListenerAction.EDIT_TAGS -> launchCatchingTask {
                 editSelectedCardsTags(selectedTags, indeterminateTags)
             }
-            else -> {}
+            else -> {
+                Timber.w("unexpected tag result: $tagsDialogListenerAction")
+            }
         }
     }
 
@@ -1696,11 +1648,6 @@ open class CardBrowser :
             updateNotes(selectedNotes)
         }
     }
-
-    private fun filterByTags(selectedTags: List<String>) =
-        launchCatchingTask {
-            viewModel.filterByTags(selectedTags)
-        }
 
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cardIds] list
@@ -2330,13 +2277,6 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     suspend fun rerenderAllCards() {
         renderBrowserQAParams(0, viewModel.rowCount - 1, viewModel.cards.toList())
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun filterByTag(vararg tags: String) {
-        tagsDialogListenerAction = TagsDialogListenerAction.FILTER
-        onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
-        filterByTags(tags.toList())
     }
 
     @VisibleForTesting

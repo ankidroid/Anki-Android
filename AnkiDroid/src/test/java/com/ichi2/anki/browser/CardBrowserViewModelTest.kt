@@ -784,6 +784,10 @@ private suspend fun CardBrowserViewModel.searchForSuspendedCards() {
     launchSearchForCards(searchTerms.copy(states = setOf(State.Suspended)))?.join()
 }
 
+private suspend fun CardBrowserViewModel.searchForMarkedNotes() {
+    launchSearchForCards(searchTerms.copy(tags = setOf("marked")))?.join()
+}
+
 @Suppress("SameParameterValue")
 private fun CardBrowserViewModel.selectRowsWithPositions(vararg positions: Int) {
     for (pos in positions) {

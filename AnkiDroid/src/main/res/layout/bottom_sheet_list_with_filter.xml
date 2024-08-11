@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="88dp"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/bottom_sheet_item"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:paddingHorizontal="16dp"
+        >
+
+        <!-- flagNoExtractUi prevents big editor from showing in landscape mode.
+             See https://stackoverflow.com/questions/4336762 -->
+        <EditText
+            android:id="@+id/filter"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_input"
+            android:backgroundTint="?attr/bottomSheetFilterBackgroundColor"
+            android:inputType="text"
+            android:singleLine="true"
+            android:paddingStart="24dp"
+            android:paddingEnd="48dp"
+            android:imeOptions="flagNoExtractUi"
+            tools:hint="Search"
+            />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/clear_filter"
+        style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_gravity="end"
+        app:srcCompat="@drawable/close_icon"
+        android:alpha="0"
+        />
+<!--    app:tint="@color/m3_selection_control_button_tint"-->
+</FrameLayout>
