@@ -32,7 +32,7 @@ class FlagsSheetFragment : BottomSheetFragment() {
                     id = flag.code.toLong(),
                     icon = flag.drawableRes,
                     text = displayName,
-                    indent = 0,
+                    indent = -1,
                     checkable = true
                 )
             }

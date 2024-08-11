@@ -32,7 +32,7 @@ class CardStateSheetFragment : BottomSheetFragment() {
                 icon = state.icon,
                 text = state.label,
                 subtitle = state.subtitle,
-                indent = 0,
+                indent = -1,
                 checkable = true
             )
         }

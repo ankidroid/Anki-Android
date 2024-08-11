@@ -13,7 +13,12 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    Designed to align the leftmost image
+    (chevron/icon) with the menu icon in the app bar when inside a bottom sheet
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,73 +28,85 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:focusable="true"
     android:clickable="true"
-    android:layoutDirection="locale">
+    android:layoutDirection="locale"
+    android:paddingStart="14dp"
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <ImageView
+        android:id="@+id/chevron"
+        style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/firstRowGuideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_chevron_right_black" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="2dp"
+        app:layout_constraintStart_toEndOf="@id/chevron"
+        app:layout_constraintTop_toTopOf="@+id/chevron"
+        app:layout_constraintBottom_toBottomOf="@+id/chevron"
+        tools:src="@drawable/ic_flag_transparent" />
+
+<!--
+    TODO: This should be centered if the only element
+     and not centered if a subtitle exists to save space
+-->
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="8dp"
+        android:textAlignment="gravity"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textDirection="locale"
         android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/checkbox"
+        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/firstRowGuideline"
+        tools:text="Title" />
+
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingEnd="16dp" />
+
+
+    <!-- Intended to be the same height as the Checkbox (since the checkbox is optional) -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/firstRowGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:minWidth="?attr/minTouchTargetSize"
-        android:minHeight="?attr/minTouchTargetSize"
-        >
-
-        <ImageView
-            android:id="@+id/chevron"
-            style="@style/Widget.MaterialComponents.CompoundButton.CheckBox"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            app:srcCompat="@drawable/ic_chevron_right_black"
-            />
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="24dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="12dp"
-            tools:src="@drawable/ic_flag_transparent"
-            />
-
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="start|center_vertical"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textDirection="locale"
-            android:textAlignment="gravity"
-            android:paddingEnd="8dp"
-            tools:text="Title"
-            />
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingEnd="24dp"
-            />
-    </LinearLayout>
-
+        app:layout_constraintGuide_begin="48dp" />
 
     <TextView
         android:id="@+id/subtitle"
-        android:paddingStart="36dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="start|center_vertical"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textDirection="locale"
-        android:textAlignment="gravity"
-        android:layout_marginTop="-8dp"
+        android:paddingBottom="12dp"
         android:paddingEnd="48dp"
+        android:textAlignment="gravity"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textDirection="locale"
         android:visibility="gone"
-        android:paddingBottom="4dp"
+        android:layout_marginTop="-8dp"
+        app:layout_constraintStart_toStartOf="@+id/text"
+        app:layout_constraintTop_toBottomOf="@+id/firstRowGuideline"
+        app:layout_constraintEnd_toStartOf="@id/checkbox"
         tools:text="This is a long subtitle explaining really important things"
-        />
-</LinearLayout>
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

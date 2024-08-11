@@ -59,6 +59,10 @@ abstract class TreeAdapter(val context: Context) : RecyclerView.Adapter<TreeAdap
         @DrawableRes val icon: Int?,
         val text: CharSequence,
         val subtitle: String?,
+        /**
+         * -1 is used as a sentinel value to define 'no indent', even if a chevron may appear
+         * on other elements
+         */
         val indent: Int,
         val collapsed: Collapsed,
         val checked: Checked
@@ -119,8 +123,11 @@ abstract class TreeAdapter(val context: Context) : RecyclerView.Adapter<TreeAdap
         }
 
         fun fullBind(item: Item) {
-            chevron.updateLayoutParams<MarginLayoutParams> {
-                marginStart = (mandatoryMargin + indentMargin * item.indent).toInt()
+            chevron.isVisible = item.indent != -1
+            if (item.indent != -1) {
+                chevron.updateLayoutParams<MarginLayoutParams> {
+                    marginStart = (mandatoryMargin + indentMargin * item.indent).toInt()
+                }
             }
 
             text.text = item.text
@@ -132,8 +139,6 @@ abstract class TreeAdapter(val context: Context) : RecyclerView.Adapter<TreeAdap
                 icon.setImageDrawable(AppCompatResources.getDrawable(context, iconToUse))
             }
 
-            // isVisible takes precedence over .alpha
-            chevron.visibility = if (item.indent == -1) View.GONE else View.VISIBLE
             chevron.animate().cancel()
 
             when (item.collapsed) {
@@ -211,6 +216,7 @@ private fun View.setOnClickListenerWithId(
     viewHolder: RecyclerView.ViewHolder,
     block: (Long) -> Unit
 ) {
+    // TODO: The ripple effect does not occur properly
     setOnClickListener {
         // TODO: The ripple effect does not occur properly on click
         val id = viewHolder.itemId
