@@ -20,7 +20,7 @@
 <resources>
 
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title" comment="AnkiDroidSmall Widget notification ticker title">Cards due</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="other">%d AnkiDroid cards due</item>
@@ -36,6 +36,9 @@
         <item quantity="one">%d minute remaining</item>
         <item quantity="other">%d minutes remaining</item>
     </plurals>
+
+    <!-- Strings for Cards Due Widget-->
+    <string name="cards_due_widget" comment="Cards Due Widget description">Cards Due</string>
 
     <string name="widget_add_note_button">Add new AnkiDroid note</string>
 </resources>
