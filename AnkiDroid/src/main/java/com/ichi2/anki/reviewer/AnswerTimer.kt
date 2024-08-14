@@ -27,8 +27,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.timeLimit
-import com.ichi2.libanki.timeTaken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -124,10 +122,10 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         }
         // Then update and resume the UI timer. Set the base time as if the timer had started
         // timeTaken() seconds ago.
-        setBase(elapsedRealTime - withCol { currentCard.timeTaken() })
+        setBase(elapsedRealTime - withCol { currentCard.timeTaken(this@withCol) })
 
         // Don't start the timer if we have already reached the time limit or it will tick over
-        if (elapsedRealTime - cardTimer.base < withCol { currentCard.timeLimit() }) {
+        if (elapsedRealTime - cardTimer.base < withCol { currentCard.timeLimit(this@withCol) }) {
             cardTimer.start()
         }
     }

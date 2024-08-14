@@ -267,13 +267,12 @@ open class BackupManager {
          *
          * @return whether the repair was successful
          */
-        context (Collection)
-        fun repairCollection(): Boolean {
-            val colPath = this@Collection.path
+        fun repairCollection(col: Collection): Boolean {
+            val colPath = col.path
             val colFile = File(colPath)
             val time = TimeManager.time
             Timber.i("BackupManager - RepairCollection - Closing Collection")
-            this@Collection.close()
+            col.close()
 
             // repair file
             val execString = "sqlite3 $colPath .dump | sqlite3 $colPath.tmp"
@@ -460,10 +459,9 @@ open class BackupManager {
          *
          * @return Whether all specified backups were successfully deleted.
          */
-        context (Collection)
         @Throws(IllegalArgumentException::class)
-        fun deleteBackups(backupsToDelete: List<File>): Boolean {
-            val allBackups = getBackups(File(this@Collection.path))
+        fun deleteBackups(collection: Collection, backupsToDelete: List<File>): Boolean {
+            val allBackups = getBackups(File(collection.path))
             val invalidBackupsToDelete = backupsToDelete.toSet() - allBackups.toSet()
 
             if (invalidBackupsToDelete.isNotEmpty()) {

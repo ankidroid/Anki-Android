@@ -68,5 +68,5 @@ class CardSoundConfigTest : JvmTest() {
     fun `cards with the same deck options are equal`() {
     }
 
-    private suspend fun createCardSoundConfig(card: Card) = withCol { CardSoundConfig.create(card) }
+    private suspend fun createCardSoundConfig(card: Card) = withCol { CardSoundConfig.create(this@withCol, card) }
 }

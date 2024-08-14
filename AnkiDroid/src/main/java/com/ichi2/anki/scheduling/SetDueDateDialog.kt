@@ -17,6 +17,7 @@
 package com.ichi2.anki.scheduling
 
 import android.app.Dialog
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -108,7 +109,7 @@ class SetDueDateDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return MaterialAlertDialogBuilder(requireContext()).create {
-            title(text = CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date))
+            title(text = CollectionManager.TR.actionsSetDueDate().toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date))
             positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
             negativeButton(R.string.dialog_cancel)
             neutralButton(R.string.help)
@@ -163,7 +164,7 @@ class SetDueDateDialog : DialogFragment() {
         // The dialog is too wide on tablets
         // Select either 450dp (tablets)
         // or 100% of the screen width (smaller phones)
-        val intendedWidth = min(MAX_WIDTH_DP.dpToPx, resources.displayMetrics.widthPixels)
+        val intendedWidth = min(MAX_WIDTH_DP.dpToPx(this.requireContext()), resources.displayMetrics.widthPixels)
         Timber.d("updating width to %d", intendedWidth)
         this.dialog?.window?.setLayout(
             intendedWidth,
@@ -275,7 +276,7 @@ class SetDueDateDialog : DialogFragment() {
 }
 
 // this can outlive the lifetime of the fragment
-private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this@AnkiActivity.launchCatchingTask {
+private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this.launchCatchingTask {
     // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
     val cardsUpdated = withProgress(resources.getString(R.string.dialog_processing)) {
         // this is async as it should be run on the viewModel
@@ -285,12 +286,12 @@ private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this@An
 
     if (cardsUpdated == null) {
         Timber.w("unable to update due date")
-        showThemedToast(R.string.something_wrong, true)
+        showThemedToast(this@updateDueDate, R.string.something_wrong, true)
         return@launchCatchingTask
     }
     showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
 }
 
-context (DialogFragment)
-val Int.dpToPx: Int
-    get() = (this * requireContext().resources.displayMetrics.density + 0.5f).toInt()
+// TODO: See if we can turn this to a `val` when context parameters are back
+fun Int.dpToPx(context: Context): Int =
+    (this * context.resources.displayMetrics.density + 0.5f).toInt()

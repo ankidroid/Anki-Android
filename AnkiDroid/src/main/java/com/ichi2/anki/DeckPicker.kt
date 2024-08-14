@@ -1904,7 +1904,7 @@ open class DeckPicker :
                 withCol {
                     Timber.i("RepairCollection: Closing collection")
                     close()
-                    BackupManager.repairCollection()
+                    BackupManager.repairCollection(this@withCol)
                 }
             }
             if (!result) {
@@ -1963,7 +1963,7 @@ open class DeckPicker :
         launchCatchingTask {
             // Number of deleted files
             val noOfDeletedFiles = withProgress(resources.getString(R.string.delete_media_message)) {
-                withCol { deleteMedia(unused) }
+                withCol { deleteMedia(this@withCol, unused) }
             }
             showSimpleMessageDialog(
                 title = resources.getString(R.string.delete_media_result_title),

@@ -216,8 +216,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
     }
 
     companion object {
-        context (TestClass)
-        fun runInstantEditorViewModelTest(
+        fun TestClass.runInstantEditorViewModelTest(
             initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
             testBody: suspend InstantEditorViewModel.() -> Unit
         ) = runTest {
@@ -227,23 +226,20 @@ class InstantEditorViewModelTest : RobolectricTest() {
     }
 }
 
-context (InstantEditorViewModel)
-private fun toggleAllClozeDeletions(words: MutableList<String>) {
+private fun InstantEditorViewModel.toggleAllClozeDeletions(words: MutableList<String>) {
     for (index in words.indices) {
         words[index] = buildClozeText(words[index])
     }
 }
 
-context (InstantEditorViewModel)
 @Suppress("SameParameterValue")
-private fun toggleClozeDeletions(words: MutableList<String>, vararg indices: Int) {
+private fun InstantEditorViewModel.toggleClozeDeletions(words: MutableList<String>, vararg indices: Int) {
     for (index in indices) {
         words[index] = buildClozeText(words[index])
     }
 }
 
-context (InstantEditorViewModel)
 @Suppress("SameParameterValue")
-private fun toggleClozeDeletion(words: MutableList<String>, index: Int) {
+private fun InstantEditorViewModel.toggleClozeDeletion(words: MutableList<String>, index: Int) {
     words[index] = buildClozeText(words[index])
 }

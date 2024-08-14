@@ -128,7 +128,6 @@ import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.setTagsFromStr
 import com.ichi2.libanki.stripAvRefs
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
@@ -886,7 +885,7 @@ open class CardBrowser :
         }
 
         actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
-            TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
 
         previewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
@@ -936,12 +935,12 @@ open class CardBrowser :
         }
         if (viewModel.hasSelectedAnyRows()) {
             actionBarMenu.findItem(R.id.action_suspend_card).apply {
-                title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
+                title = TR.browsingToggleSuspend().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_suspend)
                 // TODO: I don't think this icon is necessary
                 setIcon(R.drawable.ic_suspend)
             }
             actionBarMenu.findItem(R.id.action_toggle_bury).apply {
-                title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
+                title = TR.browsingToggleBury().toSentenceCase(this@CardBrowser, R.string.sentence_toggle_bury)
             }
             actionBarMenu.findItem(R.id.action_mark_card).apply {
                 title = TR.browsingToggleMark()
@@ -1347,6 +1346,7 @@ open class CardBrowser :
                     Timber.d("showEditTagsDialog: edit tags for one note")
                     tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
                     val dialog = tagsDialogFactory.newTagsDialog().withArguments(
+                        this@CardBrowser,
                         type = TagsDialog.DialogType.EDIT_TAGS,
                         checkedTags = checkedTags,
                         allTags = allTags
@@ -1378,6 +1378,7 @@ open class CardBrowser :
                 // withArguments performs IO, can be 18 seconds
                 val dialog = withContext(Dispatchers.IO) {
                     tagsDialogFactory.newTagsDialog().withArguments(
+                        context = this@CardBrowser,
                         type = TagsDialog.DialogType.EDIT_TAGS,
                         checkedTags = checkedTags,
                         uncheckedTags = uncheckedTags,
@@ -1392,9 +1393,10 @@ open class CardBrowser :
     private fun showFilterByTagsDialog() {
         tagsDialogListenerAction = TagsDialogListenerAction.FILTER
         val dialog = tagsDialogFactory.newTagsDialog().withArguments(
-            TagsDialog.DialogType.FILTER_BY_TAG,
-            ArrayList(0),
-            getColUnsafe.tags.all()
+            context = this@CardBrowser,
+            type = TagsDialog.DialogType.FILTER_BY_TAG,
+            checkedTags = ArrayList(0),
+            allTags = getColUnsafe.tags.all()
         )
         showDialogFragment(dialog)
     }
@@ -1552,7 +1554,7 @@ open class CardBrowser :
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
                     val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
-                    note.setTagsFromStr(tags.join(updatedTags))
+                    note.setTagsFromStr(this@undoableOp, tags.join(updatedTags))
                 }
             updateNotes(selectedNotes)
         }
@@ -2339,14 +2341,13 @@ suspend fun searchForCards(
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
-            .toCardCache(cardsOrNotes)
+            .toCardCache(this@withCol, cardsOrNotes)
             .toMutableList()
     }
 }
 
-context (Collection)
-private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
+private fun Sequence<CardId>.toCardCache(col: Collection, isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
 }
 
 class PreviewerDestination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)

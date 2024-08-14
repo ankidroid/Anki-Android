@@ -83,7 +83,7 @@ subprojects {
         tasks.withType(KotlinCompile::class.java).configureEach {
             compilerOptions {
                 allWarningsAsErrors = fatalWarnings
-                val compilerArgs = mutableListOf("-Xjvm-default=all", "-Xcontext-receivers")
+                val compilerArgs = mutableListOf("-Xjvm-default=all")
                 if (project.name != "api") {
                     compilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
                 }

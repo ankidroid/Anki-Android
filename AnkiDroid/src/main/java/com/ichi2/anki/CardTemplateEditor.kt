@@ -191,7 +191,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val notetype = tempModel!!.notetype
             val notetypeFile = NotetypeFile(this@CardTemplateEditor, notetype)
             val ord = viewPager.currentItem
-            val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(notetype.id) }
+            val note = withCol { currentFragment?.getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
             val args = TemplatePreviewerArguments(
                 notetypeFile = notetypeFile,
                 id = note.id,
@@ -736,7 +736,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
                 launchCatchingTask(resources.getString(R.string.card_template_editor_save_error)) {
                     requireActivity().withProgress(resources.getString(R.string.saving_model)) {
-                        withCol { templateEditor.tempModel!!.saveToDatabase() }
+                        withCol { templateEditor.tempModel!!.saveToDatabase(this@withCol) }
                     }
                     onModelSaved()
                 }
@@ -889,7 +889,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 val notetype = templateEditor.tempModel!!.notetype
                 val notetypeFile = NotetypeFile(requireContext(), notetype)
                 val ord = templateEditor.viewPager.currentItem
-                val note = withCol { getNote(this) ?: Note.fromNotetypeId(notetype.id) }
+                val note = withCol { getNote(this) ?: Note.fromNotetypeId(this@withCol, notetype.id) }
                 val args = TemplatePreviewerArguments(
                     notetypeFile = notetypeFile,
                     id = note.id,

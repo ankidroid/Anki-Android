@@ -63,8 +63,7 @@ class OnlyOnceTest : RobolectricTest() {
     }
 
     // catch the exception here otherwise the test scope will catch it and throw it, safe as we expect the exception
-    context(TestScope)
-    private fun preventMultipleExecutions(
+    private fun TestScope.preventMultipleExecutions(
         shouldCatchException: Boolean = false,
         wait: Boolean,
         function: () -> Unit
@@ -78,6 +77,6 @@ class OnlyOnceTest : RobolectricTest() {
                 }
             }
         }
-        if (wait) this@TestScope.advanceUntilIdle()
+        if (wait) advanceUntilIdle()
     }
 }

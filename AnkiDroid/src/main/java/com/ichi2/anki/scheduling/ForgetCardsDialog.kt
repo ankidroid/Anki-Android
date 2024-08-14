@@ -109,7 +109,7 @@ class ForgetCardsDialog : DialogFragment() {
 }
 
 // this can outlive the lifetime of the fragment
-private fun AnkiActivity.forgetCards(viewModel: ForgetCardsViewModel) = this@AnkiActivity.launchCatchingTask {
+private fun AnkiActivity.forgetCards(viewModel: ForgetCardsViewModel) = this.launchCatchingTask {
     // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
     val count = withProgress(resources.getString(R.string.dialog_processing)) {
         // this should be run on the viewModel

@@ -98,7 +98,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.renderOutput
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undoableOp
@@ -741,7 +740,7 @@ open class Reviewer :
 
         // Anki Desktop Translations
         menu.findItem(R.id.action_reschedule_card).title =
-            CollectionManager.TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            CollectionManager.TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
 
         // Undo button
         @DrawableRes val undoIconId: Int
@@ -1061,7 +1060,7 @@ open class Reviewer :
     override suspend fun updateCurrentCard() {
         val state = withCol {
             sched.currentQueueState()?.apply {
-                topCard.renderOutput(true)
+                topCard.renderOutput(this@withCol, reload = true)
             }
         }
         state?.timeboxReached?.let { dealWithTimeBox(it) }

@@ -169,7 +169,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
         }
         // handling file may result in exception
         try {
-            when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(selectedImage)) {
+            when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(this, selectedImage)) {
                 is FileSizeResult.FileTooLarge -> {
                     showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
                 }
@@ -177,7 +177,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                     showThemedToast(requireContext(), getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height), false)
                 }
                 is FileSizeResult.OK -> {
-                    BackgroundImage.import(selectedImage)
+                    BackgroundImage.import(this, selectedImage)
                 }
             }
         } catch (e: OutOfMemoryError) {

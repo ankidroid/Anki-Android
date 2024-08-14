@@ -145,9 +145,6 @@ import com.ichi2.libanki.Sound.getAvTag
 import com.ichi2.libanki.SoundOrVideoTag
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.note
-import com.ichi2.libanki.renderOutput
-import com.ichi2.libanki.setTagsFromStr
 import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
@@ -519,7 +516,7 @@ abstract class AbstractFlashcardViewer :
         // despite that making no sense outside of Reviewer.kt
         currentCard = withCol {
             sched.card?.apply {
-                renderOutput()
+                renderOutput(this@withCol, reload = false, browser = false)
             }
         }
     }
@@ -2612,7 +2609,7 @@ abstract class AbstractFlashcardViewer :
         val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
         val dialog = tagsDialogFactory!!.newTagsDialog()
-            .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
+            .withArguments(this, TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
     }
 
@@ -2622,10 +2619,10 @@ abstract class AbstractFlashcardViewer :
         stateFilter: CardStateFilter
     ) {
         launchCatchingTask {
-            val note = withCol { currentCard!!.note() }
+            val note = withCol { currentCard!!.note(this@withCol) }
             if (note.tags == selectedTags) return@launchCatchingTask
 
-            withCol { note.setTagsFromStr(selectedTags.joinToString(" ")) }
+            withCol { note.setTagsFromStr(this@withCol, selectedTags.joinToString(" ")) }
             undoableOp { updateNote(note) }
             // Reload current card to reflect tag changes
             reloadWebViewContent()

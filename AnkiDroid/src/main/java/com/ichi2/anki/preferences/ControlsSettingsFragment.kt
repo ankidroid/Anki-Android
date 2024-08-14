@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
+import androidx.annotation.StringRes
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
@@ -77,4 +78,7 @@ class ControlsSettingsFragment : SettingsFragment() {
             it.title = getString(R.string.gesture_flag_remove).toSentenceCase(R.string.sentence_gesture_flag_remove)
         }
     }
+
+    private fun String.toSentenceCase(@StringRes resId: Int): String =
+        this.toSentenceCase(this@ControlsSettingsFragment, resId)
 }

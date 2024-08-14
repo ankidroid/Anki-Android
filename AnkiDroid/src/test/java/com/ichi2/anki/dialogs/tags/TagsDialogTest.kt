@@ -688,25 +688,25 @@ class TagsDialogTest : RobolectricTest() {
         type: TagsDialog.DialogType,
         checkedTags: List<String>,
         allTags: List<String>
-    ) =
-        with(this@TagsDialogTest.targetContext) {
-            withArguments(type = type, checkedTags = checkedTags, allTags = allTags)
-        }
+    ) = withArguments(
+        context = targetContext,
+        type = type,
+        checkedTags = checkedTags,
+        allTags = allTags
+    )
 
     private fun TagsDialog.withTestArguments(
         type: TagsDialog.DialogType,
         checkedTags: List<String>,
         uncheckedTags: List<String>?,
         allTags: List<String>
-    ) =
-        with(this@TagsDialogTest.targetContext) {
-            withArguments(
-                type = type,
-                checkedTags = checkedTags,
-                uncheckedTags = uncheckedTags,
-                allTags = allTags
-            )
-        }
+    ) = withArguments(
+        context = targetContext,
+        type = type,
+        checkedTags = checkedTags,
+        uncheckedTags = uncheckedTags,
+        allTags = allTags
+    )
 
     companion object {
         private fun mockLifecycleOwner(): LifecycleOwner {

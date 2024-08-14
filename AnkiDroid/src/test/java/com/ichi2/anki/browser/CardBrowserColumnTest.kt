@@ -63,13 +63,13 @@ class CardBrowserColumnTest : JvmTest() {
 
     @Test
     fun `cards - ensure old values match backend values`() {
-        with(col) { CardsOrNotes.CARDS.saveToCollection() }
+        CardsOrNotes.CARDS.saveToCollection(col)
         `ensure old values match backend values`(CardsOrNotes.CARDS)
     }
 
     @Test
     fun `notes - ensure old values match backend values`() {
-        with(col) { CardsOrNotes.NOTES.saveToCollection() }
+        CardsOrNotes.NOTES.saveToCollection(col)
         `ensure old values match backend values`(CardsOrNotes.NOTES)
     }
 

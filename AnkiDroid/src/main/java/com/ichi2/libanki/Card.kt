@@ -463,23 +463,3 @@ open class Card : Cloneable {
         }
     }
 }
-
-/** @see Card.renderOutput */
-context (Collection)
-fun Card.renderOutput(reload: Boolean = false, browser: Boolean = false) =
-    this@Card.renderOutput(this@Collection, reload, browser)
-
-/** @see Card.note */
-context (Collection)
-fun Card.note() =
-    this@Card.note(this@Collection)
-
-/** @see Card.timeTaken */
-context (Collection)
-fun Card.timeTaken() =
-    this@Card.timeTaken(this@Collection)
-
-/** @see Card.timeLimit */
-context (Collection)
-fun Card.timeLimit() =
-    this@Card.timeLimit(this@Collection)
