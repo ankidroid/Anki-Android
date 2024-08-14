@@ -60,7 +60,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
 
     private fun setDynamicTitle() {
         findPreference<Preference>(getString(R.string.custom_button_schedule_card_key))?.let {
-            it.title = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            it.title = TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
         }
     }
 

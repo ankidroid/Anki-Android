@@ -121,7 +121,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
             Timber.d("Changing to cloze type note")
             _currentlySelectedNotetype.postValue(clozeNoteType)
             Timber.i("Using note type '%d", clozeNoteType.id)
-            editorNote = withCol { Note.fromNotetypeId(clozeNoteType.id) }
+            editorNote = withCol { Note.fromNotetypeId(this@withCol, clozeNoteType.id) }
 
             _dialogType.emit(DialogType.SHOW_EDITOR_DIALOG)
         }

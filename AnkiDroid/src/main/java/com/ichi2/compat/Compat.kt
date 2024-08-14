@@ -229,6 +229,3 @@ interface Compat {
     @Suppress("PropertyName")
     val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int
 }
-
-context (Context)
-fun Compat.vibrate(duration: Duration) = vibrate(this@Context, duration)

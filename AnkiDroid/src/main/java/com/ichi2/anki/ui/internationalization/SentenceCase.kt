@@ -29,17 +29,15 @@ import androidx.fragment.app.Fragment
  * "Toggle Suspend".toSentenceCase(R.string.sentence_toggle_suspend) // "Toggle suspend"
  * ```
  */
-context (Activity)
-fun String.toSentenceCase(@StringRes resId: Int): String {
-    val resString = getString(resId)
+fun String.toSentenceCase(activity: Activity, @StringRes resId: Int): String {
+    val resString = activity.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
     if (this.lowercase() == resString.lowercase()) return resString
     return this
 }
 
-context (Fragment)
-fun String.toSentenceCase(@StringRes resId: Int): String {
-    val resString = getString(resId)
+fun String.toSentenceCase(fragment: Fragment, @StringRes resId: Int): String {
+    val resString = fragment.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
     if (this.lowercase() == resString.lowercase()) return resString
     return this

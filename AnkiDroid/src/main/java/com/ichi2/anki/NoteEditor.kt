@@ -108,6 +108,7 @@ import com.ichi2.anki.noteeditor.CustomToolbarButton
 import com.ichi2.anki.noteeditor.FieldState
 import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
+import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.pages.ImageOcclusion
@@ -139,8 +140,6 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.load
-import com.ichi2.libanki.note
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.HashUtil
@@ -168,12 +167,10 @@ import java.io.File
 import java.util.LinkedList
 import java.util.Locale
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import androidx.appcompat.widget.Toolbar as MainToolbar
-import com.ichi2.anki.noteeditor.Toolbar as Toolbar
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -1175,7 +1172,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             if (caller == CALLER_PREVIEWER_EDIT || caller == CALLER_EDIT) {
                 withProgress {
                     undoableOp {
-                        updateNote(currentEditedCard!!.note())
+                        updateNote(currentEditedCard!!.note(this@undoableOp))
                     }
                 }
             }
@@ -1196,7 +1193,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             notetypes.change(oldNotetype, noteId, newNotetype, modelChangeFieldMap!!, modelChangeCardMap!!)
         }
         // refresh the note object to reflect the database changes
-        withCol { editorNote!!.load() }
+        withCol { editorNote!!.load(this@withCol) }
         // close note editor
         closeNoteEditor()
     }
@@ -1377,7 +1374,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         val tags = selectedTags ?: mutableListOf()
 
         val ord = if (editorNote!!.notetype.isCloze) {
-            val tempNote = withCol { Note.fromNotetypeId(editorNote!!.notetype.id) }
+            val tempNote = withCol { Note.fromNotetypeId(this@withCol, editorNote!!.notetype.id) }
             tempNote.fields = fields // makes possible to get the cloze numbers from the fields
             val clozeNumbers = withCol { clozeNumbersInNote(tempNote) }
             if (clozeNumbers.isNotEmpty()) {
@@ -1485,7 +1482,12 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(selectedTags!!)
         val dialog = with(requireContext()) {
-            tagsDialogFactory!!.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
+            tagsDialogFactory!!.newTagsDialog().withArguments(
+                context = this,
+                type = TagsDialog.DialogType.EDIT_TAGS,
+                checkedTags = selTags,
+                allTags = tags
+            )
         }
         showDialogFragment(dialog)
     }
@@ -1544,7 +1546,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     private suspend fun getCurrentMultimediaEditableNote(): MultimediaEditableNote? {
         val note = NoteService.createEmptyNote(editorNote!!.notetype)
         val fields = currentFieldStrings.requireNoNulls()
-        withCol { NoteService.updateMultimediaNoteFromFields(fields, editorNote!!.mid, note!!) }
+        withCol { NoteService.updateMultimediaNoteFromFields(this@withCol, fields, editorNote!!.mid, note!!) }
 
         return note
     }
@@ -2091,7 +2093,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         editorNote = if (note == null || addNote) {
             getColUnsafe.run {
                 val notetype = notetypes.current()
-                Note.fromNotetypeId(notetype.id)
+                Note.fromNotetypeId(this@run, notetype.id)
             }
         } else {
             note

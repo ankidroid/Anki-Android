@@ -65,10 +65,9 @@ class Note : Cloneable {
     }
 
     companion object {
-        context (Collection)
-        fun fromNotetypeId(ntid: NoteTypeId): Note {
-            val backendNote = backend.newNote(ntid)
-            return Note(this@Collection, backendNote)
+        fun fromNotetypeId(col: Collection, ntid: NoteTypeId): Note {
+            val backendNote = col.backend.newNote(ntid)
+            return Note(col, backendNote)
         }
     }
 
@@ -301,15 +300,3 @@ class Note : Cloneable {
         }
     }
 }
-
-/** @see Note.hasTag */
-context (Collection)
-fun Note.hasTag(tag: String) = this.hasTag(this@Collection, tag)
-
-/** @see Note.setTagsFromStr */
-context (Collection)
-fun Note.setTagsFromStr(str: String) = this.setTagsFromStr(this@Collection, str)
-
-/** @see Note.load */
-context (Collection)
-fun Note.load() = this.load(this@Collection)

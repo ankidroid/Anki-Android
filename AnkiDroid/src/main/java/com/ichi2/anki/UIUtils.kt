@@ -2,12 +2,10 @@
 
 package com.ichi2.anki
 
-import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 import com.ichi2.libanki.utils.Time
 import java.util.Calendar
 
@@ -21,16 +19,6 @@ fun showThemedToast(context: Context, text: CharSequence, shortLength: Boolean) 
 
 fun showThemedToast(context: Context, @StringRes textResource: Int, shortLength: Boolean) {
     Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
-}
-
-context (Fragment)
-fun showThemedToast(@StringRes textResource: Int, shortLength: Boolean) {
-    Toast.makeText(requireContext(), textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
-}
-
-context (Activity)
-fun showThemedToast(@StringRes textResource: Int, shortLength: Boolean) {
-    Toast.makeText(this@Activity, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
 }
 
 fun getDensityAdjustedValue(context: Context, value: Float): Float {

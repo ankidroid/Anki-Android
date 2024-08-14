@@ -107,9 +107,8 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param allTags all possible tags in the collection
      * @return Initialized instance of [TagsDialog]
      */
-    context(Context)
-    fun withArguments(type: DialogType, checkedTags: List<String>, allTags: List<String>): TagsDialog {
-        return withArguments(type, checkedTags, null, allTags)
+    fun withArguments(context: Context, type: DialogType, checkedTags: List<String>, allTags: List<String>): TagsDialog {
+        return withArguments(context, type, checkedTags, null, allTags)
     }
 
     /**
@@ -121,15 +120,15 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param allTags all possible tags in the collection
      * @return Initialized instance of [TagsDialog]
      */
-    context(Context)
     fun withArguments(
+        context: Context,
         type: DialogType,
         checkedTags: List<String>,
         uncheckedTags: List<String>?,
         allTags: List<String>
     ): TagsDialog {
         val data = TagsFile.TagsData(type, checkedTags, uncheckedTags, allTags)
-        val file = TagsFile(cacheDir, data)
+        val file = TagsFile(context.cacheDir, data)
         arguments = this.arguments ?: bundleOf(
             ARG_TAGS_FILE to file
         )

@@ -35,8 +35,6 @@ import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.hasTag
-import com.ichi2.libanki.note
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -116,7 +114,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     fun toggleMark() {
         launchCatchingIO {
             val card = currentCard.await()
-            val note = withCol { card.note() }
+            val note = withCol { card.note(this@withCol) }
             NoteService.toggleMark(note)
             isMarked.emit(NoteService.isMarked(note))
         }
@@ -217,7 +215,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
 
     private suspend fun updateMarkIcon() {
         val card = currentCard.await()
-        val isMarkedValue = withCol { card.note().hasTag(MARKED_TAG) }
+        val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
         isMarked.emit(isMarkedValue)
     }
 

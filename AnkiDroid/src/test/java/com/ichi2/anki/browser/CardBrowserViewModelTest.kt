@@ -247,7 +247,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `sort order from notes is selected - 16514`() {
         col.config.set("sortType", "noteCrt")
         col.config.set("noteSortType", "_field_Frequency")
-        with(col) { CardsOrNotes.NOTES.saveToCollection() }
+        CardsOrNotes.NOTES.saveToCollection(col)
 
         runViewModelTest(notes = 1) {
             assertThat("1 row returned", rowCount, equalTo(1))
@@ -716,7 +716,7 @@ class CardBrowserViewModelTest : JvmTest() {
         testBody: suspend CardBrowserViewModel.() -> Unit
     ) =
         runTest {
-            with(col) { CardsOrNotes.NOTES.saveToCollection() }
+            CardsOrNotes.NOTES.saveToCollection(col)
             for (i in 0 until notes) {
                 // ensure 1 note = 2 cards
                 addNoteUsingBasicAndReversedModel()
@@ -770,7 +770,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
             // default is CARDS, do nothing in this case
             if (mode == CardsOrNotes.NOTES) {
-                CollectionManager.withCol { mode.saveToCollection() }
+                CollectionManager.withCol { mode.saveToCollection(this@withCol) }
             }
 
             val cache = File(createTempDirectory().pathString)

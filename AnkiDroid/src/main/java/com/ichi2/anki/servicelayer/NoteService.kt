@@ -78,8 +78,12 @@ object NoteService {
         return null
     }
 
-    context (Collection)
-    fun updateMultimediaNoteFromFields(fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(
+        col: Collection,
+        fields: Array<String>,
+        modelId: NoteTypeId,
+        mmNote: MultimediaEditableNote
+    ) {
         for (i in fields.indices) {
             val value = fields[i]
             val field: IField = if (value.startsWith("<img")) {
@@ -91,7 +95,7 @@ object NoteService {
             } else {
                 TextField()
             }
-            field.setFormattedString(this@Collection, value)
+            field.setFormattedString(col, value)
             mmNote.setField(i, field)
         }
         mmNote.modelId = modelId
@@ -117,10 +121,6 @@ object NoteService {
             }
         }
     }
-
-    context (Collection)
-    fun importMediaFileToDirectory(field: IField?) =
-        importMediaToDirectory(this@Collection, field)
 
     /**
      * Considering the field is new, if it has media handle it

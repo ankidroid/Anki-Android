@@ -34,12 +34,12 @@ class SentenceCaseTest : RobolectricTest() {
     @Test
     fun `English is converted to sentence case`() {
         with(super.startRegularActivity<IntroductionActivity>()) {
-            assertThat(TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
-            assertThat(TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury), equalTo("Toggle bury"))
-            assertThat(TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date), equalTo("Set due date"))
+            assertThat(TR.browsingToggleSuspend().toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
+            assertThat(TR.browsingToggleBury().toSentenceCase(this, R.string.sentence_toggle_bury), equalTo("Toggle bury"))
+            assertThat(TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date), equalTo("Set due date"))
 
-            assertThat("Toggle Suspend".toSentenceCase(R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
-            assertThat("Ook? Ook?".toSentenceCase(R.string.sentence_toggle_suspend), equalTo("Ook? Ook?"))
+            assertThat("Toggle Suspend".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Toggle suspend"))
+            assertThat("Ook? Ook?".toSentenceCase(this, R.string.sentence_toggle_suspend), equalTo("Ook? Ook?"))
         }
     }
 }

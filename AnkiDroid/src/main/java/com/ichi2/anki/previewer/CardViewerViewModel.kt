@@ -34,7 +34,6 @@ import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TtsPlayer
-import com.ichi2.libanki.note
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -223,7 +222,7 @@ abstract class CardViewerViewModel(
 
         suspend fun getExpectedTypeInAnswer(card: Card, field: JSONObject): String? {
             val fieldName = field.getString("name")
-            val expected = withCol { card.note().getItem(fieldName) }
+            val expected = withCol { card.note(this@withCol).getItem(fieldName) }
             return if (fieldName.startsWith("cloze:")) {
                 val clozeIdx = card.ord + 1
                 withCol {

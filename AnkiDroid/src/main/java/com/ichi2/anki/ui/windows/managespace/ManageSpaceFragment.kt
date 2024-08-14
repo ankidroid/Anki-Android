@@ -95,7 +95,7 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     suspend fun deleteMediaFiles(filesNamesToDelete: List<String>) {
         try {
-            withCol { deleteMedia(filesNamesToDelete) }
+            withCol { deleteMedia(this@withCol, filesNamesToDelete) }
         } finally {
             launchCalculationOfSizeOfEverything()
             launchCalculationOfCollectionSize()
@@ -117,7 +117,7 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 
     suspend fun deleteBackups(backupsToDelete: List<File>) {
         try {
-            withCol { BackupManager.deleteBackups(backupsToDelete) }
+            withCol { BackupManager.deleteBackups(this@withCol, backupsToDelete) }
         } finally {
             launchCalculationOfBackupsSize()
             launchCalculationOfCollectionSize()

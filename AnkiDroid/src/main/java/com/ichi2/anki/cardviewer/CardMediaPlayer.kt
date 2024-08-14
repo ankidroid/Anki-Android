@@ -144,7 +144,7 @@ class CardMediaPlayer : Closeable {
         this.answers = renderOutput.answerAvTags
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
-            config = withCol { CardSoundConfig.create(card) }
+            config = withCol { CardSoundConfig.create(this@withCol, card) }
         }
     }
 
@@ -162,7 +162,7 @@ class CardMediaPlayer : Closeable {
         this.answers = renderOutput.answerAvTags
 
         if (!this::config.isInitialized || !config.appliesTo(card)) {
-            config = withCol { CardSoundConfig.create(card) }
+            config = withCol { CardSoundConfig.create(this@withCol, card) }
         }
     }
 

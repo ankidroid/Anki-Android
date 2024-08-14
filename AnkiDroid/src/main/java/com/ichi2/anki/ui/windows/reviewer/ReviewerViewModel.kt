@@ -43,8 +43,6 @@ import com.ichi2.anki.servicelayer.isBuryNoteAvailable
 import com.ichi2.anki.servicelayer.isSuspendNoteAvailable
 import com.ichi2.anki.ui.windows.reviewer.autoadvance.AutoAdvance
 import com.ichi2.libanki.ChangeManager
-import com.ichi2.libanki.hasTag
-import com.ichi2.libanki.note
 import com.ichi2.libanki.redo
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
@@ -161,7 +159,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     fun toggleMark() {
         launchCatchingIO {
             val card = currentCard.await()
-            val note = withCol { card.note() }
+            val note = withCol { card.note(this@withCol) }
             NoteService.toggleMark(note)
             isMarkedFlow.emit(NoteService.isMarked(note))
         }
@@ -371,7 +369,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
     private suspend fun updateMarkedStatus() {
         val card = currentCard.await()
-        val isMarkedValue = withCol { card.note().hasTag(MARKED_TAG) }
+        val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
         isMarkedFlow.emit(isMarkedValue)
     }
 

@@ -68,7 +68,7 @@ class TemplatePreviewerViewModel(
                 if (arguments.id != 0L) {
                     Note(this, arguments.id)
                 } else {
-                    Note.fromNotetypeId(arguments.notetype.id)
+                    Note.fromNotetypeId(this@withCol, arguments.notetype.id)
                 }
             }.apply {
                 fields = arguments.fields
