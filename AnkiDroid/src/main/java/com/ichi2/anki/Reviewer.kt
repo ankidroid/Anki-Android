@@ -92,9 +92,11 @@ import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.updateInBackground
+import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import java.io.File
 import java.util.function.Consumer
+import kotlin.coroutines.resume
 
 @Suppress("LeakingThis")
 @KotlinCleanup("too many to count")
@@ -110,7 +112,6 @@ open class Reviewer :
     private var prefFullscreenReview = false
     private lateinit var colorPalette: LinearLayout
     private var toggleStylus = false
-    private var stopTimerWithTimebox = false
 
     private val server = AnkiServer(this).also { it.start() }
     override val baseUrl get() = server.baseUrl()
@@ -1037,7 +1038,9 @@ open class Reviewer :
                 topCard.renderOutput(true)
             }
         }
-        state?.timeboxReached?.let { dealWithTimeBox(it) }
+        state?.timeboxReached?.let {
+            dealWithTimeBox(it)
+        }
         currentCard = state?.topCard
         queueState = state
     }
@@ -1063,28 +1066,26 @@ open class Reviewer :
         }
     }
 
-    private fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
+    private suspend fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
         val nCards = timebox.reps
         val nMins = timebox.secs / 60
         val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
         val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-        stopTimerWithTimebox = true
-        AlertDialog.Builder(this).show {
-            title(R.string.timebox_reached_title)
-            message(text = timeboxMessage)
-            positiveButton(R.string.dialog_continue) {
-                stopTimerWithTimebox = false
-                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
-            }
-            negativeButton(text = CollectionManager.TR.studyingFinish()) {
-                stopTimerWithTimebox = false
-                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
-                finish()
-            }
-            cancelable(true)
-            setOnCancelListener {
-                stopTimerWithTimebox = false
-                if (!stopTimerWithTimebox) launchCatchingTask { answerTimer.resume() }
+        suspendCancellableCoroutine { coroutines ->
+            AlertDialog.Builder(this).show {
+                title(R.string.timebox_reached_title)
+                message(text = timeboxMessage)
+                positiveButton(R.string.dialog_continue) {
+                    coroutines.resume(Unit)
+                }
+                negativeButton(text = CollectionManager.TR.studyingFinish()) {
+                    coroutines.resume(Unit)
+                    finish()
+                }
+                cancelable(true)
+                setOnCancelListener {
+                    coroutines.resume(Unit)
+                }
             }
         }
     }
@@ -1093,7 +1094,6 @@ open class Reviewer :
         statesMutated = false
         // show timer, if activated in the deck's preferences
         answerTimer.setupForCard(getColUnsafe, currentCard!!)
-        if (stopTimerWithTimebox)answerTimer.pause()
         delayedHide(100)
         super.displayCardQuestion()
     }
