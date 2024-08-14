@@ -17,15 +17,29 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.config.ConfigKey
 import anki.config.OptionalStringConfigKey
+import anki.config.optionalStringConfigKey
 import anki.frontend.SchedulingStatesWithContext
 import anki.i18n.FormatTimespanRequest
-import anki.scheduler.*
+import anki.scheduler.BuryOrSuspendCardsRequest
+import anki.scheduler.CardAnswer
+import anki.scheduler.CongratsInfoResponse
+import anki.scheduler.CustomStudyDefaultsResponse
+import anki.scheduler.CustomStudyRequest
+import anki.scheduler.QueuedCards
+import anki.scheduler.SchedTimingTodayResponse
+import anki.scheduler.SchedulingContext
+import anki.scheduler.SchedulingState
+import anki.scheduler.SchedulingStates
+import anki.scheduler.UnburyDeckRequest
+import anki.scheduler.cardAnswer
+import anki.scheduler.scheduleCardsAsNewRequest
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
@@ -39,9 +53,31 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.EpochSeconds
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
+import com.ichi2.libanki.utils.LibAnkiAlias
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
+import kotlin.math.ceil
+import kotlin.math.max
+
+/**
+ * A parameter for [Scheduler.setDueDate]
+ * This contains 3 elements:
+ * * start (int)
+ * * end (int - optional)
+ * * change interval (optional - represented as a "!" suffix)
+ *
+ * examples:
+ * ```
+ * 0 = today
+ * 1! = tomorrow + change interval to 1
+ * 3-7 = random choice of 3-7 days
+ * ```
+ */
+@JvmInline
+@NotInLibAnki
+value class SetDueDateDays(val value: String)
 
 data class CurrentQueueState(
     val topCard: Card,
@@ -91,6 +127,7 @@ open class Scheduler(val col: Collection) {
     }
 
     /** The time labels for the four answer buttons. */
+    @LibAnkiAlias("describe_next_states")
     fun describeNextStates(states: SchedulingStates): List<String> {
         return col.backend.describeNextStates(states)
     }
@@ -199,11 +236,20 @@ open class Scheduler(val col: Collection) {
     }
 
     /**
+     * @param cids Ids of cards to unbury
+     */
+    fun unburyCards(cids: Iterable<CardId>): OpChanges {
+        return col.backend.restoreBuriedAndSuspendedCards(cids)
+    }
+
+    /**
      * @param ids Id of cards to suspend
      */
     open fun suspendCards(ids: Iterable<CardId>): OpChangesWithCount {
+        val cids = ids.toList()
+        Timber.i("suspending %d card(s)", cids.size)
         return col.backend.buryOrSuspendCards(
-            cardIds = ids.toList(),
+            cardIds = cids,
             noteIds = listOf(),
             mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
         )
@@ -221,8 +267,10 @@ open class Scheduler(val col: Collection) {
      * @param ids Id of cards to unsuspend
      */
     open fun unsuspendCards(ids: Iterable<CardId>): OpChanges {
+        val cids = ids.toList()
+        Timber.i("unsuspending %d card(s)", cids.size)
         return col.backend.restoreBuriedAndSuspendedCards(
-            cids = ids.toList()
+            cids = cids
         )
     }
 
@@ -267,10 +315,9 @@ open class Scheduler(val col: Collection) {
     /**
      * @return Whether there are buried card is selected deck
      */
-    open fun haveBuriedInCurrentDeck(): Boolean {
-        return col.backend.congratsInfo().run {
-            haveUserBuried || haveSchedBuried
-        }
+    fun haveBuried(): Boolean {
+        val info = congratulationsInfo()
+        return info.haveUserBuried || info.haveSchedBuried
     }
 
     /** @return whether there are cards in learning, with review due the same
@@ -283,12 +330,16 @@ open class Scheduler(val col: Collection) {
     /**
      * @param ids Ids of cards to put at the end of the new queue.
      */
-    open fun forgetCards(ids: List<CardId>): OpChanges {
+    open fun forgetCards(
+        ids: List<CardId>,
+        restorePosition: Boolean = false,
+        resetCounts: Boolean = false
+    ): OpChanges {
         val request = scheduleCardsAsNewRequest {
             cardIds.addAll(ids)
             log = true
-            restorePosition = false
-            resetCounts = false
+            this.restorePosition = restorePosition
+            this.resetCounts = resetCounts
         }
         return col.backend.scheduleCardsAsNew(request)
     }
@@ -302,6 +353,29 @@ open class Scheduler(val col: Collection) {
      */
     open fun reschedCards(ids: List<CardId>, imin: Int, imax: Int): OpChanges {
         return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
+    }
+
+    /**
+     * Set cards to be due in [days], turning them into review cards if necessary.
+     * `days` can be of the form '5' or '5..7'. See [SetDueDateDays]
+     * If `config_key` is provided, provided days will be remembered in config.
+     */
+    fun setDueDate(cardIds: List<CardId>, days: SetDueDateDays, configKey: ConfigKey.String? = null): OpChanges {
+        val key: OptionalStringConfigKey?
+        if (configKey != null) {
+            key = optionalStringConfigKey { this.key = configKey }
+        } else {
+            key = null
+        }
+
+        Timber.i("updating due date of %d card(s) to '%s'", cardIds.size, days.value)
+
+        return col.backend.setDueDate(
+            cardIds = cardIds,
+            days = days.value,
+            // this value is optional; the auto-generated typing is wrong
+            configKey = key ?: OptionalStringConfigKey.getDefaultInstance()
+        )
     }
 
     /**
@@ -385,6 +459,27 @@ open class Scheduler(val col: Collection) {
         return Utils.ids2str(col.decks.active())
     }
 
+    fun congratulationsInfo(): CongratsInfoResponse {
+        return col.backend.congratsInfo()
+    }
+
+    fun haveManuallyBuried(): Boolean {
+        return congratulationsInfo().haveUserBuried
+    }
+
+    fun haveBuriedSiblings(): Boolean {
+        return congratulationsInfo().haveSchedBuried
+    }
+
+    @CheckResult
+    fun customStudy(request: CustomStudyRequest): OpChanges {
+        return col.backend.customStudy(request)
+    }
+
+    fun customStudyDefaults(deckId: DeckId): CustomStudyDefaultsResponse {
+        return col.backend.customStudyDefaults(deckId)
+    }
+
     /**
      * @return Number of new card in current deck and its descendants. Capped at [REPORT_LIMIT]
      */
@@ -421,69 +516,8 @@ open class Scheduler(val col: Collection) {
     open val dayCutoff: EpochSeconds
         get() = timingToday().nextDayAt
 
-    /* internal */
-    fun timingToday(): SchedTimingTodayResponse {
-        return if (true) { // (BackendFactory.defaultLegacySchema) {
-            val request = schedTimingTodayLegacyRequest {
-                createdSecs = col.crt
-                col.config.get<Int?>("creationOffset")?.let {
-                    createdMinsWest = it
-                }
-                nowSecs = time.intTime()
-                nowMinsWest = currentTimezoneOffset()
-                rolloverHour = rolloverHour()
-            }
-            return col.backend.schedTimingTodayLegacy(request)
-        } else {
-            // this currently breaks a bunch of unit tests that assume a mocked time,
-            // as it uses the real time to calculate daysElapsed
-            col.backend.schedTimingToday()
-        }
-    }
-
-    fun rolloverHour(): Int {
-        return col.config.get("rollover") ?: 4
-    }
-
-    open fun currentTimezoneOffset(): Int {
-        return localMinutesWest(time.intTime())
-    }
-
-    /**
-     * For the given timestamp, return minutes west of UTC in the local timezone.
-     *
-     * eg, Australia at +10 hours is -600.
-     * Includes the daylight savings offset if applicable.
-     *
-     * @param timestampSeconds The timestamp in seconds
-     * @return minutes west of UTC in the local timezone
-     */
-    fun localMinutesWest(timestampSeconds: Long): Int {
-        return col.backend.localMinutesWestLegacy(timestampSeconds)
-    }
-
-    /**
-     * Save the UTC west offset at the time of creation into the DB.
-     * Once stored, this activates the new timezone handling code.
-     */
-    fun setCreationOffset() {
-        val minsWest = localMinutesWest(col.crt)
-        col.config.set("creationOffset", minsWest)
-    }
-
-    // New timezone handling
-    // ////////////////////////////////////////////////////////////////////////
-
-    fun newTimezoneEnabled(): Boolean {
-        return col.config.get<Int?>("creationOffset") != null
-    }
-
-    fun useNewTimezoneCode() {
-        setCreationOffset()
-    }
-
-    fun clearCreationOffset() {
-        col.config.remove("creationOffset")
+    private fun timingToday(): SchedTimingTodayResponse {
+        return col.backend.schedTimingToday()
     }
 
     /** true if there are any rev cards due.  */
@@ -534,7 +568,7 @@ open class Scheduler(val col: Collection) {
         var revTime: Double
         var relrnRate: Double
         var relrnTime: Double
-        if (reload || etaCache.get(0) == -1.0) {
+        if (reload || etaCache[0] == -1.0) {
             col
                 .db
                 .query(
@@ -572,12 +606,12 @@ open class Scheduler(val col: Collection) {
             etaCache[4] = relrnRate
             etaCache[5] = relrnTime
         } else {
-            newRate = etaCache.get(0)
-            newTime = etaCache.get(1)
-            revRate = etaCache.get(2)
-            revTime = etaCache.get(3)
-            relrnRate = etaCache.get(4)
-            relrnTime = etaCache.get(5)
+            newRate = etaCache[0]
+            newTime = etaCache[1]
+            revRate = etaCache[2]
+            revTime = etaCache[3]
+            relrnRate = etaCache[4]
+            relrnTime = etaCache[5]
         }
 
         // Calculate the total time for each queue based on the historical average duration per rep
@@ -590,8 +624,8 @@ open class Scheduler(val col: Collection) {
 
         // Every queue has a failure rate, and each failure will become a relrn
         var toRelrn = counts.new // Assume every new card becomes 1 relrn
-        toRelrn += Math.ceil((1 - relrnRate) * counts.lrn).toInt()
-        toRelrn += Math.ceil((1 - revRate) * counts.rev).toInt()
+        toRelrn += ceil((1 - relrnRate) * counts.lrn).toInt()
+        toRelrn += ceil((1 - revRate) * counts.rev).toInt()
 
         // Use the accuracy rate of the relrn queue to estimate how many reps we will end up with if the cards
         // currently in relrn continue to fail at that rate. Loop through the failures of the failures until we end up
@@ -599,7 +633,7 @@ open class Scheduler(val col: Collection) {
 
         // Cap the lower end of the success rate to ensure the loop ends (it could be 0 if no revlog history, or
         // negative for other reasons). 5% seems reasonable to ensure the loop doesn't iterate too much.
-        relrnRate = Math.max(relrnRate, 0.05)
+        relrnRate = max(relrnRate, 0.05)
         var futureReps = 0
         do {
             // Truncation ensures the failure rate always decreases
@@ -616,7 +650,7 @@ open class Scheduler(val col: Collection) {
      * @return The conf of the deck of the card.
      */
     fun cardConf(card: Card): DeckConfig {
-        return col.decks.confForDid(card.did)
+        return col.decks.configDictForDeckId(card.did)
     }
 
     /*

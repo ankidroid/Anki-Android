@@ -50,17 +50,17 @@
         <item quantity="other">%d कार्डे दर्शविली</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d टीप दाखवली</item>
+        <item quantity="other">%d टिपा दाखवल्या</item>
     </plurals>
     <string name="card_browser_all_decks">सर्व डेक</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">कार्ड हटवा</item>
+        <item quantity="other">कार्डे हटवा</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">टीप हटवा</item>
+        <item quantity="other">नोट्स हटवा</item>
     </plurals>
     <string name="card_browser_change_deck">डेक बदला</string>
     <string name="delete_card_title">टीप हटवायची?</string>
@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">सध्याच्या शोधासाठी नाव</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">आपण नावाशिवाय शोध जतन करू शकत नाही</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">नाव अस्तित्त्वात आहे</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” हटवायचे?</string>
     <string name="card_browser_change_display_order">प्रदर्शन क्रम बदला</string>
     <string name="card_browser_change_display_order_title">प्रदर्शन क्रम निवडा</string>
@@ -99,13 +100,14 @@
     <string name="card_browser_search_all_decks">सर्व डेक शोधा</string>
     <string name="card_browser_unknown_deck_name">अज्ञात</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">आज \'0 %1$s\' आहे, उद्या \'1 %2$s\' आहे, इ&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">निर्यात कार्ड</item>
+        <item quantity="other">कार्ड निर्यात करा</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">नोट निर्यात करा</item>
+        <item quantity="other">नोट्स निर्यात करा</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d कार्ड हटविले</item>

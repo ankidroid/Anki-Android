@@ -23,30 +23,47 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.database.CursorWindow
 import android.net.Uri
+import anki.notetypes.StockNotetype
 import com.ichi2.anki.AbstractFlashcardViewer
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.FlashCardsContract
+import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.addNotetypeLegacy
+import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.getStockNotetypeLegacy
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.libanki.utils.set
+import com.ichi2.testutils.common.assertThrows
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.emptyStringArray
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
-import org.hamcrest.MatcherAssert.*
-import org.hamcrest.Matchers.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.greaterThanOrEqualTo
 import org.json.JSONObject
-import org.junit.*
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
-import org.junit.Assume.*
+import org.junit.Assume.assumeTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import timber.log.Timber
-import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.junit.JUnitAsserter.assertNotNull
 
@@ -63,7 +80,6 @@ class ContentProviderTest : InstrumentedTest() {
     // Whether tear down should be executed. I.e. if set up was not cancelled.
     private var tearDown = false
 
-    @KotlinCleanup("lateinit")
     private var numDecksBeforeTest = 0
 
     /* initialCapacity set to expected value when the test is written.
@@ -83,7 +99,7 @@ class ContentProviderTest : InstrumentedTest() {
         createdNotes = ArrayList()
         tearDown = true
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        val model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
+        val model = createBasicModel()
         modelId = model.getLong("id")
         val fields = model.fieldsNames
         // Use the names of the fields as test values for the notes which will be added
@@ -111,6 +127,14 @@ class ContentProviderTest : InstrumentedTest() {
         createdNotes.add(setupNewNote(col, modelId, 1, dummyFields, TEST_TAG))
     }
 
+    private fun createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
+        val m = BackendUtils.fromJsonBytes(
+            col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
+        ).apply { set("name", name) }
+        col.addNotetypeLegacy(BackendUtils.toJsonBytes(m))
+        return col.notetypes.byName(name)!!
+    }
+
     /**
      * Remove the notes and decks created in setUp().
      */
@@ -133,7 +157,7 @@ class ContentProviderTest : InstrumentedTest() {
             )
         }
         // delete test decks
-        col.decks.removeDecks(testDeckIds)
+        col.decks.remove(testDeckIds)
         assertEquals(
             "Check that all created decks have been deleted",
             numDecksBeforeTest,
@@ -186,7 +210,6 @@ class ContentProviderTest : InstrumentedTest() {
      * Check that inserting and removing a note into default deck works as expected
      */
     @Test
-    @KotlinCleanup("assertThrows")
     fun testInsertAndRemoveNote() {
         // Get required objects for test
         val cr = contentResolver
@@ -215,11 +238,9 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards(col))
         // Now delete the note
         cr.delete(newNoteUri, null, null)
-        try {
+
+        assertThrows<RuntimeException>("RuntimeException is thrown when deleting note") {
             addedNote.load(col)
-            fail("Expected RuntimeException to be thrown when deleting note")
-        } catch (e: RuntimeException) {
-            // Expect RuntimeException to be thrown when loading deleted note
         }
     }
 
@@ -234,7 +255,7 @@ class ContentProviderTest : InstrumentedTest() {
             put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
             put(FlashCardsContract.Note.TAGS, TEST_TAG)
         }
-        assertThrows(BackendNotFoundException::class.java) {
+        assertThrows<BackendNotFoundException> {
             contentResolver.insert(FlashCardsContract.Note.CONTENT_URI, values)
         }
     }
@@ -249,7 +270,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cr = contentResolver
         var col = col
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        var model: NotetypeJson? = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
+        var model: NotetypeJson? = createBasicModel()
         val modelId = model!!.getLong("id")
         // Add the note
         val modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId)
@@ -303,7 +324,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Get required objects for test
         val cr = contentResolver
         var col = col
-        var model: NotetypeJson? = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
+        var model: NotetypeJson? = createBasicModel()
         val modelId = model!!.getLong("id")
         val initialFieldsArr = model.getJSONArray("flds")
         val initialFieldCount = initialFieldsArr.length()
@@ -1146,12 +1167,10 @@ class ContentProviderTest : InstrumentedTest() {
         val noteId = card.nid
         val cardOrd = card.ord
 
-        @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")
         val values = ContentValues().apply {
-            val suspend = 1
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
             put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-            put(FlashCardsContract.ReviewInfo.SUSPEND, suspend)
+            put(FlashCardsContract.ReviewInfo.SUSPEND, 1)
         }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
         assertEquals("Check if update returns 1", 1, updateCount)
@@ -1221,6 +1240,19 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     @Test
+    fun pureAnswerHandledQuotedHtmlElement() {
+        // <hr id="answer"> is also used
+        val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
+        val note = col.newNote(col.notetypes.byName(modelName)!!)
+        note.setItem("One", "1")
+        note.setItem("Two", "2")
+        col.addNote(note)
+        val card = note.cards(col)[0]
+
+        assertThat(card.pureAnswer(col), equalTo("2"))
+    }
+
+    @Test
     fun testRenderCardWithAudio() {
         // issue 14866 - regression from 2.16
         val sound = "[sound:ankidroid_audiorec3272438736816461323.3gp]"
@@ -1259,7 +1291,8 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     private fun reopenCol(): com.ichi2.libanki.Collection {
-        CollectionHelper.instance.closeCollection("ContentProviderTest: reopenCol")
+        Timber.i("closeCollection: %s", "ContentProviderTest: reopenCol")
+        CollectionManager.closeCollectionBlocking()
         return col
     }
 
@@ -1297,7 +1330,7 @@ class ContentProviderTest : InstrumentedTest() {
             fields: Array<String>,
             tag: String
         ): Uri {
-            val newNote = Note.fromNotetypeId(col, mid)
+            val newNote = col.run { Note.fromNotetypeId(mid) }
             for (idx in fields.indices) {
                 newNote.setField(idx, fields[idx])
             }
@@ -1316,6 +1349,19 @@ class ContentProviderTest : InstrumentedTest() {
                 newNote.id.toString()
             )
         }
+    }
+
+    fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
+        val model = col.notetypes.new(name)
+        for (field in fields) {
+            col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
+        }
+        val t = Notetypes.newTemplate("Card 1")
+        t.put("qfmt", qfmt)
+        t.put("afmt", afmt)
+        col.notetypes.addTemplateInNewModel(model, t)
+        col.notetypes.add(model)
+        return name
     }
 }
 

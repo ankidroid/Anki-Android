@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Lỗi nghiêm trọng: Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_loop_dialog_title">Hệ thống hiển thị WebView không thành công</string>
     <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Câu hỏi</item>
-        <item>Sắp xếp trường</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Đáp án</item>
-        <item>Thẻ</item>
-        <item>Bộ thẻ</item>
-        <item>Ghi chú</item>
-        <item>Câu hỏi</item>
-        <item>Các đuôi</item>
-        <item>Lần sai</item>
-        <item>Lần ôn tập</item>
-        <item>Khoảng nghỉ</item>
-        <item>Độ khó</item>
-        <item>Hạn</item>
-        <item>Thẻ đã sửa đổi</item>
-        <item>Đã tạo</item>
-        <item>Ghi chú đã sửa đổi</item>
-    </string-array>
     <string name="filter_by_flags">Cờ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Sửa đổi giới hạn thẻ mới của ngày hôm nay</string>
@@ -112,10 +91,8 @@
     <string name="custom_study_limit_tags">Giới hạn cho các đuôi cụ thể</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
-    <string name="discard_unsaved_changes">Đóng và mất thông tin đang nhập?</string>
+    <string name="discard">Loại bỏ</string>
     <string name="note_editor_no_cards_created">Không có thẻ nào được tạo. Vui lòng điền vào các trường khác</string>
-    <string name="note_editor_no_first_field">Trường đầu tiên trống</string>
-    <string name="note_editor_no_cloze_delations">Loại ghi chú này phải chứa đánh dấu cloze</string>
     <string name="note_editor_no_cards_created_all_fields">Loại ghi chú hiện tại không tạo ra bất kỳ thẻ nào. \nVui lòng chọn một loại ghi chú khác, hoặc nhấp vào \"Thẻ\" và thêm một trường thay thế</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Đánh dấu Cloze sẽ chỉ hoạt động trên loại ghi chú Cloze</string>
     <string name="saving_facts">Đang lưu ghi chú</string>
@@ -125,6 +102,7 @@
     <string name="select">Chọn</string>
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Đã đạt đến giới hạn thời gian</string>
     <plurals name="timebox_reached">
@@ -136,10 +114,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Thẻ AnkiDroid</string>
     <string name="note_editor_copy_note">Sao chép ghi chú</string>
-    <string name="card_editor_reposition_card">Đặt lại vị trí</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Đặt lại vị trí</string>
     <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Lên lịch lại</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Xem trước</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Sao chép dưới dạng Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d của %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Đổi tên</string>
     <string name="checks_action">Kiểm tra</string>
@@ -151,9 +130,10 @@
     <string name="delete_deck">Đang xoá bộ thẻ&#8230;</string>
     <string name="info_rate">Đánh giá AnkiDroid</string>
     <string name="import_title">Đang nhập</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Thêm</string>
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Thêm “%s” vào bộ sưu tập? Việc này có thể mất nhiều thời gian</string>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>
     <string name="import_title_error" comment="Title of error dialog">Lỗi</string>
     <string name="import_error_handle_exception">Không thể nhập tệp\n\n%s</string>
@@ -164,7 +144,7 @@
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_preparation_in_progress">Đang chuẩn bị xuất &#8230;</string>
     <string name="export_ready_title">Trích xuất sẵn sàng</string>
-    <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu...</string>
+    <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu&#8230;</string>
     <string name="export_save_apkg_successful">Lưu gói Anki thành công</string>
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
     <string name="export_share_title">Gửi gói Anki đang dùng</string>
@@ -178,6 +158,7 @@
         ]]></string>
     <string name="export_choice_share">Chia sẻ</string>
     <string name="export_choice_save_to">Lưu tới</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tuỳ chọn</string>
     <string name="menu__deck_options">Tùy chọn bộ thẻ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>
@@ -199,17 +180,15 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Hệ thống chưa cài đặt ứng dụng có thể thực hiện tác vụ này.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Hình ảnh máy ảnh có thể lớn. Bạn có thể muốn nén và thay đổi kích thước hình ảnh trong thư mục media]]></string>
-    <string name="no_browser_notification">Không tìm thấy trình duyệt, vui lòng truy cập trang web bằng máy tính hoặc điện thoại di động:</string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Lỗi khi tải trang: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hình nền</string>
     <string name="choose_an_image">Chọn một hình ảnh</string>
+    <string name="remove_background_image">Gỡ bỏ nền?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Khôi phục mặc định</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Chỗ trống</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
@@ -262,7 +241,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Nhập email hợp lệ</string>
     <string name="password_empty">Bắt buộc có mật khẩu</string>
     <string name="back_pressed_once">Bấm trở lại một lần nữa để thoát</string>
     <string name="back_pressed_once_reviewer">Nhấn lại lần nữa để quay lại</string>
@@ -300,7 +279,7 @@
     <string name="migration_part_1_done_resume">Bạn có thể tiếp tục sử dụng AnkiDroid.
 \nQuá trình di chuyển bộ nhớ sẽ tiếp tục ở chế độ nền.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s không phải là gói tiện ích javascript hợp lệ</string>
+    <string name="not_valid_js_addon_package">%s không phải là gói tiện ích JavaScript hợp lệ</string>
     <string name="could_not_create_dir">Không thể tạo thư mục %s</string>
     <string name="malicious_archive_entry_outside">Lưu trữ nguy hiểm. Chứa mục nhập bên ngoài thư mục đích: %s</string>
     <string name="malicious_archive_exceeds_limit">Lưu trữ độc hại. Kích thước vượt quá %1$s hoặc chứa nhiều hơn %2$d tệp</string>
@@ -309,12 +288,15 @@
     <string name="expand_tag">Mở rộng thẻ \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Truy cập bộ sưu tập thất bại. Vui lòng thử lại!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Học ít</string>
     <string name="intro_ankidroid_tagline_two">Nhớ nhiều hơn</string>
     <string name="intro_short_ankidroid_explanation">Trình lập lịch thẻ Anki giúp bạn học hiệu quả hơn bằng cách tập trung vào những kiến thức bạn còn chưa vững và ghi nhớ những kiến thức bạn đã nắm vững</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Bắt đầu</string>
     <string name="intro_sync_from_ankiweb">Đồng bộ từ AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid chưa được khởi tạo. Vui lòng mở AnkiDroid và thử lại</string>
     <string name="already_logged_in">Đã đăng nhập</string>
     <!-- Deck Creation -->
     <string name="deck_created">Đã tạo bộ thẻ</string>
@@ -337,7 +319,7 @@
     <string name="deleting_selected_notes">Xoá ghi chú đã chọn</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Nhấn vào một giọng nói để nghe
     </string>
-    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Voice should be installed before use
+    <string name="tts_voices_selected_voice_should_be_installed" comment="If a voice has been tapped, is installable but not installed, we want to inform the user that they should install it for the best experience There will also be an option to use it without downloading">Nên cài đặt giọng nói trước khi sử dụng
     </string>
     <string name="tts_voices_use_selected_voice_without_install" comment="A user has been informed that a voice should be installed before use. This is text on a snackbar button which allows them to use the voice without installing it">Vẫn sử dụng
     </string>
@@ -347,10 +329,18 @@
     </string>
     <string name="tts_voices_chip_filter_to_installable_audio" comment="     Displays a list of Text to Speech voices which should be downloaded/installed before use     This is on a chip control, so keep the text short, ideally one word">        Cài đặt
     </string>
-    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Failed to open text to speech settings
+    <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Không mở được cài đặt chuyển văn bản sang giọng nói
     </string>
     <string name="shared_decks_login_required">Vui lòng đăng nhập để tải thêm các bộ thẻ</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="deck_description_field_hint">Mô tả</string>
+    <string name="failed_to_copy">Không sao chép được</string>
+    <string name="card_browser_unavailable_when_notes_mode">Không khả dụng ở chế độ ‘Ghi chú’</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Đặt lại vị trí</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

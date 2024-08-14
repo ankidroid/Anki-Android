@@ -13,8 +13,6 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
@@ -26,19 +24,30 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.testutils.*
+import com.ichi2.testutils.BackendEmulatingOpenConflict
+import com.ichi2.testutils.BackupManagerTestUtilities
+import com.ichi2.testutils.DbUtils
+import com.ichi2.testutils.grantWritePermissions
 import com.ichi2.testutils.libanki.buryNewSiblings
+import com.ichi2.testutils.revokeWritePermissions
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.ResourceLoader
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.containsInAnyOrder
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.Robolectric
@@ -167,7 +176,7 @@ class DeckPickerTest : RobolectricTest() {
     @Test
     fun limitAppliedAfterReview() {
         val sched = col.sched
-        val dconf = col.decks.getConf(1)
+        val dconf = col.decks.getConfig(1)
         assertNotNull(dconf)
         dconf.getJSONObject("new").put("perDay", 10)
         col.decks.save(dconf)
@@ -400,18 +409,10 @@ class DeckPickerTest : RobolectricTest() {
         setFragmentResult(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, arguments)
     }
 
-    // TODO delete test or at least use espresso, this is a poor implementation that can break at any time
     private fun assertDialogTitleEquals(expectedTitle: String) {
-        val actualTitle = when (val dialog = ShadowDialog.getLatestDialog()) {
-            is MaterialDialog ->
-                dialog.view
-                    .findViewById<RtlTextView>(com.afollestad.materialdialogs.R.id.md_text_title)
-                    ?.text
-            is AlertDialog -> dialog.title
-            else -> TODO()
-        }
+        val actualTitle = (ShadowDialog.getLatestDialog() as AlertDialog).title
         Timber.d("titles = \"$actualTitle\", \"$expectedTitle\"")
-        assertEquals(expectedTitle, "$actualTitle")
+        assertEquals(expectedTitle, actualTitle)
     }
 
     @Test
@@ -422,7 +423,7 @@ class DeckPickerTest : RobolectricTest() {
 
             supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.ADD_CARD, didA)
             val noteEditor = Shadows.shadowOf(this).nextStartedActivity!!
-            assertEquals("com.ichi2.anki.NoteEditor", noteEditor.component!!.className)
+            assertEquals("com.ichi2.anki.SingleFragmentActivity", noteEditor.component!!.className)
             onBackPressedDispatcher.onBackPressed()
 
             supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.BROWSE_CARDS, didA)
@@ -478,9 +479,9 @@ class DeckPickerTest : RobolectricTest() {
             getColUnsafe.sched.buryCards(listOf(card.id))
             updateDeckList()
             assertEquals(1, visibleDeckCount)
-            assertTrue(getColUnsafe.sched.haveBuriedInCurrentDeck(), "Deck should have buried cards")
+            assertTrue(getColUnsafe.sched.haveBuried(), "Deck should have buried cards")
             supportFragmentManager.selectContextMenuOption(DeckPickerContextMenuOption.UNBURY, deckId)
-            kotlin.test.assertFalse(getColUnsafe.sched.haveBuriedInCurrentDeck())
+            kotlin.test.assertFalse(getColUnsafe.sched.haveBuried())
         }
     }
 
@@ -526,7 +527,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should now be open",
-                CollectionHelper.instance.colIsOpenUnsafe()
+                CollectionManager.isOpenUnsafe()
             )
             assertThat(
                 CollectionType.SCHEMA_V_16.isCollection(
@@ -560,7 +561,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpenUnsafe()
+                !CollectionManager.isOpenUnsafe()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -584,7 +585,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpenUnsafe()
+                !CollectionManager.isOpenUnsafe()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -674,7 +675,7 @@ class DeckPickerTest : RobolectricTest() {
 
         // select a deck with no cards
         col.decks.select(emptyDeck)
-        assertThat("unbury is not visible: deck has no cards", !col.sched.haveBuriedInCurrentDeck())
+        assertThat("unbury is not visible: deck has no cards", !col.sched.haveBuried())
 
         deckPicker {
             assertThat("deck focus is set", focusedDeck, equalTo(emptyDeck))
@@ -686,7 +687,7 @@ class DeckPickerTest : RobolectricTest() {
             deckToClick.performLongClick()
 
             // ASSERT
-            assertThat("unbury is visible: one card is buried", col.sched.haveBuriedInCurrentDeck())
+            assertThat("unbury is visible: one card is buried", col.sched.haveBuried())
             assertThat("deck focus has changed", focusedDeck, equalTo(deckWithCards))
         }
     }
@@ -714,7 +715,7 @@ class DeckPickerTest : RobolectricTest() {
         // ensure collection not loaded yet
         assertThat(
             "collection should not be loaded",
-            CollectionHelper.instance.colIsOpenUnsafe(),
+            CollectionManager.isOpenUnsafe(),
             equalTo(false)
         )
     }

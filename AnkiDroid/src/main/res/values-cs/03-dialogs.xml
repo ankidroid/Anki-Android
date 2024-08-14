@@ -48,10 +48,16 @@
     <string name="check_db_warning">Toto může trvat dlouhou dobu</string>
     <string name="contextmenu_deckpicker_delete_deck">Odstranit balíček</string>
     <string name="delete_deck_title">Odstranit balíček?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Náhled</string>
     <string name="reposition_card_dialog_title">Změnit pořadí nové karty</string>
     <string name="reposition_card_dialog_message">Počáteční pozice:</string>
     <string name="reposition_card_not_new_error">Změnit pořadí lze pouze u nových karet</string>
@@ -62,35 +68,12 @@
         <item quantity="other">%d karet přesunuto</item>
     </plurals>
     <string name="reset_card_dialog_title">Obnovit proces učení karty</string>
-    <string name="reset_card_dialog_message">Tato karta bude umístěna na konec fronty s novými kartami.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d karta obnovena</item>
         <item quantity="few">%d karty obnoveny</item>
         <item quantity="many">%d karty obnoveno</item>
         <item quantity="other">%d karet obnoveno</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Přeplánovat %d kartu</item>
-        <item quantity="few">Přeplánovat %d karty</item>
-        <item quantity="many">Přeplánovat %d karty</item>
-        <item quantity="other">Přeplánovat %d karet</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Současný interval: %d den</item>
-        <item quantity="few">Současný interval: %d dny</item>
-        <item quantity="many">Současný interval: %d dne</item>
-        <item quantity="other">Současný interval: %d dní</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Přeplánovat opakování za x dní</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d karta přeplánována</item>
-        <item quantity="few">%d karty přeplánovány</item>
-        <item quantity="many">%d karty přeplánováno</item>
-        <item quantity="other">%d karet přeplánováno</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Přeplánovává se nová karta. Přeplánování také změní novou kartu na opakovanou kartu. Použijte volbu „změnit pořadí karty“, abyste změnili pořadí nové karty v rámci fronty nových karet</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Přeplánování také obnoví to, jak bude plánovač v budoucnu zacházet s kartou (snadnost bude nastavena na %d%%)</string>
     <string name="answering_error_title">Chyba databáze</string>
     <string name="answering_error_message">Zápis do kolekce se nezdařil. Databáze může být poškozena nebo nemusí být dostatek prázdného místa na disku.\n\nPokud se to děje častěji, zkuste zkontrolovat databázi, opravit kolekci nebo ji obnovit ze zálohy. Klepněte na „možnosti“.\n\nNebo to může být také chyba AnkiDroid, prosím nahlaste chybu, abychom to mohli zkontrolovat.</string>
     <string name="answering_error_report">Hlášení chyby</string>
@@ -119,8 +102,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Potvrdit</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Ano</string>
+    <string name="dialog_keep">Ponechat</string>
+    <string name="dialog_remove">Odebrat</string>
     <string name="dialog_continue">Pokračovat</string>
-    <string name="dialog_processing">Zpracovává se...</string>
+    <string name="dialog_processing">Zpracovává se&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Vytvořit</string>
     <string name="dialog_positive_delete">Odstranit</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -129,6 +114,9 @@
     <string name="dialog_positive_repair">Opravit</string>
     <string name="dialog_positive_replace">Nahradit</string>
     <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
+    <string name="dialog_invalid_custom_certificate">Zadaný text neposkytuje platný certifikát X509 v kódování PEM.</string>
+    <string name="dialog_invalid_custom_certificate_title">Chyba zpracování certifikátu</string>
+    <string name="dialog_updated_custom_certificate">Certifikát aktualizován</string>
     <!-- Media checking -->
     <string name="check_media_title">Zkontrolovat multimédia?</string>
     <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií</string>
@@ -162,7 +150,6 @@
     <string name="multimedia_editor_failed">Nepodařilo se otevřít multimediální editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Oprávnění k nahrávání zvuku bylo odepřeno</string>
-    <string name="mutimedia_editor_assertion_failed">Nastala neznámá chyba při zobrazování pokročilého editoru</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid aktualizován</string>
     <string name="integrity_check_startup_content">AnkiDroid byl aktualizován. Tato aktualizace obsahuje opravy možných problémů databáze, a doporučuje se nyní spustit kontrolu databáze.</string>
@@ -205,7 +192,7 @@
     <string name="help_item_anki_manual">Příručka Anki</string>
     <string name="help_item_ankidroid_faq">Časté dotazy AnkiDroid</string>
     <string name="help_title_get_help">Získat pomoc</string>
-    <string name="help_item_mailing_list">Seznam adresátů</string>
+    <string name="help_item_mailing_list">Emailová diskuzní skupina</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Nahlásit chybu</string>
     <string name="help_title_support_ankidroid">Podpořit AnkiDroid</string>
@@ -233,7 +220,7 @@
         <item quantity="many">Automatická synchronizace může být spuštěna za %d sekundy</item>
         <item quantity="other">Automatická synchronizace může být spuštěna za %d sekund</item>
     </plurals>
-    <string name="metered_sync_warning">Vaše připojení je měřené podle objemu dat. Přenos dat může stát peníze</string>
+    <string name="metered_sync_data_warning">Váš poskytovatel internetu si může účtovat poplatky za používání dat</string>
     <string name="deck_picker_new">Počet nových karet dnes k učení v tomto balíčku.</string>
     <string name="deck_picker_rev">Počet karet dnes ke zkoušení v tomto balíčku.</string>
     <string name="deck_picker_lrn">Počet karet v procesu učení v tomto balíčku.</string>
@@ -258,4 +245,37 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        V důsledku změn ochrany osobních údajů systému Android budou vaše data a automatické zálohy nedostupné, pokud bude aplikace odinstalována
     </string>
+    <string name="deck_already_exists">Balíček již existuje</string>
+    <string name="create_deck_numeric_hint">Pokud máte problémy s pořadím balíčků (např. „10“ je před „2“), nahraďte „2“ číslem „02“</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Nastavit interval na stejnou hodnotu</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Zobrazit kartu za</item>
+        <item quantity="few">Zobrazit karty za</item>
+        <item quantity="many">Zobrazit karty za</item>
+        <item quantity="other">Zobrazit karty za</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Zobrazit kartu v rozmezí</item>
+        <item quantity="few">Zobrazit karty v rozmezí</item>
+        <item quantity="many">Zobrazit karty v rozmezí</item>
+        <item quantity="other">Zobrazit karty v rozmezí</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">den</item>
+        <item quantity="few">dny</item>
+        <item quantity="many">dne</item>
+        <item quantity="other">dní</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Od</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Do</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
 </resources>

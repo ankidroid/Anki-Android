@@ -50,14 +50,14 @@
     <string name="backup_new_collection">புதிய தொகுப்பு</string>
     <string name="backup_del_collection">சேகரிப்பை நீக்கி புதிய ஒன்றை உருவாக்குங்கள்</string>
     <string name="backup_del_collection_question">சேகரிப்பை நீக்கி புதிய ஒன்றை உருவாக்குங்கள்? இது உங்கள் கற்றல் முன்னேற்றத்தை கைவிட்டு அனைத்து கார்டுகளையும் நீக்கும்.</string>
-    <string name="backup_full_sync_from_server">சேவையகத்திலிருந்து முழு ஒத்திசைவு</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb இலிருந்து உங்கள் சேகரிப்பை மேலெழுதவா? இது உங்கள் கற்றல் முன்னேற்றத்தை கைவிட்டு, உங்கள் கடைசி ஒத்திசைவின் பின்னர் தகவல்களை சேர்த்தது.</string>
     <string name="error_handling_title">பிழை கையாளுதல்</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">விருப்பங்கள்</string>
     <string name="backup_retry_opening">மீண்டும் திறக்க</string>
     <string name="backup_error_menu_repair">பழுதுபார்க்கும் தரவுத்தளம்</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">பழுதுபார்க்கும் தரவுத்தளம்...</string>
+    <string name="backup_repair_deck_progress">பழுதுபார்க்கும் தரவுத்தளம்&#8230;</string>
     <string name="backup_invalid_file_error">தேர்ந்தெடுக்கப்பட்ட காப்புப் பிரதி தவறானது</string>
     <string name="backup_restore_select_title">மீட்டமைக்க காப்புப் பிரதி எடுக்கவும்</string>
     <string name="backup_restore_no_backups">மறுபிரதிகள் எதுவும் இல்லை இந்த சாதனத்திற்கு. உங்கள் டெஸ்க்டாப் கணினியில் மறுபிரதிகள் இருந்தால், அவற்றை கைமுறையாக AnkiDroid கோப்புறைக்கு நகலெடு.</string>

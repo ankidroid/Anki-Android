@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kritická chyba: Vykreslování WebView selhalo. Příčina: %s</string>
     <string name="webview_crash_loop_dialog_title">Selhání vykreslování systémového webView</string>
     <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Otázka</item>
-        <item>Pole řazení</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Odpověď</item>
-        <item>Karta</item>
-        <item>Balíček</item>
-        <item>Poznámka</item>
-        <item>Otázka</item>
-        <item>Štítky</item>
-        <item>Zapomínání</item>
-        <item>Opakování</item>
-        <item>Interval</item>
-        <item>Snadnost</item>
-        <item>Ke zkoušení</item>
-        <item>Karta upravena</item>
-        <item>Vytvořeno</item>
-        <item>Poznámka upravena</item>
-    </string-array>
     <string name="filter_by_flags">Příznaky</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
@@ -112,10 +91,8 @@
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Upravit poznámku</string>
-    <string name="discard_unsaved_changes">Zavřít a ztratit stávající vstup?</string>
+    <string name="discard">Zahodit</string>
     <string name="note_editor_no_cards_created">Nebyly vytvořeny žádné karty. Vyplňte prosím další pole</string>
-    <string name="note_editor_no_first_field">První pole je prázdné</string>
-    <string name="note_editor_no_cloze_delations">Tento typ poznámky musí obsahovat doplňovačky</string>
     <string name="note_editor_no_cards_created_all_fields">Současný typ poznámky nevytvořil žádné karty.\nVyberte prosím jiný typ poznámky nebo klikněte na „Karty“ a přidejte zástupce pole</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Doplňovačky budou fungovat pouze na typu poznámky Doplňovačka</string>
     <string name="saving_facts">Ukládání poznámky</string>
@@ -125,6 +102,7 @@
     <string name="select">Vybrat</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
+    <string name="missing_note_type">Nenalezen žádný typ poznámky</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Časové omezení dosaženo</string>
     <plurals name="timebox_reached">
@@ -142,10 +120,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid karta</string>
     <string name="note_editor_copy_note">Kopírovat poznámku</string>
-    <string name="card_editor_reposition_card">Změnit pořadí</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Změnit pořadí</string>
     <string name="card_editor_reset_card">Obnovit proces učení</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Přeplánovat</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Náhled</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopírovat jako Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Přejmenovat</string>
     <string name="checks_action">Zkontrolovat</string>
@@ -157,6 +136,7 @@
     <string name="delete_deck">Odstraňuje se balíček&#8230;</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>
     <string name="import_title">Importuje se</string>
+    <string name="import_preparing_file">Soubor se připravuje na import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">To odstraní vaši stávající kolekci a nahradí ji daty ze souboru %s</string>
     <string name="import_dialog_message_add">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</string>
@@ -170,7 +150,7 @@
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_preparation_in_progress">Připravuje se export&#8230;</string>
     <string name="export_ready_title">Export připraven</string>
-    <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se...</string>
+    <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se&#8230;</string>
     <string name="export_save_apkg_successful">Anki balíček úspěšně uložen</string>
     <string name="export_save_apkg_unsuccessful">Nepodařilo se uložit Anki balíček</string>
     <string name="export_share_title">Odeslat Anki balíček pomocí</string>
@@ -184,6 +164,7 @@
         ]]></string>
     <string name="export_choice_share">Sdílet</string>
     <string name="export_choice_save_to">Uložit do</string>
+    <string name="export_saving_exported_collection">Ukládá se exportovaný soubor&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
@@ -208,17 +189,15 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
-    <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
+    <string name="no_browser_msg">Nenalezen žádný prohlížeč pro otevření odkazu: %s</string>
     <string name="web_page_error">Chyba při načítání stránky: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Pozadí</string>
     <string name="choose_an_image">Vybrat obrázek</string>
+    <string name="remove_background_image">Odebrat pozadí?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Obnovit výchozí</string>
-    <string name="cloze_sample_text">Toto je {{%1$s::příklad}} doplňovačky.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">případ</string>
-    <string name="basic_answer_sample_text">příklad</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Prázdné</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Nepodařilo se uložit obrázek tabule. %s</string>
@@ -312,7 +291,7 @@
     <string name="migration_part_1_done_resume">Můžete pokračovat v používání AnkiDroid.
 \nPřesun úložiště bude pokračovat na pozadí.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s není platný balíček javascript doplňku</string>
+    <string name="not_valid_js_addon_package">%s není platný balíček JavaScript doplňku</string>
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
     <string name="malicious_archive_entry_outside">Škodlivý archiv. Obsahuje záznam mimo cílový adresář: %s</string>
     <string name="malicious_archive_exceeds_limit">Škodlivý archiv. Velikost přesahuje %1$s nebo obsahuje více než %2$d souborů</string>
@@ -321,12 +300,15 @@
     <string name="expand_tag">Rozbalit štítek „%s“</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Přístup ke kolekci se nezdařil. Zkuste to prosím znovu!</string>
+    <string name="cd_manage_notetypes_add">Přidat nový typ poznámky</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Studujte méně</string>
     <string name="intro_ankidroid_tagline_two">Pamatujte si více</string>
     <string name="intro_short_ankidroid_explanation">Plánovač karet Anki šetří čas posílením vašich nejslabších vzpomínek a zachováním těch nejsilnějších</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Začínáme</string>
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid ještě není inicializován. Otevřete prosím AnkiDroid a zkuste to znovu</string>
     <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
     <string name="deck_created">Balíček vytvořen</string>
@@ -362,7 +344,18 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Nepodařilo se otevřít nastavení převodu textu na řeč
     </string>
     <string name="shared_decks_login_required">Prosím přihlaste se, abyste mohli stáhnout více balíčků</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="deck_description_field_hint">Popisek</string>
+    <string name="failed_to_copy">Kopírování se nezdařilo</string>
+    <string name="card_browser_unavailable_when_notes_mode">Nedostupné v režimu „Poznámky“</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">Zrušeno přeskočení %d karty</item>
+        <item quantity="few">Zrušeno přeskočení %d karet</item>
+        <item quantity="many">Zrušeno přeskočení %d karty</item>
+        <item quantity="other">Zrušeno přeskočení %d karet</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Přemístit</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

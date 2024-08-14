@@ -48,10 +48,13 @@
     <string name="check_db_warning">Mungkin mengambil masa lama</string>
     <string name="contextmenu_deckpicker_delete_deck">Padam dek</string>
     <string name="delete_deck_title">Padam dek?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Teks-ke-ucapan bahasa tiada</string>
     <string name="tts_no_tts">Jangan bercakap</string>
     <string name="unused_strings">\n\nFail tidak digunakan:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pratonton</string>
     <string name="reposition_card_dialog_title">Alih posisi kad baru</string>
     <string name="reposition_card_dialog_message">Posisi mula:</string>
     <string name="reposition_card_not_new_error">Hanya kad baru boleh alih posisi</string>
@@ -59,23 +62,9 @@
         <item quantity="other">%d kad telah alih posisi</item>
     </plurals>
     <string name="reset_card_dialog_title">Tetap semula kemajuan kad</string>
-    <string name="reset_card_dialog_message">Kad ini akan diletakkan pada hujung aturan kad baru</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d kad ditetap semula</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Jadualkan semula %d kad</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">Selang kini: %d hari</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Jadualkan semula untuk semakan dalam x hari</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="other">%d kad telah dijadual semula</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Kad baru sedang dijadualkan semula. Penjadualan semula juga menukarkan kad baru kepada kad semakan. Guna pilihan \'alih posisi kad\' untuk ubah posisi kad baru dalam aturan baru</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Penjadualan semula juga tetap semula cara penjadual mengolah kard pada masa hadapan (longgaran akan ditetapkan ke %d%%)</string>
     <string name="answering_error_title">Ralat pangkalan data</string>
     <string name="answering_error_message">Menulis ke koleksi gagal. Pangkalan data mungkin rosak atau kehabisan ruang kosong pada cakera.\n\nJika ini berlaku kerap, cuba periksa pangkalan data, baiki koleksi atau pulih dari suatu sandaran. Sentuh \"tetapan\" untuk lakukannya.\n\Atau ia mungkin pepijat AnkiDroid; sila laporkannya agar kami boleh memeriksa ralat tersebut.</string>
     <string name="answering_error_report">Lapor ralat</string>
@@ -104,6 +93,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Pasti</string>
     <string name="dialog_no">Tidak</string>
     <string name="dialog_yes">Ya</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Teruskan</string>
     <string name="dialog_processing">Memproses&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Cipta</string>
@@ -114,6 +105,9 @@
     <string name="dialog_positive_repair">Baiki</string>
     <string name="dialog_positive_replace">Ganti</string>
     <string name="dialog_collection_path_not_dir">Laluan yang dinyatakan bukan direktori yang sah</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Periksa media?</string>
     <string name="check_media_warning">Mungkin mengambil masa lama dengan koleksi media besar</string>
@@ -144,7 +138,6 @@
     <string name="multimedia_editor_failed">Gagal membuka Penyunting Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Kebenaran rakam audio ditolak</string>
-    <string name="mutimedia_editor_assertion_failed">Ralat tidak diketahui berlaku semasa memaparkan Penyunting Lanjutan</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Dinaik Taraf</string>
     <string name="integrity_check_startup_content">AnkiDroid telah dinaik taraf. Naik taraf ini mungkin termasuk pembaikan kesulitan pangkalan data, dan kami nasihatkan anda lakukan pemeriksaan pangkalan data sekarang.</string>
@@ -212,7 +205,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Penyegerakan automatik mungkin dicetuskan dalam %d saat</item>
     </plurals>
-    <string name="metered_sync_warning">Sambungan anda bermeter. Pemindahan datam mungkin memerlukan wang</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Bilangan kad baru untuk lihat hari ini dalam dek ini.</string>
     <string name="deck_picker_rev">Bilangan kad tunggakan hari ini dalam dek ini.</string>
     <string name="deck_picker_lrn">Bilangan kad sedang dipelajari hari ini dalam dek ini.</string>
@@ -237,4 +230,28 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Akibat perubahan privasi Android, data anda dan sandaran automatik tidak akan dapat dicapai jika aplikasi dinyahpasang
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

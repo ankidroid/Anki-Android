@@ -24,9 +24,9 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
+import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.Companion.PRIORITY_FILES
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.UserActionRequiredException
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
@@ -48,11 +48,11 @@ import java.io.File
  *
  * See: [migrateFiles]
  *
- * Preconditions (verified inside [migrateEssentialFiles] and [migrateFiles] - exceptions thrown if not met):
+ * Preconditions (verified inside [MigrateEssentialFiles] and [migrateFiles] - exceptions thrown if not met):
  * * Collection is not corrupt and can be opened
  * * Collection basic check passes [UserActionRequiredException.CheckDatabaseException]
  * * Collection can be closed and locked
- * * User has space to move files [UserActionRequiredException.OutOfSpaceException] (the size of essential files + [SAFETY_MARGIN_BYTES]
+ * * User has space to move files [UserActionRequiredException.OutOfSpaceException] (the size of essential files + [ScopedStorageService.SAFETY_MARGIN_BYTES]
  * * A migration is not currently taking place
  */
 open class MigrateEssentialFiles
@@ -139,7 +139,7 @@ internal constructor(
     /**
      * Copies [file] to [destinationDirectory], retaining the same filename
      */
-    fun copyTopLevelFile(file: File, destinationDirectory: Directory) {
+    private fun copyTopLevelFile(file: File, destinationDirectory: Directory) {
         val destinationPath = File(destinationDirectory.directory, file.name).path
         Timber.i("Migrating essential file: '${file.name}'")
         Timber.d("Copying '$file' to '$destinationPath'")

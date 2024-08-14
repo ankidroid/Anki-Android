@@ -17,15 +17,22 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.notes.NoteFieldsCheckResponse
+import anki.notetypes.StockNotetype
 import com.ichi2.testutils.JvmTest
+import com.ichi2.utils.createBasicModel
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
-import org.junit.Assert.*
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class CollectionTest : JvmTest() {
@@ -169,12 +176,15 @@ class CollectionTest : JvmTest() {
 
     @Test
     fun test_timestamps() {
-        val stdModelSize = StdModels.STD_MODELS.size
-        assertEquals(col.notetypes.all().size, stdModelSize)
+        // old code used StdModels.STD_MODELS.size for this variable. There were 6 models:
+        // BASIC_MODEL, BASIC_TYPING_MODEL, FORWARD_REVERSE_MODEL, FORWARD_OPTIONAL_REVERSE_MODEL,
+        // CLOZE_MODEL, IMAGE_OCCLUSION_MODEL
+        val numberOfStandardModels = StockNotetype.Kind.entries.count { it != StockNotetype.Kind.UNRECOGNIZED }
+        assertEquals(col.notetypes.all().size, numberOfStandardModels)
         for (i in 0..99) {
-            StdModels.BASIC_MODEL.add(col)
+            col.createBasicModel()
         }
-        assertEquals(col.notetypes.all().size, (100 + stdModelSize))
+        assertEquals(col.notetypes.all().size, (100 + numberOfStandardModels))
     }
 
     @Test
@@ -205,5 +215,63 @@ class CollectionTest : JvmTest() {
     fun test_filterToValidCards() {
         val cid = addNoteUsingBasicModel("foo", "bar").firstCard().id
         assertEquals(ArrayList(setOf(cid)), col.filterToValidCards(longArrayOf(cid, cid + 1)))
+    }
+
+    @Test
+    fun `default card columns`() {
+        assertThat(
+            col.loadBrowserCardColumns(),
+            equalTo(
+                listOf("noteFld", "template", "cardDue", "deck")
+            )
+        )
+    }
+
+    @Test
+    fun `default note columns`() {
+        assertThat(
+            col.loadBrowserNoteColumns(),
+            equalTo(
+                listOf("noteFld", "note", "template", "noteTags")
+            )
+        )
+    }
+
+    @Test
+    fun `set note columns`() {
+        col.setBrowserNoteColumns(listOf("noteFld"))
+
+        assertThat(
+            col.loadBrowserNoteColumns(),
+            equalTo(
+                listOf("noteFld")
+            )
+        )
+    }
+
+    @Test
+    fun `set card columns`() {
+        col.setBrowserCardColumns(listOf("question"))
+
+        assertThat(
+            col.loadBrowserCardColumns(),
+            equalTo(
+                listOf("question")
+            )
+        )
+    }
+
+    @Test
+    fun `get browser column`() {
+        kotlin.test.assertNotNull(col.getBrowserColumn("question")).also {
+            assertThat(it.cardsModeLabel, equalTo("Question"))
+        }
+
+        assertThat(col.getBrowserColumn("invalid"), nullValue())
+    }
+
+    @Test
+    fun `get all columns`() {
+        assertThat(col.allBrowserColumns(), not(hasSize(0)))
     }
 }

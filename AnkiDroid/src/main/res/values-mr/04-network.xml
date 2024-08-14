@@ -64,22 +64,22 @@
     <string name="log_out">बाहेर पडणे</string>
     <string name="reset_password">संकेतशब्द रीसेट करा</string>
     <string name="lost_mail_instructions">ईमेल विसरलात?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">साइन इन करत आहे</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX साठी पर्याय</string>
     <string name="sync_title">सिंक्रोनाइझेशन</string>
     <string name="sync_log_uploading_message">स्थानिक कडून पूर्ण संकालन</string>
     <string name="sync_database_acknowledge">संकलन समक्रमित केले</string>
+    <string name="col_synced_media_in_background">संकलन समक्रमित केले. मीडिया बॅकग्राउंडमध्ये सिंक केला जात आहे.</string>
     <string name="sync_corrupt_database">आपला डेटाबेस दूषित झाला आहे. कृपया पुन्हा संकालनाचा प्रयत्न करण्यापूर्वी ते निश्चित करा. Your \n\n आपल्या डेटाबेसच्या दुरुस्तीबद्दल माहितीसाठी%s पहा.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">स्थानिक</string>
     <string name="sync_sanity_remote">रिमोट</string>
-    <string name="force_full_sync_title">पूर्ण समक्रमण सक्ती करा</string>
-    <string name="force_full_sync_summary">पुढील समक्रमण वर, बल एका दिशेने बदल करा</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">वन-वे सिंक</string>
+    <string name="one_way_sync_confirmation">वन वे सिंक विनंती केली</string>
     <string name="full_sync_confirmation">आपण पुढील वेळी आपला संग्रह संकालित करता तेव्हा विनंती केलेल्या बदलास डेटाबेसचे संपूर्ण अपलोड आवश्यक असेल. आपल्याकडे पुनरावलोकने किंवा अन्य बदल येथे असल्यास ज्याचे अद्याप येथे संकालन केले नाही अशा दुसर्‍या डिव्हाइसची वाट पाहत असाल तर ते गमावतील. सुरू?</string>
     <string name="full_sync_confirmation_upgrade">पूर्वी स्थापित केलेल्या आवृत्तीत अँकीड्रोइडच्या बगमुळे, पूर्ण संकालनास भाग पाडण्याची शिफारस केली जाते.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">समक्रमित (पूर्ण)</string>
+    <string name="sync_menu_title_one_way_sync">समक्रमण (एक मार्ग)</string>
     <string name="sync_menu_title_no_account">समक्रमण (लॉग इन)</string>
 </resources>

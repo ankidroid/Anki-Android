@@ -96,19 +96,20 @@ jobs:
               ("0" + now.getUTCHours()).slice(-2) + ":" +
               ("0" + now.getUTCMinutes()).slice(-2);
             try {  
-              github.rest.pulls.create({              
+              await github.rest.pulls.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: "Updated strings from Crowdin " + formattedDate,
                 head: "i18n_sync",
                 base: "main",
-                body: "Contains the newest strings changes from Crowdin.",
+                body: "Contains the newest strings changes from Crowdin.\n\nhttps://crowdin.com/project/ankidroid/activity-stream",
                 maintainer_can_modify: true
               });
             } catch(err) {
               if (err.status === 422) {
                 console.log("A PR containing translations sync already exists!");
               } else {
+                console.log("Unexpected error creating pull request: " + err);
                 throw err;
               }
             }

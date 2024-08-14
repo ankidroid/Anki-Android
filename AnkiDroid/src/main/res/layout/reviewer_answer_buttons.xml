@@ -46,47 +46,6 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/preview_buttons_layout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:background="?attr/hardButtonRef"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <com.ichi2.ui.FixedTextView
-            android:id="@+id/preview_flip_flashcard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="?attr/answerButtonTextColor"
-            android:text="@string/show_answer"
-            style="@style/FooterButton" />
-
-        <ImageView
-            android:id="@+id/preview_previous_flashcard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:padding="12dp"
-            android:focusable="true"
-            android:background="?attr/hardButtonRef"
-            app:srcCompat="@drawable/ic_baseline_chevron_left_24"
-            app:tint="?attr/hardButtonTextColor" />
-
-        <ImageView
-            android:id="@+id/preview_next_flashcard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:padding="12dp"
-            android:focusable="true"
-            android:background="?attr/hardButtonRef"
-            app:srcCompat="@drawable/ic_baseline_chevron_right_24"
-            app:tint="?attr/hardButtonTextColor" />
-    </FrameLayout>
-
-    <FrameLayout
         android:id="@+id/answer_options_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -108,7 +67,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/AgainButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime1"
@@ -130,7 +91,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/HardButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime2"
@@ -152,7 +115,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/GoodButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime3"
@@ -173,7 +138,9 @@
                 android:layout_width="0dip"
                 android:layout_height="@dimen/touch_target"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:theme="@style/EasyButton"
+                >
 
                 <com.ichi2.ui.FixedTextView
                     android:id="@+id/nextTime4"
@@ -194,7 +161,8 @@
             android:orientation="vertical"
             android:focusable="true"
             android:background="?attr/hardButtonRef"
-            tools:visibility="visible">
+            tools:visibility="visible"
+            android:theme="@style/HardButton">
 
             <com.ichi2.ui.FixedTextView
                 android:layout_width="wrap_content"

@@ -15,35 +15,44 @@
 package com.ichi2.widget
 
 import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.app.PendingIntentCompat
-import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
-import timber.log.Timber
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 
-class AddNoteWidget : AppWidgetProvider() {
-    override fun onEnabled(context: Context) {
-        super.onEnabled(context)
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
+class AddNoteWidget : AnalyticsWidgetProvider() {
+
+    override fun performUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+        usageAnalytics: UsageAnalytics
+    ) {
+        updateWidgets(context, appWidgetManager, appWidgetIds)
     }
 
-    override fun onDisabled(context: Context) {
-        super.onDisabled(context)
-        UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
-    }
+    companion object {
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-        Timber.d("onUpdate")
-        val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
-        val intent = Intent(context, NoteEditor::class.java)
-        intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-        val pendingIntent = PendingIntentCompat.getActivity(context, 0, intent, 0, false)
-        remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent)
-        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
+        /**
+         * Updates the widgets displayed in the provided context using the given AppWidgetManager
+         * and widget IDs, setting up an intent to open the NoteEditor with the caller as the deck picker.
+         *
+         * @param context The context in which the widgets are updated.
+         * @param appWidgetManager The AppWidgetManager instance used to update widgets.
+         * @param appWidgetIds The array of widget IDs to be updated.
+         */
+        fun updateWidgets(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetIds: IntArray
+        ) {
+            val remoteViews = RemoteViews(context.packageName, R.layout.widget_add_note)
+            val intent = NoteEditorLauncher.AddNote().getIntent(context)
+            val pendingIntent = PendingIntentCompat.getActivity(context, 0, intent, 0, false)
+            remoteViews.setOnClickPendingIntent(R.id.widget_add_note_button, pendingIntent)
+            appWidgetManager.updateAppWidget(appWidgetIds, remoteViews)
+        }
     }
 }

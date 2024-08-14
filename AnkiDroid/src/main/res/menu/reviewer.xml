@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="locale">
 
     <item
@@ -57,37 +58,7 @@
         android:icon="@drawable/ic_flag_transparent"
         ankidroid:showAsAction="always" >
         <menu>
-            <item
-                android:id="@+id/action_flag_zero"
-                android:title="@string/menu_flag_card_zero"/>
-            <item
-                android:id="@+id/action_flag_one"
-                android:title="@string/menu_flag_card_one"
-                android:icon="@drawable/ic_flag_red"/>
-            <item
-                android:id="@+id/action_flag_two"
-                android:title="@string/menu_flag_card_two"
-                android:icon="@drawable/ic_flag_orange"/>
-            <item
-                android:id="@+id/action_flag_three"
-                android:title="@string/menu_flag_card_three"
-                android:icon="@drawable/ic_flag_green"/>
-            <item
-                android:id="@+id/action_flag_four"
-                android:title="@string/menu_flag_card_four"
-                android:icon="@drawable/ic_flag_blue"/>
-            <item
-                android:id="@+id/action_flag_five"
-                android:title="@string/menu_flag_card_five"
-                android:icon="@drawable/ic_flag_pink"/>
-            <item
-                android:id="@+id/action_flag_six"
-                android:title="@string/menu_flag_card_six"
-                android:icon="@drawable/ic_flag_turquoise"/>
-            <item
-                android:id="@+id/action_flag_seven"
-                android:title="@string/menu_flag_card_seven"
-                android:icon="@drawable/ic_flag_purple"/>
+            <!-- flags are dynamically added -->
         </menu>
     </item>
     <item
@@ -164,7 +135,7 @@
         <menu>
             <item
                 android:id="@+id/action_reschedule_card"
-                android:title="@string/reschedule_card_dialog_message" />
+                tools:title="Set due date" />
             <item
                 android:id="@+id/action_reset_card_progress"
                 android:title="@string/card_editor_reset_card" />
@@ -177,7 +148,7 @@
         ankidroid:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_toggle_mic_tool_bar"
-        android:title="@string/menu_toggle_mic_tool_bar"
+        android:title="@string/menu_enable_voice_playback"
         android:icon="@drawable/ic_action_mic"
         ankidroid:showAsAction="never"/>
     <item
@@ -189,4 +160,49 @@
         android:id="@+id/action_open_deck_options"
         android:icon="@drawable/ic_tune_white"
         android:title="@string/menu__deck_options" />
+    <item
+        android:id="@+id/user_action_1"
+        android:icon="@drawable/user_action_1"
+        android:title="@string/user_action_1"
+        />
+    <item
+        android:id="@+id/user_action_2"
+        android:icon="@drawable/user_action_2"
+        android:title="@string/user_action_2"
+        />
+    <item
+        android:id="@+id/user_action_3"
+        android:icon="@drawable/user_action_3"
+        android:title="@string/user_action_3"
+        />
+    <item
+        android:id="@+id/user_action_4"
+        android:icon="@drawable/user_action_4"
+        android:title="@string/user_action_4"
+        />
+    <item
+        android:id="@+id/user_action_5"
+        android:icon="@drawable/user_action_5"
+        android:title="@string/user_action_5"
+        />
+    <item
+        android:id="@+id/user_action_6"
+        android:icon="@drawable/user_action_6"
+        android:title="@string/user_action_6"
+        />
+    <item
+        android:id="@+id/user_action_7"
+        android:icon="@drawable/user_action_7"
+        android:title="@string/user_action_7"
+        />
+    <item
+        android:id="@+id/user_action_8"
+        android:icon="@drawable/user_action_8"
+        android:title="@string/user_action_8"
+        />
+    <item
+        android:id="@+id/user_action_9"
+        android:icon="@drawable/user_action_9"
+        android:title="@string/user_action_9"
+        />
 </menu>

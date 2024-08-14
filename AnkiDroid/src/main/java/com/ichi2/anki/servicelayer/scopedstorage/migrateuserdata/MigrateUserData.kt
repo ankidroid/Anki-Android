@@ -413,7 +413,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         var terminatedWith: Exception? = null
             private set
 
-        val retriedDirectories = hashSetOf<File>()
+        private val retriedDirectories = hashSetOf<File>()
 
         val loggedExceptions = mutableListOf<Exception>()
         private var consecutiveExceptionsWithoutProgress = 0
@@ -589,7 +589,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
     /** Returns a sequence of the Files or Directories in [source] which are to be migrated */
     private fun getUserDataFiles() = getDirectoryContent().filter { isUserData(it) }
 
-    fun isEssentialFileName(name: String): Boolean {
+    private fun isEssentialFileName(name: String): Boolean {
         return MigrateEssentialFiles.PRIORITY_FILES.flatMap { it.potentialFileNames }.contains(name)
     }
 

@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
     <string name="card_browser_change_display_order">Inmaidei ataugjando wikon</string>
     <string name="card_browser_change_display_order_title">Walei ataugjando wikon</string>
@@ -99,6 +100,7 @@
     <string name="card_browser_search_all_decks">Search all decks</string>
     <string name="card_browser_unknown_deck_name">Unknown</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Export card</item>
         <item quantity="other">Export cards</item>

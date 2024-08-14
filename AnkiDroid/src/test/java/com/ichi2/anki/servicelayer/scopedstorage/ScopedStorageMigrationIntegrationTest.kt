@@ -22,12 +22,24 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.DestFolderOverride
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.DirectoryNotEmptyException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Executor
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationProgressListener
 import com.ichi2.anki.utils.AggregateException
-import com.ichi2.testutils.*
+import com.ichi2.testutils.ShadowStatFs
+import com.ichi2.testutils.TestException
+import com.ichi2.testutils.addTempDirectory
+import com.ichi2.testutils.addTempFile
+import com.ichi2.testutils.createTransientDirectory
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.anyOf
+import org.hamcrest.Matchers.endsWith
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.not
 import org.hamcrest.io.FileMatchers.anExistingDirectory
 import org.junit.After
 import org.junit.Test
@@ -49,9 +61,6 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     private val validDestination = File(Path(targetContext.getExternalFilesDir(null)!!.canonicalPath, "AnkiDroid-1").pathString)
 
     override fun useInMemoryDatabase() = false
-
-    // we want collection.log to be tested
-    override val disableCollectionLogFile: Boolean = false
 
     @After
     override fun tearDown() {
@@ -86,7 +95,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         // close collection again so -wal doesn't end up in the list
         CollectionManager.ensureClosed()
 
-        // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
+        // 2 files remain: [collection.anki2, .nomedia]
         underTest.integrationAssertOnlyIntendedFilesRemain()
         assertThat(underTest.migratedFilesCount, equalTo(underTest.filesToMigrateCount))
 
@@ -246,7 +255,7 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
         if (sourceFilesCount == INTEGRATION_INTENDED_REMAINING_FILE_COUNT) {
             return
         }
-        fail("expected directory with 5 files, got: " + source.directory.listFiles()!!.map { it.name })
+        fail("expected directory with $INTEGRATION_INTENDED_REMAINING_FILE_COUNT files, got: " + source.directory.listFiles()!!.map { it.name })
     }
 
     private val conflictDirectory = File(source.directory, "conflict")
@@ -276,7 +285,8 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
 
     companion object {
         // media DB created on demand, and no -journal file in new backend
-        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 3
+        // collection.log no longer exists
+        const val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 2
 
         /**
          * A MigrateUserDataTest from inputSource to inputDestination (or transient directories if not provided)

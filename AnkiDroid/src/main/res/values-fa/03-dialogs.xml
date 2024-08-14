@@ -48,10 +48,14 @@
     <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
     <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
     <string name="delete_deck_title">حذف دسته؟</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
     <string name="tts_no_tts">حرف نزن</string>
     <string name="unused_strings">\n\nفایل های استفاده نشده:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">پیش نمایش</string>
     <string name="reposition_card_dialog_title">تغییر مکان کارت جدید</string>
     <string name="reposition_card_dialog_message">موقعیت شروع:</string>
     <string name="reposition_card_not_new_error">فقط کارت‌های جدید می‌توانند جابه‌جا شوند</string>
@@ -60,27 +64,10 @@
         <item quantity="other">%d کارت جابه‌جا شدند</item>
     </plurals>
     <string name="reset_card_dialog_title">بازنشانی پیشرفت کارت</string>
-    <string name="reset_card_dialog_message">این کارت در انتهاي ردیف کارت جدید قرار خواهد گرفت</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d کارت تنظیم مجدد شد</item>
         <item quantity="other">%d کارت تنظیم مجدد شدند</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d کارت را زمانبندی مجدد کن</item>
-        <item quantity="other">%d کارت را زمانبندی مجدد کن</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">بازۀ کنونی: %d روز</item>
-        <item quantity="other">بازه کنونی: %d روز</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">زمانبندی مجدد برای مرور در x روز:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d کارت زمان‌بندی مجدد شد</item>
-        <item quantity="other">%d کارت زمان‌بندی مجدد شدند</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">یک کارت جدید در حال زمان‌بندی مجدد است. زمان‌بندی مجدد، کارت های جدید را هم به کارت های مروری تبدیل میکند. برای این که مکان این کارت جدید را در ترتیب کارت ها تغییر دهید، گزینه ی \'تغییر مکان کارت\' را انتخاب کنید</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">زمان‌بندی مجدد طوری که برنامه‌ریز با کارت در آینده رفتار میکند را هم مجددا تنظیم می‌کند (سادگی به %d%% تنظیم خواهد شد)</string>
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
@@ -109,16 +96,21 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">تایید</string>
     <string name="dialog_no">خیر</string>
     <string name="dialog_yes">بله</string>
+    <string name="dialog_keep">نگه داشتن</string>
+    <string name="dialog_remove">حذف کردن</string>
     <string name="dialog_continue">ادامه</string>
     <string name="dialog_processing">در حال پردازش...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ایجاد</string>
     <string name="dialog_positive_delete">حذف</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">غیر فعال کردن</string>
-    <string name="dialog_positive_overwrite">رونويسي</string>
+    <string name="dialog_positive_overwrite">رونويسي کردن</string>
     <string name="dialog_positive_repair">اصلاح</string>
     <string name="dialog_positive_replace">جایگزین کردن</string>
     <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
+    <string name="dialog_invalid_custom_certificate">متن ارائه شده به یک گواهی X509 کدگذاری شده با PEM معتبر تبدیل نمی‌شود</string>
+    <string name="dialog_invalid_custom_certificate_title">خطا در تجزیه گواهی</string>
+    <string name="dialog_updated_custom_certificate">گواهی به‌روزرسانی شد</string>
     <!-- Media checking -->
     <string name="check_media_title">رسانه بررسی شود؟</string>
     <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">باز کردن ویرایشگر رسانه انجام نشد</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">دسترسی به ضبط صدا به آنکی‌دروید داده نشد</string>
-    <string name="mutimedia_editor_assertion_failed">در هنگام نمایش ویرایشگر پیشرفته خطایی رخ داد</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">آنکی‌دروید به روز‌رسانی شد</string>
     <string name="integrity_check_startup_content">آنکی دروید به‌روزرسانی شده است. این نسخۀ شامل تعمیراتی برای مشکلات محتمل دیتابیس است، بنابراین ما به شما پیشنهاد می‌کنیم که اکنون از گزینۀ بررسی دیتابیس استفاده کنید.</string>
@@ -175,7 +166,7 @@
     <string name="failed_to_apply_background_image">اعمال تصویر پس‌زمینه با خطا مواجه شد %s</string>
     <string name="background_image_too_large">حجم تصویر پس‌زمینه بیشتر از حد پشتیبانی است</string>
     <string name="image_max_size_allowed">حداکثر حجم پشتیبانی شده: %d مگابایت</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">ابعاد تصویر بسیار بزرگ است (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">دسترسی حافظه لازم است. لطفاً دسترسی حافظه را به آنکی‌دروید داده و سپس دوباره تلاش کنید.</string>
@@ -191,12 +182,12 @@
     <string name="help_title_using_ankidroid">استفاده از AnkiDroid</string>
     <string name="help_item_ankidroid_manual">دفترچه راهنما AnkiDroid</string>
     <string name="help_item_anki_manual">دفتر راهنما Anki</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
+    <string name="help_item_ankidroid_faq">سوالات متداول AnkiDroid</string>
     <string name="help_title_get_help">کمک گرفتن</string>
     <string name="help_item_mailing_list">لیست ایمیل‌ها</string>
     <string name="help_item_reddit">ردیت</string>
     <string name="help_item_report_bug">گزارش مشکل</string>
-    <string name="help_title_support_ankidroid">درباره AnkiDroid</string>
+    <string name="help_title_support_ankidroid">AnkiDroid را حمایت کنید</string>
     <string name="help_item_support_opencollective_donate">کمک مالی</string>
     <string name="help_item_support_develop_ankidroid">توسعه</string>
     <string name="help_item_support_rate_ankidroid">امتیازدهی</string>
@@ -213,13 +204,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">شرایط و ضوابط AnkiWeb</string>
     <string name="help_title_send_exception">ارسال گزارش عیب یابی</string>
     <string name="help_dialog_exception_report_debounce">گزارش قبلا ثبت شده است</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">گزارش ارسال شد!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
         <item quantity="other">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
     </plurals>
-    <string name="metered_sync_warning">ارتباط‌ شما دارای اندازه‌گیری است. انتقال داده می‌تواند هزینه اضافه داشته باشد.</string>
+    <string name="metered_sync_data_warning">ارائه‌دهنده اینترنت شما ممکن است برای استفاده از داده هزینه دریافت کند</string>
     <string name="deck_picker_new">تعداد کارت های جدیدی که امروز در این دسته خواهید دید.</string>
     <string name="deck_picker_rev">تعداد کارت های تا مهلت امروز در این دسته</string>
     <string name="deck_picker_lrn">تعداد کارت های در حال یاد‌گیری در این دسته.</string>
@@ -242,4 +233,31 @@
     <string name="dismiss_backup_warning_title">خطر از دست رفتن داده‌ها</string>
     <string name="dismiss_backup_warning_new_user">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک نیز حذف خواهند شد    </string>
     <string name="dismiss_backup_warning_upgrade">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک، از دسترس خارج خواهند شد    </string>
+    <string name="deck_already_exists">دسته کارت از قبل وجود دارد</string>
+    <string name="create_deck_numeric_hint">اگر مشکل ترتیب دسته کارت‌ها دارید (مثلاً ‘10’ قبل از ‘2’ ظاهر می‌شود)، ‘2’ را با ‘02’ جایگزین کنید</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">تنظیم فاصله زمانی به همان مقدار</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">نمایش کارت در</item>
+        <item quantity="other">نمایش کارتها در</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">نمایش کارت در محدوده</item>
+        <item quantity="other">روز</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">روز</item>
+        <item quantity="other">روزها</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">از</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">تا</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">نیاز به یادداشت نوع Cloze</string>
+    <string name="cloze_not_found_message">یادداشت نوع Cloze یافت نشد، ویرایشگر یادداشت را باز کنید یا پس از افزودن یادداشت نوع Cloze دوباره تلاش کنید.</string>
+    <string name="open">باز کن</string>
+    <string name="change_cloze_number">تغییر شماره Cloze</string>
+    <string name="cloze_number">شماره Cloze:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">WebView سیستم قدیمی است. برخی ویژگی‌ها به درستی کار نخواهند کرد. لطفاً آن را به‌روزرسانی کنید. \n\nنسخه نصب‌شده: %1$d\nحداقل نسخه مورد نیاز: %2$d</string>
 </resources>

@@ -18,46 +18,71 @@
 
 package com.ichi2.anki
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.TextUtils
 import android.util.TypedValue
-import android.view.*
-import android.widget.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.SubMenu
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.AbsListView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.BaseAdapter
+import android.widget.CheckBox
+import android.widget.ListView
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
+import androidx.annotation.ColorInt
+import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.ThemeUtils
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.Previewer.Companion.toIntent
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN1_KEYS
 import com.ichi2.anki.browser.CardBrowserColumn.Companion.COLUMN2_KEYS
 import com.ichi2.anki.browser.CardBrowserLaunchOptions
 import com.ichi2.anki.browser.CardBrowserViewModel
-import com.ichi2.anki.browser.CardBrowserViewModel.*
+import com.ichi2.anki.browser.CardBrowserViewModel.SearchState
 import com.ichi2.anki.browser.PreviewerIdsFile
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
-import com.ichi2.anki.dialogs.*
+import com.ichi2.anki.common.utils.android.isRobolectric
+import com.ichi2.anki.dialogs.BrowserOptionsDialog
+import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
+import com.ichi2.anki.dialogs.CardBrowserOrderDialog
+import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleMultipleCards
-import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
+import com.ichi2.anki.dialogs.IntegerDialog
+import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -65,43 +90,65 @@ import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.export.ExportDialogsFactory
 import com.ichi2.anki.export.ExportDialogsFactoryProvider
-import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
-import com.ichi2.anki.model.CardsOrNotes.*
+import com.ichi2.anki.model.CardsOrNotes.CARDS
+import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.pages.CardInfo.Companion.toIntent
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.anki.scheduling.ForgetCardsDialog
+import com.ichi2.anki.scheduling.SetDueDateDialog
+import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
-import com.ichi2.anki.servicelayer.rescheduleCards
-import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
+import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.*
-import com.ichi2.libanki.*
+import com.ichi2.async.renderBrowserQA
+import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardId
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.DeckNameId
+import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.SortOrder
+import com.ichi2.libanki.Sound
+import com.ichi2.libanki.TemplateManager
+import com.ichi2.libanki.Utils
+import com.ichi2.libanki.setTagsFromStr
+import com.ichi2.libanki.stripAvRefs
+import com.ichi2.libanki.undoableOp
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.*
+import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.TagsUtil.getUpdatedTags
+import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.widget.WidgetStatus.updateInBackground
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.*
-import java.util.function.Consumer
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -116,7 +163,6 @@ open class CardBrowser :
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
 
-    @NeedsTest("15448: double-selecting deck does nothing")
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             launchCatchingTask { selectDeckAndSave(deck.deckId) }
@@ -129,12 +175,10 @@ open class CardBrowser :
 
     lateinit var viewModel: CardBrowserViewModel
 
-    private var launchOptions: CardBrowserLaunchOptions? = null
-
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
     private val cards get() = viewModel.cards
-    var deckSpinnerSelection: DeckSpinnerSelection? = null
+    private lateinit var deckSpinnerSelection: DeckSpinnerSelection
 
     @VisibleForTesting
     lateinit var cardsListView: ListView
@@ -143,9 +187,6 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: MultiColumnListAdapter
 
-    private var searchTerms
-        get() = viewModel.searchTerms
-        set(value) { viewModel.searchTerms = value }
     private lateinit var tagsDialogFactory: TagsDialogFactory
     private var searchItem: MenuItem? = null
     private var saveSearchItem: MenuItem? = null
@@ -172,7 +213,7 @@ open class CardBrowser :
         }
         if (result.resultCode != RESULT_CANCELED) {
             Timber.i("CardBrowser:: CardBrowser: Saving card...")
-            launchCatchingTask { saveEditedCard() }
+            saveEditedCard()
         }
         val data = result.data
         if (data != null &&
@@ -240,15 +281,9 @@ open class CardBrowser :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    fun changeCardOrder(which: SortType) {
-        when (viewModel.changeCardOrder(which)) {
-            ChangeCardOrderResult.OrderChange -> { searchCards() }
-            ChangeCardOrderResult.DirectionChange -> {
-                cards.reverse()
-                updateList()
-            }
-            null -> {}
-        }
+    fun changeCardOrder(sortType: SortType) = launchCatchingTask {
+        // TODO: remove withProgress and replace with search progress bar
+        withProgress { viewModel.changeCardOrder(sortType)?.join() }
     }
 
     @VisibleForTesting
@@ -257,12 +292,9 @@ open class CardBrowser :
         override fun onSelection(searchName: String) {
             Timber.d("OnSelection using search named: %s", searchName)
             launchCatchingTask {
-                viewModel.savedSearches()[searchName]?.apply {
-                    Timber.d("OnSelection using search terms: %s", this)
-                    searchTerms = this
-                    searchView!!.setQuery(this, false)
-                    searchItem!!.expandActionView()
-                    searchCards()
+                viewModel.savedSearches()[searchName]?.also { savedSearch ->
+                    Timber.d("OnSelection using search terms: %s", savedSearch)
+                    searchForQuery(savedSearch)
                 }
             }
         }
@@ -303,16 +335,13 @@ open class CardBrowser :
         }
     }
 
-    private fun onSearch() {
-        searchTerms = searchView!!.query.toString()
-        if (searchTerms.isEmpty()) {
-            searchView!!.queryHint = resources.getString(R.string.deck_conf_cram_search)
-        }
-        searchCards()
+    @MainThread
+    @NeedsTest("search bar is set after selecting a saved search as first action")
+    private fun searchForQuery(query: String) {
+        // setQuery before expand does not set the view's value
+        searchItem!!.expandActionView()
+        searchView!!.setQuery(query, submit = true)
     }
-
-    private val selectedRowIds: List<CardId>
-        get() = viewModel.selectedRowIds
 
     private fun canPerformCardInfo(): Boolean {
         return viewModel.selectedRowCount() == 1
@@ -330,12 +359,7 @@ open class CardBrowser :
     @VisibleForTesting
     fun moveSelectedCardsToDeck(did: DeckId): Job {
         return launchCatchingTask {
-            val changed = withProgress {
-                val selectedCardIds = viewModel.queryAllSelectedCardIds()
-                undoableOp {
-                    setDeck(selectedCardIds, did)
-                }
-            }
+            val changed = withProgress { viewModel.moveSelectedCardsToDeck(did).await() }
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
     }
@@ -344,24 +368,16 @@ open class CardBrowser :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        // must be called after showedActivityFailedScreen
-        viewModel = createViewModel()
-
         tagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         exportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         super.onCreate(savedInstanceState)
-        if (wasLoadedFromExternalTextActionItem() && !hasCollectionStoragePermissions()) {
-            // we need to do this as DeckPicker still contains app init logic/upgrade logic
-            Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
-            showThemedToast(
-                this,
-                getString(R.string.intent_handler_failed_no_storage_permission),
-                false
-            )
-            displayDeckPickerForPermissionsDialog()
+        if (!ensureStoragePermissions()) {
             return
         }
-        launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
+        val launchOptions = intent?.toCardBrowserLaunchOptions() // must be called after super.onCreate()
+        // must be called once we have an accessible collection
+        viewModel = createViewModel(launchOptions)
+
         setContentView(R.layout.card_browser)
         initNavigationDrawer(findViewById(android.R.id.content))
         // initialize the lateinit variables
@@ -373,8 +389,8 @@ open class CardBrowser :
         val sflRelativeFontSize =
             preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
         val columnsContent = arrayOf(
-            COLUMN1_KEYS[viewModel.column1Index],
-            COLUMN2_KEYS[viewModel.column2Index]
+            viewModel.column1,
+            viewModel.column2
         )
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter = MultiColumnListAdapter(
@@ -388,22 +404,19 @@ open class CardBrowser :
         cardsListView.adapter = cardsAdapter
         // make the items (e.g. question & answer) render dynamically when scrolling
         cardsListView.setOnScrollListener(RenderOnScroll())
+
+        deckSpinnerSelection = DeckSpinnerSelection(
+            this,
+            findViewById(R.id.toolbar_spinner),
+            showAllDecks = true,
+            alwaysShowDefault = false,
+            showFilteredDecks = true
+        )
+
+        updateNumCardsToRender()
+
         startLoadingCollection()
 
-        when (val options = launchOptions) {
-            is CardBrowserLaunchOptions.DeepLink -> {
-                searchTerms = options.search
-                searchCards()
-            }
-            is CardBrowserLaunchOptions.SearchQueryJs -> {
-                searchTerms = options.search
-                if (options.allDecks) {
-                    onDeckSelected(SelectableDeck(ALL_DECKS_ID, getString(R.string.card_browser_all_decks)))
-                }
-                searchCards()
-            }
-            else -> {} // Context Menu handled in onCreateOptionsMenu
-        }
         exportingDelegate.onRestoreInstanceState(savedInstanceState)
 
         // Selected cards aren't restored on activity recreation,
@@ -417,81 +430,156 @@ open class CardBrowser :
         }
         onboarding.onCreate()
 
-        viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope { cardsAdapter.notifyDataSetChanged() }
-
-        viewModel.flowOfCardsOrNotes
-            .launchCollectionInLifecycleScope { runOnUiThread { searchCards() } }
-
-        viewModel.flowOfSearchQueryExpanded
-            .launchCollectionInLifecycleScope { searchQueryExpanded ->
-                Timber.d("query expansion changed: %b", searchQueryExpanded)
-                if (searchQueryExpanded) {
-                    runOnUiThread { searchItem?.expandActionView() }
-                } else {
-                    runOnUiThread { searchItem?.collapseActionView() }
-                    // invalidate options menu so that disappeared icons would appear again
-                    invalidateOptionsMenu()
-                }
-            }
-
-        viewModel.flowOfSelectedRows
-            .launchCollectionInLifecycleScope { runOnUiThread { onSelectionChanged() } }
-
-        viewModel.flowOfColumnIndex1
-            .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
-
-        viewModel.flowOfColumnIndex2
-            .launchCollectionInLifecycleScope { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
-
-        viewModel.flowOfFilterQuery
-            .launchCollectionInLifecycleScope { filterQuery ->
-                searchView!!.setQuery("", false)
-                searchTerms = filterQuery
-                searchView!!.setQuery(searchTerms, true)
-                searchCards()
-            }
-
-        viewModel.flowOfDeckId
-            .launchCollectionInLifecycleScope { deckId ->
-                if (deckId == null) return@launchCollectionInLifecycleScope
-                // this handles ALL_DECKS_ID
-                deckSpinnerSelection!!.selectDeckById(deckId, false)
-                searchCards()
-            }
-
-        viewModel.flowOfCanSearch
-            .launchCollectionInLifecycleScope { canSave ->
-                runOnUiThread { saveSearchItem?.isVisible = canSave }
-            }
-
-        viewModel.flowOfIsInMultiSelectMode
-            .launchCollectionInLifecycleScope { inMultiSelect ->
-                if (inMultiSelect) {
-                    // Turn on Multi-Select Mode so that the user can select multiple cards at once.
-                    Timber.d("load multiselect mode")
-                    // show title and hide spinner
-                    actionBarTitle.visibility = View.VISIBLE
-                    deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
-                } else {
-                    Timber.d("end multiselect mode")
-                    // If view which was originally selected when entering multi-select is visible then maintain its position
-                    val view = cardsListView.getChildAt(lastSelectedPosition - cardsListView.firstVisiblePosition)
-                    view?.let { recenterListView(it) }
-                    // update adapter to remove check boxes
-                    cardsAdapter.notifyDataSetChanged()
-                    deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
-                    actionBarTitle.visibility = View.GONE
-                }
-                // reload the actionbar using the multi-select mode actionbar
-                invalidateOptionsMenu()
-            }
-
-        viewModel.flowOfInitCompleted
-            .launchCollectionInLifecycleScope { completed -> if (completed) searchCards() }
+        setupFlows()
     }
 
-    fun searchWithFilterQuery(filterQuery: String) = launchCatchingTask {
-        viewModel.setFilterQuery(filterQuery)
+    @Suppress("UNUSED_PARAMETER")
+    private fun setupFlows() {
+        // provides a name for each flow receiver to improve stack traces
+        fun onIsTruncatedChanged(isTruncated: Boolean) = cardsAdapter.notifyDataSetChanged()
+        fun onSearchQueryExpanded(searchQueryExpanded: Boolean) {
+            Timber.d("query expansion changed: %b", searchQueryExpanded)
+            if (searchQueryExpanded) {
+                searchItem?.expandActionView()
+            } else {
+                searchItem?.collapseActionView()
+                // invalidate options menu so that disappeared icons would appear again
+                invalidateOptionsMenu()
+            }
+        }
+        fun onSelectedRowsChanged(rows: Set<CardCache>) = onSelectionChanged()
+        fun onColumn1Changed(column: CardBrowserColumn) {
+            cardsAdapter.updateMapping { it[0] = column }
+            findViewById<Spinner>(R.id.browser_column1_spinner)
+                .setSelection(COLUMN1_KEYS.indexOf(column))
+        }
+
+        fun onColumn2Changed(column: CardBrowserColumn) {
+            cardsAdapter.updateMapping { it[1] = column }
+            findViewById<Spinner>(R.id.browser_column2_spinner)
+                .setSelection(COLUMN2_KEYS.indexOf(column))
+        }
+
+        fun onFilterQueryChanged(filterQuery: String) {
+            // setQuery before expand does not set the view's value
+            searchItem!!.expandActionView()
+            searchView!!.setQuery(filterQuery, submit = false)
+        }
+        suspend fun onDeckIdChanged(deckId: DeckId?) {
+            if (deckId == null) return
+            // this handles ALL_DECKS_ID
+            deckSpinnerSelection.selectDeckById(deckId, false)
+        }
+        fun onCanSaveChanged(canSave: Boolean) {
+            saveSearchItem?.isVisible = canSave
+        }
+        fun isInMultiSelectModeChanged(inMultiSelect: Boolean) {
+            if (inMultiSelect) {
+                // Turn on Multi-Select Mode so that the user can select multiple cards at once.
+                Timber.d("load multiselect mode")
+                // show title and hide spinner
+                actionBarTitle.visibility = View.VISIBLE
+                deckSpinnerSelection.setSpinnerVisibility(View.GONE)
+            } else {
+                Timber.d("end multiselect mode")
+                // If view which was originally selected when entering multi-select is visible then maintain its position
+                val view = cardsListView.getChildAt(lastSelectedPosition - cardsListView.firstVisiblePosition)
+                view?.let { recenterListView(it) }
+                // update adapter to remove check boxes
+                cardsAdapter.notifyDataSetChanged()
+                deckSpinnerSelection.setSpinnerVisibility(View.VISIBLE)
+                actionBarTitle.visibility = View.GONE
+            }
+            // reload the actionbar using the multi-select mode actionbar
+            invalidateOptionsMenu()
+        }
+        fun cardsUpdatedChanged(unit: Unit) = cardsAdapter.notifyDataSetChanged()
+        fun searchStateChanged(searchState: SearchState) {
+            Timber.d("search state: %s", searchState)
+            when (searchState) {
+                SearchState.Initializing -> { }
+                SearchState.Searching -> {
+                    invalidate()
+                    if ("" != viewModel.searchTerms && searchView != null) {
+                        searchView!!.setQuery(viewModel.searchTerms, false)
+                        searchItem!!.expandActionView()
+                    }
+                }
+                SearchState.Completed -> redrawAfterSearch()
+                is SearchState.Error -> {
+                    showError(this, searchState.error)
+                }
+            }
+        }
+
+        fun setupColumnSpinners() {
+            // Create a spinner for column 1
+            findViewById<Spinner>(R.id.browser_column1_spinner).apply {
+                adapter = ArrayAdapter(
+                    this@CardBrowser,
+                    android.R.layout.simple_spinner_item,
+                    viewModel.column1Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                ).apply {
+                    setDropDownViewResource(R.layout.spinner_custom_layout)
+                }
+                setSelection(COLUMN1_KEYS.indexOf(viewModel.column1))
+                onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                    viewModel.setColumn1(COLUMN1_KEYS[pos])
+                }
+            }
+
+            // Setup the column 2 heading as a spinner so that users can easily change the column type
+            findViewById<Spinner>(R.id.browser_column2_spinner).apply {
+                adapter = ArrayAdapter(
+                    this@CardBrowser,
+                    android.R.layout.simple_spinner_item,
+                    viewModel.column2Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                ).apply {
+                    // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
+                    setDropDownViewResource(R.layout.spinner_custom_layout)
+                }
+                setSelection(COLUMN2_KEYS.indexOf(viewModel.column2))
+                // Create a new list adapter with updated column map any time the user changes the column
+                onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                    viewModel.setColumn2(COLUMN2_KEYS[pos])
+                }
+            }
+        }
+
+        fun initCompletedChanged(completed: Boolean) {
+            if (!completed) return
+
+            setupColumnSpinners()
+            searchCards()
+        }
+
+        @Suppress("UNCHECKED_CAST") // as? ArrayAdapter<String>?
+        fun cardsOrNotesChanged(cardsOrNotes: CardsOrNotes) {
+            Timber.d("mode change: %s - updating spinner titles", cardsOrNotes)
+            findViewById<Spinner>(R.id.browser_column1_spinner)?.adapter?.apply {
+                val adapter = this as? ArrayAdapter<String>? ?: return@apply
+                adapter.clear()
+                adapter.addAll(viewModel.column1Candidates.map { it.getLabel(cardsOrNotes) })
+            }
+            findViewById<Spinner>(R.id.browser_column2_spinner)?.adapter?.apply {
+                val adapter = this as? ArrayAdapter<String>? ?: return@apply
+                adapter.clear()
+                adapter.addAll(viewModel.column2Candidates.map { it.getLabel(cardsOrNotes) })
+            }
+        }
+        viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
+        viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
+        viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
+        viewModel.flowOfColumn1.launchCollectionInLifecycleScope(::onColumn1Changed)
+        viewModel.flowOfColumn2.launchCollectionInLifecycleScope(::onColumn2Changed)
+        viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
+        viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
+        viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
+        viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
+        viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
+        viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
+        viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
+        viewModel.flowOfCardsOrNotes.launchCollectionInLifecycleScope(::cardsOrNotesChanged)
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
@@ -500,36 +588,6 @@ open class CardBrowser :
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
         cards.reset()
-        // Create a spinner for column 1
-        findViewById<Spinner>(R.id.browser_column1_spinner).apply {
-            adapter = ArrayAdapter.createFromResource(
-                this@CardBrowser,
-                R.array.browser_column1_headings,
-                android.R.layout.simple_spinner_item
-            ).apply {
-                setDropDownViewResource(R.layout.spinner_custom_layout)
-            }
-            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-                viewModel.setColumn1Index(pos)
-            }
-            setSelection(viewModel.column1Index)
-        }
-        // Setup the column 2 heading as a spinner so that users can easily change the column type
-        findViewById<Spinner>(R.id.browser_column2_spinner).apply {
-            adapter = ArrayAdapter.createFromResource(
-                this@CardBrowser,
-                R.array.browser_column2_headings,
-                android.R.layout.simple_spinner_item
-            ).apply {
-                // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
-                setDropDownViewResource(R.layout.spinner_custom_layout)
-            }
-            // Create a new list adapter with updated column map any time the user changes the column
-            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-                viewModel.setColumn2Index(pos)
-            }
-            setSelection(viewModel.column2Index)
-        }
 
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (viewModel.isInMultiSelectMode) {
@@ -538,10 +596,12 @@ open class CardBrowser :
                 cb.toggle()
                 viewModel.toggleRowSelectionAtPosition(position)
             } else {
-                // load up the card selected on the list
-                val clickedCardId = viewModel.getCardIdAtPosition(position)
-                saveScrollingState(position)
-                openNoteEditorForCard(clickedCardId)
+                launchCatchingTask {
+                    // load up the card selected on the list
+                    val clickedCardId = viewModel.queryCardIdAtPosition(position)
+                    saveScrollingState(position)
+                    openNoteEditorForCard(clickedCardId)
+                }
             }
         }
         @KotlinCleanup("helper function for min/max range")
@@ -549,26 +609,22 @@ open class CardBrowser :
             if (viewModel.isInMultiSelectMode) {
                 viewModel.selectRowsBetweenPositions(lastSelectedPosition, position)
             } else {
-                lastSelectedPosition = position
-                saveScrollingState(position)
+                launchCatchingTask {
+                    lastSelectedPosition = position
+                    saveScrollingState(position)
 
-                // click on whole cell triggers select
-                val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
-                cb.toggle()
-                viewModel.toggleRowSelectionAtPosition(position)
-                recenterListView(view)
-                cardsAdapter.notifyDataSetChanged()
+                    // click on whole cell triggers select
+                    val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
+                    cb.toggle()
+                    viewModel.toggleRowSelectionAtPosition(position)
+                    recenterListView(view)
+                    cardsAdapter.notifyDataSetChanged()
+                }
             }
             true
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        deckSpinnerSelection = DeckSpinnerSelection(
-            this,
-            findViewById(R.id.toolbar_spinner),
-            showAllDecks = true,
-            alwaysShowDefault = false,
-            showFilteredDecks = true
-        ).apply {
+        deckSpinnerSelection.apply {
             initializeActionBarDeckSpinner(col, supportActionBar!!)
             launchCatchingTask { selectDeckById(viewModel.deckId ?: ALL_DECKS_ID, false) }
         }
@@ -594,6 +650,9 @@ open class CardBrowser :
                     Timber.i("Ctrl+E: Add Note")
                     launchCatchingTask { addNoteFromCardBrowser() }
                     return true
+                } else {
+                    Timber.i("E: Edit note")
+                    openNoteEditorForCurrentlySelectedNote()
                 }
             }
             KeyEvent.KEYCODE_D -> {
@@ -646,33 +705,47 @@ open class CardBrowser :
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
     @VisibleForTesting
     fun toggleMark() = launchCatchingTask {
-        withProgress { viewModel.toggleMark(selectedRowIds) }
+        withProgress { viewModel.toggleMark() }
         cardsAdapter.notifyDataSetChanged()
-    }
-
-    @VisibleForTesting
-    suspend fun selectAllDecks() {
-        viewModel.setDeckId(ALL_DECKS_ID)
     }
 
     /** Opens the note editor for a card.
      * We use the Card ID to specify the preview target  */
+    @NeedsTest("note edits are saved")
+    @NeedsTest("I/O edits are saved")
     private fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId
-        cardBrowserCard = getColUnsafe.getCard(currentCardId)
-        // start note editor using the card we just loaded
-        val editCard = Intent(this, NoteEditor::class.java)
-            .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT)
-            .putExtra(NoteEditor.EXTRA_CARD_ID, cardBrowserCard!!.id)
-        onEditCardActivityResult.launch(editCard)
+        val intent = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT).getIntent(this)
+        onEditCardActivityResult.launch(intent)
         // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
         viewModel.endMultiSelectMode()
     }
 
-    private fun openNoteEditorForCurrentlySelectedNote() {
+    /**
+     * In case of selection, the first card that was selected, otherwise the first card of the list.
+     */
+    private suspend fun getCardIdForNoteEditor(): CardId {
+        // Just select the first one if there's a multiselect occurring.
+        return if (viewModel.isInMultiSelectMode) {
+            viewModel.querySelectedCardIdAtPosition(0)
+        } else {
+            viewModel.getRowAtPosition(0).id
+        }
+    }
+
+    private fun openNoteEditorForCurrentlySelectedNote() = launchCatchingTask {
+        // Check whether the deck is empty
+        if (viewModel.rowCount == 0) {
+            showSnackbar(
+                R.string.no_note_to_edit,
+                Snackbar.LENGTH_LONG
+            )
+            return@launchCatchingTask
+        }
+
         try {
-            // Just select the first one. It doesn't particularly matter if there's a multiselect occurring.
-            openNoteEditorForCard(selectedRowIds[0])
+            val cardId = getCardIdForNoteEditor()
+            openNoteEditorForCard(cardId)
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
             showSnackbar(
@@ -698,6 +771,8 @@ open class CardBrowser :
         }
     }
 
+    @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         when {
             isDrawerOpen -> super.onBackPressed()
@@ -725,6 +800,12 @@ open class CardBrowser :
     override fun onResume() {
         super.onResume()
         selectNavigationItem(R.id.nav_browser)
+        updateNumCardsToRender()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        updateNumCardsToRender()
     }
 
     @KotlinCleanup("Add a few variables to get rid of the !!")
@@ -735,6 +816,10 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
+            menu.findItem(R.id.action_search_by_flag).subMenu?.let {
+                    subMenu ->
+                setupFlags(subMenu, Mode.SINGLE_SELECT)
+            }
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
@@ -750,43 +835,48 @@ open class CardBrowser :
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                     viewModel.setSearchQueryExpanded(false)
                     // SearchView doesn't support empty queries so we always reset the search when collapsing
-                    searchTerms = ""
-                    searchView!!.setQuery(searchTerms, false)
-                    searchCards()
+                    searchView!!.setQuery("", false)
+                    searchCards("")
                     return true
                 }
             })
-            searchView = searchItem!!.actionView as CardBrowserSearchView
-            searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String): Boolean {
-                    if (searchView!!.shouldIgnoreValueChange()) {
+            searchView = (searchItem!!.actionView as CardBrowserSearchView).apply {
+                queryHint = resources.getString(R.string.deck_conf_cram_search)
+                setMaxWidth(Integer.MAX_VALUE)
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (this@apply.shouldIgnoreValueChange()) {
+                            return true
+                        }
+                        viewModel.updateQueryText(newText)
                         return true
                     }
-                    viewModel.updateQueryText(newText)
-                    return true
-                }
 
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    onSearch()
-                    searchView!!.clearFocus()
-                    return true
-                }
-            })
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        searchCards(query)
+                        searchView!!.clearFocus()
+                        return true
+                    }
+                })
+            }
             // Fixes #6500 - keep the search consistent if coming back from note editor
             // Fixes #9010 - consistent search after drawer change calls invalidateOptionsMenu
-            if (!viewModel.tempSearchQuery.isNullOrEmpty() || searchTerms.isNotEmpty()) {
+            if (!viewModel.tempSearchQuery.isNullOrEmpty() || viewModel.searchTerms.isNotEmpty()) {
                 searchItem!!.expandActionView() // This calls mSearchView.setOnSearchClickListener
-                val toUse =
-                    if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else searchTerms
+                val toUse = if (!viewModel.tempSearchQuery.isNullOrEmpty()) viewModel.tempSearchQuery else viewModel.searchTerms
                 searchView!!.setQuery(toUse!!, false)
             }
             searchView!!.setOnSearchClickListener {
                 // Provide SearchView with the previous search terms
-                searchView!!.setQuery(searchTerms, false)
+                searchView!!.setQuery(viewModel.searchTerms, false)
             }
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
+            menu.findItem(R.id.action_flag).subMenu?.let {
+                    subMenu ->
+                setupFlags(subMenu, Mode.MULTI_SELECT)
+            }
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
@@ -795,18 +885,35 @@ open class CardBrowser :
             title = getColUnsafe.undoLabel()
         }
 
-        launchOptions?.let { options ->
-            if (options !is CardBrowserLaunchOptions.SystemContextMenu) return@let
-            // Fill in the search.
-            Timber.i("CardBrowser :: Called with search intent: %s", launchOptions.toString())
-            searchWithFilterQuery(options.search.toString())
-            launchOptions = null
-        }
+        actionBarMenu?.findItem(R.id.action_reschedule_cards)?.title =
+            TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
 
         previewItem = menu.findItem(R.id.action_preview)
         onSelectionChanged()
         updatePreviewMenuItem()
         return super.onCreateOptionsMenu(menu)
+    }
+
+    /**
+     * Representing different selection modes.
+     */
+    enum class Mode(val value: Int) {
+        SINGLE_SELECT(1000),
+        MULTI_SELECT(1001)
+    }
+
+    private fun setupFlags(subMenu: SubMenu, mode: Mode) {
+        lifecycleScope.launch {
+            val groupId = when (mode) {
+                Mode.SINGLE_SELECT -> mode.value
+                Mode.MULTI_SELECT -> mode.value
+            }
+
+            for ((flag, displayName) in Flag.queryDisplayNames()) {
+                subMenu.add(groupId, flag.ordinal, Menu.NONE, displayName)
+                    .setIcon(flag.drawableRes)
+            }
+        }
     }
 
     override fun onNavigationPressed() {
@@ -817,43 +924,31 @@ open class CardBrowser :
         }
     }
 
-    private fun displayDeckPickerForPermissionsDialog() {
-        // TODO: Combine this with class: IntentHandler after both are well-tested
-        val deckPicker = Intent(this, DeckPicker::class.java)
-        deckPicker.action = Intent.ACTION_MAIN
-        deckPicker.addCategory(Intent.CATEGORY_LAUNCHER)
-        deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(deckPicker)
-        finish()
-        this.setResult(RESULT_CANCELED)
-    }
-
-    private fun wasLoadedFromExternalTextActionItem(): Boolean {
-        val intent = this.intent ?: return false
-        // API 23: Replace with Intent.ACTION_PROCESS_TEXT
-        return "android.intent.action.PROCESS_TEXT".equals(intent.action, ignoreCase = true)
-    }
-
     private fun updatePreviewMenuItem() {
         previewItem?.isVisible = viewModel.rowCount > 0
     }
 
     private fun updateMultiselectMenu() {
         Timber.d("updateMultiselectMenu()")
-        if (actionBarMenu == null || actionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
+        val actionBarMenu = actionBarMenu
+        if (actionBarMenu?.findItem(R.id.action_suspend_card) == null) {
             return
         }
         if (viewModel.hasSelectedAnyRows()) {
-            actionBarMenu!!.findItem(R.id.action_suspend_card).apply {
-                title = TR.browsingToggleSuspend()
+            actionBarMenu.findItem(R.id.action_suspend_card).apply {
+                title = TR.browsingToggleSuspend().toSentenceCase(R.string.sentence_toggle_suspend)
+                // TODO: I don't think this icon is necessary
                 setIcon(R.drawable.ic_suspend)
             }
-            actionBarMenu!!.findItem(R.id.action_mark_card).apply {
+            actionBarMenu.findItem(R.id.action_toggle_bury).apply {
+                title = TR.browsingToggleBury().toSentenceCase(R.string.sentence_toggle_bury)
+            }
+            actionBarMenu.findItem(R.id.action_mark_card).apply {
                 title = TR.browsingToggleMark()
                 setIcon(R.drawable.ic_star_border_white)
             }
         }
-        actionBarMenu!!.findItem(R.id.action_export_selected).apply {
+        actionBarMenu.findItem(R.id.action_export_selected).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(
                     R.plurals.card_browser_export_cards,
@@ -866,7 +961,7 @@ open class CardBrowser :
                 )
             }
         }
-        actionBarMenu!!.findItem(R.id.action_delete_card).apply {
+        actionBarMenu.findItem(R.id.action_delete_card).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
                 resources.getQuantityString(
                     R.plurals.card_browser_delete_cards,
@@ -879,12 +974,12 @@ open class CardBrowser :
                 )
             }
         }
-        actionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
+        actionBarMenu.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
-        actionBarMenu!!.findItem(R.id.action_select_none).isVisible =
+        actionBarMenu.findItem(R.id.action_select_none).isVisible =
             viewModel.hasSelectedAnyRows()
-        actionBarMenu!!.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
-        actionBarMenu!!.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
+        actionBarMenu.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
+        actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
     private fun hasSelectedAllCards(): Boolean {
@@ -905,12 +1000,12 @@ open class CardBrowser :
     @VisibleForTesting
     suspend fun updateSelectedCardsFlag(flag: Flag) {
         // list of cards with updated flags
-        val updatedCards = withProgress { viewModel.updateSelectedCardsFlag(flag) }
+        val updatedCardIds = withProgress { viewModel.updateSelectedCardsFlag(flag) }
         // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
         // otherwise it could hang the main thread
-        updateCardsInList(updatedCards)
+        updateCardsInList(updatedCardIds)
         invalidateOptionsMenu() // maybe the availability of undo changed
-        if (updatedCards.any { card -> card.id == reviewerCardId }) {
+        if (updatedCardIds.any { it == reviewerCardId }) {
             reloadRequired = true
         }
     }
@@ -920,7 +1015,9 @@ open class CardBrowser :
      */
     private fun warnUserIfInNotesOnlyMode(): Boolean {
         if (viewModel.cardsOrNotes != NOTES) return false
-        showSnackbar(R.string.card_browser_unavailable_when_notes_only)
+        showSnackbar(R.string.card_browser_unavailable_when_notes_mode) {
+            setAction(R.string.error_handling_options) { showOptionsDialog() }
+        }
         return true
     }
 
@@ -931,6 +1028,15 @@ open class CardBrowser :
             // dismiss undo-snackbar if shown to avoid race condition
             // (when another operation will be performed on the model, it will undo the latest operation)
             undoSnackbar != null && undoSnackbar!!.isShown -> undoSnackbar!!.dismiss()
+        }
+
+        Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
+            when (item.groupId) {
+                Mode.SINGLE_SELECT.value -> filterByFlag(flag)
+                Mode.MULTI_SELECT.value -> updateFlagForSelectedRows(flag)
+                else -> return@let
+            }
+            return true
         }
 
         when (item.itemId) {
@@ -995,70 +1101,6 @@ open class CardBrowser :
                 showFilterByTagsDialog()
                 return true
             }
-            R.id.action_flag_zero -> {
-                updateFlagForSelectedRows(Flag.NONE)
-                return true
-            }
-            R.id.action_flag_one -> {
-                updateFlagForSelectedRows(Flag.RED)
-                return true
-            }
-            R.id.action_flag_two -> {
-                updateFlagForSelectedRows(Flag.ORANGE)
-                return true
-            }
-            R.id.action_flag_three -> {
-                updateFlagForSelectedRows(Flag.GREEN)
-                return true
-            }
-            R.id.action_flag_four -> {
-                updateFlagForSelectedRows(Flag.BLUE)
-                return true
-            }
-            R.id.action_flag_five -> {
-                updateFlagForSelectedRows(Flag.PINK)
-                return true
-            }
-            R.id.action_flag_six -> {
-                updateFlagForSelectedRows(Flag.TURQUOISE)
-                return true
-            }
-            R.id.action_flag_seven -> {
-                updateFlagForSelectedRows(Flag.PURPLE)
-                return true
-            }
-            R.id.action_select_flag_zero -> {
-                filterByFlag(Flag.NONE)
-                return true
-            }
-            R.id.action_select_flag_one -> {
-                filterByFlag(Flag.RED)
-                return true
-            }
-            R.id.action_select_flag_two -> {
-                filterByFlag(Flag.ORANGE)
-                return true
-            }
-            R.id.action_select_flag_three -> {
-                filterByFlag(Flag.GREEN)
-                return true
-            }
-            R.id.action_select_flag_four -> {
-                filterByFlag(Flag.BLUE)
-                return true
-            }
-            R.id.action_select_flag_five -> {
-                filterByFlag(Flag.PINK)
-                return true
-            }
-            R.id.action_select_flag_six -> {
-                filterByFlag(Flag.TURQUOISE)
-                return true
-            }
-            R.id.action_select_flag_seven -> {
-                filterByFlag(Flag.PURPLE)
-                return true
-            }
             R.id.action_delete_card -> {
                 deleteSelectedNotes()
                 return true
@@ -1068,7 +1110,11 @@ open class CardBrowser :
                 return true
             }
             R.id.action_suspend_card -> {
-                suspendCards()
+                toggleSuspendCards()
+                return true
+            }
+            R.id.action_toggle_bury -> {
+                toggleBury()
                 return true
             }
             R.id.action_change_deck -> {
@@ -1105,28 +1151,29 @@ open class CardBrowser :
             R.id.action_reposition_cards -> {
                 Timber.i("CardBrowser:: Reposition button pressed")
                 if (warnUserIfInNotesOnlyMode()) return true
-                // `selectedRowIds` getter does a lot of work so save it in a val beforehand
-                val selectedCardIds = selectedRowIds
-                // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-                if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
-                    showDialogFragment(
-                        SimpleMessageDialog.newInstance(
-                            title = getString(R.string.vague_error),
-                            message = getString(R.string.reposition_card_not_new_error),
-                            reload = false
+                launchCatchingTask {
+                    val selectedCardIds = viewModel.queryAllSelectedCardIds()
+                    // Only new cards may be repositioned (If any non-new found show error dialog and return false)
+                    if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+                        showDialogFragment(
+                            SimpleMessageDialog.newInstance(
+                                title = getString(R.string.vague_error),
+                                message = getString(R.string.reposition_card_not_new_error),
+                                reload = false
+                            )
                         )
-                    )
-                    return false
+                        return@launchCatchingTask
+                    }
+                    val repositionDialog = IntegerDialog().apply {
+                        setArgs(
+                            title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
+                            prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
+                            digits = 5
+                        )
+                        setCallbackRunnable(::repositionCardsNoValidation)
+                    }
+                    showDialogFragment(repositionDialog)
                 }
-                val repositionDialog = IntegerDialog().apply {
-                    setArgs(
-                        title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
-                        prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                        digits = 5
-                    )
-                    setCallbackRunnable(::repositionCardsNoValidation)
-                }
-                showDialogFragment(repositionDialog)
                 return true
             }
             R.id.action_edit_note -> {
@@ -1134,9 +1181,11 @@ open class CardBrowser :
                 return super.onOptionsItemSelected(item)
             }
             R.id.action_view_card_info -> {
-                viewModel.cardInfoDestination?.let { destination ->
-                    val intent: Intent = destination.toIntent(this)
-                    startActivity(intent)
+                launchCatchingTask {
+                    viewModel.queryCardInfoDestination()?.let { destination ->
+                        val intent: Intent = destination.toIntent(this@CardBrowser)
+                        startActivity(intent)
+                    }
                 }
                 return true
             }
@@ -1156,7 +1205,7 @@ open class CardBrowser :
     override fun exportDialogsFactory(): ExportDialogsFactory = exportingDelegate.dialogsFactory
 
     private fun exportSelected() = launchCatchingTask {
-        val (type, selectedIds) = viewModel.getSelectionExportData() ?: return@launchCatchingTask
+        val (type, selectedIds) = viewModel.querySelectionExportData() ?: return@launchCatchingTask
         ExportDialogFragment.newInstance(type, selectedIds).show(supportFragmentManager, "exportDialog")
     }
 
@@ -1178,23 +1227,10 @@ open class CardBrowser :
 
     private fun onResetProgress() {
         if (warnUserIfInNotesOnlyMode()) return
-        // Show confirmation dialog before resetting card progress
-        val dialog = ConfirmationDialog()
-        val title = getString(R.string.reset_card_dialog_title)
-        val message = getString(R.string.reset_card_dialog_message)
-        dialog.setArgs(title, message)
-        val confirm = Runnable {
-            Timber.i("CardBrowser:: ResetProgress button pressed")
-            resetProgressNoConfirm(selectedRowIds)
-        }
-        dialog.setConfirm(confirm)
-        showDialogFragment(dialog)
-    }
-
-    @VisibleForTesting
-    fun resetProgressNoConfirm(cardIds: List<Long>) {
         launchCatchingTask {
-            resetCards(cardIds)
+            val cardIds = viewModel.queryAllSelectedCardIds()
+            val dialog = ForgetCardsDialog.newInstance(cardIds = cardIds)
+            showDialogFragment(dialog)
         }
     }
 
@@ -1212,16 +1248,14 @@ open class CardBrowser :
     }
 
     private fun onPreview() {
-        val intentData = viewModel.previewIntentData
-        onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.index, intentData.previewerIdsFile))
+        launchCatchingTask {
+            val intentData = viewModel.queryPreviewIntentData()
+            onPreviewCardsActivityResult.launch(getPreviewIntent(intentData.currentIndex, intentData.previewerIdsFile))
+        }
     }
 
     private fun getPreviewIntent(index: Int, previewerIdsFile: PreviewerIdsFile): Intent {
-        return if (sharedPrefs().getBoolean("new_previewer", false)) {
-            Previewer2Destination(index, previewerIdsFile).toIntent(this)
-        } else {
-            PreviewDestination(index, previewerIdsFile).toIntent(this)
-        }
+        return PreviewerDestination(index, previewerIdsFile).toIntent(this)
     }
 
     private fun rescheduleSelectedCards() {
@@ -1230,21 +1264,10 @@ open class CardBrowser :
             return
         }
         if (warnUserIfInNotesOnlyMode()) return
-        val rescheduleDialog: RescheduleDialog = selectedRowIds.run {
-            val consumer = Consumer { newDays: Int -> rescheduleWithoutValidation(this, newDays) }
-            if (size == 1) {
-                rescheduleSingleCard(resources, getColUnsafe.getCard(this[0]), consumer)
-            } else {
-                rescheduleMultipleCards(resources, consumer, size)
-            }
-        }
-        showDialogFragment(rescheduleDialog)
-    }
 
-    @VisibleForTesting
-    fun rescheduleWithoutValidation(selectedCardIds: List<CardId>, newDays: Int) {
         launchCatchingTask {
-            rescheduleCards(selectedCardIds, newDays)
+            val allCardIds = viewModel.queryAllSelectedCardIds()
+            showDialogFragment(SetDueDateDialog.newInstance(allCardIds))
         }
     }
 
@@ -1276,15 +1299,7 @@ open class CardBrowser :
 
     @get:VisibleForTesting
     val addNoteIntent: Intent
-        get() {
-            val intent = Intent(this@CardBrowser, NoteEditor::class.java)
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_ADD)
-            if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
-                intent.putExtra(NoteEditor.EXTRA_DID, viewModel.lastDeckId)
-            }
-            intent.putExtra(NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW, searchTerms)
-            return intent
-        }
+        get() = createAddNoteIntent(this, viewModel)
 
     private fun addNoteFromCardBrowser() {
         onAddNoteActivityResult.launch(addNoteIntent)
@@ -1294,36 +1309,84 @@ open class CardBrowser :
         get() = intent.getLongExtra("currentCard", -1)
 
     private fun showEditTagsDialog() {
-        if (selectedRowIds.isEmpty()) {
+        if (!viewModel.hasSelectedAnyRows()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-        val allTags = getColUnsafe.tags.all()
-        val selectedNotes = selectedRowIds
-            .map { cardId: CardId? -> getColUnsafe.getCard(cardId!!).note(getColUnsafe) }
-            .distinct()
-        val checkedTags = selectedNotes
-            .flatMap { note: Note -> note.tags }
-        if (selectedNotes.size == 1) {
-            Timber.d("showEditTagsDialog: edit tags for one note")
-            tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-            val dialog = tagsDialogFactory.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, checkedTags, allTags)
-            showDialogFragment(dialog)
-            return
-        }
-        val uncheckedTags = selectedNotes
-            .flatMap { note: Note ->
-                val noteTags: List<String?> = note.tags
-                allTags.filter { t: String? -> !noteTags.contains(t) }
+
+        var progressMax: Int? = null // this can be made null to blank the dialog
+        var progress = 0
+
+        fun onProgress(progressContext: ProgressContext) {
+            val max = progressMax
+            if (max == null) {
+                progressContext.amount = null
+                progressContext.text = getString(R.string.dialog_processing)
+            } else {
+                progressContext.amount = Pair(progress, max)
             }
-        Timber.d("showEditTagsDialog: edit tags for multiple note")
-        tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
-        val dialog = tagsDialogFactory.newTagsDialog().withArguments(
-            TagsDialog.DialogType.EDIT_TAGS,
-            checkedTags,
-            uncheckedTags,
-            allTags
-        )
-        showDialogFragment(dialog)
+        }
+        launchCatchingTask {
+            withProgress(extractProgress = ::onProgress) {
+                val allTags = withCol { tags.all() }
+                val selectedNoteIds = viewModel.queryAllSelectedNoteIds()
+
+                progressMax = selectedNoteIds.size * 2
+                // TODO!! This is terribly slow on AnKing
+                val checkedTags = withCol {
+                    selectedNoteIds
+                        .asSequence() // reduce memory pressure
+                        .flatMap { nid ->
+                            progress++
+                            getNote(nid).tags // requires withCol
+                        }
+                        .distinct()
+                        .toList()
+                }
+
+                if (selectedNoteIds.size == 1) {
+                    Timber.d("showEditTagsDialog: edit tags for one note")
+                    tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+                    val dialog = tagsDialogFactory.newTagsDialog().withArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = checkedTags,
+                        allTags = allTags
+                    )
+                    showDialogFragment(dialog)
+                    return@withProgress
+                }
+                // TODO!! This is terribly slow on AnKing
+                // PERF: This MUST be combined with the above sequence - this becomes O(2n) on a
+                // database operation performed over 30k times
+                val uncheckedTags = withCol {
+                    selectedNoteIds
+                        .asSequence() // reduce memory pressure
+                        .flatMap { nid: NoteId ->
+                            progress++
+                            val note = getNote(nid) // requires withCol
+                            val noteTags = note.tags.toSet()
+                            allTags.filter { t: String? -> !noteTags.contains(t) }
+                        }
+                        .distinct()
+                        .toList()
+                }
+
+                progressMax = null
+
+                Timber.d("showEditTagsDialog: edit tags for multiple note")
+                tagsDialogListenerAction = TagsDialogListenerAction.EDIT_TAGS
+
+                // withArguments performs IO, can be 18 seconds
+                val dialog = withContext(Dispatchers.IO) {
+                    tagsDialogFactory.newTagsDialog().withArguments(
+                        type = TagsDialog.DialogType.EDIT_TAGS,
+                        checkedTags = checkedTags,
+                        uncheckedTags = uncheckedTags,
+                        allTags = allTags
+                    )
+                }
+                showDialogFragment(dialog)
+            }
+        }
     }
 
     private fun showFilterByTagsDialog() {
@@ -1341,27 +1404,26 @@ open class CardBrowser :
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
-    public override fun onSaveInstanceState(savedInstanceState: Bundle) {
+    public override fun onSaveInstanceState(outState: Bundle) {
         // Save current search terms
-        savedInstanceState.putString("mSearchTerms", searchTerms)
-        savedInstanceState.putLong("mOldCardId", oldCardId)
-        savedInstanceState.putInt("mOldCardTopOffset", oldCardTopOffset)
-        savedInstanceState.putBoolean("mShouldRestoreScroll", shouldRestoreScroll)
-        savedInstanceState.putBoolean("mPostAutoScroll", postAutoScroll)
-        savedInstanceState.putInt("mLastSelectedPosition", lastSelectedPosition)
-        exportingDelegate.onSaveInstanceState(savedInstanceState)
-        super.onSaveInstanceState(savedInstanceState)
+        outState.putString("mSearchTerms", viewModel.searchTerms)
+        outState.putLong("mOldCardId", oldCardId)
+        outState.putInt("mOldCardTopOffset", oldCardTopOffset)
+        outState.putBoolean("mShouldRestoreScroll", shouldRestoreScroll)
+        outState.putBoolean("mPostAutoScroll", postAutoScroll)
+        outState.putInt("mLastSelectedPosition", lastSelectedPosition)
+        exportingDelegate.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        searchTerms = savedInstanceState.getString("mSearchTerms", "")
         oldCardId = savedInstanceState.getLong("mOldCardId")
         oldCardTopOffset = savedInstanceState.getInt("mOldCardTopOffset")
         shouldRestoreScroll = savedInstanceState.getBoolean("mShouldRestoreScroll")
         postAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll")
         lastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
-        searchCards()
+        searchCards(savedInstanceState.getString("mSearchTerms", ""))
     }
 
     private fun invalidate() {
@@ -1370,48 +1432,23 @@ open class CardBrowser :
 
     private fun forceRefreshSearch(useSearchTextValue: Boolean = false) {
         if (useSearchTextValue && searchView != null) {
-            searchTerms = searchView!!.query.toString()
+            searchCards(searchView!!.query.toString())
+        } else {
+            searchCards()
         }
-        searchCards()
     }
 
     @RustCleanup("remove card cache; switch to RecyclerView and browserRowForId (#11889)")
     @VisibleForTesting
     fun searchCards() {
-        if (!viewModel.initCompleted) {
-            Timber.d("!initCompleted, not searching")
-            return
-        }
-        // cancel the previous search & render tasks if still running
-        invalidate()
-        if ("" != searchTerms && searchView != null) {
-            searchView!!.setQuery(searchTerms, false)
-            searchItem!!.expandActionView()
-        }
-        val searchText: String? = if (searchTerms.contains("deck:")) {
-            "($searchTerms)"
-        } else {
-            if ("" != searchTerms) "${viewModel.restrictOnDeck}($searchTerms)" else viewModel.restrictOnDeck
-        }
-        // clear the existing card list
-        cards.reset()
-        cardsAdapter.notifyDataSetChanged()
-        val query = searchText!!
-        val order = viewModel.order.toSortOrder()
         launchCatchingTask {
-            Timber.d("performing search")
-            val cards = withProgress { searchForCards(query, order, viewModel.cardsOrNotes) }
-            Timber.d("Search returned %d cards", cards.size)
-            // Render the first few items
-            for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
-                cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
-            }
-            redrawAfterSearch(cards)
+            // TODO: Move this to a LinearProgressIndicator and remove withProgress
+            withProgress { viewModel.launchSearchForCards()?.join() }
         }
     }
 
-    fun redrawAfterSearch(cards: MutableList<CardCache>) {
-        this.cards.replaceWith(cards)
+    @MainThread
+    private fun redrawAfterSearch() {
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
         /*check whether mSearchView is initialized as it is lateinit property.*/
@@ -1452,8 +1489,8 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    protected open fun numCardsToRender(): Int {
-        return ceil(
+    protected open fun updateNumCardsToRender() {
+        viewModel.numCardsToRender = ceil(
             (
                 cardsListView.height /
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics)
@@ -1461,10 +1498,11 @@ open class CardBrowser :
         ).toInt() + 5
     }
 
+    @MainThread
     private fun updateList() {
         if (colIsOpenUnsafe()) {
             cardsAdapter.notifyDataSetChanged()
-            deckSpinnerSelection!!.notifyDataSetChanged()
+            deckSpinnerSelection.notifyDataSetChanged()
             onSelectionChanged()
             updatePreviewMenuItem()
         }
@@ -1485,16 +1523,9 @@ open class CardBrowser :
             return resources.getQuantityString(subtitleId, count, count)
         }
 
-    // convenience method for updateCardsInList(...)
-    private fun updateCardInList(card: Card) {
-        val cards: MutableList<Card> = java.util.ArrayList(1)
-        cards.add(card)
-        updateCardsInList(cards)
-    }
-
     /** Returns the decks which are valid targets for "Change Deck"  */
     suspend fun getValidDecksForChangeDeck(): List<DeckNameId> =
-        deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
+        deckSpinnerSelection.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
@@ -1514,10 +1545,10 @@ open class CardBrowser :
      * For more info on [selectedTags] and [indeterminateTags] see [com.ichi2.anki.dialogs.tags.TagsDialogListener.onSelectedTags]
      */
     private suspend fun editSelectedCardsTags(selectedTags: List<String>, indeterminateTags: List<String>) = withProgress {
+        val selectedNoteIds = viewModel.queryAllSelectedNoteIds().distinct()
         undoableOp {
-            val selectedNotes = selectedRowIds
-                .map { cardId -> getCard(cardId).note() }
-                .distinct()
+            val selectedNotes = selectedNoteIds
+                .map { noteId -> getNote(noteId) }
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
                     val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
@@ -1537,29 +1568,23 @@ open class CardBrowser :
     fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
-     * Loads/Reloads (Updates the Q, A & etc) of cards in the [cards] list
-     * @param cards Cards that were changed
+     * Loads/Reloads (Updates the Q, A & etc) of cards in the [cardIds] list
+     * @param cardIds Card IDs that were changed
      */
-    private fun updateCardsInList(cards: List<Card>) {
+    private fun updateCardsInList(cardIds: List<CardId>) {
         val idToPos = viewModel.cardIdToPositionMap
         // TODO: Inefficient
-        cards
-            .mapNotNull { c -> idToPos[c.id] }
+        cardIds
+            .mapNotNull { cid -> idToPos[cid] }
             .filterNot { pos -> pos >= viewModel.rowCount }
             .map { pos -> viewModel.getRowAtPosition(pos) }
-            .forEach { it.load(true, viewModel.column1Index, viewModel.column2Index) }
+            .forEach { it.load(true, viewModel.column1, viewModel.column2) }
         updateList()
     }
 
-    private suspend fun saveEditedCard() {
+    private fun saveEditedCard() {
         Timber.d("CardBrowser - saveEditedCard()")
-        val card = cardBrowserCard!!
-        withProgress {
-            undoableOp {
-                updateNote(card.note())
-            }
-        }
-        updateCardInList(card)
+        updateCardsInList(listOf(currentCardId))
     }
 
     /**
@@ -1585,7 +1610,18 @@ open class CardBrowser :
         updateList()
     }
 
-    private fun suspendCards() = launchCatchingTask { withProgress { viewModel.suspendCards() } }
+    private fun toggleSuspendCards() = launchCatchingTask { withProgress { viewModel.toggleSuspendCards().join() } }
+
+    /** @see CardBrowserViewModel.toggleBury */
+    private fun toggleBury() = launchCatchingTask {
+        val result = withProgress { viewModel.toggleBury() } ?: return@launchCatchingTask
+        // show a snackbar as there's currently no colored background for buried cards
+        val message = when (result.wasBuried) {
+            true -> TR.studyingCardsBuried(result.count)
+            false -> resources.getQuantityString(R.plurals.unbury_cards_feedback, result.count, result.count)
+        }
+        showUndoSnackbar(message)
+    }
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message, Snackbar.LENGTH_LONG) {
@@ -1603,8 +1639,8 @@ open class CardBrowser :
         updatePreviewMenuItem()
         invalidateOptionsMenu() // maybe the availability of undo changed
     }
-    private fun saveScrollingState(position: Int) {
-        oldCardId = viewModel.getCardIdAtPosition(position)
+    private suspend fun saveScrollingState(position: Int) {
+        oldCardId = viewModel.queryCardIdAtPosition(position)
         oldCardTopOffset = calculateTopOffset(position)
     }
 
@@ -1732,8 +1768,8 @@ open class CardBrowser :
             cards,
             firstVisibleItem,
             visibleItemCount,
-            viewModel.column1Index,
-            viewModel.column2Index
+            viewModel.column1,
+            viewModel.column2
         ) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
@@ -1750,13 +1786,13 @@ open class CardBrowser :
         private val toIds: IntArray,
         private val fontSizeScalePcent: Int
     ) : BaseAdapter() {
-        private var mOriginalTextSize = -1.0f
-        private val mInflater: LayoutInflater
+        private var originalTextSize = -1.0f
+        private val inflater: LayoutInflater
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
             val v: View
             if (convertView == null) {
-                v = mInflater.inflate(resource, parent, false)
+                v = inflater.inflate(resource, parent, false)
                 val count = toIds.size
                 val columns = arrayOfNulls<View>(count)
                 for (i in 0 until count) {
@@ -1770,7 +1806,6 @@ open class CardBrowser :
             return v
         }
 
-        @Suppress("UNCHECKED_CAST")
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns
@@ -1781,7 +1816,7 @@ open class CardBrowser :
                     column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
             // set card's background color
-            val backgroundColor: Int = MaterialColors.getColor(this@CardBrowser, card.color, 0)
+            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser)
             v.setBackgroundColor(backgroundColor)
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
@@ -1815,13 +1850,13 @@ open class CardBrowser :
         private fun setFont(v: TextView) {
             // Set the font and font size for a TextView v
             val currentSize = v.textSize
-            if (mOriginalTextSize < 0) {
-                mOriginalTextSize = v.textSize
+            if (originalTextSize < 0) {
+                originalTextSize = v.textSize
             }
             // do nothing when pref is 100% and apply scaling only once
-            if (fontSizeScalePcent != 100 && abs(mOriginalTextSize - currentSize) < 0.1) {
+            if (fontSizeScalePcent != 100 && abs(originalTextSize - currentSize) < 0.1) {
                 // getTextSize returns value in absolute PX so use that in the setter
-                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, mOriginalTextSize * (fontSizeScalePcent / 100.0f))
+                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, originalTextSize * (fontSizeScalePcent / 100.0f))
             }
         }
 
@@ -1850,7 +1885,7 @@ open class CardBrowser :
         }
 
         init {
-            mInflater = LayoutInflater.from(context)
+            inflater = LayoutInflater.from(context)
         }
     }
 
@@ -1881,9 +1916,13 @@ open class CardBrowser :
      * @see showedActivityFailedScreen - we may not have AnkiDroidApp.instance and therefore can't
      * create the ViewModel
      */
-    private fun createViewModel() = ViewModelProvider(
+    private fun createViewModel(launchOptions: CardBrowserLaunchOptions?) = ViewModelProvider(
         viewModelStore,
-        CardBrowserViewModel.factory(AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository, cacheDir),
+        CardBrowserViewModel.factory(
+            lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
+            cacheDir = cacheDir,
+            options = launchOptions
+        ),
         defaultViewModelCreationExtras
     )[CardBrowserViewModel::class.java]
 
@@ -1931,7 +1970,7 @@ open class CardBrowser :
     class CardCache : Card.Cache, PositionAware {
         var isLoaded = false
             private set
-        private var mQa: Pair<String, String>? = null
+        private var qa: Pair<String, String>? = null
         override var position: Int
 
         private val inCardMode: Boolean
@@ -1942,7 +1981,7 @@ open class CardBrowser :
 
         constructor(cache: CardCache, position: Int) : super(cache) {
             isLoaded = cache.isLoaded
-            mQa = cache.mQa
+            qa = cache.qa
             this.position = position
             this.inCardMode = cache.inCardMode
         }
@@ -1951,60 +1990,51 @@ open class CardBrowser :
         override fun reload() {
             super.reload()
             isLoaded = false
-            mQa = null
+            qa = null
         }
 
         /**
          * Get the background color of items in the card list based on the Card
          * @return index into TypedArray specifying the background color
          */
-        val color: Int
-            get() {
-                return when (card.userFlag()) {
-                    1 -> R.attr.flagRed
-                    2 -> R.attr.flagOrange
-                    3 -> R.attr.flagGreen
-                    4 -> R.attr.flagBlue
-                    5 -> R.attr.flagPink
-                    6 -> R.attr.flagTurquoise
-                    7 -> R.attr.flagPurple
-                    else -> {
-                        if (isMarked(col, card.note(col))) {
-                            R.attr.markedColor
-                        } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
-                            R.attr.suspendedColor
-                        } else {
-                            android.R.attr.colorBackground
-                        }
-                    }
-                }
+        @ColorInt
+        fun getBackgroundColor(context: Context): Int {
+            val flagColor = Flag.fromCode(card.userFlag()).browserColorRes
+            if (flagColor != null) {
+                return context.getColor(flagColor)
             }
+            val colorAttr = if (isMarked(col, card.note(col))) {
+                R.attr.markedColor
+            } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+                R.attr.suspendedColor
+            } else {
+                android.R.attr.colorBackground
+            }
+            return ThemeUtils.getThemeAttrColor(context, colorAttr)
+        }
 
         fun getColumnHeaderText(key: CardBrowserColumn?): String? {
             return when (key) {
-                CardBrowserColumn.FLAGS -> Integer.valueOf(card.userFlag()).toString()
-                CardBrowserColumn.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                CardBrowserColumn.MARKED -> if (isMarked(col, card.note(col))) "marked" else null
                 CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
                 CardBrowserColumn.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
-                CardBrowserColumn.DUE -> card.dueString(col)
+                CardBrowserColumn.DUE -> dueString(col, card)
                 CardBrowserColumn.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 CardBrowserColumn.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod.toLong())
                 CardBrowserColumn.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 CardBrowserColumn.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
                 CardBrowserColumn.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 CardBrowserColumn.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
-                CardBrowserColumn.NOTE_TYPE -> card.model(col).optString("name")
+                CardBrowserColumn.NOTE_TYPE -> card.noteType(col).optString("name")
                 CardBrowserColumn.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 CardBrowserColumn.QUESTION -> {
                     updateSearchItemQA()
-                    mQa!!.first
+                    qa!!.first
                 }
                 CardBrowserColumn.ANSWER -> {
                     updateSearchItemQA()
-                    mQa!!.second
+                    qa!!.second
                 }
                 else -> null
             }
@@ -2019,7 +2049,7 @@ open class CardBrowser :
         }
 
         private fun getAvgEaseForNotes(): String {
-            val avgEase = card.avgEaseOfNote(col)
+            val avgEase = NoteService.avgEase(col, card.note(col))
 
             return if (avgEase == null) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
@@ -2048,13 +2078,13 @@ open class CardBrowser :
 
         /** pre compute the note and question/answer.  It can safely
          * be called twice without doing extra work.  */
-        fun load(reload: Boolean, column1Index: Int, column2Index: Int) {
+        fun load(reload: Boolean, column1: CardBrowserColumn, column2: CardBrowserColumn) {
             if (reload) {
                 reload()
             }
             card.note(col)
             // First column can not be the answer. If it were to change, this code should also be changed.
-            if (COLUMN1_KEYS[column1Index] == CardBrowserColumn.QUESTION || arrayOf(CardBrowserColumn.QUESTION, CardBrowserColumn.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
+            if (column1 == CardBrowserColumn.QUESTION || arrayOf(CardBrowserColumn.QUESTION, CardBrowserColumn.ANSWER).contains(column2)) {
                 updateSearchItemQA()
             }
             isLoaded = true
@@ -2066,7 +2096,7 @@ open class CardBrowser :
          * question.
          */
         private fun updateSearchItemQA() {
-            if (mQa != null) {
+            if (qa != null) {
                 return
             }
             // render question and answer
@@ -2094,7 +2124,7 @@ open class CardBrowser :
             }
             a = formatQA(a, qa, AnkiDroidApp.instance)
             q = formatQA(q, qa, AnkiDroidApp.instance)
-            mQa = Pair(q, a)
+            this.qa = Pair(q, a)
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2130,7 +2160,7 @@ open class CardBrowser :
             }
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(unmountReceiver, iFilter)
+            registerReceiverCompat(unmountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
         }
     }
 
@@ -2175,10 +2205,10 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun searchCards(searchQuery: String) {
-        searchTerms = searchQuery
-        searchCards()
-    }
+    fun searchCards(searchQuery: String) =
+        launchCatchingTask {
+            withProgress { viewModel.launchSearchForCards(searchQuery)?.join() }
+        }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         if (handler === this || handler === viewModel) {
@@ -2197,8 +2227,6 @@ open class CardBrowser :
     }
 
     companion object {
-        var cardBrowserCard: Card? = null
-
         /**
          * Argument key to add on change deck dialog,
          * so it can be dismissed on activity recreation,
@@ -2212,9 +2240,13 @@ open class CardBrowser :
 
         // Values related to persistent state data
         private const val ALL_DECKS_ID = 0L
-        const val CARD_NOT_AVAILABLE = -1
 
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
+
+        @VisibleForTesting
+        fun createAddNoteIntent(context: Context, viewModel: CardBrowserViewModel): Intent {
+            return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
+        }
 
         @CheckResult
         private fun formatQA(
@@ -2254,11 +2286,48 @@ open class CardBrowser :
             s = s.trim { it <= ' ' }
             return s
         }
+
+        fun dueString(col: Collection, card: Card): String {
+            var t = nextDue(col, card)
+            if (card.queue < 0) {
+                t = "($t)"
+            }
+            return t
+        }
+
+        @VisibleForTesting
+        fun nextDue(col: Collection, card: Card): String {
+            val date: Long
+            val due = card.due
+            date = if (card.isInDynamicDeck) {
+                return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
+            } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
+                due.toLong()
+            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CARD_TYPE_NEW) {
+                return due.toString()
+            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CARD_TYPE_REV && card.queue < 0) {
+                val time = TimeManager.time.intTime()
+                val nbDaySinceCreation = due - col.sched.today
+                time + nbDaySinceCreation * SECONDS_PER_DAY
+            } else {
+                return ""
+            }
+            return LanguageUtil.getShortDateFormatFromS(date)
+        } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
     }
 
     private fun <T> Flow<T>.launchCollectionInLifecycleScope(block: suspend (T) -> Unit) {
         lifecycleScope.launch {
-            this@launchCollectionInLifecycleScope.collect { block(it) }
+            this@launchCollectionInLifecycleScope.collect {
+                if (isRobolectric) {
+                    // hack: lifecycleScope/runOnUiThread do not handle our
+                    // test dispatcher overriding both IO and Main
+                    // in tests, waitForAsyncTasksToComplete may be required.
+                    HandlerUtils.postOnNewHandler { runBlocking { block(it) } }
+                } else {
+                    block(it)
+                }
+            }
         }
     }
 }
@@ -2280,8 +2349,8 @@ private fun Sequence<CardId>.toCardCache(isInCardMode: CardsOrNotes): Sequence<C
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, this@Collection, idx, isInCardMode) }
 }
 
-class Previewer2Destination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
+class PreviewerDestination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
 
 @CheckResult
-fun Previewer2Destination.toIntent(context: Context) =
+fun PreviewerDestination.toIntent(context: Context) =
     PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

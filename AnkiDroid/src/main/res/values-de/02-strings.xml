@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Schwerer Fehler: WebView-Renderer ist abgestürzt. Grund: %s</string>
     <string name="webview_crash_loop_dialog_title">Fehler beim System-WebView-Rendering</string>
     <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Frage</item>
-        <item>Sortierfeld</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Antwort</item>
-        <item>Karte</item>
-        <item>Stapel</item>
-        <item>Notiz</item>
-        <item>Frage</item>
-        <item>Schlagwörter</item>
-        <item>Vergessene</item>
-        <item>Wiederholungen</item>
-        <item>Intervall</item>
-        <item>Leichtigkeit</item>
-        <item>Fällig</item>
-        <item>Karte geändert</item>
-        <item>Erstellt</item>
-        <item>Notiz geändert</item>
-    </string-array>
     <string name="filter_by_flags">Flaggen</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
@@ -112,10 +91,8 @@
     <string name="custom_study_limit_tags">Auf bestimmte Schlagwörter beschränken</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notiz bearbeiten</string>
-    <string name="discard_unsaved_changes">Schließen und Eingaben verwerfen?</string>
+    <string name="discard">Verwerfen</string>
     <string name="note_editor_no_cards_created">Keine Karten erstellt. Bitte füllen Sie weitere Felder aus</string>
-    <string name="note_editor_no_first_field">Das erste Feld ist leer</string>
-    <string name="note_editor_no_cloze_delations">Dieser Notiztyp muss Auslassungen enthalten</string>
     <string name="note_editor_no_cards_created_all_fields">Der aktuelle Notiztyp hat keine Karten erzeugt.\nBitte wählen Sie einen anderen Notiztyp oder tippen Sie auf »Karten« und fügen Sie eine Feldersetzung hinzu.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Auslassungen funktionieren nur beim Notiztyp »Lückentext«</string>
     <string name="saving_facts">Notiz speichern</string>
@@ -125,6 +102,7 @@
     <string name="select">Auswählen</string>
     <string name="field_remapping">%1$s (von »%2$s«)</string>
     <string name="confirm_map_cards_to_nothing">Alle leeren Karten werden gelöscht. Sind sämtliche Karten einer Notiz gelöscht, wird diese ebenfalls entfernt. Fortfahren?</string>
+    <string name="missing_note_type">Kein Notiztyp gefunden</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Zeitlimit erreicht</string>
     <plurals name="timebox_reached">
@@ -138,10 +116,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Karte</string>
     <string name="note_editor_copy_note">Notiz kopieren</string>
-    <string name="card_editor_reposition_card">Position ändern</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Position ändern</string>
     <string name="card_editor_reset_card">Fortschritt zurücksetzen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Umplanen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vorschau</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Als Markdown kopieren</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d von %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Umbenennen</string>
     <string name="checks_action">Prüfen</string>
@@ -153,6 +132,7 @@
     <string name="delete_deck">Lösche Stapel&#8230;</string>
     <string name="info_rate">AnkiDroid bewerten</string>
     <string name="import_title">Importieren</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
     <string name="import_dialog_message_add">\"%s\" zu Ihrer Sammlung hinzufügen? Das könnte etwas Zeit beanspruchen.</string>
@@ -180,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Teilen</string>
     <string name="export_choice_save_to">Speichern unter</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optionen</string>
     <string name="menu__deck_options">Stapeloptionen</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Lernoptionen</string>
@@ -202,17 +183,15 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Im Medienverzeichnis können Sie Bilder komprimieren und deren Größe anpassen]]></string>
-    <string name="no_browser_notification">Kein Browser gefunden. Bitte besuchen Sie die Webseite via PC oder Mobilgerät: </string>
+    <string name="no_browser_msg">Kein Browser zum Öffnen des Links gefunden: %s</string>
     <string name="web_page_error">Fehler beim Laden der Seite: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hintergrund</string>
     <string name="choose_an_image">Bild auswählen</string>
+    <string name="remove_background_image">Hintergrund entfernen?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Standard wiederherstellen</string>
-    <string name="cloze_sample_text">Dies ist eine {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Baispiel</string>
-    <string name="basic_answer_sample_text">zum Beispiel</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Auslassung</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Whiteboardbild konnte nicht gespeichert werden. %s</string>
@@ -265,7 +244,7 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
+    <string name="invalid_email">Geben Sie eine gültige E-Mail ein</string>
     <string name="password_empty">Das Passwort ist erforderlich</string>
     <string name="back_pressed_once">Zum Beenden erneut \"Zurück\" drücken</string>
     <string name="back_pressed_once_reviewer">Drücken Sie erneut auf Zurück, um zurückzukehren</string>
@@ -304,7 +283,7 @@
     <string name="migration_part_1_done_resume">Du kannst jetzt AnkiDroid weiterverwenden.
 \nDie Speichermigration wird im Hintergrund fortfahren.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s ist kein gültiges Javascript-Addon-Paket</string>
+    <string name="not_valid_js_addon_package">%s ist kein gültiges JavaScript-Erweiterungspaket.</string>
     <string name="could_not_create_dir">Verzeichnis %s konnte nicht erstellt werden </string>
     <string name="malicious_archive_entry_outside">Schädliches Archiv. Enthält Eintrag außerhalb des Zielverzeichnisses: %s</string>
     <string name="malicious_archive_exceeds_limit">Schädliches Archiv. Größe überschreitet %1$s oder enthält mehr als %2$d Dateien</string>
@@ -313,12 +292,15 @@
     <string name="expand_tag">Tag \'%s\' erweitern</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Zugriff auf die Sammlung fehlgeschlagen. Bitte versuchen Sie es erneut!</string>
+    <string name="cd_manage_notetypes_add">Neuen Notiztyp hinzufügen</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Lerne weniger</string>
     <string name="intro_ankidroid_tagline_two">Merke dir mehr</string>
     <string name="intro_short_ankidroid_explanation">Ankis Zeitplaner spart Zeit, indem er deine schwächsten Erinnerungen stärkt und deine Stärksten aufrechterhält</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Los geht\'s</string>
     <string name="intro_sync_from_ankiweb">Mit AnkiWeb synchronisieren</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid ist noch nicht initialisiert. Bitte öffne die App nochmal und versuche erneut.</string>
     <string name="already_logged_in">Bereits angemeldet</string>
     <!-- Deck Creation -->
     <string name="deck_created">Stapel wurde erstellt</string>
@@ -353,7 +335,16 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Fehler beim Öffnen der TTS-Einstellungen
     </string>
     <string name="shared_decks_login_required">Bitte melde dich an, um weitere Stapel herunterzuladen</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="deck_description_field_hint">Beschreibung</string>
+    <string name="failed_to_copy">Kopieren fehlgeschlagen</string>
+    <string name="card_browser_unavailable_when_notes_mode">Nicht verfügbar im \"Notiz\"-Modus</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d Karte ausgegraben</item>
+        <item quantity="other">%d Karten ausgegraben</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Position ändern</string>
+    <string name="start_recording">Datensatz</string>
+    <string name="stop_recording">Stopp</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Weiter</string>
 </resources>

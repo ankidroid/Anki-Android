@@ -17,7 +17,7 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.CompatHelper
 import com.ichi2.testutils.TestException
@@ -97,8 +97,8 @@ interface OperationTest {
          * The [MoveDirectoryContent] that performs the action mentioned in the class description.
          */
         val spy: MoveDirectoryContent
-            get() = spy(moveDirectoryContent) {
-                doAnswer { toMoveOperation(it) }.whenever(it).toMoveOperation(any())
+            get() = spy(moveDirectoryContent) { moveDirectoryContent ->
+                doAnswer { toMoveOperation(it) }.whenever(moveDirectoryContent).toMoveOperation(any())
             }
     }
 }

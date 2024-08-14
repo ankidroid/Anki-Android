@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.jsaddons
 
-import com.ichi2.anki.AnkiDroidJsAPIConstants.sCurrentJsApiVersion
+import com.ichi2.anki.AnkiDroidJsAPIConstants.currentJsApiVersion
 import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.AddonsConst.NOTE_EDITOR_ADDON
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
@@ -123,8 +123,8 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     }
 
     // Check supplied api and current api
-    if (addonData.ankidroidJsApi != sCurrentJsApiVersion) {
-        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must be equal to current js api version $sCurrentJsApiVersion"
+    if (addonData.ankidroidJsApi != currentJsApiVersion) {
+        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must be equal to current js api version $currentJsApiVersion"
         errorList.add(errorStr)
     }
 

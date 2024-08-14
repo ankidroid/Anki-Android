@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">x-بڑا</string>
     <string name="html_size_code_xx_large">xx-بڑا</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">دوبارہ جواب دیں</string>
+    <string name="answer_hard">سخت جواب دیں</string>
+    <string name="answer_good">اچھا جواب دیں</string>
+    <string name="answer_easy">آسان جواب دیں</string>
     <string name="gesture_play">میڈیا چلائیں۔</string>
     <string name="gesture_abort_learning">سیکھنے کو روکنا</string>
     <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>
@@ -100,6 +100,6 @@
     <string name="gesture_show_hint">اشارہ دکھائیں</string>
     <string name="gesture_show_all_hints">تمام اشارے دکھائیں</string>
     <string name="record_voice">آواز ریکارڈ کریں</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="replay_voice">آواز کو دوبارہ چلائیں</string>
+    <string name="save_voice">ریکارڈنگ کو محفوظ کریں</string>
 </resources>

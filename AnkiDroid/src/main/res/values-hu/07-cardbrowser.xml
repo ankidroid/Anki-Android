@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Jelenlegi keresés neve</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nem menthetsz keresést név nélkül</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">A név már létezik</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Törlés “%1$s”?</string>
     <string name="card_browser_change_display_order">Megjelenítési sorrend módosítása</string>
     <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
@@ -99,6 +100,7 @@
     <string name="card_browser_search_all_decks">Összes pakli keresése</string>
     <string name="card_browser_unknown_deck_name">Ismeretlen</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Tartalom csonkolása</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Kártya exportálása</item>
         <item quantity="other">Kártyák exportálása</item>

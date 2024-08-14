@@ -27,6 +27,7 @@ import androidx.preference.PreferenceViewHolder
 import com.google.android.material.slider.Slider
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.getFormattedStringOrPlurals
+import com.ichi2.annotations.NeedsTest
 
 /**
  * Similar to [androidx.preference.SeekBarPreference],
@@ -47,12 +48,13 @@ import com.ichi2.anki.utils.getFormattedStringOrPlurals
  *       Format `string` or `plurals` to be used as template to display the value in the preference summary.
  *       There must be ONLY ONE placeholder, which will be replaced by the preference value.
  * * app:displayValue (*optional*): whether to show the current preference value on a TextView
- *       by the end of the slider
+ *       by the end of the preference
  * * app:displayFormat (*optional*): Format string to be used as template to display the value by
  *       the end of the slider. There must be ONLY ONE placeholder,
  *       which will be replaced by the preference value.
  *       `displayValue` is always true if a `displayFormat` is provided.
  */
+@NeedsTest("onTouchListener is only called once")
 class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preference(context, attrs) {
     private var valueFrom: Int = 0
     private var valueTo: Int = 0
@@ -61,6 +63,20 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
     private var summaryFormatResource: Int? = null
     private var displayValue: Boolean = false
     private var displayFormat: String? = null
+
+    // flyweight pattern: all listeners for an instance of the class as the same
+    // We also need to avoid any method-level closures: this callback is unused
+    // the second time `onBindViewHolder` is called
+    private val onTouchListener = object : Slider.OnSliderTouchListener {
+        override fun onStartTrackingTouch(slider: Slider) {}
+
+        override fun onStopTrackingTouch(slider: Slider) {
+            val sliderValue = slider.value.toInt()
+            if (sliderValue != value && callChangeListener(sliderValue)) {
+                value = sliderValue
+            }
+        }
+    }
 
     var value: Int = valueFrom
         set(value) {
@@ -112,18 +128,8 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
         slider.stepSize = stepSize
         slider.value = value.toFloat()
 
-        slider.addOnSliderTouchListener(
-            object : Slider.OnSliderTouchListener {
-                override fun onStartTrackingTouch(slider: Slider) {}
-
-                override fun onStopTrackingTouch(slider: Slider) {
-                    val sliderValue = slider.value.toInt()
-                    if (callChangeListener(sliderValue)) {
-                        value = sliderValue
-                    }
-                }
-            }
-        )
+        // set the listener once: avoid any method-level closures
+        slider.setOnSliderTouchListenerOnce(onTouchListener)
 
         val summaryView = holder.findViewById(android.R.id.summary) as TextView
         summaryFormatResource?.let {
@@ -131,12 +137,28 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
             summaryView.visibility = View.VISIBLE
         }
 
-        val displayValueTextView = holder.findViewById(R.id.valueDisplay) as TextView
+        val displayValueTextView = holder.findViewById(R.id.value_display) as TextView
         if (displayValue) {
             displayValueTextView.text = displayFormat?.let { String.format(it, value) }
                 ?: value.toString()
         } else {
             displayValueTextView.visibility = View.GONE
+        }
+    }
+
+    companion object {
+        /**
+         * [Slider] has no easy means of de-duplicating listeners
+         * If a listener has already been added using this method. This does nothing
+         * @see [Slider.addOnSliderTouchListener]
+         *
+         * @param listener A [Slider.OnSliderTouchListener].
+         * Must not use method-level state, as this method does not replace the listener
+         */
+        private fun Slider.setOnSliderTouchListenerOnce(listener: Slider.OnSliderTouchListener) {
+            if (this.getTag(R.id.tag_slider_listener_set) != null) return
+            this.addOnSliderTouchListener(listener)
+            this.setTag(R.id.tag_slider_listener_set, "set")
         }
     }
 }

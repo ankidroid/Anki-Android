@@ -50,14 +50,14 @@
     <string name="backup_new_collection">新的集合</string>
     <string name="backup_del_collection">刪除集合，並建立新的集合</string>
     <string name="backup_del_collection_question">是否真的要刪除集合，並建立新的集合？這會刪除所有的學習進度以及所有的卡片。</string>
-    <string name="backup_full_sync_from_server">從伺服器完整同步</string>
+    <string name="backup_one_way_sync_from_server">從伺服器單向同步</string>
     <string name="backup_full_sync_from_server_question">你確定要用 AnkiWeb 上的集合來覆蓋本地集合嗎？這會把從上次同步以來所有的學習進度以及新增的資料都刪掉。</string>
     <string name="error_handling_title">錯誤處理</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">選項</string>
     <string name="backup_retry_opening">重試開啟</string>
     <string name="backup_error_menu_repair">修復資料庫</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">修復資料庫中\n請稍後...</string>
+    <string name="backup_repair_deck_progress">修復資料庫中\n請稍後&#8230;</string>
     <string name="backup_invalid_file_error">所選的備份檔案無效</string>
     <string name="backup_restore_select_title">請選擇要還原的備份檔案</string>
     <string name="backup_restore_no_backups">裝置上沒有可用來還原集合的備份檔案，如果你的電腦上有備份檔，請手動複製到你的 AnkiDroid 資料夾裡。</string>

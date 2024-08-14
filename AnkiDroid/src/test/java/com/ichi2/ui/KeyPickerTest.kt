@@ -20,7 +20,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
 import com.ichi2.testutils.KeyEventUtils
-import org.hamcrest.CoreMatchers.*
+import com.ichi2.themes.Theme
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.notNullValue
+import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.CoreMatchers.sameInstance
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +32,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class KeyPickerTest : RobolectricTest() {
 
-    private var keyPicker: KeyPicker = KeyPicker.inflate(targetContext)
+    private var keyPicker: KeyPicker = run {
+        targetContext.setTheme(Theme.LIGHT.resId)
+        KeyPicker.inflate(targetContext)
+    }
 
     @Test
     fun test_normal_binding() {

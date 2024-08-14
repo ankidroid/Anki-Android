@@ -44,25 +44,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Restore from backup</string>
-    <string name="backup_new_collection">New collection</string>
-    <string name="backup_del_collection">Delete collection and create new one</string>
-    <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-    <string name="backup_full_sync_from_server">Full sync from server</string>
-    <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-    <string name="error_handling_title">Error handling</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Options</string>
-    <string name="backup_retry_opening">Retry opening</string>
-    <string name="backup_error_menu_repair">Repair database</string>
+    <string name="backup_deck_no_storage_left">بیک اپ محفوظ نہیں ہوا۔ آپ کے اسٹوریج میں کافی جگہ نہیں ہے۔ بیک اپ کی گہرائی کو کم کریں یا کچھ دیگر فائلوں کو ہٹا دیں۔</string>
+    <string name="storage_warning">آپ کے اسٹوریج پر %d MB سے کم جگہ رہ گئی ہے۔\nڈیٹا کے نقصان سے بچنے کے لیے کچھ جگہ خالی کریں۔</string>
+    <string name="backup_restore">بیک اپ سے بحال کریں</string>
+    <string name="backup_new_collection">نئی کلیکشن</string>
+    <string name="backup_del_collection">مجموعہ کو حذف کریں اور نیا بنائیں</string>
+    <string name="backup_del_collection_question">مجموعہ کو حذف کریں اور ایک نیا بنائیں؟ اس سے آپ کی تمام سیکھنے کی پیشرفت ختم ہو جائے گی اور تمام کارڈز حذف ہو جائیں گے۔</string>
+    <string name="backup_one_way_sync_from_server">سرور سے یک طرفہ مطابقت پذیری</string>
+    <string name="backup_full_sync_from_server_question">AnkiWeb سے اپنے مجموعہ کو اوور رائٹ کریں؟ یہ آپ کی آخری مطابقت پذیری کے بعد سے آپ کی تمام سیکھنے کی پیشرفت اور اضافی معلومات کو چھوڑ دے گا</string>
+    <string name="error_handling_title">اغلاط کی درستگی</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">اختیارات</string>
+    <string name="backup_retry_opening">دوبارہ کھولنے کی کوشش کریں۔</string>
+    <string name="backup_error_menu_repair">ڈیٹا بیس کی مرمت کریں۔</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-    <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-    <string name="backup_restore_select_title">Select backup to restore</string>
-    <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
-    <string name="open_collection_failed_title">Collection not opened</string>
-    <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
-    <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-    <string name="deck_repair_error">Collection couldn’t be repaired</string>
+    <string name="backup_repair_deck_progress">ڈیٹا بیس کی مرمت ہو رہی ہے&#8230;</string>
+    <string name="backup_invalid_file_error">منتخب کردہ بیک اپ فائل غلط تھی</string>
+    <string name="backup_restore_select_title">بحال کرنے کے لیے بیک اپ منتخب کریں</string>
+    <string name="backup_restore_no_backups">اس ڈیوائس پر کوئی بیک اپ دستیاب نہیں ہے۔ اگر آپ کے ڈیسک ٹاپ کمپیوٹر پر بیک اپ ہیں، تو انہیں دستی طور پر اپنے AnkiDroid فولڈر میں کاپی کریں۔</string>
+    <string name="open_collection_failed_title">مجموعہ نہیں کھولا گیا</string>
+    <string name="corrupt_db_message">آپ کا مجموعہ خراب ہو گیا ہے۔\n\nبیک اپ سے بحال کرنے کے لیے \"آپشنز\" کو ٹچ کریں، یا اگر یہ کام نہیں کرتا ہے، تو ڈیٹا بیس کو دستی طور پر ٹھیک کرنے کے لیے درج ذیل ہدایات دیکھیں:\n%1$s</string>
+    <string name="access_collection_failed_message">آپ کے مجموعہ تک رسائی کے دوران ایک خرابی پیش آگئی۔ ہو سکتا ہے یہ کسی بے ضرر بگ کی وجہ سے ہوا ہو، یا اس میں کوئی مسئلہ ہو۔ \n\nچیک ڈیٹا بیس کو چلانے کی کوشش کریں، یا \"آپشنز\" بٹن دبا کر بیک اپ سے بحال کریں۔ اگر آپ یہ پیغام دیکھتے رہتے ہیں، تو براہ کرم بگ رپورٹ درج کریں:\n%1$s</string>
+    <string name="deck_repair_error">مجموعہ کی مرمت نہیں ہو سکی</string>
 </resources>

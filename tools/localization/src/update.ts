@@ -20,7 +20,6 @@ import {
     LOCALIZED_REGIONS,
     TEMP_DIR,
     TITLE_STR,
-    TITLE_FILE,
     I18N_FILES,
     XML_LICENSE_HEADER,
     RES_VALUES_LANG_DIR,
@@ -82,7 +81,6 @@ async function replacechars(fileName: string): Promise<boolean> {
  */
 function fileExtFor(f: string): string {
     if (f == "14-marketdescription") return ".txt";
-    else if (f == "15-markettitle") return ".txt";
     else return ".xml";
 }
 
@@ -142,16 +140,6 @@ async function update(
         return true;
     }
 
-    // these are appended to a special file
-    if (f == "15-markettitle") {
-        const translatedTitle = translatedContent.split("\n")[0];
-
-        if (TITLE_STR != translatedTitle) {
-            fs.appendFileSync(TITLE_FILE, "\n" + language + ": " + translatedTitle);
-        }
-        return true;
-    }
-
     // Everything else is a regular file to translate into Android resources
     const newfile = valuesDirectory + f + ".xml";
     fs.writeFileSync(newfile, translatedContent);
@@ -162,10 +150,6 @@ async function update(
  * Update translated I18n files in res/value dir
  */
 export async function updateI18nFiles() {
-    // Create new / empty marketing title file to populate
-    fs.truncateSync(TITLE_FILE);
-    fs.appendFileSync(TITLE_FILE, TITLE_STR);
-
     for (const language of LANGUAGES) {
         // Language tags are 2- or 3-letters, and regional files need a marker in Android where subtag starts with "r"
         // Note the documentation does not describe what works in practice:
@@ -180,59 +164,63 @@ export async function updateI18nFiles() {
         // but this comment hopefully clarifies for the reader that BCP47 / ISO-639-2 3-letter language tags do work in practice.
         //
         // The codes are not case-sensitive; the r prefix is used to distinguish the region portion. You cannot specify a region alone.
-        let androidLanguage = "";
+        let androidLanguages = [];
         const languageCode = language.split("-", 1)[0];
         if (LOCALIZED_REGIONS.includes(languageCode)) {
-            androidLanguage = language.replace("-", "-r"); // zh-CN becomes zh-rCN
+            androidLanguages = [language.replace("-", "-r")]; // zh-CN becomes zh-rCN
         } else {
-            androidLanguage = language.split("-", 1)[0]; // Example: es-ES becomes es
+            androidLanguages = [language.split("-", 1)[0]]; // Example: es-ES becomes es
         }
 
         switch (language) {
             case "yu":
-                androidLanguage = "yue";
+                androidLanguages = ["yue"];
                 break;
 
             case "he":
-                androidLanguage = "heb";
+                // some Android phones use values-heb, some use values-iw - issue 9451
+                // the only way for Hebrew to work on all devices is to copy into both possible locations
+                androidLanguages = ["heb", "iw"];
                 break;
 
             case "id":
-                androidLanguage = "ind";
+                androidLanguages = ["ind"];
                 break;
 
             case "tl":
-                androidLanguage = "tgl";
+                androidLanguages = ["tgl"];
                 break;
         }
 
-        console.log(
-            "\nCopying language files from " + language + " to " + androidLanguage,
-        );
-        const valuesDirectory = path.join(RES_VALUES_LANG_DIR + androidLanguage + "/");
-        createDirIfNotExisting(valuesDirectory);
-
-        // Copy localization files, mask chars and append gnu/gpl licence
-        for (const f of I18N_FILES) {
-            const fileExt = fileExtFor(f);
-            const translatedContent = fs.readFileSync(
-                TEMP_DIR + "/" + language + "/" + f + fileExt,
-                "utf-8",
+        androidLanguages.map(async androidLanguage => {
+            console.log(
+                "\nCopying language files from " + language + " to " + androidLanguage,
             );
-            anyError = !(await update(
-                valuesDirectory,
-                translatedContent,
-                f,
-                fileExt,
-                language,
-            ));
-        }
+            const valuesDirectory = path.join(RES_VALUES_LANG_DIR + androidLanguage + "/");
+            createDirIfNotExisting(valuesDirectory);
 
-        if (anyError) {
-            console.error(
-                "At least one file of the last handled language contains an error.",
-            );
-            anyError = true;
-        }
+            // Copy localization files, mask chars and append gnu/gpl licence
+            for (const f of I18N_FILES) {
+                const fileExt = fileExtFor(f);
+                const translatedContent = fs.readFileSync(
+                    TEMP_DIR + "/" + language + "/" + f + fileExt,
+                    "utf-8",
+                );
+                anyError = !(await update(
+                    valuesDirectory,
+                    translatedContent,
+                    f,
+                    fileExt,
+                    language,
+                ));
+            }
+
+            if (anyError) {
+                console.error(
+                    "At least one file of the last handled language contains an error.",
+                );
+                anyError = true;
+            }
+        });
     }
 }

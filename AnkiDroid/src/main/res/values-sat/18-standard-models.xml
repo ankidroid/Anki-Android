@@ -28,15 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">ᱥᱟᱢᱟᱝ</string>
     <string name="back_field_name">ᱛᱟᱭᱚᱢ </string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ᱚᱱᱚᱞ</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">\'ᱯᱟᱪᱞᱟᱹ\' ᱥᱮᱞᱫ ᱢᱮ</string>
-    <!--Card type-->
-    <string name="card_n_name">ᱠᱟᱰ%d</string>
-    <!--Note type-->
-    <string name="basic_model_name">ᱵᱮᱥᱤᱠ</string>
-    <string name="cloze_model_name">ᱠᱞᱚᱡ</string>
-    <string name="basic_typing_model_name">ᱵᱮᱥᱤᱠ (ᱛᱮᱞᱟ ᱚᱞ‌ ᱢᱮ)</string>
-    <string name="forward_reverse_model_name">ᱵᱮᱥᱤᱠ (ᱟᱨ ᱯᱟᱪᱹᱞᱟ ᱠᱟᱰ)</string>
-    <string name="forward_optional_reverse_model_name">ᱵᱮᱥᱤᱠ (ᱚᱯᱥᱚᱱᱟᱞ ᱯᱟᱪᱞᱟᱹ ᱠᱟᱰ)</string>
 </resources>

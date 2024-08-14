@@ -46,34 +46,35 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card shown</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="one">%d kort vist</item>
+        <item quantity="other">%d kort vist</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d kort vist</item>
+        <item quantity="other">%d kort vist</item>
     </plurals>
-    <string name="card_browser_all_decks">All decks</string>
+    <string name="card_browser_all_decks">Alle dæk</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Slet kort</item>
+        <item quantity="other">Slet kort</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Slet note</item>
+        <item quantity="other">Slet noter</item>
     </plurals>
     <string name="card_browser_change_deck">Change deck</string>
-    <string name="delete_card_title">Delete note?</string>
+    <string name="delete_card_title">Slet note?</string>
     <string name="card_browser_show_marked">Filter marked</string>
     <string name="card_browser_show_suspended">Filter suspended</string>
     <string name="card_browser_search_by_tag">Filter by tag</string>
     <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">My searches</string>
+    <string name="card_browser_list_my_searches">Mine søgninger</string>
     <string name="card_browser_list_my_searches_save">Save search</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
     <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
     <string name="card_browser_change_display_order">Change display order</string>
     <string name="card_browser_change_display_order_title">Choose display order</string>
@@ -90,25 +91,26 @@
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
+    <string name="card_browser_select_all">Vælg alle</string>
+    <string name="card_browser_select_none">Vælg ingen</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ny)</string>
+    <string name="card_browser_due_filtered_card">(filtreret)</string>
+    <string name="card_browser_interval_learning_card">(indlæres)</string>
+    <string name="card_browser_no_cards_in_deck">Ingen kort fundet i dæk ‘%s’</string>
+    <string name="card_browser_search_all_decks">Søg i alle dæk</string>
+    <string name="card_browser_unknown_deck_name">Ukendt</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">I dag er ‘0 %1$s’, i morgen er ‘1 %2$s’, osv&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Eksportér kort</item>
+        <item quantity="other">Eksportér kort</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Eksportér note</item>
+        <item quantity="other">Eksportér noter</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d kort slettet</item>
+        <item quantity="other">%d kort slettet</item>
     </plurals>
 </resources>

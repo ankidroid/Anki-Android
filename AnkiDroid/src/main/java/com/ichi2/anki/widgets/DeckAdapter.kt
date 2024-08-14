@@ -20,13 +20,19 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.OnContextAndLongClickListener
+import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckNode
@@ -36,7 +42,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.util.*
 
 @KotlinCleanup("lots to do")
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
@@ -60,7 +65,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     // Listeners
     private var deckClickListener: View.OnClickListener? = null
     private var deckExpanderClickListener: View.OnClickListener? = null
-    private var deckLongClickListener: OnLongClickListener? = null
+    private var deckContextAndLongClickListener: OnContextAndLongClickListener? = null
     private var countsClickListener: View.OnClickListener? = null
 
     // Totals accumulated as each deck is processed
@@ -110,8 +115,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         deckExpanderClickListener = listener
     }
 
-    fun setDeckLongClickListener(listener: OnLongClickListener?) {
-        deckLongClickListener = listener
+    fun setDeckContextAndLongClickListener(listener: OnContextAndLongClickListener?) {
+        deckContextAndLongClickListener = listener
     }
 
     /** Sets whether the control should have partial transparency to allow a background to be seen  */
@@ -215,7 +220,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
         // Set click listeners
         holder.deckLayout.setOnClickListener(deckClickListener)
-        holder.deckLayout.setOnLongClickListener(deckLongClickListener)
+        holder.deckLayout.setOnContextAndLongClickListener(deckContextAndLongClickListener)
         holder.countsLayout.setOnClickListener(countsClickListener)
     }
 

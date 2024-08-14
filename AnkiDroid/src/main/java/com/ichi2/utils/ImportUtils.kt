@@ -26,10 +26,15 @@ import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
+import com.ichi2.anki.showImportDialog
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
@@ -39,7 +44,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */
@@ -126,11 +131,12 @@ object ImportUtils {
             }
         }
 
+        @NeedsTest("Check file name is absolute")
         fun getFileCachedCopy(context: Context, uri: Uri): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
-            val tempPath = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-            return if (copyFileToCache(context, uri, tempPath)) {
-                tempPath
+            val tempFile = File(context.cacheDir, filename)
+            return if (copyFileToCache(context, uri, tempFile.absolutePath)) {
+                tempFile.absolutePath
             } else {
                 null
             }
@@ -247,11 +253,22 @@ object ImportUtils {
 
         protected open fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
             var filename: String? = null
-            context.contentResolver.query(data, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null).use { cursor ->
-                if (cursor != null && cursor.moveToFirst()) {
-                    filename = cursor.getString(0)
-                    Timber.d("handleFileImport() Importing from content provider: %s", filename)
+            try {
+                context.contentResolver.query(
+                    data,
+                    arrayOf(OpenableColumns.DISPLAY_NAME),
+                    null,
+                    null,
+                    null
+                ).use { cursor ->
+                    if (cursor != null && cursor.moveToFirst()) {
+                        filename = cursor.getString(0)
+                        Timber.d("handleFileImport() Importing from content provider: %s", filename)
+                    }
                 }
+            } catch (e: Exception) {
+                Timber.w(e, "Error querying content provider")
+                filename = null // Set filename to null in case of an exception
             }
             return filename
         }

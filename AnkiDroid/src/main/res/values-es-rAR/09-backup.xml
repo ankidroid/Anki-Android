@@ -50,14 +50,14 @@
     <string name="backup_new_collection">Nueva colección</string>
     <string name="backup_del_collection">Eliminar colección y crear una nueva</string>
     <string name="backup_del_collection_question">¿Desea realmente eliminar la colección y crear una nueva? ¡Esto borrará todo su progreso de aprendizaje y eliminará todas sus tarjetas!</string>
-    <string name="backup_full_sync_from_server">Sincronización completa desde el servidor</string>
+    <string name="backup_one_way_sync_from_server">Sincronización unidireccional desde el servidor</string>
     <string name="backup_full_sync_from_server_question">¿Desea realmente sobreescribir su colección con la de AnkiWeb? ¡Esto borrará todo su progreso de aprendizaje y la información añadida desde su última sincronización!</string>
     <string name="error_handling_title">Manejo de errores</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Opciones</string>
     <string name="backup_retry_opening">Intente abrir nuevamente</string>
     <string name="backup_error_menu_repair">Reparar base de datos</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Reparando base de datos.\nPor favor aguarde...</string>
+    <string name="backup_repair_deck_progress">Reparando base de datos.\nPor favor aguarde&#8230;</string>
     <string name="backup_invalid_file_error">El archivo de copia de seguridad seleccionado no es válido</string>
     <string name="backup_restore_select_title">Seleccione copia de seguridad para restaurar</string>
     <string name="backup_restore_no_backups">No hay copias de seguridad para esta colección disponibles en este dispositivo. Si tiene copias de seguridad en su computadora de escritorio por favor cópielas manualmente al directorio de AnkiDroid</string>

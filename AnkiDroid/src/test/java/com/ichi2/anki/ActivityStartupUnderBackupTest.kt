@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.app.Activity
 import android.os.Looper.getMainLooper
 import com.canhub.cropper.CropImageActivity
+import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
@@ -40,20 +41,22 @@ import java.util.stream.Collectors
 class ActivityStartupUnderBackupTest : RobolectricTest() {
     @ParameterizedRobolectricTestRunner.Parameter
     @JvmField // required for Parameter
-    var mLauncher: ActivityLaunchParam? = null
+    var launcher: ActivityLaunchParam? = null
 
     // Only used for display, but needs to be defined
     @ParameterizedRobolectricTestRunner.Parameter(1)
     @JvmField // required for Parameter
-    var mActivityName: String? = null
+    var activityName: String? = null
 
     @Before
     fun before() {
         notYetHandled(CropImageActivity::class.java.simpleName, "cannot implemented - activity from canhub.cropper")
         notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
+        notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(SingleFragmentActivity::class.java.simpleName, "Implemented, but the test fails because the activity throws if a specific intent extra isn't set")
+        notYetHandled(InstantNoteEditorActivity::class.java.simpleName, "Single instance activity so should be used")
     }
 
     /**
@@ -72,7 +75,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
     fun activityHandlesRestoreBackup() {
         AnkiDroidApp.simulateRestoreFromBackup()
         val controller: ActivityController<out Activity?> = try {
-            mLauncher!!.build(targetContext).create()
+            launcher!!.build(targetContext).create()
         } catch (npe: Exception) {
             val stackTrace = getFullStackTrace(npe)
             Assert.fail(
@@ -96,7 +99,7 @@ $stackTrace"""
     }
 
     private fun notYetHandled(activityName: String, reason: String) {
-        if (mLauncher!!.simpleName == activityName) {
+        if (launcher!!.simpleName == activityName) {
             assumeThat("$activityName $reason", true, equalTo(false))
         }
     }

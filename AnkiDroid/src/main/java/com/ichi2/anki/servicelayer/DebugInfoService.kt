@@ -19,15 +19,28 @@ package com.ichi2.anki.servicelayer
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
+import androidx.annotation.MainThread
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.acra.util.Installation
+import timber.log.Timber
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
 object DebugInfoService {
-    fun getDebugInfo(info: Context): String {
-        val webviewUserAgent = getWebviewUserAgent(info)
+
+    /**
+     * Retrieves the debug info based in different parameters of the app.
+     *
+     * Note that the `FSRS` parameter can be null if the collection doesn't exist or the config is not set.
+     */
+    suspend fun getDebugInfo(info: Context): String {
+        val webviewUserAgent = withContext(Dispatchers.Main) { getWebviewUserAgent(info) }
+        // isFSRSEnabled is null on startup
+        val isFSRSEnabled = getFSRSStatus()
         return """
                AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
                
@@ -47,10 +60,13 @@ object DebugInfoService {
                
                ACRA UUID = ${Installation.id(info)}
                
+               FSRS Enabled = $isFSRSEnabled
+               
                Crash Reports Enabled = ${isSendingCrashReports(info)}
         """.trimIndent()
     }
 
+    @MainThread
     private fun getWebviewUserAgent(context: Context): String? {
         try {
             return WebView(context).settings.userAgentString
@@ -62,5 +78,12 @@ object DebugInfoService {
 
     private fun isSendingCrashReports(context: Context): Boolean {
         return CrashReportService.isAcraEnabled(context, false)
+    }
+
+    private suspend fun getFSRSStatus(): Boolean? = try {
+        CollectionManager.withOpenColOrNull { config.get<Boolean>("fsrs", false) }
+    } catch (e: Error) {
+        Timber.w(e)
+        null
     }
 }

@@ -33,9 +33,7 @@ class TextField : FieldBase(), IField {
     override val isModified: Boolean
         get() = thisModified
 
-    override var imagePath: String? = null
-
-    override var audioPath: String? = null
+    override var mediaPath: String? = null
 
     override var text: String?
         get() = _text

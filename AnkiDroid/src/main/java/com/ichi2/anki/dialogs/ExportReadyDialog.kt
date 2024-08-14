@@ -23,7 +23,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
-import com.ichi2.utils.*
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
 
 class ExportReadyDialog(private val listener: ExportReadyDialogListener) : AsyncDialogFragment() {
     interface ExportReadyDialogListener {

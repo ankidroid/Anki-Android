@@ -1,25 +1,29 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 
 plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.dokka)
     id("maven-publish")
-    id("com.android.library")
-    id("kotlin-android")
-    id("org.jetbrains.dokka")
 }
 
 group = "com.ichi2.anki"
 version = "2.0.0"
 
+kotlin {
+    explicitApi()
+}
+
 android {
     namespace = "com.ichi2.anki.api"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     buildFeatures {
         buildConfig = true
     }
 
     defaultConfig {
-        minSdk = 16
+        minSdk = libs.versions.minSdk.get().toInt()
         buildConfigField(
             "String",
             "READ_WRITE_PERMISSION",
@@ -63,13 +67,12 @@ android {
 apply(from = "../lint.gradle")
 
 dependencies {
-    implementation("androidx.annotation:annotation:1.7.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
-
-    testImplementation("org.junit.jupiter:junit-jupiter:${rootProject.extra["junit_version"]}")
-    testImplementation("org.junit.vintage:junit-vintage-engine:${rootProject.extra["junit_version"]}")
-    testImplementation("org.robolectric:robolectric:${rootProject.extra["robolectric_version"]}")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:${rootProject.extra["kotlin_version"]}")
+    implementation(libs.androidx.annotation)
+    implementation(libs.kotlin.stdlib)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.kotlin.test)
 
     lintChecks(project(":lint-rules"))
 }

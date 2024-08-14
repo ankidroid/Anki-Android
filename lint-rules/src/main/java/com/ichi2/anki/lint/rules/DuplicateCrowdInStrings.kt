@@ -36,17 +36,27 @@
 
 package com.ichi2.anki.lint.rules
 
-import com.android.SdkConstants.*
+import com.android.SdkConstants.ATTR_NAME
+import com.android.SdkConstants.ATTR_TRANSLATABLE
+import com.android.SdkConstants.TAG_STRING
+import com.android.SdkConstants.VALUE_FALSE
 import com.android.resources.ResourceFolderType
 import com.android.tools.lint.checks.StringCasingDetector.StringDeclaration
-import com.android.tools.lint.detector.api.*
+import com.android.tools.lint.detector.api.Context
+import com.android.tools.lint.detector.api.Implementation
+import com.android.tools.lint.detector.api.Issue
+import com.android.tools.lint.detector.api.Location
+import com.android.tools.lint.detector.api.ResourceXmlDetector
 import com.android.tools.lint.detector.api.Scope.Companion.ALL_RESOURCES_SCOPE
+import com.android.tools.lint.detector.api.XmlContext
+import com.android.tools.lint.detector.api.formatList
+import com.android.tools.lint.detector.api.getLocale
 import com.android.utils.Pair
 import com.ichi2.anki.lint.utils.Constants
 import com.ichi2.anki.lint.utils.StringFormatDetector
 import org.w3c.dom.Element
 import org.w3c.dom.Node
-import java.util.*
+import java.util.Locale
 
 class DuplicateCrowdInStrings : ResourceXmlDetector() {
     /*

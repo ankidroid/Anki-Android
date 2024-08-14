@@ -49,7 +49,7 @@
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d mins</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Tiada hasil</string>
     <!-- preferences.xml categories-->
@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Benarkan gerak isyarat sentuh pada penghujung skrin</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Laci navigasi skrin penuh</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Buka laci navigasi apabila dileretkan ke kanan dari mana-mana pada skrin</string>
-    <string name="gestures_none" maxLength="41">Tiada</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Tiada</string>
     <string name="gestures_swipe_up" maxLength="41">Leret ke atas</string>
     <string name="gestures_swipe_down" maxLength="41">Leret ke bawah</string>
     <string name="gestures_swipe_left" maxLength="41">Leret ke kiri</string>
@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Tengahkan kandungan kad secara menegak</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali (milisaat)</string>
     <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali tanpa sengaja</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Masa tunjuk jawapan tekan lama (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Masa minimum tekan lama sebelum butang tunjuk jawapan akui tekanan. Mungkin kurangkan tekanan tanpa sengaja. Lalai kepada 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
     <string name="show_estimates" maxLength="41">Tunjuk masa</string>
     <string name="show_estimates_summ">Tunjuk masa semakan seterusnya pada butang jawapan</string>
     <string name="show_large_answer_buttons" maxLength="41">Tunjuk butang jawapan besar</string>
@@ -179,7 +179,6 @@
     <string name="use_current" maxLength="41">Dek untuk kad baru</string>
     <string name="learn_cutoff" maxLength="41">Had belajar awal</string>
     <string name="time_limit" maxLength="41">Had kotak masa</string>
-    <string name="new_timezone" maxLength="41">Pengendalian zon masa baru</string>
     <string name="day_offset_with_description" maxLength="41">Mula hari esok</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="other">%d hours past midnight</item>
@@ -198,8 +197,6 @@
     <string name="reset">Tetap semula</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikasi pihak ketiga</string>
     <string name="thirdparty_apps_summary">Lihat senarai aplikasi yang menggunakan API AnkiDroid seperti kamus, utiliti.</string>
-    <string name="html_javascript_debugging" maxLength="41">Penyahpepijatan HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Dayakan sambungan WebView jauh, dan simpan HTML kad dalam direktori AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Penyemak</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
@@ -221,6 +218,7 @@
         <a href="%s">Ketahui lebih lanjut</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL segerak</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Papan kekunci</string>
     <string name="bluetooth">Bluetooth</string>
@@ -251,8 +249,6 @@
     <string name="analytics_summ">Anda boleh sumbang kepada AnkiDroid dengan membantu para pembangun lihat ciri-ciri yang orang ramai guna</string>
     <string name="note_editor_replace_newlines" maxLength="41">Ganti baris baru dengan HTML</string>
     <string name="note_editor_replace_newlines_summ">Dalam Penyunting Nota, tukar mana-mana &lt;br&gt; kepada baris baru apabila sunting kad.</string>
-    <string name="no_code_formatting" maxLength="41">Format jawapan taip ringkas</string>
-    <string name="no_code_formatting_summ">Betulkan ‘􏿾’ yang muncul dalam keputusan jawapan taip</string>
     <string name="type_in_answer_focus" maxLength="41">Fokus ‘taip dalam jawapan’</string>
     <string name="type_in_answer_focus_summ">Fokus ‘taip dalam jawapan’ secara automatik dalam penyemak</string>
     <!-- About -->
@@ -271,6 +267,17 @@
     <string name="key_picker_default_press_key">Tekan kekunci</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_action_1" maxLength="41">User action 1</string>
+    <string name="user_action_2" maxLength="41">User action 2</string>
+    <string name="user_action_3" maxLength="41">User action 3</string>
+    <string name="user_action_4" maxLength="41">User action 4</string>
+    <string name="user_action_5" maxLength="41">User action 5</string>
+    <string name="user_action_6" maxLength="41">User action 6</string>
+    <string name="user_action_7" maxLength="41">User action 7</string>
+    <string name="user_action_8" maxLength="41">User action 8</string>
+    <string name="user_action_9" maxLength="41">User action 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Pilih sisi kad</string>
     <string name="card_side_question">Soalan</string>
@@ -285,7 +292,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Percubaan</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Please upgrade to the new text to speech format</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Pilihan pembangun</string>
     <string name="dev_options_enabled_pref" maxLength="41">Dayakan pilihan pembangun</string>
@@ -351,4 +358,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Memperoleh&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Mengira&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Koleksi tidak wujud</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
+    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
 </resources>

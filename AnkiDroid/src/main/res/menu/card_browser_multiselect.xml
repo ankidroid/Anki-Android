@@ -25,37 +25,7 @@
         android:title="@string/menu_flag_card"
         android:icon="@drawable/ic_flag_transparent">
       <menu>
-        <item
-            android:id="@+id/action_flag_zero"
-            android:title="@string/menu_flag_card_zero"/>
-        <item
-            android:id="@+id/action_flag_one"
-            android:title="@string/menu_flag_card_one"
-            android:icon="@drawable/ic_flag_red"/>
-        <item
-            android:id="@+id/action_flag_two"
-            android:title="@string/menu_flag_card_two"
-            android:icon="@drawable/ic_flag_orange"/>
-        <item
-            android:id="@+id/action_flag_three"
-            android:title="@string/menu_flag_card_three"
-            android:icon="@drawable/ic_flag_green"/>
-        <item
-            android:id="@+id/action_flag_four"
-            android:title="@string/menu_flag_card_four"
-            android:icon="@drawable/ic_flag_blue"/>
-      <item
-          android:id="@+id/action_flag_five"
-          android:title="@string/menu_flag_card_five"
-          android:icon="@drawable/ic_flag_pink"/>
-      <item
-          android:id="@+id/action_flag_six"
-          android:title="@string/menu_flag_card_six"
-          android:icon="@drawable/ic_flag_turquoise"/>
-      <item
-          android:id="@+id/action_flag_seven"
-          android:title="@string/menu_flag_card_seven"
-          android:icon="@drawable/ic_flag_purple"/>
+          <!-- flags are dynamically added -->
       </menu>
     </item>
 
@@ -73,6 +43,12 @@
         tools:title="Toggle suspend" />
 
     <item
+        ankidroid:showAsAction="ifRoom"
+        android:id="@+id/action_toggle_bury"
+        android:icon="@drawable/ic_flip_to_back_white"
+        tools:title="Toggle bury" />
+
+    <item
         android:id="@+id/action_change_deck"
         android:title="@string/card_browser_change_deck"/>
 
@@ -82,7 +58,7 @@
 
     <item
         android:id="@+id/action_reschedule_cards"
-        android:title="@string/card_editor_reschedule_card"/>
+        tools:title="Set due date" />
 
     <item
         android:id="@+id/action_edit_tags"

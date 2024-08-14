@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Şu anki aramanın adı</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Adı olmadan arama kaydedemezsiniz.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Ad zaten var!</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" silinsin mi?</string>
     <string name="card_browser_change_display_order">Gösterme sırasını seç</string>
     <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
@@ -88,7 +89,7 @@
         <item>Aralığa göre</item>
         <item>Kolaylığa göre</item>
         <item>Tekrarlara göre</item>
-        <item>Süresi dolana göre</item>
+        <item>Hatalara göre</item>
     </string-array>
     <string name="card_browser_select_all">Hepsini seç</string>
     <string name="card_browser_select_none">Hiçbirini seçme</string>
@@ -99,6 +100,7 @@
     <string name="card_browser_search_all_decks">Tüm desteleri ara</string>
     <string name="card_browser_unknown_deck_name">Bilinmeyen</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">İçeriği kırp</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Bugün \"0 %1$s\", yarın \"1 %2$s\" vs.</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Kartı dışarı aktar</item>
         <item quantity="other">Kartları dışarı aktar</item>

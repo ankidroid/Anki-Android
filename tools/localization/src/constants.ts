@@ -32,7 +32,6 @@ createDirIfNotExisting(TEMP_DIR);
 
 export const I18N_FILES_DIR = path.join(__dirname, RES_DIR, "values/");
 export const RES_VALUES_LANG_DIR = path.join(__dirname, RES_DIR, "values-");
-export const TITLE_FILE = path.join(__dirname, DOCS_MARKET_DIR, "ankidroid-titles.txt");
 export const MARKET_DESC_FILE = path.join(
     __dirname,
     DOCS_MARKET_DIR,
@@ -63,7 +62,6 @@ export const I18N_FILES = [
     "11-arrays",
     "12-dont-translate",
     "14-marketdescription",
-    "15-markettitle",
     "16-multimedia-editor",
     "17-model-manager",
     "18-standard-models",

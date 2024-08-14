@@ -59,16 +59,16 @@
     </plurals>
     <string name="card_browser_all_decks">Усе калоды</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="few">Delete cards</item>
-        <item quantity="many">Delete cards</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Выдаліць картку</item>
+        <item quantity="few">Выдаліць карткі</item>
+        <item quantity="many">Выдаліць картак</item>
+        <item quantity="other">Выдаліць картак</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="few">Delete notes</item>
-        <item quantity="many">Delete notes</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Выдаліць нататку</item>
+        <item quantity="few">Выдаліць нататкі</item>
+        <item quantity="many">Выдаліць нататак</item>
+        <item quantity="other">Выдаліць нататак</item>
     </plurals>
     <string name="card_browser_change_deck">Змяніць калоду</string>
     <string name="delete_card_title">Выдаліць нататку?</string>
@@ -82,6 +82,7 @@
     <string name="card_browser_list_my_searches_new_name">Назва запыту пошуку</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельга захаваць пошук без назвы</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такая назва ўжо існуе</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Змяніць парадак адлюстравання</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>
@@ -107,6 +108,7 @@
     <string name="card_browser_search_all_decks">Шукаць ва ўсіх калодах</string>
     <string name="card_browser_unknown_deck_name">Невядома</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Скарачаць змест</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Сёння ‘0 %1$s’, заўтра ‘1 %2$s’ і г.д&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Экспартаваць картку</item>
         <item quantity="few">Экспартаваць карткі</item>

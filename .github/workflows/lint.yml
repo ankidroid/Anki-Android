@@ -2,11 +2,6 @@ name: Code Quality Checks
 
 on:
   workflow_dispatch:
-    inputs:
-      clearCaches:
-        description: "Clear workflow caches where possible"
-        required: false
-        type: string
   pull_request:
   push:
     # Ignore merge queue branches on push; avoids merge_group+push concurrency race since ref is same
@@ -44,14 +39,6 @@ jobs:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
           gradle-home-cache-cleanup: true
 
-      - name: Clear Caches Optionally
-        if: "${{ github.event.inputs.clearCaches != '' }}"
-        shell: bash
-        run: |
-          du -sk ~/.gradle
-          rm -fr ~/.gradle
-          du -sk ~/.gradle || echo ~/.gradle is gone
-
       - name: Warm Gradle Cache
         # This makes sure we fetch gradle network resources with a retry
         uses: nick-invision/retry@v3
@@ -62,13 +49,17 @@ jobs:
           command: ./gradlew :AnkiDroid:compilePlayDebugJavaWithJavac compileLint lint-rules:compileTestJava --daemon
 
       - name: Run Lint Debug
-        uses: gradle/gradle-build-action@v3
-        with:
-          # "lint" is run under the 'Amazon' flavor, so slow in CI
-          # "lintPlayRelease" doesn't test androidTest
-          # "lintPlayDebug" doesn't test the API
-          arguments: lintPlayDebug :api:lintDebug ktLintCheck lint-rules:test --daemon
+        # "lint" is run under the 'Amazon' flavor, so slow in CI
+        # "lintPlayRelease" doesn't test androidTest
+        # "lintPlayDebug" doesn't test the API
+        # "lintVitalFullRelease": if `main` resources are only used in `androidTest` (#15741)
+        run: ./gradlew lintPlayDebug :api:lintDebug ktLintCheck lintVitalFullRelease lint-rules:test --daemon
 
+        # Handled under the pre-commit hook: ./gradlew installGitHook
+
+        # To run manually, run the following inside folder: Anki-Android
+        # npm install --location=global prettier
+        # prettier --check AnkiDroid/**/*.js
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:

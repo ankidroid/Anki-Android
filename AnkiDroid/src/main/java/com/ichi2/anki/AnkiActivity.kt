@@ -13,7 +13,10 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
@@ -27,17 +30,19 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.browser.customtabs.CustomTabsIntent.*
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
-import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
+import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler
@@ -57,6 +62,7 @@ import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
+import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentBuilder
 
 @UiThread
 @KotlinCleanup("set activityName")
@@ -116,6 +122,15 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         dialogHandler.executeMessage()
     }
 
+    /**
+     * Sets the title of the toolbar (support action bar) for the activity.
+     *
+     * @param title The new title to be set for the toolbar.
+     */
+    open fun setToolbarTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             Timber.i("Home button pressed")
@@ -167,23 +182,23 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         return !animationDisabled()
     }
 
-    override fun setContentView(view: View) {
+    override fun setContentView(view: View?) {
         if (animationDisabled()) {
-            view.clearAnimation()
+            view?.clearAnimation()
         }
         super.setContentView(view)
     }
 
-    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
+    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         if (animationDisabled()) {
-            view.clearAnimation()
+            view?.clearAnimation()
         }
         super.setContentView(view, params)
     }
 
-    override fun addContentView(view: View, params: ViewGroup.LayoutParams) {
+    override fun addContentView(view: View?, params: ViewGroup.LayoutParams?) {
         if (animationDisabled()) {
-            view.clearAnimation()
+            view?.clearAnimation()
         }
         super.addContentView(view, params)
     }
@@ -292,7 +307,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     }
 
     /** The action to take when there was an error loading the collection  */
-    protected fun onCollectionLoadError() {
+    fun onCollectionLoadError() {
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.putExtra("collectionLoadError", true) // don't currently do anything with this
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -320,17 +335,19 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         }
     }
 
+    /**
+     * Opens a URL in a custom tab, with fallback to a browser if no custom tab implementation is available.
+     *
+     * This method first checks if there is a web browser available on the device. If no browser is found,
+     * a snackbar message is displayed informing the user. If a browser is available, a custom tab is
+     * opened with customized appearance and animations.
+     *
+     * @param url The URI to be opened.
+     */
     @KotlinCleanup("toast -> snackbar")
     open fun openUrl(url: Uri) {
-        // DEFECT: We might want a custom view for the toast, given i8n may make the text too long for some OSes to
-        // display the toast
         if (!AdaptionUtil.hasWebBrowser(this)) {
-            @KotlinCleanup("check RTL with concat")
-            showThemedToast(
-                this,
-                resources.getString(R.string.no_browser_notification) + url,
-                false
-            )
+            showSnackbar(getString(R.string.no_browser_msg, url.toString()))
             return
         }
         val toolbarColor = MaterialColors.getColor(this, R.attr.appBarColor, 0)
@@ -339,7 +356,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
             .build()
-        val builder = CustomTabsIntent.Builder(customTabActivityHelper.session)
+        val builder = CustomTabsIntentBuilder(customTabActivityHelper.session)
             .setShowTitle(true)
             .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
             .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
@@ -546,6 +563,30 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, attr)
     }
 
+    fun closeCollectionAndFinish() {
+        Timber.i("closeCollectionAndFinish()")
+        Timber.i("closeCollection: %s", "AnkiActivity:closeCollectionAndFinish()")
+        CollectionManager.closeCollectionBlocking()
+        finish()
+    }
+
+    /**
+     * If storage permissions are not granted, shows a toast message and finishes the activity.
+     *
+     * This should be called AFTER a call to `super.`[onCreate]
+     *
+     * @return `true`: activity may continue to start, `false`: [onCreate] should stop executing
+     * as storage permissions are mot granted
+     */
+    fun ensureStoragePermissions(): Boolean {
+        if (IntentHandler.grantedStoragePermissions(this, showToast = true)) {
+            return true
+        }
+        Timber.w("finishing activity. No storage permission")
+        finish()
+        return false
+    }
+
     companion object {
         const val DIALOG_FRAGMENT_TAG = "dialog"
 
@@ -573,4 +614,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
         private const val SIMPLE_NOTIFICATION_ID = 0
     }
+}
+
+fun Fragment.requireAnkiActivity(): AnkiActivity {
+    return requireActivity() as? AnkiActivity?
+        ?: throw java.lang.IllegalStateException("Fragment $this not attached to an AnkiActivity.")
 }

@@ -1,5 +1,6 @@
 /****************************************************************************************
  * Copyright (c) 2021 Akshay Jadhav <jadhavakshay0701@gmail.com>                        *
+ * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>                      *
  *                                                                                      *
  * This program is free software; you can redistribute it and/or modify it under        *
  * the terms of the GNU General Public License as published by the Free Software        *
@@ -20,7 +21,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.IntroductionActivity
@@ -29,9 +29,13 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.CreateDeckDialog.DeckDialogType
 import com.ichi2.anki.dialogs.utils.input
 import com.ichi2.libanki.DeckId
+import com.ichi2.utils.getInputTextLayout
 import com.ichi2.utils.positiveButton
+import okhttp3.internal.closeQuietly
 import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.Matcher
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -54,11 +58,16 @@ class CreateDeckDialogTest : RobolectricTest() {
         }
     }
 
+    override fun tearDown() {
+        super.tearDown()
+        activityScenario.closeQuietly()
+    }
+
     @Test
     fun testCreateFilteredDeckFunction() {
         val deckName = "filteredDeck"
         ensureExecutionOfScenario(DeckDialogType.FILTERED_DECK) { createDeckDialog, assertionCalled ->
-            createDeckDialog.setOnNewDeckCreated { id: Long ->
+            createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // a deck was created
                 assertThat(id, equalTo(col.decks.id(deckName)))
                 assertionCalled()
@@ -72,7 +81,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         val deckParentId = col.decks.id("Deck Name")
         val deckName = "filteredDeck"
         ensureExecutionOfScenario(DeckDialogType.SUB_DECK, deckParentId) { createDeckDialog, assertionCalled ->
-            createDeckDialog.setOnNewDeckCreated { id: Long ->
+            createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 val deckNameWithParentName = col.decks.getSubdeckName(deckParentId, deckName)
                 assertThat(id, equalTo(col.decks.id(deckNameWithParentName!!)))
                 assertionCalled()
@@ -85,7 +94,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     fun testCreateDeckFunction() {
         val deckName = "Deck Name"
         ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
-            createDeckDialog.setOnNewDeckCreated { id: Long ->
+            createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // a deck was created
                 assertThat(id, equalTo(col.decks.byName(deckName)!!.getLong("id")))
                 assertionCalled()
@@ -100,12 +109,34 @@ class CreateDeckDialogTest : RobolectricTest() {
         val deckNewName = "New Deck Name"
         ensureExecutionOfScenario(DeckDialogType.RENAME_DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.deckName = deckName
-            createDeckDialog.setOnNewDeckCreated { id: Long? ->
+            createDeckDialog.onNewDeckCreated = { id: DeckId ->
                 // a deck name was renamed
-                assertThat(deckNewName, equalTo(col.decks.name(id!!)))
+                assertThat(deckNewName, equalTo(col.decks.name(id)))
                 assertionCalled()
             }
             createDeckDialog.renameDeck(deckNewName)
+        }
+    }
+
+    @Test
+    fun `deck ordering hint`() {
+        // The correct way to order a deck is ['01', '02', '10']
+        val expectedText = "If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’"
+        testDialog(DeckDialogType.DECK) {
+            fun assertHelperText(reason: String?, matcher: Matcher<in CharSequence?>) =
+                assertThat(reason, getInputTextLayout().helperText, matcher)
+
+            input = "test"
+            assertHelperText("no number suggestion if text-only", nullValue())
+            input = "1. Cheese"
+            assertHelperText("no number suggestion if number is less than 10", nullValue())
+            input = "10. Cheese"
+            assertHelperText(
+                "Number suggestion if number is greater than or equal to 10",
+                equalTo(expectedText)
+            )
+            input = "1. Cheese"
+            assertHelperText("hint is removed if the number is removed", nullValue())
         }
     }
 
@@ -140,7 +171,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 null
             )
             val did = suspendCoroutine { coro ->
-                createDeckDialog.setOnNewDeckCreated { did ->
+                createDeckDialog.onNewDeckCreated = { did: DeckId ->
                     coro.resume(did)
                 }
                 createDeckDialog.createDeck("Deck$i")
@@ -188,8 +219,17 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
     }
 
+    @Test
+    fun positiveButtonEnabledOnMatchingDeckNames() {
+        val previousDeckName = "Deck Name"
+        testDialog(DeckDialogType.RENAME_DECK) {
+            input = previousDeckName
+            assertThat("no error is displayed", getInputTextLayout().error, nullValue())
+        }
+    }
+
     /**
-     * Executes [callback] on the [MaterialDialog] created from [CreateDeckDialog]
+     * Executes [callback] on the [AlertDialog] created from [CreateDeckDialog]
      */
     private fun testDialog(deckDialogType: DeckDialogType, parentId: DeckId? = null, callback: (AlertDialog.() -> Unit)) {
         activityScenario.onActivity { activity: DeckPicker ->
@@ -216,5 +256,24 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun deckTreeName(start: Int, end: Int, prefix: String): String {
         return List(end - start + 1) { "${prefix}${it + start}" }
             .joinToString("::")
+    }
+}
+
+/** Test of [CreateDeckDialog] */
+class CreateDeckDialogNonAndroidTest {
+    @Test
+    fun `number larger than nine detection`() {
+        fun assertLargerThanNine(reason: String?, input: String, result: Boolean) =
+            assertThat(reason, input.containsNumberLargerThanNine(), equalTo(result))
+
+        assertLargerThanNine("empty string", "", false)
+        assertLargerThanNine("text", "deck name", false)
+        assertLargerThanNine("less than ten", "9. - Chemicals", false)
+        assertLargerThanNine("Ten or greater", "10. - Chemicals", true)
+        assertLargerThanNine("Ten or greater", "99. - Chemicals", true)
+        assertLargerThanNine("zero prefix", "09. - Chemicals", false)
+        assertLargerThanNine("time", "10:50:59", false)
+        assertLargerThanNine("time", "Filtered Deck 22:34", false)
+        assertLargerThanNine("suffix", "Deck 34", true)
     }
 }

@@ -25,7 +25,7 @@ import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.canProperlyShowSnackbars
 import com.ichi2.anki.snackbar.showSnackbar
 import timber.log.Timber
@@ -81,7 +81,7 @@ object ClipboardUtil {
 fun Context.copyToClipboard(
     text: String,
     @StringRes successMessageId: Int = R.string.about_ankidroid_successfully_copied_debug_info,
-    @StringRes failureMessageId: Int
+    @StringRes failureMessageId: Int = R.string.failed_to_copy
 ) {
     val copied = copyTextToClipboard(text)
     // in Android S_V2 and above, the system is guaranteed to show a message on a successful copy

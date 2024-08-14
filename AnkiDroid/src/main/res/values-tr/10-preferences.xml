@@ -50,7 +50,7 @@
         <item quantity="one">%d dk</item>
         <item quantity="other">%d dk</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Sonuç yok</string>
     <!-- preferences.xml categories-->
@@ -99,7 +99,7 @@
     <string name="gestures_corner_touch_summary">Ekran köşelerinde dokunma hareketlerine izin ver</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Tam ekran gezinme çekmecesi</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Ekranın üzerindeki herhangi bir yerden sağa doğru parmağınızı kaydırdığınızda bütün dosyaların genel görünümü için bir önizleme açılacaktır</string>
-    <string name="gestures_none" maxLength="41">Hiçbiri</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Hiçbiri</string>
     <string name="gestures_swipe_up" maxLength="41">Yukarı sürükleme</string>
     <string name="gestures_swipe_down" maxLength="41">Aşağı sürükleme</string>
     <string name="gestures_swipe_left" maxLength="41">Sola sürükleme</string>
@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Çift dokunma zaman aralığı (milisaniye)</string>
     <string name="pref_double_tap_time_interval_summary">Cevaplama düğmelerine ikinci bir tıklama, bu süre geçmediyse, göz ardı edilecektir. Bu, yanlışlıkla çift tıklamayı önler</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Cevabı göster basılı tutma süresi (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Cevabı göster düğmesi dokunmayı kabûl etmeden önce minimum basılı tutma süresi. Yanlışlıkla düğmeye basma ihtimâlini azaltabilir. Varsayılan 0 ms.</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Cevabı göster basılı tutma süresi</string>
+    <string name="pref_show_answer_long_press_time_summary">Cevabı göster düğmesi dokunmayı algılayana kadar minimum basma süresi</string>
     <string name="show_estimates" maxLength="41">Düğmede zaman göster</string>
     <string name="show_estimates_summ">Cevap düğmelerinin üzerinde sonraki çıkma zamanını göster</string>
     <string name="show_large_answer_buttons" maxLength="41">Büyük cevap düğmelerini göster</string>
@@ -174,12 +174,11 @@
     <string name="show_top_bar_summ">Üst çubukta kart sayılarını ve işaretlemeleri göster</string>
     <string name="show_progress" maxLength="41">Kalanı göster</string>
     <string name="show_progress_summ">Kalan kart sayısını göster</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Kalan zamanı göster</string>
+    <string name="show_eta_summ">Beklenen kalan zamanı göster</string>
     <string name="use_current" maxLength="41">Yeni kartlar için deste</string>
     <string name="learn_cutoff" maxLength="41">Önceden öğrenme sınırı</string>
     <string name="time_limit" maxLength="41">Zaman sınırı</string>
-    <string name="new_timezone" maxLength="41">Yeni zaman dilimi idaresi</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">Geceyarısından %d saat sonra</item>
@@ -199,8 +198,6 @@
     <string name="reset">Sıfırla</string>
     <string name="thirdparty_apps_title" maxLength="41">Üçüncü parti API uygulamaları</string>
     <string name="thirdparty_apps_summary">AnkiDroid API\'ından faydalanan sözlük, araç gibi uygulamaların bir listesine bakın.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">WebView bağlantılarını etkinleştir, ve kart HTML\'ini AnkiDroid dizinine kaydet</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Çalışıcı</string>
     <string name="show_deck_title" maxLength="41">Deste başlığını göster</string>
@@ -222,6 +219,7 @@
         <a href="%s">Daha fazlasını öğren</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Senkronizasyon Url\'i</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Özel root sertifikası (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klavye</string>
     <string name="bluetooth">Bluetooth</string>
@@ -252,8 +250,6 @@
     <string name="analytics_summ">Geliştirme ekibinin insanların hangi özellikleri kullandığını görmesine yardım ederek AnkiDroid\'e katkıda bulunabilirsiniz.</string>
     <string name="note_editor_replace_newlines" maxLength="41">Satırbaşlarını HTML\'le değiştir</string>
     <string name="note_editor_replace_newlines_summ">Not Düzenleyicide kart değiştirirken, bütün &lt;br&gt;leri satırbaşına çevir</string>
-    <string name="no_code_formatting" maxLength="41">Basit yazılı cevap formatı</string>
-    <string name="no_code_formatting_summ">Yazılı cevap sonuçlarında \"􏿾\" çıkmasını düzeltir</string>
     <string name="type_in_answer_focus" maxLength="41">\"Cevabı yaz\"a odaklan</string>
     <string name="type_in_answer_focus_summ">Çalışıcıda otomatik olarak \"Cevabı yaz\" alanına odaklan</string>
     <!-- About -->
@@ -272,6 +268,17 @@
     <string name="key_picker_default_press_key">Bir tuşa basın</string>
     <string name="binding_add_axis">Joystick/hareket kumandası ekle</string>
     <string name="axis_picker_move_joystick">Bir joystick/hareket kumandasını hareket ettir</string>
+    <string name="user_actions" maxLength="41">Kullanıcı eylemleri</string>
+    <string name="user_actions_summary" maxLength="41">JavaScript\'i gözden geçirme ekranından tetikle</string>
+    <string name="user_action_1" maxLength="41">Kullanıcı eylemi 1</string>
+    <string name="user_action_2" maxLength="41">Kullanıcı eylemi 2</string>
+    <string name="user_action_3" maxLength="41">Kullanıcı eylemi 3</string>
+    <string name="user_action_4" maxLength="41">Kullanıcı eylemi 4</string>
+    <string name="user_action_5" maxLength="41">Kullanıcı eylemi 5</string>
+    <string name="user_action_6" maxLength="41">Kullanıcı eylemi 6</string>
+    <string name="user_action_7" maxLength="41">Kullanıcı eylemi 7</string>
+    <string name="user_action_8" maxLength="41">Kullanıcı eylemi 8</string>
+    <string name="user_action_9" maxLength="41">Kullanıcı eylemi 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartın tarafını seç</string>
     <string name="card_side_question">Soru</string>
@@ -285,8 +292,8 @@
     <string name="bindings_already_bound">%s bileşenine bağlı zaten</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Deneysel</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid diğer Anki istemcileriyle uyumlu, daha fazla ses ve dil seslendirmesine geliştirmeler içeren daha iyi bir metin okuma mekanizması getirdi!\n\nLütfen mümkün olan en yakın zamanda yeni sisteme geçin, çünkü bu ayar yakında kaldırılacak.</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Lütfen yeni metin okuma formatına geçin</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Geliştirici seçenekleri</string>
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>
@@ -352,4 +359,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Okunuyor&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Hesaplanıyor&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Koleksiyon mevcut değil</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Sistem çubuklarını gizle</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Hiçbiri</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Durum çubuğu</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigasyon çubuğu</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Hepsi</string>
+    <string name="ignore_display_cutout" maxLength="41">Ekran kesintisini yok say</string>
+    <string name="hide_answer_buttons" maxLength="41">Cevap düğmelerini gizle</string>
 </resources>

@@ -18,6 +18,7 @@
 <!-- Key com.ichi2.ui.BindingPreferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_controls"
     android:key="@string/pref_controls_screen_key">
 
@@ -128,7 +129,7 @@
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/reschedule_command_key"
-            android:title="@string/card_editor_reschedule_card"
+            tools:title="Set due date"
             android:icon="@drawable/ic_reschedule"
             />
         <com.ichi2.preferences.ControlPreference
@@ -255,4 +256,48 @@
             android:title="@string/gesture_show_all_hints"
             />
     </PreferenceCategory>
+
+    <com.ichi2.anki.preferences.ExtendedPreferenceCategory
+        android:key="@string/user_actions_controls_category_key"
+        android:title="@string/user_actions"
+        android:summary="@string/user_actions_summary"
+        app:helpLink="@string/link_user_actions_help">
+
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_1_key"
+            android:title="@string/user_action_1"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_2_key"
+            android:title="@string/user_action_2"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_3_key"
+            android:title="@string/user_action_3"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_4_key"
+            android:title="@string/user_action_4"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_5_key"
+            android:title="@string/user_action_5"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_6_key"
+            android:title="@string/user_action_6"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_7_key"
+            android:title="@string/user_action_7"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_8_key"
+            android:title="@string/user_action_8"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/user_action_9_key"
+            android:title="@string/user_action_9"
+            />
+    </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>

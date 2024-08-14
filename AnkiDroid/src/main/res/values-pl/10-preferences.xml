@@ -47,12 +47,12 @@
     <!-- generic strings -->
     <string name="disabled">Wyłączone</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="few">%d mins</item>
-        <item quantity="many">%d mins</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d min.</item>
+        <item quantity="few">%d min.</item>
+        <item quantity="many">%d min.</item>
+        <item quantity="other">%d min.</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Brak wyników</string>
     <!-- preferences.xml categories-->
@@ -101,7 +101,7 @@
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel nawigacyjny w pełnym ekranie</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otwórz panel nawigacyjny po przesunięciu w prawo w dowolnym miejscu ekranu</string>
-    <string name="gestures_none" maxLength="41">Brak</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Brak</string>
     <string name="gestures_swipe_up" maxLength="41">Przesuń w górę</string>
     <string name="gestures_swipe_down" maxLength="41">Przesuń w dół</string>
     <string name="gestures_swipe_left" maxLength="41">Przesuń w lewo</string>
@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Dotknij środka ekranu</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotknij lewej dolnej części ekranu</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotknij prawej dolnej części ekranu</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Potrząśnij urządzeniem</string>
     <string name="card_browser_enable_external_context_menu">Menu „%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalne </string>
     <string name="double_scrolling_gap" maxLength="41">Podwójne przewijanie</string>
@@ -153,7 +153,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Wibracje</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Migotanie</string>
     <string name="timeout_answer_text" maxLength="41">Automatyczne wyświetlanie odpowiedzi</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Pokaż odpowiedź automatycznie bez wprowadzania danych przez użytkownika. Skonfiguruj z opcji talii.</string>
     <string name="select_locale_title">Wybór języka</string>
     <string name="software_render" maxLength="41">Wyłącz renderowanie sprzętowe kart</string>
     <string name="software_render_summ">Renderowanie sprzętowe jest szybsze, lecz mogą pojawić się problemy, zwłaszcza na Androidzie 8/8.1. Jeżeli nie widzisz części interfejsu przeglądarki, spróbuj tego ustawienia.</string>
@@ -166,8 +166,8 @@
     <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interwał czasu podwójnego dotknięcia (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Drugie dotknięcie przycisków odpowiedzi zostanie zignorowane jeśli od poprzedniego nie upłynął ustawiony czas. Zapobiega to przypadkowym podwójnym dotknięciom</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimalny czas naciśnięcia, zanim przycisk odpowiedzi odpowie na dotknięcie.</string>
     <string name="show_estimates" maxLength="41">Pokaż czas przy przyciskach</string>
     <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
     <string name="show_large_answer_buttons" maxLength="41">Pokaż duże przyciski odpowiedzi</string>
@@ -176,18 +176,17 @@
     <string name="show_top_bar_summ">Wyświetl licznik kart, zakreślenie i oznaczenie w górnym pasku</string>
     <string name="show_progress" maxLength="41">Pokaż pozostałe</string>
     <string name="show_progress_summ">Pokazuj licznik pozostałych kart</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Pokaż szacowany czas</string>
+    <string name="show_eta_summ">Pokaż pozostały czas</string>
     <string name="use_current" maxLength="41">Talia dla nowych kart</string>
     <string name="learn_cutoff" maxLength="41">Limit nauki z wyprzedzeniem</string>
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>
-    <string name="new_timezone" maxLength="41">Nowa obsługa stref czasowych</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d godzina po północy</item>
+        <item quantity="few">%d godzin po północy</item>
+        <item quantity="many">%d godzin po północy</item>
+        <item quantity="other">%d godzin po północy</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
@@ -203,11 +202,9 @@
     <string name="reset">Zresetuj</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikacji stron trzecich</string>
     <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki, narzędzia.</string>
-    <string name="html_javascript_debugging" maxLength="41">Debugowanie HTML / Javascript</string>
-    <string name="html_javascript_debugging_summ">Włącz zdalne połączenia WebView i zapisz kartę HTML do katalogu AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Ekran nauki</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
+    <string name="show_deck_title" maxLength="41">Pokaż tytuł talii</string>
     <string name="accessibility" maxLength="41">Ułatwienia dostępu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Wklej zdjęcia ze schowka jako PNG</string>
@@ -226,15 +223,16 @@
         <a href="%s">Dowiedz się więcej</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Adres url synchronizacji</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klawiatura</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">Przyciski odpowiedzi</string>
+    <string name="card" maxLength="41">Karta</string>
+    <string name="note" maxLength="41">Notatka</string>
+    <string name="navigation" maxLength="41">Nawigacja</string>
+    <string name="media" maxLength="41">Multimedia</string>
+    <string name="misc" maxLength="41">Pozostałe</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
     <!-- Deck configurations -->
@@ -256,8 +254,6 @@
     <string name="analytics_summ">Możesz ulepszyć AnkiDroid, pomagając zespołowi programistów zobaczyć jakie funkcje są najczęściej używane</string>
     <string name="note_editor_replace_newlines" maxLength="41">Zastąp nowe wiersze przez HTML</string>
     <string name="note_editor_replace_newlines_summ">W Edytorze Notatek zmień wszelkie przykłady &lt;br&gt; na nowy wiersz kiedy karta jest edytowana.</string>
-    <string name="no_code_formatting" maxLength="41">Proste formatowanie wpisywanej odpowiedzi</string>
-    <string name="no_code_formatting_summ">Naprawia ‘􏿾’ pojawiające się we wpisywanych odpowiedziach</string>
     <string name="type_in_answer_focus" maxLength="41">Zaznacz pole \"podaj odpowiedź\"</string>
     <string name="type_in_answer_focus_summ">Automatycznie zaznaczaj pole \"podaj odpowiedź\" w przeglądarce</string>
     <!-- About -->
@@ -276,6 +272,17 @@
     <string name="key_picker_default_press_key">Naciśnij klawisz</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
+    <string name="user_action_1" maxLength="41">Akcja użytkownika 1</string>
+    <string name="user_action_2" maxLength="41">Akcja użytkownika 2</string>
+    <string name="user_action_3" maxLength="41">Akcja użytkownika 3</string>
+    <string name="user_action_4" maxLength="41">Akcja użytkownika 4</string>
+    <string name="user_action_5" maxLength="41">Akcja użytkownika 5</string>
+    <string name="user_action_6" maxLength="41">Akcja użytkownika 6</string>
+    <string name="user_action_7" maxLength="41">Akcja użytkownika 7</string>
+    <string name="user_action_8" maxLength="41">Akcja użytkownika 8</string>
+    <string name="user_action_9" maxLength="41">Akcja użytkownika 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Wybierz stronę karty</string>
     <string name="card_side_question">Pytanie</string>
@@ -289,8 +296,8 @@
     <string name="bindings_already_bound">Już przypisane do %s</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperymentalne</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroid wprowadził lepszy mechanizm TTS, który jest kompatybilny z innymi klientami Anki i zawiera więcej głosów i ulepszeń w odtwarzaniu języków!\n\nZaktualizuj tak szybko jak to możliwe, ponieważ to ustawienie wkrótce zniknie</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Uaktualnij do nowego formatu tekstu do mowy</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
     <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>
@@ -359,4 +366,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Pobieranie&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Obliczanie&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekcja nie istnieje</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
+    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
 </resources>

@@ -50,14 +50,14 @@
     <string name="backup_new_collection">Yeni kolleksiya</string>
     <string name="backup_del_collection">Toplama sil və yenisini yaradın</string>
     <string name="backup_del_collection_question">Kolleksiyanı silmək və yenisini yaratmaq?Bu, bütün öyrənmə tərzinizi düşəcək və bütün kartları siləcək.</string>
-    <string name="backup_full_sync_from_server">Full sync from server</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">AnkiWeb-dən kolleksiyamızın üstünə yazmaq?Bu,son sinxronizasiya etdiyinizdən sonra bütün öyrənmə tərəqqinizi və əlavə məlumatı azaldacaq.</string>
     <string name="error_handling_title">Error handling</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Options</string>
     <string name="backup_retry_opening">Açılışa yenidən baxın</string>
     <string name="backup_error_menu_repair">Verilənlər bazasını təmir et</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Verilənlər bazası təmiri...</string>
+    <string name="backup_repair_deck_progress">Verilənlər bazası təmiri&#8230;</string>
     <string name="backup_invalid_file_error">Seçilən yedək fayl etibarsız idi</string>
     <string name="backup_restore_select_title">Qaytarmaq üçün backup seçin</string>
     <string name="backup_restore_no_backups">Bu cihazda heç bir yedek mövcud deyil.Masaüstü kompüterinizdə yedekləriniz varsa,onları əl ilə AnkiDroid qovluğuna kopyalayın.</string>

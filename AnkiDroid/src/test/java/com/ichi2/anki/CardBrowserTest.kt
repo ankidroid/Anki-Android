@@ -15,45 +15,68 @@
  */
 package com.ichi2.anki
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.ListView
 import android.widget.Spinner
-import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
-import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
+import com.ichi2.anki.CardBrowser.Companion.dueString
+import com.ichi2.anki.CardBrowser.Companion.nextDue
+import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.browser.CardBrowserColumn
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
-import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
-import com.ichi2.anki.introduction.hasCollectionStoragePermissions
-import com.ichi2.anki.model.CardsOrNotes.*
+import com.ichi2.anki.browser.CardBrowserColumn.CARD
+import com.ichi2.anki.browser.CardBrowserColumn.DECK
+import com.ichi2.anki.browser.CardBrowserColumn.EASE
+import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
+import com.ichi2.anki.browser.CardBrowserColumn.SFLD
+import com.ichi2.anki.browser.CardBrowserColumn.TAGS
+import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.common.utils.isRunningAsUnitTest
+import com.ichi2.anki.dialogs.DeckSelectionDialog
+import com.ichi2.anki.model.CardsOrNotes.CARDS
+import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.scheduling.ForgetCardsViewModel
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.servicelayer.PreferenceUpgradeService
+import com.ichi2.libanki.BrowserConfig
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
-import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.IntentAssert
-import com.ichi2.testutils.OS
+import com.ichi2.testutils.TestClass
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.LanguageUtil
+import com.ichi2.utils.UiUtil.setSelectedValue
 import io.mockk.every
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
+import io.mockk.unmockkObject
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.nullValue
+import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -61,7 +84,7 @@ import org.robolectric.Robolectric
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.Config
 import timber.log.Timber
-import java.util.Locale
+import java.util.Calendar
 import java.util.Random
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -122,6 +145,25 @@ class CardBrowserTest : RobolectricTest() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
         assertThat(browser.isShowingSelectAll, equalTo(true))
+    }
+
+    @Test
+    fun testOnDeckSelected() = withBrowser(noteCount = 1) {
+        // Arrange
+        val deckId = 123L
+        val selectableDeck = DeckSelectionDialog.SelectableDeck(deckId, "Test Deck")
+
+        // Act
+        this.onDeckSelected(selectableDeck)
+
+        // Assert
+        assertEquals(deckId, this.lastDeckId)
+
+        // Act again: select the same deck
+        this.onDeckSelected(selectableDeck)
+
+        // Assert again: the deck selection should not change
+        assertEquals(deckId, this.lastDeckId)
     }
 
     @Test
@@ -267,6 +309,8 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun `change deck does not work for dynamic decks`() = runTest {
+        throwOnShowError = false
+
         val dynId = addDynamicDeck("World")
         selectDefaultDeck()
         val b = getBrowserWithNotes(5)
@@ -279,28 +323,6 @@ class CardBrowserTest : RobolectricTest() {
         for (cardId in cardIds) {
             assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))
         }
-    }
-
-    @Test
-    fun `change deck in notes mode 15444`() = runTest {
-        val newDeck = addDeck("World")
-        selectDefaultDeck()
-        val b = getBrowserWithNotes(5, reversed = true)
-        b.viewModel.setCardsOrNotes(NOTES)
-
-        b.selectRowsWithPositions(0, 2)
-
-        val allCardIds = b.viewModel.queryAllSelectedCardIds()
-        assertThat(allCardIds.size, equalTo(4))
-
-        b.moveSelectedCardsToDeck(newDeck).join()
-
-        for (cardId in allCardIds) {
-            assertThat("Deck should be changed", col.getCard(cardId).did, equalTo(newDeck))
-        }
-
-        val hasSomeDecksUnchanged = b.viewModel.cards.any { row -> row.card.did != newDeck }
-        assertThat("some decks are unchanged", hasSomeDecksUnchanged)
     }
 
     @Test // see #13391
@@ -357,7 +379,7 @@ class CardBrowserTest : RobolectricTest() {
         // check if all card flags turned green
         assertThat(
             "All cards should be flagged",
-            cardBrowser.viewModel.allCardIds
+            cardBrowser.viewModel.queryAllCardIds()
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
                 .all { flag1 -> flag1 == Flag.GREEN.code }
         )
@@ -383,36 +405,21 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
-        val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
-
-        val mockedMethod = AnkiActivity::hasCollectionStoragePermissions
         try {
-            mockkStatic(mockedMethod)
+            mockkStatic(::isRunningAsUnitTest)
+            mockkObject(IntentHandler)
 
-            every { any<AnkiActivity>().hasCollectionStoragePermissions() } returns false
+            every { grantedStoragePermissions(any(), any()) } returns false
+            every { isRunningAsUnitTest } returns false
 
-            val browserController =
-                Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
+            val browserController = Robolectric.buildActivity(CardBrowser::class.java).create()
             val cardBrowser = browserController.get()
             saveControllerForCleanup(browserController)
 
-            val shadowActivity = shadowOf(cardBrowser)
-            val outputIntent = shadowActivity.nextStartedActivity
-            val component = assertNotNull(outputIntent.component)
-
-            assertThat(
-                "Deck Picker currently handles permissions, so should be called",
-                component.className,
-                equalTo("com.ichi2.anki.DeckPicker")
-            )
             assertThat("Activity should be finishing", cardBrowser.isFinishing)
-            assertThat(
-                "Activity should be cancelled as it did nothing",
-                shadowActivity.resultCode,
-                equalTo(Activity.RESULT_CANCELED)
-            )
         } finally {
-            unmockkStatic(mockedMethod)
+            unmockkStatic(::isRunningAsUnitTest)
+            unmockkObject(IntentHandler)
         }
     }
 
@@ -423,31 +430,14 @@ class CardBrowserTest : RobolectricTest() {
         n.flush()
 
         val b = browserWithNoNewCards
-        b.filterByTag("sketchy::(1)")
+        b.filterByTagSync("sketchy::(1)")
 
         assertThat("tagged card should be returned", b.viewModel.rowCount, equalTo(1))
     }
 
     @Test
-    fun filterByFlagDisplaysProperly() = runTest {
-        val cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse")
-        flagCardForNote(cardWithRedFlag, Flag.RED)
-
-        val cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse")
-        flagCardForNote(cardWithGreenFlag, Flag.GREEN)
-
-        val anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse")
-        flagCardForNote(anotherCardWithRedFlag, Flag.RED)
-
-        val b = browserWithNoNewCards
-        b.viewModel.setFlagFilter(Flag.RED)
-
-        assertThat("Flagged cards should be returned", b.viewModel.rowCount, equalTo(2))
-    }
-
-    @Test
     @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
-    fun previewWorksAfterSort() {
+    fun previewWorksAfterSort() = runTest {
         // #7286
         val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id
         val cid2 = addNoteUsingBasicModel("Hello2", "World2").cards()[0].id
@@ -458,8 +448,8 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(1))
 
         b.selectRowsWithPositions(0)
-        val previewIntent = b.viewModel.previewIntentData
-        assertThat("before: index", previewIntent.index, equalTo(0))
+        val previewIntent = b.viewModel.queryPreviewIntentData()
+        assertThat("before: index", previewIntent.currentIndex, equalTo(0))
         assertThat(
             "before: cards",
             previewIntent.previewerIdsFile.getCardIds(),
@@ -473,31 +463,13 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(0))
 
         b.replaceSelectionWith(intArrayOf(0))
-        val intentAfterReverse = b.viewModel.previewIntentData
-        assertThat("after: index", intentAfterReverse.index, equalTo(0))
+        val intentAfterReverse = b.viewModel.queryPreviewIntentData()
+        assertThat("after: index", intentAfterReverse.currentIndex, equalTo(0))
         assertThat(
             "after: cards",
             intentAfterReverse.previewerIdsFile.getCardIds(),
             equalTo(listOf(cid2, cid1))
         )
-    }
-
-    /** 7420  */
-    @Test
-    fun addCardDeckIsNotSetIfAllDecksSelectedAfterLoad() = runTest {
-        addDeck("NotDefault")
-
-        val b = browserWithNoNewCards
-
-        assertThat("All decks should not be selected", b.hasSelectedAllDecks(), equalTo(false))
-
-        b.viewModel.setDeckId(ALL_DECKS_ID)
-
-        assertThat("All decks should be selected", b.hasSelectedAllDecks(), equalTo(true))
-
-        val addIntent = b.addNoteIntent
-
-        IntentAssert.doesNotHaveExtra(addIntent, NoteEditor.EXTRA_DID)
     }
 
     /** 7420  */
@@ -518,8 +490,8 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("The target deck should be selected", b.lastDeckId, equalTo(targetDid))
 
         val addIntent = b.addNoteIntent
-
-        IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, targetDid)
+        val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
+        IntentAssert.hasExtra(bundle, NoteEditor.EXTRA_DID, targetDid)
     }
 
     /** 7420  */
@@ -532,8 +504,8 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("The initial deck should be selected", b.lastDeckId, equalTo(initialDid))
 
         val addIntent = b.addNoteIntent
-
-        IntentAssert.hasExtra(addIntent, NoteEditor.EXTRA_DID, initialDid)
+        val bundle = addIntent.getBundleExtra(SingleFragmentActivity.FRAGMENT_ARGS_EXTRA)
+        IntentAssert.hasExtra(bundle, NoteEditor.EXTRA_DID, initialDid)
     }
 
     @Test
@@ -563,15 +535,19 @@ class CardBrowserTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
+    @SuppressLint("DirectCalendarInstanceUsage")
     fun resetDataTest() = runTest {
+        TimeManager.reset()
         addNoteUsingBasicModel("Hello", "World").firstCard().update {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
         }
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.DATE, 5)
+        val expectedDate = LanguageUtil.getShortDateFormatFromMs(cal.timeInMillis)
 
         val b = browserWithNoNewCards
-
         b.selectRowsWithPositions(0)
 
         val card = getCheckedCard(b)
@@ -579,10 +555,13 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(
             "Initial due of checked card",
             card.getColumnHeaderText(CardBrowserColumn.DUE),
-            equalTo("8/12/20")
+            equalTo(expectedDate)
         )
 
-        b.resetProgressNoConfirm(listOf(card.id))
+        ForgetCardsViewModel().apply {
+            init(listOf(card.id))
+            resetCardsAsync().await()
+        }
 
         card.reload()
 
@@ -594,31 +573,8 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Config(qualifiers = "en")
-    fun rescheduleDataTest() = runTest {
-        TimeManager.reset()
-        val b = getBrowserWithNotes(1)
-
-        b.selectRowsWithPositions(0)
-
-        val card = getCheckedCard(b)
-
-        assertThat(
-            "Initial position of checked card",
-            card.getColumnHeaderText(CardBrowserColumn.DUE),
-            equalTo("1")
-        )
-
-        b.rescheduleWithoutValidation(listOf(card.id), 5)
-
-        card.reload()
-
-        assertThat(card.card.due, equalTo(5))
-    }
-
-    @Test
     @Ignore("Doesn't work - but should")
-    fun dataUpdatesAfterUndoReposition() {
+    fun dataUpdatesAfterUndoReposition() = runTest {
         val b = getBrowserWithNotes(1)
 
         b.selectRowsWithPositions(0)
@@ -649,20 +605,6 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("FLAKY: Robolectric getOptionsMenu does not require invalidateOptionsMenu - so would not fail")
-    fun rescheduleUndoTest() {
-        val b = getBrowserWithNotes(1)
-
-        assertUndoDoesNotContain(b, R.string.deck_conf_cram_reschedule)
-
-        b.selectRowsWithPositions(0)
-
-        b.rescheduleWithoutValidation(listOf(getCheckedCard(b).id), 2)
-
-        assertUndoContains(b, R.string.deck_conf_cram_reschedule)
-    }
-
-    @Test
     fun change_deck_dialog_is_dismissed_on_activity_recreation() {
         val cardBrowser = browserWithNoNewCards
 
@@ -687,7 +629,7 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         val cardBrowser = browserWithNoNewCards
-        cardBrowser.searchCards("world or hello")
+        cardBrowser.searchCardsSync("world or hello")
 
         assertThat(
             "Cardbrowser has Deck 1 as selected deck",
@@ -757,7 +699,8 @@ class CardBrowserTest : RobolectricTest() {
         }
 
         val cardBrowser = browserWithNoNewCards
-        cardBrowser.searchCards("Hello")
+        cardBrowser.searchCards("Hello").join()
+        waitForAsyncTasksToComplete()
         assertThat(
             "Card browser should have Test Deck as the selected deck",
             cardBrowser.selectedDeckNameForUi,
@@ -765,7 +708,8 @@ class CardBrowserTest : RobolectricTest() {
         )
         assertThat("Result should be empty", cardBrowser.viewModel.rowCount, equalTo(0))
 
-        cardBrowser.searchAllDecks()
+        cardBrowser.searchAllDecks().join()
+        waitForAsyncTasksToComplete()
         assertThat("Result should contain one card", cardBrowser.viewModel.rowCount, equalTo(1))
     }
 
@@ -776,10 +720,12 @@ class CardBrowserTest : RobolectricTest() {
         addNoteUsingBasicAndReversedModel("Hello", "Anki")
 
         browserWithNoNewCards.apply {
-            searchAllDecks()
+            searchAllDecks().join()
+            waitForAsyncTasksToComplete()
             with(viewModel) {
                 assertThat("Result should contain 4 cards", rowCount, equalTo(4))
-                setCardsOrNotes(NOTES)
+                setCardsOrNotes(NOTES).join()
+                waitForAsyncTasksToComplete()
                 assertThat("Result should contain 2 cards (one per note)", rowCount, equalTo(2))
             }
         }
@@ -808,41 +754,15 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
-    private fun assertUndoDoesNotContain(browser: CardBrowser, @StringRes resId: Int) {
-        val shadowActivity = shadowOf(browser)
-        val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)
-        val expected = browser.getString(resId)
-        assertThat(
-            item.title.toString(),
-            not(containsString(expected.lowercase(Locale.getDefault())))
-        )
-    }
-
-    private fun assertUndoContains(browser: CardBrowser, @StringRes resId: Int) {
-        val shadowActivity = shadowOf(browser)
-        val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)
-        val expected = browser.getString(resId)
-        assertThat(item.title.toString(), containsString(expected.lowercase(Locale.getDefault())))
-    }
-
-    private fun getCheckedCard(b: CardBrowser): CardCache {
-        val ids = b.viewModel.selectedRowIds
+    private suspend fun getCheckedCard(b: CardBrowser): CardCache {
+        val ids = b.viewModel.queryAllSelectedCardIds()
         assertThat("only one card expected to be checked", ids, hasSize(1))
         return b.getPropertiesForCardId(ids[0])
     }
 
-    private fun flagCardForNote(n: Note, flag: Flag) {
-        n.firstCard().update {
-            setUserFlag(flag)
-        }
-    }
-
-    private fun selectDefaultDeck() {
-        col.decks.select(1)
-    }
-
-    private fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
-        removeCardFromCollection(browser.viewModel.allCardIds[positionToCorrupt])
+    private suspend fun deleteCardAtPosition(browser: CardBrowser, positionToCorrupt: Int) {
+        val id = browser.viewModel.queryCardIdAtPosition(positionToCorrupt)
+        removeCardFromCollection(id)
         browser.clearCardData(positionToCorrupt)
     }
 
@@ -872,17 +792,17 @@ class CardBrowserTest : RobolectricTest() {
         advanceRobolectricUiLooper()
     }
 
-    private fun selectMenuItem(browser: CardBrowser, action_select_all: Int) {
+    private fun selectMenuItem(browser: CardBrowser, actionSelectAll: Int) {
         Timber.d("Selecting menu item")
         // select seems to run an infinite loop :/
         val shadowActivity = shadowOf(browser)
-        shadowActivity.clickMenuItem(action_select_all)
+        shadowActivity.clickMenuItem(actionSelectAll)
         advanceRobolectricUiLooper()
     }
 
     private class CardBrowserSizeOne : CardBrowser() {
-        override fun numCardsToRender(): Int {
-            return 1
+        override fun updateNumCardsToRender() {
+            viewModel.numCardsToRender = 1
         }
     }
 
@@ -981,11 +901,13 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun `column spinner positions are set to 0 if no preferences exist`() = runBlocking {
+    fun `column spinner positions are set if no preferences exist`() = runBlocking {
         // GIVEN: No shared preferences exist for display column selections
         getSharedPrefs().edit {
-            remove(DISPLAY_COLUMN_1_KEY)
-            remove(DISPLAY_COLUMN_2_KEY)
+            remove("cardBrowserColumn1")
+            remove("cardBrowserColumn2")
+            remove(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY)
+            remove(BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY)
         }
 
         // WHEN: CardBrowser is created
@@ -997,19 +919,18 @@ class CardBrowserTest : RobolectricTest() {
         val column1SpinnerPosition = column1Spinner.selectedItemPosition
         val column2SpinnerPosition = column2Spinner.selectedItemPosition
 
-        assertThat(column1SpinnerPosition, equalTo(0))
-        assertThat(column2SpinnerPosition, equalTo(0))
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        assertThat(selectedColumn1, equalTo(SFLD))
+        assertThat(selectedColumn2, equalTo(CARD))
     }
 
     @Test
     fun `column spinner positions are initially set from existing preferences`() = runTest {
         // GIVEN: Shared preferences exists for display column selections
-        val index1 = 1
-        val index2 = 5
-
         getSharedPrefs().edit {
-            putInt(DISPLAY_COLUMN_1_KEY, index1)
-            putInt(DISPLAY_COLUMN_2_KEY, index2)
+            putString(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, "question|cardEase")
         }
 
         // WHEN: CardBrowser is created
@@ -1021,8 +942,86 @@ class CardBrowserTest : RobolectricTest() {
         val column1SpinnerPosition = column1Spinner.selectedItemPosition
         val column2SpinnerPosition = column2Spinner.selectedItemPosition
 
-        assertThat(column1SpinnerPosition, equalTo(index1))
-        assertThat(column2SpinnerPosition, equalTo(index2))
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        assertThat(selectedColumn1, equalTo(QUESTION))
+        assertThat(selectedColumn2, equalTo(EASE))
+    }
+
+    @Test
+    fun `column spinner positions are upgraded`() = runTest {
+        // GIVEN: Shared preferences exists for display column selections
+
+        // using legacy keys - test of PreferenceUpgradeService
+        getSharedPrefs().edit {
+            putInt("cardBrowserColumn1", 1)
+            putInt("cardBrowserColumn2", 5)
+        }
+
+        // meta test
+        assertThat(CardBrowserColumn.COLUMN1_KEYS[1], equalTo(SFLD))
+        assertThat(CardBrowserColumn.COLUMN2_KEYS[5], equalTo(TAGS))
+
+        PreferenceUpgradeService.upgradePreferences(getSharedPrefs(), 20300130)
+
+        // WHEN: CardBrowser is created
+        val cardBrowser: CardBrowser = getBrowserWithNotes(7)
+
+        // THEN: The display column selections should match the shared preferences values
+        val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
+        val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
+        val column1SpinnerPosition = column1Spinner.selectedItemPosition
+        val column2SpinnerPosition = column2Spinner.selectedItemPosition
+
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        assertThat(selectedColumn1, equalTo(SFLD))
+        assertThat(selectedColumn2, equalTo(TAGS))
+
+        assertThat("column 1 is cleared", !getSharedPrefs().all.containsKey("cardBrowserColumn1"))
+        assertThat("column 2 is cleared", !getSharedPrefs().all.containsKey("cardBrowserColumn2"))
+    }
+
+    @Test
+    fun `loading corrupt columns returns default`() {
+        // GIVEN: Shared preferences exists for display column selections
+        // with a corrupt value
+        getSharedPrefs().edit {
+            putString(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, "question|corrupt")
+        }
+
+        // WHEN: CardBrowser is created
+        val cardBrowser: CardBrowser = getBrowserWithNotes(7)
+
+        // THEN: The display column selections should match the shared preferences values
+        val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
+        val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
+        val column1SpinnerPosition = column1Spinner.selectedItemPosition
+        val column2SpinnerPosition = column2Spinner.selectedItemPosition
+
+        val selectedColumn1 = CardBrowserColumn.COLUMN1_KEYS[column1SpinnerPosition]
+        val selectedColumn2 = CardBrowserColumn.COLUMN2_KEYS[column2SpinnerPosition]
+
+        // In future, we may want to keep the 'question' value and only reset
+        // the corrupt column.
+        assertThat("column 1 reset to default", selectedColumn1, equalTo(SFLD))
+        assertThat("column 2 reset to default", selectedColumn2, equalTo(CARD))
+    }
+
+    @Test
+    @Ignore("issues with launchCollectionInLifecycleScope")
+    fun `column titles update when moving to notes mode`() = withBrowser {
+        val column2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
+        column2Spinner.setSelectedValue("Interval")
+
+        assertThat("spinner title: cards", column2Spinner.selectedItem, equalTo("Interval"))
+
+        viewModel.setCardsOrNotes(NOTES)
+        waitForAsyncTasksToComplete()
+
+        assertThat("spinner title: notes", column2Spinner.selectedItem, equalTo("Avg. Interval"))
     }
 
     @Test
@@ -1077,6 +1076,167 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("selection is now marked", viewModel.selectedRows.all { it.isMarked })
     }
 
+    @SuppressLint("DirectCalendarInstanceUsage")
+    @Test
+    @Config(qualifiers = "en")
+    fun nextDueTest() {
+        TimeManager.reset()
+        val n = addNoteUsingBasicModel("Front", "Back")
+        val c = n.firstCard()
+        val decks = col.decks
+        val cal = Calendar.getInstance()
+        val expectedDate = LanguageUtil.getShortDateFormatFromMs(cal.timeInMillis)
+        val id = (cal.timeInMillis / 1000).toInt()
+        cal.add(Calendar.DATE, 27)
+
+        // Not filtered
+        c.type = Consts.CARD_TYPE_NEW
+        c.due = 27
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("(27)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_NEW
+        c.due = 27
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("27", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("27", nextDue(col, c))
+        Assert.assertEquals("27", dueString(col, c))
+        c.type = Consts.CARD_TYPE_LRN
+        c.due = id
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_LRN
+        Assert.assertEquals(expectedDate, nextDue(col, c))
+        Assert.assertEquals(expectedDate, dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+        c.type = Consts.CARD_TYPE_REV
+
+        val cal2 = Calendar.getInstance()
+        cal2.add(Calendar.DATE, 20)
+        val expectedDate2 = LanguageUtil.getShortDateFormatFromMs(cal2.timeInMillis)
+        c.due = 20
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals("($expectedDate2)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals("($expectedDate2)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals("($expectedDate2)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_REV
+        Assert.assertEquals(expectedDate2, nextDue(col, c))
+        Assert.assertEquals(expectedDate2, dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+        c.type = Consts.CARD_TYPE_RELEARNING
+        c.due = id
+        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("()", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_LRN
+        c.due = id
+        Assert.assertEquals(expectedDate, nextDue(col, c))
+        Assert.assertEquals(expectedDate, dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        Assert.assertEquals("", nextDue(col, c))
+        Assert.assertEquals("", dueString(col, c))
+
+        // Dynamic deck
+        val dyn = decks.newFiltered("dyn")
+        c.oDid = c.did
+        c.did = dyn
+        Assert.assertEquals("(filtered)", nextDue(col, c))
+        Assert.assertEquals("(filtered)", dueString(col, c))
+        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        Assert.assertEquals("(filtered)", nextDue(col, c))
+        Assert.assertEquals("((filtered))", dueString(col, c))
+    }
+
+    @Test
+    fun `tts tags are stripped`() {
+        val note = addNonClozeModel(
+            "test",
+            arrayOf("Front", "Back"),
+            "[anki:tts lang=de_DE voices=com.google.android.tts-de-DE-language]{{Front}}[/anki:tts]",
+            ""
+        ).let { name ->
+            col.notetypes.byName(name)!!
+        }.addNote("Test", "Blank")
+
+        val question = CardCache(note.firstCard().id, col, 1, CARDS)
+            .getColumnHeaderText(QUESTION)
+
+        assertThat(question, equalTo(""))
+    }
+
+    @Test
+    fun `initial value is correct column`() {
+        // Column 1 is [QUESTION, SFLD], the values when [SFLD] is selected
+
+        addNoteUsingBasicAndReversedModel("Hello", "World")
+
+        withBrowser {
+            assertThat(viewModel.column1, equalTo(SFLD))
+
+            assertThat(column1Text(row = 0), equalTo("Hello"))
+            assertThat(column1Text(row = 1), equalTo("Hello"))
+        }
+    }
+
+    @Test
+    @Ignore(
+        "issues with launchCollectionInLifecycleScope - provided value is not current" +
+            "use an integration test"
+    )
+    fun `column text is updated - cardsOrNotes and column change`() {
+        addNoteUsingBasicAndReversedModel("Hello", "World")
+
+        withBrowser {
+            assertThat("cards: original column", column2TitleText, equalTo("Card Type"))
+
+            setColumn2(DECK)
+            assertThat("cards: changed column", column2TitleText, equalTo("Deck"))
+
+            viewModel.setCardsOrNotes(NOTES)
+            waitForAsyncTasksToComplete()
+
+            assertThat("notes: default column", column2TitleText, equalTo("Note Type"))
+            setColumn2(DECK)
+            assertThat("notes: changed column", column2TitleText, equalTo("Avg. Due"))
+
+            viewModel.setCardsOrNotes(CARDS)
+            assertThat("cards: updated column used", column2TitleText, equalTo("Deck"))
+        }
+    }
+
+    fun NotetypeJson.addNote(field: String, vararg fields: String): Note {
+        return addNoteUsingModelName(this.name, field, *fields)
+    }
+
     @Suppress("SameParameterValue")
     private fun withBrowser(noteCount: Int = 0, block: suspend CardBrowser.() -> Unit) = runTest {
         getBrowserWithNotes(noteCount).apply {
@@ -1094,6 +1254,21 @@ fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
 fun CardBrowser.replaceSelectionWith(positions: IntArray) {
     viewModel.selectNone()
     selectRowsWithPositions(*positions)
+}
+
+private val CardBrowser.column2TitleText: String
+    get() = findViewById<Spinner>(R.id.browser_column2_spinner)
+        .selectedItem.toString()
+
+private fun CardBrowser.setColumn2(col: CardBrowserColumn) {
+    findViewById<Spinner>(R.id.browser_column2_spinner)
+        .setSelection(CardBrowserColumn.COLUMN2_KEYS.indexOf(col))
+}
+
+fun CardBrowser.column1Text(row: Int): CharSequence? {
+    val rowView = cardsAdapter.getView(row, null, cardsListView)
+    val column1 = rowView.findViewById<FixedTextView>(R.id.card_sfld)
+    return column1.text
 }
 
 fun CardBrowser.selectRowsWithPositions(vararg positions: Int) {
@@ -1134,3 +1309,23 @@ val CardBrowser.lastDeckId
 
 val CardBrowser.validDecksForChangeDeck
     get() = runBlocking { getValidDecksForChangeDeck() }
+
+suspend fun CardBrowser.searchCardsSync(query: String) {
+    searchCards(query)
+    viewModel.searchJob?.join()
+}
+suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
+    filterByTag(*tags)
+    viewModel.searchJob?.join()
+}
+
+suspend fun CardBrowserViewModel.setFlagFilterSync(flag: Flag) {
+    setFlagFilter(flag)
+    searchJob?.join()
+}
+
+fun TestClass.flagCardForNote(n: Note, flag: Flag) {
+    n.firstCard().update {
+        setUserFlag(flag)
+    }
+}

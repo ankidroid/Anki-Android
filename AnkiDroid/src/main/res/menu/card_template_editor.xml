@@ -16,6 +16,16 @@
         android:id="@+id/action_add"
         android:title="@string/menu_add"
         ankidroid:showAsAction="never"/>
+    <!-- not implemented -->
+    <item
+        android:id="@+id/action_reposition"
+        android:title="@string/card_template_reposition_template"
+        android:visible="false"
+        ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_rename"
+        android:title="@string/rename"
+        ankidroid:showAsAction="never"/>
     <item
         android:id="@+id/action_delete"
         android:title="@string/dialog_positive_delete"
@@ -34,4 +44,8 @@
         android:id="@+id/action_insert_field"
         android:title="@string/card_template_editor_insert_field"
         ankidroid:showAsAction="never"/>
+    <item
+        android:id="@+id/action_copy_as_markdown"
+        android:title="@string/copy_as_markdown"
+        ankidroid:showAsAction="never" />
 </menu>

@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">ფატალური შეცდომა: WebView მიმღები ავარიულად გაითიშა. მიზეზი: %s</string>
     <string name="webview_crash_loop_dialog_title">შეცდომა WebView სისტემის დამუშავებისას</string>
     <string name="webview_crash_loop_dialog_content">WebView სისტემამ ვერ დაამუშავა ბარათი „%1$s“.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>კითხვა</item>
-        <item>სორტირების ველი</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>პასუხი</item>
-        <item>ბარათი</item>
-        <item>დასტა</item>
-        <item>შენიშვნა</item>
-        <item>კითხვა</item>
-        <item>იარლიყები</item>
-        <item>გადავიწყება</item>
-        <item>გადახედვა</item>
-        <item>შუალედი</item>
-        <item>სიმარტივე</item>
-        <item>სასწავლო</item>
-        <item>ბარათის მოდიფიკაცია</item>
-        <item>შექმნილია</item>
-        <item>შენიშვნის მოდიფიკაცია</item>
-    </string-array>
     <string name="filter_by_flags">დროშები</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">დღეის ახალი ბარათების ლიმიტის შეცვლა</string>
@@ -112,10 +91,8 @@
     <string name="custom_study_limit_tags">კონკრეტულ იარლიყებზე შეზღუდვა</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">შენიშვნის რედაქტირება</string>
-    <string name="discard_unsaved_changes">დაიხუროს და დაიკარგოს ეს მონაცემი?</string>
+    <string name="discard">წაშლა</string>
     <string name="note_editor_no_cards_created">ბარათები არ შეიქმნა. გთხოვთ მეტი ველი შეავსოთ</string>
-    <string name="note_editor_no_first_field">პირველი ველი ცარიელია</string>
-    <string name="note_editor_no_cloze_delations">შენიშვნის ეს ტიპი უნდა შეიცავდეს გამოტოვებულ ადგილებს</string>
     <string name="note_editor_no_cards_created_all_fields">მიმდინარე შენიშვნის ტიპმა არ წარმოშვა ბარათები.\nგთხოვთ აირჩიოთ სხვა შენიშვნის ტიპი ან შეეხოთ „ბარათების“ ღილაკს და დაამატოთ ველის შემცვლელი</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">გამოტოვებული ადგილები მხოლოდ გამოტოვებული ადგილებიანი ტიპის შენიშვნებში იმუშავებს</string>
     <string name="saving_facts">შენიშვნის შენახვა</string>
@@ -125,6 +102,7 @@
     <string name="select">არჩევა</string>
     <string name="field_remapping">%1$s (\"%2$s\"-დან)</string>
     <string name="confirm_map_cards_to_nothing">ყველა ბარათი რომელიც არაფერთანაა დაკავშირებული წაიშლება. თუ შენიშვნას არ აქვს შერჩენილი ბარათები ის დაიკარგება. დარწმუნებული ხართ, რომ გსურთ გაგრძელება?</string>
+    <string name="missing_note_type">შენიშვნის ტიპი ვერ მოიძებნა</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">დროის ლიმიტი ამოიწურა</string>
     <plurals name="timebox_reached">
@@ -138,10 +116,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ბარათი</string>
     <string name="note_editor_copy_note">შენიშვნის კოპირება</string>
-    <string name="card_editor_reposition_card">გადაადგილება</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">გადაადგილება</string>
     <string name="card_editor_reset_card">პროგრესის წაშლა</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">გადადება</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Markdown-ად კოპირება</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ბარათი %2$d-დან</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">გადარქმევა</string>
     <string name="checks_action">შემოწმება</string>
@@ -153,6 +132,7 @@
     <string name="delete_deck">იშლება დასტა&#8230;</string>
     <string name="info_rate">შეაფასეთ AnkiDroid</string>
     <string name="import_title">იმპორტირება</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
     <string name="import_message_replace_confirm">არსებული კოლექცია წაიშლება და ჩანაცვლდება არჩეული ფაილის მონაცემებით %s</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -180,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">გაზიარება</string>
     <string name="export_choice_save_to">შენახვა</string>
+    <string name="export_saving_exported_collection">ექსპორტირებული ფაილის შენახვა&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">პარამეტრები</string>
     <string name="menu__deck_options">დასტის პარამეტრები</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">სწავლის პარამეტრები</string>
@@ -202,24 +183,22 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[კამერის სურათები შეიძლება დიდი იყოს.  სურათების შეკუმშვას და ზომის შეცვლას ფაილების დირექტორიაში შეძლებთ]]></string>
-    <string name="no_browser_notification">ბრაუზერი ვერ მოიძებნა, გთხოვთ ვებგვერდი კომპიუტერზე ან მობილურ მოწყობილობაზე იხილოთ: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">შეცდომა გვერდის ჩატვირთვისას: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">ფონი</string>
     <string name="choose_an_image">სურათის არჩევა</string>
+    <string name="remove_background_image">გსურთ ფონის წაშლა?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ნაგულისხმევის აღდგენა</string>
-    <string name="cloze_sample_text">ეს {{%1$s::sample}} გამოტოვებული ადგილია.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">მაგალიტი</string>
-    <string name="basic_answer_sample_text">მაგალითი</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ცარიელი</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">დაფის სურათი ვერ შეინახა. %s</string>
     <string name="white_board_image_saved">დაფის სურათი შეინახა %s-ში</string>
     <string name="title_whiteboard_pen_color">დაფის მარკერის ფერი</string>
     <string name="title_whiteboard_editor">დაფის რედაქტორი</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">აღიქვა ავტომატიზებული ტესტი. თუკი ადამიანი ხართ, გთხოვთ, მიმართოთ AnkiDroid-ის მხარდაჭერის გუნდს</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ეს ბარათი შეიცავს AnkiDroid-ის ფუნქციებს, რომლებიც არაა მხარდაჭერილი. დაუკავშირდით დეველოპერს %1$s ან იხილეთ ვიკი. %2$s</string>
     <string name="invalid_json_data">ბარათში არასწორი მონაცემებია. %s</string>
@@ -255,7 +234,7 @@
     <string name="toolbar_item_explain_edit_or_remove">შეიყვანეთ მონიშნული ტექსტის ორივე ბოლოს ჩასასმელი HTML-კოდი\n\nხელსაწყოთა ზოლს დიდი ხნით დააჭირეთ, რათა დაარედაქტიროთ ან წაშალოთ</string>
     <string name="remove_toolbar_item">ამოიშალოს ხელსაწყოთა ზოლის ელემენტი?</string>
     <string name="note_editor_paste_too_large">სურათი ზედმეტად დიდია ჩასასმელად, გთხოვთ სურათი ხელით ჩაამატოთ</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        მიმდინარეობს Android-ის სარეზერვო ასლის შექმნა. გთხოვთ, ხელახლა სცადოთ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">შესაძლოა iManager-ის გამოყენება დაგჭირდეთ, რათა AnkiDroid-ით სწრაფი ბმულის დამატება შეძლოთ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">თქვენი საწყისი ეკრანი არ აძლევს AnkiDroid-ს სწრაფი ბმულის დამატების უფლებას</string>
     <string name="create_shortcut_error">შეცდომა სწრაფი ბმულის დამატებისას: %s</string>
@@ -304,7 +283,7 @@
     <string name="migration_part_1_done_resume">ისევ შეგიძლიათ AnkiDroid გამოიყენოთ.
 \nმეხსიერების მიგრაცია ფონში გაგრძელდება</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s არ არის მოქმედი JavaScript-ის დანამატი პაკეტი</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">ვერ შეიქმნა ნუსხა %s</string>
     <string name="malicious_archive_entry_outside">მავნე არქივი. შეიცავს შენატანს სამიზნე ნუსხის ფარგლებს გარეთ: %s</string>
     <string name="malicious_archive_exceeds_limit">მავნე არქივი. ზომა აღემატება %1$s ს ან შეიცავს %2$d ზე მეტ ფაილს.</string>
@@ -313,12 +292,15 @@
     <string name="expand_tag">იარლიყის „%s“ გაშლა</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">კოლექციაზე წვდომა ვერ მოხერხდა. გთხოვთ ხელახლა სცადოთ!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">ნაკლები მეცადინეობა</string>
     <string name="intro_ankidroid_tagline_two">მეტის დამახსოვრება</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">დაწყება</string>
     <string name="intro_sync_from_ankiweb">სინქრონიზაცია AnkiWeb-თან</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">უკვე შესული ხართ</string>
     <!-- Deck Creation -->
     <string name="deck_created">დასტა შეიქმნა</string>
@@ -353,7 +335,16 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        ხმოვანი წამკითხველის პარამეტრები ვერ გაიხსნა
     </string>
     <string name="shared_decks_login_required">მეტი დასტის გადმოსაწერად, გთხოვთ, გაიაროთ ავტორიზაცია</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="deck_description_field_hint">აღწერა</string>
+    <string name="failed_to_copy">კოპირება ვერ მოხერხდა</string>
+    <string name="card_browser_unavailable_when_notes_mode">„შენიშვნების“ რეჟიმში ვერ გამოიყენებთ</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">გადაადგილება</string>
+    <string name="start_recording">ჩაწერა</string>
+    <string name="stop_recording">გაჩერება</string>
+    <string name="play_recording">დაკვრა</string>
+    <string name="next_recording">შემდეგი</string>
 </resources>

@@ -27,7 +27,12 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
-import android.view.*
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
@@ -40,7 +45,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils.convertDpToPixel
+import com.ichi2.anki.convertDpToPixel
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.ViewGroupUtils
@@ -48,7 +53,7 @@ import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import timber.log.Timber
-import java.util.*
+import java.util.Objects
 import kotlin.math.ceil
 
 /**

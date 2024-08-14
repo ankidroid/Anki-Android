@@ -24,7 +24,7 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import org.json.JSONObject
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 /**
  * The language that a keyboard should open with when an [EditText] is selected

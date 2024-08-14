@@ -22,16 +22,14 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.libanki.Sound.VIDEO_EXTENSIONS
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.deepClone
-import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
-import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 
 private typealias Union<A, B> = Pair<A, B>
@@ -93,7 +91,10 @@ class TemplateManager {
                         lang = tag.tts.lang,
                         voices = tag.tts.voicesList,
                         otherArgs = tag.tts.otherArgsList,
-                        speed = tag.tts.speed
+                        // The backend currently sends speed = 1, even when undefined.
+                        // We agreed that '1' should be classed as 'use system' and ignored
+                        // https://github.com/ankidroid/Anki-Android/issues/15598#issuecomment-1953653639
+                        speed = tag.tts.speed.let { if (it == 1f) null else it }
                     )
                 }
             }
@@ -110,32 +111,26 @@ class TemplateManager {
      * using the _private fields directly.
      */
     class TemplateRenderContext(
-        col: Collection,
         card: Card,
         note: Note,
         browser: Boolean = false,
         notetype: NotetypeJson? = null,
         template: JSONObject? = null,
-        fill_empty: Boolean = false
+        private var fillEmpty: Boolean = false
     ) {
-        @RustCleanup("this was a WeakRef")
-        private val _col: Collection = col
         private var _card: Card = card
         private var _note: Note = note
         private var _browser: Boolean = browser
         private var _template: JSONObject? = template
-        private var fillEmpty: Boolean = fill_empty
 
-//      private var _fields: HashMap<String, String>? = null
         private var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
             fun fromExistingCard(col: Collection, card: Card, browser: Boolean): TemplateRenderContext {
-                return TemplateRenderContext(col, card, card.note(col), browser)
+                return TemplateRenderContext(card, card.note(col), browser)
             }
 
             fun fromCardLayout(
-                col: Collection,
                 note: Note,
                 card: Card,
                 notetype: NotetypeJson,
@@ -143,17 +138,14 @@ class TemplateManager {
                 fillEmpty: Boolean
             ): TemplateRenderContext {
                 return TemplateRenderContext(
-                    col,
                     card,
                     note,
                     notetype = notetype,
                     template = template,
-                    fill_empty = fillEmpty
+                    fillEmpty = fillEmpty
                 )
             }
         }
-
-        fun col() = _col
 
         /**
          * Returns the card being rendered.
@@ -165,10 +157,13 @@ class TemplateManager {
         fun note() = _note
         fun noteType() = noteType
 
-        fun render(): TemplateRenderOutput {
+        @NeedsTest(
+            "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme"
+        )
+        fun render(col: Collection): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
             try {
-                partial = partiallyRender()
+                partial = partiallyRender(col)
             } catch (e: BackendTemplateException) {
                 return TemplateRenderOutput(
                     questionText = e.localizedMessage ?: e.toString(),
@@ -178,50 +173,18 @@ class TemplateManager {
                 )
             }
 
-            /**
-             * NOT in libanki.
-             *
-             * The desktop version handles videos in an external player (mpv)
-             * because of old webview codecs in python, and to allow extending the video player.
-             * To simplify things and deliver a better result,
-             * we use the webview player, like AnkiMobile does
-             *
-             * `file:///` is used to enable seeking the video
-             */
-            fun parseVideos(text: String, mediaDir: String): String {
-                return SOUND_RE.replace(text) { match ->
-                    val fileName = match.groupValues[1]
-                    val extension = fileName.substringAfterLast(".", "")
-                    if (extension in VIDEO_EXTENSIONS) {
-                        @Language("HTML")
-                        val result =
-                            """<video src="file:///$mediaDir/$fileName" controls controlsList="nodownload"></video>"""
-                        result
-                    } else {
-                        match.value
-                    }
-                }
-            }
-
-            val mediaDir = col().media.dir
-            val qtext = parseVideos(
-                text = applyCustomFilters(partial.qnodes, this, front_side = null),
-                mediaDir = mediaDir
-            )
-            val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
+            val qtext = applyCustomFilters(partial.qnodes, this, frontSide = null)
+            val qout = col.backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
-            val atext = parseVideos(
-                text = applyCustomFilters(partial.anodes, this, front_side = qout.text),
-                mediaDir = mediaDir
-            )
-            val aout = col().backend.extractAvTags(text = atext, questionSide = false)
+            val atext = applyCustomFilters(partial.anodes, this, frontSide = qout.text)
+            val aout = col.backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
             if (!_browser) {
                 val svg = noteType.optBoolean("latexsvg", false)
-                qoutText = LaTeX.mungeQA(qoutText, _col, svg)
-                aoutText = LaTeX.mungeQA(aoutText, _col, svg)
+                qoutText = LaTeX.mungeQA(qout.text, col, svg)
+                aoutText = LaTeX.mungeQA(aout.text, col, svg)
             }
 
             return TemplateRenderOutput(
@@ -233,14 +196,14 @@ class TemplateManager {
             )
         }
 
-        fun partiallyRender(): PartiallyRenderedCard {
-            val proto = col().run {
+        fun partiallyRender(col: Collection): PartiallyRenderedCard {
+            val proto = col.run {
                 if (_template != null) {
                     // card layout screen
                     backend.renderUncommittedCardLegacy(
                         _note.toBackendNote(),
                         _card.ord,
-                        BackendUtils.to_json_bytes(_template!!.deepClone()),
+                        BackendUtils.toJsonBytes(_template!!.deepClone()),
                         fillEmpty,
                         true
                     )
@@ -269,7 +232,7 @@ class TemplateManager {
         fun applyCustomFilters(
             rendered: TemplateReplacementList,
             ctx: TemplateRenderContext,
-            front_side: String?
+            frontSide: String?
         ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
@@ -283,18 +246,18 @@ class TemplateManager {
                 } else {
                     val node = union.second!!
                     // do we need to inject in FrontSide?
-                    if (node.fieldName == "FrontSide" && front_side != null) {
-                        node.currentText = front_side
+                    if (node.fieldName == "FrontSide" && frontSide != null) {
+                        node.currentText = frontSide
                     }
 
-                    var field_text = node.currentText
-                    for (filter_name in node.filters) {
-                        fieldFilters[filter_name]?.let {
-                            field_text = it.apply(field_text, node.fieldName, filter_name, ctx)
+                    var fieldText = node.currentText
+                    for (filterName in node.filters) {
+                        fieldFilters[filterName]?.let {
+                            fieldText = it.apply(fieldText, node.fieldName, filterName, ctx)
                         }
                     }
 
-                    res += field_text
+                    res += fieldText
                 }
             }
             return res

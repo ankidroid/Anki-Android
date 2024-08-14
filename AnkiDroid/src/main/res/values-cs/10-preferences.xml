@@ -52,7 +52,7 @@
         <item quantity="many">%d min</item>
         <item quantity="other">%d min</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Žádné výsledky</string>
     <!-- preferences.xml categories-->
@@ -87,8 +87,8 @@
     <string name="col_path" maxLength="41">Adresář AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">Celoobrazovkový režim</string>
     <string name="full_screen_off">Vypnout</string>
-    <string name="full_screen_system">Skrýt panely systému</string>
-    <string name="full_screen_complete">Skrýt panely systému a tlačítka odpovědí</string>
+    <string name="full_screen_system">Skrýt systémové lišty</string>
+    <string name="full_screen_complete">Skrýt systémové lišty a tlačítka odpovědí</string>
     <string name="answer_buttons_position" maxLength="41">Pozice tlačítek odpovědí</string>
     <string-array name="answer_buttons_position_labels">
         <item>Nahoře</item>
@@ -101,7 +101,7 @@
     <string name="gestures_corner_touch_summary">Povolí dotyková gesta v rozích obrazovky</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigační menu v režimu celé obrazovky</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otevřít navigační menu, když se táhne doprava kdekoliv na obrazovce</string>
-    <string name="gestures_none" maxLength="41">Žádné</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">Žádné</string>
     <string name="gestures_swipe_up" maxLength="41">Tažení nahoru</string>
     <string name="gestures_swipe_down" maxLength="41">Tažení dolů</string>
     <string name="gestures_swipe_left" maxLength="41">Tažení doleva</string>
@@ -166,8 +166,8 @@
     <string name="vertical_centering_summ">Obsah karet vycentrovat svisle na střed</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas dvojklepnutí (milisekundy)</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutí na tlačítka odpovědí bude ignorováno, pokud tento čas neuplynul. Zabraňuje to náhodným dvojím klepnutím</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Čas dlouhého stisknutí pro zobrazení odpovědi (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimální čas dlouhého stisknutí před tím, než tlačítko Zobrazit odpověď registruje dotyk. Může snížit pravděpodobnost nechtěného stisknutí tlačítka. Výchozí hodnota je 0ms</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">Čas dlouhého stisknutí pro zobrazení odpovědi</string>
+    <string name="pref_show_answer_long_press_time_summary">Minimální doba stisku předtím, než tlačítko zobrazit odpověď zaregistruje dotyk.</string>
     <string name="show_estimates" maxLength="41">Zobrazit čas tlačítek</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
     <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
@@ -181,7 +181,6 @@
     <string name="use_current" maxLength="41">Balíček pro nové karty</string>
     <string name="learn_cutoff" maxLength="41">Limit učení se napřed</string>
     <string name="time_limit" maxLength="41">Časové omezení</string>
-    <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="one">%d hodina po půlnoci</item>
@@ -203,8 +202,6 @@
     <string name="reset">Obnovit</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikace třetích stran</string>
     <string name="thirdparty_apps_summary">Zobrazit seznam aplikací, které používají AnkiDroid API, jako jsou slovníky, nástroje</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Umožnit vzdálené připojení k WebView a uložit HTML karet do adresáře AnkiDroid</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Opakování karet</string>
     <string name="show_deck_title" maxLength="41">Zobrazit název balíčku</string>
@@ -226,6 +223,7 @@
         <a href="%s">Zjistit více</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synchronizovat url</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Vlastní kořenový certifikát (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>
@@ -256,8 +254,6 @@
     <string name="analytics_summ">Můžete přispět do AnkiDroid tím, že pomůžete vývojovému týmu dozvědět se, které funkce lidé používají</string>
     <string name="note_editor_replace_newlines" maxLength="41">Nahradit nové řádky HTML</string>
     <string name="note_editor_replace_newlines_summ">V editoru poznámek převede při úpravě karty každý výskyt &lt;br&gt; na nový řádek</string>
-    <string name="no_code_formatting" maxLength="41">Jednoduché formátování napsané odpovědi</string>
-    <string name="no_code_formatting_summ">Opraví „􏿾“, které se vyskytuje ve výsledcích napsaných odpovědí</string>
     <string name="type_in_answer_focus" maxLength="41">Vybrat „napište odpověď“</string>
     <string name="type_in_answer_focus_summ">Automaticky vybrat pole „napište odpověď“ při opakování</string>
     <!-- About -->
@@ -276,6 +272,17 @@
     <string name="key_picker_default_press_key">Stiskněte tlačítko</string>
     <string name="binding_add_axis">Přidat joystick / ovladač pohybu</string>
     <string name="axis_picker_move_joystick">Pohnout joystickem / ovladačem pohybu</string>
+    <string name="user_actions" maxLength="41">Akce uživatele</string>
+    <string name="user_actions_summary" maxLength="41">Spustit JavaScript z obrazovky opakování</string>
+    <string name="user_action_1" maxLength="41">Akce uživatele 1</string>
+    <string name="user_action_2" maxLength="41">Akce uživatele 2</string>
+    <string name="user_action_3" maxLength="41">Akce uživatele 3</string>
+    <string name="user_action_4" maxLength="41">Akce uživatele 4</string>
+    <string name="user_action_5" maxLength="41">Akce uživatele 5</string>
+    <string name="user_action_6" maxLength="41">Akce uživatele 6</string>
+    <string name="user_action_7" maxLength="41">Akce uživatele 7</string>
+    <string name="user_action_8" maxLength="41">Akce uživatele 8</string>
+    <string name="user_action_9" maxLength="41">Akce uživatele 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Vybrat stranu karty</string>
     <string name="card_side_question">Otázka</string>
@@ -290,7 +297,7 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimentální</string>
     <string name="readtext_deprecation_warn">AnkiDroid zavedl lepší TTS mechanismus, který je kompatibilní s ostatními klienty Anki a obsahuje více hlasů a vylepšení přehrávání!\n\nPřejděte prosím co nejdříve na nové TTS, protože toto nastavení bude brzy odstraněno</string>
-    <string name="readtext_reviewer_warn">Přejděte prosím na nový formát převodu textu na řeč</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">Přejděte prosím na nový formát převodu textu na řeč</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Možnosti pro vývojáře</string>
     <string name="dev_options_enabled_pref" maxLength="41">Povolit možnosti pro vývojáře</string>
@@ -358,4 +365,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Načítání&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Vypočítává se&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekce neexistuje</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Skrýt systémové lišty</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Žádné</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Stavový řádek</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigační lišta</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Všechny</string>
+    <string name="ignore_display_cutout" maxLength="41">Ignorovat výřez displeje</string>
+    <string name="hide_answer_buttons" maxLength="41">Skrýt tlačítka odpovědí</string>
 </resources>

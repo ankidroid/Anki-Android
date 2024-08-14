@@ -41,10 +41,13 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -55,11 +58,21 @@ import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
+import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+/** Overridable reference to [Dispatchers.IO]. Useful if tests can't use it */
+// COULD_BE_BETTER: this shouldn't be necessary, but TestClass::runWith needs it
+@VisibleForTesting
+var ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+
+/** Whether [showError] should throw an exception on failure */
+@VisibleForTesting
+var throwOnShowError = false
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
@@ -69,7 +82,7 @@ import kotlin.coroutines.suspendCoroutine
 fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend () -> Unit
+    block: suspend CoroutineScope.() -> Unit
 ): Job {
     return launch(context) {
         try {
@@ -94,10 +107,28 @@ interface OnErrorListener {
 
 fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener {
     return viewModelScope.launchCatching(
-        Dispatchers.IO,
+        ioDispatcher,
         { onError.emit(it) },
         { block() }
     )
+}
+
+fun <T> T.launchCatchingIO(
+    errorMessageHandler: suspend (String) -> Unit,
+    block: suspend CoroutineScope.() -> Unit
+): Job where T : ViewModel {
+    return viewModelScope.launchCatching(
+        ioDispatcher,
+        errorMessageHandler
+    ) { block() }
+}
+
+fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+    return async(ioDispatcher, block = block)
+}
+
+fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+    return viewModelScope.asyncIO(block)
 }
 
 /**
@@ -211,7 +242,22 @@ fun Fragment.launchCatchingTask(
     }
 }
 
-private fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
+fun showError(context: Context, msg: String) {
+    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg")
+    try {
+        AlertDialog.Builder(context).show {
+            title(R.string.vague_error)
+            message(text = msg)
+            positiveButton(R.string.dialog_ok)
+        }
+    } catch (ex: BadTokenException) {
+        // issue 12718: activity provided by `context` was not running
+        Timber.w(ex, "unable to display error dialog")
+    }
+}
+
+fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
+    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
@@ -384,7 +430,9 @@ private suspend fun monitorProgress(
 ) {
     val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
-        state.progress = backend.latestProgress()
+        state.progress = withContext(Dispatchers.IO) {
+            backend.latestProgress()
+        }
         state.extractProgress()
         // on main thread, so op can update UI
         withContext(Dispatchers.Main) {
@@ -418,7 +466,7 @@ private fun ProgressContext.updateDialog(dialog: android.app.ProgressDialog) {
 }
 
 /**
- * If a full sync is not already required, confirm the user wishes to proceed.
+ * If a one-way sync is not already required, confirm the user wishes to proceed.
  * If the user agrees, the schema is bumped and the routine will return true.
  * On false, calling routine should abort.
  */
@@ -439,6 +487,12 @@ suspend fun AnkiActivity.userAcceptsSchemaChange(col: Collection): Boolean {
     }
 }
 
+/**
+ * Returns whether we are allowed to change the schema.
+ *
+ * If changing the schema would require the next sync to be a full sync, and it's not already required, ask
+ * the user whether or not they still allow the schema change.
+ */
 suspend fun AnkiActivity.userAcceptsSchemaChange(): Boolean {
     if (withCol { schemaChanged() }) {
         return true

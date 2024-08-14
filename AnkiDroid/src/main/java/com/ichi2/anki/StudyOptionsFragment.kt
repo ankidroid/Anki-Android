@@ -33,12 +33,15 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
+import anki.collection.OpChanges
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.updateValuesFromDeck
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks
@@ -50,7 +53,7 @@ import kotlinx.coroutines.Job
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMenuItemClickListener {
     /**
      * Preferences
      */
@@ -78,6 +81,12 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var textNewTotal: TextView
     private lateinit var textTotal: TextView
     private var toolbar: Toolbar? = null
+
+    private var createMenuJob: Job? = null
+
+    /** Current activity.*/
+    private val deckPicker: DeckPicker
+        get() = activity as DeckPicker
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
     private var loadWithDeckOptions = false
@@ -142,10 +151,12 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         initAllContentViews(studyOptionsView)
         toolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
         if (toolbar != null) {
+            toolbar!!.inflateMenu(R.menu.deck_picker)
             toolbar!!.inflateMenu(R.menu.study_options_fragment)
             configureToolbar()
         }
         refreshInterface()
+        ChangeManager.subscribe(this)
         return studyOptionsView
     }
 
@@ -220,7 +231,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_undo -> {
+            R.id.action_undo_study_options -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
                 launchCatchingTask {
                     requireActivity().undoAndShowSnackbar()
@@ -230,7 +241,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_deck_or_study_options -> {
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
-                if (col!!.decks.isDyn(col!!.decks.selected())) {
+                if (col!!.decks.isFiltered(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
                     val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
@@ -264,18 +275,19 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 return true
             }
             R.id.action_rename -> {
-                (activity as DeckPicker).renameDeckDialog(col!!.decks.selected())
+                deckPicker.renameDeckDialog(col!!.decks.selected())
                 return true
             }
             R.id.action_delete -> {
-                (activity as DeckPicker).confirmDeckDeletion(col!!.decks.selected())
+                deckPicker.confirmDeckDeletion(col!!.decks.selected())
                 return true
             }
-            R.id.action_export -> {
-                (activity as DeckPicker).exportDeck(col!!.decks.selected())
+            R.id.action_export_deck -> {
+                deckPicker.exportDeck(col!!.decks.selected())
                 return true
             }
-            else -> return false
+            // If the menu item is not specific to study options, delegate it to the deck picker
+            else -> return deckPicker.onOptionsItemSelected(item)
         }
     }
 
@@ -315,7 +327,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             toolbar!!.setOnMenuItemClickListener(this)
             val menu = toolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (col != null && col!!.decks.isDyn(col!!.decks.selected())) {
+            if (col != null && col!!.decks.isFiltered(col!!.decks.selected())) {
                 menu.findItem(R.id.action_rebuild).isVisible = true
                 menu.findItem(R.id.action_empty).isVisible = true
                 menu.findItem(R.id.action_custom_study).isVisible = false
@@ -332,37 +344,64 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             // Switch on rename / delete / export if tablet layout
             if (fragmented) {
+                menu.setGroupVisible(R.id.commonItems, true)
                 menu.findItem(R.id.action_rename).isVisible = true
                 menu.findItem(R.id.action_delete).isVisible = true
                 menu.findItem(R.id.action_export).isVisible = true
+                menu.findItem(R.id.action_export).title = TR.actionsExport()
+                /**
+                 * Add "export collection" item in the export menu and remove it from the main menu.
+                 * The "export collection" action appears in the menu directly when we only display the deck picker.
+                 * When we display the split view, we want to move it to a submenu that already contains "export deck".
+                 */
+                val exportMenu = menu.findItem(R.id.action_export).subMenu
+                if (exportMenu?.findItem(R.id.action_export_collection) == null) {
+                    exportMenu?.add(0, R.id.action_export_collection, 0, R.string.export_collection)
+                }
+                menu.removeItem(R.id.action_export_collection)
+
+                deckPicker.setupMediaSyncMenuItem(menu)
+                deckPicker.updateMenuFromState(menu)
+                /**
+                 * Launch a task to possibly update the visible icons.
+                 * Save the job in a member variable to manage the lifecycle
+                 */
+                createMenuJob = launchCatchingTask {
+                    deckPicker.updateMenuState()
+                    deckPicker.updateMenuFromState(menu)
+                }
             } else {
+                menu.setGroupVisible(R.id.commonItems, false)
                 menu.findItem(R.id.action_rename).isVisible = false
                 menu.findItem(R.id.action_delete).isVisible = false
                 menu.findItem(R.id.action_export).isVisible = false
             }
             // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuriedInCurrentDeck()
+            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
             // Set the proper click target for the undo button's ActionProvider
             val undoActionProvider: RtlCompliantActionProvider? = MenuItemCompat.getActionProvider(
-                menu.findItem(R.id.action_undo)
+                menu.findItem(R.id.action_undo_study_options)
             ) as? RtlCompliantActionProvider
             undoActionProvider?.clickHandler = { _, menuItem -> onMenuItemClick(menuItem) }
             // Switch on or off undo depending on whether undo is available
             if (col == null || !col!!.undoAvailable()) {
-                menu.findItem(R.id.action_undo).isVisible = false
+                menu.findItem(R.id.action_undo_study_options).isVisible = false
             } else {
-                menu.findItem(R.id.action_undo).isVisible = true
-                menu.findItem(R.id.action_undo).title = col?.undoLabel()
+                menu.findItem(R.id.action_undo_study_options).isVisible = true
+                menu.findItem(R.id.action_undo_study_options).title = col?.undoLabel()
             }
             // Set the back button listener
-            if (!fragmented) {
+            if (fragmented) {
+                // when the fragment is attached to deck picker on large screen, the "back" button had no purpose, so it should be removed
+                toolbar!!.navigationIcon = null
+            } else {
                 val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_arrow_back_white)
                 icon!!.isAutoMirrored = true
                 toolbar!!.navigationIcon = icon
                 toolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finish() }
             }
         } catch (e: IllegalStateException) {
-            if (!CollectionHelper.instance.colIsOpenUnsafe()) {
+            if (!CollectionManager.isOpenUnsafe()) {
                 if (recur) {
                     Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.")
                     try {
@@ -490,7 +529,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val col: Collection?
         get() {
             try {
-                return CollectionHelper.instance.getColUnsafe(context)
+                return CollectionManager.getColUnsafe()
             } catch (e: Exception) {
                 // This may happen if the backend is locked or similar.
             }
@@ -682,6 +721,12 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // #5188 - fromHtml displays newlines as " "
             val withFixedNewlines = convertNewlinesToHtml(withStrippedTags)
             return HtmlCompat.fromHtml(withFixedNewlines!!, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        }
+    }
+
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        if (activity != null) {
+            refreshInterface(true)
         }
     }
 }

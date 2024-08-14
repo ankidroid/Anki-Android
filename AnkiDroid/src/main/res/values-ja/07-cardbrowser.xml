@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">現在の検索条件に付ける名前</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">名前なしで検索条件を保存することはできません</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前がすでに存在します</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
     <string name="card_browser_change_display_order">表示順を変更</string>
     <string name="card_browser_change_display_order_title">表示順の選択</string>
@@ -95,6 +96,7 @@
     <string name="card_browser_search_all_decks">全デッキで検索</string>
     <string name="card_browser_unknown_deck_name">不明</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">表示の切り詰め</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">「0%1$s」は今日、「1%2$s」は明日を意味します</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">カードをエクスポート</item>
     </plurals>

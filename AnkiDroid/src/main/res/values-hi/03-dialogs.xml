@@ -48,10 +48,14 @@
     <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
     <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
     <string name="tts_no_tts">बात न करें</string>
     <string name="unused_strings">\n\nअप्रयुक्त फाइलें:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">पूर्वावलोकन</string>
     <string name="reposition_card_dialog_title">नया कार्ड पुन: प्रस्तुत करें</string>
     <string name="reposition_card_dialog_message">शुरू करने की स्थिति:</string>
     <string name="reposition_card_not_new_error">केवल नए कार्डों को बदला जा सकता है</string>
@@ -60,27 +64,10 @@
         <item quantity="other">%d कार्डों का स्थान बदल दिया गया है</item>
     </plurals>
     <string name="reset_card_dialog_title">पत्ता प्रगति रीसेट करें</string>
-    <string name="reset_card_dialog_message">इस पत्ते को नए पत्तों के कतार के अंत में रखा जाएगा</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d कार्ड रीसेट हुआ</item>
         <item quantity="other">%d कार्ड रीसेट हुआ</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d कार्ड फिर से शेड्यूल करें</item>
-        <item quantity="other">%d कार्डों को फिर से शेड्यूल करें</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">वर्तमान अंतराल: %d दिन</item>
-        <item quantity="other">वर्तमान अंतराल: %d दिन</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">X दिनों में समीक्षा के लिए पुनर्निर्धारित करें:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d पत्ता पुनर्निर्धारित</item>
-        <item quantity="other">%d पत्ता पुनर्निर्धारित</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">एक नया कार्ड पुनर्निर्धारित किया जा रहा है। पुनर्निर्धारण भी नए कार्ड को समीक्षा कार्ड में बदल देता है। नई कतार में नए कार्ड की स्थिति बदलने के लिए new रिपोजिशन कार्ड ’विकल्प का उपयोग करें</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">पुनर्निर्धारण भी बताता है कि भविष्य में अनुसूचक कार्ड का व्यवहार कैसे करता है (आसानी से %d पर सेट किया जाएगा)</string>
     <string name="answering_error_title">डेटाबेस त्रुटि</string>
     <string name="answering_error_message">संग्रह में लेखन विफल रहा। डेटाबेस दूषित हो सकता है या डिस्क पर पर्याप्त खाली स्थान नहीं हो सकता है। \n\n यदि यह अधिक बार होता है, तो डेटाबेस की जाँच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। इसके लिए \"विकल्प\" स्पर्श करें। \n या यह एक एंकॉइड बग भी हो सकता है; कृपया त्रुटि रिपोर्ट करें ताकि हम इसकी जांच कर सकें।</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>
@@ -109,8 +96,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">पुष्टि करें</string>
     <string name="dialog_no">नहीं</string>
     <string name="dialog_yes">हाँ</string>
+    <string name="dialog_keep">रखना</string>
+    <string name="dialog_remove">निकालना</string>
     <string name="dialog_continue">जारी रखें</string>
-    <string name="dialog_processing">प्रोसेसिंग...</string>
+    <string name="dialog_processing">प्रोसेसिंग&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">बनाएँ</string>
     <string name="dialog_positive_delete">हटाएँ</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">सुधारें</string>
     <string name="dialog_positive_replace">की जगह</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ कोई मांय निर्देशिका नहीं है</string>
+    <string name="dialog_invalid_custom_certificate">प्रदान किया गया पाठ वैध PEM-एन्कोडेड X509 प्रमाणपत्र का समाधान नहीं करता है</string>
+    <string name="dialog_invalid_custom_certificate_title">प्रमाणपत्र पार्स करने में त्रुटि</string>
+    <string name="dialog_updated_custom_certificate">प्रमाणपत्र अद्यतन किया गया</string>
     <!-- Media checking -->
     <string name="check_media_title">मीडिया की जांच करें?</string>
     <string name="check_media_warning">यह बड़े मीडिया संग्रह के साथ एक लंबा समय लग सकता है</string>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">मल्टीमीडिया संपादक खोलने में विफल</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ऑडियो रिकॉर्डिंग की अनुमति से इनकार किया</string>
-    <string name="mutimedia_editor_assertion_failed">Advanced Editor प्रदर्शित करने में अज्ञात त्रुटि हुई</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid अपग्रेड किया गया</string>
     <string name="integrity_check_startup_content">AnkiDroid को अपग्रेड किया गया है। इस अपग्रेड में संभावित डेटाबेस समस्याओं के लिए फ़िक्सेस शामिल हैं, और हम आपको चेक डेटाबेस चलाने की सलाह देते हैं।</string>
@@ -175,7 +166,7 @@
     <string name="failed_to_apply_background_image">पृष्ठभूमि छवि लागू करने में विफल %s</string>
     <string name="background_image_too_large">डेक पिकर पृष्ठभूमि बहुत बड़ी है</string>
     <string name="image_max_size_allowed">अधिकतम छवि आकार %d MB की अनुमति है</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">छवि आयाम बहुत बड़े हैं (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">भंडारण की अनुमति की आवश्यकता नहीं है। कृपया भंडारण अनुमति प्रदान करें और फिर अपनी कार्रवाई पुनः करें।</string>
@@ -185,7 +176,7 @@
     <string name="boot_service_failed_to_schedule_notifications">रिमाइंडर शेड्यूल करने में विफल</string>
     <string name="boot_service_too_many_notifications">बहुत सारे अनुस्मारक निर्धारित हैं। कुछ दिखाई नहीं देगा</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">भाषा सेट करें</string>
     <string name="locale_selection_dialog_summary">कुछ बहुभाषी कीबोर्ड, जैसे कि GBoard टेक्स्ट को बदलते समय भाषा का समर्थन करते हैं, जब टेक्स्ट का \n\n कृपया संपादन करें, तो यदि आपका कीबोर्ड भाषा नहीं बदलता है, तो अपने कीबोर्ड निर्माता से \"setImeHintLocales\" सुविधा का अनुरोध करें।</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid का उपयोग करने में</string>
@@ -213,13 +204,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb नियम और शर्तें</string>
     <string name="help_title_send_exception">समस्या निवारण रिपोर्ट भेजें</string>
     <string name="help_dialog_exception_report_debounce">रिपोर्ट पहले ही प्रस्तुत की गई है</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">रिपोर्ट भेज दी गई!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
         <item quantity="other">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
     </plurals>
-    <string name="metered_sync_warning">आपका कनेक्शन मीटर्ड है। डेटा ट्रांसफर में पैसे खर्च हो सकते हैं</string>
+    <string name="metered_sync_data_warning">आपका इंटरनेट प्रदाता डेटा उपयोग के लिए पैसे ले सकता है</string>
     <string name="deck_picker_new">इस डेक में आज देखने के लिए नई पत्तियों की संख्या।</string>
     <string name="deck_picker_rev">इस डेक में आज के लिए पत्तियों की संख्या।</string>
     <string name="deck_picker_lrn">इस डेक में सीखने में कार्डों की संख्या।</string>
@@ -244,4 +235,31 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        एंड्रॉइड गोपनीयता परिवर्तनों के कारण, ऐप अनइंस्टॉल होने पर आपका डेटा और स्वचालित बैकअप पहुंच योग्य नहीं होगा
     </string>
+    <string name="deck_already_exists">डेक पहले से मौजूद है</string>
+    <string name="create_deck_numeric_hint">यदि आपके पास डेक ऑर्डरिंग समस्याएं हैं (उदाहरण के लिए \'10\' \'2\' से पहले आता है), तो \'2\' को \'02\' से बदलें</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">अंतराल को समान मान पर सेट करें</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">कार्ड दिखाएँ</item>
+        <item quantity="other">कार्ड दिखाएँ</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">रेंज में कार्ड दिखाएं</item>
+        <item quantity="other">रेंज में कार्ड दिखाएं</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">दिन</item>
+        <item quantity="other">दिन</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">से</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">को</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">क्लोज़ टाइप नोट आवश्यक</string>
+    <string name="cloze_not_found_message">कोई क्लोज़ प्रकार का नोट नहीं मिला, नोट संपादक खोलें या क्लोज़ प्रकार का नोट जोड़ने के बाद पुनः प्रयास करें।</string>
+    <string name="open">खोलें</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">सिस्टम WebView पुराना हो चुका है. कुछ सुविधाएं ठीक से काम नहीं करेंगी. कृपया इसे अपडेट करें।\n\nस्थापित संस्करण: %1$d\nन्यूनतम आवश्यक संस्करण: %2$d</string>
 </resources>

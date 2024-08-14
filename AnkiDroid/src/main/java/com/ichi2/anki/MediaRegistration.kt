@@ -20,14 +20,17 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.CheckResult
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.multimediacard.fields.ImageField
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.ContentResolverUtil.getFileName
 import com.ichi2.utils.FileUtil.getFileNameAndExtension
 import timber.log.Timber
-import java.io.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * RegisterMediaForWebView is used for registering media in temp path,
@@ -163,7 +166,7 @@ class MediaRegistration(private val context: Context) {
         Timber.i("Adding media to collection: %s", imagePath)
         val f = File(imagePath)
         return try {
-            CollectionHelper.instance.getColUnsafe(context)!!.media.addFile(f)
+            CollectionManager.getColUnsafe().media.addFile(f)
             true
         } catch (e: IOException) {
             Timber.w(e, "Failed to add file")

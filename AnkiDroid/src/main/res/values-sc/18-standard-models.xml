@@ -28,15 +28,4 @@
     <!--Fields-->
     <string name="front_field_name">Fronte</string>
     <string name="back_field_name">Parte de segus</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Testu</string>
-    <string name="extra_field_name_new">Extra de segus</string>
-    <string name="field_to_ask_front_name">Annanghe unu furriadu</string>
-    <!--Card type-->
-    <string name="card_n_name">Carta %d</string>
-    <!--Note type-->
-    <string name="basic_model_name">De base</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">De base (iscrie sa risposta)</string>
-    <string name="forward_reverse_model_name">De base (e carta furriada)</string>
-    <string name="forward_optional_reverse_model_name">De base (carta furriada optzionale)</string>
 </resources>

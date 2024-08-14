@@ -60,28 +60,28 @@
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
     <plurals name="reviewer_window_title">
-        <item quantity="zero">%d minutes left</item>
-        <item quantity="one">%d minute left</item>
-        <item quantity="two">%d minutes left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="zero">%d دقيقة متبقية</item>
+        <item quantity="one">%d دقيقة متبقية</item>
+        <item quantity="two">%d دقيقة متبقية</item>
+        <item quantity="few">%d دقائق متبقية</item>
+        <item quantity="many">%d دقيقة متبقية</item>
+        <item quantity="other">%d دقيقة متبقية</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="zero">%1$d hours %2$d left</item>
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="two">%1$d hours %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="zero">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="one">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="two">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="few">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="many">تبقى %1$d ساعة و%2$d دقيقة</item>
+        <item quantity="other">تبقى %1$d ساعة و%2$d دقيقة</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="zero">%1$d days %2$d left</item>
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="two">%1$d days %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="zero">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="one">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="two">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="few">تبقى %1$d أيام و%2$d ساعة</item>
+        <item quantity="many">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="other">تبقى %1$d يوم و%2$d ساعة</item>
     </plurals>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة البطاقات\nباستخدام أيقونة +.</string>
@@ -103,7 +103,7 @@
     <string name="rename_deck">تغيير اسم الرزمة</string>
     <string name="create_shortcut">إنشاء اختصار</string>
     <string name="browse_cards">تصفح البطاقات</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">تحرير الوصف</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">إضافة</string>
     <string name="menu_add_note">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">مزامنة الحساب</string>
@@ -116,21 +116,15 @@
     <string name="menu_suspend">تعليق</string>
     <string name="menu_delete_note">حذف الملحوظة</string>
     <string name="menu_flag">أضف علما</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">أضف علما للبطاقة</string>
-    <string name="menu_flag_card_zero">بدون علم</string>
-    <string name="menu_flag_card_one">علم أحمر</string>
-    <string name="menu_flag_card_two">علم برتقالي</string>
-    <string name="menu_flag_card_three">علم أخضر</string>
-    <string name="menu_flag_card_four">علم أزرق</string>
-    <string name="menu_flag_card_five">علم وردي</string>
-    <string name="menu_flag_card_six">علم تركواز</string>
-    <string name="menu_flag_card_seven">علم بنفسجي</string>
     <string name="menu_edit_tags">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
     <string name="menu_search">البحث في %1$s</string>
     <string name="menu_mark_note">تأشير الملحوظة</string>
     <string name="menu_unmark_note">إلغاء تأشير الملحوظة</string>
-    <string name="menu_toggle_mic_tool_bar">تحقق من النطق</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">إنشاء رزمة</string>
     <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
     <string name="directory_inaccessible">لا يمكن الوصول لمجلد آنكيدرويد</string>
@@ -146,10 +140,12 @@
     <string name="empty_filtered_deck">جار إفراغ الرزمة المفلترة&#8230;</string>
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
     <string name="custom_study_deck_exists">أولا أعد تسمية \"رزمة الدراسة المخصصة\" الحالية</string>
-    <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
+    <string name="empty_deck">هذه الرزمة فارغة</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
+    <string name="studyoptions_congrats_finished">مبارك! أكملت مهامك الحالية.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
@@ -158,7 +154,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">واصِل المزامنة</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">أُلغِيت المزامنة</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
+    <string name="syncing_media">تجري مزامنة الوسائط</string>
     <string name="export_deck">تصدير الرزمة</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">فارغ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">أنواع البطاقات</string>
@@ -186,7 +184,6 @@
         <item quantity="many">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
         <item quantity="other">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>
     </plurals>
-    <string name="invalid_template">لا يمكن إنشاء بطاقة</string>
     <string name="card_template_editor_would_delete_note">سيؤدي حذف نوع البطاقة هذا إلى حذف ملحوظة أو أكثر. الرجاء إنشاء نوع بطاقة جديد وحفظه أولًا.</string>
     <string name="card_template_editor_save_error">يتعذر حفظ تغييرات قالب البطاقة: %s</string>
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
@@ -263,6 +260,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">استئناف النقل</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">فشل في الوصول إلى المجموعة</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">نحن غير قادرين على الوصول إلى مجموعتك بعد إلغاء تثبيت AnkiDroid بسبب تغيير في سياسة متجر \n Play\n البيانات الخاصة بك آمنة ويمكن استعادتها في\n%s\n\nحدد الخيار أدناه للاستعادة:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">لقد أزال الأندرويد صلاحية وصول آنكيدرويد إلى %1$s بسبب قلة نشاط التطبيق. \n\n بياناتك بأمان ويمكن استعادتها. إنها موجودة في \n%2$s\n\nاختر مما يلي لاستعادتها:</string>
     <string name="restore_data_from_ankiweb">استعادة من AnkiWeb (مستحسن)</string>
     <string name="install_non_play_store_ankidroid_recommended">استعادة الوصول إلى الملفات(مستحسن)</string>
     <string name="install_non_play_store_ankidroid">استعادة الوصول إلى الملفات (متقدم)</string>
@@ -274,5 +272,8 @@
     <string name="storage_access_title">الوصول إلى التخزين</string>
     <string name="storage_access_summary">احفظ مجموعتك في مكان آمن لا يتم حذفه عندما تحذف التطبيق</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">الوصول إلى كل الملفات</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">صورة معماة</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">حذف الحساب</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">بطاقة فورية</string>
 </resources>

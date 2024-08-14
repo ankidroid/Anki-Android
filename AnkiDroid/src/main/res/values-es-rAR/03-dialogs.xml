@@ -48,10 +48,14 @@
     <string name="check_db_warning">Esto podría tomar un largo tiempo</string>
     <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
     <string name="delete_deck_title">¿Eliminar mazo?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">No hay un idioma de texto-a-voz disponible</string>
     <string name="tts_no_tts">No hable</string>
     <string name="unused_strings">\n\nArchivos sin utilizar:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Vista previa</string>
     <string name="reposition_card_dialog_title">Reposicionar nueva tarjeta</string>
     <string name="reposition_card_dialog_message">Posición inicial:</string>
     <string name="reposition_card_not_new_error">Sólo las tarjetas nuevas pueden ser reposicionadas</string>
@@ -60,27 +64,10 @@
         <item quantity="other">%d tarjetas reposicionadas</item>
     </plurals>
     <string name="reset_card_dialog_title">Resetear el progreso de las tarjetas</string>
-    <string name="reset_card_dialog_message">Esta tarjeta será colocada al final de la cola de tarjetas nuevas.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d tarjeta reiniciada</item>
         <item quantity="other">%d tarjetas reiniciadas</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reprogramar %d tarjeta</item>
-        <item quantity="other">Reprogramar %d tarjetas</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Intervalo actual: %d día</item>
-        <item quantity="other">Intervalo actual: %d días</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Reprogramar para repaso en x días:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d tarjeta reprogramada</item>
-        <item quantity="other">%d tarjetas reprogramadas</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Se está reprogramando una nueva tarjeta. Reprogramar también convierte nuevas tarjetas en tarjetas de revisión. Utilice la opción \'reposiciónar tarjetas\' para cambiar la posición de una nueva tarjeta dentro de la nueva cola</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Reprogramar también reinicia cómo el planificador trata la tarjeta en el futuro (la facilidad se establecerá en %d%%)</string>
     <string name="answering_error_title">Error en base de datos</string>
     <string name="answering_error_message">Se ha producido un error al escribir en la colección. Esto podría estar relacionado con una base de datos dañada o con un espacio en disco insuficiente.\n\nSi esto ocurre con más frecuencia, intenta verificar la base de datos, reparar la colección o restaurar desde una copia de seguridad. Para ello, presiona \"Opciones\".\n\nDe todos modos, podría ser un error de AnkiDroid; por favor, informa del error para que podamos comprobarlo.</string>
     <string name="answering_error_report">Reportar un error</string>
@@ -109,8 +96,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmar</string>
     <string name="dialog_no">No</string>
     <string name="dialog_yes">Sí</string>
+    <string name="dialog_keep">Conservar</string>
+    <string name="dialog_remove">Quitar</string>
     <string name="dialog_continue">Continuar</string>
-    <string name="dialog_processing">Procesando...</string>
+    <string name="dialog_processing">Procesando&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
     <string name="dialog_positive_delete">Eliminar</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Reemplazar</string>
     <string name="dialog_collection_path_not_dir">La ruta especificada no es un directorio válido</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">¿Comprobar archivos multimedia?</string>
     <string name="check_media_warning">Esto podría tardar mucho tiempo con colecciones de grandes archivos multimedia</string>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">Error al abrir el Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permiso de grabación de audio denegado</string>
-    <string name="mutimedia_editor_assertion_failed">Error desconocido al mostrar el Editor Avanzado</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Ankidroid actualizado</string>
     <string name="integrity_check_startup_content">AnkiDroid ha sido actualizado. Esta actualización incluye correcciones para posibles problemas de base de datos, y le aconsejamos que comprueba la base de datos ahora.</string>
@@ -219,7 +210,7 @@
         <item quantity="one">Una sincronización automática puede activarse en %d segundo</item>
         <item quantity="other">Una sincronización automática puede activarse en %d segundos</item>
     </plurals>
-    <string name="metered_sync_warning">Tu conexión es medida. La transferencia de datos puede costar dinero</string>
+    <string name="metered_sync_data_warning">Su proveedor de Internet podría cobrar dinero por el uso de datos</string>
     <string name="deck_picker_new">Número de cartas nuevas para ver hoy en este mazo.</string>
     <string name="deck_picker_rev">Número de cartas que vencen hoy en este mazo.</string>
     <string name="deck_picker_lrn">Número de cartas en aprendizaje en este mazo.</string>
@@ -244,4 +235,31 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Debido a cambios en la privacidad de Android, tus datos y copias de seguridad automatizadas serán inaccesibles si la aplicación es desinstalada
     </string>
+    <string name="deck_already_exists">El mazo ya existe.</string>
+    <string name="create_deck_numeric_hint">Si tienes problemas de ordenamiento de mazos (por ejemplo ‘10’ aparece antes de ‘2’), reemplaza ‘2’ con ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Establecer intervalo al mismo valor</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Mostrar tarjeta en</item>
+        <item quantity="other">Mostrar tarjetas en</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Mostrar tarjeta en rango</item>
+        <item quantity="other">Mostrar tarjetas en rango</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">día</item>
+        <item quantity="other">días</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">De</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">A</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

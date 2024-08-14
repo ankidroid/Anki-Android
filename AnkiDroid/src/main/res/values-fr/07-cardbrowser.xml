@@ -56,11 +56,11 @@
     <string name="card_browser_all_decks">Tous les jeux de cartes</string>
     <plurals name="card_browser_delete_cards">
         <item quantity="one">Supprimer la carte</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="other">Supprimer les cartes</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Supprimer la note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">Supprimer les notes</item>
     </plurals>
     <string name="card_browser_change_deck">Changer de paquet</string>
     <string name="delete_card_title">Supprimer la note ?</string>
@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Nom de la recherche en cours</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Vous ne pouvez pas enregistrer une recherche sans nom.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Ce nom existe déjà !</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Supprimer « %1$s » ?</string>
     <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
     <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
@@ -99,6 +100,7 @@
     <string name="card_browser_search_all_decks">Rechercher dans tous les paquets</string>
     <string name="card_browser_unknown_deck_name">Inconnu</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Tronquer le contenu</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Exporter la carte</item>
         <item quantity="other">Exporter les cartes</item>

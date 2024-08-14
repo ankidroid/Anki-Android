@@ -104,21 +104,15 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Slett notat</string>
     <string name="menu_flag">Flagg</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Flagg kort</string>
-    <string name="menu_flag_card_zero">Inkje flagg</string>
-    <string name="menu_flag_card_one">Raudt flagg</string>
-    <string name="menu_flag_card_two">Oransje flagg</string>
-    <string name="menu_flag_card_three">Grønt flagg</string>
-    <string name="menu_flag_card_four">Blått flagg</string>
-    <string name="menu_flag_card_five">Rosa flagg</string>
-    <string name="menu_flag_card_six">Turkist flagg</string>
-    <string name="menu_flag_card_seven">Lilla flagg</string>
     <string name="menu_edit_tags">Rediger tagger</string>
     <string name="delete_note_message">Slette dette notatet med alle kortene?\n%s</string>
     <string name="menu_search">Oppslag i %1$s</string>
     <string name="menu_mark_note">Marker notat</string>
     <string name="menu_unmark_note">Fjern markering på notat</string>
-    <string name="menu_toggle_mic_tool_bar">Sjekk uttale</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Lag ein kortleik</string>
     <string name="new_dynamic_deck">Lag en filtrert kortstokk</string>
     <string name="directory_inaccessible">AnkiDroid-mappa er utilgjengeleg</string>
@@ -127,17 +121,19 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Gjev AnkiDroid tilgjenge til «lagring» for å halda fram</string>
-    <string name="rebuild_filtered_deck">Den filtrerte kortstokken bygges om...</string>
+    <string name="rebuild_filtered_deck">Den filtrerte kortstokken bygges om&#8230;</string>
     <string name="rebuild_cram_label">Gjenoppbygg</string>
     <string name="empty_cram_label">Tøm</string>
     <string name="create_subdeck">Lag ein underkortleik</string>
-    <string name="empty_filtered_deck">Den filtrerte kortstokken tømmes...</string>
+    <string name="empty_filtered_deck">Den filtrerte kortstokken tømmes&#8230;</string>
     <string name="custom_study_deck_name">Tilpasset studiesesjon</string>
     <string name="custom_study_deck_exists">Gi den eksisterende tilpassede studiestokken nytt navn først</string>
-    <string name="empty_deck">Denne kortleiken er tom</string>
     <string name="search_deck" comment="Deck search for selecting it">Finn kortstokk</string>
+    <string name="empty_deck">Denne kortleiken er tom</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Finn kortstokk</string>
     <string name="invalid_deck_name">Ugildt namn på kortleik</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Ingen kort forfaller ennå</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
@@ -145,8 +141,10 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vil du avbryte synkroniseringa?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsett synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering Avbrutt</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter...\nDet kan ta en stund.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter&#8230;\nDet kan ta en stund.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Før ut kortleiken</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Ingenting</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kortslag</string>
@@ -166,7 +164,6 @@
         <item quantity="one">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
         <item quantity="other">Slette korttypen \"%2$s\" og dens %1$d kort?</item>
     </plurals>
-    <string name="invalid_template">Et kort kunne ikke genereres</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
@@ -239,6 +236,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
@@ -251,4 +249,7 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

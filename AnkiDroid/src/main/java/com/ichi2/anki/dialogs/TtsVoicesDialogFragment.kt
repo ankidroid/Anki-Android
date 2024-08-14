@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.dialogs
 
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -28,6 +27,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -43,9 +43,9 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.AndroidTtsVoice
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.dialogs.viewmodel.TtsVoicesViewModel
 import com.ichi2.anki.localizedErrorMessage
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.TtsVoice
 import com.ichi2.themes.Themes
@@ -148,7 +148,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
-            UIUtils.showThemedToast(requireContext(), R.string.tts_voices_failed_opening_tts_system_settings, shortLength = true)
+            showThemedToast(requireContext(), R.string.tts_voices_failed_opening_tts_system_settings, shortLength = true)
         }
     }
 
@@ -160,7 +160,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
         viewModel.availableVoicesFlow.observe {
             if (it is TtsVoicesViewModel.VoiceLoadingState.Failure) {
                 progressBar.visibility = View.VISIBLE
-                AlertDialog.Builder(this.context)
+                AlertDialog.Builder(requireContext())
                     .setMessage(it.exception.localizedMessage)
                     .setOnDismissListener { this@TtsVoicesDialogFragment.dismiss() }
                     .show()
@@ -222,7 +222,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
     }
 
     // inner allows access to viewModel/openTtsSettings
-    inner class TtsVoiceAdapter() : ListAdapter<AndroidTtsVoice, TtsVoiceAdapter.TtsViewHolder>(TtsVoiceDiffCallback()) {
+    inner class TtsVoiceAdapter : ListAdapter<AndroidTtsVoice, TtsVoiceAdapter.TtsViewHolder>(TtsVoiceDiffCallback()) {
         inner class TtsViewHolder(private val voiceView: View) : RecyclerView.ViewHolder(voiceView) {
             private val textViewTop = voiceView.findViewById<TextView>(R.id.mtrl_list_item_secondary_text)
             private val textViewBottom = voiceView.findViewById<TextView>(R.id.mtrl_list_item_text)

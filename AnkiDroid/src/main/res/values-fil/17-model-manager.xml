@@ -50,36 +50,36 @@
     <!--Rename-->
     <string name="rename_model">Palitan ang pangalan ng uri ng tala.</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">I-set ang hint sa wika sa %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">I-edit ang mga patlang</string>
     <string name="model_field_editor_add">Magdagdag ng field</string>
     <string name="model_field_editor_delete">Tanggalin ang patlang</string>
     <string name="model_field_editor_rename">Palitan ang pangalan ng patlang</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">I-set ang hint ng wika ng keyboard</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_reposition">Reposition field (magpasok ng halaga%1$d-%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">Tandaan ang huling input tuwing nagdaragdag</string>
     <string name="model_field_editor_changing">Ina-update ang mga patlang</string>
     <string name="model_field_editor_sort_field">Ayusin ayon sa patlang na ito</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">Sigurado ka ba na nais mong burahin ang uri ng tala na ito?</string>
     <string name="field_delete_warning">Sigurado ka bang nais mong tanggalin ang field na ito?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Magdagdag ng:%1$s</string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">I-clone:%1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_summary">Ilagay ang template na gagamitin ng card browser upang maipakita ang iyong mga card. Gamitin ito upang maipakita ang mas maiksi na sagot.\n\nAng harap na template ng\n\"Ang kabisera ng {{Country}} ay:\"\nay maaaring paiksiin sa card browser bilang\n\"Kabisera: {{Country}}\"</string>
+    <string name="card_template_browser_appearance_question_format">Format ng Tanong</string>
+    <string name="card_template_browser_appearance_answer_format">Format ng Sagot</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Ibalik sa Default na Halaga?</string>
+    <string name="card_template_browser_appearance_saving_note">Ang pagbabagong ito ay ma-aapply tuwing isesave ang card template</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">I-override ang deck (bukas)</string>
+    <string name="card_template_editor_deck_override_off">I-override ang deck (sara)</string>
+    <string name="model_manager_deck_override_added_message">I-set ang default deck na \'%1$s\' ng \'%2$s\'</string>
+    <string name="model_manager_deck_override_removed_message">Tinanggal ang default deck para sa \'%s\'</string>
+    <string name="deck_override_explanation">Pumili ng deck na paglalagyan ng mga bagong card ng \'%s\'</string>
+    <string name="deck_picker_dialog_filter_decks">Salain ang mga deck</string>
 </resources>

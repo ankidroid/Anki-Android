@@ -1,3 +1,13 @@
 video {
     max-width: 100%;
 }
+
+@font-face {
+    font-family: "Free Mono";
+    src: url("file:///android_asset/fonts/freefont/FreeMono.ttf")
+}
+
+#typeans {
+  width: 100%;
+  font-family: "Free Mono";
+}

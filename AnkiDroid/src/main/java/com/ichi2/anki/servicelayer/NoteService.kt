@@ -26,7 +26,12 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
-import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
+import com.ichi2.anki.multimediacard.fields.EFieldType
+import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
@@ -73,7 +78,8 @@ object NoteService {
         return null
     }
 
-    fun updateMultimediaNoteFromFields(col: Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
+    context (Collection)
+    fun updateMultimediaNoteFromFields(fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             val field: IField = if (value.startsWith("<img")) {
@@ -85,7 +91,7 @@ object NoteService {
             } else {
                 TextField()
             }
-            field.setFormattedString(col, value)
+            field.setFormattedString(this@Collection, value)
             mmNote.setField(i, field)
         }
         mmNote.modelId = modelId
@@ -112,6 +118,10 @@ object NoteService {
         }
     }
 
+    context (Collection)
+    fun importMediaFileToDirectory(field: IField?) =
+        importMediaToDirectory(this@Collection, field)
+
     /**
      * Considering the field is new, if it has media handle it
      *
@@ -120,8 +130,7 @@ object NoteService {
     fun importMediaToDirectory(col: Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
-            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
-            EFieldType.IMAGE -> tmpMediaPath = field.imagePath
+            EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> tmpMediaPath = field.mediaPath
             EFieldType.TEXT -> {
             }
         }
@@ -137,8 +146,7 @@ object NoteService {
                         inFile.delete()
                     }
                     when (field.type) {
-                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> field.audioPath = outFile.absolutePath
-                        EFieldType.IMAGE -> field.imagePath = outFile.absolutePath
+                        EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaPath = outFile.absolutePath
                         else -> {
                         }
                     }
@@ -242,3 +250,23 @@ fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(col, note(
 fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(col, note(col))
 
 fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(col))
+
+suspend fun isBuryNoteAvailable(card: Card): Boolean {
+    return withCol {
+        db.queryScalar(
+            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+            card.nid,
+            card.id
+        ) == 1
+    }
+}
+
+suspend fun isSuspendNoteAvailable(card: Card): Boolean {
+    return withCol {
+        db.queryScalar(
+            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+            card.nid,
+            card.id
+        ) == 1
+    }
+}

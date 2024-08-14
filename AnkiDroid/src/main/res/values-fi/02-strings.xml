@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kriittinen virhe: WebView-renderöijä kaatui. Syy: %s</string>
     <string name="webview_crash_loop_dialog_title">Järjestelmän WebView Renderöinti Epäonnistui</string>
     <string name="webview_crash_loop_dialog_content">Järjestelmän WebView ei pystynyt näyttämään korttia \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Kysymys</item>
-        <item>Lajittelukenttä</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Vastaus</item>
-        <item>Kortti</item>
-        <item>Pakka</item>
-        <item>Muistiinpano</item>
-        <item>Kysymys</item>
-        <item>Tunnisteet</item>
-        <item>Virheet</item>
-        <item>Kertaukset</item>
-        <item>Kertausväli</item>
-        <item>Helppous</item>
-        <item>Erääntynyt</item>
-        <item>Korttia Muokattu</item>
-        <item>Luotu</item>
-        <item>Muistilappua muokattu</item>
-    </string-array>
     <string name="filter_by_flags">Liput</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Muuta tämän päivän uusien korttien määrän ylärajaa</string>
@@ -112,10 +91,8 @@
     <string name="custom_study_limit_tags">Rajoitu tiettyhin tunnisteisiin</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Muokkaa muistiinpanoa</string>
-    <string name="discard_unsaved_changes">Sulje ja menetä muutokset?</string>
+    <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">Kortteja ei luotu. Täytä lisää kenttiä</string>
-    <string name="note_editor_no_first_field">Ensimmäinen kenttä on tyhjä</string>
-    <string name="note_editor_no_cloze_delations">Tämän muistiinpanotyypin täytyy sisältää aukkotehtävä</string>
     <string name="note_editor_no_cards_created_all_fields">Nykyistä muistiinpanotyyppiä käyttäviä kortteja ei ole.\nValitse toinen muistiinpanotyyppi tai valitse \"Kortit\" ja lisää korvaava kenttä.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Aukkotehtävät toimivat vain aukkotehtävätyyppisissä muistiinpanoissa</string>
     <string name="saving_facts">Tallennetaan muistiinpanoa</string>
@@ -125,6 +102,7 @@
     <string name="select">Valitse</string>
     <string name="field_remapping">%1$s (”%2$s”:sta)</string>
     <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
+    <string name="missing_note_type">No note type found</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Aikaikkuna saavutettu</string>
     <plurals name="timebox_reached">
@@ -138,10 +116,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kortti</string>
     <string name="note_editor_copy_note">Kopioi muistiinpano</string>
-    <string name="card_editor_reposition_card">Uudelleenasettele</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Uudelleenasettele</string>
     <string name="card_editor_reset_card">Tyhjennä edistyminen</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Ajasta uudelleen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Esikatselu</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Nimeä uudelleen</string>
     <string name="checks_action">Tarkista</string>
@@ -153,6 +132,7 @@
     <string name="delete_deck">Poistetaan pakka&#8230;</string>
     <string name="info_rate">Arvostele AnkiDroid</string>
     <string name="import_title">Tuodaan</string>
+    <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lisää</string>
     <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
     <string name="import_dialog_message_add">Lisää “%s” kokoelmaan? Tässä voi kestää kauan</string>
@@ -164,9 +144,9 @@
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
     <string name="import_error_copy_to_cache">Tiedoston tallentaminen välimuistiin epäonnistui (tallennustila on mahdollisesti loppunut).</string>
     <string name="import_interrupted">Tuonti keskeytyi: AnkiDroid suljettiin</string>
-    <string name="export_preparation_in_progress">Valmistellaan vientiä...</string>
+    <string name="export_preparation_in_progress">Valmistellaan vientiä&#8230;</string>
     <string name="export_ready_title">Vienti valmis</string>
-    <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan...</string>
+    <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan&#8230;</string>
     <string name="export_save_apkg_successful">Anki-tiedosto tallennettu.</string>
     <string name="export_save_apkg_unsuccessful">Anki-tiedoston tallennus epäonnistui.</string>
     <string name="export_share_title">Lähetä Anki-pakkaus käyttäen</string>
@@ -179,7 +159,8 @@
         [2] %2$s
         ]]></string>
     <string name="export_choice_share">Jaa</string>
-    <string name="export_choice_save_to">Tallenna...</string>
+    <string name="export_choice_save_to">Tallenna&#8230;</string>
+    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Valinnat</string>
     <string name="menu__deck_options">Pakan asetukset</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opiskeluasetukset</string>
@@ -202,17 +183,15 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Järjestelmään ei ole asennettu sovellusta, joka voisi suorittaa tämän toiminnon.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kameran kuvat voivat olla suuria. Voit halutessasi pakata mediahakemistossa olevia kuvia ja muuttaa niiden kokoa.]]></string>
-    <string name="no_browser_notification">Selainta ei löytynyt, käy verkkosivulla tietokoneella tai puhelimella: </string>
+    <string name="no_browser_msg">No browser found for opening the link: %s</string>
     <string name="web_page_error">Virhe ladattaessa sivua: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Tausta</string>
     <string name="choose_an_image">Valitse kuva</string>
+    <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Palauta oletusarvot</string>
-    <string name="cloze_sample_text">Tämä on {{%1$s:esimerkki}} aukkotehtävästä.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">ecimerkki</string>
-    <string name="basic_answer_sample_text">esimerkki</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tyhjä</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Kirjoitustaulun kuvan tallentaminen epäonnistui. %s</string>
@@ -304,7 +283,7 @@
     <string name="migration_part_1_done_resume">Voit jatkaa AnkiDroidin käyttöä.
 \nTallennustilan siirto jatkuu taustalla.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s ei ole kelvollinen JavaScript-lisäosapaketti</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Hakemiston %s luonti ei onnistunut</string>
     <string name="malicious_archive_entry_outside">Haitallinen arkisto. Sisältää pääsyn kohdehakemiston ulkopuolelle: %s</string>
     <string name="malicious_archive_exceeds_limit">Haitallinen arkisto. Koko on suurempi kuin %1$s tai se sisältää yli %2$d tiedostoa</string>
@@ -313,12 +292,15 @@
     <string name="expand_tag">Laajenna tunniste \"%s\"</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Kokoelmaan pääsy epäonnistui. Yritä uudelleen!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Opiskele vähemmän</string>
     <string name="intro_ankidroid_tagline_two">Muista enemmän</string>
     <string name="intro_short_ankidroid_explanation">Anki aikatauluttaa opettelukortit ja tehostaa opiskeluasi. Kertaa haastavia asioita unohtamatta jo hallitsemaasi.</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Aloita</string>
     <string name="intro_sync_from_ankiweb">Synkronoi AnkiWebistä</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Olet jo kirjautunut sisään</string>
     <!-- Deck Creation -->
     <string name="deck_created">Pakka luotu</string>
@@ -353,5 +335,14 @@
     <string name="shared_decks_login_required">Please log in to download more decks</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

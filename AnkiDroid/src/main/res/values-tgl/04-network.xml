@@ -70,16 +70,16 @@
     <string name="sync_title">Pagsisingkronisa</string>
     <string name="sync_log_uploading_message">Buong pag-sisingkronisa mula sa lokal</string>
     <string name="sync_database_acknowledge">Na-isingkronisa na ang koleksyon</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Ang iyong talahanayan ng datos ay may sira. Mangyaring ayusin ito bago muling subukan na i-singkronisa.\n\n Tingnan ang %s para sa impormasyon tungkol sa pag-aayos ng iyong talahanayan ng datos.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Malayo</string>
-    <string name="force_full_sync_title">Pilitin ang buong pagsisingkronisa</string>
-    <string name="force_full_sync_summary">Sa sususnod na pagsisingkronisa, pilitin ang mga pagbabago sa isang direksyon</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Ang ninanais na pagbabago ay mangangailangan ng isang buong pag-upload ng talahanayan ng datos sa susunod na pagsisingkronisa ng iyong koleksyon. Kung mayroon kang mga balik-aral o iba pang mga pagbabago na naghihintay sa iba pang mga aparato na hindi pa naka-singkronisa dito, mawawala ang mga ito. Magpatuloy?</string>
     <string name="full_sync_confirmation_upgrade">Dahil sa isang bug sa naunang naka-install na bersyon ng AnkiDroid, iminumungkahi ang isang buong pag-sisingkronisa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

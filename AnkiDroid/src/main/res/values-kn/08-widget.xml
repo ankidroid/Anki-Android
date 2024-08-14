@@ -45,19 +45,19 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">ಕಾರ್ಡ್‌ಗಳು ಬಾಕಿ ಉಳಿದಿವೆ</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d AnkiDroid ಕಾರ್ಡ್ ಬಾಕಿಯಿದೆ</item>
+        <item quantity="other">%d AnkiDroid ಕಾರ್ಡ್‌ಗಳ ಬಾಕಿಯಿದೆ</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">ಆಂಚಿಡ್ರಾಯ್ಡ್ ಚಿಕ್ಕದಾಗಿದೆ</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d ಕಾರ್ಡ್ ಬಾಕಿಯಿದೆ</item>
+        <item quantity="other">%d ಕಾರ್ಡ್ ಬಾಕಿಯಿದೆ</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
+        <item quantity="other">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <string name="widget_add_note_button">ಹೊಸ AnkiDroid ಟಿಪ್ಪಣಿಯನ್ನು ಸೇರಿಸಿ</string>
 </resources>

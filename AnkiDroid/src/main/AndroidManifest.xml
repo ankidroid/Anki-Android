@@ -40,6 +40,8 @@
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" android:maxSdkVersion="25" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <!-- Disabled on Play Store -->
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
     <permission android:name="${applicationId}.permission.READ_WRITE_DATABASE"
@@ -229,13 +231,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEND"/>
                 <data android:mimeType="application/apkg"/>
                 <data android:mimeType="application/colpkg"/>
                 <data android:mimeType="application/vnd.anki"/>
                 <data android:mimeType="application/x-apkg"/>
                 <data android:mimeType="application/x-colpkg"/>
                 <data android:mimeType="application/octet-stream"/>
-                <data android:mimeType="application/zip"/>
                 <data android:mimeType="text/tab-separated-values"/>
                 <data android:mimeType="text/comma-separated-values"/>
             </intent-filter>
@@ -340,6 +342,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
+            android:name=".multimedia.MultimediaActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
             android:name="com.ichi2.anki.preferences.Preferences"
             android:exported="false"
             android:configChanges="screenSize"
@@ -365,7 +371,7 @@
             android:name="com.ichi2.anki.AnkiCardContextMenuAction"
             android:label="@string/context_menu_anki_card_label"
             android:enabled="true"
-            android:targetActivity=".NoteEditor"
+            android:targetActivity=".IntentHandler2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PROCESS_TEXT" />
@@ -374,7 +380,7 @@
             </intent-filter>
         </activity-alias>
         <activity
-            android:name="com.ichi2.anki.NoteEditor"
+            android:name="com.ichi2.anki.IntentHandler2"
             android:label="@string/fact_adder_intent_title"
             android:theme="@style/Theme_Dark.Launcher"
             android:exported="true"
@@ -418,42 +424,21 @@
             android:finishOnTaskLaunch="true"
             />
         <activity
-            android:name="com.ichi2.anki.Previewer"
-            android:label="@string/preview_title"
-            android:exported="false"
-            />
-        <activity
             android:name="com.ichi2.anki.SingleFragmentActivity"
             android:exported="false"
-            />
-        <activity
-            android:name="com.ichi2.anki.ImageOcclusionActivity"
-            android:exported="false"
             android:configChanges="orientation|screenSize"
             />
         <activity
-            android:name="com.ichi2.anki.previewer.PreviewerActivity"
+            android:name="com.ichi2.anki.previewer.CardViewerActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize"
             />
-        <activity
-            android:name="com.ichi2.anki.CardTemplatePreviewer"
-            android:label="@string/preview_title"
-            android:exported="false"
-            />
-        <activity
-            android:name=".multimediacard.activity.MultimediaEditFieldActivity"
-            android:label="@string/title_activity_edit_text"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            >
-        </activity>
         <activity
             android:name="com.ichi2.anki.CardTemplateEditor"
             android:label="@string/title_activity_template_editor"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             >
         </activity>
         <activity
@@ -479,7 +464,10 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:configChanges="keyboardHidden|screenSize" />
 
-
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
@@ -496,6 +484,7 @@
             android:foregroundServiceType="dataSync"
             />
 
+        <!-- Don't disable/enable the widgets here until min API>=31, see issue #15747 & https://issuetracker.google.com/issues/36914010 -->
         <!-- small widget -->
         <receiver
             android:name="com.ichi2.widget.AnkiDroidWidgetSmall"
@@ -525,6 +514,13 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_add_note"
                 />
+        </receiver>
+
+        <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
+            </intent-filter>
         </receiver>
 
         <receiver
@@ -588,6 +584,27 @@
          -->
         <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
 
+        <!--
+        Transparent Single instance activity, and is cleared from recent tasks as we want to mimic
+        the behaviour of not opening the application and still be able to access the dialog.
+        Task affinity allows us to separate the activity allowing us to define that an activity belongs to a
+        different task, it ensures that the activity does not interfere with other tasks in our application.
+         -->
+        <activity
+            android:name="com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity"
+            android:exported="true"
+            android:label="@string/instant_card"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
 
 
         <provider
@@ -598,7 +615,16 @@
             >
             <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
         </provider>
-
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="remove">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.apkgfileprovider"

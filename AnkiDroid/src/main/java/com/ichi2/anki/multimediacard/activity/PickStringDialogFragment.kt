@@ -20,14 +20,14 @@
 package com.ichi2.anki.multimediacard.activity
 
 import android.R
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.ichi2.utils.KotlinCleanup
-import java.util.*
+import java.util.ArrayList
 
 /**
  * This dialog fragment support a choice from a list of strings.
@@ -40,7 +40,7 @@ class PickStringDialogFragment : DialogFragment() {
     @KotlinCleanup("requireActivity")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Use the Builder class for convenient dialog construction
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(title)
         val adapter = ArrayAdapter(
             requireActivity(),

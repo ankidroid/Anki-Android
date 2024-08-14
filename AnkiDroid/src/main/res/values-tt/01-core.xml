@@ -101,21 +101,15 @@
     <string name="menu_suspend">Искә алмау</string>
     <string name="menu_delete_note">Язуны бетерү</string>
     <string name="menu_flag">Төс</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Төс кую</string>
-    <string name="menu_flag_card_zero">Төссез</string>
-    <string name="menu_flag_card_one">Кызыл байрак</string>
-    <string name="menu_flag_card_two">Кызыл-сары байрак</string>
-    <string name="menu_flag_card_three">Яшел байрак</string>
-    <string name="menu_flag_card_four">Зәңгәр байрак</string>
-    <string name="menu_flag_card_five">Алсу байрак</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Тегларны үзгәртү</string>
     <string name="delete_note_message">Бу язуны һәм бөтен аның кәртләрен бетерергәме?\n%s</string>
     <string name="menu_search">%1$sдә карарга</string>
     <string name="menu_mark_note">Язуны билгеләү</string>
     <string name="menu_unmark_note">Билгеләүне бетерергә</string>
-    <string name="menu_toggle_mic_tool_bar">Әйтелешне тикшерү</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Колода ясау</string>
     <string name="new_dynamic_deck">Фильтрлы колода ясау</string>
     <string name="directory_inaccessible">AnkiDroid папкасына рөхсәт юк</string>
@@ -124,17 +118,19 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Зинһар, AnkiDroid өчен \"Storage\" рөхсәтен бирегез</string>
-    <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә...</string>
+    <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә&#8230;</string>
     <string name="rebuild_cram_label">Яңадан тезү</string>
     <string name="empty_cram_label">Бушату</string>
     <string name="create_subdeck">Колода эчендә колода ясау</string>
-    <string name="empty_filtered_deck">Фильтрлы колода бушатыла...</string>
+    <string name="empty_filtered_deck">Фильтрлы колода бушатыла&#8230;</string>
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
-    <string name="empty_deck">Бу колода буш</string>
     <string name="search_deck" comment="Deck search for selecting it">Колода эзләү</string>
+    <string name="empty_deck">Бу колода буш</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Колода эзләү</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Хәзерге вакытка кәртләр юк</string>
     <string name="sd_card_not_mounted">Хәтер картасы куелмаган</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизацияләргә</string>
@@ -142,8 +138,10 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Синхронизацияне кире кагыргамы?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Синхронизацияне дәвам итү</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизация кире кагылган</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу...\nБу бераз вакыт алырга мөмкин </string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Кире кагу&#8230;\nБу бераз вакыт алырга мөмкин </string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Колоданы экспортлау</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Берни </string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Кәрт төрләре</string>
@@ -161,7 +159,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">\"%2$s\" кәрт төрен hәм аның %1$d кәртен бетерергәме?</item>
     </plurals>
-    <string name="invalid_template">Кәрт ясала алмады</string>
     <string name="card_template_editor_would_delete_note">Бу кәрт төрен бетерү бер я берничә язунын бетерелүнә китерер. Зинhар, башта яңа кәрт төрен ясап саклагыз. </string>
     <string name="card_template_editor_save_error">Кәрт шаблонындагы үзгәртүләрне саклап булмый: %s</string>
     <string name="template_for_current_card_deleted">Бу кәртнең кәрт төре бетерелгән иде.</string>
@@ -233,6 +230,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
@@ -245,4 +243,7 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

@@ -104,8 +104,10 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         suspendCancellableCoroutine { continuation ->
             val tts = tts?.also {
                 it.voice = voice.voice
-                if (it.setSpeechRate(tag.speed) == ERROR) {
-                    return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_SPEECH_RATE_FAILED))
+                tag.speed?.let { speed ->
+                    if (it.setSpeechRate(speed) == ERROR) {
+                        return@suspendCancellableCoroutine continuation.resume(AndroidTtsError.failure(TtsErrorCode.APP_SPEECH_RATE_FAILED))
+                    }
                 }
                 // if it's already playing: stop it
                 it.stopPlaying()

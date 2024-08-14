@@ -26,6 +26,8 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuItemCompat
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.themes.Themes
+import com.ichi2.utils.iconAlpha
 import timber.log.Timber
 import java.io.FileNotFoundException
 
@@ -63,6 +65,13 @@ class DrawingActivity : AnkiActivity() {
                 R.color.white
             )
         )
+
+        // undo button
+        val undoEnabled: Boolean = !whiteboard.undoEmpty()
+        val alphaUndo = if (undoEnabled) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        val undoIcon = menu.findItem(R.id.action_undo)
+        undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
+
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -78,6 +87,12 @@ class DrawingActivity : AnkiActivity() {
                     colorPalette.visibility = View.VISIBLE
                 } else {
                     colorPalette.visibility = View.GONE
+                }
+            }
+            R.id.action_undo -> {
+                Timber.i("Drawing:: Undo button pressed")
+                if (!whiteboard.undoEmpty()) {
+                    whiteboard.undo()
                 }
             }
         }

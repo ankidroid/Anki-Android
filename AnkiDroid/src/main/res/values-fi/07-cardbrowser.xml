@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Nimi nykyiselle haulle</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Hakua ei voi tallentaa ilman nimeä.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nimi on jo olemassa</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Poistetaanko ”%1$s”?</string>
     <string name="card_browser_change_display_order">Muuta esitysjärjestystä</string>
     <string name="card_browser_change_display_order_title">Valitse esitysjärjestys</string>
@@ -99,6 +100,7 @@
     <string name="card_browser_search_all_decks">Etsi kaikista pakoista</string>
     <string name="card_browser_unknown_deck_name">Tuntematon</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Katkaise sisältö</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Vie kortti</item>
         <item quantity="other">Vie kortteja</item>

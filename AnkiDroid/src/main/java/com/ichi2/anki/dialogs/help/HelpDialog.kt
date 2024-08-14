@@ -16,12 +16,9 @@
 package com.ichi2.anki.dialogs.help
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.VisibleForTesting
@@ -30,15 +27,14 @@ import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.fragment.app.commit
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics.Actions
 import com.ichi2.anki.analytics.UsageAnalytics.Category
+import com.ichi2.anki.convertDpToPixel
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrl
 import com.ichi2.anki.dialogs.help.HelpItem.Action.OpenUrlResource
 import com.ichi2.anki.dialogs.help.HelpItem.Action.Rate
@@ -132,6 +128,18 @@ class HelpDialog : DialogFragment() {
             }
         }
 
+        fun newPrivacyPolicyInstance(): HelpDialog {
+            UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, Actions.OPENED_PRIVACY)
+            val privacyId = mainHelpMenuItems.single { it.analyticsId == Actions.OPENED_PRIVACY }.id
+            val privacyItems = childHelpMenuItems.filter { it.parentId == privacyId }
+            return HelpDialog().apply {
+                arguments = bundleOf(
+                    ARG_MENU_TITLE to R.string.help_title_privacy,
+                    ARG_MENU_ITEMS to privacyItems.toTypedArray()
+                )
+            }
+        }
+
         /**
          * @param canRateApp a boolean that indicates if the system has an app to open to rate AnkiDroid
          */
@@ -169,33 +177,19 @@ internal const val ARG_SELECTED_MENU_ITEM = " selected_menu_item"
 /**
  * This fragment is responsible for showing a list of menu items in the application's [HelpDialog].
  */
-class HelpPageFragment : ListFragment() {
+class HelpPageFragment : Fragment(R.layout.fragment_help_page) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        listAdapter = HelpMenuAdapter(requireContext(), requireArgsHelpEntries())
-    }
-
-    override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
-        val selectedItem = l.getItemAtPosition(position) as HelpItem
-        UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, selectedItem.analyticsId)
-        parentFragmentManager.setFragmentResult(
-            REQUEST_HELP_PAGE,
-            bundleOf(ARG_SELECTED_MENU_ITEM to selectedItem)
-        )
-    }
-
-    private class HelpMenuAdapter(
-        context: Context,
-        menuItems: Array<HelpItem>
-    ) : ArrayAdapter<HelpItem>(context, android.R.layout.simple_list_item_1, menuItems) {
-
-        private val drawablePadding = UIUtils.convertDpToPixel(16F, context).toInt()
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val rowView = super.getView(position, convertView, parent) as TextView
-            val menuItem = getItem(position) as HelpItem
-            return rowView.apply {
+        val drawablePadding = convertDpToPixel(16F, requireContext()).toInt()
+        val pageContentLayout = view.findViewById<LinearLayout>(R.id.page_content)
+        requireArgsHelpEntries().forEach { menuItem ->
+            val contentRow = requireActivity().layoutInflater.inflate(
+                R.layout.item_help_entry,
+                pageContentLayout,
+                false
+            ) as TextView
+            contentRow.apply {
                 setText(menuItem.titleResId)
                 setCompoundDrawablesRelativeWithIntrinsicBounds(
                     menuItem.iconResId,
@@ -204,6 +198,14 @@ class HelpPageFragment : ListFragment() {
                     0
                 )
                 compoundDrawablePadding = drawablePadding
+                setOnClickListener {
+                    UsageAnalytics.sendAnalyticsEvent(Category.LINK_CLICKED, menuItem.analyticsId)
+                    parentFragmentManager.setFragmentResult(
+                        REQUEST_HELP_PAGE,
+                        bundleOf(ARG_SELECTED_MENU_ITEM to menuItem)
+                    )
+                }
+                pageContentLayout.addView(this)
             }
         }
     }

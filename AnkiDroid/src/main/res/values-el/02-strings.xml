@@ -62,8 +62,8 @@
     <string name="updated_version">Αναβαθμίστηκε στην εκδοχή %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Αποθήκευση πίνακα</string>
-    <string name="enable_stylus">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="enable_stylus">Ενεργοποίηση γραψίματος με γραφίδα</string>
+    <string name="disable_stylus">Απενεργοποίηση γραψίματος με γραφίδα</string>
     <string name="enable_whiteboard">Ενεργοποίηση πίνακα</string>
     <string name="disable_whiteboard">Απενεργοποίηση πίνακα</string>
     <string name="show_whiteboard">Εμφάνιση πίνακα</string>
@@ -76,31 +76,10 @@
     <string name="webview_crash_unknwon_detailed">Αυτό προκλήθηκε από ένα εσωτερικό σφάλμα στο WebView</string>
     <string name="webview_crash_oom">Η μνήμη εξαντλήθηκε</string>
     <string name="webview_crash_oom_details">Το WebView τερματίστηκε από το σύστημα. Αυτό συμβαίνει συνήθως όταν η εφαρμογή δεν έχει αρκετή μνήμη, συχνά λόγω μεγάλων γραμματοσειρών ή πολυμέσων.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_nonfatal">WebView renderer κατέρρευσε. Αιτία: %s</string>
     <string name="webview_crash_fatal">Μοιραίο σφάλμα: Η συσκευή αναπαραγωγής WebView κατέρρευσε. Αιτία: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Ερώτηση</item>
-        <item>Sort field</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Απάντηση</item>
-        <item>Κάρτα</item>
-        <item>Τράπουλα</item>
-        <item>Σημείωση</item>
-        <item>Ερώτηση</item>
-        <item>Ετικέτες</item>
-        <item>Lapses</item>
-        <item>Επαναλήψεις</item>
-        <item>Διάστημα</item>
-        <item>Ευκολία</item>
-        <item>Due</item>
-        <item>Τροποποιημένες κάρτες</item>
-        <item>Δημιουργήθηκε</item>
-        <item>Τροποποιημένες σημειώσεις</item>
-    </string-array>
+    <string name="webview_crash_loop_dialog_title">Αποτυχία Απόδοσης WebView Συστήματος</string>
+    <string name="webview_crash_loop_dialog_content">Το σύστημα WebView απέτυχε να αποδώσει την κάρτα \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags">Σημαίες</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Τροποποίηση σημερινού ορίου νέων καρτών</string>
@@ -112,10 +91,8 @@
     <string name="custom_study_limit_tags">Περιορισμός σε συγκεκριμένες ετικέτες</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
-    <string name="discard_unsaved_changes">Κλείσιμο και απώλεια της τρέχουσας καταχώρησης;</string>
+    <string name="discard">Απόρριψη</string>
     <string name="note_editor_no_cards_created">Δεν δημιουργήθηκαν κάρτες. Συμπληρώστε περισσότερα πεδία</string>
-    <string name="note_editor_no_first_field">Το πρώτο πεδίο είναι κενό</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">Ο τρέχων τύπος σημείωσης δεν παρήγαγε καμία κάρτα.\nΠαρακαλώ επιλέξτε έναν άλλο τύπο σημείωσης ή κάντε κλικ στο \'Κάρτες\' και προσθέστε μία αντικατάσταση πεδίου</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Αποθήκευση σημείωσης</string>
@@ -125,6 +102,7 @@
     <string name="select">Επιλέξτε</string>
     <string name="field_remapping">%1$s (από “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Kάρτες χωρίς αντιστοίχιση θα διαγραφούν. Αν μια σημείωση δεν έχει εναπομείναντες κάρτες, θα χαθεί. Είστε σίγουροι ότι θέλετε να συνεχίσετε;</string>
+    <string name="missing_note_type">Δεν βρέθηκε τύπος σημείωσης</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Χρονικό όριο ξεπεράστηκε</string>
     <plurals name="timebox_reached">
@@ -138,10 +116,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Κάρτα Ανκί-Ντρόιντ</string>
     <string name="note_editor_copy_note">Αντιγραφή σημείωσης</string>
-    <string name="card_editor_reposition_card">Επανατοποθέτηση</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Επανατοποθέτηση</string>
     <string name="card_editor_reset_card">Διαγραφή προόδου</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Επαναπρογραμματισμός</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Προεπισκόπιση</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Αντιγραφή ως Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d από %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Μετονομασία</string>
     <string name="checks_action">Έλεγχος</string>
@@ -149,10 +128,11 @@
     <string name="check_media">Έλεγχος πολυμέσων </string>
     <string name="empty_cards">Κενές κάρτες</string>
     <string name="empty_card_warning">Αυτή η κάρτα είναι κενή. Χρησιμοποιήστε την επιλογή \"Άδειες κάρτες\" από το μενού στην οθόνη λίστας τραπουλών.</string>
-    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Διαγραφή τράπουλας...\nΠαρακαλούμε περιμένετε.</string>
+    <string name="unknown_type_field_warning">Τύπος απάντησης: άγνωστο πεδίο %s</string>
+    <string name="delete_deck">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>
     <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>
     <string name="import_title">Εισαγωγή</string>
+    <string name="import_preparing_file">Προετοιμασία αρχείου για εισαγωγή&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Προσθήκη</string>
     <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
     <string name="import_dialog_message_add">Προσθήκη \"%s\" στη συλλογή; Μπορεί να διαρκέσει πολύ χρόνο</string>
@@ -164,9 +144,9 @@
     <string name="import_error_content_provider">Το επιλεγμένο αρχείο δεν μπορεί να εισαχθεί αυτόματα από το AnkiDroid. Παρακαλώ δείτε το εγχειρίδιο χρήστη για το πώς να εισάγετε χειροκίνητα αρχεία anki: \n%s</string>
     <string name="import_error_copy_to_cache">Αποτυχία προσωρινής μνήμης αρχείου (πιθανόν εκτός χώρου αποθήκευσης)</string>
     <string name="import_interrupted">Η εισαγωγή διακόπηκε: Το AnkiDroid έκλεισε</string>
-    <string name="export_preparation_in_progress">Προετοιμασία εξαγωγής...</string>
+    <string name="export_preparation_in_progress">Προετοιμασία εξαγωγής&#8230;</string>
     <string name="export_ready_title">Εξαγωγή έτοιμη</string>
-    <string name="export_send_no_handlers">Δεν υπάρχουν διαθέσιμες εφαρμογές για χειρισμό apkg. Αποθήκευση...</string>
+    <string name="export_send_no_handlers">Δεν υπάρχουν διαθέσιμες εφαρμογές για χειρισμό apkg. Αποθήκευση&#8230;</string>
     <string name="export_save_apkg_successful">Επιτυχής αποθήκευση πακέτου Αnki</string>
     <string name="export_save_apkg_unsuccessful">Αποτυχία αποθήκευσης πακέτου Anki</string>
     <string name="export_share_title">Αποστολή πακέτου Anki με χρήση</string>
@@ -180,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Κοινοποίηση</string>
     <string name="export_choice_save_to">Αποθήκευση σε</string>
+    <string name="export_saving_exported_collection">Το εξαγόμενο αρχείο αποθηκεύεται&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Επιλογές</string>
     <string name="menu__deck_options">Επιλογές τράπουλας</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Επιλογές μελέτης</string>
@@ -202,17 +183,15 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Το σύστημα δεν έχει εγκατεστημένη εφαρμογή που μπορεί να εκτελέσει αυτήν την ενέργεια.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Οι εικόνες της φωτογραφικής μηχανής μπορεί να είναι μεγάλες. Μπορεί να θέλετε να συμπιέσετε και να αλλάξετε το μέγεθος των εικόνων στον κατάλογο πολυμέσων]]></string>
-    <string name="no_browser_notification">Δεν βρέθηκε περιηγητής, παρακαλώ επισκεφθείτε την ιστοσελίδα από τον υπολογιστή ή το κινητό: </string>
+    <string name="no_browser_msg">Δε βρέθηκε περιηγητής για το άνοιγμα του συνδέσμου: %s</string>
     <string name="web_page_error">Σφάλμα φόρτωσης σελίδας: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Φόντο</string>
     <string name="choose_an_image">Επιλέξτε εικόνα</string>
+    <string name="remove_background_image">Αφαίρεση ταπετσαρίας;</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Επαναφορά προεπιλογής</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">παρεδειγμα</string>
-    <string name="basic_answer_sample_text">ένα παράδειγμα</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Κενό</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Αποτυχία αποθήκευσης της εικόνας του πίνακα. %s</string>
@@ -223,7 +202,7 @@
     <!-- JS api -->
     <string name="api_version_developer_contact">Αυτή η κάρτα χρησιμοποιεί μη υποστηριζόμενες δυνατότητες του  AnkiDroid. Επικοινωνήστε με τον προγραμματιστή %1$s, ή δείτε το wiki. %2$s</string>
     <string name="invalid_json_data">Η κάρτα παρείχε μη έγκυρα δεδομένα. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="valid_js_api_version">Μη έγκυρη έκδοση AnkiDroid JS API. Επικοινωνήστε με τον προγραμματιστή %s, ή δείτε το wiki</string>
     <string name="update_js_api_version">Διαθέσιμη ενημέρωση του AnkiDroid JS API. Επικοινωνήστε με τον προγραμματιστή %sή δείτε το wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Προβολή</string>
     <string name="anki_js_error_code">(Κωδικός σφάλματος: %d)</string>
@@ -243,16 +222,16 @@
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
+    <string name="insert_horizontal_line">Εισαγωγή Οριζόντιας Γραμμής</string>
+    <string name="insert_heading">Εισαγωγή Επικεφαλίδας</string>
     <string name="format_font_size">Αλλαγή μεγέθους γραμματοσειράς</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_mathjax">Εισαγωγή Εξίσωσης MathJax</string>
     <string name="note_editor_toolbar_icon">Κείμενο κουμπιού</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
+    <string name="before_text">HTML Πριν Την Επιλογή</string>
+    <string name="after_text">HTML Μετά Την Επιλογή</string>
     <string name="add_toolbar_item">Δημιουργία Αντικειμένου Γραμμής Εργαλείων</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="edit_toolbar_item">Επεξεργασία Αντικειμένου Γραμμής Εργαλείων</string>
+    <string name="toolbar_item_explain_edit_or_remove">Εισάγετε το HTML που θα εισαχθεί πριν και μετά το επιλεγμένο κείμενο\n\nΠατήστε παρατεταμένα ένα αντικείμενο γραμμής εργαλείων για να το επεξεργαστείτε ή να το αφαιρέσετε</string>
     <string name="remove_toolbar_item">Αφαίρεση Αντικειμένου Γραμμής Εργαλείων;</string>
     <string name="note_editor_paste_too_large">Η εικόνα είναι πολύ μεγάλη για επικόλληση, παρακαλώ εισάγετε την εικόνα χειροκίνητα</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Αντίγραφο ασφαλείας Android σε εξέλιξη. Παρακαλώ προσπαθήστε ξανά</string>
@@ -280,13 +259,13 @@
     <string name="something_wrong">Κάτι πήγε στραβά, παρακαλώ προσπαθήστε ξανά</string>
     <string name="download_failed">Αποτυχία λήψης</string>
     <string name="deck_download_progress_message">Μπορείτε να χρησιμοποιήσετε άλλες εφαρμογές ενώ εκτελείται η λήψη</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="check_network">Παρακαλώ ελέγξτε τη σύνδεσή σας στο δίκτυο</string>
     <string name="search_using_deck_name">Αναζήτηση με το όνομα τράπουλας</string>
     <string name="external_storage_unavailable">Η λήψη ματαιώθηκε, ο εξωτερικός χώρος αποθήκευσης δεν είναι διαθέσιμος</string>
     <string name="home">Αρχική</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Η κάρτα θάφτηκε.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d κάρτα σε αναστολή.</item>
         <item quantity="other">%d κάρτες σε αναστολή.</item>
@@ -304,7 +283,7 @@
     <string name="migration_part_1_done_resume">Μπορείτε να συνεχίσετε να χρησιμοποιείτε το AnkiDroid. 
 \nΗ μετεγκατάσταση αποθήκευσης θα συνεχιστεί στο παρασκήνιο.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
+    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Αδυναμία δημιουργίας καταλόγου %s</string>
     <string name="malicious_archive_entry_outside">Κακόβουλο αρχείο. Περιέχει είσοδο έξω από τον κατάλογο στόχο: %s</string>
     <string name="malicious_archive_exceeds_limit">Κακόβουλο αρχείο. Το μέγεθος υπερβαίνει το %1$s ή περιέχει περισσότερα από τα %2$d αρχεία</string>
@@ -313,12 +292,15 @@
     <string name="expand_tag">Ανάπτυξη ετικέτας \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Αποτυχία πρόσβασης στη συλλογή. Παρακαλώ προσπαθήστε ξανά!</string>
+    <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Διαβάστε λιγότερο</string>
     <string name="intro_ankidroid_tagline_two">Απομνημόνευση περισσότερων</string>
     <string name="intro_short_ankidroid_explanation">Ο προγραμματιστής του Anki εξοικονομεί χρόνο ενισχύοντας τις πιο αδύναμες μνήμες σας και διατηρώντας τις δυνατές</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Ξεκινήστε</string>
     <string name="intro_sync_from_ankiweb">Συγχρονισμός απο το AnkiWeb</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
     <string name="already_logged_in">Ήδη συνδεδεμένος</string>
     <!-- Deck Creation -->
     <string name="deck_created">Η τράπουλα δημιουργήθηκε</string>
@@ -356,5 +338,14 @@
     <string name="shared_decks_login_required">Παρακαλώ συνδεθείτε για να κατεβάσετε περισσότερες τράπουλες</string>
     <string name="deck_description_field_hint">Description</string>
     <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="card_browser_unavailable_when_notes_mode">Unavailable in ‘Notes’ mode</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d card unburied</item>
+        <item quantity="other">%d cards unburied</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="next_recording">Next</string>
 </resources>

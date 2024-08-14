@@ -49,7 +49,7 @@
     <plurals name="pref_summ_minutes">
         <item quantity="other">%d分</item>
     </plurals>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
+    <string name="pref_milliseconds">%sミリ秒</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">該当なし</string>
     <!-- preferences.xml categories-->
@@ -69,8 +69,8 @@
     <string name="pref_cat_plugins" maxLength="41">プラグイン</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">線の太さ</string>
-    <string name="use_input_tag" maxLength="41">カード内にキーボード入力で解答する</string>
-    <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
+    <string name="use_input_tag" maxLength="41">答えを入力する欄をカード内に表示</string>
+    <string name="use_input_tag_summ">答えをキーボード入力するタイプのカードの文字入力欄を、カードの下側ではなくカードの中に表示します</string>
     <string name="reset_languages" maxLength="41">言語設定をリセット</string>
     <string name="reset_languages_summ">すべてのデッキの（テキスト読み上げ用および辞書用の）言語設定をリセットします</string>
     <string name="reset_languages_question">言語の割り当て設定をすべてリセットします。よろしいですか？</string>
@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">カード画面内を縦３ × 横３の９エリアに区別して各エリアにタップジェスチャーを割り当てられます</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">どこでもドロワー</string>
     <string name="gestures_fullscreen_nav_drawer_summary">アプリ画面上のどこからでも、右向きにスワイプするとナビゲーションドロワーが開きます</string>
-    <string name="gestures_none" maxLength="41">なし</string>
+    <string name="gestures_none" maxLength="41" comment="No gestures">なし</string>
     <string name="gestures_swipe_up" maxLength="41">上にスワイプ</string>
     <string name="gestures_swipe_down" maxLength="41">下にスワイプ</string>
     <string name="gestures_swipe_left" maxLength="41">左にスワイプ</string>
@@ -134,7 +134,7 @@
     <string name="sync_status_badge" maxLength="41">同期状態を区別</string>
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期ボタンに目印を付けます</string>
     <string name="metered_sync_title" maxLength="41">Wi-Fi接続時以外の同期を許可</string>
-    <string name="metered_sync_summary">この設定を無効にすると、Wi-Fi以外の方法でインターネットに接続しているときに同期しようとすると、確認メッセージが表示されます</string>
+    <string name="metered_sync_summary">このオプションがオフの場合、Wi-Fi以外の方法でインターネットに接続しているときに同期しようとすると、確認メッセージが表示されます</string>
     <string name="backup_limits_frequency">頻度</string>
     <string name="backup_limits_lifetime">保管期間</string>
     <string name="app_theme" maxLength="41">テーマ</string>
@@ -163,8 +163,8 @@
     <string name="vertical_centering_summ">コンテンツを上下方向の中央に配置します</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔（ミリ秒）</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
-    <string name="pref_show_answer_long_press" maxLength="41">「解答を表示」ボタンが必要とする長押し時間（ミリ秒）</string>
-    <string name="pref_show_answer_long_press_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする、ボタンを押し続ける時間。この時間より短い（＝素早い）接触を無視します。揺れのある環境や手の震えなどで意図せず「解答を表示」ボタンを押してしまいがちな場合に調整すると効果的です。デフォルトでは0ミリ秒（つまり、長押し不要）です</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">「解答を表示」ボタンが必要とする長押し時間</string>
+    <string name="pref_show_answer_long_press_time_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする長押し時間。デフォルトでは0ミリ秒（長押し必要なし）です。</string>
     <string name="show_estimates" maxLength="41">回答ボタンに学習間隔を表示</string>
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>
@@ -173,12 +173,11 @@
     <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
     <string name="show_progress_summ">トップバーに、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">推定所要時間を表示</string>
+    <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの現在の課題すべてに回答するまでの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
     <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
     <string name="time_limit" maxLength="41">タイムボックス（学習時間の目標・区切り）</string>
-    <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
         <item quantity="other">%d時</item>
@@ -192,20 +191,18 @@
     <string name="custom_buttons_setting_always_show">常に表示</string>
     <string name="custom_buttons_setting_if_room">空きスペースがあれば表示</string>
     <string name="custom_buttons_setting_menu_only">メニューでのみ表示</string>
-    <string name="reset_custom_buttons" maxLength="41">既定値にリセット</string>
-    <string name="reset_settings_to_default">規定値にリセットしますか？</string>
+    <string name="reset_custom_buttons" maxLength="41">初期設定にリセット</string>
+    <string name="reset_settings_to_default">初期設定にリセットしますか？</string>
     <string name="reset">リセット</string>
-    <string name="thirdparty_apps_title" maxLength="41">サードパーティ製APIアプリ</string>
+    <string name="thirdparty_apps_title" maxLength="41">サードパーティー製APIアプリ</string>
     <string name="thirdparty_apps_summary">辞書やユーティリティなど、AnkiDroidを活用するアプリのリストを見るにはここをタップしてください</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascriptのデバッグ</string>
-    <string name="html_javascript_debugging_summ">リモートのWebView接続を有効にし、カードのHTMLをAnkiDroidディレクトリに保存します</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">学習画面</string>
     <string name="show_deck_title" maxLength="41">デッキのタイトルを表示</string>
     <string name="accessibility" maxLength="41">アクセシビリティ</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
-    <string name="paste_as_png_summary">既定の設定ではAnkiDroidはディスク領域の節約のため、クリップボードにある画像をJPG画像として貼り付けます。 このオプションを有効にすると、JPG画像ではなくPNG画像として貼り付けます</string>
+    <string name="paste_as_png_summary">このオプションがオフ（デフォルト）の場合、クリップボードにある画像を貼り付ける際は、ディスク領域の節約のためにJPG形式の画像ファイルとして貼り付けます。このオプションをオンにすると、PNG形式の画像ファイルとして貼り付けます</string>
     <string name="exit_via_double_tap_back" maxLength="41">学習終了・アプリ終了には「戻る」操作２回</string>
     <string name="exit_via_double_tap_back_summ">学習画面とデッキリスト画面でそれぞれ、意図せず画面を閉じてしまう操作ミスを起こりにくくします</string>
     <!-- Allow all files in media imports -->
@@ -220,6 +217,7 @@
         <a href="%s">Learn more</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">同期URL</string>
+    <string name="custom_sync_certificate_title" maxLength="41">カスタムルート証明書 (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>
@@ -250,10 +248,8 @@
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます</string>
     <string name="note_editor_replace_newlines" maxLength="41">改行タグを改行に置き換えて表示</string>
     <string name="note_editor_replace_newlines_summ">「ノートを編集」画面のフィールドで、改行を表すHTMLタグ &lt;br&gt; を表示せず、実際に改行に置き換えた状態で表示します。新たに改行を行った場合も、その箇所に &lt;br&gt; タグを挿入しますが、そのタグは表示しません</string>
-    <string name="no_code_formatting" maxLength="41">文字入力回答でシンプルなフォントを使用</string>
-    <string name="no_code_formatting_summ">文字入力して解答する種類のカードで、解答結果に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
-    <string name="type_in_answer_focus_summ">答えをキーボード入力する欄がカード内にある場合、自動的にカーソルを入れて、すぐに文字を入力できる状態にします</string>
+    <string name="type_in_answer_focus_summ">答えをキーボード入力するタイプのカードでは、カードを表示したときに、あらかじめ文字入力欄を選択してキーボードを表示した状態にします</string>
     <!-- About -->
     <string name="open_changelog">変更履歴を開く</string>
     <string name="pref_cat_about_title" maxLength="41">AnkiDroidについて</string>
@@ -270,6 +266,17 @@
     <string name="key_picker_default_press_key">いずれかのキーを押してください</string>
     <string name="binding_add_axis">ジョイスティック/モーションコントローラーの動作を追加</string>
     <string name="axis_picker_move_joystick">ジョイスティック/モーションコントローラーを動かしてください</string>
+    <string name="user_actions" maxLength="41">ユーザーアクション</string>
+    <string name="user_actions_summary" maxLength="41">JavaScriptで記述された任意の動作を実行します</string>
+    <string name="user_action_1" maxLength="41">ユーザーアクション 1</string>
+    <string name="user_action_2" maxLength="41">ユーザーアクション 2</string>
+    <string name="user_action_3" maxLength="41">ユーザーアクション 3</string>
+    <string name="user_action_4" maxLength="41">ユーザーアクション 4</string>
+    <string name="user_action_5" maxLength="41">ユーザーアクション 5</string>
+    <string name="user_action_6" maxLength="41">ユーザーアクション 6</string>
+    <string name="user_action_7" maxLength="41">ユーザーアクション 7</string>
+    <string name="user_action_8" maxLength="41">ユーザーアクション 8</string>
+    <string name="user_action_9" maxLength="41">ユーザーアクション 9</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>
@@ -283,8 +290,8 @@
     <string name="bindings_already_bound">すでに「%s」の操作に割り当て済みです</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
-    <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
-    <string name="readtext_reviewer_warn">Please upgrade to the new text to speech format</string>
+    <string name="readtext_deprecation_warn">AnkiDroidは、他のAnkiクライアント（デスクトップ版Anki、AnkiMobile）と互換性がある、より優れたTTS（テキスト読み上げ）システムを導入しました。新システムでは、より多くの音声や、品質の向上した再生機能が利用できます。\n\n従来のTTSシステムを対象とするこのオプションは近い将来に削除され、利用できなくなります。そうなる前に、できるだけ早く、ノートタイプ内のカードテンプレートを新しいTTSシステムに対応したものに変更することをおすすめします。</string>
+    <string name="readtext_reviewer_warn" tools:ignore="UnusedResources">テキスト読み上げ（TTS）の新しいフォーマットにアップグレードしてください</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>
@@ -296,12 +303,12 @@
          ####################################################################################### -->
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroidは一定時間（分）ごとにコレクションのバックアップを作成しています。
         各期間（日／週／月）の代表として保管するバックアップ以外のバックアップは、
-        ディスク領域を空けるために、作成から2日以上経過した後に削除していきます。
+        ストレージ容量を圧迫しないよう、作成から2日以上経過した後に削除していきます。
         <br><br>
-        注意：メディアファイル（画像／音声／動画）はこの自動バックアップの対象外です。
-        アプリ内のデータを失う不測の事態に備えて、コレクションのAnkiWebとの同期や、AnkiWeb以外のアプリ外部の場所へのコレクションのエクスポートを、メディアファイルを含めた状態で定期的に行うことを強くおすすめします。
+        注意：メディアファイル（画像／音声／動画のファイル）はこの自動バックアップの対象外です。
+        デバイスの故障・紛失など、アプリ内のコレクションを失う万一の事態に備えて、AnkiWebとの同期や、AnkiWeb以外のアプリ外部の保存場所（Googleドライブなど）へのエクスポートを、メディアファイルを含めた状態で定期的に行うことを強くおすすめします。
         <br><br>
-        バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面右上のメニューから行えます。
+        コレクションのエクスポートや、バックアップからのコレクションの復元は、デッキリスト画面右上のメニューから行えます。
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動バックアップの間隔（分）</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">各日代表のバックアップ保管数（何日分）</string>
@@ -324,7 +331,7 @@
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">バックアップを削除</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">バックアップを削除</string>
-    <string name="progress__deleting_backups">バックアップを削除しています...</string>
+    <string name="progress__deleting_backups">バックアップを削除しています&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">コレクションを削除</string>
     <string name="pref__delete_collection__summary">コレクション、メディア（画像・音声・動画）、バックアップを削除します。アプリの設定は削除されません</string>
@@ -350,4 +357,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">取得中&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">計算中&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">コレクションが存在しません</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">システムバーを隠す</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">なし（すべて表示）</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">ステータスバー（通知バー）</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">ナビゲーションバー</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">すべて</string>
+    <string name="ignore_display_cutout" maxLength="41">ノッチ（ディスプレイ上部のくぼみ）を無視</string>
+    <string name="hide_answer_buttons" maxLength="41">解答ボタン・回答ボタンを隠す</string>
 </resources>

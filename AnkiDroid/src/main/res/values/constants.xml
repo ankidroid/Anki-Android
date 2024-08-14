@@ -124,6 +124,7 @@
     <string name="link_help_ar">https://docs.ankidroid.org/help-ar.html</string>
     <string name="link_manual_ar">https://docs.ankidroid.org/manual-ar.html</string>
     <string name="link_manual_note_format_toolbar">https://docs.ankidroid.org/manual.html#noteFormattingToolbar</string>
+    <string name="link_user_actions_help">https://ankidroid.org/#userActions</string>
     <string name="link_faq_tts">https://github.com/ankidroid/Anki-Android/wiki/FAQ#tts--text-to-speech-is-not-speaking</string>
     <string name="link_faq_missing_media" tools:ignore="Typos">https://github.com/ankidroid/Anki-Android/wiki/FAQ#why-doesnt-my-sound-or-image-work-on-ankidroid</string>
     <string name="link_third_party_api_apps">https://github.com/ankidroid/Anki-Android/wiki/Third-Party-Apps</string>
@@ -133,10 +134,13 @@
     <string name="repair_deck">https://docs.ankiweb.net/#/files?id=corrupt-collections</string>
     <string name="resetpw_url">https://ankiweb.net/account/resetpw</string>
     <string name="register_url">https://ankiweb.net/account/register</string>
+    <string name="remove_account_url">https://ankiweb.net/account/remove-account</string>
     <string name="link_reddit">https://www.reddit.com/r/Anki/</string>
     <string name="link_ankidroid_privacy_policy">https://github.com/ankidroid/Anki-Android/wiki/Privacy-Policy</string>
     <string name="link_ankiweb_privacy_policy">https://ankiweb.net/account/privacy</string>
     <string name="link_ankiweb_terms_and_conditions">https://ankiweb.net/account/terms</string>
+    <string name="link_webview_update">https://github.com/ankidroid/Anki-Android/wiki/WebView-Detection-and-Package-Updates#outdated-webview</string>
+    <string name="link_legacy_webview_update">https://github.com/ankidroid/Anki-Android/wiki/WebView-Detection-and-Package-Updates#outdated-android-native-webview</string>
     <!-- Link is in the name of Glutanimate - server admin -->
     <string name="link_discord">https://discord.gg/qjzcRTx</string>
     <string name="link_facebook">https://www.facebook.com/AnkiDroid/</string>
@@ -150,6 +154,7 @@
     <string name="link_install_non_play_store_install">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
     <string name="link_migration_failed_dialog_learn_more_en">https://docs.ankidroid.org/storage-migration-error.html</string>
+    <string name="link_set_due_date_help">https://docs.ankiweb.net/browsing.html#cards</string>
     <string name="migration_failed_help_url">https://docs.ankidroid.org/storage-migration-error.html</string>
 
     <string-array name="cram_deck_conf_order_values">
@@ -216,6 +221,25 @@
         <item>@string/sync_media_always_value</item>
         <item>@string/sync_media_only_unmetered_value</item>
         <item>@string/sync_media_never_value</item>
+    </string-array>
+
+    <string-array name="hide_system_bars_entries">
+        <item>@string/hide_system_bars_none</item>
+        <item>@string/hide_system_bars_status_bar</item>
+        <item>@string/hide_system_bars_navigation_bar</item>
+        <item>@string/hide_system_bars_all_bars</item>
+    </string-array>
+
+    <string name="hide_system_bars_none_value">0</string>
+    <string name="hide_system_bars_status_bar_value">1</string>
+    <string name="hide_system_bars_navigation_bar_value">2</string>
+    <string name="hide_system_bars_all_value">3</string>
+
+    <string-array name="hide_system_bars_values">
+        <item>@string/hide_system_bars_none_value</item>
+        <item>@string/hide_system_bars_status_bar_value</item>
+        <item>@string/hide_system_bars_navigation_bar_value</item>
+        <item>@string/hide_system_bars_all_value</item>
     </string-array>
 
     <!-- Preferences headers summaries -->
@@ -295,4 +319,5 @@
     <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
     <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
     <string name="reset_onboarding_desc">Show all tutorials again</string>
+
 </resources>

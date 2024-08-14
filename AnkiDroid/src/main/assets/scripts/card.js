@@ -99,11 +99,11 @@ function reloadPage() {
     window.location.href = "signal:reload_card_html";
 }
 
-/* Tell the app the text in the input box when it loses focus */
-function taBlur(itag) {
+/* Inform the app of the current 'type in the answer' value */
+function taChange(itag) {
     //#5944 - percent wasn't encoded, but Mandarin was.
     var encodedVal = encodeURI(itag.value);
-    window.location.href = "typeblurtext:" + encodedVal;
+    window.location.href = "typechangetext:" + encodedVal;
 }
 
 /* Look at the text entered into the input box and send the text on a return */
@@ -162,6 +162,8 @@ var onPageFinished = function () {
 
     var card = document.querySelector(".card");
 
+    var typedElement = document.getElementsByName("typed")[0];
+
     _runHook(onUpdateHook)
         .then(() => {
             if (window.MathJax != null) {
@@ -184,6 +186,12 @@ var onPageFinished = function () {
             }
         })
         .then(() => card.classList.add("mathjax-rendered"))
+        .then(() => {
+            // Focus if the element contains the attribute
+            if (typedElement && typedElement.getAttribute("data-focus")) {
+                typedElement.focus();
+            }
+        })
         .then(_runHook(onShownHook));
 };
 
@@ -238,4 +246,15 @@ function showAllHints() {
     document.querySelectorAll("a.hint").forEach(el => {
         el.click();
     });
+}
+
+function userAction(number) {
+    try {
+        let userJs = globalThis[`userJs${number}`];
+        if (userJs != null) {
+            userJs();
+        }
+    } catch (e) {
+        alert(e);
+    }
 }

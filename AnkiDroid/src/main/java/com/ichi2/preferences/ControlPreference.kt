@@ -23,23 +23,29 @@ import android.util.AttributeSet
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
+import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.anki.reviewer.MappableBinding.Screen
 import com.ichi2.anki.reviewer.screenBuilder
+import com.ichi2.anki.showThemedToast
 import com.ichi2.ui.AxisPicker
 import com.ichi2.ui.KeyPicker
-import com.ichi2.utils.*
+import com.ichi2.utils.customView
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 
 /**
  * A preference which allows mapping of inputs to actions (example: keys -> commands)
@@ -127,12 +133,7 @@ class ControlPreference : ListPreference {
                     customView(view = gesturePicker)
 
                     gesturePicker.onGestureChanged { gesture ->
-                        showToastIfBindingIsUsed(
-                            fromGesture(
-                                gesture,
-                                screenBuilder
-                            )
-                        )
+                        warnIfBindingIsUsed(fromGesture(gesture, screenBuilder), gesturePicker)
                     }
                 }
             }
@@ -145,12 +146,11 @@ class ControlPreference : ListPreference {
 
                     // When the user presses a key
                     keyPicker.setBindingChangedListener { binding ->
-                        showToastIfBindingIsUsed(
-                            MappableBinding(
-                                binding,
-                                screenBuilder(CardSide.BOTH)
-                            )
+                        val mappableBinding = MappableBinding(
+                            binding,
+                            screenBuilder(CardSide.BOTH)
                         )
+                        warnIfBindingIsUsed(mappableBinding, keyPicker)
                     }
 
                     positiveButton(R.string.dialog_ok) {
@@ -216,6 +216,14 @@ class ControlPreference : ListPreference {
         return getCommandWithBindingExceptThis(binding) != null
     }
 
+    private fun warnIfBindingIsUsed(binding: MappableBinding, warningDisplay: WarningDisplay) {
+        getCommandWithBindingExceptThis(binding)?.let {
+            val name = context.getString(it.resourceId)
+            val warning = context.getString(R.string.bindings_already_bound, name)
+            warningDisplay.setWarning(warning)
+        } ?: warningDisplay.clearWarning()
+    }
+
     /** Displays a warning to the user if the provided binding couldn't be used */
     private fun showToastIfBindingIsUsed(binding: MappableBinding) {
         val bindingCommand = getCommandWithBindingExceptThis(binding)
@@ -223,7 +231,7 @@ class ControlPreference : ListPreference {
 
         val commandName = context.getString(bindingCommand.resourceId)
         val text = context.getString(R.string.bindings_already_bound, commandName)
-        UIUtils.showThemedToast(context, text, true)
+        showThemedToast(context, text, true)
     }
 
     /** @return command where the binding is mapped excluding the current command */

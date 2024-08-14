@@ -18,7 +18,7 @@ package com.ichi2.anki.jsaddons
 
 import timber.log.Timber
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
 import java.util.regex.Pattern
 
 object NpmUtils {
@@ -83,10 +83,7 @@ object NpmUtils {
             val arr = name.split('/')
             val scope = arr[0].removePrefix("@")
             val isValidScopeName = validateName(scope)
-
-            if (!isValidScopeName) {
-                return isValidScopeName
-            }
+            if (!isValidScopeName) return false
 
             // validate name again
             return validateName(arr[1])

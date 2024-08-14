@@ -48,10 +48,14 @@
     <string name="check_db_warning">Cela peut prendre du temps</string>
     <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Aucun langage de synthèse vocale disponible</string>
     <string name="tts_no_tts">Ne pas parler</string>
     <string name="unused_strings">\n\nFichiers inutilisés :\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Aperçu</string>
     <string name="reposition_card_dialog_title">Repositionner la nouvelle carte</string>
     <string name="reposition_card_dialog_message">Position de départ:</string>
     <string name="reposition_card_not_new_error">Seules les nouvelles cartes peuvent être repositionnées</string>
@@ -60,27 +64,10 @@
         <item quantity="other">%d cartes repositionnées</item>
     </plurals>
     <string name="reset_card_dialog_title">Réinitialiser les progrès de la carte</string>
-    <string name="reset_card_dialog_message">Cette carte sera placée à la fin de la nouvelle file de cartes.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d carte réinitialisée</item>
         <item quantity="other">%d cartes réinitialisées</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Replanifier %d carte</item>
-        <item quantity="other">Replanifier %d cartes</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Intervalle actuel : %d jour</item>
-        <item quantity="other">Intervalle actuel : %d jours</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Replanifier pour révision dans x jours :</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d carte replanifiée</item>
-        <item quantity="other">%d cartes replanifiées</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Une nouvelle carte est en cours de replanification. La replanification transforme également les nouvelles cartes en cartes de révision. Utilisez l\'option « repositionner la carte » pour changer la position d\'une nouvelle carte dans la nouvelle file d\'attente</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">La replanification réinitialise également la façon dont le planificateur traite la carte dans le futur (la facilité sera réglée à %d%%)</string>
     <string name="answering_error_title">Erreur de la base de données</string>
     <string name="answering_error_message">L\'écriture de la collection a échoué. La base de données pourrait être corrompue ou il se peut qu\'il n\'y ait pas assez d\'espace libre sur le disque.\n\nSi ceci se produit plus souvent, essayez de vérifier la base de données, de réparer la collection ou de la restaurer à partir d\'une sauvegarde. Touchez « options » pour cela.\n\Ou il pourrait s\'agir d\'une erreur AnkiDroid ; veuillez signaler l\'erreur pour que nous puissions vérifier ceci.</string>
     <string name="answering_error_report">Signaler les erreurs</string>
@@ -109,6 +96,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirmer</string>
     <string name="dialog_no">Non</string>
     <string name="dialog_yes">Oui</string>
+    <string name="dialog_keep">Conserver</string>
+    <string name="dialog_remove">Retirer</string>
     <string name="dialog_continue">Continuer</string>
     <string name="dialog_processing">Traitement&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Créer</string>
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">Réparer</string>
     <string name="dialog_positive_replace">Remplacer</string>
     <string name="dialog_collection_path_not_dir">Le chemin indiqué ne mène pas à un répertoire valide</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Vérifier les médias ?</string>
     <string name="check_media_warning">Cela peut prendre longtemps avec les grandes collections de médias</string>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">Impossible d’ouvrir l’éditeur multimédia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permission d\'enregistrement audio refusée</string>
-    <string name="mutimedia_editor_assertion_failed">Une erreur inconnue s\'est produite lors de l\'affichage de l\'éditeur avancé</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid mis à jour</string>
     <string name="integrity_check_startup_content">AnkiDroid a été mis à jour. Cette mise à jour inclut des corrections pour d\'éventuels problèmes de base de données, et nous vous conseillons d\'exécuter une vérification de la base de données immédiatement.</string>
@@ -175,7 +166,7 @@
     <string name="failed_to_apply_background_image">Impossible d\'appliquer l\'image d\'arrière-plan %s</string>
     <string name="background_image_too_large">L\'arrière-plan du sélecteur de paquets est trop grand</string>
     <string name="image_max_size_allowed">Taille maximale de l’image de %d Mo autorisée</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Les dimensions de l\'image sont trop grandes (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Autorisation de stockage requise manquante. Veuillez accorder l’autorisation de stockage puis réessayez.</string>
@@ -213,13 +204,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">Termes et conditions d\'utilisation d\'AnkiWeb</string>
     <string name="help_title_send_exception">Envoyer un rapport de dépannage</string>
     <string name="help_dialog_exception_report_debounce">Rapport déjà soumis</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Le rapport a été envoyé !</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Une synchronisation automatique peut être déclenchée dans %d seconde</item>
         <item quantity="other">Une synchronisation automatique peut être déclenchée dans %d secondes</item>
     </plurals>
-    <string name="metered_sync_warning">Votre connexion est limitée. Le transfert de données peut coûter de l\'argent</string>
+    <string name="metered_sync_data_warning">Votre fournisseur d\'accès Internet peut vous facturer pour l\'utilisation des données</string>
     <string name="deck_picker_new">Nombre de nouvelles cartes à voir aujourd\'hui dans ce paquet.</string>
     <string name="deck_picker_rev">Nombre de cartes prévues aujourd\'hui dans ce paquet.</string>
     <string name="deck_picker_lrn">Nombre de cartes en cours d\'apprentissage dans ce paquet.</string>
@@ -242,4 +233,31 @@
     <string name="dismiss_backup_warning_title">Risque de perte de données</string>
     <string name="dismiss_backup_warning_new_user">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront supprimées de votre téléphone si l\'application est désinstallée</string>
     <string name="dismiss_backup_warning_upgrade">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront inaccessibles si l\'application est désinstallée</string>
+    <string name="deck_already_exists">Le paquet existe déjà</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

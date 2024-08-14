@@ -55,12 +55,12 @@
     </plurals>
     <string name="card_browser_all_decks">Todos os baralhos</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">Excluir cartão</item>
+        <item quantity="other">Excluir cartões</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">Excluir nota</item>
+        <item quantity="other">Excluir notas</item>
     </plurals>
     <string name="card_browser_change_deck">Mudar Baralho</string>
     <string name="delete_card_title">Excluir nota?</string>
@@ -74,6 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">Nome para a pesquisa atual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Você não pode salvar uma pesquisa sem um nome</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">O nome já existe</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Excluir \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
     <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
@@ -99,6 +100,7 @@
     <string name="card_browser_search_all_decks">Pesquisar em todos os baralhos</string>
     <string name="card_browser_unknown_deck_name">Desconhecido</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Mostrar menos</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Hoje é \'0 %1$s\', amanhã é \'1 %2$s\', etc.</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Exportar cartão</item>
         <item quantity="other">Exportar cartões</item>

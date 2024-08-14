@@ -64,22 +64,22 @@
     <string name="log_out">Odhlásiť</string>
     <string name="reset_password">Obnoviť heslo</string>
     <string name="lost_mail_instructions">Zabudli ste e-mail?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Prihlasovanie</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Možnosti pre XXX</string>
     <string name="sync_title">Synchronizácia</string>
     <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server Ankiweb</string>
     <string name="sync_database_acknowledge">Kolekcia synchronizovaná</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Vaša databáza je poškodená. Prosím opravte ju pred opätovným pokusom o synchronizáciu.\n\nPozrite si %s pre informácie o oprave databázy.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Miestnu</string>
     <string name="sync_sanity_remote">Vzdialenú</string>
-    <string name="force_full_sync_title">Vynútiť úplnú synchronizáciu</string>
-    <string name="force_full_sync_summary">Pri ďalšej synchronizácii, vynútiť zmeny v jednom smere</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">Jednosmerná sznchronizácia</string>
+    <string name="one_way_sync_confirmation">Zvolená jednosmerná synchronizácia</string>
     <string name="full_sync_confirmation">Požadované zmeny si vyžadujú úplné nahratie databázy na server pri ďalšej synchronizácii vašej zbierky. Ak máte naplánované skúšanie alebo zmeny na iných zariadeniach, ktoré ešte neboli synchronizované, budú stratené. Chcete pokračovať?</string>
     <string name="full_sync_confirmation_upgrade">Kvôli chybe v predchádzajúcej nainštalovanej verzii AnkiDroid, odporúča sa úplná synchronizácia.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Úplná synchronizácia</string>
+    <string name="sync_menu_title_one_way_sync">Sznchronizácia (jednosmerná)</string>
     <string name="sync_menu_title_no_account">Synchronizácia (prihlásiť)</string>
 </resources>

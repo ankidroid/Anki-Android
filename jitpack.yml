@@ -1,9 +1,14 @@
 # We want control over the SDK used to build since we need newer JDKs
+# Use the latest LTS supported by temurin with version format xx.yy.zz-tem (ignore sub-version)
+# You may find versions e.g. for JDK21 like so https://adoptium.net/temurin/archive/?version=21
+# You may verify that a JDK is installed by looking at the "sdk list java" output from, for example:
+# https://jitpack.io/com/github/ankidroid/Anki-Android/v2.18alpha7/build.log (just use a recent tag,
+# if it has not built yet you will have to wait for it to build then on refresh the build log should exist)
 before_install:
     - sdk update
     - sdk list java
-    - sdk install java 17.0.9-tem
-    - sdk use java 17.0.9-tem
+    - sdk install java 21.0.2-tem
+    - sdk use java 21.0.2-tem
 
 # We can do the absolute minimum to build the API module, no need to build AnkiDroid module
 install:

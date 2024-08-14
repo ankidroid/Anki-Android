@@ -24,8 +24,8 @@ import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.libanki.Media
 import org.acra.util.IOUtils
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
 import java.io.File
 
 /** Adds a media file to collection.media which [Media] is not aware of */

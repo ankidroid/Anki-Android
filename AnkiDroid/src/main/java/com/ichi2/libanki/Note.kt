@@ -29,7 +29,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import com.ichi2.utils.emptyStringArray
 import org.json.JSONObject
-import java.util.*
+import java.util.AbstractSet
 import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
@@ -48,9 +48,7 @@ class Note : Cloneable {
     var mid: Long = 0
         private set
     lateinit var tags: MutableList<String>
-        private set
     lateinit var fields: MutableList<String>
-        private set
     private var fMap: Map<String, Pair<Int, JSONObject>>? = null
     var usn = 0
         private set
@@ -67,9 +65,10 @@ class Note : Cloneable {
     }
 
     companion object {
-        fun fromNotetypeId(col: Collection, ntid: NoteTypeId): Note {
-            val backendNote = col.backend.newNote(ntid)
-            return Note(col, backendNote)
+        context (Collection)
+        fun fromNotetypeId(ntid: NoteTypeId): Note {
+            val backendNote = backend.newNote(ntid)
+            return Note(this@Collection, backendNote)
         }
     }
 
@@ -126,15 +125,14 @@ class Note : Cloneable {
         template["ord"] = card.ord
 
         val output = TemplateManager.TemplateRenderContext.fromCardLayout(
-            col = col,
             note = this,
             card = card,
             notetype = model,
             template = template,
             fillEmpty = fillEmpty
-        ).render()
+        ).render(col)
         card.renderOutput = output
-        card.setNote(this)
+        card.note = this
         return card
     }
 
@@ -203,19 +201,19 @@ class Note : Cloneable {
      * Tags
      * ***********************************************************
      */
-    fun hasTag(col: Collection, tag: String?): Boolean {
-        return col.tags.inList(tag!!, tags)
+    fun hasTag(col: Collection, tag: String): Boolean {
+        return col.tags.inList(tag, tags)
     }
 
     fun stringTags(col: Collection): String {
         return col.tags.join(col.tags.canonify(tags))
     }
 
-    fun setTagsFromStr(col: Collection, str: String?) {
-        tags = col.tags.split(str!!)
+    fun setTagsFromStr(col: Collection, str: String) {
+        tags = col.tags.split(str)
     }
 
-    fun removeTag(tag: String?) {
+    fun removeTag(tag: String) {
         val rem: MutableList<String> = ArrayList(
             tags.size
         )
@@ -236,8 +234,8 @@ class Note : Cloneable {
         tags.add(tag)
     }
 
-    fun addTags(tags: AbstractSet<String>?) {
-        tags!!.addAll(tags)
+    fun addTags(tags: AbstractSet<String>) {
+        tags.addAll(tags)
     }
 
     /**
@@ -248,7 +246,8 @@ class Note : Cloneable {
         return col.backend.noteFieldsCheck(this.toBackendNote()).state
     }
 
-    fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(col: Collection): String =
+        col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
     fun setField(index: Int, value: String) {
         fields[index] = value
@@ -309,7 +308,7 @@ fun Note.hasTag(tag: String) = this.hasTag(this@Collection, tag)
 
 /** @see Note.setTagsFromStr */
 context (Collection)
-fun Note.setTagsFromStr(str: String?) = this.setTagsFromStr(this@Collection, str)
+fun Note.setTagsFromStr(str: String) = this.setTagsFromStr(this@Collection, str)
 
 /** @see Note.load */
 context (Collection)

@@ -60,8 +60,8 @@
     <string name="expand">Ismànnia</string>
     <string name="collapse">Mìnima</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">mancat %d minutu</item>
+        <item quantity="other">mancant %d minutos</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
@@ -85,14 +85,14 @@
     <string name="ease_button_easy">Fàtzile</string>
     <string name="menu_import">Importa</string>
     <string name="undo">Annulla</string>
-    <string name="redo">Redo</string>
+    <string name="redo">Torra a fàghere</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Annulla su tratu</string>
     <string name="move_all_to_deck">Move totu a intro de su matzu</string>
     <string name="unbury">Disinterra</string>
     <string name="rename_deck">Càmbia nùmene a su matzu</string>
     <string name="create_shortcut">Crea un\'incurtzada</string>
     <string name="browse_cards">Esplora sas cartas</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Modìfica sa descritzione</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Annanghe</string>
     <string name="menu_add_note">Annanghe una nota</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sincroniza unu contu</string>
@@ -105,22 +105,16 @@
     <string name="menu_suspend">Suspende</string>
     <string name="menu_delete_note">Iscantzella sa nota</string>
     <string name="menu_flag">Bandera</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Marca sa carta cun una bandera</string>
-    <string name="menu_flag_card_zero">Peruna bandera</string>
-    <string name="menu_flag_card_one">Bandera ruja</string>
-    <string name="menu_flag_card_two">Bandera arantzu</string>
-    <string name="menu_flag_card_three">Bandera birde</string>
-    <string name="menu_flag_card_four">Bandera biaita</string>
-    <string name="menu_flag_card_five">Bandera rosa</string>
-    <string name="menu_flag_card_six">Bandera turchesa</string>
-    <string name="menu_flag_card_seven">Bandera pùrpura</string>
     <string name="menu_edit_tags">Modìfica sas etichetas</string>
     <string name="delete_note_message">Boles a beru iscantzellare custa nota e totu sas cartas suas?\n
                                              %s</string>
     <string name="menu_search">Chirca in %1$s</string>
     <string name="menu_mark_note">Marca sa nota</string>
     <string name="menu_unmark_note">Boga sa marcadura a sa nota</string>
-    <string name="menu_toggle_mic_tool_bar">Verìfica sa pronùntzia</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Crea unu matzu</string>
     <string name="new_dynamic_deck">Crea unu matzu filtradu</string>
     <string name="directory_inaccessible">Sa cartella de AnkiDroid no est atzessìbile</string>
@@ -136,10 +130,12 @@
     <string name="empty_filtered_deck">Isboidende su matzu filtradu&#8230;</string>
     <string name="custom_study_deck_name">Sessione de istùdiu personalizada</string>
     <string name="custom_study_deck_exists">In antis càmbia su nùmene a su matzu de istùdiu personalizadu chi esistit</string>
-    <string name="empty_deck">Custu matzu est bòidu</string>
     <string name="search_deck" comment="Deck search for selecting it">Chirca de matzos</string>
+    <string name="empty_deck">Custu matzu est bòidu</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chirca de matzos</string>
     <string name="invalid_deck_name">Nùmene de su matzu non vàlidu</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
@@ -149,7 +145,9 @@
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizatzione annullada</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullende&#8230;\n
     Bi diat pòdere chèrrere unu pagu de tempus.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Esporta su matzu</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Nudda</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Castas de cartas</string>
@@ -169,7 +167,6 @@
         <item quantity="one">Cheres iscantzellare sa casta de cartas “%2$s” e sa carta chi cuntenet?</item>
         <item quantity="other">Cheres iscantzellare sa casta de cartas “%2$s” e sas %1$d cartas suas?</item>
     </plurals>
-    <string name="invalid_template">No est istadu possìbile generare una carta</string>
     <string name="card_template_editor_would_delete_note">Iscantzellende custa casta de carta dias iscantzellare una o prus notas. Pro praghere in antis crea e sarva una casta de carta noa.</string>
     <string name="card_template_editor_save_error">Impossìbile sarvare sas modìficas a su mollu de carta: %s</string>
     <string name="template_for_current_card_deleted">Sa casta de carta pro sa carta atuale est istada iscantzellada.</string>
@@ -243,6 +240,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Sighi cun su tramudòngiu</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Non faghet a atzèdere a sa colletzione</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non semus in gradu de atzèdere a sa colletzione tua a pustis de sa disinstallatzione de AnkiDroid pro neghe de una modìfica in sa polìtica de su Play Store\n\nSos datos tuos sunt seguros e si podent ripristinare. Sunt postos in\n%s\n\nSeletziona un\'optzione in suta pro ripristinare:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Riprìstina dae AnkiWeb (cussigiadu)</string>
     <string name="install_non_play_store_ankidroid_recommended">Riprìstina s\'atzessu a sa cartella (cussigiadu)</string>
     <string name="install_non_play_store_ankidroid">Riprìstina s\'atzessu a sa cartella (avantzadu)</string>
@@ -255,4 +253,7 @@
     <string name="storage_access_summary">Sarvat sa colletzione tua in unu logu seguru chi non s\'at a iscantzellare si as a disinstallare s\'aplicatzione</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Atzessu a totu sos archìvios</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

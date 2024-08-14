@@ -25,7 +25,7 @@
         android:valueFrom="10"
         android:valueTo="300"
         android:stepSize="10"
-        app:displayFormat="@string/pref_summary_percentage"/>
+        app:displayFormat="@string/percentage"/>
     <com.ichi2.preferences.SliderPreference
         android:key="@string/image_zoom_preference"
         android:title="@string/image_zoom"
@@ -33,7 +33,7 @@
         android:valueFrom="50"
         android:valueTo="300"
         android:stepSize="10"
-        app:displayFormat="@string/pref_summary_percentage"/>
+        app:displayFormat="@string/percentage"/>
     <com.ichi2.preferences.SliderPreference
         android:title="@string/button_size"
         android:key="@string/answer_button_size_preference"
@@ -41,7 +41,7 @@
         android:valueFrom="10"
         android:valueTo="200"
         android:stepSize="10"
-        app:displayFormat="@string/pref_summary_percentage"/>
+        app:displayFormat="@string/percentage"/>
     <SwitchPreferenceCompat
         android:key="@string/show_large_answer_buttons_preference"
         android:defaultValue="false"
@@ -54,12 +54,13 @@
         android:valueFrom="10"
         android:valueTo="200"
         android:stepSize="10"
-        app:displayFormat="@string/pref_summary_percentage"/>
-    <com.ichi2.preferences.NumberRangePreferenceCompat
+        app:displayFormat="@string/percentage"/>
+    <com.ichi2.preferences.SliderPreference
         android:defaultValue="0"
         android:key="@string/pref_card_minimal_click_time"
-        android:summary="@string/pref_show_answer_long_press_summary"
-        android:title="@string/pref_show_answer_long_press"
-        app:min="0"
-        android:max="2000" />
+        android:summary="@string/pref_show_answer_long_press_time_summary"
+        android:title="@string/pref_show_answer_long_press_time"
+        android:valueFrom="0"
+        android:valueTo="2000"
+        app:displayFormat="@string/pref_milliseconds"/>
 </PreferenceScreen>

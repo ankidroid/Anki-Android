@@ -65,11 +65,11 @@
     <string name="enable_stylus">Kalem modunu aç</string>
     <string name="disable_stylus">Kalem kodunu kapat</string>
     <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
-    <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
+    <string name="disable_whiteboard">Yazı tahtasını devre dışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
     <string name="hide_whiteboard">Yazı tahtasını gizle</string>
     <string name="clear_whiteboard">Yazı tahtasını temizle</string>
-    <string name="replay_audio">Sesi yeniden çal</string>
+    <string name="replay_audio">Sesi tekrar oynat</string>
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="webview_crash_unknown">Bilinmeyen hata</string>
@@ -80,27 +80,6 @@
     <string name="webview_crash_fatal">Kritik Hata: WebView oluşturucusu çöktü. Neden: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Oluşturma Hatası</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
-    <!-- Browser -->
-    <string-array name="browser_column1_headings">
-        <item>Soru</item>
-        <item>Alanı sırala</item>
-    </string-array>
-    <string-array name="browser_column2_headings">
-        <item>Cevap</item>
-        <item>Kart</item>
-        <item>Deste</item>
-        <item>Not</item>
-        <item>Soru</item>
-        <item>Etiketler</item>
-        <item>Yanlışlar</item>
-        <item>Çalışmalar</item>
-        <item>Sıklık</item>
-        <item>Kolaylık</item>
-        <item>Vade</item>
-        <item>Kart Değiştirildi</item>
-        <item>Oluşturulma Tarihi</item>
-        <item>Değiştirilmiş Notlar</item>
-    </string-array>
     <string name="filter_by_flags">Bayraklar</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
@@ -112,10 +91,8 @@
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notu düzenle</string>
-    <string name="discard_unsaved_changes">Kapatıp şu anki girdi kaybedilsin mi?</string>
+    <string name="discard">Vazgeç</string>
     <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
-    <string name="note_editor_no_first_field">İlk alan boş</string>
-    <string name="note_editor_no_cloze_delations">Bu not türü boşluk doldurma içermelidir</string>
     <string name="note_editor_no_cards_created_all_fields">Seçili not türü hiç kart çıkarmadı.\nLütfen başka bir not türü seçin, veya \"Kartlar\"a basıp alan değişikliği ekleyin.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Boşluk doldurma sadece Boşluklu not türünde çalışır</string>
     <string name="saving_facts">Not kaydediliyor</string>
@@ -125,6 +102,7 @@
     <string name="select">Seç</string>
     <string name="field_remapping">%1$s (\'%2$s\' içinden)</string>
     <string name="confirm_map_cards_to_nothing">Hiçbir şeyle eşlemeyen tüm kartlar silinecektir. Eğer bir notun kalan kartları yoksa, kaybolacaktır. Devam etmek istediğinizden emin misiniz?</string>
+    <string name="missing_note_type">Not türü bulunmuyor</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Zaman sınırına ulaşıldı</string>
     <plurals name="timebox_reached">
@@ -138,10 +116,11 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kartı</string>
     <string name="note_editor_copy_note">Notu kopyala</string>
-    <string name="card_editor_reposition_card">Yerini değiştir</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Yerini değiştir</string>
     <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Yeniden planla</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Önizle</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Markdown olarak kopyala</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d içinden %1$d tanesi</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Yeniden adlandır</string>
     <string name="checks_action">Kontrol et</string>
@@ -153,6 +132,7 @@
     <string name="delete_deck">Deste siliniyor&#8230;</string>
     <string name="info_rate">AnkiDroid\'e oy ver</string>
     <string name="import_title">İçeri Aktarılıyor</string>
+    <string name="import_preparing_file">Dosya içeri aktarma için hazırlanıyor&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silecek ve şu dosyanın verileriyle değiştirecek: %s</string>
     <string name="import_dialog_message_add">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir</string>
@@ -166,7 +146,7 @@
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_preparation_in_progress">Dışa aktarım hazırlanıyor&#8230;</string>
     <string name="export_ready_title">Dışa aktarım hazır</string>
-    <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
+    <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor&#8230;</string>
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_share_title">Anki paketini göndermek için kullan</string>
@@ -180,6 +160,7 @@
         ]]></string>
     <string name="export_choice_share">Paylaş</string>
     <string name="export_choice_save_to">Kaydet</string>
+    <string name="export_saving_exported_collection">Dışarı aktarılan dosya kaydediliyor&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Seçenekler</string>
     <string name="menu__deck_options">Deste seçenekleri</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Çalışma seçenekleri</string>
@@ -202,17 +183,15 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
-    <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına bilgisayardan veya telefondan girin: </string>
+    <string name="no_browser_msg">%s linkini açacak tarayıcı bulunamadı</string>
     <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arkaplan</string>
     <string name="choose_an_image">Bir resim seç</string>
+    <string name="remove_background_image">Arkaplan kaldırılsın mı?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Varsayılana Dön</string>
-    <string name="cloze_sample_text">Bu {{%1$s::örnek}} bir boşluk doldurmadır.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">örnik</string>
-    <string name="basic_answer_sample_text">bir örnek</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Yazı tahtası resmi kaydedilemedi. %s</string>
@@ -304,7 +283,7 @@
     <string name="migration_part_1_done_resume">AnkiDroid\'i kullanmaya devam edebilirsiniz.
 \nDepolama geçişi arkaplanda devam edecek.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s geçerli bir javascript eklenti paketi değil</string>
+    <string name="not_valid_js_addon_package">%s geçerli bir JavaScript eklenti paketi değil</string>
     <string name="could_not_create_dir">Klasör oluşturma hatası %s</string>
     <string name="malicious_archive_entry_outside">Kötü niyetli arşiv. Hedef dizinin dışında girdi içeriyor: %s</string>
     <string name="malicious_archive_exceeds_limit">Kötü niyetli arşiv. Boyut %1$s\'tan büyük ya da %2$d dosyadan fazlasını içeriyor</string>
@@ -313,12 +292,15 @@
     <string name="expand_tag">\"%s\" etiketini genişlet</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Koleksiyona erişilemedi. Lütfen tekrar deneyin!</string>
+    <string name="cd_manage_notetypes_add">Yeni bir not türü ekle</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Daha az ders çalış</string>
     <string name="intro_ankidroid_tagline_two">Daha çok hatırla</string>
     <string name="intro_short_ankidroid_explanation">Anki\'nin kart zamanlayıcısı en zayıf anılarınızı güçlendirip en güçlülerinizi muhafaza ederek zaman kazandırır</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Başla</string>
     <string name="intro_sync_from_ankiweb">AnkiWeb\'den senkronize et</string>
+    <!-- IntentHandler -->
+    <string name="app_not_initialized_new">AnkiDroid henüz açılmadı. Lütfen AnkiDroid\'i açıp tekrar deneyin</string>
     <string name="already_logged_in">Zaten giriş yapılmış</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deste oluşturuldu</string>
@@ -354,7 +336,16 @@
     <string name="tts_voices_failed_opening_tts_system_settings" comment="error message if opening the system text to speech settings fails">        Metin okuma ayarları açılamadı
     </string>
     <string name="shared_decks_login_required">Daha fazla deste indirmek için lütfen giriş yapın</string>
-    <string name="deck_description_field_hint">Description</string>
-    <string name="failed_to_copy">Failed to copy</string>
-    <string name="card_browser_unavailable_when_notes_only">Unavailable in ‘Notes Only’ mode</string>
+    <string name="deck_description_field_hint">Açıklama</string>
+    <string name="failed_to_copy">Kopyalanamadı</string>
+    <string name="card_browser_unavailable_when_notes_mode">\"Notlar\" modunda kullanılamıyor</string>
+    <plurals name="unbury_cards_feedback">
+        <item quantity="one">%d kart çıkarıldı</item>
+        <item quantity="other">%d kart çıkarıldı</item>
+    </plurals>
+    <string name="card_template_reposition_template" comment="move a card template to a new position">Yerini değiştir</string>
+    <string name="start_recording">Kayda başla</string>
+    <string name="stop_recording">Durdur</string>
+    <string name="play_recording">Oynat</string>
+    <string name="next_recording">Sonraki</string>
 </resources>

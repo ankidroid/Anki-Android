@@ -50,14 +50,14 @@
     <string name="backup_new_collection">Uus kogumik</string>
     <string name="backup_del_collection">Kustuta kogumik ja loo uut</string>
     <string name="backup_del_collection_question">Kustuta kogumik ja loo uut? See kustutab kõike teie õppimise andmeid ja kustutab kõik kaardid.</string>
-    <string name="backup_full_sync_from_server">Full sync from server</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
     <string name="error_handling_title">Error handling</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Valikud</string>
     <string name="backup_retry_opening">Retry opening</string>
     <string name="backup_error_menu_repair">Paranda andmebaasi</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Parandan andmebaasi...</string>
+    <string name="backup_repair_deck_progress">Parandan andmebaasi&#8230;</string>
     <string name="backup_invalid_file_error">Valitud tagavara fail oli kehtetu</string>
     <string name="backup_restore_select_title">Select backup to restore</string>
     <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>

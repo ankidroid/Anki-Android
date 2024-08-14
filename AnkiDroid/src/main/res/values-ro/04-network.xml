@@ -70,16 +70,16 @@
     <string name="sync_title">Sincronizare</string>
     <string name="sync_log_uploading_message">Sincronizare completă din local</string>
     <string name="sync_database_acknowledge">Colectia sincronizata</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Baza de date este corupta. Vă rugăm să o refaceti înainte de a încerca din nou să sync.\n\nSee %s pentru informaţii despre repararea bazei de date.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remote</string>
-    <string name="force_full_sync_title">Force full sync</string>
-    <string name="force_full_sync_summary">On next sync, force changes in one direction</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
+    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
 </resources>

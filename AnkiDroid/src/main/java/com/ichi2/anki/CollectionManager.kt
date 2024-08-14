@@ -21,20 +21,25 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.backend.backendError
+import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
-import com.ichi2.utils.isRobolectric
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.Translations
+import okio.withLock
 import timber.log.Timber
 import java.io.File
+import java.util.concurrent.locks.ReentrantLock
 
 object CollectionManager {
     /**
@@ -59,9 +64,9 @@ object CollectionManager {
     @VisibleForTesting
     var emulateOpenFailure = false
 
-    /** A speed optimisation to remove the logging function of the collection */
-    @VisibleForTesting
-    var disableLogFile: Boolean = false
+    private val testMutex = ReentrantLock()
+
+    private var currentSyncCertificate: String = ""
 
     /**
      * Execute the provided block on a serial background queue, to ensure
@@ -86,6 +91,12 @@ object CollectionManager {
      *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
     private suspend fun<T> withQueue(@WorkerThread block: CollectionManager.() -> T): T {
+        if (isRobolectric) {
+            // #16253 Robolectric Windows: `withContext(queue)` is insufficient for serial execution
+            return testMutex.withLock {
+                this@CollectionManager.block()
+            }
+        }
         return withContext(queue) {
             this@CollectionManager.block()
         }
@@ -231,7 +242,7 @@ object CollectionManager {
         if (collection == null || collection!!.dbClosed) {
             val path = collectionPathInValidFolder()
             collection =
-                collection(path, log = !disableLogFile, backend)
+                collection(path, backend)
         }
     }
 
@@ -257,13 +268,14 @@ object CollectionManager {
     /**
      * Like [withQueue], but can be used in a synchronous context.
      *
-     * Note: Because [runBlocking] inside `RobolectricTest.runTest` will lead to
-     * deadlocks, this will not block when run under Robolectric,
-     * and there is no guarantee about concurrent access.
+     * Note: [runBlocking] inside `RobolectricTest.runTest` will lead to deadlocks, so
+     * under Robolectric, this uses a mutex
      */
     private fun <T> blockForQueue(block: CollectionManager.() -> T): T {
         return if (isRobolectric) {
-            block(this)
+            testMutex.withLock {
+                block(this)
+            }
         } else {
             runBlocking {
                 withQueue(block)
@@ -389,5 +401,28 @@ object CollectionManager {
         // note: we avoid the call to .limitedParallelism() here,
         // as it does not seem to be compatible with the test scheduler
         queue = dispatcher
+    }
+
+    /**
+     * Update the custom TLS certificate used in the backend for its requests to the sync server.
+     *
+     * If the cert parameter hasn't changed from the cached sync certificate, then just return true.
+     * Otherwise, set the custom certificate in the backend and get the success value.
+     *
+     * If cert was a valid certificate, then cache it in currentSyncCertificate and return true.
+     * Otherwise, return false to indicate that a custom sync certificate was not applied.
+     *
+     * Passing in an empty string unsets any custom sync certificate in the backend.
+     */
+    fun updateCustomCertificate(cert: String): Boolean {
+        if (cert == currentSyncCertificate) {
+            return true
+        }
+
+        return getBackend().setCustomCertificate(cert).apply {
+            if (this) {
+                currentSyncCertificate = cert
+            }
+        }
     }
 }

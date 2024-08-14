@@ -20,15 +20,29 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
 import com.ichi2.anki.model.RelativeFilePath
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.FileConflictResolutionFailedException
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.MigrationContext
+import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.compat.Test21And26
-import com.ichi2.testutils.*
-import org.hamcrest.CoreMatchers.*
+import com.ichi2.testutils.TestException
+import com.ichi2.testutils.addTempFile
+import com.ichi2.testutils.createTransientDirectory
+import com.ichi2.testutils.createTransientFile
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.endsWith
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasSize
 import org.hamcrest.io.FileMatchers
 import org.junit.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertFailsWith
@@ -226,7 +240,7 @@ class MoveConflictedFileTest : Test21And26(), OperationTest {
      * @param sourceFileName The name of the source file: "file.ext"
      * @param content The content of the source file
      */
-    private class InputParameters constructor(
+    private class InputParameters(
         private vararg val directoryComponents: String,
         val sourceFileName: String,
         val content: String = "source content"

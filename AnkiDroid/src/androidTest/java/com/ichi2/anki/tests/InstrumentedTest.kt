@@ -24,7 +24,6 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import com.ichi2.annotations.DuplicatedCode
@@ -33,7 +32,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
+import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
 import org.junit.After
@@ -47,7 +46,7 @@ import kotlin.test.fail
 
 abstract class InstrumentedTest {
     internal val col: Collection
-        get() = CollectionHelper.instance.getColUnsafe(testContext)!!
+        get() = CollectionManager.getColUnsafe()
 
     @get:Throws(IOException::class)
     protected val emptyCol: Collection
@@ -102,20 +101,18 @@ abstract class InstrumentedTest {
     fun runBeforeEachTest() {
         closeAndroidNotRespondingDialog()
         // resolved issues with the collection being reused if useInMemoryDatabase is false
-        CollectionHelper.instance.setColForTests(null)
+        CollectionManager.setColForTests(null)
     }
 
     @After
     fun runAfterEachTest() {
         try {
-            if (CollectionHelper.instance.colIsOpenUnsafe()) {
-                CollectionHelper
-                    .instance
-                    .getColUnsafe(InstrumentationRegistry.getInstrumentation().targetContext)!!
-                    .debugEnsureNoOpenPointers()
+            if (CollectionManager.isOpenUnsafe()) {
+                CollectionManager.getColUnsafe().debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.instance.closeCollection("InstrumentedTest: End")
+            Timber.i("closeCollection: %s", "InstrumentedTest: End")
+            CollectionManager.closeCollectionBlocking()
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -131,7 +128,6 @@ abstract class InstrumentedTest {
 
     /** Restore regular collection behavior  */
     private fun disableNullCollection() {
-        CollectionHelper.setInstanceForTesting(CollectionHelper())
         CollectionManager.emulateOpenFailure = false
     }
 

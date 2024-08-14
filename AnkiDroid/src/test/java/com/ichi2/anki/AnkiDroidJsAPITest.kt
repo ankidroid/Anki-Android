@@ -21,14 +21,15 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.utils.BASIC_MODEL_NAME
 import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
-import org.junit.Assert.assertEquals
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class AnkiDroidJsAPITest : RobolectricTest() {
@@ -37,7 +38,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiGetNextTimeTest() = runTest {
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -70,7 +71,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiTestCurrentCard() = runTest {
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -180,7 +181,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     fun ankiJsUiTest() = runTest {
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -222,7 +223,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // js api test for marking and flagging card
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -282,7 +283,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // in scheduling the count will be less than previous scheduling
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")
@@ -352,7 +353,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         TimeManager.reset()
         val models = col.notetypes
         val didA = addDeck("Test", setAsSelected = true)
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(BASIC_MODEL_NAME)
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")
@@ -373,7 +374,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // verify that it did get rescheduled
         // --------------------------------
         val cardToBeReschedule = col.getCard(cardId)
-        assertEquals("Card is rescheduled", 15L + col.sched.today, cardToBeReschedule.due)
+        assertEquals(15 + col.sched.today, cardToBeReschedule.due, "Card is rescheduled")
     }
 
     @Test
@@ -383,15 +384,15 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
         // Make card review with 28L due and 280% ease
         c.type = Consts.CARD_TYPE_REV
-        c.due = 28L
+        c.due = 28
         c.factor = 2800
         c.ivl = 8
 
         // before reset
-        assertEquals("Card due before reset", 28L, c.due)
-        assertEquals("Card interval before reset", 8, c.ivl)
-        assertEquals("Card ease before reset", 2800, c.factor)
-        assertEquals("Card type before reset", Consts.CARD_TYPE_REV, c.type)
+        assertEquals(28, c.due, "Card due before reset")
+        assertEquals(8, c.ivl, "Card interval before reset")
+        assertEquals(2800, c.factor, "Card ease before reset")
+        assertEquals(Consts.CARD_TYPE_REV, c.type, "Card type before reset")
 
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
@@ -405,22 +406,38 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // verify that card progress reset
         // --------------------------------
         val cardAfterReset = col.getCard(reviewer.currentCard!!.id)
-        assertEquals("Card due after reset", 2, cardAfterReset.due)
-        assertEquals("Card interval after reset", 0, cardAfterReset.ivl)
-        assertEquals("Card type after reset", Consts.CARD_TYPE_NEW, cardAfterReset.type)
+        assertEquals(2, cardAfterReset.due, "Card due after reset")
+        assertEquals(0, cardAfterReset.ivl, "Card interval after reset")
+        assertEquals(Consts.CARD_TYPE_NEW, cardAfterReset.type, "Card type after reset")
     }
 
     companion object {
         fun jsApiContract(data: String = ""): ByteArray {
             return JSONObject().apply {
-                put("version", "0.0.2")
+                put("version", "0.0.3")
                 put("developer", "test@example.com")
                 put("data", data)
             }.toString().toByteArray()
         }
 
         fun formatApiResult(res: Any): String {
-            return "{\"success\":true,\"value\":\"$res\"}"
+            return JSONObject().apply {
+                put("success", true)
+                when (res) {
+                    is Boolean -> {
+                        put("value", res)
+                    }
+                    is Int -> {
+                        put("value", res)
+                    }
+                    is Long -> {
+                        put("value", res)
+                    }
+                    else -> {
+                        put("value", res.toString())
+                    }
+                }
+            }.toString()
         }
 
         suspend fun getDataFromRequest(
@@ -428,7 +445,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             jsAPI: AnkiDroidJsAPI,
             apiData: String = ""
         ): String {
-            return jsAPI.handleJsApiRequest(methodName, jsApiContract(apiData), true)
+            return jsAPI.handleJsApiRequest(methodName, jsApiContract(apiData), false)
                 .decodeToString()
         }
     }

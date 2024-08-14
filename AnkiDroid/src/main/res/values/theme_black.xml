@@ -26,6 +26,7 @@
         <item name="actionModeBackground">@color/theme_black_primary_dark</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_black_primary_dark</item>
+        <item name="tabActiveIconColor">@color/material_blue_500</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_black_row_current</item>
@@ -47,6 +48,7 @@
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/material_green_400</item>
         <item name="easyButtonTextColor">@color/material_blue_700</item>
+        <item name="alternativeBackgroundColor">#101010</item>
         <!-- Reviewer button drawables -->
         <item name="againButtonRef">@drawable/footer_button_all_black</item>
         <item name="hardButtonRef">@drawable/footer_button_all_black</item>
@@ -62,13 +64,6 @@
         <item name="suspendedColor">#A8A634</item>
         <item name="selectedColor">#a86634</item>
         <item name="markedColor">#391080</item>
-        <item name="flagRed">@color/flag_red_dark</item>
-        <item name="flagOrange">@color/flag_orange_dark</item>
-        <item name="flagGreen">@color/flag_green_dark</item>
-        <item name="flagBlue">@color/flag_blue_dark</item>
-        <item name="flagPink">@color/flag_pink_dark</item>
-        <item name="flagTurquoise">@color/flag_turquoise_dark</item>
-        <item name="flagPurple">@color/flag_purple_dark</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#855</item>
         <!-- Note editor colors -->
@@ -87,9 +82,6 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo_black_theme</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-        <!--        TODO: Remove it once we migrate to Alert Dialog-->
-        <item name="md_background_color">@color/theme_black_primary_light</item>
-        <item name="md_color_button_text">@color/white</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">#000000</item>
         <item name="popupBackgroundColor">@color/popup_background_theme_black</item>
@@ -106,8 +98,6 @@
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#55111111</item>
 
-        <!-- Browser Options Dialog-->
-        <item name="colorSurface">@color/theme_black_primary</item>
 
         <!-- ProgressDialog-->
         <item name="dialogBackground">@color/theme_black_primary_light</item>

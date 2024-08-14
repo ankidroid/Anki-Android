@@ -18,8 +18,8 @@ package com.ichi2.anki.reviewer
 import android.content.Context
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
-import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.utils.StringUtil
 import com.ichi2.utils.lastIndexOfOrNull
 import timber.log.Timber

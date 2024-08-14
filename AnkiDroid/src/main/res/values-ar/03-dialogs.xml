@@ -48,10 +48,18 @@
     <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا</string>
     <string name="contextmenu_deckpicker_delete_deck">حذف الرزمة</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
+    <plurals name="delete_deck_message">
+        <item quantity="zero">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="two">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="tts_no_tts">لا تنطق</string>
     <string name="unused_strings">\n\nملفات عير مستخدمة:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">معاينة</string>
     <string name="reposition_card_dialog_title">تغيير موضع البطاقة الجديدة</string>
     <string name="reposition_card_dialog_message">موضع البداية:</string>
     <string name="reposition_card_not_new_error">يمكن تغيير موضع البطاقات الجديدة فقط</string>
@@ -64,7 +72,6 @@
         <item quantity="other">تم تغيير موضع %d بطاقة</item>
     </plurals>
     <string name="reset_card_dialog_title">تصفير تقدم البطاقة</string>
-    <string name="reset_card_dialog_message">ستوضع هذه البطاقة في نهاية صف البطاقات الجديدة</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="zero">تم تصفير %d بطاقة</item>
         <item quantity="one">تم تصفير %d بطاقة</item>
@@ -73,34 +80,6 @@
         <item quantity="many">تم تصفير %d بطاقة</item>
         <item quantity="other">تم تصفير %d بطاقة</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="zero">إعادة جدولة %d بطاقة</item>
-        <item quantity="one">إعادة جدولة %d بطاقة</item>
-        <item quantity="two">إعادة جدولة %d بطاقة</item>
-        <item quantity="few">إعادة جدولة %d بطاقات</item>
-        <item quantity="many">إعادة جدولة %d بطاقة</item>
-        <item quantity="other">إعادة جدولة %d بطاقة</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="zero">الفاصل الزمني الحالي: %d يوم</item>
-        <item quantity="one">الفاصل الزمني الحالي: %d يوم</item>
-        <item quantity="two">الفاصل الزمني الحالي: %d يوم</item>
-        <item quantity="few">الفاصل الزمني الحالي: %d أيام</item>
-        <item quantity="many">الفاصل الزمني الحالي: %d يومًا</item>
-        <item quantity="other">الفاصل الزمني الحالي: %d يوم</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">إعادة الجدولة للمراجعة بعد س يوم</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="zero">تمت إعادة جدولة %d بطاقة</item>
-        <item quantity="one">تمت إعادة جدولة %d بطاقة</item>
-        <item quantity="two">تمت إعادة جدولة %d بطاقة</item>
-        <item quantity="few">تمت إعادة جدولة %d بطاقات</item>
-        <item quantity="many">تمت إعادة جدولة %d بطاقات</item>
-        <item quantity="other">تمت إعادة جدولة %d بطاقة</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">تجري إعادة جدولة بطاقة جديدة. تحول إعادة الجدولة البطاقات الجديدة إلى بطاقات مراجعة. استخدم خيار «تغيير الموضع» لتغيير موضع بطاقة جديدة في صف البطاقات الجديدة</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">ستغير إعادة الجدولة طريقة المجدول في التعامل مع البطاقة في المستقبل (سيتم ضبط السهولة إلى %d%%)</string>
     <string name="answering_error_title">خطأ في قاعدة البيانات</string>
     <string name="answering_error_message">فشلت الكتابة إلى المجموعة. قد تكون قاعدة البيانات تالفة أو قد لا تكون هناك مساحة كافية على القرص.\n\nإذا كان هذا يحدث غالبًا، جرب فحص قاعدة البيانات، أو إصلاح المجموعة، أو استرجاعها من نسخة احتياطية. انقر «خيارات» لفعل ذلك. \nأو قد يكون هذا عطلًا في أنكي درويد ربما؛ الرجاء الإبلاغ عن هذا لنتحقق منه.</string>
     <string name="answering_error_report">إبلاغ عن الخطأ</string>
@@ -129,6 +108,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">تأكيد</string>
     <string name="dialog_no">لا</string>
     <string name="dialog_yes">نعم</string>
+    <string name="dialog_keep">إبقاء</string>
+    <string name="dialog_remove">حذف</string>
     <string name="dialog_continue">استمرار</string>
     <string name="dialog_processing">تجري المعالجة...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
@@ -139,6 +120,9 @@
     <string name="dialog_positive_repair">إصلاح</string>
     <string name="dialog_positive_replace">استبدال</string>
     <string name="dialog_collection_path_not_dir">المسار المحدد ليس مجلدًا صالحًا</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">هل تريد فحص الوسائط؟</string>
     <string name="check_media_warning">قد يأخذ هذا وقتًا طويلًا لمجموعات الوسائط الكبيرة</string>
@@ -174,7 +158,6 @@
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>
-    <string name="mutimedia_editor_assertion_failed">حدث خطأ غير معروف عند عرض المحرر المتقدم</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">تم تحديث أنكيدرويد</string>
     <string name="integrity_check_startup_content">تم تحديث أنكيدرويد. يتضمن هذا التحديث إصلاحًا لأعطال ممكنة في قاعدة البيانات، لذلك ننصح باستخدام ميزة فحص قاعدة البيانات الآن.</string>
@@ -199,7 +182,7 @@
     <string name="failed_to_apply_background_image">تعذر تطبيق صورة الخلفية %s</string>
     <string name="background_image_too_large">خلفية محدد الرزم كبيرة جدًا</string>
     <string name="image_max_size_allowed">الحد الأقصى لحجم الصورة المسموح به هو %d ميجابايت</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">أبعاد الصورة كبيرة جدًا (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">يفتقد إذن التخزين المطلوب. يرجى منح إذن التخزين ثم المحاولة مجددًا.</string>
@@ -209,7 +192,7 @@
     <string name="boot_service_failed_to_schedule_notifications">تعذرت جدولة التنبيهات</string>
     <string name="boot_service_too_many_notifications">تمت جدولة كثير من التنبيهات. لن يظهر بعضها</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">ضبط اللغة</string>
     <string name="locale_selection_dialog_summary">بعض لوحات المفاتيح متعددة اللغات، مثل GBoard، تدعم تغيير اللغة عند تحرير النص\n\nيرجى طلب ميزة “setImeHintLocales” من مصنّع لوحة المفاتيح الخاصة بك إذا كانت لوحة المفاتيح لا تغيّر اللغة.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">استخدام أنكيدرويد</string>
@@ -237,7 +220,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">أخكام وشروط أنكي ويب</string>
     <string name="help_title_send_exception">إرسال تقرير استكشاف الأخطاء</string>
     <string name="help_dialog_exception_report_debounce">تم إرسال التقرير مسبقًا</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">تم إرسال التقرير!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="zero">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
@@ -247,7 +230,7 @@
         <item quantity="many">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
         <item quantity="other">قد تبدأ المزامنة التلقائية خلال %d ثانية</item>
     </plurals>
-    <string name="metered_sync_warning">اتصالك بالإنترنت محدود. قد يكلف نقل البيانات مصاريف</string>
+    <string name="metered_sync_data_warning">مقدم خدمة الإنترنت الخاص بك قد يدفّعك مالًا بدل استخدامك للبيانات</string>
     <string name="deck_picker_new">عدد البطاقات الجديدة لتراها اليوم من هذه الرزمة.</string>
     <string name="deck_picker_rev">عدد البطاقات التي موعدها اليوم في هذه الرزمة.</string>
     <string name="deck_picker_lrn">عدد بطاقات التعلّم في هذه الرزمة.</string>
@@ -272,4 +255,43 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        بسبب تغييرات خصوصية الأندرويد، سيتم حذف بياناتك والنسخ الاحتياطية الآلية من هاتفك إذا تم إلغاء تثبيت التطبيق
     </string>
+    <string name="deck_already_exists">هذه الرزمة موجودة بالفعل</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="zero">Show cards in</item>
+        <item quantity="one">Show card in</item>
+        <item quantity="two">Show cards in</item>
+        <item quantity="few">Show cards in</item>
+        <item quantity="many">Show cards in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="zero">Show cards in range</item>
+        <item quantity="one">Show card in range</item>
+        <item quantity="two">Show cards in range</item>
+        <item quantity="few">Show cards in range</item>
+        <item quantity="many">Show cards in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="zero">days</item>
+        <item quantity="one">day</item>
+        <item quantity="two">days</item>
+        <item quantity="few">days</item>
+        <item quantity="many">days</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

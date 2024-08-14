@@ -16,8 +16,6 @@
 
 package com.ichi2.testutils.rules
 
-import android.content.Context
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.libanki.Collection
 import org.junit.rules.TestRule
@@ -55,14 +53,10 @@ class MockitoCollectionRule : TestRule {
     private fun removeCollectionMock() {
         Timber.v("removing collection mock")
         CollectionManager.setColForTests(null)
-        CollectionHelper.setInstanceForTesting(CollectionHelper())
     }
 
     private fun mockCollection() {
         Timber.v("mocking collection")
         CollectionManager.setColForTests(col)
-        CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
-            override fun getColUnsafe(context: Context?) = col
-        })
     }
 }

@@ -14,9 +14,20 @@
 
 package com.ichi2.anki.utils
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.PowerManager
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.R
+import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.copyToClipboard
 
 /**
  * Acquire a wake lock and release it after running [block].
@@ -42,3 +53,32 @@ inline fun <T> withWakeLock(levelAndFlags: Int, tag: String, block: () -> T): T 
         wakeLock.release()
     }
 }
+
+fun Context.openUrl(uri: Uri) {
+    if (!AdaptionUtil.hasWebBrowser(this)) {
+        val noBrowserMessage = getString(R.string.no_browser_msg, uri.toString())
+        if (this is FragmentActivity) {
+            showSnackbar(noBrowserMessage) {
+                setAction(android.R.string.copyUrl) {
+                    copyToClipboard(uri.toString())
+                }
+            }
+        } else {
+            showThemedToast(this, noBrowserMessage, shortLength = false)
+        }
+        return
+    }
+    startActivity(Intent(Intent.ACTION_VIEW, uri))
+}
+
+// necessary for Fragments that are BaseSnackbarBuilderProvider to work correctly
+fun Fragment.openUrl(uri: Uri) {
+    if (!AdaptionUtil.hasWebBrowser(requireContext())) {
+        showSnackbar(getString(R.string.no_browser_msg, uri.toString()))
+        return
+    }
+    startActivity(Intent(Intent.ACTION_VIEW, uri))
+}
+
+fun Fragment.openUrl(@StringRes stringRes: Int) =
+    openUrl(Uri.parse(requireContext().getString(stringRes)))

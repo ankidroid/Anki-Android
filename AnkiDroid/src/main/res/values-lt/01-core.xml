@@ -60,7 +60,7 @@
     <string name="expand">Išskleisti</string>
     <string name="collapse">Suskleisti</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
+        <item quantity="one">liko %d minučių</item>
         <item quantity="few">%d minutes left</item>
         <item quantity="many">%d minutes left</item>
         <item quantity="other">%d minutes left</item>
@@ -110,21 +110,15 @@
     <string name="menu_suspend">Atidėti</string>
     <string name="menu_delete_note">Ištrinti užrašą</string>
     <string name="menu_flag">Pažymėti</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Pažymėti su vėliava</string>
-    <string name="menu_flag_card_zero">Nėra vėliavos</string>
-    <string name="menu_flag_card_one">Raudona vėliava</string>
-    <string name="menu_flag_card_two">Oranžinė vėliava</string>
-    <string name="menu_flag_card_three">Žalia vėliava</string>
-    <string name="menu_flag_card_four">Mėlyna vėliava</string>
-    <string name="menu_flag_card_five">Rožinė vėliava</string>
-    <string name="menu_flag_card_six">Turkio vėliava</string>
-    <string name="menu_flag_card_seven">Violetinė vėliava</string>
     <string name="menu_edit_tags">Redaguoti žymes</string>
     <string name="delete_note_message">Ar tikrai norite ištrinti šį užrašą ir visas su juo susijusias korteles?\n%s</string>
     <string name="menu_search">Ieškoti: %1$s</string>
     <string name="menu_mark_note">Žymėti užrašą</string>
     <string name="menu_unmark_note">Atžymėti užrašą</string>
-    <string name="menu_toggle_mic_tool_bar">Patikrinti tarimą</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Kurti rinkinį</string>
     <string name="new_dynamic_deck">Kurti rinktinį rinkinį</string>
     <string name="directory_inaccessible">„AnkiDroid“ katalogas yra nepasiekiamas</string>
@@ -133,17 +127,19 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Norėdami tęsti, suteikite AnkiDroid saugyklos teises.</string>
-    <string name="rebuild_filtered_deck">Perdaromas filtruotas rinkinys...</string>
+    <string name="rebuild_filtered_deck">Perdaromas filtruotas rinkinys&#8230;</string>
     <string name="rebuild_cram_label">Atkurti</string>
     <string name="empty_cram_label">Išvalyti</string>
     <string name="create_subdeck">Kurkite vidinį rinkinį</string>
-    <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys...</string>
+    <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys&#8230;</string>
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
-    <string name="empty_deck">Šis rinkinys yra tuščias</string>
     <string name="search_deck" comment="Deck search for selecting it">Rinkinio paieška</string>
+    <string name="empty_deck">Šis rinkinys yra tuščias</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Rinkinio paieška </string>
     <string name="invalid_deck_name">Blogas rinkinio vardas</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Numatytų kortelių kol kas dar nėra</string>
     <string name="sd_card_not_mounted">Atminties įrenginys neprijungtas</string>
     <string name="button_sync" comment="Text of the sync button">Sinchronizuoti</string>
@@ -152,7 +148,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Tęsti sinchronizavimą</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinchronizavimas atšauktas</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Atšaukiama&#8230;\nTai gali šiek tiek užtrukti.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Eksportuoti rinkinį</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Nieko</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kortelių tipai</string>
@@ -176,7 +174,6 @@
         <item quantity="many">Ar tikrai ištrinti “%2$s” kortelių tipų ir su jais susijusias %1$d korteles?</item>
         <item quantity="other">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusias %1$d kortelių?</item>
     </plurals>
-    <string name="invalid_template">Kortelės sukurti nepavyko</string>
     <string name="card_template_editor_would_delete_note">Ištrynus šį kortelių tipą, kartu bus ištrintas vienas ar keli užrašai. Prašome pirmiausiai sukurti naują kortelių tipą.</string>
     <string name="card_template_editor_save_error">Negalima užsaugoti kortelių šablono pakeitimo: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
@@ -251,6 +248,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
@@ -263,4 +261,7 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

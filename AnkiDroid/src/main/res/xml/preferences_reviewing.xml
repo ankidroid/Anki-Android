@@ -63,10 +63,6 @@
             android:key="@string/keep_screen_on_preference"
             android:summary="@string/pref_keep_screen_on_summ"
             android:title="@string/pref_keep_screen_on" />
-        <SwitchPreferenceCompat
-            android:key="@string/new_timezone_handling_preference"
-            android:title="@string/new_timezone"
-            android:defaultValue="false" />
         <com.ichi2.preferences.NumberRangePreferenceCompat
             android:defaultValue="200"
             android:key="@string/double_tap_time_interval_preference"

@@ -17,7 +17,9 @@ package com.ichi2.testutils
 
 import android.annotation.SuppressLint
 import com.ichi2.libanki.utils.Time
-import java.util.*
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.util.TimeZone
 
 /** @param [step] Number of milliseconds between each call.
  * @param [initTime]: Time since epoch in MS. */

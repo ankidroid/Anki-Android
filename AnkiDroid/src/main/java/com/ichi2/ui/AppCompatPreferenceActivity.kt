@@ -18,28 +18,44 @@
 
 package com.ichi2.ui
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceActivity
-import android.view.*
+import android.view.KeyEvent
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import com.ichi2.anki.CollectionHelper
+import androidx.core.content.ContextCompat
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.receiver.SdCardReceiver
+import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
-import com.ichi2.utils.*
+import com.ichi2.utils.HashUtil
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.message
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import net.ankiweb.rsdroid.BackendException
 import timber.log.Timber
-import java.util.*
+import java.util.LinkedList
 
 /**
  * A [android.preference.PreferenceActivity] which implements and proxies the necessary calls
@@ -183,12 +199,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         delegate.installViewFactory()
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
-        val col = CollectionHelper.instance.getColUnsafe(this)
-        if (col != null) {
-            this.col = col
-        } else {
-            finish()
-        }
+        this.col = CollectionManager.getColUnsafe()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -290,7 +301,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         }
         val iFilter = IntentFilter()
         iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-        registerReceiver(unmountReceiver, iFilter)
+        registerReceiverCompat(unmountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
     }
 
     protected abstract fun closeWithResult()

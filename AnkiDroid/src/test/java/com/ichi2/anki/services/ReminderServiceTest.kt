@@ -19,13 +19,15 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
-import org.hamcrest.MatcherAssert.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
+import org.mockito.Mockito.spy
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
 import org.robolectric.Shadows
 import org.robolectric.shadows.ShadowNotificationManager
@@ -68,7 +70,7 @@ class ReminderServiceTest : RobolectricTest() {
 
         whenever(mockCol.sched).thenThrow(IllegalStateException("Unit test: simulating database exception"))
 
-        CollectionHelper.instance.setColForTests(mockCol)
+        CollectionManager.setColForTests(mockCol)
 
         buildDefaultDeckReminders()
 

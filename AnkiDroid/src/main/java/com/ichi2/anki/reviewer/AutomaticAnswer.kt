@@ -22,7 +22,9 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.cardviewer.ViewerCommand
-import com.ichi2.anki.reviewer.AnswerButtons.*
+import com.ichi2.anki.reviewer.AnswerButtons.AGAIN
+import com.ichi2.anki.reviewer.AnswerButtons.GOOD
+import com.ichi2.anki.reviewer.AnswerButtons.HARD
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.secondsToShowAnswer
 import com.ichi2.anki.utils.ext.secondsToShowQuestion
@@ -252,12 +254,12 @@ class AutomaticAnswer(
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
     @get:JvmName("useTimer") val useTimer: Boolean = false,
-    private val secondsToShowQuestionFor: Int = 60,
-    private val secondsToShowAnswerFor: Int = 20
+    private val secondsToShowQuestionFor: Double = 60.0,
+    private val secondsToShowAnswerFor: Double = 20.0
 ) {
 
-    val millisecondsToShowQuestionFor = secondsToShowQuestionFor * 1000L
-    val millisecondsToShowAnswerFor = secondsToShowAnswerFor * 1000L
+    val millisecondsToShowQuestionFor = (secondsToShowQuestionFor * 1000L).toLong()
+    val millisecondsToShowAnswerFor = (secondsToShowAnswerFor * 1000L).toLong()
 
     // a wait of zero means auto-advance is disabled
     val autoAdvanceIfShowingAnswer; get() = secondsToShowAnswerFor > 0
@@ -273,7 +275,7 @@ class AutomaticAnswerSettings(
             col: Collection,
             selectedDid: DeckId
         ): AutomaticAnswerSettings {
-            val conf = col.decks.confForDid(selectedDid)
+            val conf = col.decks.configDictForDeckId(selectedDid)
             val action = getAction(conf)
             val useTimer = preferences.getBoolean("timeoutAnswer", false)
 

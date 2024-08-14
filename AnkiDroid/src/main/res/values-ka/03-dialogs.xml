@@ -48,10 +48,14 @@
     <string name="check_db_warning">ამას შეიძლება დიდი ხანი დასჭირდეს</string>
     <string name="contextmenu_deckpicker_delete_deck">დასტის წაშლა</string>
     <string name="delete_deck_title">წაიშალოს დასტა?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">მიუწვდომელია ხმოვანი წამკითხველის ენა</string>
     <string name="tts_no_tts">არ წაიკითხოს</string>
     <string name="unused_strings">\n\nგამოუყენებელი ფაილები:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">წინასწარ ნახვა</string>
     <string name="reposition_card_dialog_title">ახალი ბარათის გადაადგილება</string>
     <string name="reposition_card_dialog_message">საწყისი პოზიცია:</string>
     <string name="reposition_card_not_new_error">პოზიციის შეცვლა მხოლოდ ახალი ბარათებისთვის შეიძლება</string>
@@ -60,27 +64,10 @@
         <item quantity="other">შეიცვალა %d ბარათის პოზიცია</item>
     </plurals>
     <string name="reset_card_dialog_title">ბარათის პროგრესის გაუქმება</string>
-    <string name="reset_card_dialog_message">ეს ბარათი ახალი ბარათების რიგის ბოლოში მოთავსდება</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d ბარათი დაყენდა საწყის მდგომარეობაში</item>
         <item quantity="other">%d ბარათი დაყენდა საწყის მდგომარეობაში</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d ბარათის გადადება</item>
-        <item quantity="other">%d ბარათის გადადება</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">მიმდინარე შუალედი: %d დღე</item>
-        <item quantity="other">მიმდინარე შუალედი: %d დღე</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">გადახედვის x დღით გადადება</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">გადაიდო %d ბარათი</item>
-        <item quantity="other">გადაიდო %d ბარათი</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="answering_error_title">მონაცემთა ბაზის შეცდომა</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">შეცდომის შეტყობინება</string>
@@ -90,9 +77,9 @@
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
     <string name="custom_study_new_total_new">ახალი ბარათი დასტაში: %d</string>
     <string name="custom_study_rev_total_rev">გადასახედი დასტაში: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
+    <string name="custom_study_new_extend">დღევანდელი ახალი ბარათების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
     <string name="custom_study_rev_extend">დღევანდელი გადახედვების ლიმიტის გაზრდა/შემცირება (\"-3\") ამდენით:</string>
-    <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
+    <string name="custom_study_forgotten">გასულ x დღეში დავიწყებული ბარათების გადახედვა:</string>
     <string name="custom_study_ahead">X დღით ადრე სწავლა:</string>
     <string name="custom_study_random">დასტიდან x ბარათის შემთხვევით ამორჩევა:</string>
     <string name="custom_study_preview">ბოლო x დღეში დამატებული ბარათების წინასწარ ნახვა:</string>
@@ -109,6 +96,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">დადასტურება</string>
     <string name="dialog_no">არა</string>
     <string name="dialog_yes">კი</string>
+    <string name="dialog_keep">შენარჩუნება</string>
+    <string name="dialog_remove">წაშლა</string>
     <string name="dialog_continue">გაგრძელება</string>
     <string name="dialog_processing">მუშავდება&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">შექმნა</string>
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">შეკეთება</string>
     <string name="dialog_positive_replace">ჩანაცვლება</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">შეცდომა სერტიფიკატის პარსინგისას</string>
+    <string name="dialog_updated_custom_certificate">სერტიფიკატი განახლდა</string>
     <!-- Media checking -->
     <string name="check_media_title">შემოწმდეს მედიაფაილები?</string>
     <string name="check_media_warning">ამას დიდი ზომის მედია-კოლექციების შემთხვევაში შეიძლება დიდი ხანი დასჭირდეს</string>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">ვერ გაიხსნა მულტიმედია-რედაქტორი</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">აუდიოფაილის ჩაწერის უფლება უარყოფილია</string>
-    <string name="mutimedia_editor_assertion_failed">უცნობი შეცდომა გაფართოებული რედაქტორის ჩვენებისას</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid განახლდა</string>
     <string name="integrity_check_startup_content">AnkiDroid განახლდა. ეს განახლება შეიცავს მონაცემთა ბაზისთვის მოსალოდნელი  პრობლემების შესწორებებს. გირჩევთ ახლავე განახორციელოთ „მონაცემთა ბაზის შემოწმება“.</string>
@@ -213,13 +204,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb-ის წესები და პირობები</string>
     <string name="help_title_send_exception">უწესივრობათა დიაგნოსტიკისა და აღმოფხვრის ანგარიშის გაგზავნა</string>
     <string name="help_dialog_exception_report_debounce">შეტყობინება უკვე გაგზავნილია</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">ანგარიში გაიგზავნა!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">შესაძლოა, თქვენმა ინტერნეტ-მომსახურების მომწოდებელმა ფული ჩამოგაჭრათ მობილური მონაცემების გამოყენებისათვის</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -234,7 +225,7 @@
     <string name="cannot_create_subdeck_for_all_decks">ყველა დასტისთვის ვერ შექმნით ქვედასტას</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">კოლექციის სარეზერვო ასლი</string>
-    <string name="backup_collection_message">კარგი ხანია არ შეგიქმნიათ კოლექციის სარეზერვო ასლი. უმჯობესია ეს გააკეთოთ, რათა მონაცემები არ დაგეკარგოთ.</string>
+    <string name="backup_collection_message">კარგა ხანია არ შეგიქმნიათ კოლექციის სარეზერვო ასლი. უმჯობესია ეს გააკეთოთ, რათა მონაცემები არ დაგეკარგოთ</string>
     <string name="button_backup">სარეზერვო ასლი</string>
     <string name="button_disable_reminder">შეხსენების გამორთვა</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">მოგვიანებით</string>
@@ -244,4 +235,31 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">დასტა უკვე არსებობს</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">დღეში</item>
+        <item quantity="other">დღეში</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

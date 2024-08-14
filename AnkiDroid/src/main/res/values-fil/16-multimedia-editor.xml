@@ -41,24 +41,14 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Magdagdag ng larawan</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_audio_clip">Magdagdag ng audio clip</string>
+    <string name="multimedia_editor_popup_video_clip">Magdagdag ng video clip</string>
     <string name="multimedia_editor_popup_audio">Mag-record ng audio</string>
-    <string name="multimedia_editor_popup_text">Advanced na editor</string>
     <string name="multimedia_editor_popup_cloze">Alisin ang pagtanggal</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
-    <string name="multimedia_editor_field_editing_image">Imahe</string>
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_audio_clip">Audio Clip</string>
+    <string name="multimedia_editor_field_editing_audio">Recording ng Audio</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Tapos</string>
-    <!-- Text field editing -->
-    <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_clear">Linisin</string>
-    <string name="multimedia_editor_text_field_editing_clone">I-clone mula</string>
-    <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">Dalhin mula sa</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
@@ -66,27 +56,23 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
     <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">May nagkamali</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">Hindi magamit ang mga SVG sa pag-preview</string>
+    <string name="multimedia_editor_png_paste_error">May mali sa pag-convert ng larawan sa clipboard at gawing png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Maglagay ng nilalaman ng multimedia sa field ng%1$s</string>
-    <string name="multimedia_editor_attach_media">Maglakip ng media</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Nabigo ang pag-record</string>
     <string name="multimedia_editor_audio_view_playing_failed">Nabigo ang pag-play</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
-    <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Nabigo ang pag-edit</string>
+    <string name="multimedia_editor_audio_view_create_failed">Hindi makagawa ng tool bar ng recorder</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="crop_image">Gusto mo bang i-crop ang larawan</string>
+    <string name="crop_button">I-crop ang larawan</string>
+    <string name="save_dialog_content">Ang laki ng kasalukuyang larawan ay %sMB. Ang default na hangganan ng laki ng larawan ay 1MB. Gusto mo pa rin ba itong i-crop?</string>
+    <string name="select_image_failed">"Bigo na mapili ang larawan. Mangyaring ulitin"</string>
+    <string name="activity_result_unexpected">Nagbalik ng hindi inaasahang halaga ang app. Maaaring kailangan mo gumamit ng ibang app</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Mga Laman ng Field</string>
+    <string name="reselect">Reselect</string>
 </resources>

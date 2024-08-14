@@ -17,11 +17,17 @@ package com.ichi2.utils
 
 import android.os.Bundle
 import com.ichi2.utils.BundleUtils.getNullableLong
+import com.ichi2.utils.BundleUtils.requireLong
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.eq
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.kotlin.whenever
 import kotlin.random.Random
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
 class BundleUtilsTest {
@@ -50,6 +56,33 @@ class BundleUtilsTest {
         val value = b.getNullableLong(KEY)
 
         verify(b).getLong(eq(KEY))
+
+        assertEquals(expected, value)
+    }
+
+    @Test
+    fun test_RequireLong_NotFound_ThrowsException() {
+        val mockedBundle = mock(Bundle::class.java)
+
+        whenever(mockedBundle.containsKey(anyString())).thenReturn(false)
+
+        assertFailsWith<IllegalStateException> { mockedBundle.requireLong(KEY) }
+
+        verify(mockedBundle).containsKey(eq(KEY))
+    }
+
+    @Test
+    fun test_RequireLong_Found_ReturnIt() {
+        val expected = Random.Default.nextLong()
+        val mockedBundle = mock(Bundle::class.java)
+
+        whenever(mockedBundle.containsKey(anyString())).thenReturn(true)
+        whenever(mockedBundle.getLong(anyString())).thenReturn(expected)
+
+        val value = mockedBundle.requireLong(KEY)
+
+        verify(mockedBundle).containsKey(eq(KEY))
+        verify(mockedBundle).getLong(eq(KEY))
 
         assertEquals(expected, value)
     }

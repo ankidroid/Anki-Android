@@ -17,13 +17,14 @@
 
 package com.ichi2.anki
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
 import com.ichi2.anki.introduction.SetupCollectionFragment
-import com.ichi2.anki.introduction.SetupCollectionFragment.*
+import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
@@ -66,10 +67,12 @@ class IntroductionActivity : AnkiActivity() {
     }
 
     private fun openLoginDialog() {
+        Timber.i("Opening login screen")
         onLoginResult.launch(Intent(this, LoginActivity::class.java))
     }
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
+        Timber.i("Opening deck picker, login: %b", result == RESULT_SYNC_PROFILE)
         this.sharedPrefs().edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -87,4 +90,8 @@ class IntroductionActivity : AnkiActivity() {
 
         const val INTRODUCTION_SLIDES_SHOWN = "IntroductionSlidesShown"
     }
+}
+
+internal fun Context.hasShownAppIntro(): Boolean {
+    return sharedPrefs().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
 }

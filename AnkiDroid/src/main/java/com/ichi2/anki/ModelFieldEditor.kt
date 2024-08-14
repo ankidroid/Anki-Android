@@ -32,7 +32,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
@@ -54,7 +53,7 @@ import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
 import org.json.JSONException
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     // Position of the current field selected
@@ -263,7 +262,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             withProgress(message = getString(R.string.model_field_editor_changing)) {
                 val result = withCol {
                     try {
-                        notetypes.remField(notetype, noteFields.getJSONObject(currentPos))
+                        notetypes.remFieldLegacy(notetype, noteFields.getJSONObject(currentPos))
                         true
                     } catch (e: ConfirmModSchemaException) {
                         // Should never be reached
@@ -381,7 +380,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 val result = withCol {
                     Timber.d("doInBackgroundRepositionField")
                     try {
-                        notetypes.moveField(notetype, noteFields.getJSONObject(currentPos), index)
+                        notetypes.moveFieldLegacy(notetype, noteFields.getJSONObject(currentPos), index)
                         true
                     } catch (e: ConfirmModSchemaException) {
                         e.log()
@@ -405,7 +404,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val fieldLabel = fieldNameInput!!.text.toString()
             .replace("[\\n\\r]".toRegex(), "")
         val field = noteFields.getJSONObject(currentPos)
-        getColUnsafe.notetypes.renameField(notetype, field, fieldLabel)
+        getColUnsafe.notetypes.renameFieldLegacy(notetype, field, fieldLabel)
         initialize()
     }
 
@@ -432,9 +431,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private suspend fun changeSortField(notetype: NotetypeJson, idx: Int) {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
-            CollectionManager.withCol {
+            withCol {
                 Timber.d("doInBackgroundChangeSortField")
-                notetypes.set_sort_index(notetype, idx)
+                notetypes.setSortIndex(notetype, idx)
             }
         }
         initialize()

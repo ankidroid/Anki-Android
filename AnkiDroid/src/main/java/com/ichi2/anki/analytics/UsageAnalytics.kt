@@ -459,14 +459,13 @@ object UsageAnalytics {
         "timeLimit", // Timebox time limit
         "timeoutAnswer", // Automatic display answer
         "keepScreenOn", // Disable screen timeout
-        "newTimezoneHandling", // New timezone handling
         "doubleTapTimeInterval", // Double tap time interval (milliseconds)
         // Sync
         "syncFetchMedia", // Fetch media on sync
         "automaticSyncMode", // Automatic synchronization
         "showSyncStatusBadge", // Display synchronization status
         "allowMetered", // Allow sync on metered connections
-        "force_full_sync", // Force full sync
+        "one_way_sync", // One-way sync
         // Backup
         "minutes_between_automatic_backups",
         "daily_backups_to_keep",
@@ -531,6 +530,15 @@ object UsageAnalytics {
         "binding_SHOW_ALL_HINTS",
         "binding_ADD_NOTE",
         "binding_RESCHEDULE_NOTE",
+        "binding_USER_ACTION_1",
+        "binding_USER_ACTION_2",
+        "binding_USER_ACTION_3",
+        "binding_USER_ACTION_4",
+        "binding_USER_ACTION_5",
+        "binding_USER_ACTION_6",
+        "binding_USER_ACTION_7",
+        "binding_USER_ACTION_8",
+        "binding_USER_ACTION_9",
         // Accessibility
         "cardZoom",
         "imageZoom",
@@ -546,7 +554,6 @@ object UsageAnalytics {
         "useInputTag", // Type answer into the card
         "disableExtendedTextUi", // Disable Single-Field Edit Mode
         "noteEditorNewlineReplace", // Replace newlines with HTML
-        "noCodeFormatting", // Simple typed answer formatting
         "autoFocusTypeInAnswer", // Focus ‘type in answer’
         "mediaImportAllowAllFiles", // Allow all files in media imports
         "providerEnabled", // Enable AnkiDroid API
@@ -573,6 +580,15 @@ object UsageAnalytics {
         "customButtonSaveWhiteboard",
         "customButtonWhiteboardPenColor",
         "customButtonShowHideWhiteboard",
-        "customButtonClearWhiteboard"
+        "customButtonClearWhiteboard",
+        "customButtonUserAction1",
+        "customButtonUserAction2",
+        "customButtonUserAction3",
+        "customButtonUserAction4",
+        "customButtonUserAction5",
+        "customButtonUserAction6",
+        "customButtonUserAction7",
+        "customButtonUserAction8",
+        "customButtonUserAction9"
     )
 }

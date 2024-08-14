@@ -23,7 +23,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.IntroductionActivity.Companion.INTRODUCTION_SLIDES_SHOWN
 import com.ichi2.anki.preferences.sharedPrefs
 import timber.log.Timber
-import java.util.*
+import java.util.BitSet
 
 class OnboardingUtils {
 

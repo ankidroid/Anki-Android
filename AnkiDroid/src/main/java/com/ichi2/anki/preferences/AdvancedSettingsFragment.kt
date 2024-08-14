@@ -20,8 +20,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AlertDialog
-import androidx.preference.*
-import com.ichi2.anki.*
+import androidx.preference.EditTextPreference
+import androidx.preference.Preference
+import androidx.preference.SwitchPreferenceCompat
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.MetaDB
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider

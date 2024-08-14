@@ -53,10 +53,10 @@
     </plurals>
     <string name="card_browser_all_decks">所有牌組</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="other">Delete cards</item>
+        <item quantity="other">刪除卡片</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">刪除筆記</item>
     </plurals>
     <string name="card_browser_change_deck">變更牌組</string>
     <string name="delete_card_title">刪除筆記？</string>
@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">目前搜尋的名稱</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">你不能儲存沒有名稱的搜尋</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名稱已存在</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">刪除「%1$s」嗎？</string>
     <string name="card_browser_change_display_order">更改顯示順序</string>
     <string name="card_browser_change_display_order_title">選擇顯示順序</string>
@@ -95,6 +96,7 @@
     <string name="card_browser_search_all_decks">搜尋所有牌組</string>
     <string name="card_browser_unknown_deck_name">未知</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">截斷內容</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">今天是 \'0 %1$s\'，明天是 \'1 %2$s\'，等等&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">匯出卡片</item>
     </plurals>

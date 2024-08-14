@@ -18,12 +18,14 @@ package com.ichi2.libanki
 
 import anki.config.ConfigKey
 import com.google.protobuf.kotlin.toByteStringUtf8
+import com.ichi2.libanki.utils.NotInLibAnki
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 class Config(val backend: Backend) {
@@ -56,5 +58,27 @@ class Config(val backend: Backend) {
 
     fun setBool(key: ConfigKey.Bool, value: Boolean) {
         backend.setConfigBool(key, value, false)
+    }
+
+    @NotInLibAnki
+    inline fun<reified T> get(key: String, default: T): T? {
+        return try {
+            Json.decodeFromString<T>(backend.getConfigJson(key).toStringUtf8())
+        } catch (ex: BackendNotFoundException) {
+            default
+        } catch (ex: SerializationException) {
+            null
+        }
+    }
+
+    @NotInLibAnki
+    fun getObject(key: String, default: JSONObject): JSONObject {
+        return try {
+            JSONObject(backend.getConfigJson(key).toStringUtf8())
+        } catch (ex: BackendNotFoundException) {
+            default
+        } catch (ex: JSONException) {
+            default
+        }
     }
 }

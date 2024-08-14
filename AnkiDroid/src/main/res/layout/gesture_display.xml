@@ -101,6 +101,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent"
         app:srcCompat="@drawable/ic_gesture_swipe" />
 
 </merge>

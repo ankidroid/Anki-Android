@@ -24,11 +24,13 @@ import android.speech.tts.UtteranceProgressListener
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.cardviewer.SingleCardSide
+import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.TTSTag
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
@@ -37,7 +39,6 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import java.util.*
 
 object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -52,7 +53,7 @@ object ReadText {
     private var mOrd = 0
     var questionAnswer: CardSide? = null
         private set
-    const val NO_TTS = "0"
+    private const val NO_TTS = "0"
     private val mTtsParams = Bundle()
     private var mCompletionListener: ReadTextListener? = null
 
@@ -129,7 +130,7 @@ object ReadText {
         showDialogAfterDelay(dialog, 500)
     }
 
-    internal fun showDialogAfterDelay(dialog: AlertDialog.Builder, delayMillis: Int) {
+    private fun showDialogAfterDelay(dialog: AlertDialog.Builder, delayMillis: Int) {
         postDelayedOnNewHandler({
             try {
                 dialog.show()
@@ -197,7 +198,7 @@ object ReadText {
         Timber.d("ReadText.textToSpeech() method started for string '%s', locale '%s'", tag.fieldText, tag.lang)
         var localeCode = tag.lang
         val originalLocaleCode = localeCode
-        if (!localeCode.isEmpty()) {
+        if (localeCode.isNotEmpty()) {
             if (!isLanguageAvailable(localeCode)) {
                 localeCode = ""
             }
@@ -211,13 +212,13 @@ object ReadText {
             // user has chosen not to read the text
             return false
         }
-        if (!localeCode.isEmpty() && isLanguageAvailable(localeCode)) {
+        if (localeCode.isNotEmpty() && isLanguageAvailable(localeCode)) {
             speak(textToSpeak, localeCode, queueMode)
             return true
         }
 
         // Otherwise ask the user what language they want to use
-        if (!originalLocaleCode.isEmpty()) {
+        if (originalLocaleCode.isNotEmpty()) {
             // (after notifying them first that no TTS voice was found for the locale
             // they originally requested)
             showThemedToast(
@@ -253,9 +254,7 @@ object ReadText {
                     Timber.d("TTS initialized and available languages found")
                     (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
-                    if (ankiActivityContext != null) {
-                        ankiActivityContext.showSnackbar(R.string.no_tts_available_message)
-                    }
+                    ankiActivityContext?.showSnackbar(R.string.no_tts_available_message)
                     Timber.w("TTS initialized but no available languages found")
                 }
                 textToSpeech!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
@@ -274,6 +273,7 @@ object ReadText {
                         }
                     }
 
+                    @Suppress("DeprecatedCallableAddReplaceWith")
                     @Deprecated("")
                     override fun onError(utteranceId: String) {
                         // required for UtteranceProgressListener, but also deprecated
@@ -287,12 +287,6 @@ object ReadText {
             } else {
                 showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
                 Timber.w("TTS not successfully initialized")
-            }
-        }
-        // Remember the user to upgrade to the new TTS system #15475
-        ankiActivityContext?.showSnackbar(R.string.readtext_reviewer_warn, LENGTH_INDEFINITE) {
-            setAction(R.string.scoped_storage_learn_more) {
-                ankiActivityContext.openUrl(R.string.link_tts)
             }
         }
     }
@@ -350,4 +344,12 @@ object ReadText {
     interface ReadTextListener {
         fun onDone(playedSide: CardSide?)
     }
+}
+
+fun legacyGetTtsTags(col: Collection, card: Card, cardSide: SingleCardSide, context: Context): List<TTSTag> {
+    val cardSideContent: String = when (cardSide) {
+        SingleCardSide.FRONT -> card.question(col)
+        SingleCardSide.BACK -> card.pureAnswer(col)
+    }
+    return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
 }

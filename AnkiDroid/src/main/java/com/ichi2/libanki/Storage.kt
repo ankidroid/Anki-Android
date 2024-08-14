@@ -15,7 +15,7 @@
  */
 package com.ichi2.libanki
 
-import com.ichi2.anki.UIUtils.getDayStart
+import com.ichi2.anki.getDayStart
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.Backend
@@ -34,11 +34,10 @@ object Storage {
      * */
     fun collection(
         path: String,
-        log: Boolean = false,
         backend: Backend? = null
     ): Collection {
         val backend2 = backend ?: BackendFactory.getBackend()
-        return Collection(path, log, backend2)
+        return Collection(path, backend2)
     }
 
     /**

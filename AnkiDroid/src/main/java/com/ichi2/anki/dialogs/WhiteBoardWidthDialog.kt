@@ -24,7 +24,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.*
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import java.util.function.Consumer
 
 class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWidth: Int) {

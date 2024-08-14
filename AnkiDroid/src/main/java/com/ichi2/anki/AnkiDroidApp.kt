@@ -33,10 +33,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.work.Configuration
 import com.ichi2.anki.CrashReportService.sendExceptionReport
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
+import com.ichi2.anki.common.utils.isRunningAsUnitTest
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
@@ -46,6 +47,7 @@ import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
@@ -59,6 +61,7 @@ import com.ichi2.utils.Permissions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
@@ -68,7 +71,7 @@ import java.util.Locale
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application() {
+open class AnkiDroidApp : Application(), Configuration.Provider {
     /** An exception if the WebView subsystem fails to load  */
     private var webViewError: Throwable? = null
     private val notifications = MutableLiveData<Void?>()
@@ -78,6 +81,9 @@ open class AnkiDroidApp : Application() {
 
     /** Used to avoid showing extra progress dialogs when one already shown. */
     var progressDialogShown = false
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder().build()
 
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     /**
@@ -133,6 +139,10 @@ open class AnkiDroidApp : Application() {
             UsageAnalytics.setDryRun(true)
         }
 
+        applicationScope.launch {
+            Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))
+        }
+
         // Stop after analytics and logging are initialised.
         if (CrashReportService.isProperServiceProcess()) {
             Timber.d("Skipping AnkiDroidApp.onCreate from ACRA sender process")
@@ -143,7 +153,7 @@ open class AnkiDroidApp : Application() {
         }
 
         // make default HTML / JS debugging true for debug build and disable for unit/android tests
-        if (BuildConfig.DEBUG && !AdaptionUtil.isRunningAsUnitTest) {
+        if (BuildConfig.DEBUG && !isRunningAsUnitTest) {
             preferences.edit { putBoolean("html_javascript_debugging", true) }
         }
         CardBrowserContextMenu.ensureConsistentStateWithPreferenceStatus(

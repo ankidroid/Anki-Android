@@ -29,7 +29,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Hantera nottyper</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Hantera fält</string>
     <!--Toasts-->
-    <string name="toast_last_model">Du kan inte ta bort din senaste anteckningstyp</string>
+    <string name="toast_last_model">Du kan inte radera din sista anteckningstyp</string>
     <string name="toast_last_field">Nottyper måste ha åtminstone ett fält</string>
     <string name="toast_empty_name">Du måste ange ett namn</string>
     <string name="toast_duplicate_field">Fältnamnet används redan</string>
@@ -44,11 +44,11 @@
         <item quantity="other">%d noter</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">Ta bort nottyp</string>
+    <string name="model_browser_delete">Ta bort anteckningstyp</string>
     <string name="model_browser_rename" comment="Rename a note type">Byt namn</string>
     <string name="model_browser_template">Redigera kort</string>
     <!--Rename-->
-    <string name="rename_model">Byt namn på anteckningstyp</string>
+    <string name="rename_model">Byt namn på nottyp</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Ställ in språktips till %s</string>
     <!--Field Editing-->

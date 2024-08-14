@@ -70,6 +70,7 @@
     <string name="card_browser_list_my_searches_new_name">当前搜索的名称</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">没有输入名称时不能保存搜索结果</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名称已存在</string>
+    <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">确认删除「%1$s」？</string>
     <string name="card_browser_change_display_order">改变排序方式</string>
     <string name="card_browser_change_display_order_title">排序方式</string>
@@ -95,6 +96,7 @@
     <string name="card_browser_search_all_decks">搜索全部牌组</string>
     <string name="card_browser_unknown_deck_name">未知</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">截断内容</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">今天是 ‘0 %1$s’，明天是 ‘1 %2$s’等&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="other">导出卡片</item>
     </plurals>

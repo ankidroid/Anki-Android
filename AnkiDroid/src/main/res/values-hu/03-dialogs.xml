@@ -48,10 +48,14 @@
     <string name="check_db_warning">Ez sokáig tarthat</string>
     <string name="contextmenu_deckpicker_delete_deck">Pakli törlése</string>
     <string name="delete_deck_title">Pakli törlése</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="tts_no_tts">Ne beszélj</string>
     <string name="unused_strings">\n\bNem használt fájlok:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Előnézet</string>
     <string name="reposition_card_dialog_title">Helyezze át az új kártyát</string>
     <string name="reposition_card_dialog_message">Kiinduló helyzet:</string>
     <string name="reposition_card_not_new_error">Csak az új kártyákat lehet áthelyezni</string>
@@ -60,27 +64,10 @@
         <item quantity="other">%d kártyák áthelyezve</item>
     </plurals>
     <string name="reset_card_dialog_title">Kártya folyamatát alaphelyzetbe</string>
-    <string name="reset_card_dialog_message">Ez a kártya az új kártya várólista végére kerül.</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d kártya visszaállítva</item>
         <item quantity="other">%d kártyák visszaállítva</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%d kártya átütemezése</item>
-        <item quantity="other">%d kártya átütemezése</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Jelenlegi intervallum: %d nap</item>
-        <item quantity="other">Jelenlegi intervallum: %d nap</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Ismétléshez átütemezés x nap:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d kártya átütemezve</item>
-        <item quantity="other">%d kártyák átütemezve</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Új kártya ütemezése. Az ütemezés az új kártyákat felülvizsgálja. A \"kártya átrendezése\" opcióval módosíthatod az új kártya helyzetét az új sorban</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Az ütemezés visszaállítja azt is, ahogyan az ütemező a jövőben kezeli a kártyát (az egyszerűséget %d%% -ra állítja)</string>
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
@@ -109,8 +96,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Megerősít</string>
     <string name="dialog_no">Nem</string>
     <string name="dialog_yes">Igen</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Eltávolít</string>
     <string name="dialog_continue">Folytatás</string>
-    <string name="dialog_processing">Feldolgozás...</string>
+    <string name="dialog_processing">Feldolgozás&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Létrehoz</string>
     <string name="dialog_positive_delete">Töröl</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">Javít</string>
     <string name="dialog_positive_replace">Kicserél</string>
     <string name="dialog_collection_path_not_dir">A megadott elérési út nem érvényes mappa</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Média ellenőrzése?</string>
     <string name="check_media_warning">Ez sokáig tarthat nagy média gyűjtemények esetén</string>
@@ -130,7 +122,7 @@
     <string name="check_media_no_unused_missing">Nincs haszálaton kívüli, vagy hiányzó fájl.</string>
     <string name="check_media_db_updated">Média adatbázis újraépült.</string>
     <string name="check_media_delete_unused">Használaton kívüliek törlése</string>
-    <string name="delete_media_message">Média törlése...</string>
+    <string name="delete_media_message">Média törlése&#8230;</string>
     <string name="delete_media_result_title">Törlés eredménye</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">%d fájl törölve</item>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">A Multimédia Szerkesztő megnyitása sikertelen</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Audió felvétel engedély megtagadva</string>
-    <string name="mutimedia_editor_assertion_failed">Ismeretlen hiba történt a Bővített Szerkesztő megnyitása során</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Frissített AnkiDroid</string>
     <string name="integrity_check_startup_content">Az AnkiDroid frissítve lett. Ez a frissítés lehetséges adatbázis problémákat orvosol, javasoljuk, hogy most futtassátok az adatbázis ellenőrzést.</string>
@@ -219,7 +210,7 @@
         <item quantity="one">Egy auto szinkronizálás elindulhat %d másodperc elteltével.</item>
         <item quantity="other">Egy automatikus szinkronizálás elindulhat %d másodperc múlva</item>
     </plurals>
-    <string name="metered_sync_warning">A kapcsolat forgalmi díjas. Az adatátvitel pénzbe kerülhet</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">A ma megnézendő új kártyák száma ebben a pakliban.</string>
     <string name="deck_picker_rev">A ma elvégzendő kártyák száma ebben a pakliban.</string>
     <string name="deck_picker_lrn">A tanulandó kártyák száma ebben a pakliban.</string>
@@ -242,4 +233,31 @@
     <string name="dismiss_backup_warning_title">Figyelmeztetés adatveszteségről</string>
     <string name="dismiss_backup_warning_new_user">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is törlődnek, ha az alkalmazás eltávolításra kerül.</string>
     <string name="dismiss_backup_warning_upgrade">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is elérhetetlenné válnak, ha az alkalmazás eltávolításra kerül.</string>
+    <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

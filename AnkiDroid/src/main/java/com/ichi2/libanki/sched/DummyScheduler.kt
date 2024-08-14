@@ -18,7 +18,7 @@
 
 package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import java.lang.Exception
 

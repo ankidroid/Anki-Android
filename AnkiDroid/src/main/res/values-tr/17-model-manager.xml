@@ -27,7 +27,7 @@
 <resources>
     <!--Menu Labels-->
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Not türlerini belirle</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Alanları belirle</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Alanları yönet</string>
     <!--Toasts-->
     <string name="toast_last_model">Son not türünüzü silemezsin.</string>
     <string name="toast_last_field">Not türlerinin en az bir alanı olmak zorundadır</string>
@@ -48,7 +48,7 @@
     <string name="model_browser_rename" comment="Rename a note type">Yeniden adlandır</string>
     <string name="model_browser_template">Kartları düzenle</string>
     <!--Rename-->
-    <string name="rename_model">Not tipini yeniden adlandır</string>
+    <string name="rename_model">Not türünü yeniden adlandır</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Dil ipucunu %s olarak ayarla</string>
     <!--Field Editing-->
@@ -63,7 +63,7 @@
     <string name="model_field_editor_changing">Alanlar güncelleniyor</string>
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Bu mesajı silmek istediğinizden emin misiniz?</string>
+    <string name="model_delete_warning">Bu not türünü silmek istediğinize emin misiniz?</string>
     <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Ekle: %1$s </string>
@@ -71,13 +71,13 @@
     <string name="model_browser_add_clone">Klonla: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Kartlarınızı görüntülemek için kullanılacak kart tarayıcı şablonunu giriniz. Daha anlaşılır bir yanıt görüntülemek için bunu kullanın.\n\nŞablonun önü\n\"{{Ülkesi}}nin başkenti: \"\nkart tarayıcıda şöyle sıkıştırılabilir\n\"Başkent: {{Ülke}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Soru Tipi</string>
-    <string name="card_template_browser_appearance_answer_format">Cevap Tipi</string>
+    <string name="card_template_browser_appearance_question_format">Soru Biçimi</string>
+    <string name="card_template_browser_appearance_answer_format">Cevap Biçimi</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Varsayılan değerler korunsun mu?</string>
     <string name="card_template_browser_appearance_saving_note">Kart şablonu kaydedildiğinde bu değişiklikler uygulanır</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Destenin üzerine yazmak (açık)</string>
-    <string name="card_template_editor_deck_override_off">Destenin üezerine yazmak (kapalı)</string>
+    <string name="card_template_editor_deck_override_on">Desteyi geçersiz kılma (açık)</string>
+    <string name="card_template_editor_deck_override_off">Desteyi geçersiz kılma (kapalı)</string>
     <string name="model_manager_deck_override_added_message">\'%1$s\' varsayılan destesini \'%2$s\' olarak ayarlayın</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' için varsayılan deste kaldırıldı</string>
     <string name="deck_override_explanation">Yeni \'%s\' kartlarının yerleştirileceği desteyi seçin</string>

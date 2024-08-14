@@ -32,6 +32,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import anki.config.copy
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.AppBarLayout
@@ -43,6 +44,8 @@ import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.getInstanceFromClassName
@@ -54,7 +57,7 @@ class Preferences :
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
 
-    private fun hasLateralNavigation(): Boolean {
+    fun hasLateralNavigation(): Boolean {
         return findViewById<FragmentContainerView>(R.id.lateral_nav_container) != null
     }
 
@@ -229,14 +232,20 @@ class Preferences :
 
         /** Sets the hour that the collection rolls over to the next day  */
         @VisibleForTesting
+        @NeedsTest("ensure Start of Next Day is handled by the scheduler")
         suspend fun setDayOffset(context: Context, hours: Int) {
-            withCol {
-                config.set("rollover", hours)
-                scheduleNotification(TimeManager.time, context)
+            val prefs = withCol { getPreferences() }
+            val newPrefs = prefs.copy { scheduling = prefs.scheduling.copy { rollover = hours } }
+
+            undoableOp {
+                setPreferences(newPrefs)
             }
+            scheduleNotification(TimeManager.time, context)
+            Timber.i("set day offset: '%d'", hours)
         }
+
         suspend fun getDayOffset(): Int {
-            return withCol { config.get("rollover") ?: 4 }
+            return withCol { getPreferences().scheduling.rollover }
         }
     }
 }

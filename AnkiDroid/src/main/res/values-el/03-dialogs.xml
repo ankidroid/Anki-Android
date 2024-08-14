@@ -48,10 +48,14 @@
     <string name="check_db_warning">Αυτό μπορεί να διαρκέσει πολύ</string>
     <string name="contextmenu_deckpicker_delete_deck">Διαγραφή τράπουλας</string>
     <string name="delete_deck_title">Διαγραφή τράπουλας;</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
     <string name="tts_no_tts">Σίγαση</string>
     <string name="unused_strings">\n\nΑχρησιμοποίητα αρχεία:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Προεπισκόπηση</string>
     <string name="reposition_card_dialog_title">Επανατοποθέτηση νέας κάρτας</string>
     <string name="reposition_card_dialog_message">Θέση έναρξης:</string>
     <string name="reposition_card_not_new_error">Μόνο νέες κάρτες μπορούν να επανατοποθετηθούν</string>
@@ -60,27 +64,10 @@
         <item quantity="other">Επανατοποθετήθηκαν %d κάρτες</item>
     </plurals>
     <string name="reset_card_dialog_title">Επαναφορά προόδου κάρτας</string>
-    <string name="reset_card_dialog_message">Αυτή η κάρτα θα τοποθετηθεί στο τέλος της ουράς νέων καρτών</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">Επαναφορά %d καρτών</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Επαναπρογραμματισμός %d κάρτας</item>
-        <item quantity="other">Επαναπρογραμματισμός %d καρτών</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Τρέχον διάστημα: %d ημέρες</item>
-        <item quantity="other">Current interval: %d days</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Επαναπρογραμματισμός για επανάληψη σε x ημέρες</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d κάρτες επαναπρογραμματίστηκαν</item>
-        <item quantity="other">%d cards rescheduled</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Μια νέα κάρτα επαναπρογραμματίζεται.Η αναδιάταξη μετατρέπει επίσης τις νέες κάρτες σε κάρτες προς επανάληψη. Χρησιμοποιήστε την επιλογή \'reposition card\' για να αλλάξετε τη θέση μιας νέας κάρτας στη νέα ουρά</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="answering_error_title">Σφάλμα βάσης δεδομένων</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Αναφορά σφάλματος</string>
@@ -109,8 +96,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Επιβεβαίωση</string>
     <string name="dialog_no">Όχι</string>
     <string name="dialog_yes">Ναι</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Συνέχεια</string>
-    <string name="dialog_processing">Επεξεργασία...</string>
+    <string name="dialog_processing">Επεξεργασία&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Δημιουργία</string>
     <string name="dialog_positive_delete">Διαγραφή</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">Επισκευή</string>
     <string name="dialog_positive_replace">Αντικατάσταση</string>
     <string name="dialog_collection_path_not_dir">Η καθορισμένη διαδρομή δεν ήταν ένας έγκυρος κατάλογος</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Έλεγχος πολυμέσων;</string>
     <string name="check_media_warning">Αυτό μπορεί να διαρκέσει πολύ ώρα με μεγάλες συλλογές πολυμέσων</string>
@@ -141,7 +133,7 @@
     <string name="tags_dialog_option_new_cards">Νέο</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Εύρεση κενών καρτών...</string>
+    <string name="emtpy_cards_finding">Εύρεση κενών καρτών&#8230;</string>
     <string name="empty_cards_count">Κάρτες προς διαγραφή: %d</string>
     <string name="empty_cards_deleted">Διαγραμμένες κάρτες: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">Αποτυχία ανοίγματος του επεξεργαστή πολυμέσων</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Απόρριψη άδειας ηχογράφησης</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Το AnkiDroid αναβαθμίστηκε</string>
     <string name="integrity_check_startup_content">Το AnkiDroid έχει αναβαθμιστεί. Αυτή η αναβάθμιση περιλαμβάνει διορθώσεις για πιθανά προβλήματα βάσης δεδομένων και σας συμβουλεύουμε να εκτελέσετε τώρα έλεγχο βάσης δεδομένων.</string>
@@ -219,7 +210,7 @@
         <item quantity="one">Ο αυτόματος συγχρονισμός μπορεί να ενεργοποιηθεί σε %d δευτερόλεπτο</item>
         <item quantity="other">Ο αυτόματος συγχρονισμός μπορεί να ενεργοποιηθεί σε %d δευτερόλεπτα</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Αριθμός νέων καρτών για να δείτε σήμερα σε αυτή την τράπουλα.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Αριθμός καρτών σε εκμάθηση σε αυτή την τράπουλα.</string>
@@ -244,4 +235,31 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

@@ -32,17 +32,16 @@ import timber.log.Timber
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-// TODO: investigate whether it's feasible to drop the useInputTag option introduced back
-// in 2015. https://github.com/ankidroid/Anki-Android/pull/3921
-
+/**
+ * @param useInputTag use an `<input>` tag to allow for HTML styling
+ * @param autoFocus Whether the user wants to focus "type in answer"
+ */
 class TypeAnswer(
-    @get:JvmName("useInputTag") val useInputTag: Boolean,
-    @get:JvmName("doNotUseCodeFormatting") val doNotUseCodeFormatting: Boolean,
-    /** Preference: Whether the user wants to focus "type in answer" */
+    val useInputTag: Boolean,
     val autoFocus: Boolean
 ) {
 
-    /** The correct answer in the compare to field if answer should be given by learner. Null if no answer is expected. */
+    /** The correct answer in the compare to field if answer should be given by learner. `null` if no answer is expected. */
     var correct: String? = null
         private set
 
@@ -71,7 +70,7 @@ class TypeAnswer(
 
     /**
      * @return true If entering input via EditText
-     * and if the current card has a {{type:field}} on the card template
+     * and if the current card has a `{{type:field}}` on the card template
      */
     fun validForEditText(): Boolean {
         return !useInputTag && correct != null
@@ -101,7 +100,7 @@ class TypeAnswer(
             fldTag = fldTag.split(":").toTypedArray()[1]
         }
         // loop through fields for a match
-        val flds: JSONArray = card.model(col).getJSONArray("flds")
+        val flds: JSONArray = card.noteType(col).getJSONArray("flds")
         for (fld in flds.jsonObjectIterable()) {
             val name = fld.getString("name")
             if (name == fldTag) {
@@ -152,10 +151,10 @@ class TypeAnswer(
             // shouldOverrideUrlLoading() in createWebView() in this file.
             append(
                 """<center>
-<input type="text" name="typed" id="typeans" onfocus="taFocus();" onblur="taBlur(this);" onKeyPress="return taKey(this, event)" autocomplete="off" """
+<input type="text" name="typed" id="typeans" data-focus="$autoFocus" onfocus="taFocus();" oninput='taChange(this);' onKeyPress="return taKey(this, event)" autocomplete="off" """
             )
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
-            // desktop just doesn’t show the input tag there. Do it with standard values here instead.)
+            // desktop just doesn't show the input tag there. Do it with standard values here instead.)
             if (font.isNotEmpty() && size > 0) {
                 append("style=\"font-family: '").append(font).append("'; font-size: ")
                     .append(size).append("px;\" ")
@@ -198,10 +197,7 @@ class TypeAnswer(
         val sb = StringBuilder()
         fun append(@Language("HTML") html: String) = sb.append(html)
 
-        var comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer)
-        if (doNotUseCodeFormatting) {
-            comparisonText = "$comparisonText<style>code.typeans { font-family: sans-serif; }</style>"
-        }
+        val comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer)
         append(Matcher.quoteReplacement(comparisonText))
         return m.replaceAll(sb.toString())
     }
@@ -213,7 +209,6 @@ class TypeAnswer(
         fun createInstance(preferences: SharedPreferences): TypeAnswer {
             return TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
-                doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
                 autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", true)
             )
         }

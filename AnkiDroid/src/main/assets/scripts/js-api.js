@@ -1,6 +1,6 @@
 /*
  * AnkiDroid JavaScript API
- * Version: 0.0.2
+ * Version: 0.0.3
  */
 
 /**
@@ -71,6 +71,7 @@ const jsApiList = {
     ankiSttSetLanguage: "sttSetLanguage",
     ankiSttStart: "sttStart",
     ankiSttStop: "sttStop",
+    ankiAddTagToNote: "addTagToNote",
 };
 
 class AnkiDroidJS {
@@ -116,6 +117,13 @@ class AnkiDroidJS {
 }
 
 Object.keys(jsApiList).forEach(method => {
+    if (method === "ankiAddTagToNote") {
+        AnkiDroidJS.prototype[method] = async function (noteId, tag) {
+            const endpoint = jsApiList[method];
+            const data = JSON.stringify({ noteId, tag });
+            return await this.handleRequest(endpoint, data);
+        };
+    }
     if (method === "ankiTtsSpeak") {
         AnkiDroidJS.prototype[method] = async function (text, queueMode = 0) {
             const endpoint = jsApiList[method];

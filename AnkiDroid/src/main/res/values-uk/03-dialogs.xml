@@ -48,10 +48,16 @@
     <string name="check_db_warning">Це може зайняти багато часу</string>
     <string name="contextmenu_deckpicker_delete_deck">Видалити колоду</string>
     <string name="delete_deck_title">Видалити колоду?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Попередній перегляд</string>
     <string name="reposition_card_dialog_title">Перемістити нову картку</string>
     <string name="reposition_card_dialog_message">Початкова позиція:</string>
     <string name="reposition_card_not_new_error">Можна перемістити тільки нові картки</string>
@@ -62,35 +68,12 @@
         <item quantity="other">%d карток переміщено</item>
     </plurals>
     <string name="reset_card_dialog_title">Скинути прогрес картки</string>
-    <string name="reset_card_dialog_message">Ця картка буде переміщена у кінець черги нових карток</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d картку скинуто</item>
         <item quantity="few">%d картки скинуті</item>
         <item quantity="many">%d картки скинуті</item>
         <item quantity="other">%d картки скинуті</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Перепланувати %d картку</item>
-        <item quantity="few">Перепланувати %d картки</item>
-        <item quantity="many">Перепланувати %d карток</item>
-        <item quantity="other">Перепланувати %d карток</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Поточний інтервал: %d доба</item>
-        <item quantity="few">Поточний інтервал: %d доби</item>
-        <item quantity="many">Поточний інтервал: %d діб</item>
-        <item quantity="other">Поточний інтервал: %d доби</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Запланувати повторення через x днів:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d картку переплановано</item>
-        <item quantity="few">%d карток переплановано</item>
-        <item quantity="many">%d карток переплановано</item>
-        <item quantity="other">%d картки переплановано</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Переплановується нова картка. Перепланування перетворює нові картки на повторені. Скористайтеся опцією «перемістити картку», щоб змінити місце картки в новій черзі</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Планування також скидає, як планувальник відноситься до карти в майбутньому (легкість картки буде встановлено на %d%%)</string>
     <string name="answering_error_title">Помилка бази даних</string>
     <string name="answering_error_message">Під час запису в колекцію сталася помилка. Причиною може бути пошкоджена база даних або відсутність місця на диску.\n\nЯкщо це трапляється частіше, будь ласка, спробуйте перевірити базу даних, полагодити колекцію, або відновити її з резервної копії. Для цього натисніть на «налаштування».\n\nОднак, це також може бути недолік AnkiDroid; будь ласка, надішліть звіт для перевірки цього.</string>
     <string name="answering_error_report">Повідомити про помилку</string>
@@ -119,6 +102,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Підтвердити</string>
     <string name="dialog_no">Ні</string>
     <string name="dialog_yes">Так</string>
+    <string name="dialog_keep">Залишити</string>
+    <string name="dialog_remove">Видалити</string>
     <string name="dialog_continue">Продовжити</string>
     <string name="dialog_processing">Обробка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
@@ -129,6 +114,9 @@
     <string name="dialog_positive_repair">Виправити</string>
     <string name="dialog_positive_replace">Замінити</string>
     <string name="dialog_collection_path_not_dir">Вказаний шлях не є дійсним</string>
+    <string name="dialog_invalid_custom_certificate">Наданий текст не перетворюється на дійсний сертифікат X509 з PEM-кодуванням</string>
+    <string name="dialog_invalid_custom_certificate_title">Помилка парсингу сертифікату</string>
+    <string name="dialog_updated_custom_certificate">Сертифікат оновлено</string>
     <!-- Media checking -->
     <string name="check_media_title">Перевірити медіафайли?</string>
     <string name="check_media_warning">Процес може зайняти багато часу з великими колекціями медіафайлів</string>
@@ -162,7 +150,6 @@
     <string name="multimedia_editor_failed">Не вдалося відкрити мультимедійний редактор</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Відхилено доступ до запису звуку</string>
-    <string name="mutimedia_editor_assertion_failed">Невідома помилка під час відображення розширеного редактора</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid оновлено</string>
     <string name="integrity_check_startup_content">AnkiDroid оновлено. Оновлення включає в себе виправлення можливих проблем з базою даних, і ми радимо Вам запустити перевірку бази даних.</string>
@@ -233,7 +220,7 @@
         <item quantity="many">Автоматична синхронізація може запуститися через %d секунд.</item>
         <item quantity="other">Автоматична синхронізація може запуститися через %d секунди.</item>
     </plurals>
-    <string name="metered_sync_warning">Ваше з\'єднання вимірюється. За передачу даних можуть зніматися кошти</string>
+    <string name="metered_sync_data_warning">Ваш інтернет-провайдер може стягувати гроші за використання даних</string>
     <string name="deck_picker_new">Кількість нових карт, що будуть бачити сьогодні в цій колоді.</string>
     <string name="deck_picker_rev">Кількість нових карток на сьогодні в цій колоді</string>
     <string name="deck_picker_lrn">Кількість карток для повторення на сьогодні в цій колоді</string>
@@ -258,4 +245,37 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії стануть недоступними, якщо додаток буде видалено
     </string>
+    <string name="deck_already_exists">Колода вже існує</string>
+    <string name="create_deck_numeric_hint">Якщо у вас є проблеми з порядком колод (наприклад, \'10\' стоїть перед \'2\') - замініть \'2\' на \'02\'</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Встановити інтервал на те саме значення</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Показати картку через</item>
+        <item quantity="few">Показати картки через</item>
+        <item quantity="many">Показати картки через</item>
+        <item quantity="other">Показати картки через</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Показати картку в діапазоні</item>
+        <item quantity="few">Показати картки в діапазоні</item>
+        <item quantity="many">Показати картки в діапазоні</item>
+        <item quantity="other">Показати картки в діапазоні</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">день</item>
+        <item quantity="few">дні</item>
+        <item quantity="many">днів</item>
+        <item quantity="other">днів</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Від</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">До</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Необхідний запис типу Cloze</string>
+    <string name="cloze_not_found_message">Не знайдено жодного запису з пропусками (Cloze), відкрийте Редактор записів або спробуйте знову після додання запису з пропусками.</string>
+    <string name="open">Відкрити</string>
+    <string name="change_cloze_number">Змінити номер Cloze</string>
+    <string name="cloze_number">Номер Cloze:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">Системний WebView застарілий. Деякі функції не будуть правильно працювати. Оновіть його, будь ласка.\n\nВстановлена версія: %1$d\nЯк мінімум потрібна версія: %2$d</string>
 </resources>

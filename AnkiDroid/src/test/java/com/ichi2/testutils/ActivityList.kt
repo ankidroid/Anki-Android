@@ -20,13 +20,30 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.CheckResult
 import com.canhub.cropper.CropImageActivity
-import com.ichi2.anki.*
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CardTemplateBrowserAppearanceEditor
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWER_FORMAT
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
-import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.anki.CardTemplateEditor
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.DrawingActivity
+import com.ichi2.anki.FilteredDeckOptions
+import com.ichi2.anki.Info
+import com.ichi2.anki.IntentHandler
+import com.ichi2.anki.IntentHandler2
+import com.ichi2.anki.IntroductionActivity
+import com.ichi2.anki.LoginActivity
+import com.ichi2.anki.ModelFieldEditor
+import com.ichi2.anki.MyAccount
+import com.ichi2.anki.Reviewer
+import com.ichi2.anki.SharedDecksActivity
+import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.StudyOptionsActivity
+import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
+import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.Preferences
-import com.ichi2.anki.previewer.PreviewerActivity
+import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
@@ -49,6 +66,7 @@ object ActivityList {
                     1L
                 )
             },
+            get(IntentHandler2::class.java),
             get(StudyOptionsActivity::class.java),
             get(CardBrowser::class.java),
             get(ModelFieldEditor::class.java),
@@ -61,11 +79,6 @@ object ActivityList {
             get(DrawingActivity::class.java),
             // Info has unhandled intents
             get(Info::class.java),
-            // NoteEditor has unhandled intents
-            get(NoteEditor::class.java),
-            get(Previewer::class.java),
-            get(CardTemplatePreviewer::class.java),
-            get(MultimediaEditFieldActivity::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
             get(SharedDecksActivity::class.java),
@@ -75,8 +88,9 @@ object ActivityList {
             get(ManageSpaceActivity::class.java),
             get(PermissionsActivity::class.java),
             get(SingleFragmentActivity::class.java),
-            get(ImageOcclusionActivity::class.java),
-            get(PreviewerActivity::class.java)
+            get(CardViewerActivity::class.java),
+            get(InstantNoteEditorActivity::class.java),
+            get(MultimediaActivity::class.java)
         )
     }
 

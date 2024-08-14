@@ -61,15 +61,15 @@
     <string name="collapse">Toraytirish</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d minut qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d soat %2$d minut qoldi</item>
+        <item quantity="other">%1$d soat %2$d minut qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d kun %2$d soat qoldi</item>
+        <item quantity="other">%1$d kun %2$d soat qoldi</item>
     </plurals>
     <string name="no_cards_placeholder_title">To\'plam bo\'sh</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
@@ -91,7 +91,7 @@
     <string name="rename_deck">To\'plamni qayta nomlash</string>
     <string name="create_shortcut">Yorliq yaratish</string>
     <string name="browse_cards">Kartalarni ko\'rib chiqish</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Tavsifini tahrirlash</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Qo\'shish</string>
     <string name="menu_add_note">Qayd qo\'shish</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Akkauntni sinxronlashtirish</string>
@@ -104,21 +104,15 @@
     <string name="menu_suspend">To\'xtatib turish</string>
     <string name="menu_delete_note">Qaydni o\'chirish</string>
     <string name="menu_flag">Bayroq</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Kartaga bayroq qo\'yish</string>
-    <string name="menu_flag_card_zero">Bayroqsiz</string>
-    <string name="menu_flag_card_one">Qizil bayroq</string>
-    <string name="menu_flag_card_two">Apelsinrang bayroq</string>
-    <string name="menu_flag_card_three">Yashil bayroq</string>
-    <string name="menu_flag_card_four">Ko\'k bayroq</string>
-    <string name="menu_flag_card_five">Pushti bayroq</string>
-    <string name="menu_flag_card_six">Feruza bayroq</string>
-    <string name="menu_flag_card_seven">Siyohrang bayroq</string>
     <string name="menu_edit_tags">Teglarni tahrirlash</string>
     <string name="delete_note_message">Rostdan ham bu qayd va uning barcha kartalarini o\'chirish?\n%s</string>
     <string name="menu_search">%1$s dan izlab ko\'rish</string>
     <string name="menu_mark_note">Qaydni belgilash</string>
     <string name="menu_unmark_note">Qayddan belgini olib tashlash</string>
-    <string name="menu_toggle_mic_tool_bar">Talaffuzni tekshirish</string>
+    <string name="menu_enable_voice_playback">Ovozli o\'qishni yoqish</string>
+    <string name="menu_disable_voice_playback">Ovozli o\'qishni o\'chirish</string>
     <string name="new_deck">Paluba yaratish</string>
     <string name="new_dynamic_deck">Siljiydigan paluba yaratish</string>
     <string name="directory_inaccessible">AnkiDroid katalogi mavjud emas</string>
@@ -134,10 +128,12 @@
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Avval qo\'shimcha shug\'ullanish to\'plamini qayta nomlang</string>
-    <string name="empty_deck">Bu to\'plam bo\'sh</string>
     <string name="search_deck" comment="Deck search for selecting it">To\'plam qidirish</string>
+    <string name="empty_deck">Bu to\'plam bo\'sh</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">To\'plam qidirish</string>
     <string name="invalid_deck_name">To\'plamning nomi yaroqsiz</string>
+    <string name="studyoptions_congrats_finished">Tabriklamiz! Hammasini tugatdingiz.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Tugashi lozim kartalar halicha yo\'q</string>
     <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlash</string>
@@ -145,8 +141,10 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Sinxronlashni bekor qilishni istaysizmi?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Sinxronlashni davom ettirish</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinxronlash bekor qilindi</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Bekor qilinyapti...\n Bu biroz vaqt olishi mumkin</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Bekor qilinyapti&#8230;\n Bu biroz vaqt olishi mumkin</string>
+    <string name="syncing_media">Mediani sinxronlash</string>
     <string name="export_deck">To\'plamni eksport qilish</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Hechnima</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Karta turlari</string>
@@ -166,7 +164,6 @@
         <item quantity="one">“%2$s” turdagi kartani va uning  %1$d ta kartasini ochirasizmi?</item>
         <item quantity="other">“%2$s” turdagi kartani va uning  %1$d ta kartalarini ochirasizmi?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
@@ -240,6 +237,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
@@ -252,4 +250,7 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

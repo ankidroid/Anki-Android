@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
@@ -29,39 +30,63 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.list.listItems
-import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.ichi2.anki.*
-import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.BackupManager
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.ConflictResolution
+import com.ichi2.anki.DatabaseRestorationListener
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
+import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_DB_ERROR
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_DB_LOCKED
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_DISK_FULL
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_ERROR_HANDLING
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_LOAD_FAILED
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_NEW_COLLECTION
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_ONE_WAY_SYNC_FROM_SERVER
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_REPAIR_COLLECTION
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_RESTORE_BACKUP
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
+import com.ichi2.anki.isLoggedIn
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.servicelayer.ScopedStorageService
+import com.ichi2.anki.showImportDialog
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.*
 import com.ichi2.utils.UiUtil.makeBold
+import com.ichi2.utils.cancelable
+import com.ichi2.utils.create
+import com.ichi2.utils.listItems
+import com.ichi2.utils.listItemsAndMessage
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.neutralButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
     private lateinit var repairValues: IntArray
     private lateinit var backups: Array<File>
 
-    @Suppress("Deprecation") // Material dialog neutral button deprecation
     @SuppressLint("CheckResult")
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         val res = res()
-        val dialog = MaterialDialog(requireActivity())
+        val alertDialog = AlertDialog.Builder(requireActivity())
         val isLoggedIn = isLoggedIn()
-        dialog.cancelable(true)
+        alertDialog.cancelable(true)
             .title(text = title)
-            .cancelOnTouchOutside(false)
         var sqliteInstalled = false
         try {
             sqliteInstalled = Runtime.getRuntime().exec("sqlite3 --version").waitFor() == 0
@@ -74,26 +99,28 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_LOAD_FAILED -> {
                 // Collection failed to load; give user the option of either choosing from repair options, or closing
                 // the activity
-                dialog.show {
+                alertDialog.show {
+                    title(R.string.open_collection_failed_title)
                     cancelable(false)
-                    contentNullable(message)
-                    icon(R.drawable.ic_warning)
+                    message(text = message)
+                    setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                     }
                     negativeButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                 }
             }
             DIALOG_DB_ERROR -> {
                 // Database Check failed to execute successfully; give user the option of either choosing from repair
                 // options, submitting an error report, or closing the activity
-                dialog.show {
+                alertDialog.create {
                     cancelable(false)
-                    contentNullable(message)
-                    icon(R.drawable.ic_warning)
+                    title(R.string.answering_error_title)
+                    message(text = message)
+                    setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -103,9 +130,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         dismissAllDialogFragments()
                     }
                     neutralButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
-                    setActionButtonEnabled(WhichButton.NEGATIVE, (activity as DeckPicker).hasErrorFiles())
+                }.apply {
+                    show()
+                    getButton(Dialog.BUTTON_NEGATIVE).isEnabled = (activity as DeckPicker).hasErrorFiles()
                 }
             }
             DIALOG_ERROR_HANDLING -> {
@@ -130,9 +159,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // // restore from backup
                 options.add(res.getString(R.string.backup_restore))
                 values.add(3)
-                // full sync from server
+                // one-way sync from server
                 if (isLoggedIn) {
-                    options.add(res.getString(R.string.backup_full_sync_from_server))
+                    options.add(res.getString(R.string.backup_one_way_sync_from_server))
                     values.add(4)
                 }
                 // delete old collection and build new one
@@ -146,10 +175,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     repairValues[i] = values[i]
                     i++
                 }
-                dialog.show {
-                    icon(R.drawable.ic_warning)
+                alertDialog.show {
+                    title(R.string.error_handling_title)
+                    setIcon(R.drawable.ic_warning)
                     negativeButton(R.string.dialog_cancel)
-                    listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    listItems(items = titles.toList().map { it as CharSequence }) { _, index ->
                         when (repairValues[index]) {
                             0 -> {
                                 ActivityCompat.recreate(activity as DeckPicker)
@@ -168,7 +198,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 return@listItems
                             }
                             4 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_FULL_SYNC_FROM_SERVER)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
                                 return@listItems
                             }
                             5 -> {
@@ -182,9 +212,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_REPAIR_COLLECTION -> {
                 // Allow user to run BackupManager.repairCollection()
-                dialog.show {
-                    contentNullable(message)
-                    icon(R.drawable.ic_warning)
+                alertDialog.show {
+                    title(R.string.dialog_positive_repair)
+                    message(text = message)
+                    setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.dialog_positive_repair) {
                         (activity as DeckPicker).repairCollection()
                         dismissAllDialogFragments()
@@ -197,8 +228,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 val path = CollectionHelper.getCollectionPath(requireContext())
                 backups = BackupManager.getBackups(File(path))
                 if (backups.isEmpty()) {
-                    dialog.title(R.string.backup_restore)
-                        .contentNullable(message)
+                    alertDialog.title(R.string.backup_restore)
+                        .title(text = message)
                         .positiveButton(R.string.dialog_ok) {
                             (activity as DeckPicker?)
                                 ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -209,14 +240,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     val formatter = LocalizedUnambiguousBackupTimeFormatter()
                     val dates = backups.map { formatter.getTimeOfBackupAsText(it) }
 
-                    dialog.title(R.string.backup_restore_select_title)
+                    alertDialog.title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
                             (activity as? AnkiActivity)?.let {
                                 ImportFileSelectionFragment.openImportFilePicker(it, ImportFileSelectionFragment.ImportFileType.APKG)
                             }
                         }
                         .negativeButton(R.string.dialog_cancel)
-                        .listItemsSingleChoice(items = dates.toTypedArray().toList(), waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
+                        .setSingleChoiceItems(dates.toTypedArray(), -1) { _, index: Int ->
                             if (backups[index].length() > 0) {
                                 // restore the backup if it's valid
                                 (activity as DeckPicker?)
@@ -233,29 +264,28 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 }
                             }
                         }
-                        // needed because listItemsSingleChoice disables the positive button and we
-                        // want to allow in the dialog direct item selection and different action for
-                        // positive button
-                        .setActionButtonEnabled(WhichButton.POSITIVE, true)
                 }
-                dialog.setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
+                alertDialog.setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
                         Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
                         dismissAllDialogFragments()
                         return@setOnKeyListener true
                     }
                     false
-                }
-                dialog
+                }.create()
             }
             DIALOG_NEW_COLLECTION -> {
                 // Allow user to create a new empty collection
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.backup_new_collection)
+                    message(text = message)
                     positiveButton(R.string.dialog_positive_create) {
-                        val ch = CollectionHelper.instance
                         val time = TimeManager.time
-                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
+                        Timber.i(
+                            "closeCollection: %s",
+                            "DatabaseErrorDialog: Before Create New Collection"
+                        )
+                        CollectionManager.closeCollectionBlocking()
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             ActivityCompat.recreate(activity as DeckPicker)
@@ -268,8 +298,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_CONFIRM_DATABASE_CHECK -> {
                 // Confirmation dialog for database check
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.check_db_title)
+                    message(text = message)
                     positiveButton(R.string.dialog_ok) {
                         (activity as DeckPicker).integrityCheck()
                         dismissAllDialogFragments()
@@ -279,8 +310,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_CONFIRM_RESTORE_BACKUP -> {
                 // Confirmation dialog for backup restore
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.restore_backup_title)
+                    message(text = message)
                     positiveButton(R.string.dialog_continue) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
@@ -288,10 +320,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     negativeButton(R.string.dialog_cancel)
                 }
             }
-            DIALOG_FULL_SYNC_FROM_SERVER -> {
+            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> {
                 // Allow user to do a full-sync from the server
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.backup_one_way_sync_from_server)
+                    message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
                         (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
@@ -301,10 +334,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_DB_LOCKED -> {
                 // If the database is locked, all we can do is ask the user to exit.
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.database_locked_title)
+                    message(text = message)
                     positiveButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                     cancelable(false)
                 }
@@ -315,48 +349,48 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 options.add(makeBold(res.getString(R.string.backup_restore)))
                 values.add(0)
                 if (isLoggedIn) {
-                    options.add(makeBold(res.getString(R.string.backup_full_sync_from_server)))
+                    options.add(makeBold(res.getString(R.string.backup_one_way_sync_from_server)))
                     values.add(1)
                 }
-                dialog.show {
+                alertDialog.show {
                     cancelable(false)
-                    contentNullable(message)
-                    icon(R.drawable.ic_warning)
+                    title(R.string.incompatible_database_version_title)
+                    setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
-                    listItems(items = options, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
+                    listItemsAndMessage(message = message, items = options) { _, index: Int ->
                         when (values[index]) {
                             0 -> (activity as DeckPicker).showDatabaseErrorDialog(
                                 DIALOG_RESTORE_BACKUP
                             )
                             1 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_FULL_SYNC_FROM_SERVER
+                                DIALOG_ONE_WAY_SYNC_FROM_SERVER
                             )
                         }
                     }
                 }
             }
             DIALOG_DISK_FULL -> {
-                dialog.show {
-                    contentNullable(message)
+                alertDialog.show {
+                    title(R.string.storage_full_title)
+                    message(text = message)
                     positiveButton(R.string.close) {
-                        exit()
+                        closeCollectionAndFinish()
                     }
                 }
             }
             DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> {
                 val listItems = UninstallListItem.createList()
-                dialog.show {
-                    contentNullable(message)
-                    listItems(items = listItems.map { getString(it.stringRes) }, waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
+                alertDialog.show {
+                    title(R.string.directory_inaccessible_after_uninstall)
+                    listItemsAndMessage(message = message, items = listItems.map { getString(it.stringRes) }) { _, index: Int ->
                         val listItem = listItems[index]
                         listItem.onClick(activity as DeckPicker)
                         if (listItem.dismissesDialog) {
-                            this.dismiss()
+                            dismiss()
                         }
                     }
-                    noAutoDismiss()
                     cancelable(false)
                 }
             }
@@ -364,7 +398,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     /** List items for [DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL] */
-    private enum class UninstallListItem(@StringRes val stringRes: Int, val dismissesDialog: Boolean, val onClick: (DeckPicker) -> Unit) {
+    enum class UninstallListItem(@StringRes val stringRes: Int, val dismissesDialog: Boolean, val onClick: (AnkiActivity) -> Unit) {
 
         RESTORE_FROM_ANKIWEB(
             R.string.restore_data_from_ankiweb,
@@ -392,7 +426,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         RESTORE_FROM_BACKUP(
             R.string.restore_data_from_backup,
             dismissesDialog = false,
-            { deckPicker ->
+            { activity ->
+                val deckPicker = activity as DeckPicker
                 Timber.i("Restoring from colpkg")
                 val newAnkiDroidDirectory = CollectionHelper.getDefaultAnkiDroidDirectory(deckPicker)
                 deckPicker.importColpkgListener = DatabaseRestorationListener(deckPicker, newAnkiDroidDirectory)
@@ -429,17 +464,20 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
         companion object {
             /** A dialog which creates a new collection in an unsafe location */
-            fun displayResetToNewDirectoryDialog(context: DeckPicker) {
+            fun displayResetToNewDirectoryDialog(context: AnkiActivity) {
                 AlertDialog.Builder(context).show {
                     title(R.string.backup_new_collection)
                     setIcon(R.drawable.ic_warning)
                     message(R.string.new_unsafe_collection)
                     positiveButton(R.string.dialog_positive_create) {
                         Timber.w("Creating new collection")
-                        val ch = CollectionHelper.instance
-                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
+                        Timber.i(
+                            "closeCollection: %s",
+                            "DatabaseErrorDialog: Before Create New Collection"
+                        )
+                        CollectionManager.closeCollectionBlocking()
                         CollectionHelper.resetAnkiDroidDirectory(context)
-                        context.exit()
+                        context.closeCollectionAndFinish()
                     }
                     negativeButton(R.string.dialog_cancel)
                     cancelable(false)
@@ -455,8 +493,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         }
     }
 
-    private fun exit() {
-        (activity as DeckPicker).exit()
+    private fun closeCollectionAndFinish() {
+        (activity as AnkiActivity).closeCollectionAndFinish()
     } // Generic message shown when a libanki task failed
 
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
@@ -478,7 +516,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_del_collection_question)
             DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_warning)
             DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup)
-            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server_question)
+            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server_question)
             DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_summary)
             INCOMPATIBLE_DB_VERSION -> {
                 var databaseVersion = -1
@@ -510,7 +548,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
             DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
             DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
-            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server)
+            DIALOG_ONE_WAY_SYNC_FROM_SERVER -> res().getString(R.string.backup_one_way_sync_from_server)
             DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)
             INCOMPATIBLE_DB_VERSION -> res().getString(R.string.incompatible_database_version_title)
             DIALOG_DB_ERROR -> res().getString(R.string.answering_error_title)
@@ -540,7 +578,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         DIALOG_NEW_COLLECTION,
         DIALOG_CONFIRM_DATABASE_CHECK,
         DIALOG_CONFIRM_RESTORE_BACKUP,
-        DIALOG_FULL_SYNC_FROM_SERVER,
+        DIALOG_ONE_WAY_SYNC_FROM_SERVER,
 
         /** If the database is locked, all we can do is reset the app  */
         DIALOG_DB_LOCKED,

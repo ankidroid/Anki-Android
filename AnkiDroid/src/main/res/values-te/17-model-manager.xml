@@ -29,7 +29,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">గమనిక రకాలను నిర్వహించండి</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ఫీల్డ్లను నిర్వహించండి</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">మీరు మీ చివరి గమనిక రకాన్ని తొలగించలేరు</string>
     <string name="toast_last_field">గమనిక గమనికలు కనీసం ఒక ఫీల్డ్ అయి ఉండాలి</string>
     <string name="toast_empty_name">మీరు తప్పనిసరిగా పేరు నమోదు చేయాలి</string>
     <string name="toast_duplicate_field">ఫీల్డ్ పేరు ఇప్పటికే ఉపయోగించబడింది</string>
@@ -56,30 +56,30 @@
     <string name="model_field_editor_add">ఫీల్డ్ను జోడించండి</string>
     <string name="model_field_editor_delete">ఫీల్డ్ను తొలగించు</string>
     <string name="model_field_editor_rename">ఫీల్డ్ పేరు మార్చండి</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">కీబోర్డ్ భాష సూచనను సెట్ చేయండి</string>
     <string name="model_field_editor_reposition_menu">రీపోషన్ ఫీల్డ్</string>
     <string name="model_field_editor_reposition">ప్రత్యామ్నాయ క్షేత్రం (%1$d-%2$d విలువను నమోదు చేయండి)</string>
     <string name="model_field_editor_toggle_sticky">జోడించేటప్పుడు చివరి ఇన్‌పుట్‌ను గుర్తుంచుకోండి</string>
     <string name="model_field_editor_changing">ఖాళీలను నవీకరిస్తోంది</string>
     <string name="model_field_editor_sort_field">ఈ ఫీల్డ్ ద్వారా క్రమబద్ధీకరించు</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">మీరు ఈ గమనిక రకాన్ని ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?</string>
     <string name="field_delete_warning">మీరు ఖచ్చితంగా ఈ ఫీల్డ్ని తొలగించాలనుకుంటున్నారా?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">చెరచు %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">ఒకే రీతి: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
+    <string name="card_template_browser_appearance_summary">మీ కార్డ్‌లను ప్రదర్శించడానికి కార్డ్ బ్రౌజర్ ఉపయోగించే టెంప్లేట్‌ను నమోదు చేయండి. మరింత సంక్షిప్త సమాధానాన్ని ప్రదర్శించడానికి దీన్ని ఉపయోగించండి.\n\n\n బ్రౌజర్‌లో “{{Country}} రాజధాని:”\n ముందు ఉన్న టెంప్లేట్ కార్డ్ “క్యాపిటల్: {{Country}}”కి కుదించబడుతుంది.</string>
     <string name="card_template_browser_appearance_question_format">ప్రశ్న ఫార్మాట్</string>
     <string name="card_template_browser_appearance_answer_format">జవాబు ఫార్మాట్</string>
     <string name="card_template_browser_appearance_restore_default_dialog">డిఫాల్ట్ విలువలను పునరుద్ధరించాలా?</string>
     <string name="card_template_browser_appearance_saving_note">కార్డ్ టెంప్లేట్ సేవ్ చేయబడినప్పుడు ఈ మార్పులు వర్తిస్తాయి</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">డెక్ ఓవర్‌రైడ్ (ఆన్)</string>
+    <string name="card_template_editor_deck_override_off">డెక్ ఓవర్‌రైడ్ (ఆఫ్)</string>
+    <string name="model_manager_deck_override_added_message">\'%1$s\' డిఫాల్ట్ డెక్‌ని \'%2$s\'కి సెట్ చేయండి</string>
+    <string name="model_manager_deck_override_removed_message">\'%s\' కోసం డిఫాల్ట్ డెక్ తీసివేయబడింది</string>
+    <string name="deck_override_explanation">కొత్త \'%s\' కార్డ్‌లను ఉంచడానికి డెక్‌ను ఎంచుకోండి</string>
+    <string name="deck_picker_dialog_filter_decks">ఫిల్టర్ డెక్స్</string>
 </resources>

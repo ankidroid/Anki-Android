@@ -28,7 +28,8 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.json.JSONObject
-import java.util.*
+import java.util.ArrayList
+import kotlin.math.min
 
 /** Responsible for recreating EditFieldLines after NoteEditor operations
  * This primarily exists so we can use saved instance state to repopulate the dynamically created FieldEditLine
@@ -58,7 +59,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         }
         if (type.type == Type.CHANGE_FIELD_COUNT) {
             val currentFieldStrings = editor.currentFieldStrings
-            for (i in 0 until Math.min(currentFieldStrings.size, fieldEditLines.size)) {
+            for (i in 0 until min(currentFieldStrings.size, fieldEditLines.size)) {
                 fieldEditLines[i].setContent(currentFieldStrings[i], type.replaceNewlines)
             }
         }
@@ -68,7 +69,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
     private fun recreateFieldsFromState(): List<FieldEditLine> {
         val editLines: MutableList<FieldEditLine> = ArrayList(savedFieldData!!.size)
         for (state in savedFieldData!!) {
-            val edit_line_view = FieldEditLine(editor)
+            val edit_line_view = FieldEditLine(editor.requireContext())
             if (edit_line_view.id == 0) {
                 edit_line_view.id = View.generateViewId()
             }
@@ -78,11 +79,11 @@ class FieldState private constructor(private val editor: NoteEditor) {
         return editLines
     }
 
-    protected fun createFields(type: FieldChangeType): List<FieldEditLine> {
+    private fun createFields(type: FieldChangeType): List<FieldEditLine> {
         val fields = getFields(type)
         val editLines: MutableList<FieldEditLine> = ArrayList(fields.size)
         for (i in fields.indices) {
-            val edit_line_view = FieldEditLine(editor)
+            val edit_line_view = FieldEditLine(editor.requireContext())
             editLines.add(edit_line_view)
             edit_line_view.name = fields[i][0]
             edit_line_view.setContent(fields[i][1], type.replaceNewlines)
@@ -95,7 +96,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
             val fMapNew = Notetypes.fieldMap(type.newNotetype!!)
-            return fromFieldMap(editor, items, fMapNew, type.modelChangeFieldMap)
+            return fromFieldMap(editor.requireContext(), items, fMapNew, type.modelChangeFieldMap)
         }
         return editor.fieldsFromSelectedNote
     }

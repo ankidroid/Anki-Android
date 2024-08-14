@@ -101,21 +101,15 @@
     <string name="menu_suspend">Bekukan</string>
     <string name="menu_delete_note">Padam nota</string>
     <string name="menu_flag">Tanda</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Tanda kad</string>
-    <string name="menu_flag_card_zero">Tiada tanda</string>
-    <string name="menu_flag_card_one">Tanda merah</string>
-    <string name="menu_flag_card_two">Tanda jingga</string>
-    <string name="menu_flag_card_three">Tanda hijau</string>
-    <string name="menu_flag_card_four">Tanda biru</string>
-    <string name="menu_flag_card_five">Tanda merah jambu</string>
-    <string name="menu_flag_card_six">Tanda firus</string>
-    <string name="menu_flag_card_seven">Tanda ungu</string>
     <string name="menu_edit_tags">Sunting tag</string>
     <string name="delete_note_message">Pasti padam nota dan semua kadnya?\n%s</string>
     <string name="menu_search">Cari di %1$s</string>
     <string name="menu_mark_note">Cap nota</string>
     <string name="menu_unmark_note">Buang cap nota</string>
-    <string name="menu_toggle_mic_tool_bar">Semak sebutan</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Cipta dek</string>
     <string name="new_dynamic_deck">Cipta dek tapisan</string>
     <string name="directory_inaccessible">Direktori AnkiDroid tidak dapat dicapai</string>
@@ -131,10 +125,12 @@
     <string name="empty_filtered_deck">Mengosongkan dek ditapis&#8230;</string>
     <string name="custom_study_deck_name">Sesi ulang kaji tersuai</string>
     <string name="custom_study_deck_exists">Nama semula dek ulang kaji tersuai sedia ada dahulu</string>
-    <string name="empty_deck">Dek kosong</string>
     <string name="search_deck" comment="Deck search for selecting it">Carian Dek</string>
+    <string name="empty_deck">Dek kosong</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Carian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak sah</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Tiada kad tertunggak lagi</string>
     <string name="sd_card_not_mounted">Peranti storan tidak dipasang</string>
     <string name="button_sync" comment="Text of the sync button">Segerak</string>
@@ -143,7 +139,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Teruskan penyegerakan</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Penyegerakan terbatal</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatal&#8230;\nMungkin mengambil masa.</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Eksport dek</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Tiada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Jenis kad</string>
@@ -161,7 +159,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Padam jenis kad “%2$s”, dan %1$d kad-kadnya?</item>
     </plurals>
-    <string name="invalid_template">Kad tidak dapat dihasilkan</string>
     <string name="card_template_editor_would_delete_note">Membuang jenis kad ini akan akibatkan satu atau lebih nota turut dipadam. Sila cipta dan simpan jenis kad yang baru dahulu.</string>
     <string name="card_template_editor_save_error">Gagal simpan suntingan templat kad: %s</string>
     <string name="template_for_current_card_deleted">Jenis kad bagi kad ini telah dipadam.</string>
@@ -233,6 +230,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Teruskan penghijrahan</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksi tidak dapat dicapai</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Kami gagal mencapai koleksi anda setelah AnkiDroid dinyahpasang akibat perubahan Polisi Play Store\n\nData anda selamat dan boleh dipulihkan. Ia terletak di \n%s\n\nPilih antara pilihan di bawah untuk pulihkan:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Pulih dari AnkiWeb (disyorkan)</string>
     <string name="install_non_play_store_ankidroid_recommended">Pulih capaian folder (disyorkan)</string>
     <string name="install_non_play_store_ankidroid">Pulih capaian folder (lanjutan)</string>
@@ -245,4 +243,7 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

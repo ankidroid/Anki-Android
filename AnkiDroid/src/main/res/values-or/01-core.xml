@@ -60,16 +60,16 @@
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
+        <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d ଘଣ୍ଟା %2$d ବାକି ଅଛି</item>
+        <item quantity="other">%1$d ଘଣ୍ଟା %2$d ବାକି ଅଛି</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d ଦିନ %2$d ବାକି ଅଛି</item>
+        <item quantity="other">%1$d ଦିନ %2$d ବାକି ଅଛି</item>
     </plurals>
     <string name="no_cards_placeholder_title">ସଂଗ୍ରହ ଖାଲି ଅଛି</string>
     <string name="no_cards_placeholder_description">+ ଆଇକନ୍ ଵ୍ୟଵହାର କରି\nପତ୍ର ଯୋଡ଼ିବା ଆରମ୍ଭ କରନ୍ତୁ।</string>
@@ -91,7 +91,7 @@
     <string name="rename_deck">ତାସଖଣ୍ଡ ନାମ ବଦଳାନ୍ତୁ</string>
     <string name="create_shortcut">ସର୍ଟ୍‌କଟ୍ ସୃଷ୍ଟି କରିବା</string>
     <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ଖେଳାଇବା</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">ବର୍ଣ୍ଣନା ସମ୍ପାଦନା</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ସୀଙ୍କ୍ ଖାତା</string>
@@ -104,21 +104,15 @@
     <string name="menu_suspend">ନିଲମ୍ବନ କରନ୍ତୁ</string>
     <string name="menu_delete_note">ନୋଟ୍ ଵିଲୋପ କରିବା</string>
     <string name="menu_flag">ପତାକା</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">ପତ୍ରକୁ ଏକ ପତାକା ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
-    <string name="menu_flag_card_zero">ପତାକା ନାହିଁ</string>
-    <string name="menu_flag_card_one">ନାଲି ପତାକା</string>
-    <string name="menu_flag_card_two">କମଳା ପତାକା</string>
-    <string name="menu_flag_card_three">ସବୁଜ ପତାକା</string>
-    <string name="menu_flag_card_four">ନୀଳ ପତାକା</string>
-    <string name="menu_flag_card_five">ଗୋଲାପୀ ପତାକା</string>
-    <string name="menu_flag_card_six">ଫୀରୋଜା ପତାକା</string>
-    <string name="menu_flag_card_seven">ବାଇଗଣୀ ପତାକା</string>
     <string name="menu_edit_tags">ଟ୍ୟାଗ୍ ସମ୍ପାଦନା</string>
     <string name="delete_note_message">ଆପଣ ପ୍ରକୃତରେ ଏହି ନୋଟ୍ ଏଵଂ ଏହାର ସମସ୍ତ ପତ୍ର ଵିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n%s</string>
     <string name="menu_search">%1$s ରେ ଦୃଷ୍ଟିପାତ</string>
     <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
-    <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
     <string name="new_dynamic_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
     <string name="directory_inaccessible">AnkiDroid directory ଅଗମ୍ୟ ଅଟେ</string>
@@ -134,10 +128,12 @@
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
     <string name="custom_study_deck_exists">ପ୍ରଥମେ ଵିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
     <string name="search_deck" comment="Deck search for selecting it">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
+    <string name="empty_deck">ତାସଖଣ୍ଡଟି ଖାଲି ଅଛି</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">ତାସଖଣ୍ଡ ସନ୍ଧାନ</string>
     <string name="invalid_deck_name">ଅବୈଧ ତାସଖଣ୍ଡ ନାମ</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">କୌଣସି ପତ୍ର ବାକି ନାହିଁ</string>
     <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
@@ -146,7 +142,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
+    <string name="syncing_media">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଚାଲିଛି</string>
     <string name="export_deck">ତାସଖଣ୍ଡ ରପ୍ତାନି କରନ୍ତୁ</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">କିଛି ନାହିଁ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ପତ୍ର ପ୍ରକାର</string>
@@ -166,7 +164,6 @@
         <item quantity="one">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟିଏ ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
         <item quantity="other">\"%2$s\" ପତ୍ର ପ୍ରକାର ଏବଂ ଏହାର %1$dଟି ପତ୍ର ବିଲୋପ କରିବେ କି?</item>
     </plurals>
-    <string name="invalid_template">ଏକ ପତ୍ର ସୃଷ୍ଟି କରିହେଲା ନାହିଁ</string>
     <string name="card_template_editor_would_delete_note">ଏହି ପତ୍ର ପ୍ରକାର ଅପସାରଣ କରିବା ଦ୍ୱାରା ଗୋଟିଏ କିମ୍ବା ଅଧିକ ନୋଟ୍ ବିଲୋପ ହୋଇପାରେ। ଦୟାକରି ପ୍ରଥମେ ଏକ ନୂତନ ପତ୍ର ପ୍ରକାର ସୃଷ୍ଟି କରି ସଂରକ୍ଷଣ କରନ୍ତୁ।</string>
     <string name="card_template_editor_save_error">ପତ୍ର ଟେମ୍ପଲେଟ୍ ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ସଞ୍ଚୟ କରିବାରେ ଅସମର୍ଥ: %s</string>
     <string name="template_for_current_card_deleted">ସାମ୍ପ୍ରତିକ ପତ୍ରର ପତ୍ର ପ୍ରକାର ବିଲୋପ ହେଇଯାଇଛି।</string>
@@ -239,6 +236,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ଅଗମ୍ୟ ସଂଗ୍ରହ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store ନୀତିରେ ପରିଵର୍ତ୍ତନ ହେତୁ AnkiDroid ଅନଇନଷ୍ଟଲ୍ ହେବା ପରେ ଆମେ ଆପଣଙ୍କ ସଂଗ୍ରହ ପାଖରେ ପହଞ୍ଚିବାରେ ଅସମର୍ଥ\n\nଆପଣଙ୍କ ଡାଟା ସୁରକ୍ଷିତ ଅଛି ଏଵଂ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରିବ। ଯାହା ଏଠି ଗଚ୍ଛିତ ଅଛି\n%s\n\nପୁନରୁଦ୍ଧାର କରିବାକୁ ହେଲେ ତଳେ ଏକ ଵିକଳ୍ପ ବାଛନ୍ତୁ:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">AnkiWebରୁ ପୁନରୁଦ୍ଧାର କରିବା (ସୁପାରିଶିତ)</string>
     <string name="install_non_play_store_ankidroid_recommended">ଫୋଲ୍ଡର୍ ପ୍ରଵେଶାଧିକାର ପୁନଃସ୍ଥାପନ କରିବା (ସୁପାରିଶିତ)</string>
     <string name="install_non_play_store_ankidroid">ଫୋଲ୍ଡର୍ ପ୍ରଵେଶାଧିକାର ପୁନଃସ୍ଥାପନ କରିବା (ଵିକଶିତ)</string>
@@ -250,5 +248,8 @@
     <string name="storage_access_title">ଷ୍ଟୋରେଜ୍ ପ୍ରବେଶାଧିକାର</string>
     <string name="storage_access_summary">ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଏକ ସୁରକ୍ଷିତ ସ୍ଥାନରେ ସଂରକ୍ଷଣ କରେ ଯାହା ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ବିଲୋପ ହେବ ନାହିଁ</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ସମସ୍ତ ଫାଇଲ୍ ପ୍ରବେଶାଧିକାର</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">ପ୍ରତିଛବି ଅନ୍ତର୍ଦ୍ଧାନ</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

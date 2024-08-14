@@ -22,23 +22,24 @@ import android.print.PrintAttributes
 import android.print.PrintManager
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.utils.TimeManager
 
-class Statistics : PageFragment() {
-    override val title: String
-        get() = resources.getString(R.string.statistics)
-
-    override val pageName = "graphs"
+class Statistics : PageFragment(R.layout.statistics) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialToolbar>(R.id.toolbar)?.apply {
-            inflateMenu(R.menu.statistics)
+
+        view.findViewById<AppBarLayout>(R.id.app_bar)
+            .addLiftOnScrollListener { _, backgroundColor ->
+                activity?.window?.statusBarColor = backgroundColor
+            }
+
+        view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             menu.findItem(R.id.action_export_stats).title = CollectionManager.TR.statisticsSavePdf()
             setOnMenuItemClickListener { item ->
                 if (item.itemId == R.id.action_export_stats) {
@@ -49,7 +50,7 @@ class Statistics : PageFragment() {
         }
     }
 
-    /**Prepares and initiates a printing task for the content(stats) displayed in the WebView.
+    /** Prepares and initiates a printing task for the content(stats) displayed in the WebView.
      * It uses the Android PrintManager service to create a print job, based on the content of the WebView.
      * The resulting output is a PDF document. **/
     private fun exportWebViewContentAsPDF() {
@@ -66,7 +67,7 @@ class Statistics : PageFragment() {
 
     companion object {
         fun getIntent(context: Context): Intent {
-            return SingleFragmentActivity.getIntent(context, Statistics::class)
+            return getIntent(context, "graphs", context.getString(R.string.statistics), Statistics::class)
         }
     }
 }

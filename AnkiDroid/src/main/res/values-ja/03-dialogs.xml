@@ -48,10 +48,13 @@
     <string name="check_db_warning">これには長い時間がかかることがあります。</string>
     <string name="contextmenu_deckpicker_delete_deck">デッキを削除</string>
     <string name="delete_deck_title">デッキを削除しますか？</string>
+    <plurals name="delete_deck_message">
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="tts_no_tts">発声なし</string>
     <string name="unused_strings">\n\n(*) のファイルのリスト:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
     <string name="reposition_card_dialog_title">新規カードの導入順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
     <string name="reposition_card_not_new_error">新規カード以外は順序を変更できません。</string>
@@ -59,23 +62,9 @@
         <item quantity="other">%d枚のカードの表示順序が変更されました</item>
     </plurals>
     <string name="reset_card_dialog_title">カードの学習進度をリセット</string>
-    <string name="reset_card_dialog_message">このカードを新規カードの最後に配置します</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d枚のカードの学習履歴をリセットしました</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">%d枚のカードのスケジュールを変更</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">現在の間隔: %d日</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">x日後に復習する</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="other">%d枚のカードのスケジュールを変更しました</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">新規カードのスケジュールを変更しようとしています。 スケジュールを変更すると、新規カードは習得ステップを飛ばして復習カードに移行します。新規カードのまま表示の順序を変更したい場合は、カードブラウザーの 「新規カードの表示順序を変更」機能を使用してください</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">スケジュール変更を行うと、そのカードの復習履歴に基づいて間隔を調整する指標がリセットされます（易しさが初期値の%d%%に戻ります）</string>
     <string name="answering_error_title">データベース エラー</string>
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。データベースの破損しているか、ストレージの空き容量が不足している可能性があります。\n\n繰り返しエラーが発生する場合には、「データベースをチェック」、コレクションの修復、「バックアップから復元」を試してみてください。\nまた、AnkiDroidのバグである可能性が考えられる場合は、開発者にご報告ください。</string>
     <string name="answering_error_report">エラーを報告</string>
@@ -104,8 +93,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">確認</string>
     <string name="dialog_no">いいえ</string>
     <string name="dialog_yes">はい</string>
+    <string name="dialog_keep">維持</string>
+    <string name="dialog_remove">削除</string>
     <string name="dialog_continue">続行</string>
-    <string name="dialog_processing">処理中です...</string>
+    <string name="dialog_processing">処理中です&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">作成</string>
     <string name="dialog_positive_delete">削除</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -114,10 +105,13 @@
     <string name="dialog_positive_repair">修復</string>
     <string name="dialog_positive_replace">上書き</string>
     <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
+    <string name="dialog_invalid_custom_certificate">提供されたテキストをPEMエンコードしても有効な X.509証明書になりません</string>
+    <string name="dialog_invalid_custom_certificate_title">証明書の解析エラー</string>
+    <string name="dialog_updated_custom_certificate">証明書が更新されました</string>
     <!-- Media checking -->
     <string name="check_media_title">メディアをチェックしますか？</string>
     <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
-    <string name="check_media_message">メディアをチェックしています...</string>
+    <string name="check_media_message">メディアをチェックしています&#8230;</string>
     <string name="check_media_acknowledge">メディアのチェックの完了</string>
     <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
     <string name="check_media_unused">(*) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>
@@ -144,7 +138,6 @@
     <string name="multimedia_editor_failed">マルチメディアエディタを開けませんでした</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が付与されませんでした</string>
-    <string name="mutimedia_editor_assertion_failed">エディタの表示中に不明なエラーが発生しました</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
     <string name="integrity_check_startup_content">AnkiDroidをアップグレードしました。このアップグレードには、データベースに関する不具合の修正が含まれています。今すぐ「データベースをチェック」を実行することをおすすめします。</string>
@@ -161,8 +154,8 @@
     <string name="incompatible_database_version_title">互換性のないバージョンのデータベース</string>
     <string name="incompatible_database_version_summary">このデータベースは、このAnkiDroidでは使用できません。 これを使用するには、AnkiDroidをアップグレードするか、データベースをダウングレードしてください。\n\nこのAnkiDroidで開ける最大バージョン: %1$d\nこのデータベースのバージョン: %2$d\n\n次の復元オプションは、現在のコレクションを、このAnkiDroidで使用できる可能性が高いデータベースで上書きします。 </string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">背景画像を適用しました</string>
-    <string name="background_image_removed">背景画像を解除しました</string>
+    <string name="background_image_applied">背景画像に適用しました</string>
+    <string name="background_image_removed">背景画像を削除しました</string>
     <string name="no_image_selected">画像が選択されていません</string>
     <string name="error_selecting_image">画像の選択中にエラーが発生しました。マニュアルを参照してください。 %s</string>
     <string name="error_deleting_image">画像削除エラー</string>
@@ -212,7 +205,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
-    <string name="metered_sync_warning">従量課金制のネット接続です。データ通信量に応じて通信費が増える可能性があります</string>
+    <string name="metered_sync_data_warning">データ通信の使用によって、通信事業者（携帯電話会社など）への支払い料金が増える場合があります。</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、習得中カードの数。</string>
@@ -227,7 +220,7 @@
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">コレクションのバックアップ</string>
-    <string name="backup_collection_message">しばらくの期間、コレクションのバックアップをアプリの外部に作成していません。アプリ内のデータを失う不測の事態に備え、今すぐアプリ外部にバックアップを作成することをお勧めします。</string>
+    <string name="backup_collection_message">しばらくの期間、このアプリ内ではない場所にコレクションのバックアップを作成していません。デバイスの故障・紛失など、アプリ内のコレクションを失う万一の事態に備え、今すぐアプリの外（かつ、デバイスの外）にバックアップを作成することをおすすめします。</string>
     <string name="button_backup">バックアップ</string>
     <string name="button_disable_reminder">リマインダーを無効にする</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">後で</string>
@@ -236,4 +229,28 @@
     <string name="dismiss_backup_warning_new_user">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、あなたのコレクションや自動バックアップのデータもこの端末から削除されます。
     </string>
     <string name="dismiss_backup_warning_upgrade">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、現在のコレクションや自動バックアップのデータにアクセスできなくなります。</string>
+    <string name="deck_already_exists">同じ名前のデッキがすでにあります</string>
+    <string name="create_deck_numeric_hint">デッキは名前の文字列順に並べられるため、たとえばデッキ「10」はデッキ「2」よりも上に配置されます。この場合、「2」を「02」に変更すれば、それより下に「10」を配置できます。</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">復習間隔も同じ日数にする</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="other">この日を復習期日に指定</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="other">この期間の日のどれかを復習期日に指定（ランダム）</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="other">日後</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">～</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">最短</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">最長</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">「穴埋め問題」用のノートタイプが必要です</string>
+    <string name="cloze_not_found_message">「穴埋め問題」に対応したノートタイプが見つかりませんでした。アプリで「穴埋め問題」に対応したノートタイプを追加してからもう一度試すか、それ以外のノートタイプのノートを編集するため、「開く」ボタンを押してください。</string>
+    <string name="open">開く</string>
+    <string name="change_cloze_number">穴埋め問題の番号を変更</string>
+    <string name="cloze_number">穴埋め問題番号</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">「AndroidシステムのWebView 」（または「Android System WebView」）が古くなっています。いくつかの機能が正しく動作しません。更新してください。\n\nインストールされているバージョン: %1$d\n最低限必要なバージョン: %2$d</string>
 </resources>

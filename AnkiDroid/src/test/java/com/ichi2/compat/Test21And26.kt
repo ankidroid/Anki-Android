@@ -19,13 +19,19 @@ package com.ichi2.compat
 import android.annotation.SuppressLint
 import com.ichi2.anki.model.Directory
 import com.ichi2.testutils.createTransientDirectory
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import org.junit.AfterClass
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import java.io.File
 import java.io.IOException
 import kotlin.test.assertFailsWith
@@ -83,7 +89,7 @@ abstract class Test21And26 {
      * Represents structure and compat required to simulate https://github.com/ankidroid/Anki-Android/issues/10358
      * This is a bug that occurred in a smartphone, where listFiles returned `null` on an existing directory.
      */
-    inner class PermissionDenied constructor(val directory: Directory, val compat: Compat) {
+    inner class PermissionDenied(val directory: Directory, val compat: Compat) {
         /**
          * This run test, ensuring that [newDirectoryStream] throws on [directory].
          * This is useful in the case where we can't directly access the directory or compat

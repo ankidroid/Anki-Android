@@ -32,7 +32,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.atLeast
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
+import org.mockito.kotlin.reset
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.verify
 import org.robolectric.annotation.Config
 import timber.log.Timber
 
@@ -52,7 +59,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer(any()) } doReturn false
+            on { shouldShowTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, card)
@@ -71,7 +78,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer(any()) } doReturn true
+            on { shouldShowTimer(any()) } doReturn true
             on { timeLimit(any()) } doReturn 12
         }
 
@@ -97,11 +104,11 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer(any()) } doReturn true
+            on { shouldShowTimer(any()) } doReturn true
         }
 
         val nonTimerCard: Card = mock {
-            on { showTimer(any()) } doReturn false
+            on { shouldShowTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, timerCard)
@@ -132,7 +139,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer(col) } doReturn true
+            on { shouldShowTimer(col) } doReturn true
             on { timeLimit(col) } doReturn 1000
         }
 
@@ -150,7 +157,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer(any()) } doReturn true
+            on { shouldShowTimer(any()) } doReturn true
             on { timeLimit(any()) } doReturn 1000
             on { timeTaken(any()) } doReturn 1001
         }
@@ -172,7 +179,7 @@ class AnswerTimerTest : JvmTest() {
         val timer = getTimer()
 
         val nonTimerCard: Card = mock {
-            on { showTimer(any()) } doReturn false
+            on { shouldShowTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, nonTimerCard)

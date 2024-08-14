@@ -1,0 +1,5 @@
+# The files in this directory are copied from testlib dynamically during build
+# Copy used instead of `androidTestImplementation(':testlib')` until android gradle plugin
+# issue that breaks coverage for shared test/androidTest deps is fixed
+# see https://issuetracker.google.com/issues/332746900#comment2
+*.kt

@@ -48,10 +48,14 @@
     <string name="check_db_warning">Това може да отнеме дълго време</string>
     <string name="contextmenu_deckpicker_delete_deck">Изтрий колода</string>
     <string name="delete_deck_title">Изтрий колода</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Няма наличен синтез за език</string>
     <string name="tts_no_tts">Не говори</string>
     <string name="unused_strings">\n\nНеизползвани файли:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Преглед</string>
     <string name="reposition_card_dialog_title">Преместване на нова карта</string>
     <string name="reposition_card_dialog_message">Начална позиция:</string>
     <string name="reposition_card_not_new_error">Само нови карти могат да бъдат премествани</string>
@@ -60,27 +64,10 @@
         <item quantity="other">%d картите са преместени</item>
     </plurals>
     <string name="reset_card_dialog_title">Начално състояние на прогреса на картата</string>
-    <string name="reset_card_dialog_message">Тази карта ще бъде поставен в края на опашката на новите карти</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">%d карти са нулирани</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Препланиране на %d карта</item>
-        <item quantity="other">Reschedule %d cards</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Текущия интервал: %d ден</item>
-        <item quantity="other">Текущия интервал: %d дни</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Повторно планиране за преглед след x дни:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d карта е препланирана</item>
-        <item quantity="other">%d карти са препланирани</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Планира се нова карта. Препланиране също променя нови карти на повторяющи се. Използвайте опцията \'преместване на карта\' за да промените позиция на нова карта в опашката</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Препланиране също определя как планировчикът ще третира картата (лекота ще бъди %d%%)</string>
     <string name="answering_error_title">Грешка в базата данни</string>
     <string name="answering_error_message">Писането в колекцията е неуспешна. Базата данни може да е повредена или може да няма свободно пространство на диска.\n\nАко това се случва по-често, опитайте да проверите базата данни, да поправите колекцията или да възстановите я от резервно копия. Докоснете \"Опции\" за това.\n\Това може да е грешка в AnkiDroid; Моля, съобщете за тази грешка, да можем да я проверим.</string>
     <string name="answering_error_report">Доклад грешки</string>
@@ -109,8 +96,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Потвърждаване</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_yes">Да</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Продължи</string>
-    <string name="dialog_processing">Обработване...</string>
+    <string name="dialog_processing">Обработване&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Създай</string>
     <string name="dialog_positive_delete">Изтрий</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">Поправи</string>
     <string name="dialog_positive_replace">Замени</string>
     <string name="dialog_collection_path_not_dir">Указаният път не е валидна директория</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Проверка на медия?</string>
     <string name="check_media_warning">Това може да отнеме дълго време при големи мултимедийни колекции</string>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">Не може да отвори редактор на мультимедия</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Разрешението за аудиозапис е отменено</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid е обновен</string>
     <string name="integrity_check_startup_content">AnkiDroid се надгради. Това надграждане включва поправки за възможни проблеми с базата данни и ви съветваме да започнете проверка на базата данни сега.</string>
@@ -219,7 +210,7 @@
         <item quantity="one">An automatic sync may be triggered in %d second</item>
         <item quantity="other">An automatic sync may be triggered in %d seconds</item>
     </plurals>
-    <string name="metered_sync_warning">Вашата мрежова връзка е по тарифа. Прехвърлянето на данни може да струва пари</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
     <string name="deck_picker_rev">Number of cards due today in this deck.</string>
     <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
@@ -244,4 +235,31 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

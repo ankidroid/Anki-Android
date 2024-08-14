@@ -60,13 +60,13 @@
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">残り約%d分</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">残り約%1$d時間%2$d分</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">残り約%1$d日と%2$d時間</item>
     </plurals>
     <string name="no_cards_placeholder_title">まだカードがありません</string>
     <string name="no_cards_placeholder_description">画面右下の「＋」ボタンから\nカードを追加してください</string>
@@ -88,7 +88,7 @@
     <string name="rename_deck">デッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">デッキ説明文を編集</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
@@ -101,21 +101,15 @@
     <string name="menu_suspend">休止</string>
     <string name="menu_delete_note">ノートを削除</string>
     <string name="menu_flag">フラグ</string>
+    <string name="rename_flag">フラグの名前を変更</string>
     <string name="menu_flag_card">カードにフラグを付ける</string>
-    <string name="menu_flag_card_zero">フラグなし</string>
-    <string name="menu_flag_card_one">レッド</string>
-    <string name="menu_flag_card_two">オレンジ</string>
-    <string name="menu_flag_card_three">グリーン</string>
-    <string name="menu_flag_card_four">ブルー</string>
-    <string name="menu_flag_card_five">ピンク</string>
-    <string name="menu_flag_card_six">ターコイズ</string>
-    <string name="menu_flag_card_seven">パープル</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらもすべて削除されます。\n%s</string>
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
-    <string name="menu_toggle_mic_tool_bar">自分の発音を確認</string>
+    <string name="menu_enable_voice_playback">発音チェック機能をオン</string>
+    <string name="menu_disable_voice_playback">発音チェック機能をオフ</string>
     <string name="new_deck">デッキを新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
     <string name="directory_inaccessible">AnkiDroidディレクトリにアクセスできません</string>
@@ -124,17 +118,19 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">続行するにはAnkiDroidにストレージの権限を許可してください</string>
-    <string name="rebuild_filtered_deck">フィルターデッキを再構築しています...</string>
+    <string name="rebuild_filtered_deck">フィルターデッキを再構築しています&#8230;</string>
     <string name="rebuild_cram_label">再構築</string>
     <string name="empty_cram_label">空にする</string>
     <string name="create_subdeck">サブデッキを作成</string>
     <string name="empty_filtered_deck">フィルターデッキを空にしています&#8230;</string>
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
-    <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
+    <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
+    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">このデッキの現在の課題をすべて達成しました。\nなお、%s</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
@@ -143,7 +139,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">同期を続行</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同期がキャンセルされました</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
+    <string name="syncing_media">メディアを同期中</string>
     <string name="export_deck">デッキをエクスポート</string>
+    <string name="export_collection">コレクションをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">カードタイプ</string>
@@ -161,7 +159,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">カードタイプ \'%2$s\' とそのカード%1$d枚を削除しますか？</item>
     </plurals>
-    <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１枚または複数枚のノートが削除されます。先に新しいカードタイプを追加し保存してください。</string>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
@@ -233,6 +230,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">移行を再開</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroidを数か月使用していなかったため、 %1$s の権限が、Androidによって削除されました。\n\nあなたのコレクション（データ）自体は削除されておらず、使用を再開することも可能ですのでご安心ください。あなたのコレクションは次のフォルダに安全に保管されています：\n%2$s\n\nAnkiDroidの利用を再開するために、次の中からご希望の対処方法を選択してください。</string>
     <string name="restore_data_from_ankiweb">AnkiWebから復元 (推奨)</string>
     <string name="install_non_play_store_ankidroid_recommended">フォルダへのアクセスを回復 (推奨)</string>
     <string name="install_non_play_store_ankidroid">フォルダへのアクセスを回復 (高度)</string>
@@ -244,5 +242,8 @@
     <string name="storage_access_title">ストレージへのアクセス</string>
     <string name="storage_access_summary">このアプリをアンインストールしても削除されない場所にコレクションを保存します</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">すべてのファイルへのアクセス</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">画像穴埋め問題</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">アカウントを削除</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">穴埋めクイック作成</string>
 </resources>

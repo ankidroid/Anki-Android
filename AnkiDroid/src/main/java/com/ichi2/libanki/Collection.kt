@@ -1,19 +1,25 @@
-/****************************************************************************************
- * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>                         *
- * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
- *                                                                                      *
- * This program is free software; you can redistribute it and/or modify it under        *
- * the terms of the GNU General private License as published by the Free Software        *
- * Foundation; either version 3 of the License, or (at your option) any later           *
- * version.                                                                             *
- *                                                                                      *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY      *
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A      *
- * PARTICULAR PURPOSE. See the GNU General private License for more details.             *
- *                                                                                      *
- * You should have received a copy of the GNU General private License along with         *
- * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
- ****************************************************************************************/
+/*
+ * Copyright (c) 2011 Norbert Nagold <norbert.nagold@gmail.com>
+ * Copyright (c) 2012 Kostas Spyropoulos <inigo.aldana@gmail.com>
+ * Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General private License as published by the Free Software
+ * Foundation; either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General private License for more details.
+ *
+ * You should have received a copy of the GNU General private License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ *  This file incorporates code under the following license
+ *  https://github.com/ankitects/anki/blob/33a923797afc9655c3b4f79847e1705a1f998d03/pylib/anki/browser.py
+ *
+ *    Copyright: Ankitects Pty Ltd and contributors
+ *    License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+ */
 
 // "FunctionName": many libAnki functions used to have leading _s
 @file:Suppress("FunctionName")
@@ -27,6 +33,10 @@ import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
+import anki.config.Preferences
+import anki.config.copy
+import anki.search.BrowserColumns
+import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
@@ -37,16 +47,15 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.sched.DummyScheduler
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.VersionUtils
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
-import java.io.*
-import java.util.*
+import java.io.File
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -55,12 +64,11 @@ import java.util.*
 // This module manages the tag cache and tags for notes.
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @WorkerThread
-open class Collection(
+class Collection(
     /**
      *  The path to the collection.anki2 database. Must be unicode and openable with [File].
      */
     val path: String,
-    private var debugLog: Boolean, // Not in libAnki.
     /**
      * Outside of libanki, you should not access the backend directly for collection operations.
      * Operations that work on a closed collection (eg importing), or do not require a collection
@@ -131,18 +139,14 @@ open class Collection(
     var ls: Long = 0
     // END: SQL table columns
 
-    private var logHnd: PrintWriter? = null
-
     init {
         media = Media(this)
         tags = Tags(this)
         val created = reopen()
-        log(path, VersionUtils.pkgVersionName)
         startReps = 0
         startTime = 0
         _loadScheduler()
         if (created) {
-            sched.useNewTimezoneCode()
             config.set("schedVer", 2)
             // we need to reload the scheduler: this was previously loaded as V1
             _loadScheduler()
@@ -172,12 +176,17 @@ open class Collection(
         val ver = schedVer()
         if (ver == 1) {
             sched = DummyScheduler(this)
-        } else {
+        } else if (ver == 2) {
             if (!backend.getConfigBool(ConfigKey.Bool.SCHED_2021)) {
                 backend.setConfigBool(ConfigKey.Bool.SCHED_2021, true, undoable = false)
             }
             sched = Scheduler(this)
-            config.set("localOffset", sched.currentTimezoneOffset())
+            if (config.get<Int>("creationOffset") == null) {
+                val prefs = getPreferences().copy {
+                    scheduling = scheduling.copy { newTimezone = true }
+                }
+                setPreferences(prefs)
+            }
         }
     }
 
@@ -193,7 +202,6 @@ open class Collection(
                 backend.closeCollection(downgrade)
             }
             dbInternal = null
-            _closeLog()
             Timber.i("Collection closed")
         }
     }
@@ -205,7 +213,6 @@ open class Collection(
             val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
             load()
-            _openLog()
             if (afterFullSync) {
                 _loadScheduler()
             }
@@ -221,13 +228,14 @@ open class Collection(
         config = Config(backend)
     }
 
-    /** Note: not in libanki.  Mark schema modified to force a full
+    /** Mark schema modified to force a full
      * sync, but with the confirmation checking function disabled This
      * is equivalent to `modSchema(False)` in Anki. A distinct method
      * is used so that the type does not states that an exception is
      * thrown when in fact it is never thrown.
      */
-    open fun modSchemaNoCheck() {
+    @NotInLibAnki
+    fun modSchemaNoCheck() {
         db.execute(
             "update col set scm=?, mod=?",
             TimeManager.time.intTimeMS(),
@@ -235,7 +243,7 @@ open class Collection(
         )
     }
 
-    /** Mark schema modified to force a full sync.
+    /** Mark schema modified to cause a one-way sync.
      * ConfirmModSchemaException will be thrown if the user needs to be prompted to confirm the action.
      * If the user chooses to confirm then modSchemaNoCheck should be called, after which the exception can
      * be safely ignored, and the outer code called again.
@@ -247,7 +255,7 @@ open class Collection(
         if (!schemaChanged()) {
             /* In Android we can't show a dialog which blocks the main UI thread
              Therefore we can't wait for the user to confirm if they want to do
-             a full sync here, and we instead throw an exception asking the outer
+             a one-way sync here, and we instead throw an exception asking the outer
              code to handle the user's choice */
             throw ConfirmModSchemaException()
         }
@@ -298,30 +306,26 @@ open class Collection(
 
     /**
      * Return a new note with a specific model
-     * @param m The model to use for the new note
+     * @param notetype The model to use for the new note
      * @return The new note
      */
-    fun newNote(m: NotetypeJson): Note {
-        return Note.fromNotetypeId(this, m.id)
+    fun newNote(notetype: NotetypeJson): Note {
+        return Note.fromNotetypeId(notetype.id)
     }
 
     /**
      * Cards ******************************************************************** ***************************
      */
+
+    /**
+     * Returns whether the collection contains no cards.
+     */
+    @LibAnkiAlias("is_empty")
     val isEmpty: Boolean
         get() = db.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0
 
     fun cardCount(): Int {
         return db.queryScalar("SELECT count() FROM cards")
-    }
-
-    // NOT IN LIBANKI //
-    fun cardCount(vararg dids: Long): Int {
-        return db.queryScalar("SELECT count() FROM cards WHERE did IN " + ids2str(dids))
-    }
-
-    fun isEmptyDeck(vararg dids: Long): Boolean {
-        return cardCount(*dids) == 0
     }
 
     /*
@@ -403,7 +407,8 @@ open class Collection(
     data class CardIdToNoteId(val id: Long, val nid: Long)
 
     /** Return a list of card ids  */
-    @RustCleanup("Remove in V16.") // Not in libAnki
+    @RustCleanup("Remove in V16.")
+    @NotInLibAnki
     fun findOneCardByNote(query: String, order: SortOrder): List<CardId> {
         // This function shouldn't exist and CardBrowser should be modified to use Notes,
         // so not much effort was expended here
@@ -440,9 +445,61 @@ open class Collection(
         return sortedResultList.map { it.id }
     }
 
+    @LibAnkiAlias("find_and_replace")
     @RustCleanup("Calling code should handle returned OpChanges")
     fun findReplace(nids: List<Long>, src: String, dst: String, regex: Boolean = false, field: String? = null, fold: Boolean = true): Int {
         return backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
+    }
+
+    /* Browser Table */
+
+    @LibAnkiAlias("all_browser_columns")
+    fun allBrowserColumns(): List<BrowserColumns.Column> = backend.allBrowserColumns()
+
+    @LibAnkiAlias("get_browser_column")
+    fun getBrowserColumn(key: String): BrowserColumns.Column? {
+        for (column in backend.allBrowserColumns()) {
+            if (column.key == key) {
+                return column
+            }
+        }
+        return null
+    }
+
+    // consider changing implementation to return protobuf directly
+    @LibAnkiAlias("browser_row_for_id")
+    @Deprecated("not implemented", replaceWith = ReplaceWith("nothing"))
+    fun browserRowForId(id: Long): BrowserRow = TODO()
+
+    /** Return the stored card column names and ensure the backend columns are set and in sync. */
+    @LibAnkiAlias("load_browser_card_columns")
+    fun loadBrowserCardColumns(): List<String> {
+        val columns = config.get<List<String>>(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, BrowserDefaults.CARD_COLUMNS)!!
+        backend.setActiveBrowserColumns(columns)
+        return columns
+    }
+
+    @LibAnkiAlias("set_browser_card_columns")
+    fun setBrowserCardColumns(columns: List<String>) {
+        config.set(BrowserConfig.ACTIVE_CARD_COLUMNS_KEY, columns)
+        backend.setActiveBrowserColumns(columns)
+    }
+
+    /** Return the stored note column names and ensure the backend columns are set and in sync. */
+    @LibAnkiAlias("load_browser_note_columns")
+    fun loadBrowserNoteColumns(): List<String> {
+        val columns = config.get<List<String>>(
+            BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY,
+            BrowserDefaults.NOTE_COLUMNS
+        )!!
+        backend.setActiveBrowserColumns(columns)
+        return columns
+    }
+
+    @LibAnkiAlias("set_browser_note_columns")
+    fun setBrowserNoteColumns(columns: List<String>) {
+        config.set(BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY, columns)
+        backend.setActiveBrowserColumns(columns)
     }
 
     /*
@@ -509,7 +566,9 @@ open class Collection(
     }
 
     fun removeNotes(nids: Iterable<NoteId> = listOf(), cids: Iterable<CardId> = listOf()): OpChangesWithCount {
-        return backend.removeNotes(noteIds = nids, cardIds = cids)
+        return backend.removeNotes(noteIds = nids, cardIds = cids).also {
+            Timber.d("removeNotes: %d changes", it.count)
+        }
     }
 
     fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
@@ -570,62 +629,6 @@ open class Collection(
         return true
     }
 
-    fun log(vararg objects: Any?) {
-        if (!debugLog) return
-
-        val unixTime = TimeManager.time.intTime()
-
-        val outerTraceElement = Thread.currentThread().stackTrace[3]
-        val fileName = outerTraceElement.fileName
-        val methodName = outerTraceElement.methodName
-
-        val objectsString = objects
-            .map { if (it is LongArray) Arrays.toString(it) else it }
-            .joinToString(", ")
-
-        writeLog("[$unixTime] $fileName:$methodName() $objectsString")
-    }
-
-    private fun writeLog(s: String) {
-        logHnd?.let {
-            try {
-                it.println(s)
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to write to collection log")
-            }
-        }
-        Timber.d(s)
-    }
-
-    private fun _openLog() {
-        if (!debugLog) {
-            return
-        }
-        Timber.i("Opening Collection Log")
-        try {
-            val lpath = File(path.replaceFirst("\\.anki2$".toRegex(), ".log"))
-            if (lpath.exists() && lpath.length() > 10 * 1024 * 1024) {
-                val lpath2 = File("$lpath.old")
-                if (lpath2.exists()) {
-                    lpath2.delete()
-                }
-                lpath.renameTo(lpath2)
-            }
-            logHnd = PrintWriter(BufferedWriter(FileWriter(lpath, true)), true)
-        } catch (e: IOException) {
-            // turn off logging if we can't open the log file
-            Timber.e("Failed to open collection.log file - disabling logging")
-            debugLog = false
-        }
-    }
-
-    private fun _closeLog() {
-        if (!debugLog) return
-        Timber.i("Closing Collection Log")
-        logHnd?.close()
-        logHnd = null
-    }
-
     /**
      * Card Flags *****************************************************************************************************
      */
@@ -647,7 +650,7 @@ open class Collection(
 
     //endregion
 
-    /** Not in libAnki  */
+    @NotInLibAnki
     @CheckResult
     fun filterToValidCards(cards: LongArray?): List<Long> {
         return db.queryLongList("select id from cards where id in " + ids2str(cards))
@@ -679,8 +682,9 @@ open class Collection(
     }
 
     /** Change the flag color of the specified cards. flag=0 removes flag. */
-    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int) {
-        backend.setFlag(cardIds = cids, flag = flag)
+    @CheckResult
+    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int): OpChangesWithCount {
+        return backend.setFlag(cardIds = cids, flag = flag)
     }
 
     fun getEmptyCards(): EmptyCardsReport {
@@ -716,9 +720,6 @@ open class Collection(
         return backend.clozeNumbersInNote(n.toBackendNote())
             .sorted()
     }
-    fun addImageOcclusionNotetype() {
-        backend.addImageOcclusionNotetype()
-    }
 
     fun getImageForOcclusionRaw(input: ByteArray): ByteArray {
         return backend.getImageForOcclusionRaw(input = input)
@@ -753,5 +754,13 @@ open class Collection(
     fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
         val homeDeck = currentReviewCard?.currentDeckId()?.did ?: 0L
         return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
+    }
+
+    fun getPreferences(): Preferences {
+        return backend.getPreferences()
+    }
+
+    fun setPreferences(preferences: Preferences): OpChanges {
+        return backend.setPreferences(preferences)
     }
 }

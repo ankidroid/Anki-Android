@@ -19,9 +19,15 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
-import com.ichi2.anki.*
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.OnboardingUtils
+import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers
@@ -118,10 +124,10 @@ class DevOptionsFragment : SettingsFragment() {
                         media.addFile(f)
                     }
                     if (i % 1000 == 0) {
-                        UIUtils.showThemedToast(requireContext(), "$i files added.", true)
+                        showThemedToast(requireContext(), "$i files added.", true)
                     }
                 }
-                UIUtils.showThemedToast(requireContext(), "$numberOfFiles files added successfully", false)
+                showThemedToast(requireContext(), "$numberOfFiles files added successfully", false)
             }
         }
     }

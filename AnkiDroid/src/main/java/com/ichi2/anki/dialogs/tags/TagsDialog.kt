@@ -3,26 +3,31 @@ package com.ichi2.anki.dialogs.tags
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
+import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.model.CardStateFilter
@@ -30,7 +35,20 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
+import com.ichi2.utils.customView
+import com.ichi2.utils.getInputField
+import com.ichi2.utils.input
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import org.apache.commons.io.FileUtils
 import timber.log.Timber
+import java.io.File
+import java.nio.charset.Charset
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -62,7 +80,7 @@ class TagsDialog : AnalyticsDialogFragment {
     private var toolbarSearchItem: MenuItem? = null
     private var noTagsTextView: TextView? = null
     private var tagsListRecyclerView: RecyclerView? = null
-    private var dialog: MaterialDialog? = null
+    private var dialog: AlertDialog? = null
     private val listener: TagsDialogListener?
 
     private lateinit var selectedOption: CardStateFilter
@@ -89,7 +107,8 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param allTags all possible tags in the collection
      * @return Initialized instance of [TagsDialog]
      */
-    fun withArguments(type: DialogType, checkedTags: List<String?>, allTags: List<String?>): TagsDialog {
+    context(Context)
+    fun withArguments(type: DialogType, checkedTags: List<String>, allTags: List<String>): TagsDialog {
         return withArguments(type, checkedTags, null, allTags)
     }
 
@@ -102,31 +121,37 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param allTags all possible tags in the collection
      * @return Initialized instance of [TagsDialog]
      */
+    context(Context)
     fun withArguments(
         type: DialogType,
-        checkedTags: List<String?>,
+        checkedTags: List<String>,
         uncheckedTags: List<String>?,
-        allTags: List<String?>
+        allTags: List<String>
     ): TagsDialog {
-        val args = this.arguments ?: Bundle()
-        args.putInt(DIALOG_TYPE_KEY, type.ordinal)
-        args.putStringArrayList(CHECKED_TAGS_KEY, ArrayList(checkedTags))
-        if (uncheckedTags != null) {
-            args.putStringArrayList(UNCHECKED_TAGS_KEY, ArrayList(uncheckedTags))
-        }
-        args.putStringArrayList(ALL_TAGS_KEY, ArrayList(allTags))
-        arguments = args
+        val data = TagsFile.TagsData(type, checkedTags, uncheckedTags, allTags)
+        val file = TagsFile(cacheDir, data)
+        arguments = this.arguments ?: bundleOf(
+            ARG_TAGS_FILE to file
+        )
         return this
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resizeWhenSoftInputShown(requireActivity().window)
-        type = DialogType.entries[requireArguments().getInt(DIALOG_TYPE_KEY)]
+
+        val tagsFile = requireNotNull(
+            BundleCompat.getParcelable(requireArguments(), ARG_TAGS_FILE, TagsFile::class.java)
+        ) {
+            "$ARG_TAGS_FILE is required"
+        }
+
+        val data = tagsFile.getData()
+        type = data.type
         tags = TagsList(
-            requireArguments().getStringArrayList(ALL_TAGS_KEY)!!,
-            requireArguments().getStringArrayList(CHECKED_TAGS_KEY)!!,
-            requireArguments().getStringArrayList(UNCHECKED_TAGS_KEY)
+            allTags = data.allTags,
+            checkedTags = data.checkedTags,
+            uncheckedTags = data.uncheckedTags
         )
         isCancelable = true
     }
@@ -165,17 +190,18 @@ class TagsDialog : AnalyticsDialogFragment {
             dialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
             positiveText = getString(R.string.dialog_ok)
-            tagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { v ->
-                createAddTagDialog(v.tag as String)
-                true
-            }
+            tagsArrayAdapter!!.tagContextAndLongClickListener =
+                OnContextAndLongClickListener { v ->
+                    createAddTagDialog(v.tag as String)
+                    true
+                }
         } else {
             dialogTitle = resources.getString(R.string.studyoptions_limit_select_tags)
             positiveText = getString(R.string.select)
-            tagsArrayAdapter!!.tagLongClickListener = View.OnLongClickListener { false }
+            tagsArrayAdapter!!.tagContextAndLongClickListener = OnContextAndLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
-        dialog = MaterialDialog(requireActivity())
+        dialog = AlertDialog.Builder(requireActivity())
             .positiveButton(text = positiveText!!) {
                 tagsDialogListener.onSelectedTags(
                     tags!!.copyOfCheckedTagList(),
@@ -184,10 +210,16 @@ class TagsDialog : AnalyticsDialogFragment {
                 )
             }
             .negativeButton(R.string.dialog_cancel)
-            .customView(view = tagsDialogView, noVerticalPadding = true)
-        val dialog: MaterialDialog? = dialog
+            .customView(view = tagsDialogView)
+            .create()
+        val dialog: AlertDialog? = dialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
     private fun radioButtonIdToCardState(id: Int) =
@@ -255,29 +287,25 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     /**
-     * A wrapper function around dialog.getInputEditText() to get non null [EditText]
-     */
-    // TODO: Remove this, no longer needed
-    private fun requireDialogInputEditText(dialog: MaterialDialog): EditText {
-        return dialog.getInputField()
-    }
-
-    /**
      * Create an add tag dialog.
      *
      * @param prefixTag: The tag to be prefilled into the EditText section. A trailing '::' will be appended.
      */
     @NeedsTest("The prefixTag should be prefilled properly")
     private fun createAddTagDialog(prefixTag: String?) {
-        val addTagDialog = MaterialDialog(requireActivity())
-            .title(text = getString(R.string.add_tag))
-            .positiveButton(R.string.dialog_ok)
-            .negativeButton(R.string.dialog_cancel)
-            .input(
-                hintRes = R.string.tag_name,
-                inputType = InputType.TYPE_CLASS_TEXT
-            ) { _: MaterialDialog?, input: CharSequence -> addTag(input.toString()) }
-        val inputET = requireDialogInputEditText(addTagDialog)
+        val addTagDialog = AlertDialog.Builder(requireActivity()).show {
+            title(text = getString(R.string.add_tag))
+            positiveButton(R.string.dialog_ok)
+            negativeButton(R.string.dialog_cancel)
+            setView(R.layout.dialog_generic_text_input)
+        }.input(
+            hint = getString(R.string.tag_name),
+            inputType = InputType.TYPE_CLASS_TEXT
+        ) { d: AlertDialog?, input: CharSequence ->
+            addTag(input.toString())
+            d?.dismiss()
+        }
+        val inputET = addTagDialog.getInputField()
         inputET.filters = arrayOf(addTagFilter)
         if (!prefixTag.isNullOrEmpty()) {
             // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
@@ -311,8 +339,7 @@ class TagsDialog : AnalyticsDialogFragment {
             }
 
             // Show a snackbar to let the user know the tag was added successfully
-            dialog!!.view.findViewById<View>(R.id.tags_dialog_snackbar)
-                .showSnackbar(feedbackText)
+            dialog!!.findViewById<View>(R.id.tags_dialog_snackbar)?.showSnackbar(feedbackText)
         }
     }
 
@@ -322,10 +349,7 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     companion object {
-        private const val DIALOG_TYPE_KEY = "dialog_type"
-        private const val CHECKED_TAGS_KEY = "checked_tags"
-        private const val UNCHECKED_TAGS_KEY = "unchecked_tags"
-        private const val ALL_TAGS_KEY = "all_tags"
+        private const val ARG_TAGS_FILE = "tagsFile"
 
         /**
          * The filter that constrains the inputted tag.
@@ -369,4 +393,60 @@ class TagsDialog : AnalyticsDialogFragment {
             sb
         }
     }
+}
+
+/**
+ * Temporary file containing the arguments [TagsDialog] uses
+ *
+ * to avoid [android.os.TransactionTooLargeException]
+ *
+ */
+@WorkerThread
+class TagsFile(path: String) : File(path), Parcelable {
+
+    /**
+     * @param directory parent directory of the file. Generally it should be the cache directory
+     * @param data data for the dialog to display. Typically [Context.getCacheDir]
+     */
+    constructor(directory: File, data: TagsData) : this(createTempFile("tagsDialog", ".tmp", directory).path) {
+        // PERF: Use an alternate format
+        // https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/formats.md
+        val jsonEncoded = Json.encodeToString(data)
+        Timber.d("persisting tags to disk, length: %d", jsonEncoded.length)
+        FileUtils.writeStringToFile(this, jsonEncoded, Charset.forName("UTF-8"))
+    }
+
+    fun getData(): TagsData {
+        // PERF!!: This takes ~2 seconds with AnKing
+        val jsonEncoded = FileUtils.readFileToString(this, Charset.forName("UTF-8"))
+        return Json.decodeFromString<TagsData>(jsonEncoded)
+    }
+
+    override fun describeContents(): Int = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(path)
+    }
+
+    companion object {
+        @JvmField
+        @Suppress("unused")
+        val CREATOR = object : Parcelable.Creator<TagsFile> {
+            override fun createFromParcel(source: Parcel?): TagsFile {
+                return TagsFile(source!!.readString()!!)
+            }
+
+            override fun newArray(size: Int): Array<TagsFile> {
+                return arrayOf()
+            }
+        }
+    }
+
+    @Serializable
+    data class TagsData(
+        val type: TagsDialog.DialogType,
+        val checkedTags: List<String>,
+        val uncheckedTags: List<String>?,
+        val allTags: List<String>
+    )
 }

@@ -1,14 +1,15 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
-    tools:context=".DeckPicker">
-    <group android:id="@+id/allItems">
-        <item
-            android:id="@+id/deck_picker_action_filter"
-            android:icon="@drawable/ic_search_white"
-            android:title="@string/search_decks"
-            ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
-            ankidroid:showAsAction="always|collapseActionView"/>
+    >
+    <item
+        android:id="@+id/deck_picker_action_filter"
+        android:icon="@drawable/ic_search_white"
+        android:title="@string/search_decks"
+        android:visible="false"
+        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+        ankidroid:showAsAction="always|collapseActionView"/>
+    <group android:id="@+id/commonItems">
         <item
             android:id="@+id/action_migration_progress"
             android:visible="false"
@@ -28,6 +29,7 @@
             android:id="@+id/action_sync"
             android:icon="@drawable/ic_sync"
             android:title="@string/button_sync"
+            ankidroid:actionProviderClass="com.ichi2.anki.SyncActionProvider"
             ankidroid:showAsAction="always"/>
         <item
             android:id="@+id/action_undo"
@@ -66,7 +68,7 @@
             android:menuCategory="secondary"
             android:title="@string/menu_import"/>
         <item
-            android:id="@+id/action_export"
+            android:id="@+id/action_export_collection"
             android:menuCategory="secondary" />
     </group>
 </menu>

@@ -30,8 +30,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CheckResult
-import java.io.*
-import java.util.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.io.Serializable
+import java.util.Locale
+import kotlin.time.Duration
 
 /**
  * This interface defines a set of functions that are not available on all platforms.
@@ -72,7 +78,7 @@ import java.util.*
 interface Compat {
     fun setupNotificationChannel(context: Context)
     fun setTooltipTextByContentDescription(view: View)
-    fun vibrate(context: Context, durationMillis: Long)
+    fun vibrate(context: Context, duration: Duration)
     fun getMediaRecorder(context: Context): MediaRecorder
     fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
@@ -161,7 +167,7 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun createDirectories(directory: File)
-    fun hasVideoThumbnail(path: String): Boolean
+    fun hasVideoThumbnail(path: String): Boolean?
 
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
@@ -223,3 +229,6 @@ interface Compat {
     @Suppress("PropertyName")
     val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int
 }
+
+context (Context)
+fun Compat.vibrate(duration: Duration) = vibrate(this@Context, duration)

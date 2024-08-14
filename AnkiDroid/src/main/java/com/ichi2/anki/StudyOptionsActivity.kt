@@ -75,6 +75,7 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (isDrawerOpen) {
+            @Suppress("DEPRECATION")
             super.onBackPressed()
         } else {
             Timber.i("Back key pressed")

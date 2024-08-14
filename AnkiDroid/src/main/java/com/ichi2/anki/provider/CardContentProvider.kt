@@ -18,26 +18,42 @@
  ****************************************************************************************/
 package com.ichi2.anki.provider
 
-import android.content.*
+import android.content.ContentProvider
+import android.content.ContentUris
+import android.content.ContentValues
+import android.content.UriMatcher
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.utils.ext.description
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Sound.replaceWithSoundTags
-import com.ichi2.libanki.TemplateManager.*
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.*
+import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.Utils
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.utils.FileUtil
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
@@ -48,7 +64,6 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 /**
  * Supported URIs:
@@ -105,10 +120,9 @@ class CardContentProvider : ContentProvider() {
          * applied to more columns. "MID", "USN", "MOD" are not really user friendly.
          */
         private val sDefaultNoteProjectionDBAccess = FlashCardsContract.Note.DEFAULT_PROJECTION.clone()
-        private const val COL_NULL_ERROR_MSG = "AnkiDroid database inaccessible. Open AnkiDroid to see what's wrong."
 
         private fun sanitizeNoteProjection(projection: Array<String>?): Array<String> {
-            if (projection == null || projection.isEmpty()) {
+            if (projection.isNullOrEmpty()) {
                 return sDefaultNoteProjectionDBAccess
             }
             val sanitized = ArrayList<String>(projection.size)
@@ -192,8 +206,7 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("query", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
+        val col = CollectionManager.getColUnsafe()
         Timber.d(getLogMessage("query", uri))
 
         // Find out what data the user is requesting
@@ -390,9 +403,8 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceUpdateSecurity(uri)) {
             throwSecurityException("update", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("update", uri))
+        val col = CollectionManager.getColUnsafe()
+        Timber.d(getLogMessage("update", uri))
 
         // Find out what data the user is requesting
         val match = sUriMatcher.match(uri)
@@ -454,7 +466,7 @@ class CardContentProvider : ContentProvider() {
                     isDeckUpdate = key == FlashCardsContract.Card.DECK_ID
                     did = values.getAsLong(key)
                 }
-                require(!col.decks.isDyn(did)) { "Cards cannot be moved to a filtered deck" }
+                require(!col.decks.isFiltered(did)) { "Cards cannot be moved to a filtered deck" }
                 /* now update the card
                  */if (isDeckUpdate && did >= 0) {
                     Timber.d("CardContentProvider: Moving card to other deck...")
@@ -495,7 +507,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newDid != null) {
-                        if (col.decks.isDyn(newDid.toLong())) {
+                        if (col.decks.isFiltered(newDid.toLong())) {
                             throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                         }
                         model!!.put("did", newDid)
@@ -582,7 +594,10 @@ class CardContentProvider : ContentProvider() {
                         FlashCardsContract.ReviewInfo.NOTE_ID -> noteID = values.getAsLong(key)
                         FlashCardsContract.ReviewInfo.CARD_ORD -> cardOrd = values.getAsInteger(key)
                         FlashCardsContract.ReviewInfo.EASE -> ease = values.getAsInteger(key)
-                        FlashCardsContract.ReviewInfo.TIME_TAKEN -> timeTaken = values.getAsLong(key)
+                        FlashCardsContract.ReviewInfo.TIME_TAKEN ->
+                            timeTaken =
+                                values.getAsLong(key)
+
                         FlashCardsContract.ReviewInfo.BURY -> bury = values.getAsInteger(key)
                         FlashCardsContract.ReviewInfo.SUSPEND -> suspend = values.getAsInteger(key)
                     }
@@ -634,9 +649,8 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission()) {
             throwSecurityException("delete", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("delete", uri))
+        val col = CollectionManager.getColUnsafe()
+        Timber.d(getLogMessage("delete", uri))
         return when (sUriMatcher.match(uri)) {
             NOTES_ID -> {
                 col.removeNotes(nids = listOf(uri.pathSegments[1].toLong()))
@@ -688,15 +702,14 @@ class CardContentProvider : ContentProvider() {
      * This implementation optimizes for when the notes are grouped according to model.
      */
     private fun bulkInsertNotes(valuesArr: Array<ContentValues>?, deckId: DeckId): Int {
-        if (valuesArr == null || valuesArr.isEmpty()) {
+        if (valuesArr.isNullOrEmpty()) {
             return 0
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        if (col.decks.isDyn(deckId)) {
+        val col = CollectionManager.getColUnsafe()
+        if (col.decks.isFiltered(deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
-        col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null)))
+        Timber.d("bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null))
 
         var result = 0
         for (i in valuesArr.indices) {
@@ -710,7 +723,7 @@ class CardContentProvider : ContentProvider() {
             }
             val fldsArray = Utils.splitFields(flds)
             // Create empty note
-            val newNote = Note.fromNotetypeId(col, thisModelId)
+            val newNote = col.run { Note.fromNotetypeId(thisModelId) }
             // Set fields
             // Check that correct number of flds specified
             if (fldsArray.size != newNote.fields.size) {
@@ -740,9 +753,8 @@ class CardContentProvider : ContentProvider() {
         if (!hasReadWritePermission() && shouldEnforceQueryOrInsertSecurity()) {
             throwSecurityException("insert", uri)
         }
-        val col = CollectionHelper.instance.getColUnsafe(context!!)
-            ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        col.log(getLogMessage("insert", uri))
+        val col = CollectionManager.getColUnsafe()
+        Timber.d(getLogMessage("insert", uri))
 
         // Find out what data the user is requesting
         return when (sUriMatcher.match(uri)) {
@@ -754,7 +766,7 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val newNote = Note.fromNotetypeId(col, modelId) // ué
+                val newNote = col.run { Note.fromNotetypeId(modelId) }
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
@@ -792,7 +804,7 @@ class CardContentProvider : ContentProvider() {
                 if (modelName == null || fieldNames == null || numCards == null) {
                     throw IllegalArgumentException("Model name, field_names, and num_cards can't be empty")
                 }
-                if (did != null && col.decks.isDyn(did)) {
+                if (did != null && col.decks.isFiltered(did)) {
                     throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                 }
                 // Create a new model
@@ -807,7 +819,7 @@ class CardContentProvider : ContentProvider() {
                     // Add some empty card templates
                     var idx = 0
                     while (idx < numCards) {
-                        val cardName = context!!.resources.getString(R.string.card_n_name, idx + 1)
+                        val cardName = CollectionManager.TR.cardTemplatesCard(idx + 1)
                         val t = Notetypes.newTemplate(cardName)
                         t.put("qfmt", "{{${allFields[0]}}}")
                         var answerField: String? = allFields[0]
@@ -889,7 +901,7 @@ class CardContentProvider : ContentProvider() {
                         ?: throw IllegalArgumentException("field name missing for model: $mid")
                     val field: JSONObject = notetypes.newField(name)
                     try {
-                        notetypes.addField(existingModel, field)
+                        notetypes.addFieldLegacy(existingModel, field)
 
                         val flds: JSONArray = existingModel.getJSONArray("flds")
                         return ContentUris.withAppendedId(uri, (flds.length() - 1).toLong())
@@ -953,22 +965,17 @@ class CardContentProvider : ContentProvider() {
             // pass this (hopefully temporary) file to the media.addFile function.
             val fileMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(cR.getType(fileUri)) // return eg "jpeg"
             // should we be enforcing strict mimetypes? which types?
+            val tempMediaDir = FileUtil.getAnkiCacheDirectory(context!!, "temp-media")
+            if (tempMediaDir == null) {
+                Timber.e("insertMediaFile() failed to get cache directory")
+                return null
+            }
             val tempFile: File
-            val externalCacheDir = context!!.externalCacheDir
-            if (externalCacheDir == null) {
-                Timber.e("createUI() unable to get external cache directory")
-                return null
-            }
-            val tempMediaDir = File(externalCacheDir.absolutePath + "/temp-media")
-            if (!tempMediaDir.exists() && !tempMediaDir.mkdir()) {
-                Timber.e("temp-media dir did not exist and could not be created")
-                return null
-            }
             try {
                 tempFile = File.createTempFile(
                     preferredName + "_", // the beginning of the filename.
                     ".$fileMimeType", // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
-                    tempMediaDir
+                    File(tempMediaDir)
                 )
                 tempFile.deleteOnExit()
             } catch (e: Exception) {
@@ -1046,7 +1053,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple(col))
+                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.renderOutput(col).questionText)
                 FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(col, false).answerText)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
@@ -1132,10 +1139,10 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Deck.DECK_ID -> rb.add(id)
                 FlashCardsContract.Deck.DECK_COUNTS -> rb.add(deckCounts)
                 FlashCardsContract.Deck.OPTIONS -> {
-                    val config = col.decks.confForDid(id).toString()
+                    val config = col.decks.configDictForDeckId(id).toString()
                     rb.add(config)
                 }
-                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isDyn(id))
+                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isFiltered(id))
                 FlashCardsContract.Deck.DECK_DESC -> {
                     val desc = col.decks.current().description
                     rb.add(desc)
@@ -1237,3 +1244,18 @@ private fun TemplateRenderOutput.questionWithFixedSoundTags() =
 /** replaces [anki:play...] with [sound:] */
 private fun TemplateRenderOutput.answerWithFixedSoundTags() =
     replaceWithSoundTags(answerText, this)
+
+/**
+ * Returns the answer with anything before the `<hr id=answer>` tag removed
+ * TODO inline once the legacy TTS mechanism is removed
+ */
+fun Card.pureAnswer(col: Collection): String {
+    val s = renderOutput(col).answerText
+    for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+        val pos = s.indexOf(target)
+        if (pos == -1) continue
+        return s.substring(pos + target.length).trim { it <= ' ' }
+    }
+    // neither found
+    return s
+}

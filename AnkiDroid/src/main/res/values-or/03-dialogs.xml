@@ -48,10 +48,14 @@
     <string name="check_db_warning">ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
     <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବା</string>
     <string name="delete_deck_title">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବେ ତ?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">କୌଣସି ପାଠ୍ୟ-ରୁ-କଥନ ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
     <string name="unused_strings">\n\nଅବ୍ୟବହୃତ ଫାଇଲ:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">ପୂର୍ଵାଵଲୋକନ</string>
     <string name="reposition_card_dialog_title">ନୂଆ ପତ୍ରଟିକୁ ପୁନଃଅଵସ୍ଥିତ କରିବା</string>
     <string name="reposition_card_dialog_message">ଆରମ୍ଭ ଅଵସ୍ଥିତି:</string>
     <string name="reposition_card_not_new_error">କେଵଳ ନୂଆ ପତ୍ରଗୁଡ଼ିକୁ ପୁନଃଅଵସ୍ଥିତ କରିହେବ</string>
@@ -60,30 +64,13 @@
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃଅଵସ୍ଥିତ କରାଗଲା</item>
     </plurals>
     <string name="reset_card_dialog_title">ପତ୍ରର ପ୍ରଗତି ପୁନଃସେଟ୍ କର</string>
-    <string name="reset_card_dialog_message">ଏହି ପତ୍ରକୁ ନୂତନ ପତ୍ର ଧାଡ଼ି ଶେଷରେ ରଖାଯିବ</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>
         <item quantity="other">%dଟି ପତ୍ର ପୁନଃସେଟ୍ ହେଲା</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">%dଟିଏ ପତ୍ରର ପୁନଃନିର୍ଦ୍ଧାରଣ କର</item>
-        <item quantity="other">%dଟି ପତ୍ରର ପୁନଃନିର୍ଦ୍ଧାରଣ କର</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
-        <item quantity="other">ଚଳିତ ଅନ୍ତରାଳ: %d ଦିନ</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">x ଦିନରେ ସମୀକ୍ଷା ପାଇଁ ପୁନଃନିର୍ଦ୍ଧାରିତ କରନ୍ତୁ</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%dଟିଏ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
-        <item quantity="other">%dଟି ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଗଲା</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">ଏକ ନୂତନ ପତ୍ର ପୁନଃନିର୍ଦ୍ଧାରଣ କରାଯାଉଛି। ପୁନଃନିର୍ଦ୍ଧାରଣ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସମୀକ୍ଷା ପତ୍ରରେ ବି ପରିଣତ କରେ। ନୂତନ ଧାଡ଼ି ମଧ୍ୟରେ ଏକ ନୂତନ ପତ୍ରର ପୋଜିସନ୍ ପରିବର୍ତ୍ତନ କରିବାକୁ ‘ପତ୍ରଟିକୁ ରିପୋଜିସନ୍ କରିବା’ ବିକଳ୍ପ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">ପୁନଃନିର୍ଦ୍ଧାରଣ କରିବା ଫଳରେ ଭବିଷ୍ୟତରେ ଅନୁସୂଚକ ପତ୍ରକୁ କିପରି ଵ୍ୟଵହାର କରିବ ତାହା ମଧ୍ୟ ପୁନଃସେଟ୍ ହୋଇଯାଏ (ଅର୍ଥାତ୍ ସହଜତା %dକୁ ସେଟ୍ ହେବ)।</string>
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
-    <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
-    <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
+    <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି କୀଟ ପ୍ରତିବେଦନ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
+    <string name="answering_error_report">ତ୍ରୁଟି ପ୍ରତିବେଦନ କରିବା</string>
     <string name="storage_full_message">AnkiDroid ଖୋଲିବା ପାଇଁ ପର୍ଯ୍ୟାପ୍ତ ମୁକ୍ତ ଷ୍ଟୋରେଜ୍ ସ୍ଥାନ ନାହିଁ। ଜାରି ରଖିବାକୁ ହେଲେ କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ। </string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
@@ -109,8 +96,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">ନିଶ୍ଚିତ କରିବା</string>
     <string name="dialog_no">ନା</string>
     <string name="dialog_yes">ହଁ</string>
+    <string name="dialog_keep">ରଖିବା</string>
+    <string name="dialog_remove">କାଢ଼ିବା</string>
     <string name="dialog_continue">ଜାରି ରଖନ୍ତୁ</string>
-    <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ...</string>
+    <string name="dialog_processing">ପ୍ରକ୍ରିୟାରତ&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ସୃଷ୍ଟି କରନ୍ତୁ</string>
     <string name="dialog_positive_delete">ଵିଲୋପ</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -119,6 +108,9 @@
     <string name="dialog_positive_repair">ସଜାଡନ୍ତୁ</string>
     <string name="dialog_positive_replace">ପ୍ରତିସ୍ଥାପନ</string>
     <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ </string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">ମିଡ଼ିଆ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
@@ -150,7 +142,6 @@
     <string name="multimedia_editor_failed">ମଲ୍ଟିମିଡ଼ିଆ ସମ୍ପାଦକ ଖୋଲିବାରେ ବିଫଳ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ଅଡ଼ିଓ ରେକର୍ଡିଂ ଅନୁମତି ପ୍ରତ୍ୟାଖାନ ହେଲା</string>
-    <string name="mutimedia_editor_assertion_failed">ଉନ୍ନତ ସମ୍ପାଦକ ପ୍ରଦର୍ଶନ କଲାବେଳେ ଅଜଣା ତ୍ରୁଟି ଘଟିଲା</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid  ଅପଗ୍ରେଡ୍ ହୋଇଛି</string>
     <string name="integrity_check_startup_content">AnkiDroid କୁ ନବୀକରଣ କରାଯାଇଛି। ଏହି ଅପଗ୍ରେଡ୍ ସମ୍ଭାବ୍ୟ ଡାଟାବେସ୍ ସମସ୍ୟା ପାଇଁ ସମାଧାନ ଅନ୍ତର୍ଭୂକ୍ତ କରେ, ଏବଂ ଆମେ ବର୍ତ୍ତମାନ ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଆପଣଙ୍କୁ ପରାମର୍ଶ ଦେଉ।</string>
@@ -195,7 +186,7 @@
     <string name="help_title_get_help">ସହାୟତା ପାଆନ୍ତୁ</string>
     <string name="help_item_mailing_list">ମେଲିଂ ତାଲିକା</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">ଏକ ବଗ୍ ରିପୋର୍ଟ କରନ୍ତୁ</string>
+    <string name="help_item_report_bug">ଏକ କୀଟ ପ୍ରତିବେଦନ କରିବା</string>
     <string name="help_title_support_ankidroid">AnkiDroidକୁ ସମର୍ଥନ କରନ୍ତୁ</string>
     <string name="help_item_support_opencollective_donate">ଦାନ କରନ୍ତୁ</string>
     <string name="help_item_support_develop_ankidroid">ବିକାଶ କରନ୍ତୁ</string>
@@ -211,15 +202,15 @@
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid ଗୋପନୀୟତା ନୀତି</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb ଗୋପନୀୟତା ନୀତି</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ଚୁକ୍ତିନାମା ଓ ସର୍ତ୍ତାଵଳୀ</string>
-    <string name="help_title_send_exception">ତ୍ରୁଟି ନିବାରଣ ରିପୋର୍ଟ ପଠାନ୍ତୁ</string>
-    <string name="help_dialog_exception_report_debounce">ରିପୋର୍ଟ ଆଗରୁ ଦାଖଲ ହୋଇଛି</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_title_send_exception">ତ୍ରୁଟି ନିବାରଣ ପ୍ରତିବେଦନ ପଠାଅ</string>
+    <string name="help_dialog_exception_report_debounce">ପ୍ରତିବେଦନ ଆଗରୁ ଦାଖଲ ହୋଇଛି</string>
+    <string name="help_dialog_exception_report_sent">ପ୍ରତିବେଦନ ପଠାଗଲା!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
         <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
     </plurals>
-    <string name="metered_sync_warning">ଆପଣଙ୍କ ସଂଯୋଜନା ମିଟର୍ ହେଉଛି। ଡାଟା ଅନ୍ତରଣରେ ଟଙ୍କା ଖର୍ଚ୍ଚ ହୋଇପାରେ</string>
+    <string name="metered_sync_data_warning">ଆପଣଙ୍କ ଇଣ୍ଟରନେଟ୍ ପ୍ରଦାତା ଡାଟା ବ୍ୟବହାର ପାଇଁ ଟଙ୍କା ଆଦାୟ କରିପାରନ୍ତି</string>
     <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_rev">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ପାଇଁ ଧାର୍ଯ୍ୟ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
     <string name="deck_picker_lrn">ଏହି ତାସଖଣ୍ଡରେ ଶିକ୍ଷାଧିନ ପତ୍ରର ସଂଖ୍ୟା।</string>
@@ -244,4 +235,31 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ପରିଵର୍ତ୍ତନ ହେତୁ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ଆପଣଙ୍କ ଡାଟା ଏଵଂ ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ଅଗମ୍ୟ ପାଲଟିବ
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">ଦିନ</item>
+        <item quantity="other">ଦିନ</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">ଖୋଲିବା</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

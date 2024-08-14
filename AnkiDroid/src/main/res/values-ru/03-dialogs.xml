@@ -48,10 +48,16 @@
     <string name="check_db_warning">Это может занять много времени</string>
     <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
     <string name="delete_deck_title">Удалить колоду?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Синтез речи недоступен</string>
     <string name="tts_no_tts">Не произносить</string>
     <string name="unused_strings">\n\nНеиспользуемые файлы:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Предпросмотр</string>
     <string name="reposition_card_dialog_title">Переместить новую карточку</string>
     <string name="reposition_card_dialog_message">Начальная позиция:</string>
     <string name="reposition_card_not_new_error">Можно переместить только новые карточки</string>
@@ -62,35 +68,12 @@
         <item quantity="other">%d карточек перемещены</item>
     </plurals>
     <string name="reset_card_dialog_title">Сбросить состояние карточек</string>
-    <string name="reset_card_dialog_message">Эта карточка будет помещена в конец очереди новых карт</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d карточка сброшена</item>
         <item quantity="few">%d карточки сброшены</item>
         <item quantity="many">%d карточек сброшены</item>
         <item quantity="other">%d карточек сброшены</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Перепланировать %d карточку</item>
-        <item quantity="few">Перепланировать %d карточки</item>
-        <item quantity="many">Перепланировать %d карточек</item>
-        <item quantity="other">Перепланировать %d карточек</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Текущий интервал: %d день</item>
-        <item quantity="few">Текущий интервал: %d дня</item>
-        <item quantity="many">Текущий интервал: %d дней</item>
-        <item quantity="other">Текущий интервал: %d дней</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Через сколько дней запланировать повторение:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d карточка перепланирована</item>
-        <item quantity="few">%d карточки перепланированы</item>
-        <item quantity="many">%d карточек перепланированы</item>
-        <item quantity="other">%d карточек перепланированы</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Новая карточка перепланирована и стала повторяемой. Чтобы изменить номер карточки в очереди, используйте «Переместить карточку»</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Планировщик учтёт, что карточка была перепланирована (лёгкость установлена на %d%%)</string>
     <string name="answering_error_title">Ошибка в базе данных</string>
     <string name="answering_error_message">Не удалось записать в коллекцию. База данных может быть повреждена, или не хватает места в хранилище.\n\nПопробуйте проверить базу данных или восстановить коллекцию из резервной копии.\nОднако, это может быть ошибкой в AnkiDroid. Пожалуйста, сообщите об этом разработчикам.</string>
     <string name="answering_error_report">Сообщить об ошибке</string>
@@ -119,8 +102,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Подтвердить</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_yes">Да</string>
+    <string name="dialog_keep">Оставить</string>
+    <string name="dialog_remove">Удалить</string>
     <string name="dialog_continue">Продолжить</string>
-    <string name="dialog_processing">Обработка...</string>
+    <string name="dialog_processing">Обработка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
     <string name="dialog_positive_delete">Удалить</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -129,6 +114,9 @@
     <string name="dialog_positive_repair">Исправить</string>
     <string name="dialog_positive_replace">Заменить</string>
     <string name="dialog_collection_path_not_dir">Указанный путь не является допустимой папкой</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Проверить медиафайлы?</string>
     <string name="check_media_warning">Это может занять много времени, если медиафайлов много</string>
@@ -163,7 +151,6 @@
     <string name="multimedia_editor_failed">Не удалось открыть редактор мультимедиа</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Не удалось получить разрешение на запись звука</string>
-    <string name="mutimedia_editor_assertion_failed">Произошла неизвестная ошибка при отображении расширенного редактора</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid обновлён</string>
     <string name="integrity_check_startup_content">AnkiDroid был обновлён. Это обновление включает в себя исправления возможных проблем с базой данных, и мы рекомендуем вам запустить проверку базы данных.</string>
@@ -188,7 +175,7 @@
     <string name="failed_to_apply_background_image">Не удалось установить фоновое изображение %s</string>
     <string name="background_image_too_large">Фоновое изображение слишком большое</string>
     <string name="image_max_size_allowed">Максимальный размер изображения – %d МБ</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Размер изображения слишком велик (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Нет разрешения на доступ к хранилищу. Предоставьте разрешение «Хранилище» и попробуйте снова.</string>
@@ -226,7 +213,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">Условия использования AnkiWeb</string>
     <string name="help_title_send_exception">Отправить отчёт о неполадках</string>
     <string name="help_dialog_exception_report_debounce">Отчёт уже отправлен</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Отчёт отправлен!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Автоматическая синхронизация может быть запущена через %d секунду</item>
@@ -234,7 +221,7 @@
         <item quantity="many">Автоматическая синхронизация может быть запущена через %d секунд</item>
         <item quantity="other">Автоматическая синхронизация может быть запущена через %d секунд</item>
     </plurals>
-    <string name="metered_sync_warning">Сеть тарифицируется. За передачу данных может взиматься плата</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Количество новых карточек на сегодня в этой колоде.</string>
     <string name="deck_picker_rev">Количество карточек на сегодня в колоде.</string>
     <string name="deck_picker_lrn">Количество изучаемых карточек в колоде.</string>
@@ -259,4 +246,37 @@
     </string>
     <string name="dismiss_backup_warning_upgrade">        В связи с изменениями конфиденциальности Android, после удалении приложения ваши данные и автоматизированные резервные копии будут недоступны
     </string>
+    <string name="deck_already_exists">Колода уже существует</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задать то же значение интервалу</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Показать карточку через</item>
+        <item quantity="few">Показать карточки через</item>
+        <item quantity="many">Показать карточки через</item>
+        <item quantity="other">Показать карточки через</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Показать карточку в промежутке</item>
+        <item quantity="few">Показать карточки в промежутке</item>
+        <item quantity="many">Показать карточки в промежутке</item>
+        <item quantity="other">Показать карточки в промежутке</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">день</item>
+        <item quantity="few">дня</item>
+        <item quantity="many">дней</item>
+        <item quantity="other">дней</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">От</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">До</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Нужен тип записи с пропусками</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Открыть</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

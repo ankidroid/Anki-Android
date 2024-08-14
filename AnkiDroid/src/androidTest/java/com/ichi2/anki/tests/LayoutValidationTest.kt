@@ -93,7 +93,6 @@ class LayoutValidationTest : InstrumentedTest() {
             // There are hidden public fields: abc_list_menu_item_layout for example
             val nonAnkiFieldNames = HashSet<String>()
             nonAnkiFieldNames.addAll(getFieldNames(com.google.android.material.R.layout::class.java))
-            nonAnkiFieldNames.addAll(getFieldNames(com.afollestad.materialdialogs.R.layout::class.java))
             nonAnkiFieldNames.addAll(getFieldNames(androidx.preference.R.layout::class.java)) // preference_category_material
 
             // Names of layouts that should be ignored by the layout inflation test.

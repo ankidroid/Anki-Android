@@ -19,7 +19,7 @@ package com.ichi2.anki.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import timber.log.Timber
 
 /**
@@ -35,8 +35,8 @@ class SdCardReceiver : BroadcastReceiver() {
             i.action = MEDIA_EJECT
             context.sendBroadcast(i)
             try {
-                val col = CollectionHelper.instance.getColUnsafe(context)
-                col?.close()
+                val col = CollectionManager.getColUnsafe()
+                col.close()
             } catch (e: Exception) {
                 Timber.w(e, "Exception while trying to close collection likely because it was already unmounted")
             }

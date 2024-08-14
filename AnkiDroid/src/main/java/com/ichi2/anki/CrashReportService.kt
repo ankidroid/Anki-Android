@@ -33,10 +33,14 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
 import org.acra.ReportField
-import org.acra.config.*
+import org.acra.config.CoreConfigurationBuilder
+import org.acra.config.DialogConfigurationBuilder
+import org.acra.config.HttpSenderConfigurationBuilder
+import org.acra.config.LimiterConfigurationBuilder
+import org.acra.config.LimiterData
+import org.acra.config.ToastConfigurationBuilder
 import org.acra.sender.HttpSender
 import timber.log.Timber
-import java.util.*
 
 object CrashReportService {
 

@@ -15,14 +15,13 @@
     <string name="time_limit_preference">timeLimit</string>
     <string name="timeout_answer_preference">timeoutAnswer</string>
     <string name="keep_screen_on_preference">keepScreenOn</string>
-    <string name="new_timezone_handling_preference">newTimezoneHandling</string>
     <string name="double_tap_time_interval_preference">doubleTapTimeInterval</string>
     <!-- Sync -->
     <string name="pref_sync_screen_key">syncScreen</string>
     <string name="sync_account_key">syncAccount</string>
     <string name="sync_fetch_media_key">syncFetchMedia</string>
     <string name="automatic_sync_choice_key">automaticSyncMode</string>
-    <string name="force_full_sync_key">force_full_sync</string>
+    <string name="one_way_sync_key">one_way_sync</string>
     <string name="sync_status_badge_key">showSyncStatusBadge</string>
     <string name="metered_sync_key">allowMetered</string>
     <string name="custom_sync_server_key">custom_sync_server_link</string>
@@ -70,6 +69,15 @@
     <string name="custom_button_whiteboard_pen_color_key">customButtonWhiteboardPenColor</string>
     <string name="custom_button_show_hide_whiteboard_key">customButtonShowHideWhiteboard</string>
     <string name="custom_button_clear_whiteboard_key">customButtonClearWhiteboard</string>
+    <string name="custom_button_user_action_1_key">customButtonUserAction1</string>
+    <string name="custom_button_user_action_2_key">customButtonUserAction2</string>
+    <string name="custom_button_user_action_3_key">customButtonUserAction3</string>
+    <string name="custom_button_user_action_4_key">customButtonUserAction4</string>
+    <string name="custom_button_user_action_5_key">customButtonUserAction5</string>
+    <string name="custom_button_user_action_6_key">customButtonUserAction6</string>
+    <string name="custom_button_user_action_7_key">customButtonUserAction7</string>
+    <string name="custom_button_user_action_8_key">customButtonUserAction8</string>
+    <string name="custom_button_user_action_9_key">customButtonUserAction9</string>
     <!-- Controls -->
     <string name="pref_controls_screen_key">controlsScreen</string>
     <string name="gestures_preference">gestures</string>
@@ -115,6 +123,16 @@
     <string name="show_all_hints_command_key">binding_SHOW_ALL_HINTS</string>
     <string name="add_note_command_key">binding_ADD_NOTE</string>
     <string name="reschedule_command_key">binding_RESCHEDULE_NOTE</string>
+    <string name="user_actions_controls_category_key">userActionsControls</string>
+    <string name="user_action_1_key">binding_USER_ACTION_1</string>
+    <string name="user_action_2_key">binding_USER_ACTION_2</string>
+    <string name="user_action_3_key">binding_USER_ACTION_3</string>
+    <string name="user_action_4_key">binding_USER_ACTION_4</string>
+    <string name="user_action_5_key">binding_USER_ACTION_5</string>
+    <string name="user_action_6_key">binding_USER_ACTION_6</string>
+    <string name="user_action_7_key">binding_USER_ACTION_7</string>
+    <string name="user_action_8_key">binding_USER_ACTION_8</string>
+    <string name="user_action_9_key">binding_USER_ACTION_9</string>
     <!-- Accessibility -->
     <string name="pref_accessibility_screen_key">accessibilityScreen</string>
     <string name="card_zoom_preference">cardZoom</string>
@@ -125,6 +143,7 @@
     <!-- Custom sync server -->
     <string name="pref_custom_sync_server_screen_key">customSyncServerScreen</string>
     <string name="custom_sync_server_collection_url_key">syncBaseUrl</string>
+    <string name="custom_sync_certificate_key">customSyncCertificate</string>
     <!-- Advanced -->
     <string name="pref_advanced_screen_key">pref_screen_advanced</string>
     <string name="pref_cat_workarounds_key">category_workarounds</string>
@@ -134,7 +153,6 @@
     <string name="use_input_tag_key">useInputTag</string>
     <string name="disable_single_field_edit_key">disableExtendedTextUi</string>
     <string name="note_editor_newline_replace_key">noteEditorNewlineReplace</string>
-    <string name="no_code_formatting_key">noCodeFormatting</string>
     <string name="type_in_answer_focus_key">autoFocusTypeInAnswer</string>
     <string name="exit_via_double_tap_back_key">exitViaDoubleTapBack</string>
     <string name="media_import_allow_all_files_key">mediaImportAllowAllFiles</string>
@@ -157,7 +175,9 @@
     <string name="pref_trigger_crash_key">trigger_crash_preference</string>
     <string name="pref_analytics_debug_key">analytics_debug_preference</string>
     <string name="pref_lock_database_key">debug_lock_database</string>
-    <string name="new_previewer_pref_key">new_previewer</string>
+    <string name="new_congrats_screen_pref_key">new_congrats_screen</string>
+    <string name="new_reviewer_pref_key">newReviewer</string>
+    <string name="new_reviewer_options_key">newReviewerOptions</string>
     <string name="pref_show_onboarding_key">showOnboarding</string>
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
@@ -176,4 +196,10 @@
     <string name="pref_daily_backups_to_keep_key">daily_backups_to_keep</string>
     <string name="pref_weekly_backups_to_keep_key">weekly_backups_to_keep</string>
     <string name="pref_monthly_backups_to_keep_key">monthly_backups_to_keep</string>
+
+    <!-- Reviewer options -->
+    <string name="hide_system_bars_key">hideSystemBars</string>
+    <string name="ignore_display_cutout_key">ignoreDisplayCutout</string>
+    <string name="hide_answer_buttons_key">hideAnswerButtons</string>
+
 </resources>

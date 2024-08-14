@@ -16,6 +16,7 @@
 package com.ichi2.anki.pages
 
 import android.graphics.Bitmap
+import android.webkit.ValueCallback
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
@@ -23,9 +24,10 @@ import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.OnPageFinishedCallback
-import com.ichi2.utils.AssetHelper
+import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.toRGBHex
 import timber.log.Timber
+import java.io.ByteArrayInputStream
 import java.io.IOException
 
 /**
@@ -43,25 +45,41 @@ open class PageWebViewClient : WebViewClient() {
         request: WebResourceRequest
     ): WebResourceResponse? {
         val path = request.url.path
-        if (request.method == "GET" && path?.startsWith("/backend/web") == true) {
-            try {
-                val mime = AssetHelper.guessMimeType(path)
-                val inputStream = view.context.assets.open(path.substring(1))
-                return WebResourceResponse(mime, null, inputStream)
-            } catch (_: IOException) {
-                Timber.w("%s not found", path)
-            }
+        if (request.method != "GET" || path == null) return null
+        if (path == "/favicon.png") {
+            return WebResourceResponse("image/x-icon", null, ByteArrayInputStream(byteArrayOf()))
         }
-        return super.shouldInterceptRequest(view, request)
+
+        val assetPath = if (path.startsWith("/_app/")) {
+            "backend/sveltekit/app/${path.substring(6)}"
+        } else if (isSvelteKitPage(path.substring(1))) {
+            "backend/sveltekit/index.html"
+        } else {
+            return null
+        }
+
+        try {
+            val mimeType = guessMimeType(assetPath)
+            val inputStream = view.context.assets.open(assetPath)
+            val response = WebResourceResponse(mimeType, null, inputStream)
+            if ("immutable" in path) {
+                response.responseHeaders = mapOf("Cache-Control" to "max-age=31536000")
+            }
+            return response
+        } catch (_: IOException) {
+            Timber.w("Not found %s", assetPath)
+        }
+        return null
     }
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
         view?.let { webView ->
             val bgColor = MaterialColors.getColor(webView, android.R.attr.colorBackground).toRGBHex()
-            webView.evaluateJavascript("""document.body.style.setProperty("background-color", "$bgColor", "important")""") {
-                Timber.v("backgroundColor set")
-            }
+            webView.evaluateAfterDOMContentLoaded(
+                """document.body.style.setProperty("background-color", "$bgColor", "important");
+                    console.log("Background color set");"""
+            )
         }
     }
 
@@ -81,13 +99,62 @@ open class PageWebViewClient : WebViewClient() {
         }
     }
 
+    @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION") // still needed for API 23
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+        if (view == null || url == null) return super.shouldOverrideUrlLoading(view, url)
+        if (handleUrl(view, url)) {
+            return true
+        }
+        return super.shouldOverrideUrlLoading(view, url)
+    }
+
     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
         if (view == null || request == null) return super.shouldOverrideUrlLoading(view, request)
-        if (request.url.toString() == "page-fully-loaded:") {
-            Timber.v("displaying WebView after '$promiseToWaitFor' executed")
-            view.isVisible = true
+        if (handleUrl(view, request.url.toString())) {
             return true
         }
         return super.shouldOverrideUrlLoading(view, request)
     }
+
+    private fun handleUrl(view: WebView, url: String): Boolean {
+        if (url == "page-fully-loaded:") {
+            Timber.v("displaying WebView after '$promiseToWaitFor' executed")
+            view.isVisible = true
+            return true
+        }
+        return false
+    }
+}
+
+fun isSvelteKitPage(path: String): Boolean {
+    val pageName = path.substringBefore("/")
+    return when (pageName) {
+        "graphs",
+        "congrats",
+        "card-info",
+        "change-notetype",
+        "deck-options",
+        "import-anki-package",
+        "import-csv",
+        "import-page",
+        "image-occlusion" -> true
+        else -> false
+    }
+}
+
+fun WebView.evaluateAfterDOMContentLoaded(script: String, resultCallback: ValueCallback<String>? = null) {
+    evaluateJavascript(
+        """
+                var codeToRun = function() { 
+                    $script
+                }
+                
+                if (document.readyState === "loading") {
+                  document.addEventListener("DOMContentLoaded", codeToRun);
+                } else {
+                  codeToRun();
+                }
+        """.trimIndent(),
+        resultCallback
+    )
 }

@@ -2,18 +2,18 @@
 
 package com.ichi2.anki
 
-import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Parcelable
 import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.CheckResult
-import androidx.annotation.RequiresApi
-import androidx.core.content.IntentCompat
-import androidx.test.core.app.ApplicationProvider
+import androidx.core.os.BundleCompat
+import androidx.core.os.bundleOf
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SdkSuppress
 import anki.config.ConfigKey
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.AbstractFlashcardViewer.Companion.toAnimationTransition
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_3
@@ -31,30 +31,33 @@ import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
 import com.ichi2.anki.servicelayer.LanguageHintService
-import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.undoableOp
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import com.ichi2.testutils.Flaky
-import com.ichi2.testutils.OS
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
+import com.ichi2.utils.createBasicTypingModel
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
-import org.junit.Assert.*
+import org.hamcrest.Matchers.containsString
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.not
+import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.nullValue
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
 import org.robolectric.Robolectric
-import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 import java.util.stream.Stream
 import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 
 @Suppress("SameParameterValue")
-@RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
+@SdkSuppress(minSdkVersion = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
@@ -134,7 +137,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     fun validEncodingSetsAnswerCorrectly() {
         // 你好%
-        val url = "typeblurtext:%E4%BD%A0%E5%A5%BD%25"
+        val url = "typechangetext:%E4%BD%A0%E5%A5%BD%25"
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
         viewer.handleUrlFromJavascript(url)
@@ -200,11 +203,15 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             val expectedInverseAnimation =
                 ActivityTransitionAnimation.getInverseTransition(expectedAnimation)
 
-            viewer.executeCommand(ViewerCommand.EDIT, gesture)
-            val actual = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application).nextStartedActivity
-
-            val actualInverseAnimation = IntentCompat.getParcelableExtra(
-                actual,
+            val animation = gesture.toAnimationTransition().invert()
+            val bundle = bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_EDIT,
+                NoteEditor.EXTRA_CARD_ID to viewer.currentCard!!.id,
+                FINISH_ANIMATION_EXTRA to animation as Parcelable
+            )
+            val noteEditor = NoteEditorTest().openNoteEditorWithArgs(bundle)
+            val actualInverseAnimation = BundleCompat.getParcelable(
+                noteEditor.requireArguments(),
                 FINISH_ANIMATION_EXTRA,
                 Direction::class.java
             )
@@ -237,8 +244,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     @Flaky(OS.ALL, "executeCommand(FLIP_OR_ANSWER_EASE4) cannot be awaited")
     fun typedLanguageIsSet() = runTest {
-        val withLanguage = StdModels.BASIC_TYPING_MODEL.add(col, "a")
-        val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
+        val withLanguage = col.createBasicTypingModel("a")
+        val normal = col.createBasicTypingModel("b")
         val typedField = 1 // BACK
 
         LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
@@ -270,7 +277,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() = runTest {
         val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
-        viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
+        viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5.0, 5.0))
         viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
         assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
         controller.pause()

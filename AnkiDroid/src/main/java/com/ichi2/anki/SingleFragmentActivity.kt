@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -41,10 +42,14 @@ open class SingleFragmentActivity : AnkiActivity() {
             return
         }
         super.onCreate(savedInstanceState)
+        if (!ensureStoragePermissions()) {
+            return
+        }
         setContentView(R.layout.single_fragment_activity)
         setTransparentStatusBar()
 
         // avoid recreating the fragment on configuration changes
+        // the fragment should handle state restoration
         if (savedInstanceState != null) {
             return
         }
@@ -59,15 +64,30 @@ open class SingleFragmentActivity : AnkiActivity() {
             replace(R.id.fragment_container, fragment)
         }
     }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)!!
+        return if (fragment is DispatchKeyEventListener) {
+            fragment.dispatchKeyEvent(event) || super.dispatchKeyEvent(event)
+        } else {
+            super.dispatchKeyEvent(event)
+        }
+    }
+
     companion object {
         const val FRAGMENT_NAME_EXTRA = "fragmentName"
         const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
 
-        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
+        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null, intentAction: String? = null): Intent {
             return Intent(context, SingleFragmentActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)
+                action = intentAction
             }
         }
     }
+}
+
+interface DispatchKeyEventListener {
+    fun dispatchKeyEvent(event: KeyEvent): Boolean
 }

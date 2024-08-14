@@ -22,8 +22,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -75,13 +77,17 @@ object Themes {
         }
 
         currentTheme = if (themeFollowsSystem(prefs)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             if (systemIsInNightMode(context)) {
                 Theme.ofId(prefs.getString(NIGHT_THEME_KEY, Theme.BLACK.id)!!)
             } else {
                 Theme.ofId(prefs.getString(DAY_THEME_KEY, Theme.LIGHT.id)!!)
             }
         } else {
-            Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!)
+            Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!).also {
+                val mode = if (it.isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                AppCompatDelegate.setDefaultNightMode(mode)
+            }
         }
     }
 
@@ -143,4 +149,8 @@ fun FragmentActivity.setTransparentStatusBar() {
     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
         !Themes.currentTheme.isNightMode
     window.statusBarColor = Color.TRANSPARENT
+}
+
+fun FragmentActivity.setTransparentBackground() {
+    window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 }

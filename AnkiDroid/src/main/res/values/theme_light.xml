@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="DuplicateCrowdInStrings">
-    <style name="Theme_Light" parent="@style/Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/material_light_blue_500</item>
         <item name="colorPrimaryDark">@color/material_light_blue_700</item>
@@ -13,7 +13,7 @@
 
         <item name="colorSurfaceContainerHighest">?attr/colorSurfaceContainer</item>
         <item name="colorSurfaceContainerHigh">?android:attr/colorBackground</item>
-        <item name="colorSurfaceContainer">@color/faded_primary</item>
+        <item name="colorSurfaceContainer">#0F03A9F4</item>
         <item name="colorSurfaceContainerLow">?android:attr/colorBackground</item>
 
         <item name="android:textColor">@color/text_color_light</item>
@@ -41,6 +41,7 @@
         <item name="actionModeBackground">?attr/colorPrimary</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">?attr/colorPrimary</item>
+        <item name="tabActiveIconColor">@color/white</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">#ececec</item>
@@ -54,6 +55,10 @@
         <item name="reviewCountColor">@color/material_green_700</item>
         <item name="zeroCountColor">#1f000000</item>
         <!-- Reviewer colors -->
+        <item name="againButtonBackground">@color/material_red_700</item>
+        <item name="hardButtonBackground">@color/material_blue_grey_700</item>
+        <item name="goodButtonBackground">@color/material_green_500</item>
+        <item name="easyButtonBackground">@color/material_light_blue_500</item>
         <item name="topBarColor">@color/material_light_blue_100</item>
         <item name="maxTimerColor">@color/material_red_500</item>
         <item name="answerButtonTextColor">@color/white</item>
@@ -61,29 +66,23 @@
         <item name="hardButtonTextColor">@color/white</item>
         <item name="goodButtonTextColor">@color/white</item>
         <item name="easyButtonTextColor">@color/white</item>
+        <item name="alternativeBackgroundColor">#f4f5f9</item>
         <!-- Reviewer button drawables -->
         <item name="showAnswerColor">@color/material_blue_grey_700</item>
         <item name="againButtonRef">@drawable/footer_button_again</item>
         <item name="hardButtonRef">@drawable/footer_button_hard</item>
         <item name="goodButtonRef">@drawable/footer_button_good</item>
         <item name="easyButtonRef">@drawable/footer_button_easy</item>
-        <item name="againButtonRippleRef">@drawable/footer_button_again_ripple</item>
-        <item name="hardButtonRippleRef">@drawable/footer_button_hard_ripple</item>
-        <item name="goodButtonRippleRef">@drawable/footer_button_good_ripple</item>
-        <item name="easyButtonRippleRef">@drawable/footer_button_easy_ripple</item>
+        <item name="againButtonRippleRef">@drawable/footer_button_ripple</item>
+        <item name="hardButtonRippleRef">@drawable/footer_button_ripple</item>
+        <item name="goodButtonRippleRef">@drawable/footer_button_ripple</item>
+        <item name="easyButtonRippleRef">@drawable/footer_button_ripple</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">?attr/dividerHorizontal</item>
         <!-- Browser colors -->
         <item name="suspendedColor">#FFFFB2</item>
         <item name="selectedColor">#FFFFBB99</item>
         <item name="markedColor">#D9B2E9</item>
-        <item name="flagRed">@color/flag_red</item>
-        <item name="flagOrange">@color/flag_orange</item>
-        <item name="flagGreen">@color/flag_green</item>
-        <item name="flagBlue">@color/flag_blue</item>
-        <item name="flagPink">@color/flag_pink</item>
-        <item name="flagTurquoise">@color/flag_turquoise</item>
-        <item name="flagPurple">@color/flag_purple</item>
         <!-- Note editor colors -->
         <item name="duplicateColor">#fcc</item>
         <item name="editTextBackgroundColor">#EBCCCCCC</item>
@@ -101,12 +100,9 @@
         <item name="navDrawerImage">@drawable/nav_drawer_logo</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
-        <item name="md_color_button_text">@color/black</item>
         <item name="dialogCornerRadius">@dimen/dialog_corner_radius</item>
         <item name="android:dialogCornerRadius" tools:targetApi="p">@dimen/dialog_corner_radius</item>
-        <item name="md_corner_radius">@dimen/dialog_corner_radius</item>
         <item name="textAllCaps">false</item>
-        <item name="md_button_casing">literal</item>
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
         <item name="popupBackgroundColor">@android:color/white</item>
@@ -141,6 +137,8 @@
         <item name="checkMediaListBackground">@color/material_blue_grey_050</item>
         <item name="checkMediaListForeground">@color/material_grey_700</item>
         <item name="progressDialogButtonTextColor">@color/material_light_blue_500</item>
-
+        <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
     </style>
+
+    <style name="Theme_Light" parent="Base.Theme.Light"/>
 </resources>

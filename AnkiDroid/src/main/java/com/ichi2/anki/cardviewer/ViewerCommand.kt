@@ -26,10 +26,10 @@ import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.ctrl
 import com.ichi2.anki.reviewer.Binding.ModifierKeys.Companion.shift
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
-import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
-import java.util.*
+import com.ichi2.anki.reviewer.MappableBinding.Screen
+import java.util.Arrays
 import java.util.function.BiFunction
 import java.util.stream.Collectors
 
@@ -73,7 +73,19 @@ enum class ViewerCommand(val resourceId: Int) {
     SHOW_HINT(R.string.gesture_show_hint),
     SHOW_ALL_HINTS(R.string.gesture_show_all_hints),
     ADD_NOTE(R.string.menu_add_note),
-    RESCHEDULE_NOTE(R.string.card_editor_reschedule_card);
+
+    // TODO: CollectionManager.TR.actionsSetDueDate()
+    RESCHEDULE_NOTE(R.string.card_editor_reschedule_card),
+    USER_ACTION_1(R.string.user_action_1),
+    USER_ACTION_2(R.string.user_action_2),
+    USER_ACTION_3(R.string.user_action_3),
+    USER_ACTION_4(R.string.user_action_4),
+    USER_ACTION_5(R.string.user_action_5),
+    USER_ACTION_6(R.string.user_action_6),
+    USER_ACTION_7(R.string.user_action_7),
+    USER_ACTION_8(R.string.user_action_8),
+    USER_ACTION_9(R.string.user_action_9)
+    ;
 
     companion object {
         val allDefaultBindings: List<MappableBinding>
@@ -81,7 +93,7 @@ enum class ViewerCommand(val resourceId: Int) {
                 .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
                 .collect(Collectors.toList())
 
-        fun fromPreferenceKey(key: String) = ViewerCommand.entries.first { it.preferenceKey == key }
+        fun fromPreferenceKey(key: String) = entries.first { it.preferenceKey == key }
     }
 
     val preferenceKey: String

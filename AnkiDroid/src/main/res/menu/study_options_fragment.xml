@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/action_undo"
+        android:id="@+id/action_undo_study_options"
         android:enabled="true"
         android:icon="@drawable/ic_undo_white"
         android:title="@string/undo"
@@ -40,8 +41,15 @@
         android:visibility = "gone"/>
     <item
         android:id="@+id/action_export"
-        android:title="@string/export_deck"
-        android:visibility = "gone"/>
+        tools:text="Export"
+        android:visibility="gone">
+        <menu>
+            <item
+                android:id="@+id/action_export_deck"
+                android:menuCategory="secondary"
+                android:title="@string/export_deck" />
+        </menu>
+    </item>
     <item
         android:id="@+id/action_unbury"
         android:title="@string/unbury"

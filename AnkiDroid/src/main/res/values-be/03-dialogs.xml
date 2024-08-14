@@ -48,10 +48,16 @@
     <string name="check_db_warning">Гэта можа заняць шмат часу</string>
     <string name="contextmenu_deckpicker_delete_deck">Выдаліць калоду</string>
     <string name="delete_deck_title">Выдаліць калоду?</string>
+    <plurals name="delete_deck_message">
+        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
+        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+    </plurals>
+    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">Сінтэз маўлення недаступны</string>
     <string name="tts_no_tts">Не прамаўляць</string>
     <string name="unused_strings">\n\nНявыкарыстаныя файлы:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Папярэдні прагляд</string>
     <string name="reposition_card_dialog_title">Перамясціць новую картку</string>
     <string name="reposition_card_dialog_message">Пачатковая пазіцыя:</string>
     <string name="reposition_card_not_new_error">Толькі новыя карткі могуць быць перамешчаныя</string>
@@ -62,35 +68,12 @@
         <item quantity="other">Перамешчаны %d картак</item>
     </plurals>
     <string name="reset_card_dialog_title">Скінуць дасягненні па картцы</string>
-    <string name="reset_card_dialog_message">Гэтая картка будзе змешчана ў канец чаргі новых картак</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">Скінута %d картка</item>
         <item quantity="few">Скінуты %d карткі</item>
         <item quantity="many">Скінуты %d картак</item>
         <item quantity="other">Скінуты %d картак</item>
     </plurals>
-    <!-- Reschedule Card Dialog -->
-    <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Перапланаваць %d картку</item>
-        <item quantity="few">Перапланаваць %d карткі</item>
-        <item quantity="many">Перапланаваць %d картак</item>
-        <item quantity="other">Перапланаваць %d карткі</item>
-    </plurals>
-    <plurals name="reschedule_card_dialog_interval">
-        <item quantity="one">Бягучы інтэрвал: %d дзень</item>
-        <item quantity="few">Бягучы інтэрвал: %d дні</item>
-        <item quantity="many">Бягучы інтэрвал: %d дзён</item>
-        <item quantity="other">Бягучы інтэрвал: %d дні</item>
-    </plurals>
-    <string name="reschedule_card_dialog_message">Запланаваць паўтарэнне ў наступныя х дзён:</string>
-    <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">Перапланавана %d картка</item>
-        <item quantity="few">Перапланаваны %d карткі</item>
-        <item quantity="many">Перапланаваны %d картак</item>
-        <item quantity="other">Перапланаваны %d картак</item>
-    </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Новая картка перапланавана. Дадзеная аперацыя дадае новыя карткі ў паўтораныя. Скарыстайцеся параметрам \"перамясціць картку\" для змянення пазіцыі новай карткі ў чарзе.</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Перапланаванне таксама скіне налады таго, як планіроўшчык будзе апрацоўваць картку ў будучым (лёгкасць карткі будзе прызначаная на %d%%) </string>
     <string name="answering_error_title">Памылка базы даных</string>
     <string name="answering_error_message">Збой запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; паведаміце пра гэта распрацоўшчыкам.</string>
     <string name="answering_error_report">Паведаміць пра памылку</string>
@@ -119,8 +102,10 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Пацвердзіць</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_yes">Так</string>
+    <string name="dialog_keep">Keep</string>
+    <string name="dialog_remove">Remove</string>
     <string name="dialog_continue">Працягнуць</string>
-    <string name="dialog_processing">Апрацоўка...</string>
+    <string name="dialog_processing">Апрацоўка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Стварыць</string>
     <string name="dialog_positive_delete">Выдаліць</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -129,6 +114,9 @@
     <string name="dialog_positive_repair">Выправіць</string>
     <string name="dialog_positive_replace">Замяніць</string>
     <string name="dialog_collection_path_not_dir">Азначаны шлях не з\'яўляецца дапушчальным каталогам</string>
+    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
+    <string name="dialog_updated_custom_certificate">Certificate updated</string>
     <!-- Media checking -->
     <string name="check_media_title">Праверыць медыяфайлы?</string>
     <string name="check_media_warning">Гэта можа заняць шмат часу ў тым выпадку, калі калекцыя медыяфайлаў надта вялікая</string>
@@ -140,7 +128,7 @@
     <string name="check_media_no_unused_missing">Адсутных або файлаў, якія не выкарыстоўваюцца не знойдзена</string>
     <string name="check_media_db_updated">База даных з медыяфайлаламі перабудавана</string>
     <string name="check_media_delete_unused">Выдаліць, якія не выкарыстоўваюцца</string>
-    <string name="delete_media_message">Выдаленне медыяфайлаў...</string>
+    <string name="delete_media_message">Выдаленне медыяфайлаў&#8230;</string>
     <string name="delete_media_result_title">Вынік выдалення</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">Выдалены %d файл</item>
@@ -162,7 +150,6 @@
     <string name="multimedia_editor_failed">Памылка адкрыцця рэдактара мультымедыя</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Адхілены доступ да запісу гуку</string>
-    <string name="mutimedia_editor_assertion_failed">Узнікла невядомая памылка падчас адлюстравання пашыранага рэдактара</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">Праграма AnkiDroid абноўленая</string>
     <string name="integrity_check_startup_content">Праграма AnkiDroid абноўленая. Дадзенае абнаўленне змяшчае выпраўленні магчымых праблем з базай даных і мы раім вам запусціць яе праверку. </string>
@@ -233,7 +220,7 @@
         <item quantity="many">Аўтаматычная сінхранізацыя можа пачацца праз %d секунд</item>
         <item quantity="other">Аўтаматычная сінхранізацыя можа пачацца праз %d секунды</item>
     </plurals>
-    <string name="metered_sync_warning">Ваша злучэнне тарыфікуецца. За перададзеныя даныя могуць спаганяцца грошы</string>
+    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
     <string name="deck_picker_new">Колькасць новых картак, якія можна ўбачыць за сёння ў гэтай калодзе.</string>
     <string name="deck_picker_rev">Колькасць картак на сёння ў гэтай калодзе.</string>
     <string name="deck_picker_lrn">Колькасць картак, якія вывучаюцца ў гэтай калодзе.</string>
@@ -260,4 +247,37 @@
     <string name="dismiss_backup_warning_upgrade">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі стануць недаступны
     
     </string>
+    <string name="deck_already_exists">Deck already exists</string>
+    <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
+    <!-- Set Due Date -->
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in</item>
+        <item quantity="few">Show cards in</item>
+        <item quantity="many">Show cards in</item>
+        <item quantity="other">Show cards in</item>
+    </plurals>
+    <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
+        <item quantity="one">Show card in range</item>
+        <item quantity="few">Show cards in range</item>
+        <item quantity="many">Show cards in range</item>
+        <item quantity="other">Show cards in range</item>
+    </plurals>
+    <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
+        <item quantity="one">day</item>
+        <item quantity="few">days</item>
+        <item quantity="many">days</item>
+        <item quantity="other">days</item>
+    </plurals>
+    <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <!-- Instant Note Editor -->
+    <string name="cloze_note_required">Cloze Type Note Required</string>
+    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
+    <string name="open">Open</string>
+    <string name="change_cloze_number">Change cloze number</string>
+    <string name="cloze_number">Cloze number:</string>
+    <!-- Outdated WebView dialog -->
+    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

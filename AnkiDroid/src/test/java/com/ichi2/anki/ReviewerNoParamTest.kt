@@ -35,12 +35,13 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Screen
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
-import com.ichi2.testutils.Flaky
-import com.ichi2.testutils.OS
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.greaterThan
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -133,6 +134,12 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(
+        OS.ALL,
+        "Hide should be called after answering a card" +
+            "    Expected: a value greater than <2>" +
+            "         but: <2> was equal to <2>"
+    )
     fun showingCardHidesFullScreen() {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()
@@ -149,6 +156,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(OS.ALL, "Expected: a value greater than <2> but: <2> was equal to <2>")
     fun undoingCardHidesFullScreen() = runTest {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()

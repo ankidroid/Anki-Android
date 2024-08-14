@@ -104,21 +104,15 @@
     <string name="menu_suspend">Хасах</string>
     <string name="menu_delete_note">Картын хэсгийг устгах</string>
     <string name="menu_flag">Дарцаг</string>
+    <string name="rename_flag">Rename flags</string>
     <string name="menu_flag_card">Картыг дарцаглах</string>
-    <string name="menu_flag_card_zero">Дарцаггүй</string>
-    <string name="menu_flag_card_one">Улаан дарцаг</string>
-    <string name="menu_flag_card_two">Улбар шар дарцаг</string>
-    <string name="menu_flag_card_three">Ногоон дарцаг</string>
-    <string name="menu_flag_card_four">Цэнхэр дарцаг</string>
-    <string name="menu_flag_card_five">Ягаан дарцаг</string>
-    <string name="menu_flag_card_six">Цэнхэр</string>
-    <string name="menu_flag_card_seven">Нил ягаан дарцаг</string>
     <string name="menu_edit_tags">Шошгийг солих</string>
     <string name="delete_note_message">Та үнэхээр энэ картыг, хэсгүүдтэй нь цуг устгамаар байна уу?\n%s</string>
     <string name="menu_search">%1$s ын дараа дахин харагдана</string>
     <string name="menu_mark_note">Картын хэсэгт тэмдэглэл нэмэх</string>
     <string name="menu_unmark_note">Картын хэсгийн тэмдэглэлийг хасах</string>
-    <string name="menu_toggle_mic_tool_bar">Дуудлагийг шалгах</string>
+    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Багц бүтээх</string>
     <string name="new_dynamic_deck">Ангилсан багц бүтээх</string>
     <string name="directory_inaccessible">Анкидройдын файлуудын чиглэсэн чиглэл ашиглах боломжгүй байна</string>
@@ -134,10 +128,12 @@
     <string name="empty_filtered_deck">Хоосон багцыг ангилж байна&#8230;</string>
     <string name="custom_study_deck_name">Тусгай суралцах горим</string>
     <string name="custom_study_deck_exists">Аль хэдийн эхлүүлсэн \"Тусгай судлах хэсэг\"-ийнхээ нэрээ эхэлж өөрчилнө үү</string>
-    <string name="empty_deck">Энэ багц хоосон байна</string>
     <string name="search_deck" comment="Deck search for selecting it">Багц хайх</string>
+    <string name="empty_deck">Энэ багц хоосон байна</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Интернетээс багц хайх</string>
     <string name="invalid_deck_name">Ингэж нэрлэх боломжгүй байна</string>
+    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Одоохондоо сурах, давтах карт алга байна</string>
     <string name="sd_card_not_mounted">Багтаамжийн  хэрэгсэл холбогдоогүй байна</string>
     <string name="button_sync" comment="Text of the sync button">Зэрэгцүүлэх</string>
@@ -146,7 +142,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг үргэлжлүүлэх</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Зэрэгцүүлэлтийг зогсоолоо</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Цуцалж байна&#8230;\n Бага зэрэг удаж магадгүй</string>
+    <string name="syncing_media">Syncing media</string>
     <string name="export_deck">Багцыг экспортлох</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Юу ч үгүй</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Картын төрлүүд</string>
@@ -166,7 +164,6 @@
         <item quantity="one">“%2$s\" энэ төрлийн картыг, мөн үүний %1$d картыг устгах уу?</item>
         <item quantity="other">“%2$s\" энэ төрлийн картыг, мөн үүний %1$d картыг устгах уу?</item>
     </plurals>
-    <string name="invalid_template">Картыг үүсгэх боломжгүй байна</string>
     <string name="card_template_editor_would_delete_note">Энэ картын төрлийн хасах нь нэг болон түүнээс олон картны хэсгүүдийг устгана. Эхлээд шинэ картны төрөл үүсгэнэ үү.</string>
     <string name="card_template_editor_save_error">Картны загварын өөрчлөлтүүдийг хадгалах боломжгүй байна:%s</string>
     <string name="template_for_current_card_deleted">Энэ картны төрөл нь устгагдсан байна</string>
@@ -238,6 +235,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Шилжүүлэх үйл явцыг үргэлжлүүлэх</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Орох боломжгүй цуглуулга</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store - ын Ашиглалтын Журамд өөрчлөлт орсны улмаас, таны цуглуулгыг, AnkiDroid - ыг устгасны дараа ашиглах боломжгүй. \n\n Таны мэдээлэл аюулгүй ба дахин сэргээж болно. Тэгэхийн тулд та \n%s\n\n - дээр очоод доор \"to restore\" гэх сонголтыг нь дарахад болно:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Сервэрээс мэдээллээ сэргээх ()</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
@@ -250,4 +248,7 @@
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

@@ -60,22 +60,22 @@
     <string name="expand">Rozwiń</string>
     <string name="collapse">Zwiń</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Została %d minuta</item>
+        <item quantity="few">Zostały %d minuty</item>
+        <item quantity="many">Zostało %d minut</item>
+        <item quantity="other">Zostało %d minut</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Pozostała %1$d godzina %2$d</item>
+        <item quantity="few">Pozostały %1$d godziny %2$d</item>
+        <item quantity="many">Pozostało %1$d godzin %2$d</item>
+        <item quantity="other">Pozostało %1$d godzin %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Pozostał %1$d dzień %2$d</item>
+        <item quantity="few">Pozostały %1$d dni %2$d</item>
+        <item quantity="many">Pozostało %1$d dni %2$d</item>
+        <item quantity="other">Pozostało %1$d dni %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekcja jest pusta</string>
     <string name="no_cards_placeholder_description">Zacznij dodawać karty używając przycisku +</string>
@@ -90,14 +90,14 @@
     <string name="ease_button_easy">Łatwa</string>
     <string name="menu_import">Importuj</string>
     <string name="undo">Cofnij</string>
-    <string name="redo">Redo</string>
+    <string name="redo">Ponów</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Cofnij pociągnięcie pędzlem</string>
     <string name="move_all_to_deck">Przenieś wszystkie do talii</string>
     <string name="unbury">Odkop</string>
     <string name="rename_deck">Zmień nazwę talii</string>
     <string name="create_shortcut">Utwórz skrót</string>
     <string name="browse_cards">Przeglądaj karty</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Edytuj opis</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Dodaj</string>
     <string name="menu_add_note">Dodaj notatkę</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synchronizacja konta</string>
@@ -110,21 +110,15 @@
     <string name="menu_suspend">Zawieś</string>
     <string name="menu_delete_note">Usuń notatkę</string>
     <string name="menu_flag">Oflaguj</string>
+    <string name="rename_flag">Zmień flagi</string>
     <string name="menu_flag_card">Oflaguj kartę</string>
-    <string name="menu_flag_card_zero">Brak flagi</string>
-    <string name="menu_flag_card_one">Czerwona flaga</string>
-    <string name="menu_flag_card_two">Pomarańczowa flaga</string>
-    <string name="menu_flag_card_three">Zielona flaga</string>
-    <string name="menu_flag_card_four">Niebieska flaga</string>
-    <string name="menu_flag_card_five">Różowa flaga</string>
-    <string name="menu_flag_card_six">Turkusowa flaga</string>
-    <string name="menu_flag_card_seven">Fioletowa flaga</string>
     <string name="menu_edit_tags">Edytuj etykiety</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
     <string name="menu_search">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note">Wyróżnij notatkę</string>
     <string name="menu_unmark_note">Cofnij wyróżnienie notatki</string>
-    <string name="menu_toggle_mic_tool_bar">Sprawdź wymowę</string>
+    <string name="menu_enable_voice_playback">Włącz odtwarzanie głosu</string>
+    <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Stwórz talię</string>
     <string name="new_dynamic_deck">Stwórz filtrowaną talię</string>
     <string name="directory_inaccessible">Katalog AnkiDroid jest niedostępny</string>
@@ -140,10 +134,12 @@
     <string name="empty_filtered_deck">Opróżnienie filtrowanej talii&#8230;</string>
     <string name="custom_study_deck_name">Sesja nauki niestandardowej</string>
     <string name="custom_study_deck_exists">Najpierw zmień nazwę istniejącej talii nauki niestandardowej.</string>
-    <string name="empty_deck">Ta talia jest pusta</string>
     <string name="search_deck" comment="Deck search for selecting it">Przeszukaj talię</string>
+    <string name="empty_deck">Ta talia jest pusta</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Wyszukiwanie talii</string>
     <string name="invalid_deck_name">Nieprawidłowa nazwa talii</string>
+    <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Talia na razie skończona! %s</string>
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>
@@ -151,8 +147,10 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Chcesz przerwać synchronizację?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Kontynuuj synchronizację</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronizacja przerwana</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulowanie...\nTo może chwilę zająć.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulowanie&#8230;\nTo może chwilę zająć.</string>
+    <string name="syncing_media">Synchronizowanie mediów</string>
     <string name="export_deck">Eksportuj talię</string>
+    <string name="export_collection">Export collection</string>
     <string name="nothing">Nic</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typ karty</string>
@@ -176,7 +174,6 @@
         <item quantity="many">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
         <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
     </plurals>
-    <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
     <string name="card_template_editor_would_delete_note">Usunięcie tego typu karty spowodowałoby usunięcie przynajmniej jednej notatki. Proszę najpierw utworzyć i zapisać nowy typ karty.</string>
     <string name="card_template_editor_save_error">Nie można zapisać zmian szablonu karty: %s</string>
     <string name="template_for_current_card_deleted">Typ karty dla aktualnej karty został usunięty</string>
@@ -251,6 +248,7 @@
     <string name="migration__resume_after_failed_dialog__button_positive">Wznów migrację</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Niedostępna kolekcja</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nie możemy uzyskać dostępu do Twojej kolekcji po odinstalowaniu AnkiDroid ze względu na zmianę w polityce sklepu Play\n\nTwoje dane są bezpieczne i mogą zostać przywrócone. Znajduje się w\n%s\n\nWybierz jedną z opcji poniżej, aby je przywrócić:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">System Android usunął uprawnienie AnkiDroid do %1$s z powodu długiego czasu nieaktywności aplikacji.\n\n Twoje dane są bezpieczne i mogą zostać przywrócone. Znajdują się w katalogu: \n%2$s\n\n Wybierz jedną z opcji poniżej by kontynuować:</string>
     <string name="restore_data_from_ankiweb">Przywróć z AnkiWeb (zalecane)</string>
     <string name="install_non_play_store_ankidroid_recommended">Przywróć dostęp do folderu (zalecane)</string>
     <string name="install_non_play_store_ankidroid">Przywróć dostęp do folderu (zaawansowane)</string>
@@ -263,4 +261,7 @@
     <string name="storage_access_summary">Zapisuje twoją kolekcję w bezpiecznym miejscu, żeby w przypadku odinstalowania aplikacji nie została usunięta</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Dostęp do wszystkich plików</string>
     <string name="image_occlusion">Image Occlusion</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Usuń konto</string>
+    <!-- Instant Note Editor -->
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

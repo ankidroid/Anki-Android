@@ -50,14 +50,14 @@
     <string name="backup_new_collection">Νέα συλλογή</string>
     <string name="backup_del_collection">Διαγραφή συλλογής και δημιουργία καινούργιας</string>
     <string name="backup_del_collection_question">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη συλλογή σας και να δημιουργήσετε μία νέα; Αυτό θα διαγράψει όλη την πρόοδο εκμάθησή σας και όλες τις κάρτες!</string>
-    <string name="backup_full_sync_from_server">Πλήρης συγχρονισμός από διακομιστή</string>
+    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
     <string name="backup_full_sync_from_server_question">Είστε βέβαιοι ότι θέλετε να αντικαταστήσετε τη συλλογή σας με αυτή από το AnkiWeb; Αυτό θα διαγράψει όλη την πρόοδο εκμάθησής σας και πληροφορίες που προσθέσατε από τον τελευταίο συγχρονισμό!</string>
     <string name="error_handling_title">Χειρισμός σφαλμάτων</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Επιλογές</string>
     <string name="backup_retry_opening">Επαναπροσπάθεια ανοίγματος</string>
     <string name="backup_error_menu_repair">Επισκευή βάσης δεδομένων</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Επισκευή βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
+    <string name="backup_repair_deck_progress">Επισκευή βάσης δεδομένων.\nΠαρακαλούμε περιμένετε&#8230;</string>
     <string name="backup_invalid_file_error">Το επιλεγμένο αντίγραφο ασφαλείας δεν ήταν έγκυρο</string>
     <string name="backup_restore_select_title">Επιλέξτε το αντίγραφο για επαναφορά</string>
     <string name="backup_restore_no_backups">Δε βρέθηκαν αντίγραφα ασφαλείας γι\' αυτή τη συλλογή στη συσκευή. Αν έχετε αντίγραφα στον υπολογιστή σας, παρακαλούμε αντιγράψτε τα στο φάκελο Ανκί-Ντρόιντ.</string>

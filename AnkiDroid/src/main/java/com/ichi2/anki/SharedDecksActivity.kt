@@ -18,11 +18,15 @@
 package com.ichi2.anki
 
 import android.app.DownloadManager
-import android.content.*
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.*
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -45,6 +49,8 @@ class SharedDecksActivity : AnkiActivity() {
 
     private var shouldHistoryBeCleared = false
 
+    private val allowedHosts = listOf(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
+
     /**
      * Handle condition when page finishes loading and history needs to be cleared.
      * Currently, this condition arises when user presses the home button on the toolbar.
@@ -62,6 +68,28 @@ class SharedDecksActivity : AnkiActivity() {
                 shouldHistoryBeCleared = false
             }
             super.onPageFinished(view, url)
+        }
+
+        /**
+         * Prevent the WebView from loading urls which arent needed for importing shared decks.
+         * This is to prevent potential misuse, such as bypassing content restrictions or
+         * using the AnkiDroid WebView as a regular browser to bypass browser blocks,
+         * which could lead to procrastination.
+         */
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            val host = request?.url?.host
+            if (host != null) {
+                if (allowedHosts.any { regex -> regex.matches(host) }) {
+                    return super.shouldOverrideUrlLoading(view, request)
+                }
+            }
+
+            request?.url?.let { super@SharedDecksActivity.openUrl(it) }
+
+            return true
         }
 
         override fun onReceivedHttpError(
@@ -122,7 +150,7 @@ class SharedDecksActivity : AnkiActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        webviewToolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.close_icon)
+        webviewToolbar.navigationIcon = ContextCompat.getDrawable(applicationContext, R.drawable.close_icon)
 
         webView = findViewById(R.id.web_view)
 
@@ -191,6 +219,7 @@ class SharedDecksActivity : AnkiActivity() {
 
         val searchView = menu.findItem(R.id.search)?.actionView as SearchView
         searchView.queryHint = getString(R.string.search_using_deck_name)
+        searchView.setMaxWidth(Integer.MAX_VALUE)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 webView.loadUrl(resources.getString(R.string.shared_decks_url) + query)

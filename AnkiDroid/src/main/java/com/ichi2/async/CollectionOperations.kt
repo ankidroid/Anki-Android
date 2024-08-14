@@ -16,15 +16,17 @@
 
 package com.ichi2.async
 
-import com.ichi2.anki.*
-import com.ichi2.libanki.*
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CardTemplateNotetype
+import com.ichi2.anki.StudyOptionsFragment
+import com.ichi2.anki.browser.CardBrowserColumn
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.NotetypeJson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
-import java.util.*
 
 /**
  * Takes a list of media file names and removes them from the [Collection]
@@ -64,8 +66,8 @@ suspend fun renderBrowserQA(
     cards: List<CardBrowser.CardCache>,
     startPos: Int,
     n: Int,
-    column1Index: Int,
-    column2Index: Int,
+    column1: CardBrowserColumn,
+    column2: CardBrowserColumn,
     onProgressUpdate: (Int) -> Unit
 ): Pair<List<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundRenderBrowserQA")
@@ -104,7 +106,7 @@ suspend fun renderBrowserQA(
             continue
         }
         // Update item
-        card.load(false, column1Index, column2Index)
+        card.load(false, column1, column2)
         val progress = i.toFloat() / n * 100
         withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
     }

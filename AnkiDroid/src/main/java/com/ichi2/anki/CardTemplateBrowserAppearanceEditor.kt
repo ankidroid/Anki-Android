@@ -47,7 +47,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         super.onCreate(savedInstanceState)
         val bundle = savedInstanceState ?: intent.extras
         if (bundle == null) {
-            UIUtils.showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true)
+            showThemedToast(this, getString(R.string.card_template_editor_card_browser_appearance_failed), true)
             finish()
             return
         }
@@ -82,6 +82,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         Timber.i("Back Button Pressed")
         super.onBackPressed()
@@ -98,7 +99,9 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
     }
 
     private fun showDiscardChangesDialog() {
-        DiscardChangesDialog.showDialog(this, ::discardChangesAndClose)
+        DiscardChangesDialog.showDialog(this) {
+            discardChangesAndClose()
+        }
     }
 
     private fun showRestoreDefaultDialog() {

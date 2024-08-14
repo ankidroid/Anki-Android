@@ -64,22 +64,22 @@
     <string name="log_out">Đăng xuất</string>
     <string name="reset_password">Đặt lại mật khẩu</string>
     <string name="lost_mail_instructions">Quên Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">Đang đăng nhập</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>
     <string name="sync_title">Đồng bộ</string>
     <string name="sync_log_uploading_message">Đồng bộ hoàn toàn từ thiết bị</string>
     <string name="sync_database_acknowledge">Bộ sưu tập đã được đồng bộ</string>
+    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">CSDL của bạn đã hỏng. Xin sửa nó trước khi thử đồng bộ lại.\n\nXem %s để biết thông tin về sửa chữa CSDL.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Trên thiết bị</string>
     <string name="sync_sanity_remote">Từ xa</string>
-    <string name="force_full_sync_title">Thực hiện đồng bộ đầy đủ</string>
-    <string name="force_full_sync_summary">Trong lần đồng bộ kế tiếp, buộc các thay đổi theo một hướng</string>
-    <string name="force_full_sync_confirmation">Buộc đồng bộ hóa hoàn toàn</string>
+    <string name="one_way_sync_title">Đồng bộ một chiều</string>
+    <string name="one_way_sync_confirmation">Đã yêu cầu đồng bộ một chiều</string>
     <string name="full_sync_confirmation">Thay đổi theo yêu cầu đòi hỏi tải lên đầy đủ CSDL trong lần đồng bộ bộ sưu tập tiếp theo. Nếu có thẻ ôn tập hoặc các thay đổi đang chờ trên thiết bị khác mà chưa được đồng bộ ở đây, chúng sẽ bị mất. Vẫn tiếp tục chứ?</string>
     <string name="full_sync_confirmation_upgrade">Do lỗi của phiên bản AnkiDroid đã cài đặt trước đó, đề nghị thực hiện đồng bộ hoàn toàn.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Đồng bộ (đầy đủ)</string>
+    <string name="sync_menu_title_one_way_sync">Đồng bộ (một chiều)</string>
     <string name="sync_menu_title_no_account">Đồng bộ (đăng nhập)</string>
 </resources>

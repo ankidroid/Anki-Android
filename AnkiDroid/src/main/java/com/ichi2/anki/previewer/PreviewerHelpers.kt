@@ -17,26 +17,16 @@ package com.ichi2.anki.previewer
 
 import android.R
 import android.content.Context
-import android.content.Intent
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.LanguageUtils
-import com.ichi2.anki.NoteEditor
 import com.ichi2.themes.Themes
 import com.ichi2.utils.toRGBHex
 import org.intellij.lang.annotations.Language
 
-class NoteEditorDestination(val cardId: Long) {
-    fun toIntent(context: Context): Intent =
-        Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_PREVIEWER_EDIT)
-            putExtra(NoteEditor.EXTRA_EDIT_FROM_CARD_ID, cardId)
-        }
-}
-
 /**
  * Not exactly equal to anki's stdHtml. Some differences:
- * * `ankidroid.css` is added
+ * * `ankidroid.css` and `ankidroid.js` are added
  * * `bridgeCommand()` is ignored
  *
  * Aimed to be used only for reviewing/previewing cards
@@ -77,7 +67,6 @@ fun stdHtml(
         ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
     }
 
-    @Suppress("UnnecessaryVariable") // necessary for the HTML notation
     @Language("HTML")
     val html = """
                 <!DOCTYPE html>
@@ -98,6 +87,7 @@ fun stdHtml(
                     <div id="qa"></div>
                     <script src="file:///android_asset/jquery.min.js"></script>
                     <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
+                    <script src="file:///android_asset/scripts/ankidroid.js"></script>
                     <script src="file:///android_asset/backend/web/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>
