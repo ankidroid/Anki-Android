@@ -1687,7 +1687,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 mediaButton.setBackgroundResource(R.drawable.ic_attachment)
 
                 mediaButton.setOnClickListener {
-                    @NeedsTest("Ensure bottom sheet fragment is shown")
                     handleMultimediaActions(i)
                 }
 
@@ -1738,7 +1737,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
      *
      * @param fieldIndex the index of the field in the note where the multimedia content should be added
      */
-    private fun handleMultimediaActions(fieldIndex: Int) {
+    fun handleMultimediaActions(fieldIndex: Int) {
         Timber.d("Showing MultimediaBottomSheet fragment")
         val multimediaBottomSheet = MultimediaBottomSheet()
         multimediaBottomSheet.show(parentFragmentManager, "MultimediaBottomSheet")
