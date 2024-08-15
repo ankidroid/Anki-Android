@@ -230,7 +230,9 @@
     <string name="edit_toolbar_item">アイテムを編集</string>
     <string name="toolbar_item_explain_edit_or_remove">選択した文字列の前後に挿入するHTMLをそれぞれ入力してください\n\n作成したツールバーアイテムを編集または削除したい場合は、そのアイテムのボタンを長押ししてください</string>
     <string name="remove_toolbar_item">このツールバーアイテムを削除しますか？</string>
-    <string name="note_editor_paste_too_large">画像が大きすぎるため貼り付けできません。手動で画像を挿入してください</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Androidのバックアップが進行中です。もう一度やり直してください</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidのショートカットを追加するには、iManagerでの許可が必要な場合があります。</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面へのショートカットの追加が許可されませんでした</string>

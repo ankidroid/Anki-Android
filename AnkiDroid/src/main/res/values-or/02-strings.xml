@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକା ସମ୍ପାଦନା</string>
     <string name="toolbar_item_explain_edit_or_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବା ଲାଗି HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ କୁ ସମ୍ପାଦନ ବା ହଟାଇବା ପାଇଁ ତା\' ଉପରେ ଲମ୍ବା ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ହଟାଇବେ?</string>
-    <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ଵ୍ୟଵହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ଗୃହସ୍କ୍ରୀନ୍ AnkiDroidକୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବାର ଅନୁମତି ଦିଏ ନାହିଁ</string>

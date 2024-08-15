@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">ᱦᱟᱹᱛᱤᱭᱟᱹᱨ ᱡᱤᱱᱤᱥ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
-    <string name="note_editor_paste_too_large">ᱪᱤᱛᱟᱹᱨ ᱞᱟᱴᱷᱟ ᱞᱟᱹᱜᱤᱫ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱛᱤ ᱛᱮ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">       ᱮᱱᱰᱨᱚᱭᱮᱰ ᱵᱮᱠᱟᱯ ᱪᱟᱞᱟᱜ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮᱡᱽ ᱟᱨᱦᱚᱸ ᱨᱤᱠᱟᱹᱭ ᱢᱮ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid ᱥᱚᱴᱠᱚᱴ ᱥᱮᱞᱮᱫ ᱪᱷᱚ ᱞᱟᱹᱜᱤᱫ ᱟᱢ iManager ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ᱟᱢᱟᱜ ᱚᱲᱟᱜ ᱥᱠᱨᱤᱱ AnkiDroid ᱥᱚᱴᱠᱚᱴ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭᱟᱭ</string>

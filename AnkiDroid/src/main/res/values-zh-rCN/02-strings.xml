@@ -230,7 +230,9 @@
     <string name="edit_toolbar_item">编辑工具栏项</string>
     <string name="toolbar_item_explain_edit_or_remove">输入要在选定文本之前和之后插入的 HTML\n\n 长按工具栏项目来编辑或删除它</string>
     <string name="remove_toolbar_item">删除工具栏项目？</string>
-    <string name="note_editor_paste_too_large">图片太大，无法粘贴，请手动插入图像</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        正在进行 Android 备份。请重试</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">请使用 iManager 来允许 AnkiDroid 添加快捷方式</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">您的主屏幕不允许 AnkiDroid 添加快捷方式</string>

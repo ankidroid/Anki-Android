@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Επεξεργασία Αντικειμένου Γραμμής Εργαλείων</string>
     <string name="toolbar_item_explain_edit_or_remove">Εισάγετε το HTML που θα εισαχθεί πριν και μετά το επιλεγμένο κείμενο\n\nΠατήστε παρατεταμένα ένα αντικείμενο γραμμής εργαλείων για να το επεξεργαστείτε ή να το αφαιρέσετε</string>
     <string name="remove_toolbar_item">Αφαίρεση Αντικειμένου Γραμμής Εργαλείων;</string>
-    <string name="note_editor_paste_too_large">Η εικόνα είναι πολύ μεγάλη για επικόλληση, παρακαλώ εισάγετε την εικόνα χειροκίνητα</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Αντίγραφο ασφαλείας Android σε εξέλιξη. Παρακαλώ προσπαθήστε ξανά</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Ίσως χρειαστεί να χρησιμοποιήσετε το iManager για να επιτρέψετε στο AnkiDroid να προσθέσει συντομεύσεις</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Η αρχική σας οθόνη δεν επιτρέπει στο AnkiDroid να προσθέσει συντομεύσεις</string>

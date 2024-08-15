@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">ಪರಿಕರಪಟ್ಟಿ ಐಟಂ ಅನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="toolbar_item_explain_edit_or_remove">ಆಯ್ಕೆಮಾಡಿದ ಪಠ್ಯದ ಮೊದಲು ಮತ್ತು ನಂತರ ಸೇರಿಸಲು HTML ಅನ್ನು ನಮೂದಿಸಿ\n\nಎಡಿಟ್ ಮಾಡಲು ಅಥವಾ ತೆಗೆದುಹಾಕಲು ಟೂಲ್‌ಬಾರ್ ಐಟಂ ಅನ್ನು ದೀರ್ಘವಾಗಿ ಒತ್ತಿರಿ</string>
     <string name="remove_toolbar_item">ಟೂಲ್‌ಬಾರ್ ಐಟಂ ಅನ್ನು ತೆಗೆದುಹಾಕುವುದೇ?</string>
-    <string name="note_editor_paste_too_large">ಚಿತ್ರ ಅಂಟಿಸಲು ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ, ದಯವಿಟ್ಟು ಚಿತ್ರವನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಸೇರಿಸಿ</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android ಬ್ಯಾಕಪ್ ಪ್ರಗತಿಯಲ್ಲಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಸೇರಿಸಲು AnkiDroid ಅನ್ನು ಅನುಮತಿಸಲು ನೀವು iManager ಅನ್ನು ಬಳಸಬೇಕಾಗಬಹುದು</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ಶಾರ್ಟ್‌ಕಟ್‌ಗಳನ್ನು ಸೇರಿಸಲು ನಿಮ್ಮ ಮುಖಪುಟವು ಆಂಕಿಡ್ರಾಯ್ಡ್‌ಗೆ ಅನುಮತಿಸುವುದಿಲ್ಲ</string>

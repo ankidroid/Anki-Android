@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Modifica Elemento Barra Strumenti</string>
     <string name="toolbar_item_explain_edit_or_remove">Inserisci l\'HTML da inserire prima e dopo il testo selezionato\n\nTieni premuto un elemento della barra per modificarlo o rimuoverlo</string>
     <string name="remove_toolbar_item">Rimuovere l\'Elemento della Barra Strumenti?</string>
-    <string name="note_editor_paste_too_large">L\'immagine da incollare è troppo grande, inserire l\'immagine manualmente</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Backup di Android in corso. Sei pregato di riprovare</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Utilizza iManager per consentire ad AnkiDroid di aggiungere scorciatoie</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">La tua schermata iniziale non consente ad AnkiDroid di aggiungere scorciatoie</string>

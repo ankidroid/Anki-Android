@@ -239,7 +239,9 @@
     <string name="edit_toolbar_item">Изменить элемент панели</string>
     <string name="toolbar_item_explain_edit_or_remove">Введите HTML, который будет вставлен до и после выделенного текста.\n\nНажмите и удерживайте элемент панели инструментов, чтобы изменить или удалить его.</string>
     <string name="remove_toolbar_item">Удалить элемент панели инструментов?</string>
-    <string name="note_editor_paste_too_large">Изображение слишком велико для вставки, пожалуйста, вставьте изображение вручную</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Выполняется резервное копирование Android. Попробуйте еще раз</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Возможно, вам потребуется iManager, чтобы AnkiDroid мог добавлять ярлыки</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш домашний экран не позволяет AnkiDroid добавлять ярлыки</string>

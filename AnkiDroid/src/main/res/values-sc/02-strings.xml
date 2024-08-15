@@ -236,7 +236,9 @@
     <string name="edit_toolbar_item">Modìfica un\'elementu de sa barra de trastes</string>
     <string name="toolbar_item_explain_edit_or_remove">Inserta s\'HTML de pònnere in antis e a pustis de su testu seletzionadu\n\nIncarca a longu in un\'elementu de sa barra de sas ainas pro lu modificare o bogare</string>
     <string name="remove_toolbar_item">Bogare s\'elementu de sa barra de sas ainas?</string>
-    <string name="note_editor_paste_too_large">S\'immàgine est tropu manna pro l\'incollare, inserta·la in manera manuale</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Còpia de seguresa de Android in cursu. Torra a proare, pro praghere</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Dias pòdere tènnere bisòngiu de impreare iManager pro permìtere a AnkiDroid de annànghere incurtzadas</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">S\'ischermada printzipale tua non permitet a AnkiDroid de annànghere incurtzadas</string>

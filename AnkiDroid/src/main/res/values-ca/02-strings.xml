@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Element de la barra d\'eines</string>
     <string name="toolbar_item_explain_edit_or_remove">Entreu el codi HTML que voleu inserir abans i després del text seleccionat\n\nFeu una pressió prolongada a un element de la barra d\'eines per editar-ho o eliminar-hp</string>
     <string name="remove_toolbar_item">Elimino l\'element de la barra d\'eines?</string>
-    <string name="note_editor_paste_too_large">La imatge és massa gran per enganxar-la. Inseriu-la manualment si us plau</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        S\'està fent una còpia de seguretat d\'Android. Prova-ho un altre vegada si us plau</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Potser haureu de fer servir iManager per permetre a AnkiDroid afegir dreceres</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">La pantalla d\'inici no permet que AnkiDroid afegeixi dreceres</string>

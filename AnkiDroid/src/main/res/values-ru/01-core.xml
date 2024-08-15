@@ -66,7 +66,7 @@
         <item quantity="other">Осталось %d минуты</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">Остался %1$d час %2$d</item>
         <item quantity="few">%1$d hours %2$d left</item>
         <item quantity="many">%1$d hours %2$d left</item>
         <item quantity="other">Осталось %1$d часов %2$d</item>

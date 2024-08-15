@@ -141,7 +141,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
     <string name="syncing_media">Sinkronisasi media</string>
     <string name="export_deck">Ekspor dek</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Ekspor koleksi</string>
     <string name="nothing">Tidak ada</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipe kartu</string>

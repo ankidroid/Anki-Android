@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Baguhin ang Toolbar Item</string>
     <string name="toolbar_item_explain_edit_or_remove">Magtala ng HTML na ilalagay bago at pagkatapos ng piniling teksto\n\nIdiin ang toolbar item upang baguhin o tanggalin ito</string>
     <string name="remove_toolbar_item">Tanggalin ang Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">Masyadong malaki ang litrato upang i-paste, mangyaring mano-manong ilagay ang litrato.</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Nagsasagawa ng Android backup. Mangyaring subukan muli</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Maaring kailangang gumamit ng iManager upang payagan ang AnkiDroid na magdagdag ng mga gitis.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Hindi pinpayagan ang AnkiDroid na maglagay ng gitis sa iyong home screen.</string>

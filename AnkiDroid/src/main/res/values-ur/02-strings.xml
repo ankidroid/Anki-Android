@@ -234,7 +234,9 @@
     <string name="edit_toolbar_item">ٹول بار آئٹم میں ترمیم کریں۔</string>
     <string name="toolbar_item_explain_edit_or_remove">منتخب کردہ متن سے پہلے اور بعد میں داخل کرنے کے لیے HTML درج کریں\n\nٹول بار آئٹم میں ترمیم کرنے یا اسے ہٹانے کے لیے دیر تک دبائیں</string>
     <string name="remove_toolbar_item">ٹول بار آئٹم کو ہٹائیں؟</string>
-    <string name="note_editor_paste_too_large">تصویر پیسٹ کرنے کے لیے بہت بڑی ہے، براہ کرم دستی طور پر تصویر داخل کریں۔</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android بیک اپ جاری ہے۔ دوبارہ کوشش کریں</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid کو شارٹ کٹ شامل کرنے کی اجازت دینے کے لیے آپ کو iManager استعمال کرنے کی ضرورت پڑ سکتی ہے۔</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">آپ کی ہوم اسکرین AnkiDroid کو شارٹ کٹ شامل کرنے کی اجازت نہیں دیتی ہے۔</string>

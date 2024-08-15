@@ -136,7 +136,7 @@
     <string name="delete_deck">מוחק חפיסה&#8230;</string>
     <string name="info_rate">דירוג AnkiDroid</string>
     <string name="import_title">מתבצע ייבוא</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">מכין קובץ לייבוא&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
     <string name="import_dialog_message_add">הוסף את \"%s\" לאוסף. פעולה זו עלולה להמשך זמן רב</string>
@@ -164,7 +164,7 @@
          ]]></string>
     <string name="export_choice_share">שתף</string>
     <string name="export_choice_save_to">שמור אל</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">שומר את הקובץ המיוצא&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
     <string name="menu__deck_options">אפשרויות חפיסה</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">אפשרויות למידה</string>
@@ -239,7 +239,9 @@
     <string name="edit_toolbar_item">עריכת פריט סרגל כלים</string>
     <string name="toolbar_item_explain_edit_or_remove">הזן HTML שיוכנס לפני ואחרי הטקסט שנבחר \n\n לחץ לחיצה ארוכה על פריט בסרגל הכלים כדי לערוך או להסיר אותו</string>
     <string name="remove_toolbar_item">להסיר פריט סרגל כלים?</string>
-    <string name="note_editor_paste_too_large">התמונה גדולה מדי להדבקה, אנא הכנס את התמונה ידנית</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">בתהליך עדכון אנדרואיד, נסה שנית.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ייתכן שיהיה עליך להשתמש ב- iManager כדי לאפשר ל- AnkiDroid להוסיף קיצורי דרך</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">מסך הבית שלך אינו מאפשר ל- AnkiDroid להוסיף קיצורי דרך</string>
