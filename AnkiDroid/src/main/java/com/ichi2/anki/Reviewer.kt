@@ -120,8 +120,10 @@ import com.ichi2.utils.tintOverflowMenuIcons
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import java.io.File
+import kotlin.coroutines.resume
 
 @Suppress("LeakingThis")
 @KotlinCleanup("too many to count")
@@ -1089,20 +1091,27 @@ open class Reviewer :
         }
     }
 
-    private fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
+    private suspend fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
         val nCards = timebox.reps
         val nMins = timebox.secs / 60
         val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
         val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-        AlertDialog.Builder(this).show {
-            title(R.string.timebox_reached_title)
-            message(text = timeboxMessage)
-            positiveButton(R.string.dialog_continue) {}
-            negativeButton(text = CollectionManager.TR.studyingFinish()) {
-                finish()
+        suspendCancellableCoroutine { coroutines ->
+            AlertDialog.Builder(this).show {
+                title(R.string.timebox_reached_title)
+                message(text = timeboxMessage)
+                positiveButton(R.string.dialog_continue) {
+                    coroutines.resume(Unit)
+                }
+                negativeButton(text = CollectionManager.TR.studyingFinish()) {
+                    coroutines.resume(Unit)
+                    finish()
+                }
+                cancelable(true)
+                setOnCancelListener {
+                    coroutines.resume(Unit)
+                }
             }
-            cancelable(true)
-            setOnCancelListener { }
         }
     }
 
