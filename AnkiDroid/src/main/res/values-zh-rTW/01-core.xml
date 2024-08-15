@@ -53,14 +53,14 @@
     <string name="drawing">繪圖</string>
     <string name="send_feedback">傳送建議</string>
     <string name="studyoptions_due_today">今日到期卡牌:</string>
-    <string name="studyoptions_new_total">卡片總數:</string>
+    <string name="studyoptions_new_total">卡片總數：</string>
     <string name="studyoptions_total_cards">卡片總數:</string>
     <string name="studyoptions_start">開始學習</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">摺疊</string>
     <plurals name="reviewer_window_title">
-        <item quantity="other">剩下%d分鐘</item>
+        <item quantity="other">剩餘%d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">剩餘 %1$d 小時 %2$d 分鐘</item>

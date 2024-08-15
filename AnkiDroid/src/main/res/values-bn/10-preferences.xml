@@ -47,7 +47,7 @@
     <!-- generic strings -->
     <string name="disabled">নিষ্ক্রিয় করুন</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
+        <item quantity="one">%d মিনিট</item>
         <item quantity="other">%d মিনিট</item>
     </plurals>
     <string name="pref_milliseconds">%s মিলিসেকেন্ড</string>
@@ -76,17 +76,17 @@
     <string name="reset_languages" maxLength="41">ভাষা রিসেট করুন</string>
     <string name="reset_languages_summ">প্রত্যেক ডেকের জন্য ভাষা এসাইনমেন্ট রিসেট করুন (text to speech ও শব্দকোষের জন্য)</string>
     <string name="reset_languages_question">ভাষা এসাইনমেন্ট রিসেট করুন?</string>
-    <string name="reset_confirmation">All states reset</string>
-    <string name="card_zoom" maxLength="41">Card zoom</string>
-    <string name="image_zoom" maxLength="41">Image zoom</string>
-    <string name="button_size" maxLength="41">Answer button size</string>
-    <string name="card_browser_font_size" maxLength="41">Card browser font scaling</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
+    <string name="reset_confirmation">রিসেট সম্পন্ন</string>
+    <string name="card_zoom" maxLength="41">কার্ড জুম</string>
+    <string name="image_zoom" maxLength="41">ছবি জুম</string>
+    <string name="button_size" maxLength="41">উত্তর বাটান আকার</string>
+    <string name="card_browser_font_size" maxLength="41">কার্ড ব্রাউজারের ফন্ট আকার </string>
+    <string name="card_browser_hide_media" maxLength="41">ব্রাউজারে ফাইলের নাম দেখান </string>
     <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
-    <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">Fullscreen mode</string>
-    <string name="full_screen_off">Off</string>
-    <string name="full_screen_system">Hide the system bars</string>
+    <string name="col_path" maxLength="41">AnkiDroid ডিরেক্টরি </string>
+    <string name="fullscreen_review" maxLength="41">ফুলস্ক্রিন মোড</string>
+    <string name="full_screen_off">বন্ধ</string>
+    <string name="full_screen_system">সিস্টেম বার আড়াল করুন </string>
     <string name="full_screen_complete">Hide the system bars and answer buttons</string>
     <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
     <string-array name="answer_buttons_position_labels">

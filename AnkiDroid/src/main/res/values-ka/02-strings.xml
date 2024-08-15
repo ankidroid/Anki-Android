@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">ხელსაწყოთა ზოლის ელემენტის რედაქტირება</string>
     <string name="toolbar_item_explain_edit_or_remove">შეიყვანეთ მონიშნული ტექსტის ორივე ბოლოს ჩასასმელი HTML-კოდი\n\nხელსაწყოთა ზოლს დიდი ხნით დააჭირეთ, რათა დაარედაქტიროთ ან წაშალოთ</string>
     <string name="remove_toolbar_item">ამოიშალოს ხელსაწყოთა ზოლის ელემენტი?</string>
-    <string name="note_editor_paste_too_large">სურათი ზედმეტად დიდია ჩასასმელად, გთხოვთ სურათი ხელით ჩაამატოთ</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        მიმდინარეობს Android-ის სარეზერვო ასლის შექმნა. გთხოვთ, ხელახლა სცადოთ</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">შესაძლოა iManager-ის გამოყენება დაგჭირდეთ, რათა AnkiDroid-ით სწრაფი ბმულის დამატება შეძლოთ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">თქვენი საწყისი ეკრანი არ აძლევს AnkiDroid-ს სწრაფი ბმულის დამატების უფლებას</string>

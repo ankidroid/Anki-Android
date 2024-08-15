@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Eszköztár Elem szerkesztés</string>
     <string name="toolbar_item_explain_edit_or_remove">Add meg a HTML-t, amit a kiválasztott szöveg elé és mögé beszúr. \n\nHosszan nyomd az eszköztár elemét szerkesztéshez vagy törléshez</string>
     <string name="remove_toolbar_item">Törlöd ezt az Eszköztár Elemet?</string>
-    <string name="note_editor_paste_too_large">A kép túl nagy a bemásoláshoz, kérjük illeszd be kézzel!</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android biztonsági mentés folyamatban. Próbálkozzon később</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Az AnkiDroidban rövidítések használatához szükséges lehet az iManager használata</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">A Kezdőképernyőd nem engedi AnkiDroid közvetlen elérések elhelyezését</string>

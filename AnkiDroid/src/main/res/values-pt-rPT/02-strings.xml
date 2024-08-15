@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Editar entrada para a Barra de Ferramentas</string>
     <string name="toolbar_item_explain_edit_or_remove">Introduza o HTML a ser inserido antes e depois do texto seleccionado.\n\nPressione durante algum tempo sobre uma das entradas na Barra de Ferramentas para a editar ou remover.</string>
     <string name="remove_toolbar_item">Remover entrada da Barra de Ferramentas?</string>
-    <string name="note_editor_paste_too_large">A imagem é demasiado grande para ser colada, por favor insira-a manualmente.</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Cópia de segurança do Android em progresso. Por favor, tente de novo.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Pode precisar de utilizar o iManager para permitir que o AnkiDroid adicione atalhos.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">O seu ecrã de início não permite que o AnkiDroid adicione atalhos.</string>

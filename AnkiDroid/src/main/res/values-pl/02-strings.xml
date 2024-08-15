@@ -239,7 +239,9 @@
     <string name="edit_toolbar_item">Edytuj element paska narzędzi</string>
     <string name="toolbar_item_explain_edit_or_remove">Wprowadź kod HTML, który będzie wstawiony przed i po wybranym tekście\n\nPrzytrzymaj element paska narzędzi, aby go usunąć</string>
     <string name="remove_toolbar_item">Usunąć element paska narzędzi?</string>
-    <string name="note_editor_paste_too_large">Obraz jest zbyt duży, aby go wkleić, proszę wstaw go ręcznie</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Kopia zapasowa Android w toku. Spróbuj ponownie</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Może być konieczne użycie iManager, by umożliwić AnkiDroid dodawanie skrótów</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Twój launcher nie pozwala AnkiDroid dodawać skrótów</string>

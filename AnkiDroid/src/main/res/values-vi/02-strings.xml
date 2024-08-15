@@ -230,7 +230,9 @@
     <string name="edit_toolbar_item">Chỉnh sửa mục Thanh công cụ</string>
     <string name="toolbar_item_explain_edit_or_remove">Nhập HTML sẽ được chèn vào trước và sau văn bản đã chọn\n\nNhấn và giữ một mục trên thanh công cụ để chỉnh sửa hoặc xóa nó</string>
     <string name="remove_toolbar_item">Xóa Mục Thanh công cụ?</string>
-    <string name="note_editor_paste_too_large">Hình ảnh quá lớn để dán, vui lòng chèn hình ảnh theo cách thủ công</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android đang sao lưu. Hãy thử lại sau</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bạn có thể cần sử dụng iManager để cho phép AnkiDroid thêm phím tắt</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Màn hình chính của bạn không cho phép AnkiDroid thêm phím tắt</string>

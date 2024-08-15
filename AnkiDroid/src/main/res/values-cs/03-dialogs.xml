@@ -49,12 +49,12 @@
     <string name="contextmenu_deckpicker_delete_deck">Odstranit balíček</string>
     <string name="delete_deck_title">Odstranit balíček?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Vymazat všechny karty v %1$s? Obsahuje %2$d kartu</item>
+        <item quantity="few">Vymazat všechny karty v %1$s? Obsahuje %2$d karty</item>
+        <item quantity="many">Vymazat všechny karty v %1$s? Obsahuje %2$d karet</item>
+        <item quantity="other">Vymazat všechny karty v %1$s? Obsahuje %2$d karet</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Vymazat filtrovaný balíček %s a poslat všechny karty zpět do jejich původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
     <string name="tts_no_tts">Nemluv</string>
     <string name="unused_strings">\n\nNepoužité soubory:\n</string>

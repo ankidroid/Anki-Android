@@ -245,7 +245,9 @@
     <string name="edit_toolbar_item">تعديل عنصر شريط الأدوات</string>
     <string name="toolbar_item_explain_edit_or_remove">أدخل أكواد HTML التي يجب إضافتها قبل النص المحدد وبعده.\n\nاضغط ضغطة مطولة على عنصر بشريط الأدوات لتعديله أو حذفه.</string>
     <string name="remove_toolbar_item">هل تريد حذف عنصر شريط الأدوات؟</string>
-    <string name="note_editor_paste_too_large">الصورة كبيرة جدًا للصق، أضف الصورة يدويًا</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        النسخ الاحتياطي للأندرويد قيد التقدم. الرجاء المحاولة مجددًا</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لأنكيدرويد بإضافة اختصارات</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>

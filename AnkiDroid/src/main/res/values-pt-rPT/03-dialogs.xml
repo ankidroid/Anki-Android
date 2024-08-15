@@ -49,10 +49,10 @@
     <string name="contextmenu_deckpicker_delete_deck">Eliminar baralho</string>
     <string name="delete_deck_title">Eliminar baralho?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Apagar todas as fichas em %1$s? Este tem %2$d ficha</item>
+        <item quantity="other">Apagar todas as fichas em %1$s? Este tem %2$d fichas</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Apagar baralho filtrado %s e devolver fichas aos seus baralhos originais?</string>
     <string name="no_tts_available_message">Nenhuma língua disponível para o sistema de conversão de texto para fala</string>
     <string name="tts_no_tts">Não falar</string>
     <string name="unused_strings">\n\nFicheiros não utilizados:\n</string>

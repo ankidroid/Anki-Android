@@ -70,7 +70,7 @@
     <string name="sync_title">סנכרון</string>
     <string name="sync_log_uploading_message">סנכרון מלא מהמקומי</string>
     <string name="sync_database_acknowledge">האוסף סונכרן</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">האוסף מסונכרן. המדיה מסתנכרנת ברקע.</string>
     <string name="sync_corrupt_database">מסד הנתונים שלך הושחת. נא לתקן אותו בטרם ביצוע ניסיון סנכרון חוזר.\n\nניתן לעיין ב־%s לקבלת מידע בנוגע לתיקון מסד הנתונים שלך.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">מקומי</string>

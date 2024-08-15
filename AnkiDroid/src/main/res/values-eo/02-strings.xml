@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Redakti elementon de ilarstrio</string>
     <string name="toolbar_item_explain_edit_or_remove">Enigu HTML-kodon, kiu estos aldonita antaŭ kaj post la elektita teksto\n\nFrapetadu elementon de ilarstrio por redakti aŭ forigi ĝin</string>
     <string name="remove_toolbar_item">Ĉu forigi elementon de ilarstrio?</string>
-    <string name="note_editor_paste_too_large">La bildo estas tro granda por alglui, enmetu la bildon permane</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Restarigado de Android-sekurkopio. Reprovu</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Uzu iManager por permesi al AnkiDroid krei simbolajn ligilojn</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Via hejma ekrano ne permesas al AnkiDroid krei simbolajn ligilojn</string>

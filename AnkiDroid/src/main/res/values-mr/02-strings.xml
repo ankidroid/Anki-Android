@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">टूलबार आयटम संपादित करा</string>
     <string name="toolbar_item_explain_edit_or_remove">निवडलेल्या मजकुराच्या आधी आणि नंतर घालण्यासाठी HTML प्रविष्ट करा\n\nटूलबार आयटम संपादित करण्यासाठी किंवा काढण्यासाठी बराच वेळ दाबा</string>
     <string name="remove_toolbar_item">टूलबार आयटम काढायचा?</string>
-    <string name="note_editor_paste_too_large">पेस्ट करण्यासाठी प्रतिमा खूप मोठी आहे, कृपया व्यक्तिचलितपणे प्रतिमा घाला</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android बॅकअप प्रगतीपथावर आहे. कृपया पुन्हा प्रयत्न करा</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Android बॅकअप प्रगतीपथावर आहे. कृपया पुन्हा प्रयत्न करा</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">आपली मुख्य स्क्रीन AnkiDroid ला शॉर्टकट जोडण्याची परवानगी देत ​​नाही</string>

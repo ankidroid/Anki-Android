@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">ટૂલબાર આઇટમ સંપાદિત કરો</string>
     <string name="toolbar_item_explain_edit_or_remove">પસંદ કરેલ ટેક્સ્ટ પહેલાં અને પછી દાખલ કરવા માટે HTML દાખલ કરો\n\nટૂલબાર આઇટમને સંપાદિત કરવા અથવા દૂર કરવા માટે તેને લાંબા સમય સુધી દબાવો</string>
     <string name="remove_toolbar_item">ટૂલબાર આઇટમ દૂર કરીએ?</string>
-    <string name="note_editor_paste_too_large">છબી પેસ્ટ કરવા માટે ખૂબ મોટી છે, કૃપા કરીને મેન્યુઅલી છબી દાખલ કરો</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android બેકઅપ ચાલુ છે. મહેરબાની કરીને ફરીથી પ્રયતન કરો</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid ને શૉર્ટકટ્સ ઉમેરવાની મંજૂરી આપવા માટે તમારે iManager નો ઉપયોગ કરવાની જરૂર પડી શકે છે</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">તમારી હોમ સ્ક્રીન AnkiDroid ને શોર્ટકટ ઉમેરવાની મંજૂરી આપતી નથી</string>

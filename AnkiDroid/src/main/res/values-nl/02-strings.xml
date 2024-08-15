@@ -233,7 +233,9 @@
     <string name="edit_toolbar_item">Werkbalkitem bewerken</string>
     <string name="toolbar_item_explain_edit_or_remove">Voer HTML in die voor en na de geselecteerde tekst moet worden ingevoegd.\n\nDruk lang op een item op de werkbalk om het te bewerken of te verwijderen.</string>
     <string name="remove_toolbar_item">Werkbalkitem verwijderen?</string>
-    <string name="note_editor_paste_too_large">De afbeelding is te groot om te plakken, gelieve de afbeelding manueel in te voegen</string>
+    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Bezig met Android back-up. Probeer het opnieuw</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Mogelijk moet u iManager gebruiken om AnkiDroid snelkoppelingen te laten toevoegen</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Uw startscherm staat niet toe dat AnkiDroid snelkoppelingen toevoegt</string>
