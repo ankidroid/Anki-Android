@@ -68,8 +68,12 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
+import androidx.core.util.component1
+import androidx.core.util.component2
 import androidx.core.view.MenuItemCompat
+import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.isVisible
+import androidx.draganddrop.DropHelper
 import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -163,6 +167,7 @@ import com.ichi2.anki.worker.UniqueWorkNames
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.deleteMedia
 import com.ichi2.async.sendNotificationForAsyncOperation
+import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
@@ -177,8 +182,11 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
+import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
 import com.ichi2.utils.FragmentFactoryUtils
 import com.ichi2.utils.HandlerUtils
+import com.ichi2.utils.ImportUtils
+import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
@@ -600,6 +608,40 @@ open class DeckPicker :
                 else -> error("Unexpected fragment result key! Did you forget to update DeckPicker?")
             }
         }
+
+        CompatHelper.compat.configureView(
+            this,
+            pullToSyncWrapper,
+            IMPORT_MIME_TYPES,
+            DropHelper.Options.Builder()
+                .setHighlightColor(R.color.material_lime_green_A700)
+                .setHighlightCornerRadiusPx(0)
+                .build(),
+            onReceiveContentListener
+        )
+    }
+
+    private val onReceiveContentListener = OnReceiveContentListener { _, payload ->
+        val (uriContent, remaining) = payload.partition { item -> item.uri != null }
+
+        val clip = uriContent?.clip ?: return@OnReceiveContentListener remaining
+        val uri = clip.getItemAt(0).uri
+        if (!ImportUtils.FileImporter().isValidImportType(this, uri)) {
+            ImportResult.fromErrorString(getString(R.string.import_log_no_apkg))
+            return@OnReceiveContentListener remaining
+        }
+
+        try {
+            // Intent is nullable because `clip.getItemAt(0).intent` always returns null
+            ImportUtils.FileImporter().handleContentProviderFile(this, uri)
+            onResume()
+        } catch (e: Exception) {
+            Timber.w(e)
+            CrashReportService.sendExceptionReport(e, "DeckPicker::onReceiveContent")
+            return@OnReceiveContentListener remaining
+        }
+
+        return@OnReceiveContentListener remaining
     }
 
     private fun handleContextMenuSelection(

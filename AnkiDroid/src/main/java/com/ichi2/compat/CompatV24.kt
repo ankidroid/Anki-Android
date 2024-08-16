@@ -24,7 +24,6 @@ import android.view.View
 import androidx.core.view.OnReceiveContentListener
 import androidx.draganddrop.DropHelper
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.utils.ClipboardUtil.MEDIA_MIME_TYPES
 import timber.log.Timber
 import java.util.Locale
 
@@ -48,13 +47,14 @@ open class CompatV24 : CompatV23(), Compat {
     override fun configureView(
         activity: Activity,
         view: View,
+        mimeTypes: Array<String>,
         options: DropHelper.Options,
         onReceiveContentListener: OnReceiveContentListener
     ) {
         DropHelper.configureView(
             activity,
             view,
-            MEDIA_MIME_TYPES,
+            mimeTypes,
             options,
             onReceiveContentListener
         )

@@ -213,6 +213,7 @@ interface Compat {
     fun configureView(
         activity: Activity,
         view: View,
+        mimeTypes: Array<String>,
         options: DropHelper.Options,
         onReceiveContentListener: OnReceiveContentListener
     )
