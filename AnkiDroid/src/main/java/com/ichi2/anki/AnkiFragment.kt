@@ -29,6 +29,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.ichi2.async.CollectionLoader
+import com.ichi2.compat.CompatV24
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.tintOverflowMenuIcons
@@ -47,12 +48,12 @@ import timber.log.Timber
  */
 // TODO: Consider refactoring to create AnkiInterface to consolidate common implementations between AnkiFragment and AnkiActivity.
 //  This could help reduce code repetition and improve maintainability.
-open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout) {
+open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivityProvider {
 
     val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
-    val ankiActivity: AnkiActivity
+    override val ankiActivity: AnkiActivity
         get() = requireAnkiActivity()
 
     val mainToolbar: Toolbar
@@ -218,4 +219,9 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout) {
         requireActivity().finish()
         return false
     }
+
+    /**
+     * Lists of shortcuts for this fragment, and the IdRes of the name of this shortcut group.
+     */
+    open val shortcuts: CompatV24.ShortcutGroup? = null
 }

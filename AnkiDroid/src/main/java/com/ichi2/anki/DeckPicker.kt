@@ -152,6 +152,8 @@ import com.ichi2.async.deleteMedia
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
+import com.ichi2.compat.CompatV24
+import com.ichi2.compat.shortcut
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -189,6 +191,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.Translations
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -2388,6 +2391,30 @@ open class DeckPicker :
         /** Always open reviewer (keyboard shortcut)  */
         SKIP_STUDY_OPTIONS
     }
+
+    override val shortcuts
+        get() = CompatV24.ShortcutGroup(
+            listOf(
+                shortcut("A", R.string.menu_add_note),
+                shortcut("B", R.string.card_browser_context_menu),
+                shortcut("Y", R.string.pref_cat_sync),
+                shortcut("/", R.string.deck_conf_cram_search),
+                shortcut("S", Translations::decksStudyDeck),
+                shortcut("T", R.string.open_statistics),
+                shortcut("C", R.string.check_db),
+                shortcut("D", R.string.new_deck),
+                shortcut("F", R.string.new_dynamic_deck),
+                shortcut("DEL", R.string.delete_deck_title),
+                shortcut("Shift+DEL", R.string.delete_deck_without_confirmation),
+                shortcut("R", R.string.rename_deck),
+                shortcut("P", R.string.open_settings),
+                shortcut("M", R.string.check_media),
+                shortcut("Ctrl+E", R.string.export_collection),
+                shortcut("Ctrl+Shift+I", R.string.menu_import),
+                shortcut("Ctrl+Shift+N", R.string.model_browser_label)
+            ),
+            R.string.deck_picker_group
+        )
 
     companion object {
         /**

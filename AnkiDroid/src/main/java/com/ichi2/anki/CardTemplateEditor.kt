@@ -73,6 +73,8 @@ import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.compat.CompatV24
+import com.ichi2.compat.shortcut
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
@@ -86,6 +88,7 @@ import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.jsonObjectIterable
+import net.ankiweb.rsdroid.Translations
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -325,61 +328,62 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         val currentFragment = currentFragment ?: return super.onKeyUp(keyCode, event)
-        if (event.isCtrlPressed) {
-            when (keyCode) {
-                KeyEvent.KEYCODE_P -> {
-                    Timber.i("Ctrl+P: Perform preview from keypress")
-                    currentFragment.performPreview()
-                }
-                KeyEvent.KEYCODE_1 -> {
-                    Timber.i("Ctrl+1: Edit front template from keypress")
-                    currentFragment.bottomNavigation.selectedItemId = R.id.front_edit
-                }
-                KeyEvent.KEYCODE_2 -> {
-                    Timber.i("Ctrl+2: Edit back template from keypress")
-                    currentFragment.bottomNavigation.selectedItemId = R.id.back_edit
-                }
-                KeyEvent.KEYCODE_3 -> {
-                    Timber.i("Ctrl+3: Edit styling from keypress")
-                    currentFragment.bottomNavigation.selectedItemId = R.id.styling_edit
-                }
-                KeyEvent.KEYCODE_S -> {
-                    Timber.i("Ctrl+S: Save note from keypress")
-                    currentFragment.saveNoteType()
-                }
-                KeyEvent.KEYCODE_I -> {
-                    Timber.i("Ctrl+I: Insert field from keypress")
-                    currentFragment.showInsertFieldDialog()
-                }
-                KeyEvent.KEYCODE_A -> {
-                    Timber.i("Ctrl+A: Add card template from keypress")
-                    currentFragment.addCardTemplate()
-                }
-                KeyEvent.KEYCODE_R -> {
-                    Timber.i("Ctrl+R: Rename card from keypress")
-                    currentFragment.showRenameDialog()
-                }
-                KeyEvent.KEYCODE_B -> {
-                    Timber.i("Ctrl+B: Open browser appearance from keypress")
-                    currentFragment.openBrowserAppearance()
-                }
-                KeyEvent.KEYCODE_D -> {
-                    Timber.i("Ctrl+D: Delete card from keypress")
-                    currentFragment.deleteCardTemplate()
-                }
-                KeyEvent.KEYCODE_O -> {
-                    Timber.i("Ctrl+O: Display deck override dialog from keypress")
-                    currentFragment.displayDeckOverrideDialog(currentFragment.tempModel)
-                }
-                KeyEvent.KEYCODE_M -> {
-                    Timber.i("Ctrl+M: Copy markdown from keypress")
-                    currentFragment.copyMarkdownTemplateToClipboard()
-                }
-                else -> return super.onKeyUp(keyCode, event)
+        if (!event.isCtrlPressed) { return super.onKeyUp(keyCode, event) }
+        when (keyCode) {
+            KeyEvent.KEYCODE_P -> {
+                Timber.i("Ctrl+P: Perform preview from keypress")
+                currentFragment.performPreview()
             }
-            return true
+            KeyEvent.KEYCODE_1 -> {
+                Timber.i("Ctrl+1: Edit front template from keypress")
+                currentFragment.bottomNavigation.selectedItemId = R.id.front_edit
+            }
+            KeyEvent.KEYCODE_2 -> {
+                Timber.i("Ctrl+2: Edit back template from keypress")
+                currentFragment.bottomNavigation.selectedItemId = R.id.back_edit
+            }
+            KeyEvent.KEYCODE_3 -> {
+                Timber.i("Ctrl+3: Edit styling from keypress")
+                currentFragment.bottomNavigation.selectedItemId = R.id.styling_edit
+            }
+            KeyEvent.KEYCODE_S -> {
+                Timber.i("Ctrl+S: Save note from keypress")
+                currentFragment.saveNoteType()
+            }
+            KeyEvent.KEYCODE_I -> {
+                Timber.i("Ctrl+I: Insert field from keypress")
+                currentFragment.showInsertFieldDialog()
+            }
+            KeyEvent.KEYCODE_A -> {
+                Timber.i("Ctrl+A: Add card template from keypress")
+                currentFragment.addCardTemplate()
+            }
+            KeyEvent.KEYCODE_R -> {
+                Timber.i("Ctrl+R: Rename card from keypress")
+                currentFragment.showRenameDialog()
+            }
+            KeyEvent.KEYCODE_B -> {
+                Timber.i("Ctrl+B: Open browser appearance from keypress")
+                currentFragment.openBrowserAppearance()
+            }
+            KeyEvent.KEYCODE_D -> {
+                Timber.i("Ctrl+D: Delete card from keypress")
+                currentFragment.deleteCardTemplate()
+            }
+            KeyEvent.KEYCODE_O -> {
+                Timber.i("Ctrl+O: Display deck override dialog from keypress")
+                currentFragment.displayDeckOverrideDialog(currentFragment.tempModel)
+            }
+            KeyEvent.KEYCODE_M -> {
+                Timber.i("Ctrl+M: Copy markdown from keypress")
+                currentFragment.copyMarkdownTemplateToClipboard()
+            }
+            else -> {
+                return super.onKeyUp(keyCode, event)
+            }
         }
-        return super.onKeyUp(keyCode, event)
+        // We reach this only if we didn't reach the `else` case.
+        return true
     }
 
     @get:VisibleForTesting
@@ -423,6 +427,25 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             baseId += (itemCount + 1).toLong()
         }
     }
+
+    override val shortcuts
+        get() = CompatV24.ShortcutGroup(
+            listOf(
+                shortcut("Ctrl+P", R.string.card_editor_preview_card),
+                shortcut("Ctrl+1", R.string.edit_front_template),
+                shortcut("Ctrl+2", R.string.edit_back_template),
+                shortcut("Ctrl+3", R.string.edit_styling),
+                shortcut("Ctrl+S", R.string.save),
+                shortcut("Ctrl+I", R.string.card_template_editor_insert_field),
+                shortcut("Ctrl+A", Translations::cardTemplatesAddCardType),
+                shortcut("Ctrl+R", Translations::cardTemplatesRenameCardType),
+                shortcut("Ctrl+B", R.string.edit_browser_appearance),
+                shortcut("Ctrl+D", Translations::cardTemplatesRemoveCardType),
+                shortcut("Ctrl+O", Translations::cardTemplatesDeckOverride),
+                shortcut("Ctrl+M", R.string.copy_the_template)
+            ),
+            R.string.card_template_editor_group
+        )
 
     class CardTemplateFragment : Fragment() {
         private val refreshFragmentHandler = Handler(Looper.getMainLooper())

@@ -19,9 +19,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.KeyboardShortcutGroup
+import android.view.Menu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
+import com.ichi2.compat.CompatV24
+import com.ichi2.compat.ShortcutGroupProvider
 import com.ichi2.utils.getInstanceFromClassName
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -36,6 +40,9 @@ import kotlin.reflect.jvm.jvmName
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
 open class SingleFragmentActivity : AnkiActivity() {
+    // The displayed fragment.
+    lateinit var fragment: Fragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -55,7 +62,7 @@ open class SingleFragmentActivity : AnkiActivity() {
         val fragmentClassName = requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
             "'$FRAGMENT_NAME_EXTRA' extra should be provided"
         }
-        val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
+        fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
             arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
         }
         supportFragmentManager.commit {
@@ -84,8 +91,22 @@ open class SingleFragmentActivity : AnkiActivity() {
             }
         }
     }
+
+    override val shortcuts: CompatV24.ShortcutGroup?
+        get() = (fragment as? ShortcutGroupProvider)?.shortcuts
 }
 
 interface DispatchKeyEventListener {
     fun dispatchKeyEvent(event: KeyEvent): Boolean
+}
+
+interface KeyboardShortcutEventListener {
+    /**
+     * @see AnkiActivity.onProvideKeyboardShortcuts
+     */
+    fun onProvideKeyboardShortcuts(
+        data: MutableList<KeyboardShortcutGroup>,
+        menu: Menu?,
+        deviceId: Int
+    )
 }

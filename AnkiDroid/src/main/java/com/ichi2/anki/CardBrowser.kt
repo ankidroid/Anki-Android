@@ -113,6 +113,9 @@ import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.renderBrowserQA
+import com.ichi2.compat.CompatHelper
+import com.ichi2.compat.CompatV24
+import com.ichi2.compat.shortcut
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
@@ -144,6 +147,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.Translations
 import timber.log.Timber
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -671,6 +675,10 @@ open class CardBrowser :
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+K: Toggle Mark")
                     toggleMark()
+                    return true
+                } else if (event.isAltPressed) {
+                    Timber.i("Alt+K: Show keyboard shortcuts dialog")
+                    CompatHelper.compat.showKeyboardShortcutsDialog(this)
                     return true
                 }
             }
@@ -2362,6 +2370,42 @@ open class CardBrowser :
             refreshAfterUndo()
         }
     }
+
+    override val shortcuts
+        get() = CompatV24.ShortcutGroup(
+            listOf(
+                shortcut("Ctrl+Shift+A", R.string.edit_tags_dialog),
+                shortcut("Ctrl+A", R.string.card_browser_select_all),
+                shortcut("Ctrl+Shift+E", Translations::exportingExport),
+                shortcut("Ctrl+E", R.string.menu_add_note),
+                shortcut("E", R.string.cardeditor_title_edit_card),
+                shortcut("Ctrl+D", R.string.card_browser_change_deck),
+                shortcut("Ctrl+K", Translations::browsingToggleMark),
+                shortcut("Ctrl+Alt+R", Translations::browsingReschedule),
+                shortcut("DEL", R.string.delete_card_title),
+                shortcut("Ctrl+Alt+N", R.string.reset_card_dialog_title),
+                shortcut("Ctrl+Alt+T", R.string.toggle_cards_notes),
+                shortcut("Ctrl+T", R.string.card_browser_search_by_tag),
+                shortcut("Ctrl+Shift+S", Translations::actionsReposition),
+                shortcut("Ctrl+Alt+S", R.string.card_browser_list_my_searches),
+                shortcut("Ctrl+S", R.string.card_browser_list_my_searches_save),
+                shortcut("Alt+S", R.string.card_browser_show_suspended),
+                shortcut("Ctrl+Shift+J", Translations::browsingToggleBury),
+                shortcut("Ctrl+J", Translations::browsingToggleSuspend),
+                shortcut("Ctrl+Shift+I", Translations::actionsCardInfo),
+                shortcut("Ctrl+O", R.string.show_order_dialog),
+                shortcut("Ctrl+M", R.string.card_browser_show_marked),
+                shortcut("Esc", R.string.card_browser_select_none),
+                shortcut("Ctrl+1", R.string.gesture_flag_red),
+                shortcut("Ctrl+2", R.string.gesture_flag_orange),
+                shortcut("Ctrl+3", R.string.gesture_flag_green),
+                shortcut("Ctrl+4", R.string.gesture_flag_blue),
+                shortcut("Ctrl+5", R.string.gesture_flag_pink),
+                shortcut("Ctrl+6", R.string.gesture_flag_turquoise),
+                shortcut("Ctrl+7", R.string.gesture_flag_purple)
+            ),
+            R.string.card_browser_context_menu
+        )
 
     companion object {
         /**

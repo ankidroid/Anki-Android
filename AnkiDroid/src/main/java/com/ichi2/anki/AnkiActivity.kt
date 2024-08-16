@@ -16,6 +16,9 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.KeyboardShortcutGroup
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +47,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
@@ -60,7 +64,10 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
+import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
+import com.ichi2.compat.CompatV24
+import com.ichi2.compat.ShortcutGroupProvider
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
@@ -73,7 +80,7 @@ import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentB
 
 @UiThread
 @KotlinCleanup("set activityName")
-open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
+open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, ShortcutGroupProvider, AnkiActivityProvider {
 
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
@@ -86,6 +93,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     /** The name of the parent class (example: 'Reviewer')  */
     private val activityName: String
     val dialogHandler = DialogHandler(this)
+    override val ankiActivity = this
 
     private val customTabActivityHelper: CustomTabActivityHelper = CustomTabActivityHelper()
 
@@ -624,6 +632,32 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         finish()
     }
 
+    override fun onProvideKeyboardShortcuts(
+        data: MutableList<KeyboardShortcutGroup>,
+        menu: Menu?,
+        deviceId: Int
+    ) {
+        val shortcutGroups = CompatHelper.compat.getShortcuts(this)
+        data.addAll(shortcutGroups)
+        super.onProvideKeyboardShortcuts(data, menu, deviceId)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        if (event.isAltPressed && keyCode == KeyEvent.KEYCODE_K) {
+            CompatHelper.compat.showKeyboardShortcutsDialog(this)
+            return true
+        }
+
+        val done = super.onKeyUp(keyCode, event)
+
+        // Show snackbar only if the current activity have shortcuts, a modifier key is pressed and the keyCode is an unmapped alphabet key
+        if (!done && shortcuts != null && (event.isCtrlPressed || event.isAltPressed || event.isMetaPressed) && (keyCode in KeyEvent.KEYCODE_A..KeyEvent.KEYCODE_Z) || (keyCode in KeyEvent.KEYCODE_NUMPAD_0..KeyEvent.KEYCODE_NUMPAD_9)) {
+            showSnackbar(R.string.show_shortcuts_message, Snackbar.LENGTH_SHORT)
+            return true
+        }
+        return false
+    }
+
     /**
      * If storage permissions are not granted, shows a toast message and finishes the activity.
      *
@@ -640,6 +674,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         finish()
         return false
     }
+
+    override val shortcuts
+        get(): CompatV24.ShortcutGroup? = null
 
     companion object {
         const val DIALOG_FRAGMENT_TAG = "dialog"
@@ -673,4 +710,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 fun Fragment.requireAnkiActivity(): AnkiActivity {
     return requireActivity() as? AnkiActivity?
         ?: throw java.lang.IllegalStateException("Fragment $this not attached to an AnkiActivity.")
+}
+
+interface AnkiActivityProvider {
+    val ankiActivity: AnkiActivity
 }

@@ -132,7 +132,10 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.compat.CompatV24
+import com.ichi2.compat.ShortcutGroupProvider
 import com.ichi2.compat.setTooltipTextCompat
+import com.ichi2.compat.shortcut
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
@@ -194,7 +197,7 @@ import androidx.appcompat.widget.Toolbar as MainToolbar
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
-class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, SubtitleListener, TagsDialogListener, BaseSnackbarBuilderProvider, DispatchKeyEventListener, MenuProvider {
+class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, SubtitleListener, TagsDialogListener, BaseSnackbarBuilderProvider, DispatchKeyEventListener, MenuProvider, ShortcutGroupProvider {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -2346,6 +2349,20 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         // set selection without firing selectionChanged event
         noteTypeSpinner!!.setSelection(position, false)
     }
+
+    override val shortcuts
+        get() = CompatV24.ShortcutGroup(
+            listOf(
+                shortcut("Ctrl+ENTER", R.string.save),
+                shortcut("Ctrl+D", R.string.select_deck),
+                shortcut("Ctrl+L", R.string.card_template_editor_group),
+                shortcut("Ctrl+N", R.string.select_note_type),
+                shortcut("Ctrl+Shift+T", R.string.tag_editor),
+                shortcut("Ctrl+Shift+C", R.string.multimedia_editor_popup_cloze),
+                shortcut("Ctrl+P", R.string.card_editor_preview_card)
+            ),
+            R.string.note_editor_group
+        )
 
     private fun updateTags() {
         if (selectedTags == null) {
