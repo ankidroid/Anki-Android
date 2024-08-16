@@ -364,4 +364,5 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">全部</string>
     <string name="ignore_display_cutout" maxLength="41">忽略显示屏刘海</string>
     <string name="hide_answer_buttons" maxLength="41">隐藏回答按钮</string>
+    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
 </resources>
