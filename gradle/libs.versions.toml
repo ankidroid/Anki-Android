@@ -69,9 +69,7 @@ javaSemver = "0.10.2"
 json = "20240303"
 jsoup = "1.18.1"
 androidTestJunit = "1.2.1"
-junitJupiter = "5.10.3"
-junitJupiterParams = "5.10.3"
-junitVintageEngine = "5.10.3"
+junitJupiter= "5.10.3"
 kotlin = '2.0.10'
 kotlinReflect = "2.0.10"
 kotlinTest = "2.0.10"
@@ -173,8 +171,8 @@ hamcrest-library = { module = "org.hamcrest:hamcrest-library", version.ref = "ha
 ivanshafran-shared-preferences-mock = { module = "io.github.ivanshafran:shared-preferences-mock", version.ref = "sharedPreferencesMock" }
 json = { module = "org.json:json", version.ref = "json" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
-junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiterParams" }
-junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitVintageEngine" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiter" }
+junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitJupiter" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinReflect" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinTest" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinTest" }
