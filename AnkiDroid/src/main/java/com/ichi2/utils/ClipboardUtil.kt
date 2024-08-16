@@ -34,6 +34,7 @@ object ClipboardUtil {
     val IMAGE_MIME_TYPES = arrayOf("image/*")
     val AUDIO_MIME_TYPES = arrayOf("audio/*")
     val VIDEO_MIME_TYPES = arrayOf("video/*")
+    val IMPORT_MIME_TYPES = arrayOf("application/*", "text/*")
     val MEDIA_MIME_TYPES = arrayOf(*IMAGE_MIME_TYPES, *AUDIO_MIME_TYPES, *VIDEO_MIME_TYPES)
 
     fun hasImage(clipboard: ClipboardManager?): Boolean {

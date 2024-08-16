@@ -154,6 +154,7 @@ open class CompatV23 : Compat {
     override fun configureView(
         activity: Activity,
         view: View,
+        mimeTypes: Array<String>,
         options: DropHelper.Options,
         onReceiveContentListener: OnReceiveContentListener
     ) {
