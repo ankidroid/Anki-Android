@@ -47,7 +47,6 @@ jobs:
         timeout-minutes: 5
         with:
           cache-read-only: true
-          gradle-home-cache-cleanup: true
 
       - name: Checkout PR
         uses: actions/checkout@v4
