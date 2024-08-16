@@ -364,4 +364,5 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">すべて</string>
     <string name="ignore_display_cutout" maxLength="41">ノッチ（ディスプレイ上部のくぼみ）を無視</string>
     <string name="hide_answer_buttons" maxLength="41">解答ボタン・回答ボタンを隠す</string>
+    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
 </resources>

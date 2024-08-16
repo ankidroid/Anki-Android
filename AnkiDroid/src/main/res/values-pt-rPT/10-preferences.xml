@@ -368,4 +368,5 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Todas</string>
     <string name="ignore_display_cutout" maxLength="41">Ignorar o corte no ecrã</string>
     <string name="hide_answer_buttons" maxLength="41">Ocultar os botões de resposta</string>
+    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
 </resources>
