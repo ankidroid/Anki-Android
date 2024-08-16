@@ -29,10 +29,12 @@ import android.graphics.Bitmap.CompressFormat
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyboardShortcutGroup
 import android.view.View
 import androidx.annotation.CheckResult
 import androidx.core.view.OnReceiveContentListener
 import androidx.draganddrop.DropHelper
+import com.ichi2.anki.AnkiActivity
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -217,6 +219,18 @@ interface Compat {
         options: DropHelper.Options,
         onReceiveContentListener: OnReceiveContentListener
     )
+
+    /**
+     * Shows keyboard shortcuts dialog
+     */
+    fun showKeyboardShortcutsDialog(
+        activity: AnkiActivity
+    )
+
+    /**
+     * Get current activity keyboard shortcuts
+     */
+    fun getShortcuts(activity: AnkiActivity): List<KeyboardShortcutGroup>
 
     /**
      * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)

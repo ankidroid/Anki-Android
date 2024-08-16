@@ -30,10 +30,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Vibrator
 import android.provider.MediaStore
+import android.view.KeyboardShortcutGroup
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.draganddrop.DropHelper
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
@@ -159,6 +161,17 @@ open class CompatV23 : Compat {
         onReceiveContentListener: OnReceiveContentListener
     ) {
         // No implementation possible.
+    }
+
+    // Until API 24
+    override fun showKeyboardShortcutsDialog(activity: AnkiActivity) {
+        // No implementation available
+    }
+
+    // Until API 24
+    override fun getShortcuts(activity: AnkiActivity): List<KeyboardShortcutGroup> {
+        // No implementation available
+        return listOf()
     }
 
     // Until API 26
