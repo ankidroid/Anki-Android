@@ -234,10 +234,7 @@ class TgzPackageExtract(private val context: Context) {
         try {
             FileInputStream(inputFile).use { inputStream ->
                 ArchiveStreamFactory().createArchiveInputStream<TarArchiveInputStream>("tar", inputStream).use { tarInputStream ->
-
-                    var entry = tarInputStream.nextEntry
-
-                    while (entry != null) {
+                    tarInputStream.forEach { entry ->
                         val outputFile = File(outputDir, entry.name)
 
                         // Zip Slip Vulnerability https://snyk.io/research/zip-slip-vulnerability
@@ -247,8 +244,6 @@ class TgzPackageExtract(private val context: Context) {
                         } else {
                             unTarFile(tarInputStream, entry, outputDir, outputFile)
                         }
-
-                        entry = tarInputStream.nextEntry
                     }
                 }
             }
@@ -353,26 +348,20 @@ class TgzPackageExtract(private val context: Context) {
 
         FileInputStream(tarFile).use { inputStream ->
             ArchiveStreamFactory().createArchiveInputStream<TarArchiveInputStream>("tar", inputStream).use { tarInputStream ->
-
-                var entry = tarInputStream.nextEntry
                 var numOfEntries = 0
 
-                while (entry != null) {
+                tarInputStream.forEach { entry ->
                     numOfEntries++
+                    if (numOfEntries > TOO_MANY_FILES) {
+                        throw IllegalStateException("Too many files to untar")
+                    }
                     unTarSize += entry.size
-                    entry = tarInputStream.nextEntry
-                }
-
-                if (numOfEntries > TOO_MANY_FILES) {
-                    throw IllegalStateException("Too many files to untar")
                 }
             }
         }
-
         return unTarSize
     }
 
-    //
     /**
      * If space consumed is more than half of original availableSpace, delete file recursively and throw
      *
