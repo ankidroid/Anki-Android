@@ -276,6 +276,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             if (result.resultCode == RESULT_CANCELED) {
                 Timber.d("Multimedia result canceled")
                 val index = result.data?.extras?.getInt(MULTIMEDIA_RESULT_FIELD_INDEX) ?: return@NoteEditorActivityResultCallback
+                showMultimediaBottomSheet()
                 handleMultimediaActions(index)
                 return@NoteEditorActivityResultCallback
             }
@@ -1687,6 +1688,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 mediaButton.setBackgroundResource(R.drawable.ic_attachment)
 
                 mediaButton.setOnClickListener {
+                    showMultimediaBottomSheet()
                     handleMultimediaActions(i)
                 }
 
@@ -1728,6 +1730,13 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         )
     }
 
+    @VisibleForTesting
+    fun showMultimediaBottomSheet() {
+        Timber.d("Showing MultimediaBottomSheet fragment")
+        val multimediaBottomSheet = MultimediaBottomSheet()
+        multimediaBottomSheet.show(parentFragmentManager, "MultimediaBottomSheet")
+    }
+
     /**
      * Handles user interactions with the multimedia options for a specific field in a note.
      *
@@ -1737,11 +1746,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
      *
      * @param fieldIndex the index of the field in the note where the multimedia content should be added
      */
-    fun handleMultimediaActions(fieldIndex: Int) {
-        Timber.d("Showing MultimediaBottomSheet fragment")
-        val multimediaBottomSheet = MultimediaBottomSheet()
-        multimediaBottomSheet.show(parentFragmentManager, "MultimediaBottomSheet")
-
+    private fun handleMultimediaActions(fieldIndex: Int) {
         // Based on the type of multimedia action received, perform the corresponding operation
         lifecycleScope.launch {
             val note: MultimediaEditableNote = getCurrentMultimediaEditableNote() ?: return@launch
