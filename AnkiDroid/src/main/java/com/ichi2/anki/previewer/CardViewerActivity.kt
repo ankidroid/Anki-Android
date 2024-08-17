@@ -19,7 +19,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.widget.ThemeUtils
+import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.utils.navBarNeedsScrim
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -31,6 +34,12 @@ class CardViewerActivity : SingleFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge() // TODO assess moving this to SingleFragmentActivity
         super.onCreate(savedInstanceState)
+
+        // use the screen background color if the nav bar doesn't need a scrim when using a
+        // transparent background. e.g. when navigation gestures are enabled
+        if (!navBarNeedsScrim) {
+            window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
+        }
     }
 
     companion object {
