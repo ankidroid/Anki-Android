@@ -480,8 +480,14 @@ class AudioRecordingController(
 
     fun toggleToRecorder() {
         Timber.i("recorder requested")
-        if (audioPlayer!!.isPlaying) {
-            audioPlayer?.stop()
+        try {
+            audioPlayer?.let { player ->
+                if (player.isPlaying) {
+                    player.stop()
+                }
+            }
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "MediaPlayer is not in a valid state to check if it's playing")
         }
         controlAudioRecorder()
     }
