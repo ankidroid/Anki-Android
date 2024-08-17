@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.ThemeUtils
+import androidx.fragment.app.Fragment
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.utils.navBarNeedsScrim
@@ -43,7 +44,7 @@ class CardViewerActivity : SingleFragmentActivity() {
     }
 
     companion object {
-        fun getIntent(context: Context, fragmentClass: KClass<out CardViewerFragment>, arguments: Bundle? = null): Intent {
+        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
             return Intent(context, CardViewerActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)

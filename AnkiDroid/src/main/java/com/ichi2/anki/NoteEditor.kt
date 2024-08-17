@@ -119,7 +119,7 @@ import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
-import com.ichi2.anki.previewer.TemplatePreviewerFragment
+import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
@@ -1433,7 +1433,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             ord = ord,
             fillEmpty = false
         )
-        val intent = TemplatePreviewerFragment.getIntent(requireContext(), args)
+        val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
         startActivity(intent)
     }
 
