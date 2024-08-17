@@ -28,7 +28,6 @@ import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
@@ -57,7 +56,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import kotlinx.coroutines.launch
@@ -99,13 +97,6 @@ class ReviewerFragment :
                 setupMenuItems(it)
                 it.setOptionalIconsVisible(true)
                 requireContext().increaseHorizontalPaddingOfOverflowMenuIcons(it)
-            }
-        }
-
-        with(requireActivity()) {
-            if (!navBarNeedsScrim) {
-                window.navigationBarColor =
-                    ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
             }
         }
 

@@ -37,7 +37,6 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
-import com.ichi2.anki.utils.navBarNeedsScrim
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -120,11 +119,6 @@ class TemplatePreviewerFragment :
         }
 
         with(requireActivity()) {
-            // use the screen background color if the nav bar doesn't need a scrim when using a
-            // transparent background. e.g. when navigation gestures are enabled
-            if (!navBarNeedsScrim) {
-                window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.alternativeBackgroundColor)
-            }
             window.statusBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.appBarColor)
         }
         if (inFragmentedActivity) {
