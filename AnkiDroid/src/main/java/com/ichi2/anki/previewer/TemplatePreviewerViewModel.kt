@@ -237,8 +237,7 @@ data class TemplatePreviewerArguments(
     val tags: MutableList<String>,
     val id: Long = 0,
     val ord: Int = 0,
-    val fillEmpty: Boolean = false,
-    val inFragmentedActivity: Boolean = false
+    val fillEmpty: Boolean = false
 ) : Parcelable {
     val notetype: NotetypeJson get() = notetypeFile.getNotetype()
 }

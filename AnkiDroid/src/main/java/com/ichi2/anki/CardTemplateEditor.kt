@@ -39,6 +39,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.ThemeUtils
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
@@ -46,7 +47,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.commit
+import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -66,6 +67,7 @@ import com.ichi2.anki.notetype.RenameCardTemplateDialog
 import com.ichi2.anki.notetype.RepositionCardTemplateDialog
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
+import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.postDelayed
@@ -161,7 +163,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             tempModel = CardTemplateNotetype.fromBundle(savedInstanceState)
         }
 
-        templatePreviewerFrame = findViewById(R.id.template_previewer_fragment)
+        templatePreviewerFrame = findViewById(R.id.fragment_container)
         /**
          * Check if templatePreviewerFrame is not null and if its visibility is set to VISIBLE.
          * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
@@ -199,13 +201,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 ord = ord,
                 fields = note.fields,
                 tags = note.tags,
-                fillEmpty = true,
-                inFragmentedActivity = fragmented
+                fillEmpty = true
             )
-            val details = TemplatePreviewerFragment.newInstance(args)
-            supportFragmentManager.commit {
-                replace(R.id.template_previewer_fragment, details)
+            val fragment = TemplatePreviewerFragment.newInstance(args)
+            supportFragmentManager.commitNow {
+                replace(R.id.fragment_container, fragment)
             }
+            val backgroundColor = ThemeUtils.getThemeAttrColor(this@CardTemplateEditor, R.attr.alternativeBackgroundColor)
+            fragment.requireView().setBackgroundColor(backgroundColor)
         }
     }
 
@@ -912,7 +915,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     tags = note.tags,
                     fillEmpty = true
                 )
-                val intent = TemplatePreviewerFragment.getIntent(requireContext(), args)
+                val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
                 startActivity(intent)
             }
         }
