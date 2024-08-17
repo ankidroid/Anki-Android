@@ -203,7 +203,7 @@ class NoteEditorTest : RobolectricTest() {
         val intent = NoteEditorLauncher.AddNote().getIntent(targetContext)
         ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->
             scenario.onNoteEditor { noteEditor ->
-                noteEditor.handleMultimediaActions(0)
+                noteEditor.showMultimediaBottomSheet()
 
                 onView(withId(R.id.multimedia_action_image)).inRoot(isDialog()).check(matches(isDisplayed()))
                 onView(withId(R.id.multimedia_action_audio)).inRoot(isDialog()).check(matches(isDisplayed()))
