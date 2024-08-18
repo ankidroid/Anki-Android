@@ -48,6 +48,7 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -366,9 +367,7 @@ class ReviewerFragment :
     }
 
     private fun launchAddNote() {
-        val intent = Intent(context, NoteEditor::class.java).apply {
-            putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
-        }
+        val intent = NoteEditorLauncher.AddNoteFromReviewer().getIntent(requireContext())
         noteEditorLauncher.launch(intent)
     }
 
