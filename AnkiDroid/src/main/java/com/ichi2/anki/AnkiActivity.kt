@@ -6,7 +6,10 @@ package com.ichi2.anki
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioManager
@@ -16,6 +19,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.ProgressBar
@@ -35,6 +39,7 @@ import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT
 import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_SYSTEM
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -51,9 +56,11 @@ import com.ichi2.anki.dialogs.SimpleMessageDialog.SimpleMessageDialogListener
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.Preferences.Companion.MINIMUM_CARDS_DUE_FOR_NOTIFICATION
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
+import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
@@ -67,6 +74,14 @@ import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentB
 @UiThread
 @KotlinCleanup("set activityName")
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
+
+    /**
+     * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
+     *
+     * @see registerReceiver
+     * @see broadcastsActions
+     */
+    private var broadcastReceiver: BroadcastReceiver? = null
 
     /** The name of the parent class (example: 'Reviewer')  */
     private val activityName: String
@@ -112,6 +127,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         customTabActivityHelper.unbindCustomTabsService(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        broadcastReceiver?.let { unregisterReceiver(it) }
+    }
+
     override fun onResume() {
         super.onResume()
         UsageAnalytics.sendAnalyticsScreenView(this)
@@ -148,6 +168,40 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     // called when the CollectionLoader finishes... usually will be over-ridden
     protected open fun onCollectionLoaded(col: Collection) {
         hideProgressBar()
+    }
+
+    /**
+     * Maps from intent name action to function to run when this action is received by [broadcastReceiver].
+     * By default it handles [SdCardReceiver.MEDIA_EJECT], and shows/dismisses dialogs when an SD
+     * card is ejected/remounted (collection is saved beforehand by [SdCardReceiver])
+     */
+    protected open val broadcastsActions = mapOf(
+        SdCardReceiver.MEDIA_EJECT to { onSdCardNotMounted() }
+    )
+
+    /**
+     * Register a broadcast receiver, associating an intent to an action as in [broadcastsActions].
+     * Add more values in [broadcastsActions] to react to more intents.
+     */
+    fun registerReceiver() {
+        if (broadcastReceiver != null) {
+            // Receiver already registered
+            return
+        }
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                broadcastsActions[intent.action]?.invoke()
+            }
+        }.also {
+            val iFilter = IntentFilter()
+            broadcastsActions.keys.map(iFilter::addAction)
+            registerReceiverCompat(it, iFilter, ContextCompat.RECEIVER_EXPORTED)
+        }
+    }
+
+    protected fun onSdCardNotMounted() {
+        showThemedToast(this, resources.getString(R.string.sd_card_not_mounted), false)
+        finish()
     }
 
     /** Legacy code should migrate away from this, and use withCol {} instead.

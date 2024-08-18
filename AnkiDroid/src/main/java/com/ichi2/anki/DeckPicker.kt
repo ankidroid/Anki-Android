@@ -26,10 +26,8 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.database.SQLException
 import android.graphics.PixelFormat
@@ -59,7 +57,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -154,7 +151,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.deleteMedia
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Consts
@@ -264,8 +260,6 @@ open class DeckPicker :
 
     private lateinit var reviewSummaryTextView: TextView
 
-    @KotlinCleanup("make lateinit, but needs more changes")
-    private var unmountReceiver: BroadcastReceiver? = null
     private lateinit var floatingActionMenu: DeckPickerFloatingActionMenu
 
     // flag asking user to do a full sync which is used in upgrade path
@@ -503,7 +497,7 @@ open class DeckPicker :
         if (fragmented && !startupError) {
             loadStudyOptionsFragment(false)
         }
-        registerExternalStorageListener()
+        registerReceiver()
 
         // create inherited navigation drawer layout here so that it can be used by parent class
         initNavigationDrawer(mainView)
@@ -1167,9 +1161,6 @@ open class DeckPicker :
 
     override fun onDestroy() {
         super.onDestroy()
-        if (unmountReceiver != null) {
-            unregisterReceiver(unmountReceiver)
-        }
         if (progressDialog != null && progressDialog!!.isShowing) {
             progressDialog!!.dismiss()
         }
@@ -1702,11 +1693,6 @@ open class DeckPicker :
         showAsyncDialogFragment(newFragment, Channel.SYNC)
     }
 
-    fun onSdCardNotMounted() {
-        showThemedToast(this, resources.getString(R.string.sd_card_not_mounted), false)
-        finish()
-    }
-
     // Callback method to submit error report
     fun sendErrorReport() {
         CrashReportService.sendExceptionReport(RuntimeException(), "DeckPicker.sendErrorReport")
@@ -1898,25 +1884,12 @@ open class DeckPicker :
         }
 
     /**
-     * Show a message when the SD card is ejected
+     * Refresh the deck picker when the SD card is inserted.
      */
-    private fun registerExternalStorageListener() {
-        if (unmountReceiver == null) {
-            unmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        onSdCardNotMounted()
-                    } else if (intent.action == SdCardReceiver.MEDIA_MOUNT) {
-                        ActivityCompat.recreate(this@DeckPicker)
-                    }
-                }
-            }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            iFilter.addAction(SdCardReceiver.MEDIA_MOUNT)
-            registerReceiverCompat(unmountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
-        }
-    }
+    override val broadcastsActions = super.broadcastsActions + mapOf(
+        SdCardReceiver.MEDIA_MOUNT
+            to { ActivityCompat.recreate(this) }
+    )
 
     fun openAnkiWebSharedDecks() {
         val intent = Intent(this, SharedDecksActivity::class.java)
