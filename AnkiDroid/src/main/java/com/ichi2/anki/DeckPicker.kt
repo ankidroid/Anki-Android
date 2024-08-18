@@ -584,8 +584,6 @@ open class DeckPicker :
 
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        Onboarding.DeckPicker(this, recyclerViewLayoutManager).onCreate()
-
         launchShowingHidingEssentialFileMigrationProgressDialog()
 
         InitialActivity.checkWebviewVersion(packageManager, this)
@@ -2330,6 +2328,7 @@ open class DeckPicker :
         }
         val currentFilter = if (toolbarSearchView != null) toolbarSearchView!!.query else null
 
+        Onboarding.DeckPicker(this, recyclerViewLayoutManager).onCreate()
         if (isEmpty) {
             if (supportActionBar != null) {
                 supportActionBar!!.subtitle = null
@@ -2584,7 +2583,7 @@ open class DeckPicker :
     }
 
     /**
-     * The number of decks which are visible to the user (excluding decks if the parent is collapsed).
+     * The number of decks which are visible to the user (it does not count any deck with a collapsed ancestor).
      * Not the total number of decks
      */
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2592,10 +2591,13 @@ open class DeckPicker :
         get() = deckListAdapter.itemCount
 
     /**
-     * Check if at least one deck is being displayed.
+     * Check if at least one non empty deck is displayed.
      */
-    fun hasAtLeastOneDeckBeingDisplayed(): Boolean {
-        return deckListAdapter.itemCount > 0 && recyclerViewLayoutManager.getChildAt(0) != null
+    fun hasAtLeastOneDeckAndOneCard(): Boolean {
+        // The first part checks that there is a card
+        // The second that the decks are loaded in the view.
+        return deckListAdapter.due?.let { it > 0 } == true &&
+            recyclerViewLayoutManager.getChildAt(0) != null
     }
 
     private enum class DeckSelectionType {

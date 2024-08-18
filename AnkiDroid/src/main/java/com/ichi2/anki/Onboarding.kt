@@ -129,17 +129,23 @@ abstract class Onboarding<Feature>(
         private val recyclerViewLayoutManager: LinearLayoutManager
     ) : Onboarding<DeckPicker.DeckPickerOnboardingEnum>(activityContext, mutableListOf()) {
 
+        private var displayedTutorial = false
+
         init {
             tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.FAB, this::showTutorialForFABIfNew))
-            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.DECK_NAME, this::showTutorialForDeckIfNew, activityContext::hasAtLeastOneDeckBeingDisplayed))
-            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.COUNTS_LAYOUT, this::showTutorialForCountsLayoutIfNew, activityContext::hasAtLeastOneDeckBeingDisplayed))
+            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.DECK_NAME, this::showTutorialForDeckIfNew) { !displayedTutorial && activityContext.hasAtLeastOneDeckAndOneCard() })
+            tutorials.add(TutorialArguments(DeckPickerOnboardingEnum.COUNTS_LAYOUT, this::showTutorialForCountsLayoutIfNew) { !displayedTutorial && activityContext.hasAtLeastOneDeckAndOneCard() })
         }
 
         private fun showTutorialForFABIfNew() {
+            displayedTutorial = true
             CustomMaterialTapTargetPromptBuilder(activityContext, DeckPickerOnboardingEnum.FAB)
                 .createCircleWithDimmedBackground()
                 .setFocalColourResource(R.color.material_blue_500)
-                .setDismissedListener { onCreate() }
+                .setDismissedListener {
+                    onCreate()
+                    displayedTutorial = false
+                }
                 .setTarget(R.id.fab_main)
                 .setPrimaryText(R.string.fab_tutorial_title)
                 .setSecondaryText(R.string.fab_tutorial_desc)
@@ -147,18 +153,26 @@ abstract class Onboarding<Feature>(
         }
 
         private fun showTutorialForDeckIfNew() {
+            displayedTutorial = true
             CustomMaterialTapTargetPromptBuilder(activityContext, DeckPickerOnboardingEnum.DECK_NAME)
                 .createRectangleWithDimmedBackground()
-                .setDismissedListener { showTutorialForCountsLayoutIfNew() }
-                .setTarget(recyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.deck_name_linear_layout))
+                .setDismissedListener {
+                    showTutorialForCountsLayoutIfNew()
+                    displayedTutorial = false
+                }
+                .setTarget(recyclerViewLayoutManager.getChildAt(0)!!.findViewById<View>(R.id.deck_name_linear_layout))
                 .setPrimaryText(R.string.start_studying)
                 .setSecondaryText(R.string.start_studying_desc)
                 .show()
         }
 
         private fun showTutorialForCountsLayoutIfNew() {
+            displayedTutorial = true
             CustomMaterialTapTargetPromptBuilder(activityContext, DeckPickerOnboardingEnum.COUNTS_LAYOUT)
                 .createRectangleWithDimmedBackground()
+                .setDismissedListener {
+                    displayedTutorial = false
+                }
                 .setTarget(recyclerViewLayoutManager.getChildAt(0)?.findViewById(R.id.counts_layout))
                 .setPrimaryText(R.string.menu__study_options)
                 .setSecondaryText(R.string.study_options_desc)

@@ -630,7 +630,7 @@ class DeckPickerTest : RobolectricTest() {
         )
         assertThat(
             "Deck is being displayed",
-            deckPicker.hasAtLeastOneDeckBeingDisplayed(),
+            deckPicker.hasAtLeastOneDeckAndOneCard(),
             equalTo(true)
         )
     }
@@ -646,7 +646,7 @@ class DeckPickerTest : RobolectricTest() {
         )
         assertThat(
             "No deck is being displayed",
-            deckPicker.hasAtLeastOneDeckBeingDisplayed(),
+            deckPicker.hasAtLeastOneDeckAndOneCard(),
             equalTo(false)
         )
     }
