@@ -21,13 +21,11 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Activity.RESULT_CANCELED
-import android.content.BroadcastReceiver
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
@@ -62,7 +60,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.registerReceiver
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
@@ -122,7 +120,6 @@ import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
@@ -135,7 +132,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
@@ -209,10 +205,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
      */
     private var reloadRequired = false
 
-    /**
-     * Broadcast that informs us when the sd card is about to be unmounted
-     */
-    private var unmountReceiver: BroadcastReceiver? = null
     private var fieldsLayoutContainer: LinearLayout? = null
     private var mediaRegistration: MediaRegistration? = null
     private var tagsDialogFactory: TagsDialogFactory? = null
@@ -581,7 +573,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         super.onCollectionLoaded(col)
         val intent = requireActivity().intent
         Timber.d("NoteEditor() onCollectionLoaded: caller: %d", caller)
-        registerExternalStorageListener()
+        ankiActivity.registerReceiver()
         fieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
         tagsButton = findViewById(R.id.CardEditorTagButton)
         cardsButton = findViewById(R.id.CardEditorCardsButton)
@@ -1259,13 +1251,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         closeNoteEditor()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (unmountReceiver != null) {
-            unregisterReceiver(unmountReceiver)
-        }
-    }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         updateToolbar()
@@ -1459,24 +1444,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         )
         val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
         startActivity(intent)
-    }
-
-    /**
-     * finish when sd card is ejected
-     */
-    private fun registerExternalStorageListener() {
-        if (unmountReceiver == null) {
-            unmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action != null && intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        requireActivity().finish()
-                    }
-                }
-            }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            requireContext().registerReceiverCompat(unmountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
-        }
     }
 
     private fun setTags(tags: Array<String>) {

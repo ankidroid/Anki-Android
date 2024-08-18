@@ -23,11 +23,9 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
-import android.content.BroadcastReceiver
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
@@ -72,7 +70,6 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
@@ -110,7 +107,6 @@ import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.PostRequestHandler
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
@@ -129,7 +125,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.OnlyOnce.Method.ANSWER_CARD
 import com.ichi2.anki.utils.OnlyOnce.preventSimultaneousExecutions
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.libanki.Card
@@ -192,10 +187,6 @@ abstract class AbstractFlashcardViewer :
     @VisibleForTesting
     val jsApi by lazy { AnkiDroidJsAPI(this) }
 
-    /**
-     * Broadcast that informs us when the sd card is about to be unmounted
-     */
-    private var unmountReceiver: BroadcastReceiver? = null
     private var tagsDialogFactory: TagsDialogFactory? = null
 
     /**
@@ -590,7 +581,7 @@ abstract class AbstractFlashcardViewer :
         super.onCollectionLoaded(col)
         val mediaDir = col.media.dir
         cardMediaPlayer = CardMediaPlayer.newInstance(this, getMediaBaseUrl(mediaDir))
-        registerExternalStorageListener()
+        registerReceiver()
         restoreCollectionPreferences(col)
         initLayout()
         cardRenderContext = createInstance(this, col, typeAnswer!!)
@@ -653,9 +644,6 @@ abstract class AbstractFlashcardViewer :
     override fun onDestroy() {
         super.onDestroy()
         tts.releaseTts(this)
-        if (unmountReceiver != null) {
-            unregisterReceiver(unmountReceiver)
-        }
         // WebView.destroy() should be called after the end of use
         // http://developer.android.com/reference/android/webkit/WebView.html#destroy()
         if (cardFrame != null) {
@@ -803,24 +791,6 @@ abstract class AbstractFlashcardViewer :
     /** Whether the callback to onCollectionLoaded has loaded card content  */
     private fun hasLoadedCardContent(): Boolean {
         return cardContent != null
-    }
-
-    /**
-     * Show/dismiss dialog when sd card is ejected/remounted (collection is saved by SdCardReceiver)
-     */
-    private fun registerExternalStorageListener() {
-        if (unmountReceiver == null) {
-            unmountReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finish()
-                    }
-                }
-            }
-            val iFilter = IntentFilter()
-            iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiverCompat(unmountReceiver, iFilter, ContextCompat.RECEIVER_EXPORTED)
-        }
     }
 
     open fun undo(): Job {
