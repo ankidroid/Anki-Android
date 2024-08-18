@@ -22,9 +22,9 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ichi2.anki.OnboardingUtils.Companion.SHOW_ONBOARDING
 import com.ichi2.anki.OnboardingUtils.Companion.addFeatures
-import com.ichi2.anki.OnboardingUtils.Companion.isVisited
-import com.ichi2.anki.OnboardingUtils.Companion.setVisited
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 
 /**
@@ -55,7 +55,7 @@ import com.ichi2.utils.HandlerUtils.executeFunctionUsingHandler
 abstract class Onboarding<Feature>(
     private val context: Context,
     val tutorials: MutableList<TutorialArguments<Feature>>
-) where Feature : Enum<Feature>, Feature : OnboardingFlag {
+) where Feature : Enum<Feature>, Feature : OnboardingEntry {
 
     companion object {
         // Constants being used for onboarding preferences should not be modified.
@@ -94,7 +94,7 @@ abstract class Onboarding<Feature>(
     fun onCreate() {
         tutorials.forEach {
             // If tutorial is visited or condition is false then return from the loop.
-            if (isVisited(it.featureIdentifier, context) || it.onboardingCondition?.invoke() == false) {
+            if (!it.canBeDisplayed(context)) {
                 return@forEach
             }
 
@@ -120,7 +120,9 @@ abstract class Onboarding<Feature>(
         val onboardingFunction: () -> Unit,
         val onboardingCondition: (() -> Boolean)? = null
     )
-            where Feature : Enum<Feature>, Feature : OnboardingFlag
+            where Feature : Enum<Feature>, Feature : OnboardingEntry {
+        fun canBeDisplayed(context: Context) = context.sharedPrefs().getBoolean(SHOW_ONBOARDING, false) && onboardingCondition?.invoke() != false && !featureIdentifier.isVisited(context)
+    }
 
     class DeckPicker(
         private val activityContext: com.ichi2.anki.DeckPicker,
@@ -163,16 +165,12 @@ abstract class Onboarding<Feature>(
                 .show()
         }
 
-        enum class DeckPickerOnboardingEnum(var value: Int) : OnboardingFlag {
+        enum class DeckPickerOnboardingEnum(var value: Int) : OnboardingEntry {
             FAB(0), DECK_NAME(1), COUNTS_LAYOUT(2);
 
-            override fun getOnboardingEnumValue(): Int {
-                return value
-            }
+            override val bitFlag = value
 
-            override fun getFeatureConstant(): String {
-                return DECK_PICKER_ONBOARDING
-            }
+            override val preferenceKeyForThisView = DECK_PICKER_ONBOARDING
         }
     }
 
@@ -198,7 +196,7 @@ abstract class Onboarding<Feature>(
          * Called when the difficulty buttons are displayed after clicking on 'Show Answer'.
          */
         fun onAnswerShown() {
-            if (isVisited(ReviewerOnboardingEnum.DIFFICULTY_RATING, activityContext)) {
+            if (ReviewerOnboardingEnum.DIFFICULTY_RATING.isVisited(activityContext)) {
                 return
             }
 
@@ -227,7 +225,7 @@ abstract class Onboarding<Feature>(
          * Show after undo button goes into enabled state
          */
         fun onUndoButtonEnabled() {
-            if (isVisited(ReviewerOnboardingEnum.UNDO, activityContext)) {
+            if (ReviewerOnboardingEnum.UNDO.isVisited(activityContext)) {
                 return
             }
 
@@ -240,16 +238,12 @@ abstract class Onboarding<Feature>(
                 .show()
         }
 
-        enum class ReviewerOnboardingEnum(var value: Int) : OnboardingFlag {
+        enum class ReviewerOnboardingEnum(var value: Int) : OnboardingEntry {
             SHOW_ANSWER(0), DIFFICULTY_RATING(1), FLAG(2), UNDO(3);
 
-            override fun getOnboardingEnumValue(): Int {
-                return value
-            }
+            override val bitFlag = value
 
-            override fun getFeatureConstant(): String {
-                return REVIEWER_ONBOARDING
-            }
+            override val preferenceKeyForThisView = REVIEWER_ONBOARDING
         }
     }
 
@@ -280,16 +274,12 @@ abstract class Onboarding<Feature>(
                 .show()
         }
 
-        enum class NoteEditorOnboardingEnum(var value: Int) : OnboardingFlag {
+        enum class NoteEditorOnboardingEnum(var value: Int) : OnboardingEntry {
             FRONT_BACK(0), FORMATTING_TOOLS(1);
 
-            override fun getOnboardingEnumValue(): Int {
-                return value
-            }
+            override val bitFlag = value
 
-            override fun getFeatureConstant(): String {
-                return NOTE_EDITOR_ONBOARDING
-            }
+            override val preferenceKeyForThisView = NOTE_EDITOR_ONBOARDING
         }
     }
 
@@ -320,19 +310,15 @@ abstract class Onboarding<Feature>(
                     visibility = View.GONE
                 }
             }
-            setVisited(CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD, activityContext)
+            CardBrowserOnboardingEnum.CARD_PRESS_AND_HOLD.setVisited(activityContext)
         }
 
-        enum class CardBrowserOnboardingEnum(var value: Int) : OnboardingFlag {
+        enum class CardBrowserOnboardingEnum(var value: Int) : OnboardingEntry {
             DECK_CHANGER(0), CARD_PRESS_AND_HOLD(1);
 
-            override fun getOnboardingEnumValue(): Int {
-                return value
-            }
+            override val bitFlag = value
 
-            override fun getFeatureConstant(): String {
-                return CARD_BROWSER_ONBOARDING
-            }
+            override val preferenceKeyForThisView = CARD_BROWSER_ONBOARDING
         }
     }
 }

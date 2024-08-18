@@ -23,7 +23,6 @@ import androidx.core.content.edit
 import com.ichi2.anki.IntroductionActivity.Companion.INTRODUCTION_SLIDES_SHOWN
 import com.ichi2.anki.preferences.sharedPrefs
 import timber.log.Timber
-import java.util.BitSet
 
 class OnboardingUtils {
 
@@ -47,47 +46,6 @@ class OnboardingUtils {
          * They all get reset when reset is pressed. */
         fun addFeatures(featureCategory: Iterable<String>) {
             featureCategory.forEach(::addFeature)
-        }
-
-        /**
-         * Check if the tutorial for a feature should be displayed or not.
-         */
-        fun isVisited(featureIdentifier: OnboardingFlag, context: Context): Boolean {
-            // Return if onboarding is not enabled.
-            if (!context.sharedPrefs().getBoolean(SHOW_ONBOARDING, false)) {
-                return true
-            }
-
-            val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
-
-            // If the bit at an index is set, then the corresponding tutorial has been seen.
-            // Return true if seen, otherwise false.
-            return visitedFeatures.get(featureIdentifier.getOnboardingEnumValue())
-        }
-
-        /**
-         * Set the tutorial for a feature as visited.
-         */
-        fun setVisited(featureIdentifier: OnboardingFlag, context: Context) {
-            val visitedFeatures = getAllVisited(context, featureIdentifier.getFeatureConstant())
-
-            // Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
-            visitedFeatures.set(featureIdentifier.getOnboardingEnumValue())
-
-            context.sharedPrefs().edit {
-                putLong(
-                    featureIdentifier.getFeatureConstant(),
-                    visitedFeatures.toLongArray()[0]
-                )
-            }
-        }
-
-        /**
-         * Returns a BitSet where the set bits indicate the visited screens.
-         */
-        private fun getAllVisited(context: Context, featureConstant: String): BitSet {
-            val currentValue = context.sharedPrefs().getLong(featureConstant, 0)
-            return BitSet.valueOf(longArrayOf(currentValue))
         }
 
         fun reset(context: Context) {

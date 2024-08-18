@@ -27,7 +27,7 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.backgrounds.RectangleProm
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.CirclePromptFocal
 import uk.co.samuelwall.materialtaptargetprompt.extras.focals.RectanglePromptFocal
 
-class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, private val featureIdentifier: T) : MaterialTapTargetPrompt.Builder(activity) where T : Enum<T>, T : OnboardingFlag {
+class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, private val featureIdentifier: T) : MaterialTapTargetPrompt.Builder(activity) where T : Enum<T>, T : OnboardingEntry {
 
     private fun createRectangle(): CustomMaterialTapTargetPromptBuilder<T> {
         promptFocal = RectanglePromptFocal()
@@ -84,7 +84,7 @@ class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, private va
         // This will prevent click on any outside view when user tries to dismiss the feature prompt
         captureTouchEventOutsidePrompt = true
 
-        OnboardingUtils.setVisited(featureIdentifier, activity)
+        featureIdentifier.setVisited(activity)
         return super.show()
     }
 }

@@ -39,7 +39,7 @@ class OnboardingUtilsTest {
         assertThat("All onboarding identifiers are available for reset", onboardingIdentifiers, containsInAnyOrder(featuresAvailableForReset))
     }
 
-    enum class Feature : OnboardingFlag
+    enum class Feature : OnboardingEntry
 
     private fun getConstantValue(it: KCallable<*>): String = it.call(null) as String
 }

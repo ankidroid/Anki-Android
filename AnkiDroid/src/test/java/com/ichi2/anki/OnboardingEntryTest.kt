@@ -30,7 +30,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class OnboardingFlagTest : RobolectricTest() {
+class OnboardingEntryTest : RobolectricTest() {
 
     companion object {
         const val FIRST_ENUM = "FirstEnum"
@@ -97,37 +97,29 @@ class OnboardingFlagTest : RobolectricTest() {
         assertTrue(isVisited(SecondEnum.LAST))
     }
 
-    private enum class FirstEnum(var valueFirst: Int) : OnboardingFlag {
+    private enum class FirstEnum(var valueFirst: Int) : OnboardingEntry {
         FIRST(0),
         MIDDLE(1);
 
-        override fun getOnboardingEnumValue(): Int {
-            return valueFirst
-        }
+        override val bitFlag = valueFirst
 
-        override fun getFeatureConstant(): String {
-            return FIRST_ENUM
-        }
+        override val preferenceKeyForThisView = FIRST_ENUM
     }
 
-    private enum class SecondEnum(var valueSecond: Int) : OnboardingFlag {
+    private enum class SecondEnum(valueSecond: Int) : OnboardingEntry {
         MIDDLE(0),
         LAST(1);
 
-        override fun getOnboardingEnumValue(): Int {
-            return valueSecond
-        }
+        override val bitFlag = valueSecond
 
-        override fun getFeatureConstant(): String {
-            return SECOND_ENUM
-        }
+        override val preferenceKeyForThisView = SECOND_ENUM
     }
 
-    private fun isVisited(featureIdentifier: OnboardingFlag): Boolean {
+    private fun isVisited(featureIdentifier: OnboardingEntry): Boolean {
         return OnboardingUtils.isVisited(featureIdentifier, targetContext)
     }
 
-    private fun setVisited(featureIdentifier: OnboardingFlag) {
+    private fun setVisited(featureIdentifier: OnboardingEntry) {
         OnboardingUtils.setVisited(featureIdentifier, targetContext)
     }
 }
