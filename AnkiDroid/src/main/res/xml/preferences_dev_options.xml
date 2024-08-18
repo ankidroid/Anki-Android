@@ -66,10 +66,6 @@
         android:title="@string/reset_onboarding"
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
-    <Preference
-        android:title="@string/reset_onboarding"
-        android:summary="@string/reset_onboarding_desc"
-        android:key="@string/pref_reset_onboarding_key"/>
     <PreferenceCategory
         android:title="Create fake media"
         >
