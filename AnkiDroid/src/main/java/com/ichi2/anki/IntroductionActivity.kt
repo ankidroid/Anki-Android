@@ -23,6 +23,7 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
+import com.ichi2.anki.OnboardingUtils.Companion.SHOW_ONBOARDING
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
@@ -73,7 +74,11 @@ class IntroductionActivity : AnkiActivity() {
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
         Timber.i("Opening deck picker, login: %b", result == RESULT_SYNC_PROFILE)
-        this.sharedPrefs().edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
+        this.sharedPrefs().edit {
+            putBoolean(INTRODUCTION_SLIDES_SHOWN, true)
+            // This ensures that onboarding is only displayed to new users.
+            putBoolean(SHOW_ONBOARDING, true)
+        }
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         if (result == RESULT_SYNC_PROFILE) {
