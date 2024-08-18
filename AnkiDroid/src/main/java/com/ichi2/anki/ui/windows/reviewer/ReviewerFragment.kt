@@ -44,12 +44,15 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.Ease
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.reviewer.AnswerTimer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -65,6 +68,8 @@ class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
     Toolbar.OnMenuItemClickListener {
+    private lateinit var answerTimer: AnswerTimer
+    private lateinit var showAnswerButton: MaterialButton
 
     override val viewModel: ReviewerViewModel by viewModels {
         ReviewerViewModel.factory(CardMediaPlayer())
@@ -75,6 +80,22 @@ class ReviewerFragment :
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
+    }
+
+    override fun onResume() {
+        if (showAnswerButton.isVisible) {
+            lifecycleScope.launch { answerTimer.resume() }
+        }
+
+        super.onResume()
+    }
+
+    override fun onPause() {
+        if (!showAnswerButton.isVisible) {
+            answerTimer.pause()
+        }
+
+        super.onPause()
     }
 
     override fun onStop() {
@@ -88,8 +109,9 @@ class ReviewerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         setupImmersiveMode(view)
+        setupToolbar(view)
         setupAnswerButtons(view)
-        setupCounts(view)
+        setupAnswerTimer()
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             setOnMenuItemClickListener(this@ReviewerFragment)
@@ -125,6 +147,15 @@ class ReviewerFragment :
         viewModel.statesMutationEval.collectIn(lifecycleScope) { eval ->
             webView.evaluateJavascript(eval) {
                 viewModel.onStateMutationCallback()
+            }
+        }
+    }
+
+    // Setup/reset the answer timer for the current card
+    private fun setupAnswerTimer() {
+        lifecycleScope.launch {
+            withCol {
+                lifecycleScope.launch { answerTimer.setupForCard(this@withCol, viewModel.currentCard.await()) }
             }
         }
     }
@@ -165,6 +196,11 @@ class ReviewerFragment :
         return true
     }
 
+    private fun answer(answer: Ease) {
+        viewModel.answer(answer)
+        setupAnswerTimer()
+    }
+
     private fun setupAnswerButtons(view: View) {
         val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
         if (hideAnswerButtons) {
@@ -178,16 +214,16 @@ class ReviewerFragment :
         }
 
         val againButton = view.findViewById<MaterialButton>(R.id.again_button).apply {
-            setOnClickListener { viewModel.answerAgain() }
+            setOnClickListener { answer(Ease.AGAIN) }
         }
         val hardButton = view.findViewById<MaterialButton>(R.id.hard_button).apply {
-            setOnClickListener { viewModel.answerHard() }
+            setOnClickListener { answer(Ease.HARD) }
         }
         val goodButton = view.findViewById<MaterialButton>(R.id.good_button).apply {
-            setOnClickListener { viewModel.answerGood() }
+            setOnClickListener { answer(Ease.GOOD) }
         }
         val easyButton = view.findViewById<MaterialButton>(R.id.easy_button).apply {
-            setOnClickListener { viewModel.answerEasy() }
+            setOnClickListener { answer(Ease.EASY) }
         }
 
         viewModel.answerButtonsNextTimeFlow.flowWithLifecycle(lifecycle)
@@ -198,7 +234,7 @@ class ReviewerFragment :
                 easyButton.setAnswerButtonNextTime(R.string.ease_button_easy, times?.easy)
             }
 
-        val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
+        showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
             setOnClickListener {
                 viewModel.showAnswer()
             }
@@ -208,9 +244,11 @@ class ReviewerFragment :
         // TODO add some kind of feedback/animation after tapping show answer or the answer buttons
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { shouldShowAnswer ->
             if (shouldShowAnswer) {
+                answerTimer.pause()
                 showAnswerButton.isVisible = false
                 answerButtonsLayout.isVisible = true
             } else {
+                answerTimer.resume()
                 showAnswerButton.isVisible = true
                 answerButtonsLayout.isVisible = false
             }
@@ -222,7 +260,7 @@ class ReviewerFragment :
         }
     }
 
-    private fun setupCounts(view: View) {
+    private fun setupToolbar(view: View) {
         val newCount = view.findViewById<MaterialTextView>(R.id.new_count)
         val learnCount = view.findViewById<MaterialTextView>(R.id.lrn_count)
         val reviewCount = view.findViewById<MaterialTextView>(R.id.rev_count)
@@ -242,6 +280,8 @@ class ReviewerFragment :
                 spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
                 currentCount.text = spannableString
             }
+
+        answerTimer = AnswerTimer(view.findViewById(R.id.card_time))
     }
 
     private fun setupFlagMenu(menu: Menu) {
@@ -354,11 +394,13 @@ class ReviewerFragment :
             if (result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true ||
                 result.data?.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false) == true
             ) {
+                setupAnswerTimer()
                 viewModel.refreshCard()
             }
         }
 
     private fun launchEditNote() {
+        answerTimer.pause()
         lifecycleScope.launch {
             val intent = viewModel.getEditNoteDestination().getIntent(requireContext())
             noteEditorLauncher.launch(intent)
@@ -366,6 +408,7 @@ class ReviewerFragment :
     }
 
     private fun launchAddNote() {
+        // TODO: add answerTimer.pause() here after https://github.com/ankidroid/Anki-Android/pull/16896 is merged
         val intent = Intent(context, NoteEditor::class.java).apply {
             putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
         }
@@ -373,6 +416,7 @@ class ReviewerFragment :
     }
 
     private fun launchCardInfo() {
+        answerTimer.pause()
         lifecycleScope.launch {
             val intent = viewModel.getCardInfoDestination().toIntent(requireContext())
             startActivity(intent)
@@ -380,10 +424,12 @@ class ReviewerFragment :
     }
 
     private val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        setupAnswerTimer()
         viewModel.refreshCard()
     }
 
     private fun launchDeckOptions() {
+        answerTimer.pause()
         lifecycleScope.launch {
             val intent = viewModel.getDeckOptionsDestination().getIntent(requireContext())
             deckOptionsLauncher.launch(intent)

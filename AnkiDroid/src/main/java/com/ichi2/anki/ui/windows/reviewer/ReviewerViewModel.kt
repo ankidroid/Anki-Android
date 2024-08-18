@@ -151,10 +151,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         }
     }
 
-    fun answerAgain() = answerCard(Ease.AGAIN)
-    fun answerHard() = answerCard(Ease.HARD)
-    fun answerGood() = answerCard(Ease.GOOD)
-    fun answerEasy() = answerCard(Ease.EASY)
+    fun answer(answer: Ease) = answerCard(answer)
 
     fun toggleMark() {
         launchCatchingIO {

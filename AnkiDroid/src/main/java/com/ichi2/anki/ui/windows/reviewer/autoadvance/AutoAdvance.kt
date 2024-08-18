@@ -16,6 +16,7 @@
 package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.Ease
 import com.ichi2.anki.asyncIO
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.ui.windows.reviewer.ReviewerViewModel
@@ -81,9 +82,9 @@ class AutoAdvance(val viewModel: ReviewerViewModel) {
             delay(durationToShowAnswerFor())
             when (answerAction()) {
                 AnswerAction.BURY_CARD -> viewModel.buryCard()
-                AnswerAction.ANSWER_AGAIN -> viewModel.answerAgain()
-                AnswerAction.ANSWER_HARD -> viewModel.answerHard()
-                AnswerAction.ANSWER_GOOD -> viewModel.answerGood()
+                AnswerAction.ANSWER_AGAIN -> viewModel.answer(Ease.AGAIN)
+                AnswerAction.ANSWER_HARD -> viewModel.answer(Ease.HARD)
+                AnswerAction.ANSWER_GOOD -> viewModel.answer(Ease.GOOD)
                 AnswerAction.SHOW_REMINDER -> showReminder(TR.studyingAnswerTimeElapsed())
             }
         }
