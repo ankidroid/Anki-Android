@@ -260,6 +260,9 @@
     <string name="open">ખુલ્લા</string>
     <string name="change_cloze_number">કલમ નંબર બદલો</string>
     <string name="cloze_number">બંધ નંબર:</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView સિસ્ટમ જૂની છે. કેટલીક સુવિધાઓ યોગ્ય રીતે કામ કરશે નહીં. કૃપા કરીને તેને અપડેટ કરો.\n\nઇન્સ્ટોલ કરેલ સંસ્કરણ: %1$d\nન્યૂનતમ આવશ્યક સંસ્કરણ: %2$d</string>
 </resources>

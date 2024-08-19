@@ -252,6 +252,9 @@
     <string name="open">開啟</string>
     <string name="change_cloze_number">修改填充測驗題數</string>
     <string name="cloze_number">填充測驗題數：</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">系統 WebView 已經過時。某些功能無法正常運作。請更新。\n\n安裝版本：%1$d%1$d最低要求版本：%2$d</string>
 </resources>

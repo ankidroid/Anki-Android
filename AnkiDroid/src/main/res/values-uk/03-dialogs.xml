@@ -276,6 +276,9 @@
     <string name="open">Відкрити</string>
     <string name="change_cloze_number">Змінити номер Cloze</string>
     <string name="cloze_number">Номер Cloze:</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Системний WebView застарілий. Деякі функції не будуть правильно працювати. Оновіть його, будь ласка.\n\nВстановлена версія: %1$d\nЯк мінімум потрібна версія: %2$d</string>
 </resources>
