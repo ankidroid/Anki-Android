@@ -33,7 +33,7 @@ import timber.log.Timber
  * * https://docs.ankiweb.net/browsing.html#cards
  */
 class ForgetCardsViewModel : ViewModel() {
-    private lateinit var cardIds: List<CardId>
+    lateinit var cardIds: List<CardId>
 
     /**
      * Resets cards back to their original positions in the new queue
@@ -70,12 +70,14 @@ class ForgetCardsViewModel : ViewModel() {
             restoreOriginalPositionIfPossible,
             resetRepetitionAndLapseCounts
         )
-        withCol {
-            sched.forgetCards(
-                cardIds,
-                restorePosition = restoreOriginalPositionIfPossible,
-                resetCounts = resetRepetitionAndLapseCounts
-            )
+        for (cardId in cardIds) {
+            withCol {
+                sched.forgetCards(
+                    cardIds,
+                    restorePosition = restoreOriginalPositionIfPossible,
+                    resetCounts = resetRepetitionAndLapseCounts
+                )
+            }
         }
         return@async cardIds.size
     }
