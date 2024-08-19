@@ -164,7 +164,6 @@
         <item quantity="one">“%2$s” કાર્ડનો પ્રકાર અને તેનું %1$d કાર્ડ કાઢી નાખીએ?</item>
         <item quantity="other">\"%2$s\" કાર્ડનો પ્રકાર અને તેના %1$d કાર્ડ કાઢી નાખીએ?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">આ કાર્ડ પ્રકારને દૂર કરવાથી એક અથવા વધુ નોંધો કાઢી નાખવામાં આવશે. કૃપા કરીને પહેલા એક નવો કાર્ડ પ્રકાર બનાવો અને સાચવો.</string>
     <string name="card_template_editor_save_error">કાર્ડ ટેમ્પલેટ ફેરફારો સાચવવામાં અસમર્થ: %s</string>
     <string name="template_for_current_card_deleted">વર્તમાન કાર્ડ માટે કાર્ડનો પ્રકાર કાઢી નાખવામાં આવ્યો હતો.</string>
     <!-- Card Browser Appearance -->

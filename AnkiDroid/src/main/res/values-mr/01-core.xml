@@ -164,7 +164,6 @@
         <item quantity="one">“%2$s” कार्ड प्रकार आणि त्याचे %1$d कार्ड हटवायचे?</item>
         <item quantity="other">“%2$s” कार्ड प्रकार आणि त्याची %1$d कार्ड हटवायची?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">हा कार्ड प्रकार हटविल्यामुळे एक किंवा अधिक नोट्स हटविल्या जाऊ शकतात. कृपया प्रथम एक नवीन कार्ड प्रकार तयार करा आणि जतन करा.</string>
     <string name="card_template_editor_save_error">कार्ड टेम्पलेट बदल जतन करण्यात अक्षम:%s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्डासाठी कार्ड प्रकार हटविला गेला.</string>
     <!-- Card Browser Appearance -->

@@ -174,7 +174,6 @@
         <item quantity="many">Ar tikrai ištrinti “%2$s” kortelių tipų ir su jais susijusias %1$d korteles?</item>
         <item quantity="other">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusias %1$d kortelių?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Ištrynus šį kortelių tipą, kartu bus ištrintas vienas ar keli užrašai. Prašome pirmiausiai sukurti naują kortelių tipą.</string>
     <string name="card_template_editor_save_error">Negalima užsaugoti kortelių šablono pakeitimo: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->

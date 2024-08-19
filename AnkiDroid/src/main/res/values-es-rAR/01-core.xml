@@ -164,7 +164,6 @@
         <item quantity="one">¿Eliminar el tipo de tarjeta \'%2$s\' y su %1$d tarjeta?</item>
         <item quantity="other">¿Eliminar el tipo de tarjeta \'%2$s\' y sus %1$d tarjetas?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Eliminar este tipo de tarjeta causaría que se eliminaran una o más notas. Por favor, cree y guarde primero un nuevo tipo de tarjeta.</string>
     <string name="card_template_editor_save_error">No se pueden guardar los cambios de plantilla de tarjeta: %s</string>
     <string name="template_for_current_card_deleted">El tipo de tarjeta para la tarjeta actual fue eliminado.</string>
     <!-- Card Browser Appearance -->

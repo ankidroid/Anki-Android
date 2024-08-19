@@ -360,4 +360,7 @@
     <string name="stop_recording">Zastavit</string>
     <string name="play_recording">Přehrát</string>
     <string name="next_recording">Další</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
 </resources>

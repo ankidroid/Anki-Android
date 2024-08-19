@@ -164,7 +164,6 @@
         <item quantity="one">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డు?</item>
         <item quantity="other">తొలగించు \"%2$s\" కార్డు రకం, మరియు దాని %1$d కార్డులు?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">ఈ కార్డ్ రకాన్ని తీసివేయడం వలన ఒకటి లేదా అంతకంటే ఎక్కువ గమనికలు తీసివేయబడతాయి. దయచేసి ముందుగా కొత్త కార్డ్ రకాన్ని సృష్టించి, సేవ్ చేయండి.</string>
     <string name="card_template_editor_save_error">కార్డ్ టెంప్లేట్ మార్పులను సేవ్ చేయడం సాధ్యపడలేదు: %s</string>
     <string name="template_for_current_card_deleted">ప్రస్తుత కార్డ్ కోసం కార్డ్ రకం తొలగించబడింది.</string>
     <!-- Card Browser Appearance -->

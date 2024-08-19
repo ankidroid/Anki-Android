@@ -343,4 +343,7 @@
     <string name="stop_recording">ನಿಲ್ಲಿಸು</string>
     <string name="play_recording">ಪ್ಲೇ ಮಾಡಿ</string>
     <string name="next_recording">ಮುಂದೆ</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
 </resources>

@@ -164,7 +164,6 @@
         <item quantity="one">Skrap die \"%2$s\" kaarttipe en die samegaande %1$d kaart?</item>
         <item quantity="other">Skrap die \"%2$s\" kaarttipe en die samegaande %1$d kaarte?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">As hierdie kaarttipe verwyder word, sal een of meer notas uitgevee word. Skep en stoor asseblief eers \'n nuwe kaarttipe.</string>
     <string name="card_template_editor_save_error">kan nie kaartsjabloonveranderinge stoor nie: %s</string>
     <string name="template_for_current_card_deleted">die kaarttipe vir huidige kaart is uitgevee.</string>
     <!-- Card Browser Appearance -->

@@ -164,7 +164,6 @@
         <item quantity="one">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
         <item quantity="other">\&quot;%2$s\&quot; ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱟᱨ %1$d ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱜᱮᱫ ᱜᱤᱰᱤ ᱟ ᱥᱮ?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">ᱱᱚᱶᱟ ᱠᱟᱰ ᱯᱨᱚᱠᱟᱨ ᱚᱪᱚᱜ ᱞᱮᱠᱷᱟᱱ ᱟᱨᱦᱚᱸ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱠᱚ ᱜᱮᱫ ᱜᱤᱲᱤᱼᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱯᱨᱩᱛᱷᱩᱢ ᱱᱟᱶᱟ ᱠᱟᱰ ᱛᱮᱭᱟᱨ ᱯᱮ ᱾   </string>
     <string name="card_template_editor_save_error">ᱠᱟᱰ ᱪᱷᱚᱸᱪ ᱵᱟᱭ ᱥᱚᱝᱪᱚᱭᱚᱜ ᱠᱟᱱᱟᱺ %s </string>
     <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾ </string>
     <!-- Card Browser Appearance -->

@@ -159,7 +159,6 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">\'%2$s\' 카드 형식과 %1$d 카드를 삭제할까요?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">해당 카드 유형을 삭제하면 하나, 또는 여러 개의 노트가 삭제됩니다. 먼저 새로운 카드 유형을 만들어주십시오.</string>
     <string name="card_template_editor_save_error">카드 템플릿 변경 사항을 저장할 수 없습니다. %s</string>
     <string name="template_for_current_card_deleted">현재 카드의 카드 유형은 삭제되었습니다.</string>
     <!-- Card Browser Appearance -->

@@ -164,7 +164,6 @@
         <item quantity="one">“%2$s\" энэ төрлийн картыг, мөн үүний %1$d картыг устгах уу?</item>
         <item quantity="other">“%2$s\" энэ төрлийн картыг, мөн үүний %1$d картыг устгах уу?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Энэ картын төрлийн хасах нь нэг болон түүнээс олон картны хэсгүүдийг устгана. Эхлээд шинэ картны төрөл үүсгэнэ үү.</string>
     <string name="card_template_editor_save_error">Картны загварын өөрчлөлтүүдийг хадгалах боломжгүй байна:%s</string>
     <string name="template_for_current_card_deleted">Энэ картны төрөл нь устгагдсан байна</string>
     <!-- Card Browser Appearance -->
