@@ -164,7 +164,6 @@
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>
         <item quantity="other">حذف نوع کارت \"%2$s\"، و %1$d تا از کارت‌های آن؟</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">حذف این نوع کارت باعث حذف یک یا چند یادداشت خواهد شد. لطفاً ابتدا نوع کارت جدیدی را ساخته و ذخیره کنید.</string>
     <string name="card_template_editor_save_error">نمیتوان تغییرات قالب کارت را ذخیره کرد: %s</string>
     <string name="template_for_current_card_deleted">نوع کارت برای کارت فعلی حذف شد.</string>
     <!-- Card Browser Appearance -->

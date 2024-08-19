@@ -164,7 +164,6 @@
         <item quantity="one">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
         <item quantity="other">\'%2$s\' কার্ডের ধরন, আর তার %1$d কার্ড মুছে ফেলতে চান?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">এই কার্ড-টাইপ টি মুছে ফেলা হলে এক ব একাধিক নোট মুছে যেতে পারে। দয়া করে প্রথমে একটি নতুন কার্ড-টাইপ তৈরি করে সংরক্ষণ করে রাখুন।</string>
     <string name="card_template_editor_save_error">কার্ড-টেমপ্লেট এর পরিবর্তন সংরক্ষণ করা সম্ভব হচ্ছেনা: %s</string>
     <string name="template_for_current_card_deleted">এই কার্ড সংশ্লিষ্ট কার্ড-টেমপ্লেট মুছে ফেলা হয়েছে।</string>
     <!-- Card Browser Appearance -->

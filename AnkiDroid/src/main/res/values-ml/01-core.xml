@@ -164,7 +164,6 @@
         <item quantity="one">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡും ഇല്ലാതാക്കണോ?</item>
         <item quantity="other">“%2$s” കാർഡ് തരവും അതിന്റെ %1$d കാർഡുകളും ഇല്ലാതാക്കണോ?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">ഈ കാർഡ് തരം നീക്കംചെയ്യുന്നത് ഒന്നോ അതിലധികമോ കുറിപ്പുകൾ ഇല്ലാതാക്കാൻ കാരണമാകും. ആദ്യം ഒരു പുതിയ കാർഡ് തരം സൃഷ്ടിച്ച് സംരക്ഷിക്കുക.</string>
     <string name="card_template_editor_save_error">കാർഡ് ടെംപ്ലേറ്റ് മാറ്റങ്ങൾ സംരക്ഷിക്കാൻ കഴിയില്ല: %s</string>
     <string name="template_for_current_card_deleted">നിലവിലെ കാർഡിനായുള്ള കാർഡ് തരം ഇല്ലാതാക്കി.</string>
     <!-- Card Browser Appearance -->

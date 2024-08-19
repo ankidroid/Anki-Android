@@ -164,7 +164,6 @@
         <item quantity="one">Törlöd a “%2$s” és a %1$d kártya típusát?</item>
         <item quantity="other">Törlöd a “%2$s” kártyatípust és a %1$d kártyákat?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">A kártyatípus eltávolítása egy vagy több megjegyzés törlését okozhatja. Először hozz létre és ments el egy új kártyatípust.</string>
     <string name="card_template_editor_save_error">Nem lehet elmenteni a kártya sablonjának változásait: %s</string>
     <string name="template_for_current_card_deleted">A kártya típusa törölve lett.</string>
     <!-- Card Browser Appearance -->

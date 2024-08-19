@@ -345,4 +345,7 @@
     <string name="stop_recording">Selesai rekam</string>
     <string name="play_recording">Mainkan</string>
     <string name="next_recording">Berikutnya</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
 </resources>

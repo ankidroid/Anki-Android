@@ -164,7 +164,6 @@
         <item quantity="one">Tanggalin ang \"%2$s\" uri ng kard, at ang %1$d kard nito?</item>
         <item quantity="other">Burahin ang \"%2$s\" uri ng kard, at ang %1$d kard nito?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Ang pag-alis ng uri ng card na ito ay magdudulot ng pagkakatanggal ng isa o higit pang mga tala. Mangyaring gumawa muna ng isang bagong uri ng card.</string>
     <string name="card_template_editor_save_error">Hindi ma-i-save ang mga binago sa padron ng card: %s</string>
     <string name="template_for_current_card_deleted">Nabura ang uri ng card sa kasalukuyang card.</string>
     <!-- Card Browser Appearance -->

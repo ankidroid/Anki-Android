@@ -164,7 +164,6 @@
         <item quantity="one">Të fshihet lloji i kartës \"%2$s\" dhe karta e saj %1$d?</item>
         <item quantity="other">Të fshihet lloji i kartës \"%2$s\" dhe %1$d kartat e saj?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Heqja e këtij lloji të kartës do të shkaktonte fshirjen e një ose më shumë shënimeve. Ju lutemi krijoni dhe ruani fillimisht një lloj të ri karte.</string>
     <string name="card_template_editor_save_error">Ndryshimet e modelit të kartës nuk mund të ruhen: %s</string>
     <string name="template_for_current_card_deleted">Lloji i kartës për kartën aktuale u fshi.</string>
     <!-- Card Browser Appearance -->

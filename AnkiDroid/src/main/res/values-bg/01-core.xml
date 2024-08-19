@@ -164,7 +164,6 @@
         <item quantity="one">Изтриване на тип карта \"%2$s\" и неговата %1$d карта?</item>
         <item quantity="other">Изтриване на тип карта \"%2$s\" и неговите %1$d карти?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Изтриването на този тип карти ще доведе до премахване на една или няколко бележки. Моля, първо създайте и запазете нов тип карти.</string>
     <string name="card_template_editor_save_error">Не може да се запазят промените в шаблона на картата: %s</string>
     <string name="template_for_current_card_deleted">Видът карта за текущата карта беше изтрит.</string>
     <!-- Card Browser Appearance -->

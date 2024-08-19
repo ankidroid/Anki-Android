@@ -166,7 +166,6 @@ Back - बैक</string>
         <item quantity="one">“%2$s” कार्ड प्रकार और उसका %1$d कार्ड हटा दिया जाए?</item>
         <item quantity="other">\"%2$s\" कार्ड प्रकार और उसके\"%1$d\" कार्ड को हटाएं?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">इस कार्ड के प्रकार को हटाने से आपके एक या अधिक नोट हटा दिए जा सकते हैं। कृपया हटाने से पहले एक नया कार्ड प्रकार बनाकर उसे सहेजें।</string>
     <string name="card_template_editor_save_error">कार्ड टेम्प्लेट परिवर्तन सहेजने में असमर्थ: %s</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
     <!-- Card Browser Appearance -->

@@ -164,7 +164,6 @@
         <item quantity="one">Διαγραφή του “%2$s” τύπου κάρτας και της %1$d κάρτας του;</item>
         <item quantity="other">Διαγραφή του “%2$s” τύπου κάρτας και των %1$d καρτών του;</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Η κατάργηση αυτού του τύπου κάρτας θα προκαλέσει τη διαγραφή ενός ή παραπάνω σημειώσεων. Παρακαλούμε δημιουργήστε και αποθηκεύστε ένα νέο τύπο κάρτας πρώτα.</string>
     <string name="card_template_editor_save_error">Δεν είναι δυνατή η αποθήκευση αλλαγών προτύπου κάρτας: %s</string>
     <string name="template_for_current_card_deleted">Ο τύπος κάρτας για την τρέχουσα κάρτα έχει διαγραφεί.</string>
     <!-- Card Browser Appearance -->

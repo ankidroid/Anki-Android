@@ -164,7 +164,6 @@
         <item quantity="one">Poista ”%2$s” korttityyppi ja sen %1$d. kortti?</item>
         <item quantity="other">Poista ”%2$s” korttityyppi ja sen %1$d. kortit?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Korttityypin poistaminen aiheuttaisi yhden tai useamman kortin poistamisen. Luo sekä tallenna uusikorttityyppi ensin.</string>
     <string name="card_template_editor_save_error">Korttimallin muutoksia ei voitu tallentaa: %s</string>
     <string name="template_for_current_card_deleted">Tämän kortin korttityyppi poistettiin.</string>
     <!-- Card Browser Appearance -->

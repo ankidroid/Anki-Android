@@ -164,7 +164,6 @@
         <item quantity="one">Kartentyp »%2$s« und seine %1$d Karte löschen?</item>
         <item quantity="other">Kartentyp »%2$s« und seine %1$d Karten löschen?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Durch Entfernen dieses Kartentyps würde mindestens eine Notiz gelöscht werden. Bitte erstellen und speichern Sie zuerst einen neuen Kartentyp.</string>
     <string name="card_template_editor_save_error">Änderungen an Kartenvorlagen konnten nicht gespeichert werden: %s</string>
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Card Browser Appearance -->

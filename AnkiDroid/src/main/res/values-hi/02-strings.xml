@@ -347,4 +347,7 @@
     <string name="stop_recording">रुकना</string>
     <string name="play_recording">खेल</string>
     <string name="next_recording">अगला</string>
+    <!--  AlertDialog in the deleteCardTemplate  -->
+    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
 </resources>

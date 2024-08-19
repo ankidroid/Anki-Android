@@ -164,7 +164,6 @@
         <item quantity="one">“%2$s” ಕಾರ್ಡ್ ಪ್ರಕಾರ ಮತ್ತು ಅದರ %1$d ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುವುದೇ?</item>
         <item quantity="other">“%2$s” ಕಾರ್ಡ್ ಪ್ರಕಾರ ಮತ್ತು ಅದರ %1$d ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುವುದೇ?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">ಈ ಕಾರ್ಡ್ ಪ್ರಕಾರವನ್ನು ತೆಗೆದುಹಾಕುವುದರಿಂದ ಒಂದು ಅಥವಾ ಹೆಚ್ಚಿನ ಟಿಪ್ಪಣಿಗಳನ್ನು ಅಳಿಸಬಹುದು. ದಯವಿಟ್ಟು ಮೊದಲು ಹೊಸ ಕಾರ್ಡ್ ಪ್ರಕಾರವನ್ನು ರಚಿಸಿ ಮತ್ತು ಉಳಿಸಿ.</string>
     <string name="card_template_editor_save_error">ಕಾರ್ಡ್ ಟೆಂಪ್ಲೇಟ್ ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ:%s</string>
     <string name="template_for_current_card_deleted">ಪ್ರಸ್ತುತ ಕಾರ್ಡ್‌ನ ಕಾರ್ಡ್ ಪ್ರಕಾರವನ್ನು ಅಳಿಸಲಾಗಿದೆ.</string>
     <!-- Card Browser Appearance -->

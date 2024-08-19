@@ -164,7 +164,6 @@
         <item quantity="one">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
         <item quantity="other">წავშალოთ \"%2$s\" ბარათის ტიპი და მისი %1$d ბარათი?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">ბარათის ტიპის გაუქმებამ შესაძლოა გამოიწვიოს ერთი ან რამდენიმე შენიშვნის წაშლა. გთხოვთ ჯერ შექმნათ და შეინახოთ ბარათის ახალი ტიპი.</string>
     <string name="card_template_editor_save_error">ბარათის შაბლონის შენახვა შეუძლებელია: %s</string>
     <string name="template_for_current_card_deleted">ბარათის ტიპი ამ ბარათიდან წაიშალა.</string>
     <!-- Card Browser Appearance -->

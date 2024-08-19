@@ -164,7 +164,6 @@
         <item quantity="one">Supprimer le type de carte « %2$s » et son %1$d carte ?</item>
         <item quantity="other">Supprimer le type de carte “%2$s” et ses %1$d cartes ?</item>
     </plurals>
-    <string name="card_template_editor_would_delete_note">Retirer ce type de carte provoquera la suppression d\'une ou de plusieurs notes. Veuillez d\'abord créer et sauvegarder un nouveau type de carte.</string>
     <string name="card_template_editor_save_error">Impossible de sauvegarder les modifications apportées au modèle de carte : %s</string>
     <string name="template_for_current_card_deleted">Le type de carte pour la carte actuelle a été supprimé.</string>
     <!-- Card Browser Appearance -->
