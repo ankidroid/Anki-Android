@@ -251,6 +251,9 @@
     <string name="open">開く</string>
     <string name="change_cloze_number">穴埋め問題の番号を変更</string>
     <string name="cloze_number">穴埋め問題番号</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">「AndroidシステムのWebView 」（または「Android System WebView」）が古くなっています。いくつかの機能が正しく動作しません。更新してください。\n\nインストールされているバージョン: %1$d\n最低限必要なバージョン: %2$d</string>
 </resources>

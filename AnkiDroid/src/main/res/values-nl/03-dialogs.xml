@@ -260,6 +260,9 @@
     <string name="open">Openen</string>
     <string name="change_cloze_number">Wijzig het cloze-nummer</string>
     <string name="cloze_number">Cloze-nummer:</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">De systeem WebView is verouderd. Sommige functies zullen niet correct werken. Gelieve te updaten.\n\nGeïnstalleerde versie: %1$d\nMinimale vereiste versie: %2$d</string>
 </resources>

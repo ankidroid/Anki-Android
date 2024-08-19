@@ -260,6 +260,9 @@
     <string name="open">جاری</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView سسٹم پرانا ہے۔ کچھ خصوصیات صحیح طریقے سے کام نہیں کریں گی۔ براہ کرم اسے اپ ڈیٹ کریں۔\n\nانسٹال شدہ ورژن: %1$d\nکم از کم مطلوبہ ورژن: %2$d</string>
 </resources>

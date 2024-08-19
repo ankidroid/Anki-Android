@@ -60,15 +60,15 @@
     <string name="expand">Etendi</string>
     <string name="collapse">Maletendi</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">Ankoraŭ %d minuton</item>
-        <item quantity="other">Ankoraŭ %d minutojn</item>
+        <item quantity="one">ankoraŭ %d minuto</item>
+        <item quantity="other">ankoraŭ %d minutoj</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">ankoraŭ %1$d horo %2$d</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">ankoraŭ %1$d horoj %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
+        <item quantity="one">ankoraŭ %1$d tago %2$d</item>
         <item quantity="other">ankoraŭ %1$d tagoj %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekto estas malplena</string>

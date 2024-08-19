@@ -258,6 +258,9 @@
     <string name="open">उघड</string>
     <string name="change_cloze_number">बंद क्रमांक बदला</string>
     <string name="cloze_number">Cloze number:</string>
+    <string name="change_editor_mode">Change editor mode</string>
+    <string name="open_note_editor">Open note editor</string>
+    <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView प्रणाली जुनी आहे. काही वैशिष्ट्ये योग्यरित्या कार्य करू शकत नाहीत. कृपया ते अपडेट करा.\n\nस्थापित आवृत्ती: %1$d\nकिमान आवश्यक आवृत्ती: %2$d</string>
 </resources>
