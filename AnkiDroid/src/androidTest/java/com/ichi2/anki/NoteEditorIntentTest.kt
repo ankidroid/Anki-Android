@@ -58,7 +58,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
             val editor = activity.getEditor()
             currentFieldStrings = editor.currentFieldStrings[0]
         }
-        MatcherAssert.assertThat(currentFieldStrings!![0], Matchers.equalTo("sample text"))
+        MatcherAssert.assertThat(currentFieldStrings!!, Matchers.equalTo("sample text"))
     }
 
     @Test
