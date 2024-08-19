@@ -218,7 +218,7 @@
     <string name="ankidroid_init_failed_webview">O AnkiDroid depende da \"WebView\" de sistema, e esta encontra-se indisponível. Isto pode ocorrer durante a instalação de actualizações. Por favor, volte a tentar dentro de alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Tamanho da letra</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar barra de ferramentas</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar Barra de Ferramentas</string>
     <string name="format_insert_bold">Colocar em Negrito</string>
     <string name="format_insert_italic">Colocar em Itálico</string>
     <string name="format_insert_underline">Colocar como Sublinhado</string>
@@ -233,15 +233,15 @@
     <string name="edit_toolbar_item">Editar entrada para a Barra de Ferramentas</string>
     <string name="toolbar_item_explain_edit_or_remove">Introduza o HTML a ser inserido antes e depois do texto seleccionado.\n\nPressione durante algum tempo sobre uma das entradas na Barra de Ferramentas para a editar ou remover.</string>
     <string name="remove_toolbar_item">Remover entrada da Barra de Ferramentas?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">A imagem é demasiado grande, por favor insira-a manualmente.</string>
+    <string name="note_editor_video_too_large">O vídeo é demasiado grande, por favor insira-o manualmente.</string>
+    <string name="note_editor_audio_too_large">O ficheiro de áudio é demasiado grande, por favor insira-o manualmente.</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Cópia de segurança do Android em progresso. Por favor, tente de novo.</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Pode precisar de utilizar o iManager para permitir que o AnkiDroid adicione atalhos.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">O seu ecrã de início não permite que o AnkiDroid adicione atalhos.</string>
     <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Assegurar que as frases começam por maiúscula</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Permitir o \"scroll\" na Barra de Ferramentas</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Frases começam por maiúscula</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Barra Ferramentas deslizável</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
