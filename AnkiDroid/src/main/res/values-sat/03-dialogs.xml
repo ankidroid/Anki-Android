@@ -49,10 +49,10 @@
     <string name="contextmenu_deckpicker_delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="delete_deck_title">ᱰᱮᱠ ᱴᱚᱭᱴᱚᱞ ᱢᱮᱴᱟᱣᱟ  ᱥᱮ?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">%1$s ᱨᱮ ᱡᱚᱛᱚ ᱠᱟᱨᱰ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱨᱰ ᱢᱮᱱᱟᱜᱼᱟ</item>
+        <item quantity="other">%1$s ᱨᱮ ᱡᱚᱛᱚ ᱠᱟᱨᱰ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱨᱰ ᱢᱮᱱᱟᱜᱼᱟ</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">ᱯᱷᱤᱞᱴᱟᱨ ᱟᱠᱟᱫ ᱰᱮᱠ %s ᱵᱚᱫᱚᱞ ᱢᱮ ᱟᱨ ᱡᱚᱛᱚ ᱠᱟᱨᱰ ᱟᱠᱚᱣᱟᱜ ᱚᱨᱡᱤᱱᱤᱭᱟᱞ ᱰᱮᱠ ᱨᱮ ᱵᱚᱫᱚᱞ ᱢᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
     <string name="unused_strings">\n\nUnused ᱯᱟᱹᱤᱞ:\n</string>
@@ -71,7 +71,7 @@
     <string name="answering_error_title">ᱥᱟᱹᱠᱷᱭᱟᱛ ᱵᱟᱹᱭᱥᱟᱣ ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ</string>
     <string name="answering_error_message">ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱚᱞ ᱵᱷᱩᱞ ᱾ database ᱫᱚ ᱠᱦᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱰᱤᱥᱠ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱱᱩᱜᱟ ᱾ \n\nᱡᱚᱫᱤ ᱵᱟᱨᱚᱢᱵᱟᱨ ᱱᱚᱠᱟ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ, ᱮᱱᱰᱮᱠᱷᱟᱱ ᱟᱨ ᱢᱤᱫ ᱡᱮᱠᱷᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱯᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ backup ᱠᱷᱚᱱ ᱰᱟᱴᱟ restore ᱛᱟᱵᱚᱱ ᱯᱮ ᱾ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ \&quot;options\&quot; ᱨᱮ ᱚᱛᱟᱭ ᱯᱮ ᱾\n\ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱱᱚᱟ ᱫᱚ bug ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱟ; ᱫᱚᱭᱟᱠᱟᱛᱮ report ᱯᱮ ᱾ </string>
     <string name="answering_error_report">ᱦᱩᱰᱟᱜ ᱥᱚᱱᱫᱮᱥ</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">ᱮᱱᱠᱤᱰᱨᱚᱭᱮᱰ ᱪᱷᱟᱯᱟ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱟᱹᱰᱤ ᱵᱟᱹᱲᱤᱡ ᱥᱴᱳᱨᱮᱡᱽ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱞᱟᱦᱟ ᱛᱮ ᱪᱟᱞᱟᱜ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱭᱜᱟ ᱵᱮᱵᱚᱦᱟᱨ ᱢᱮ ᱾</string>
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
     <string name="intent_aedict_empty">ᱴᱩᱢᱟᱹᱞ \&quot;default\&quot; ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
@@ -84,8 +84,8 @@
     <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
     <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
     <string name="custom_study_rebuild_deck_corrupt">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱫᱟᱭ ᱛᱮᱭᱟᱨ ᱞᱮᱱᱟ</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">ᱥᱴᱳᱨᱮᱡ ᱯᱩᱨᱤ</string>
+    <string name="storage_almost_full_title">ᱥᱴᱳᱨᱮᱡ ᱜᱮ ᱯᱩᱨᱤ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid ᱡᱟᱹ ᱫᱚᱦᱚ ᱞᱟᱹᱜᱤᱫ %s ᱠᱷᱟᱞᱤ ᱟᱨᱡᱟᱣ ᱴᱷᱟᱶ ᱞᱟᱹᱠᱛᱤ । ᱫᱟᱭᱟᱠᱟᱛᱮ ᱴᱷᱟᱶ ᱥᱟᱯᱷᱟ</string>
     <string name="restore_backup_title">ᱱᱚᱠᱚᱞ ᱡᱚᱜᱟᱣ ᱫᱚᱦᱰᱟᱭᱟ ᱥᱮ?</string>
@@ -96,8 +96,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">ᱴᱷᱟᱹᱣᱠᱟᱹ</string>
     <string name="dialog_no">ᱵᱟᱝ</string>
     <string name="dialog_yes">ᱦᱮᱸ</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">ᱫᱚᱦᱚᱭ ᱢᱮ</string>
+    <string name="dialog_remove">ᱥᱟᱦᱟᱣ ᱢᱮ</string>
     <string name="dialog_continue">ᱞᱮᱛᱟᱲ</string>
     <string name="dialog_processing">ᱠᱟᱹᱢᱤ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ &#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">ᱛᱮᱭᱟᱨ</string>
@@ -108,9 +108,9 @@
     <string name="dialog_positive_repair">ᱡᱩᱛᱨᱟᱹᱣ</string>
     <string name="dialog_positive_replace">ᱥᱟᱦᱟ</string>
     <string name="dialog_collection_path_not_dir">ᱦᱚᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱩᱫᱩᱫᱩᱜ ᱵᱟᱭ ᱴᱷᱤᱠ ᱟᱟ</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">ᱮᱢ ᱟᱠᱟᱱ ᱴᱮᱠᱥᱴ ᱫᱚ PEM-encoded X509 ᱥᱟᱨᱴᱤᱯᱷᱤᱠᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱦᱟᱹᱴᱤᱧ ᱟᱠᱟᱱᱟ</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_updated_custom_certificate">ᱥᱟᱨᱴᱤᱯᱷᱤᱠᱮᱴ ᱟᱯᱰᱮᱴ ᱟᱠᱟᱱᱟ</string>
     <!-- Media checking -->
     <string name="check_media_title">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ ?</string>
     <string name="check_media_warning">ᱢᱟᱨᱟᱝ ᱢᱮᱰᱤᱭᱟ ᱴᱩᱢᱟᱹᱞ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱟᱭ</string>
@@ -166,7 +166,7 @@
     <string name="failed_to_apply_background_image">ᱚᱱᱚᱰ ᱪᱤᱛᱟᱨ ᱵᱟᱦᱟᱞ ᱰᱤᱜᱟᱹᱣ %s</string>
     <string name="background_image_too_large">ᱰᱠᱮ ᱦᱟᱛᱟᱣ ᱵᱮᱠᱜᱟᱨᱩᱸᱰ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ</string>
     <string name="image_max_size_allowed">ᱰᱷᱮᱨ ᱢᱚᱦᱰᱟ %d MB ᱜᱟᱱᱚᱜ ᱟ</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">ᱪᱤᱛᱟᱹᱨ ᱢᱟᱨᱟᱝ ᱫᱚ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱠᱟᱱᱟ (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱵᱟᱱᱩᱜᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱚᱦᱚ ᱪᱷᱟᱰ ᱮᱢᱚᱜ ᱢᱮ ᱟᱨ ᱯᱷᱮᱨ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
@@ -176,7 +176,7 @@
     <string name="boot_service_failed_to_schedule_notifications">ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱰᱤᱜᱟᱹᱣ</string>
     <string name="boot_service_too_many_notifications">ᱟᱹᱰᱤᱜᱟᱱ ᱠᱟᱹᱢᱤ ᱦᱚᱨᱟ ᱩᱭᱦᱟᱹᱨ ᱾ ᱛᱤᱱᱟᱹᱝᱜᱟᱱ ᱡᱤᱱᱥ ᱵᱟᱭ ᱫᱮᱠᱷᱟᱣᱟ</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">ᱯᱟᱹᱨᱥᱤ ᱥᱮᱴᱮᱨ ᱢᱮ</string>
     <string name="locale_selection_dialog_summary">ᱠᱤᱪᱷᱤ ᱢᱟᱹᱞᱴᱤᱞᱤᱱᱜᱩᱟᱞ ᱠᱤᱭᱵᱚᱰ, ᱡᱮᱢᱚᱱ GBoard  ᱫᱚ ᱚᱞ ᱠᱚ ᱥᱟᱯᱲᱟᱣ ᱡᱷᱚᱜ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱜᱟᱱᱚᱜᱼᱟ \n\n ᱡᱩᱫᱤ ᱟᱢᱟᱜᱽ ᱠᱤᱭᱵᱚᱰ ᱯᱟᱹᱨᱥᱤ ᱵᱚᱫᱚᱞ ᱠᱚ ᱵᱟᱭ ᱜᱟᱱᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱱ ᱫᱚᱭᱟ ᱠᱟᱛᱮ ᱠᱮᱭᱵᱚᱰ ᱢᱮᱱᱭᱩᱯᱷᱮᱠᱪᱚᱨᱟᱹᱨ ᱨᱮᱭᱟᱜ “setImeHintLocales” ᱱᱮᱦᱚᱨᱮᱢ ᱾</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ᱵᱮᱵᱷᱟᱨᱮᱫᱟᱹᱧ</string>
@@ -192,7 +192,7 @@
     <string name="help_item_support_develop_ankidroid">ᱰᱮᱵᱷᱞᱚᱯ</string>
     <string name="help_item_support_rate_ankidroid">ᱫᱚᱨ</string>
     <string name="help_item_support_other_ankidroid">ᱚᱞᱜᱟ</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">ᱛᱚᱨᱡᱚᱢᱟ</string>
     <string name="help_title_community">ᱡᱟᱹᱛ</string>
     <string name="help_item_anki_forums">Anki ᱯᱷᱚᱨᱚᱱ</string>
     <string name="help_item_discord">Discord</string>
@@ -204,13 +204,13 @@
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ᱟᱹᱱᱟᱹᱨᱤ ᱟᱨ ᱥᱚᱨᱛᱚ</string>
     <string name="help_title_send_exception">ᱦᱤᱲᱤᱡ ᱥᱟᱦᱟ ᱨᱤᱯᱚᱴ ᱠᱩᱞ ᱢᱮ</string>
     <string name="help_dialog_exception_report_debounce">ᱨᱤᱯᱚᱴ ᱢᱟᱨᱟᱝ ᱨᱮ ᱮᱢᱮᱠᱟᱱᱟ</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">ᱨᱚᱯᱚᱨᱴ ᱮ ᱥᱚᱫᱚᱨ ᱟᱠᱟᱱᱟ!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
         <item quantity="other">%d ᱴᱤᱡ ᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱜᱮᱭᱟ</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">ᱟᱢᱟᱜ ᱤᱱᱴᱟᱨᱱᱮᱴ ᱯᱨᱚᱵᱷᱟᱭᱰᱟᱨ ᱰᱮᱴᱟ ᱵᱮᱵᱷᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱴᱟᱠᱟ ᱦᱟᱛᱟᱣᱟ</string>
     <string name="deck_picker_new">ᱱᱚᱣᱟ ᱰᱮᱠᱨᱮ ᱛᱮᱦᱮᱧ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱱᱟᱣᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱮᱞ</string>
     <string name="deck_picker_rev">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮ ᱛᱮᱦᱮᱧ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱟᱜ ᱱᱟᱣᱟ ᱮᱞ</string>
     <string name="deck_picker_lrn">ᱱᱚᱣᱟ ᱰᱮᱠ ᱨᱮᱭᱟᱜ ᱥᱮᱪᱮᱫ ᱠᱟᱰ  ᱮᱞ </string>
@@ -222,44 +222,44 @@
     <string name="import_collection_package">ᱦᱟᱞᱟᱝᱥᱟᱢᱴᱟ ᱯᱭᱟᱠᱮᱡ (.colpkg)</string>
     <string name="import_csv">ᱚᱞ ᱨᱮᱫ (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">ᱟᱢ ᱡᱚᱛᱚ ᱰᱮᱠ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ subdeck ᱵᱟᱢ ᱵᱮᱱᱟᱣ ᱫᱟᱲᱮᱭᱟᱜ-ᱟ</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">ᱟᱢᱟᱜ ᱥᱟᱸᱪᱟᱨ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
+    <string name="backup_collection_message">ᱟᱢ ᱫᱚ ᱟᱢᱟᱜ ᱥᱟᱠᱟᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱠ-ᱟᱯ ᱵᱟᱢ ᱵᱮᱨᱮᱫ ᱟᱠᱟᱫᱼᱟ ᱾ ᱟᱢ ᱱᱚᱶᱟ ᱱᱤᱛᱚᱜ ᱠᱟᱹᱢᱤᱭᱟᱢ ᱡᱮᱛᱮ ᱟᱢᱟᱜ ᱰᱮᱴᱟ ᱵᱚᱫᱚᱞ ᱵᱟᱝ ᱦᱩᱭᱩᱜᱼᱟ</string>
+    <string name="button_backup">ᱵᱮᱠᱮᱯ</string>
+    <string name="button_disable_reminder">ᱱᱚᱶᱟ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">ᱛᱟᱭᱚᱢ ᱛᱮ</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ᱤᱧ ᱫᱚ ᱵᱟᱧ ᱧᱮᱞᱚᱜᱼᱟ</string>
+    <string name="dismiss_backup_warning_title">ᱰᱮᱴᱟ ᱞᱚᱥᱴ ᱟᱣᱟᱨᱰ</string>
+    <string name="dismiss_backup_warning_new_user">        ᱟᱱᱰᱨᱚᱭᱮᱰ ᱯᱨᱟᱭᱵᱷᱮᱴᱤ ᱵᱮᱸᱠᱤᱝ ᱠᱷᱟᱹᱛᱤᱨ ᱟᱢᱟᱜ ᱰᱟᱴᱟ ᱟᱨ ᱚᱴᱚᱢᱮᱴᱤᱠ ᱵᱮᱠᱤᱯ ᱠᱚ ᱟᱢᱟᱜ ᱯᱷᱚᱱ ᱠᱷᱚᱱ ᱰᱤᱞᱤᱴ ᱦᱩᱭᱩᱜ ᱟ ᱡᱩᱫᱤ ᱟᱢ ᱱᱚᱶᱟ ᱮᱯ ᱵᱚᱫᱚᱞ ᱮᱫ ᱟ
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        ᱟᱱᱰᱨᱚᱭᱮᱰ ᱯᱨᱟᱭᱵᱷᱮᱴᱤ ᱪᱮᱱᱡᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ ᱟᱢᱟᱜ ᱰᱮᱴᱟ ᱟᱨ ᱚᱴᱚᱢᱮᱴᱤᱠ ᱵᱮᱠ-ᱟᱯ ᱠᱚ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱚᱫᱚᱞ ᱞᱮᱱ ᱠᱷᱟᱱ ᱵᱟᱝ ᱥᱮᱴᱮᱨᱚᱜ-ᱟ
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">ᱰᱮᱠ ᱱᱤᱛᱚᱜ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
-    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
+    <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ᱥᱚᱢᱟᱱ ᱢᱩᱞᱩᱠ ᱨᱮ ᱥᱮᱴᱮᱨ ᱢᱮ</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in</item>
-        <item quantity="other">Show cards in</item>
+        <item quantity="one">ᱠᱟᱨᱰ ᱚᱞ ᱢᱮ</item>
+        <item quantity="other">ᱠᱟᱨᱰ ᱠᱚ ᱩᱫᱩᱜ ᱢᱮ</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
-        <item quantity="one">Show card in range</item>
-        <item quantity="other">Show cards in range</item>
+        <item quantity="one">ᱛᱷᱚᱠ ᱨᱮ ᱠᱟᱨᱰ ᱧᱮᱞ ᱢᱮ</item>
+        <item quantity="other">ᱛᱷᱚᱠ ᱨᱮ ᱠᱟᱨᱰ ᱠᱚ ᱥᱚᱫᱚᱨ ᱢᱮ</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">ᱫᱤᱱ</item>
+        <item quantity="other">ᱫᱤᱱ</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">ᱠᱷᱚᱱ</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)"> ᱛᱮ</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze Type Note Required</string>
-    <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="cloze_note_required">ᱠᱞᱳᱡ ᱴᱟᱭᱤᱯ ᱱᱳᱴ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
+    <string name="cloze_not_found_message">Cloze ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱵᱟᱝ ᱧᱟᱢ ᱞᱮᱱᱟ, ᱱᱳᱴ ᱮᱰᱤᱴᱚᱨ ᱮᱛᱦᱚᱵ ᱢᱮ ᱟᱨ ᱵᱟᱝ Cloze ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱥᱮᱞᱮᱫ ᱠᱟᱛᱮ ᱟᱨᱦᱚᱸ ᱯᱨᱚᱵᱷᱟᱣ ᱢᱮ ᱾</string>
+    <string name="open">ᱡᱷᱤᱡᱽ</string>
+    <string name="change_cloze_number">ᱥᱞᱳᱡ ᱮᱞ ᱛᱚᱨᱡᱚᱢᱟ ᱢᱮ</string>
+    <string name="cloze_number">ᱠᱞᱳᱡ ᱱᱚᱢᱵᱚᱨ:</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
 </resources>

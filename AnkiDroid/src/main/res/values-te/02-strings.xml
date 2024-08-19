@@ -233,9 +233,9 @@
     <string name="edit_toolbar_item">టూల్‌బార్ అంశాన్ని సవరించండి</string>
     <string name="toolbar_item_explain_edit_or_remove">ఎంచుకున్న వచనానికి ముందు మరియు తర్వాత ఇన్సర్ట్ చేయడానికి HTMLని నమోదు చేయండి\n\nటూల్‌బార్ అంశాన్ని సవరించడానికి లేదా తీసివేయడానికి ఎక్కువసేపు నొక్కండి</string>
     <string name="remove_toolbar_item">టూల్‌బార్ అంశాన్ని తీసివేయాలా?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">చిత్రం చాలా పెద్దది, దయచేసి చిత్రాన్ని మాన్యువల్‌గా చొప్పించండి</string>
+    <string name="note_editor_video_too_large">వీడియో ఫైల్ చాలా పెద్దది, దయచేసి వీడియోని మాన్యువల్‌గా చొప్పించండి</string>
+    <string name="note_editor_audio_too_large">ఆడియో ఫైల్ చాలా పెద్దది, దయచేసి ఆడియోను మాన్యువల్‌గా చొప్పించండి</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android బ్యాకప్ ప్రోగ్రెస్‌లో ఉంది. దయచేసి మళ్లీ ప్రయత్నించండి</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">సత్వరమార్గాలను జోడించడానికి AnkiDroidని అనుమతించడానికి మీరు iManagerని ఉపయోగించాల్సి రావచ్చు</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">మీ హోమ్ స్క్రీన్‌కి సత్వరమార్గాలను జోడించడానికి AnkiDroid మిమ్మల్ని అనుమతించదు</string>
