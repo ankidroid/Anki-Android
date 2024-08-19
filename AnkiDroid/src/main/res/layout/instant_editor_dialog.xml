@@ -62,10 +62,12 @@
             style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tooltipText="@string/change_editor_mode"
             app:icon="@drawable/ic_mode_edit_white" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/increment_cloze_button"
+            android:tooltipText="@string/change_cloze_mode"
             style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,6 +78,7 @@
             style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tooltipText="@string/open_note_editor"
             app:icon="@drawable/ic_round_open_in_new" />
 
     </LinearLayout>
