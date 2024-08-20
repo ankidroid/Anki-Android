@@ -334,10 +334,15 @@ class CardContentProvider : ContentProvider() {
                 }
 
                 // retrieve the number of cards provided by the selection parameter "limit"
+                val cards = col.backend.getQueuedCards(
+                    fetchLimit = limit,
+                    intradayLearningOnly = false
+                ).cardsList.map { Card(it.card) }
+
+                val buttonCount = 4
                 var k = 0
                 while (k < limit) {
-                    val currentCard = col.sched.card ?: break
-                    val buttonCount = 4
+                    val currentCard = cards.getOrNull(k) ?: break
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {
