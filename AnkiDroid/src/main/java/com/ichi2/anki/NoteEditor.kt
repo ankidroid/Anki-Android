@@ -37,6 +37,7 @@ import android.text.TextWatcher
 import android.view.ActionMode
 import android.view.KeyEvent
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -70,6 +71,7 @@ import androidx.core.os.BundleCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.util.component1
 import androidx.core.util.component2
+import androidx.core.view.MenuProvider
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
@@ -192,7 +194,7 @@ import androidx.appcompat.widget.Toolbar as MainToolbar
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
-class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, SubtitleListener, TagsDialogListener, BaseSnackbarBuilderProvider, MainToolbar.OnMenuItemClickListener, DispatchKeyEventListener {
+class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, SubtitleListener, TagsDialogListener, BaseSnackbarBuilderProvider, DispatchKeyEventListener, MenuProvider {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -511,7 +513,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        configureMainToolbar()
+        mainToolbar.addMenuProvider(this)
     }
 
     /**
@@ -1249,13 +1251,15 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         updateToolbar()
     }
 
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.note_editor, menu)
+        onPrepareMenu(menu)
+    }
+
     /**
      * Configures the main toolbar with the appropriate menu items and their visibility based on the current state.
      */
-    private fun configureMainToolbar() {
-        mainToolbar.setOnMenuItemClickListener(this)
-        mainToolbar.inflateMenu(R.menu.note_editor)
-        val menu = mainToolbar.menu
+    override fun onPrepareMenu(menu: Menu) {
         if (addNote) {
             menu.findItem(R.id.action_copy_note).isVisible = false
             val iconVisible = allowSaveAndPreview()
@@ -1293,7 +1297,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         else -> true
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_preview -> {
                 Timber.i("NoteEditor:: Preview button pressed")
@@ -2486,7 +2490,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
             // In case the type is changed while adding the card, the menu options need to be invalidated
-            invalidateMenu()
+            mainToolbar.invalidateMenu()
             changeNoteType(allModelIds!![pos])
         }
 
