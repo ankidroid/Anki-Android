@@ -59,7 +59,7 @@ colorpicker = "1.2.0"
 # https://commons.apache.org/proper/commons-collections/changes-report.html
 commonsCollections4 = "4.4"
 # https://commons.apache.org/proper/commons-compress/changes-report.html
-commonsCompress = "1.27.0"
+commonsCompress = "1.27.1"
 # https://commons.apache.org/proper/commons-exec/changes-report.html
 commonsExec = "1.4.0"
 # https://commons.apache.org/proper/commons-io/changes-report.html
