@@ -89,12 +89,12 @@
     <string name="move_all_to_deck">Movi ĉiujn al kartaro</string>
     <string name="unbury">Malkaŝi</string>
     <string name="rename_deck">Renomi kartaron</string>
-    <string name="create_shortcut">Krei simbolan ligilon</string>
+    <string name="create_shortcut">Krei fenestraĵon</string>
     <string name="browse_cards">Foliumi kartojn</string>
     <string name="edit_deck_description" comment="edit the deck description">Redakti priskribon</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Aldoni</string>
     <string name="menu_add_note">Aldoni noton</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigo-konton</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Samtempigi konton</string>
     <string name="menu_dismiss_note">Kaŝi / forigi</string>
     <string name="menu_bury_card">Kaŝi karton por tago</string>
     <string name="menu_bury_note">Kaŝi noton por tago</string>
@@ -104,15 +104,15 @@
     <string name="menu_suspend">Kaŝi daŭre</string>
     <string name="menu_delete_note">Forigi noton</string>
     <string name="menu_flag">Flagi</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Renomi flagojn</string>
     <string name="menu_flag_card">Flagi karton</string>
     <string name="menu_edit_tags">Redakti etikedojn</string>
     <string name="delete_note_message">Ĉu vi certe volas forigi tiun ĉi noton kaj ĉiujn ĝiajn kartojn?\n%s</string>
     <string name="menu_search">Serĉi en %1$s</string>
     <string name="menu_mark_note">Marki noton</string>
     <string name="menu_unmark_note">Malmarki noton</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback">Aktivigi ludadon de voĉo</string>
+    <string name="menu_disable_voice_playback">Malaktivigi ludadon de voĉo</string>
     <string name="new_deck">Krei kartaron</string>
     <string name="new_dynamic_deck">Krei filtritan kartaron</string>
     <string name="directory_inaccessible">Dosierujo de AnkiDroid estas nealirebla</string>
@@ -120,10 +120,10 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Donu al AnkiDroid permeson al “konservejo” por pluigi</string>
+    <string name="startup_no_storage_permission">Donu al AnkiDroid la permeson por aliri konservejo por pluigi</string>
     <string name="rebuild_filtered_deck">Rekreado de filtrita kartaro&#8230;</string>
     <string name="rebuild_cram_label">Rekrei</string>
-    <string name="empty_cram_label">Forviŝi</string>
+    <string name="empty_cram_label">Malplenigi</string>
     <string name="create_subdeck">Krei subkartaron</string>
     <string name="empty_filtered_deck">Malplenigado de filtrita kartaro&#8230;</string>
     <string name="custom_study_deck_name">Propra lernado</string>
@@ -132,19 +132,19 @@
     <string name="empty_deck">Tiu ĉi kartaro estas malplena</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Serĉi kartaron</string>
     <string name="invalid_deck_name">Malĝusta nomo por kartaro</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_finished">Gratulon! Vi finis hodiaŭan lernadon.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">La kartaro estas ripetita! %s</string>
     <string name="studyoptions_no_cards_due">Neniu karto por ripeti</string>
     <string name="sd_card_not_mounted">Aparata konservejo ne muntita</string>
     <string name="button_sync" comment="Text of the sync button">Samtempigi</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migri al limigit-ampleksa konservejo «scoped storage»</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Ĉu vi volas ĉesigi samtempigadon?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Pluigi samtempigadon</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Samtempigado nuligita</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Nuligado&#8230;\nTio ĉi povas okupi iom da tempo.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Samtempigado de aŭdvidaĵoj</string>
     <string name="export_deck">Elporti kartaron</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Elporti kolekton</string>
     <string name="nothing">Nenio</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Tipo de karto</string>
@@ -161,8 +161,8 @@
         <item quantity="other">%1$d kartoj estos kreitaj. Ĉu pluigi?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="one">Ĉu forigi la tipon de kartoj “%2$s” kaj ĝian %1$d karton?</item>
-        <item quantity="other">Ĉu vi volas forigi la kartotipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
+        <item quantity="one">Ĉu forigi la kart-tipon “%2$s” kaj ĝian %1$d karton?</item>
+        <item quantity="other">Ĉu forigi la kart-tipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
     </plurals>
     <string name="card_template_editor_save_error">Fiaskis konservi ŝanĝojn al ŝablono de karto: %s</string>
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
@@ -189,66 +189,54 @@
         <item quantity="other">%1$d kartoj (0 lernenda)</item>
     </plurals>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Ne povas skribi aĭ krei la dosieron %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Pluraj eraroj, la plej frua: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Pluraj sinsekvaj eraroj sen progreso, la plej frua: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculating transfer size&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migration successful</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
-        \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
-        <br><br>
-        The changes were reverted.
-        <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
-        <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
-        <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrado de datumbazo</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Kopiado&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrado de aŭdvidaĵoj</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Kalkulado de grando&#8230;</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Movis %1$s el %2$s</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migrado sukcesis</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">Viaj datumoj estas sukcese migritaj. AnkiDroid denove plene funkcias kaj vi povas aktivigi samtempigon.
+\n
+Estu konscia, ke via kolekto nun troviĝas en dosierujo, kiu foriĝos dum malinstali la aplikaĵon. Certiĝu pri sekureco de viaj datumoj per ofte samtempigi aŭ per fari sekurkopiojn.</string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migrado malsukcesis</string>
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[Kopiado de datumbazo malsukcesis pro la eraro: %1$s
+<br><br>
+La ŝanĝoj estas malfaritaj.
+<br><br>
+Provu refari migradon. Por solvi tiun ĉi problemon, provu liberigi iom da spaco aŭ rekonektu la eksteran konservejon, kiu entenas vian kolekton.
+<br><br>
+<a href="%2$s">Pliaj informoj kaj helpo</a>]]></string>
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[Movado de aŭdvidaĵoj estas haltigita pro la eraro: %1$s
+<br><br>
+La ŝanĝoj <i>ne estas</i> malfaritaj. Kvankam probable neniuj datumoj perdiĝis, aŭdvidaĵaj dosieroj povas povas esti parte en malnova kaj parte en nova dosierujo.
+<br><br>
+Provu refari migradon. Por solvi tiun ĉi problemon, provu liberigi iom da spaco aŭ rekonektu la eksteran konservejon, kiu entenas vian kolekton.
+<br><br>
+<a href="%2$s">Pliaj informoj kaj helpo</a>]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[Migrado de datumoj estas haltigita pro la eraro: %1$s
+<br><br>
+<a href="%2$s">Pliaj informoj kaj helpo</a>]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Pluigi migradon</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Kolekto nealirebla</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Pro ŝanĝi politikon en la vendejo Play Store, AnkiDroid ne povis aliri vian kolekton post malinstali.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%s\n\nElektu ion el la suba listo por restarigi viajn datumojn:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android senigis la aplikaĵon AnkiDroid je la permeso %1$s pro longa malaktiveco de aplikaĵo.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%2$s\n\nElektu ion el la suba listo por restarigi viajn datumojn.</string>
+    <string name="restore_data_from_ankiweb">restarigi el AnkiWeb (konsilinda)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Restarigi aliron al dosierujo (konsilinda)</string>
+    <string name="install_non_play_store_ankidroid">restarigi aliron al dosierujo (altnivela)</string>
+    <string name="restore_data_from_backup">restarigi el sekurkopio .colpkg (altnivela)</string>
     <string name="create_new_collection">Krei novan kolekton</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="new_unsafe_collection">La nova kolekto estos forigita el via telefono, se vi malinstalos AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="permissions_screen_headline">AnkiDroid postulas kelkajn permesojn por funkcii</string>
+    <string name="storage_access_title">Aliro al konservejo</string>
+    <string name="storage_access_summary">por konservi vian kolekton en sekura loko, kiu ne estos forviŝita post malinstali la aplikaĵon AnkiDroid</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Aliro al ĉiuj dosieroj</string>
+    <string name="image_occlusion">Bildtruo</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Forigi konton</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Tuja karto</string>
 </resources>
