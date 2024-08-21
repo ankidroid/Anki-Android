@@ -143,7 +143,6 @@
     <string name="empty_cards_deleted">Cartas iscantzelladas: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">No est istadu possìbile otènnere su permissu pro su micròfonu.</string>
-    <string name="multimedia_editor_camera_permission_refused">No est istadu possìbile otènnere  su permissu pro sa fotocàmera. Sa funtzionalidade est istada disabilitada.</string>
     <string name="multimedia_editor_failed">Abertura de s\'Editore Multimediale fallida</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permissu de registratzione àudio negadu</string>

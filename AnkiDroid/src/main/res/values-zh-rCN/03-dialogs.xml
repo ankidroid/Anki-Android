@@ -134,7 +134,6 @@
     <string name="empty_cards_deleted">已删除卡牌：%d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">无法获取麦克风权限。</string>
-    <string name="multimedia_editor_camera_permission_refused">无法获取相机权限。功能已被禁用。</string>
     <string name="multimedia_editor_failed">打开多媒体编辑器失败</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音频录制权限被拒绝</string>

@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">हटाई गई फ़ाइलें: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">माइक्रोफ़ोन अनुमति प्राप्त नहीं कर सका।</string>
-    <string name="multimedia_editor_camera_permission_refused">कैमरा अनुमति प्राप्त नहीं कर सका। कार्यक्षमता अक्षम कर दी गई है।</string>
     <string name="multimedia_editor_failed">मल्टीमीडिया संपादक खोलने में विफल</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ऑडियो रिकॉर्डिंग की अनुमति से इनकार किया</string>

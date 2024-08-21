@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">Cards deletados: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Não foi possível obter permissão de microfone.</string>
-    <string name="multimedia_editor_camera_permission_refused">Não foi possível obter a permissão da câmera. Funcionalidade foi desativada.</string>
     <string name="multimedia_editor_failed">Falha ao abrir o Editor de Multimídia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Permissão de gravação de áudio negada</string>

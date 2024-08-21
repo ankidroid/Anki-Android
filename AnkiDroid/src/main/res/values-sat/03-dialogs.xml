@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟᱺ %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">ᱢᱟᱤᱠᱨᱚᱯᱷᱚᱱ ᱪᱷᱟᱰ ᱵᱟᱝ ᱟᱜᱩ ᱫᱟᱲᱮᱟᱫᱟᱠ ᱟ ᱾</string>
-    <string name="multimedia_editor_camera_permission_refused">ᱠᱮᱢᱨᱟ ᱪᱦᱟᱰ ᱵᱟᱜ ᱟᱹᱜᱩ ᱫᱟᱲᱮᱟᱫᱟ ᱾ ᱠᱟᱹᱢᱤᱠᱟᱚ ᱵᱟᱰ ᱦᱚᱪᱚᱭ ᱮᱱᱟ</string>
     <string name="multimedia_editor_failed">ᱢᱟᱹᱞᱴᱤᱢᱤᱰᱤᱭᱟ ᱮᱰᱤᱴᱚᱨ ᱚᱰᱚᱠ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ᱟᱧᱡᱚᱢ ᱨᱮᱠᱚᱰᱤᱝ ᱪᱷᱟᱰ ᱵᱟᱰ</string>

@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">کارڈز حذف کر دیے گئے: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">مائیکروفون کی اجازت حاصل نہیں کی جا سکی۔</string>
-    <string name="multimedia_editor_camera_permission_refused">کیمرے کی اجازت حاصل نہیں کی جا سکی۔ فعالیت کو غیر فعال کر دیا گیا ہے۔</string>
     <string name="multimedia_editor_failed">ملٹی میڈیا ایڈیٹر کھولنے میں ناکام</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">آڈیو ریکارڈنگ کی اجازت مسترد کر دی گئی</string>

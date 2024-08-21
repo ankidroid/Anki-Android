@@ -146,7 +146,6 @@
     <string name="empty_cards_deleted">Карток видалено: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Не вдалося отримати дозвіл на використання мікрофона.</string>
-    <string name="multimedia_editor_camera_permission_refused">Не вдалося отримати дозвіл на використанння камери. Функція вимкнена.</string>
     <string name="multimedia_editor_failed">Не вдалося відкрити мультимедійний редактор</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Відхилено доступ до запису звуку</string>

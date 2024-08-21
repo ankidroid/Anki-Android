@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">Silinen kartlar: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Mikrofon izni alınamadı.</string>
-    <string name="multimedia_editor_camera_permission_refused">Kamera izni alınamadı. İşlevsellik devre dışı bırakıldı.</string>
     <string name="multimedia_editor_failed">Multimedya Düzenleyiciyi açma başarısız oldu</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Ses kayıt izni reddedildi</string>
