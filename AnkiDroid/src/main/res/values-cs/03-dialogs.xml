@@ -146,7 +146,6 @@
     <string name="empty_cards_deleted">Odstraněno karet: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Nelze získat oprávnění k mikrofonu.</string>
-    <string name="multimedia_editor_camera_permission_refused">Nelze získat oprávnění k fotoaparátu. Funkcionalita byla zakázána.</string>
     <string name="multimedia_editor_failed">Nepodařilo se otevřít multimediální editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Oprávnění k nahrávání zvuku bylo odepřeno</string>

@@ -134,7 +134,6 @@
     <string name="empty_cards_deleted">Kad telah dipadam: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Tidak dapat memperoleh kebenaran mikrofon.</string>
-    <string name="multimedia_editor_camera_permission_refused">Tidak dapat memperoleh kebenaran kamera. Fungsinya telah dilumpuhkan.</string>
     <string name="multimedia_editor_failed">Gagal membuka Penyunting Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Kebenaran rakam audio ditolak</string>

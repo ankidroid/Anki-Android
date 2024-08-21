@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">%d Karten gelöscht</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Zugriffsberechtigung für das Mikrofon konnte nicht erlangt werden.</string>
-    <string name="multimedia_editor_camera_permission_refused">Zugriffsberechtigung für die Kamera konnte nicht erlangt werden. Funktion wurde deaktiviert.</string>
     <string name="multimedia_editor_failed">Multimedia-Editor konnte nicht geöffnet werden</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Berechtigung für Audioaufnahme verweigert</string>

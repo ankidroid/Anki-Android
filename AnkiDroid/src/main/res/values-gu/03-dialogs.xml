@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">કાર્ડ કાઢી નાખ્યા: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">માઇક્રોફોનની પરવાનગી મેળવી શકાઈ નથી.</string>
-    <string name="multimedia_editor_camera_permission_refused">કેમેરાની પરવાનગી મેળવી શકાઈ નથી. કાર્યક્ષમતા અક્ષમ કરવામાં આવી છે.</string>
     <string name="multimedia_editor_failed">મલ્ટીમીડિયા એડિટર ખોલવામાં નિષ્ફળ</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ઑડિયો રેકોર્ડિંગની પરવાનગી નકારી</string>

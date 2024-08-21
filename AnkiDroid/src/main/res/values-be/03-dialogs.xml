@@ -146,7 +146,6 @@
     <string name="empty_cards_deleted">Выдалена картак: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Памылка атрымання дазволу на выкарыстанне мікрафона.</string>
-    <string name="multimedia_editor_camera_permission_refused">Памылка атрымання дазволу на выкарыстанне камеры. Функцыянальнасць адключаная.</string>
     <string name="multimedia_editor_failed">Памылка адкрыцця рэдактара мультымедыя</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Адхілены доступ да запісу гуку</string>

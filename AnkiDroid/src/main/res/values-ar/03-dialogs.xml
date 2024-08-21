@@ -154,7 +154,6 @@
     <string name="empty_cards_deleted">بطاقات حُذِفت: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">تعذر الحصول على إذن الميكروفون.</string>
-    <string name="multimedia_editor_camera_permission_refused">تعذر الحصول على إذن الكاميرا. تم تعطيل الميزة.</string>
     <string name="multimedia_editor_failed">تعذر فتح محرر الوسائط المتعددة</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">رُفِض إذن تسجيل الصوت</string>

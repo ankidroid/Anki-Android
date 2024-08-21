@@ -147,7 +147,6 @@
     <string name="empty_cards_deleted">Удалено карточек: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Не удалось получить разрешение на микрофон.</string>
-    <string name="multimedia_editor_camera_permission_refused">Не удалось получить разрешение камеры. Функция отключена.</string>
     <string name="multimedia_editor_failed">Не удалось открыть редактор мультимедиа</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Не удалось получить разрешение на запись звука</string>

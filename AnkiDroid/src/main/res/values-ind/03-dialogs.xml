@@ -134,7 +134,6 @@
     <string name="empty_cards_deleted">Kartu dihapus: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Tidak mendapat izin mikrofon</string>
-    <string name="multimedia_editor_camera_permission_refused">Tidak mendapat izin kamera. Fungsionalitas sudah dimatikan</string>
     <string name="multimedia_editor_failed">Gagal membuka Editor Multimedia</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Izin merekam audio ditolak</string>

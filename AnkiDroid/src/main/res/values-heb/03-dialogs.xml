@@ -147,7 +147,6 @@
     <string name="empty_cards_deleted">כרטיסים נמחקו: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">לא מצליח לקבל הרשאת מיקרופון </string>
-    <string name="multimedia_editor_camera_permission_refused">לא מצליח לקבל הרשאת מצלמה. פונקציונליות בוטלה.</string>
     <string name="multimedia_editor_failed">נכשל בפתיחת עורך מדיה.</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">הרשאת הקלטת שמע נדחתה</string>

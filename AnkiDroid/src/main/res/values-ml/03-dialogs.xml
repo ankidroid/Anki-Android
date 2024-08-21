@@ -138,7 +138,6 @@
     <string name="empty_cards_deleted">കാർഡുകൾ ഇല്ലാതാക്കി: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">മൈക്രോഫോൺ അനുമതി നേടാനായില്ല.</string>
-    <string name="multimedia_editor_camera_permission_refused">ക്യാമറ അനുമതി നേടാനായില്ല. പ്രവർത്തനം പ്രവർത്തനരഹിതമാക്കി.</string>
     <string name="multimedia_editor_failed">മൾട്ടിമീഡിയ എഡിറ്റർ തുറക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">ഓഡിയോ റെക്കോർഡിംഗ് അനുമതി നിരസിച്ചു</string>

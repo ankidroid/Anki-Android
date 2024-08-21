@@ -139,7 +139,6 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="empty_cards_deleted">Ang mga kard ay tinanggal na%d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Nabigong makakuha ng permiso na gamitin ang mikropono.</string>
-    <string name="multimedia_editor_camera_permission_refused">Hindi makamit ang permiso sa kamera. Hindi pinagana ang katanginang ito.</string>
     <string name="multimedia_editor_failed">Bigong buksan ang Multimedia Editor</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Hindi binigyang permiso na mag-record ng audio</string>

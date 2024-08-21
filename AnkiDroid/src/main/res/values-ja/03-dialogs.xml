@@ -49,9 +49,9 @@
     <string name="contextmenu_deckpicker_delete_deck">デッキを削除</string>
     <string name="delete_deck_title">デッキを削除しますか？</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">「%1$s」内のすべてのカードを削除しますか？　%2$d枚のカードが含まれています</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">フィルターデッキ「%s」を削除し、すべてのカードを元のデッキに戻しますか？</string>
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="tts_no_tts">発声なし</string>
     <string name="unused_strings">\n\n(*) のファイルのリスト:\n</string>
@@ -134,7 +134,6 @@
     <string name="empty_cards_deleted">%d枚のカードを削除しました</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">マイクの権限を取得できませんでした。</string>
-    <string name="multimedia_editor_camera_permission_refused">カメラの権限を取得できませんでした。機能が無効になっています。</string>
     <string name="multimedia_editor_failed">マルチメディアエディタを開けませんでした</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が付与されませんでした</string>
@@ -251,9 +250,9 @@
     <string name="open">開く</string>
     <string name="change_cloze_number">穴埋め問題の番号を変更</string>
     <string name="cloze_number">穴埋め問題番号</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_editor_mode">編集モードの切り替え</string>
+    <string name="open_note_editor">アプリのノート追加画面で編集</string>
+    <string name="change_cloze_mode">穴埋め問題モードの切り替え</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">「AndroidシステムのWebView 」（または「Android System WebView」）が古くなっています。いくつかの機能が正しく動作しません。更新してください。\n\nインストールされているバージョン: %1$d\n最低限必要なバージョン: %2$d</string>
 </resources>

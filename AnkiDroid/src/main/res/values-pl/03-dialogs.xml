@@ -146,7 +146,6 @@
     <string name="empty_cards_deleted">Usuniętych kart: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Nie udało się uzyskać uprawnień do interakcji z mikrofonem.</string>
-    <string name="multimedia_editor_camera_permission_refused">Nie można uzyskać uprawnień aparatu. Funkcjonalność została wyłączona.</string>
     <string name="multimedia_editor_failed">Nie udało się otworzyć edytora multimediów</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Nie uzyskano uprawnienia do nagrywania dźwięków</string>

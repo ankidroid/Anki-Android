@@ -146,7 +146,6 @@
     <string name="empty_cards_deleted">Počet vymazaných kartičiek: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">Nepodarilo sa získať povolenie k mikrofónu.</string>
-    <string name="multimedia_editor_camera_permission_refused">Nepodarilo sa získať povolenie k fotoaparátu. Funkcionalita bola zakázaná.</string>
     <string name="multimedia_editor_failed">Nepodarilo sa otvoriť editor multimédií</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">Povolenie pre audio nahrávanie bolo zamietnuté</string>
