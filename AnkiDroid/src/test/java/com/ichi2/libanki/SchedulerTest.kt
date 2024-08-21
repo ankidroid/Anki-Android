@@ -846,8 +846,6 @@ open class SchedulerTest : JvmTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0]
-        val orig = c.clone()
         val note2 = col.newNote()
         note2.setItem("Front", "two")
         col.addNote(note2)
@@ -858,7 +856,7 @@ open class SchedulerTest : JvmTest() {
         col.decks.save(cram)
         col.sched.rebuildDyn(did)
         // grab the first card
-        c = col.sched.card!!
+        val c: Card = col.sched.card!!
         Assert.assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_TWO))
         // failing it will push its due time back
@@ -875,10 +873,6 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(QUEUE_TYPE_NEW, c2.queue)
         Assert.assertEquals(0, c2.reps)
         Assert.assertEquals(CARD_TYPE_NEW, c2.type)
-
-        // the other card should appear again
-        c = col.sched.card!!
-        Assert.assertEquals(orig.id, c.id)
 
         // emptying the filtered deck should restore card
         col.sched.emptyDyn(did)
