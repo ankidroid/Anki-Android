@@ -259,9 +259,9 @@
     <string name="open">Aç</string>
     <string name="change_cloze_number">Boşluk numarasını değiştir</string>
     <string name="cloze_number">Boşluk numarası:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_editor_mode">Düzenleyici modunu değiştir</string>
+    <string name="open_note_editor">Not düzenleyiciyi aç</string>
+    <string name="change_cloze_mode">Boşluk modunu değiştir</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
 </resources>

@@ -189,7 +189,7 @@
         <item quantity="other">%1$d kaarten (0 te doen)</item>
     </plurals>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Kan niet schrijven naar of creëren van bestand %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Meerdere fouten, meest recent: %s"</string>
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Meerdere opeenvolgende fouten zonder voortgang, meest recent: %s</string>
     <!-- Scoped storage migration -->
