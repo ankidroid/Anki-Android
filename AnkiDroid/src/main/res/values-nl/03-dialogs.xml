@@ -49,10 +49,10 @@
     <string name="contextmenu_deckpicker_delete_deck">Leerset verwijderen</string>
     <string name="delete_deck_title">Verwijder set</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Alle kaarten verwijderen in %1$s? Het bevat %2$d kaart</item>
+        <item quantity="other">Alle kaarten verwijderen in %1$s? Het bevat %2$d kaarten</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Verwijder gefilterd deck %s en plaats alle kaarten terug in hun oorspronkelijke decks?</string>
     <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
     <string name="tts_no_tts">Niet spreken</string>
     <string name="unused_strings">\n\nOngebruikte bestanden:\n</string>
@@ -259,9 +259,9 @@
     <string name="open">Openen</string>
     <string name="change_cloze_number">Wijzig het cloze-nummer</string>
     <string name="cloze_number">Cloze-nummer:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_editor_mode">Wijzig bewerkingsmodus</string>
+    <string name="open_note_editor">Open notitie editor</string>
+    <string name="change_cloze_mode">Wijzig het cloze nummer</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">De systeem WebView is verouderd. Sommige functies zullen niet correct werken. Gelieve te updaten.\n\nGeïnstalleerde versie: %1$d\nMinimale vereiste versie: %2$d</string>
 </resources>

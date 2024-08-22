@@ -233,9 +233,9 @@
     <string name="edit_toolbar_item">Werkbalkitem bewerken</string>
     <string name="toolbar_item_explain_edit_or_remove">Voer HTML in die voor en na de geselecteerde tekst moet worden ingevoegd.\n\nDruk lang op een item op de werkbalk om het te bewerken of te verwijderen.</string>
     <string name="remove_toolbar_item">Werkbalkitem verwijderen?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">De afbeelding is te groot, voeg de afbeelding handmatig in</string>
+    <string name="note_editor_video_too_large">Het videobestand is te groot, voeg de video handmatig in</string>
+    <string name="note_editor_audio_too_large">Het audiobestand is te groot, voeg de audio handmatig in</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Bezig met Android back-up. Probeer het opnieuw</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Mogelijk moet u iManager gebruiken om AnkiDroid snelkoppelingen te laten toevoegen</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Uw startscherm staat niet toe dat AnkiDroid snelkoppelingen toevoegt</string>
@@ -351,6 +351,6 @@
     <string name="play_recording">Afspelen</string>
     <string name="next_recording">Volgende</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_title">Kan kaarttype niet verwijderen</string>
+    <string name="orphan_note_message">Als je dit kaarttype verwijdert, zullen sommige notities geen kaarten meer hebben.</string>
 </resources>
