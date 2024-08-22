@@ -130,9 +130,15 @@ interface TestClass {
         }
     }
 
-    fun addDynamicDeck(name: String?): DeckId {
+    fun addDynamicDeck(name: String, search: String? = null): DeckId {
         return try {
-            col.decks.newFiltered(name!!)
+            col.decks.newFiltered(name).also { did ->
+                if (search == null) return@also
+                val deck = col.decks.get(did)!!
+                deck.getJSONArray("terms").getJSONArray(0).put(0, search)
+                col.decks.save(deck)
+                col.sched.rebuildDyn(did)
+            }
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }

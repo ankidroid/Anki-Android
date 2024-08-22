@@ -229,11 +229,15 @@ class Decks(private val col: Collection) {
         return len(this.allNamesAndIds())
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("card_count")
-    @Suppress("unused", "unused_parameter")
-    private fun cardCount(vararg decks: DeckId, includeSubdecks: Boolean): Int {
-        TODO()
+    fun cardCount(vararg decks: DeckId, includeSubdecks: Boolean): Int {
+        val dids = decks.toMutableSet()
+        if (includeSubdecks) {
+            // dids.update([child[1] for did in dids for child in self.children(did)])
+            dids.addAll(dids.flatMap { did -> children(did) }.map { nameAndId -> nameAndId.second })
+        }
+        val strIds = Utils.ids2str(dids)
+        return col.db.queryScalar("select count() from cards where did in $strIds or odid in $strIds")
     }
 
     @RustCleanup("implement and make public")
