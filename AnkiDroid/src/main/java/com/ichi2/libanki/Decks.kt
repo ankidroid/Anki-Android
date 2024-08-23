@@ -34,6 +34,7 @@ import anki.deck_config.UpdateDeckConfigsRequest
 import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
+import anki.decks.deck
 import com.google.protobuf.kotlin.toByteStringUtf8
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
@@ -196,6 +197,16 @@ class Decks(private val col: Collection) {
     @Suppress("unused")
     private fun deckTree(): DeckTreeNode {
         TODO()
+    }
+
+    @LibAnkiAlias("find_deck_in_tree")
+    fun findDeckInTree(node: DeckTreeNode, deckId: DeckId): DeckTreeNode? {
+        if (node.deckId == deckId) return node
+        for (child in node.childrenList) {
+            val foundNode = findDeckInTree(child, deckId)
+            if (foundNode != null) return foundNode
+        }
+        return null
     }
 
     @RustCleanup("implement and make public")
