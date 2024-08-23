@@ -25,6 +25,7 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.config.OptionalStringConfigKey
 import anki.config.optionalStringConfigKey
+import anki.decks.DeckTreeNode
 import anki.frontend.SchedulingStatesWithContext
 import anki.i18n.FormatTimespanRequest
 import anki.scheduler.BuryOrSuspendCardsRequest
@@ -449,6 +450,21 @@ open class Scheduler(val col: Collection) {
 
     fun deckDueTree(): DeckNode {
         return deckTree(true)
+    }
+
+    /**
+     * Returns a tree of decks with counts. If [deckId] is provided, only the according subtree is
+     * returned.
+     *
+     * // TODO look into combining this method with parameterless deckDueTree
+     */
+    @LibAnkiAlias("deck_due_tree")
+    fun deckDueTree(deckId: DeckId? = null): DeckTreeNode? {
+        val tree = col.backend.deckTree(now = time.intTime())
+        if (deckId != null) {
+            return col.decks.findDeckInTree(tree, deckId)
+        }
+        return tree
     }
 
     fun deckTree(includeCounts: Boolean): DeckNode {
