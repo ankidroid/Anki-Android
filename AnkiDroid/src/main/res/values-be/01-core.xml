@@ -259,7 +259,7 @@
     <string name="storage_access_title">Доступ да сховішча</string>
     <string name="storage_access_summary">Захаванне калекцыі ў бяспечным месцы, якое не будзе выдалена пры выдаленні праграмы</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ да ўсіх файлаў</string>
-    <string name="image_occlusion">Аклюзія відарысу</string>
+    <string name="image_occlusion">Аклюзія відарыса</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Выдаліць уліковы запіс</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>

@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Mostra botons de resposta grans</string>
     <string name="show_large_answer_buttons_summ">Mostra botó de resposta a dos files</string>
     <string name="show_top_bar" maxLength="41">Mostra la barra de dalt</string>
-    <string name="show_top_bar_summ">Mostra contadors de carta, bandera i marca a la barra de dalt</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Mostra el romanent</string>
     <string name="show_progress_summ">Mostra el recompte de cartes restants</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
@@ -279,6 +279,7 @@
     <string name="user_action_7" maxLength="41">User action 7</string>
     <string name="user_action_8" maxLength="41">User action 8</string>
     <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecciona cara de la carta</string>
     <string name="card_side_question">Pregunta</string>

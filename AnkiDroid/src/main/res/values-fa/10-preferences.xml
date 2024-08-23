@@ -172,7 +172,7 @@
     <string name="show_large_answer_buttons" maxLength="41">دکمه های بزرگ جواب نشان بده</string>
     <string name="show_large_answer_buttons_summ">دکمه ی جواب را در 2 ردیف نشان بده</string>
     <string name="show_top_bar" maxLength="41">نمایش نوار بالا</string>
-    <string name="show_top_bar_summ">نمایش تعداد کارت‌ها، پرچم‌ها و علامت‌ها در نوار بالا</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">نمایش باقیمانده</string>
     <string name="show_progress_summ">نمایش تعداد کارت‌های باقیمانده</string>
     <string name="show_eta" maxLength="41">نمایش زمان تخمینی</string>
@@ -280,6 +280,7 @@
     <string name="user_action_7" maxLength="41">اقدام کاربر 7</string>
     <string name="user_action_8" maxLength="41">اقدام کاربر 8</string>
     <string name="user_action_9" maxLength="41">اقدام کاربر 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">طرف کارت را انتخاب کنید</string>
     <string name="card_side_question">سوال</string>

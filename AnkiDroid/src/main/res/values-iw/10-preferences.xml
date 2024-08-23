@@ -174,7 +174,7 @@
     <string name="show_large_answer_buttons" maxLength="41">לחצני תשובה גדולים</string>
     <string name="show_large_answer_buttons_summ">הצג כפתורי תשובה בשתי שורות</string>
     <string name="show_top_bar" maxLength="41">הצג סרגל עליון</string>
-    <string name="show_top_bar_summ">הצג ספירת כרטיסים, דגל וסמן בסרגל העליון</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">הצג נותרים</string>
     <string name="show_progress_summ">הצג את מספר הכרטיסים שנותרו</string>
     <string name="show_eta" maxLength="41">הצג הערכת זמן לסיום</string>
@@ -283,6 +283,7 @@
     <string name="user_action_7" maxLength="41">פעולת משתמש 7</string>
     <string name="user_action_8" maxLength="41">פעולת משתמש 8</string>
     <string name="user_action_9" maxLength="41">פעולת משתמש 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">בחר צד כרטיס</string>
     <string name="card_side_question">שאלה</string>

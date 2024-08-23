@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Große Antwortschaltflächen anzeigen</string>
     <string name="show_large_answer_buttons_summ">Antwortschaltfläche in 2 Zeilen anzeigen</string>
     <string name="show_top_bar" maxLength="41">Obere Leiste anzeigen</string>
-    <string name="show_top_bar_summ">Kartenanzahl, Flagge und Markierung in oberer Leiste anzeigen</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>
     <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
     <string name="show_eta" maxLength="41">Ankunftszeit anzeigen</string>
@@ -279,6 +279,7 @@
     <string name="user_action_7" maxLength="41">Benutzerdefinierte Aktion 7</string>
     <string name="user_action_8" maxLength="41">Benutzerdefinierte Aktion 8</string>
     <string name="user_action_9" maxLength="41">Benutzerdefinierte Aktion 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>
     <string name="card_side_question">Frage</string>

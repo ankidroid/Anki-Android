@@ -170,7 +170,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
     <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
     <string name="show_top_bar" maxLength="41">Hiển thị thanh trên cùng</string>
-    <string name="show_top_bar_summ">Hiển thị số lượng thẻ, gắn cờ và đánh dấu trên thanh trên cùng</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Hiển thị còn lại</string>
     <string name="show_progress_summ">Hiển thị số thẻ còn lại</string>
     <string name="show_eta" maxLength="41">Hiển thị ETA</string>
@@ -276,6 +276,7 @@
     <string name="user_action_7" maxLength="41">Thao tác người dùng 7</string>
     <string name="user_action_8" maxLength="41">Thao tác người dùng 8</string>
     <string name="user_action_9" maxLength="41">Thao tác người dùng 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
     <string name="card_side_question">Question</string>

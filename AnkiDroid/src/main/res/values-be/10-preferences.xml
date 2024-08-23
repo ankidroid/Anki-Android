@@ -117,7 +117,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Дотык пасярэдзіне</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Дотык ніжняга левага вугла</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Дотык ніжняга правага вугла</string>
-    <string name="gestures_shake" maxLength="41">Падтрасіце прыладу</string>
+    <string name="gestures_shake" maxLength="41">Патрасіце прыладу</string>
     <string name="card_browser_enable_external_context_menu">Меню «%s»</string>
     <string name="card_browser_enable_external_context_menu_summary">Уключыць кантэкстнае меню «%s» у сістэме</string>
     <string name="double_scrolling_gap" maxLength="41">Падвоеная прагортка</string>
@@ -174,7 +174,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Паказваць вялікія кнопкі адказу</string>
     <string name="show_large_answer_buttons_summ">Паказваць кнопкі адказу ў 2 радкі</string>
     <string name="show_top_bar" maxLength="41">Паказваць верхнюю панэль</string>
-    <string name="show_top_bar_summ">Паказваць лічыльнік картак, сцяжок і пазнаку на верхняй панэлі</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Паказаць тое, што засталося</string>
     <string name="show_progress_summ">Паказваць лічыльнік картак, якія засталіся</string>
     <string name="show_eta" maxLength="41">Show ETA</string>
@@ -284,6 +284,7 @@
     <string name="user_action_7" maxLength="41">User action 7</string>
     <string name="user_action_8" maxLength="41">User action 8</string>
     <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберыце бок карткі</string>
     <string name="card_side_question">Пытанне</string>

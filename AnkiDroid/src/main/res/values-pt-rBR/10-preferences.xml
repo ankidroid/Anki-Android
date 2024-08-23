@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botões de resposta grandes</string>
     <string name="show_large_answer_buttons_summ">Mostrar botão de resposta em 2 linhas</string>
     <string name="show_top_bar" maxLength="41">Mostrar barra superior</string>
-    <string name="show_top_bar_summ">Mostrar contagem de cartas, bandeira e marcações na barra superior</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Mostar restantes</string>
     <string name="show_progress_summ">Mostrar contagem de cards restantes</string>
     <string name="show_eta" maxLength="41">Mostrar tempo restante estimado</string>
@@ -279,6 +279,7 @@
     <string name="user_action_7" maxLength="41">Ação do usuário 7</string>
     <string name="user_action_8" maxLength="41">Ação do usuário 8</string>
     <string name="user_action_9" maxLength="41">Ação do usuário 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecionar lado da carta</string>
     <string name="card_side_question">Pergunta</string>

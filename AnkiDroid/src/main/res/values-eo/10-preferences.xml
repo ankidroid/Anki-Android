@@ -47,16 +47,16 @@
     <!-- generic strings -->
     <string name="disabled">Malaktiva</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d min</item>
+        <item quantity="other">%d min</item>
     </plurals>
-    <string name="pref_milliseconds">%s ms</string>
+    <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
     <string name="pref_search_no_results">Neniuj rezultoj</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ĝenerala</string>
     <string name="pref_cat_studying" maxLength="41">Studado</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_system_wide" maxLength="41">Operaciumo</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Samtempigo</string>
     <string name="pref_cat_scheduling" maxLength="41">Planado</string>
@@ -115,7 +115,7 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Frapeti centron</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
-    <string name="gestures_shake" maxLength="41">Shake device</string>
+    <string name="gestures_shake" maxLength="41">Skui aparaton</string>
     <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
     <string name="double_scrolling_gap" maxLength="41">Duobla rulumado</string>
@@ -130,12 +130,12 @@
     <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigado</string>
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Ĉiam</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Nur je netarifaj retkonektoj</string>
     <string name="sync_media_never">Neniam</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Permesi samtempigon je tarifaj retkonektoj</string>
+    <string name="metered_sync_summary">Se malaktiva, vi ricevos averton dum provi samtempigi uzante tarifan (pagendan) retkonekton</string>
     <string name="backup_limits_frequency">Ofteco</string>
     <string name="backup_limits_lifetime">Daŭro de konservado</string>
     <string name="app_theme" maxLength="41">Temo</string>
@@ -151,7 +151,7 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibri</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumpulsi</string>
     <string name="timeout_answer_text" maxLength="41">Aŭtomate montri respondon</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
+    <string name="timeout_answer_summ2">Montri respondon aŭtomate sen enigi datumojn fare de uzanto. Agordebla en agordoj de kartaro.</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
     <string name="software_render_summ">Aparatara bildigilo estas pli rapida, sed povas kaŭzi problemojn, precipe ĉe Android 8/8.1. Se parto de fasado ĉe la ekrano “ripeti karton” ne aperas, provu aktivigi tiun ĉi agordon.</string>
@@ -171,18 +171,18 @@
     <string name="show_large_answer_buttons" maxLength="41">Grandaj butonoj de respondo</string>
     <string name="show_large_answer_buttons_summ">Montri butonojn de respondo en 2 vicoj</string>
     <string name="show_top_bar" maxLength="41">Montri supran breton</string>
-    <string name="show_top_bar_summ">Montri nombron da kartoj, flagon kaj markon sur la supra breto</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">Montri pliajn kartojn</string>
     <string name="show_progress_summ">Montri nombron da pliaj kartoj</string>
-    <string name="show_eta" maxLength="41">Show ETA</string>
-    <string name="show_eta_summ">Show remaining time</string>
+    <string name="show_eta" maxLength="41">Montri proksimuman tempon</string>
+    <string name="show_eta_summ">Montri proksimuman pluan tempon</string>
     <string name="use_current" maxLength="41">Kartaro por novaj kartoj</string>
     <string name="learn_cutoff" maxLength="41">Limigo de anticipa lernado</string>
     <string name="time_limit" maxLength="41">Limigo de lernada tempero (timebox)</string>
     <string name="day_offset_with_description" maxLength="41">Komenco de tago (0 estas la horo 00:00. 23 estas la horo 23:00)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d horo post noktmezo</item>
+        <item quantity="other">%d horoj post noktmezo</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
@@ -199,9 +199,9 @@
     <string name="thirdparty_apps_title" maxLength="41">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="show_deck_title" maxLength="41">Show deck title</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Lernada ekrano</string>
+    <string name="show_deck_title" maxLength="41">Montri titolon de kartaro</string>
+    <string name="accessibility" maxLength="41">Alirebleco</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Alglui bildojn kiel PNG</string>
     <string name="paste_as_png_summary">Implicite la aplikaĵo Anki algluas bildojn el la tondujo kiel dosierojn JPG por konservi spacon. Vi povas uzi tiun ĉi agordon por alglui ilin kiel PNG.</string>
@@ -213,22 +213,18 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Propra servilo por samtempigado</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ne uzata</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
-        ]]></string>
+    <string name="custom_sync_server_help2"><![CDATA[Alternative al samtempigi kun AnkiWeb, vi povas uzi vian propran samtempigan servilon. Se nenio estas agordita, la implicita servilo de AnkiWeb estos uzata.<a href="%s">Pliaj informoj</a>]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Samtempiga servilo</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">Propra radika atestilo (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klavaro</string>
-    <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="bluetooth">Bludento</string>
+    <string name="answer_buttons" maxLength="41">Butonoj de respondo</string>
     <string name="card" maxLength="41">Karto</string>
     <string name="note" maxLength="41">Noto</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="navigation" maxLength="41">Navigi</string>
+    <string name="media" maxLength="41">Aŭdvidaĵo</string>
+    <string name="misc" maxLength="41">Aliaj</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->
@@ -242,8 +238,8 @@
     <string name="deck_conf_cram_reschedule_summ">Replani karton surbaze de miaj respondoj en tiu ĉi kartaro</string>
     <string name="deck_conf_cram_filter_2_check">Aktivigi duan filtrilon</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
-    <string name="deck_conf_cram_preview_delays" maxLength="41">Preview delays</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays" maxLength="41">Intertempoj por antaŭripeto</string>
+    <string name="deck_conf_cram_preview_delays_summ">Intertempoj estas en sekundoj. La valoro “0” movas karton reen al originala kartaro.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title" maxLength="41">Kunhavigi uzadon de eblaĵoj</string>
@@ -253,32 +249,33 @@
     <string name="type_in_answer_focus" maxLength="41">Marki kampon “enigi respondon”</string>
     <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” dum ripetado</string>
     <!-- About -->
-    <string name="open_changelog">Montri ŝanĝoprotokolon</string>
+    <string name="open_changelog">Montri ŝanĝ-protokolon</string>
     <string name="pref_cat_about_title" maxLength="41">Pri</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="contributors_title">Kontribuantoj</string>
+    <string name="about_contributors_description"><![CDATA[Jen listo de niaj karaj <a href=\"%1$s\">kontribuantoj</a>. Vi ankaŭ povas helpi al AnkiDroid per programi, traduki, donaci <a href=\"%2$s\">kaj pli</a>!]]></string>
+    <string name="license">Permesilo</string>
+    <string name="license_description"><![CDATA[AnkiDroid estas eldonita laŭ la permesiloj <a href=\"%1$s\">GPL-3.0</a> kaj <a href=\"%2$s\">AGPL-3.0</a>, ĝia fontkodo estas disponebla en <a href=\"%3$s\">GitHub</a>.]]></string>
+    <string name="donate_description"><![CDATA[Vi povas subteni evoluigon de AnkiDroid per <a href=\"%1$s\">donaci monon</a>. Ĉiu monsumo estas dankinda.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">Aldoni geston</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
+    <string name="binding_replace_gesture">Anstataŭigi geston</string>
     <string name="binding_add_key">Aldoni klavon</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Anstataŭigi klavon</string>
     <string name="key_picker_default_press_key">Premu klavon</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
-    <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="binding_add_axis">Asigni ludstirilon</string>
+    <string name="axis_picker_move_joystick">Movu per ludstirilo</string>
+    <string name="user_actions" maxLength="41">Agoj de uzanto</string>
+    <string name="user_actions_summary" maxLength="41">Plenumi JavaScript sur la lernada ekrano</string>
+    <string name="user_action_1" maxLength="41">Ago de uzanto #1</string>
+    <string name="user_action_2" maxLength="41">Ago de uzanto #2</string>
+    <string name="user_action_3" maxLength="41">Ago de uzanto #3</string>
+    <string name="user_action_4" maxLength="41">Ago de uzanto #4</string>
+    <string name="user_action_5" maxLength="41">Ago de uzanto #5</string>
+    <string name="user_action_6" maxLength="41">Ago de uzanto #6</string>
+    <string name="user_action_7" maxLength="41">Ago de uzanto #7</string>
+    <string name="user_action_8" maxLength="41">Ago de uzanto #8</string>
+    <string name="user_action_9" maxLength="41">Ago de uzanto #9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Elekti kartflankon</string>
     <string name="card_side_question">Demando</string>
