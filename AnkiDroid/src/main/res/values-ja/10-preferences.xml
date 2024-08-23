@@ -170,7 +170,7 @@
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>
     <string name="show_large_answer_buttons_summ">回答ボタンを２列で表示します</string>
     <string name="show_top_bar" maxLength="41">トップバーを表示</string>
-    <string name="show_top_bar_summ">アプリバーの下に、カードの残り枚数、フラグ、マークの状態を示すバーを表示します</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">残りのカード枚数を表示</string>
     <string name="show_progress_summ">トップバーに、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
     <string name="show_eta" maxLength="41">推定所要時間を表示</string>
@@ -277,6 +277,7 @@
     <string name="user_action_7" maxLength="41">ユーザーアクション 7</string>
     <string name="user_action_8" maxLength="41">ユーザーアクション 8</string>
     <string name="user_action_9" maxLength="41">ユーザーアクション 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">カードの表面 (質問側) と裏面 (解答側) 、どちらでの操作ですか？</string>
     <string name="card_side_question">表面</string>

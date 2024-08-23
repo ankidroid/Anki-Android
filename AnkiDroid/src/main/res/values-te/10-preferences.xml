@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">పెద్ద జవాబు బటన్‌లను చూపండి</string>
     <string name="show_large_answer_buttons_summ">2 వరుసలలో సమాధానం బటన్‌ను ప్రదర్శించు</string>
     <string name="show_top_bar" maxLength="41">ఎగువ పట్టీని చూపు</string>
-    <string name="show_top_bar_summ">కార్డ్ గణనలను చూపండి, ఎగువ బార్‌లో ఫ్లాగ్ చేయండి మరియు గుర్తు పెట్టండి</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">మిగిలిన చూపు</string>
     <string name="show_progress_summ">మిగిలిన కార్డ్ సంఖ్యను చూపు</string>
     <string name="show_eta" maxLength="41">ETA చూపించు</string>
@@ -278,6 +278,7 @@
     <string name="user_action_7" maxLength="41">వినియోగదారు చర్యలు 7</string>
     <string name="user_action_8" maxLength="41">వినియోగదారు చర్యలు 8</string>
     <string name="user_action_9" maxLength="41">వినియోగదారు చర్యలు 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">కార్డ్ వైపు ఎంచుకోండి</string>
     <string name="card_side_question">ప్రశ్న</string>

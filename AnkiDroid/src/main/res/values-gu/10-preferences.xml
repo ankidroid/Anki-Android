@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">મોટા જવાબ બટનો બતાવો</string>
     <string name="show_large_answer_buttons_summ">2 હરોળમાં જવાબ બટન બતાવો</string>
     <string name="show_top_bar" maxLength="41">ટોચની પટ્ટી બતાવો</string>
-    <string name="show_top_bar_summ">ટોચની પટ્ટીમાં કાર્ડ નંબર, ધ્વજ અને પ્રતીક બતાવો</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">બાકીના બતાવો</string>
     <string name="show_progress_summ">બાકીના કાર્ડની સંખ્યા બતાવો</string>
     <string name="show_eta" maxLength="41">ETA બતાવો</string>
@@ -279,6 +279,7 @@
     <string name="user_action_7" maxLength="41">વપરાશકર્તા ક્રિયા 7</string>
     <string name="user_action_8" maxLength="41">વપરાશકર્તા ક્રિયા 8</string>
     <string name="user_action_9" maxLength="41">વપરાશકર્તા ક્રિયા 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">કાર્ડ બાજુ પસંદ કરો</string>
     <string name="card_side_question">પ્રશ્ન</string>

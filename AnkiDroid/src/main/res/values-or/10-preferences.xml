@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
     <string name="show_large_answer_buttons_summ">୨ ଧାଡ଼ିଆ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
     <string name="show_top_bar" maxLength="41">ଶୀର୍ଷ ଦଣ୍ଡିକା ଦେଖାଇବା</string>
-    <string name="show_top_bar_summ">ଶୀର୍ଷ ଦଣ୍ଡିକାରେ ପତ୍ର ଗଣନା, ପତାକା ଏଵଂ ଚିହ୍ନ ଦେଖାଇବା</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">ବାକିତକ ଦେଖାଇବା</string>
     <string name="show_progress_summ">ଅଵଶିଷ୍ଟ ପତ୍ର ଗଣନା ଦେଖାଇବା</string>
     <string name="show_eta" maxLength="41">ଆଗମନର ଆନୁମାନିକ ସମୟ ଦେଖାଅ</string>
@@ -279,6 +279,7 @@
     <string name="user_action_7" maxLength="41">ଉପଭୋକ୍ତା କୃତ୍ୟ ୭</string>
     <string name="user_action_8" maxLength="41">ଉପଭୋକ୍ତା କୃତ୍ୟ ୮</string>
     <string name="user_action_9" maxLength="41">ଉପଭୋକ୍ତା କୃତ୍ୟ ୯</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ପତ୍ର ପାର୍ଶ୍ୱ ଚୟନ କରନ୍ତୁ</string>
     <string name="card_side_question">ପ୍ରଶ୍ନ</string>

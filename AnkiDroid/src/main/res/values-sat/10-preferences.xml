@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">ᱢᱟᱨᱟᱝ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱚᱱ ᱧᱮ ᱚᱪᱚᱭ ᱢᱮ</string>
     <string name="show_large_answer_buttons_summ">᱒ᱰᱷᱟᱰ ᱨᱮ ᱞᱟᱹᱱᱟᱹᱭ ᱵᱚᱴᱳᱱ ᱧᱮᱞ ᱚᱪᱚᱭ ᱢᱮ</string>
     <string name="show_top_bar" maxLength="41">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
-    <string name="show_top_bar_summ">ᱪᱮᱛᱟᱱ ᱵᱟᱨ ᱨᱮ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱠᱚ, ᱯᱚᱛᱠᱟ ᱟᱨ ᱪᱤᱱᱦᱟᱹ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">ᱵᱟᱹᱠᱤ ᱠᱚ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_progress_summ">ᱥᱟᱨᱮᱡ ᱠᱟᱱ ᱠᱟᱰ ᱦᱤᱥᱟᱹᱵ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="show_eta" maxLength="41">ETA ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
@@ -279,6 +279,7 @@
     <string name="user_action_7" maxLength="41">User action 7</string>
     <string name="user_action_8" maxLength="41">User action 8</string>
     <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ᱠᱟᱰ ᱯᱟᱥᱴᱟ ᱪᱚᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="card_side_question">ᱠᱩᱠᱞᱤ</string>
