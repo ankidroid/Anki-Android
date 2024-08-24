@@ -268,7 +268,6 @@ open class CardBrowser :
     private var oldCardTopOffset = 0
     private var shouldRestoreScroll = false
     private var postAutoScroll = false
-    private val onboarding = Onboarding.CardBrowser(this)
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -427,7 +426,6 @@ open class CardBrowser :
                 dialogFragment.dismiss()
             }
         }
-        onboarding.onCreate()
 
         setupFlows()
     }
