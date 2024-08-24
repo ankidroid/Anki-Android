@@ -34,12 +34,14 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendCard
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendNote
 import com.ichi2.anki.AnkiDroidJsAPIConstants.flagCommands
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
@@ -386,9 +388,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         return conversion(apiContract, status)
     }
 
+    @NeedsTest("needs coverage")
     private suspend fun ankiSearchCardWithCallback(apiContract: ApiContract): ByteArray = withContext(Dispatchers.Main) {
         val cards = try {
-            searchForCards(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
+            searchForRows(apiContract.cardSuppliedData, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
+                .map { withCol { getCard(it.cardOrNoteId) } }
         } catch (exc: Exception) {
             activity.webView!!.evaluateJavascript(
                 "console.log('${context.getString(R.string.search_card_js_api_no_results)}')",
@@ -398,7 +402,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             return@withContext convertToByteArray(apiContract, false)
         }
         val searchResult: MutableList<String> = ArrayList()
-        for (card in cards.map { it.card }) {
+        for (card in cards) {
             val jsonObject = JSONObject()
             val fieldsData = card.note(getColUnsafe).fields
             val fieldsName = card.noteType(getColUnsafe).fieldsNames
