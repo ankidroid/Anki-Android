@@ -494,9 +494,6 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
         startLoadingCollection()
-        // Onboarding must be initialised after creating view
-        val onboarding = Onboarding.NoteEditor(this)
-        onboarding.onCreate()
         // TODO this callback doesn't handle predictive back navigation!
         // see #14678, added to temporarily fix for a bug
         requireActivity().onBackPressedDispatcher.addCallback(this) {

@@ -21,7 +21,6 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.OnboardingUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.launchCatchingTask
@@ -80,11 +79,6 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_lock_database_key).setOnPreferenceClickListener {
             Timber.w("Toggling database lock")
             launchCatchingTask { CollectionManager.withCol { Thread.sleep(1000 * 86400) } }
-            false
-        }
-        // Reset onboarding
-        requirePreference<Preference>(R.string.pref_reset_onboarding_key).setOnPreferenceClickListener {
-            OnboardingUtils.reset(requireContext())
             false
         }
 

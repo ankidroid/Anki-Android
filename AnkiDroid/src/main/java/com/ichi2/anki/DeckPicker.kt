@@ -584,8 +584,6 @@ open class DeckPicker :
 
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        Onboarding.DeckPicker(this, recyclerViewLayoutManager).onCreate()
-
         launchShowingHidingEssentialFileMigrationProgressDialog()
 
         InitialActivity.checkWebviewVersion(packageManager, this)

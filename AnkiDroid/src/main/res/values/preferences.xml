@@ -179,8 +179,6 @@
     <string name="new_congrats_screen_pref_key">new_congrats_screen</string>
     <string name="new_reviewer_pref_key">newReviewer</string>
     <string name="new_reviewer_options_key">newReviewerOptions</string>
-    <string name="pref_show_onboarding_key">showOnboarding</string>
-    <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <!-- Developer options > Create fake media -->
     <string name="pref_fill_collection_key">fillCollection</string>

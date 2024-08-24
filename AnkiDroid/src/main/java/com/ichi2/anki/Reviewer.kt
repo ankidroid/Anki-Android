@@ -193,7 +193,6 @@ open class Reviewer :
 
     @VisibleForTesting
     protected val processor = PeripheralKeymap(this, this)
-    private val onboarding = Onboarding.Reviewer(this)
 
     private val addNoteLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -783,9 +782,6 @@ open class Reviewer :
                 }
             }
         }
-        if (undoEnabled) {
-            onboarding.onUndoButtonEnabled()
-        }
         val toggleWhiteboardIcon = menu.findItem(R.id.action_toggle_whiteboard)
         val toggleStylusIcon = menu.findItem(R.id.action_toggle_stylus)
         val hideWhiteboardIcon = menu.findItem(R.id.action_hide_whiteboard)
@@ -865,8 +861,6 @@ open class Reviewer :
             voicePlaybackIcon.setTitle(R.string.menu_enable_voice_playback)
         }
 
-        onboarding.onCreate()
-
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         tintOverflowMenuIcons(menu, skipIf = { isFlagItem(it) })
 
@@ -935,7 +929,6 @@ open class Reviewer :
 
     override fun displayAnswerBottomBar() {
         super.displayAnswerBottomBar()
-        onboarding.onAnswerShown()
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
