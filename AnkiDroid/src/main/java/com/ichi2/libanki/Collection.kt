@@ -32,6 +32,8 @@ import androidx.annotation.WorkerThread
 import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.collection.opChanges
+import anki.collection.opChangesWithCount
 import anki.config.ConfigKey
 import anki.config.Preferences
 import anki.config.copy
@@ -571,8 +573,21 @@ class Collection(
         }
     }
 
-    fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
+    fun removeCardsAndOrphanedNotes(cardIds: List<Long>): OpChangesWithCount {
+        // TODO: This should be handled in the backend with https://forums.ankiweb.net/t/removecards-should-return-opchangeswithcount/48597
+        Timber.d("removing ${cardIds.size} card(s)")
+        // Note: we do not want to remove the associated notes.
+        // This is for 'empty cards'  (e.g. fixing when cloze deletions are removed)
         backend.removeCards(cardIds)
+
+        return opChangesWithCount {
+            count = cardIds.size
+            changes = opChanges {
+                card = true
+                browserTable = true
+                studyQueues = true
+            }
+        }
     }
 
     fun addNote(note: Note, deckId: DeckId): OpChanges {

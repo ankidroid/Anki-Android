@@ -85,6 +85,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import anki.collection.OpChanges
+import anki.collection.OpChangesWithCount
 import anki.sync.SyncStatusResponse
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -2582,6 +2583,7 @@ open class DeckPicker :
         updateDeckList()
     }
 
+    @NeedsTest("ChangeManager receives changes only on success")
     private fun handleEmptyCards() {
         launchCatchingTask {
             val emptyCids = withProgress(R.string.emtpy_cards_finding) {
@@ -2598,8 +2600,8 @@ open class DeckPicker :
                     setMessage(getString(R.string.empty_cards_count, emptyCids.size))
                     setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                         launchCatchingTask {
-                            withProgress(TR.emptyCardsDeleting()) {
-                                withCol { removeCardsAndOrphanedNotes(emptyCids) }
+                            withProgress<OpChangesWithCount>(TR.emptyCardsDeleting()) {
+                                undoableOp { return@undoableOp removeCardsAndOrphanedNotes(emptyCids) }
                             }
                         }
                         showSnackbar(getString(R.string.empty_cards_deleted, emptyCids.size))
