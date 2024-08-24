@@ -2,7 +2,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
-    android:title="@string/button_backup">
+    android:title="@string/pref_backup_title">
     <!-- Includes modified text from `TR.preferencesBackupExplanation()`
          and `TR.preferencesNoteMediaIsNotBackedUp()`. -->
     <com.ichi2.preferences.HtmlHelpPreference

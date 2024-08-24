@@ -304,6 +304,9 @@ this formatter is used if the bind only applies to both the question and the ans
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
+    <string name="pref_backup_title" maxLength="41"
+        comment="Titles for Backup category or screen in Settings. Noun."
+        >Backup</string>
     <string name="pref__backups_help__summary"><![CDATA[
         AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
