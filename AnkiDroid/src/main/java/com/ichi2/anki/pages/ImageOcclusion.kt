@@ -26,6 +26,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.themes.setTransparentStatusBar
 import org.json.JSONObject
 import timber.log.Timber
 
@@ -33,7 +34,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().setTransparentStatusBar()
         with(requireActivity()) {
             onBackPressedDispatcher.addCallback(this) {
                 DiscardChangesDialog.showDialog(this@with) {
