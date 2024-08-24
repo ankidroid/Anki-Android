@@ -28,12 +28,13 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.themes.setTransparentStatusBar
 
 class Statistics : PageFragment(R.layout.statistics) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().setTransparentStatusBar()
         view.findViewById<AppBarLayout>(R.id.app_bar)
             .addLiftOnScrollListener { _, backgroundColor ->
                 activity?.window?.statusBarColor = backgroundColor

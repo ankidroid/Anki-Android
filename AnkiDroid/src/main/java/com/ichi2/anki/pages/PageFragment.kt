@@ -30,6 +30,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.themes.Themes
+import com.ichi2.themes.setTransparentStatusBar
 import timber.log.Timber
 import kotlin.reflect.KClass
 
@@ -65,7 +66,7 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
             webViewClient = onCreateWebViewClient(savedInstanceState)
             webChromeClient = PageChromeClient()
         }
-
+        requireActivity().setTransparentStatusBar()
         val arguments = requireArguments()
         val path = requireNotNull(arguments.getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
         val title = arguments.getString(TITLE_ARG_KEY)
