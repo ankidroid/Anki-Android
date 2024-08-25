@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.anki.preferences
 
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.ui.preferences.screens.BackupLimitsPresenter
 
@@ -35,5 +36,10 @@ class BackupLimitsSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // initialization handled by BackupLimitsPresenter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        requireActivity().title = CollectionManager.TR.preferencesBackups()
     }
 }
