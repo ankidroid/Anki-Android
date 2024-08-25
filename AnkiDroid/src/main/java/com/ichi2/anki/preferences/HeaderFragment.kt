@@ -24,6 +24,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
@@ -38,6 +39,9 @@ class HeaderFragment : PreferenceFragmentCompat() {
         selectedHeaderPreferenceKey = savedInstanceState?.getString(KEY_SELECTED_HEADER_PREF) ?: DEFAULT_SELECTED_HEADER
 
         highlightHeaderPreference(requirePreference<HeaderPreference>(selectedHeaderPreferenceKey))
+
+        requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
+            .title = CollectionManager.TR.preferencesBackups()
 
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
             if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
