@@ -34,6 +34,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.work.Configuration
+import anki.collection.OpChanges
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
@@ -53,11 +54,13 @@ import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.ChangeManager
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.Permissions
+import com.ichi2.widget.DeckPickerWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -71,7 +74,7 @@ import java.util.Locale
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application(), Configuration.Provider {
+open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.Subscriber {
     /** An exception if the WebView subsystem fails to load  */
     private var webViewError: Throwable? = null
     private val notifications = MutableLiveData<Void?>()
@@ -116,6 +119,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
 
         // Get preferences
         val preferences = this.sharedPrefs()
+
+        // Ensures any change is propagated to widgets
+        ChangeManager.subscribe(this)
 
         CrashReportService.initialize(this)
         val logType = LogType.value
@@ -277,6 +283,23 @@ open class AnkiDroidApp : Application(), Configuration.Provider {
             sendExceptionReport(e, "setAcceptFileSchemeCookies")
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
+        }
+    }
+
+    /**
+     * Callback method invoked when operations that affect the app state are executed.
+     * If relevant changes related to the study queues are detected, the Deck Picker Widgets
+     * are updated accordingly.
+     *
+     * @param changes The set of changes that occurred.
+     * @param handler An optional handler that can be used for custom processing (unused here).
+     */
+    override fun opExecuted(changes: OpChanges, handler: Any?) {
+        Timber.d("ChangeSubscriber - opExecuted called with changes: $changes")
+        if (changes.studyQueues) {
+            DeckPickerWidget.updateDeckPickerWidgets(this)
+        } else {
+            Timber.d("No relevant changes to update the widget")
         }
     }
 

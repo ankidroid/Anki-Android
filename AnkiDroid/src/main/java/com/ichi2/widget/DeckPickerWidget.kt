@@ -18,6 +18,7 @@ package com.ichi2.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
@@ -139,6 +140,26 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     remoteViews.addView(R.id.deckCollection, deckView)
                 }
                 appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+            }
+        }
+
+        /**
+         * Updates the Deck Picker Widgets based on the current state of the application.
+         * It fetches the App Widget IDs and updates each widget with the associated deck IDs.
+         */
+        fun updateDeckPickerWidgets(context: Context) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+
+            val provider = ComponentName(context, DeckPickerWidget::class.java)
+            Timber.d("Fetching appWidgetIds for provider: $provider")
+
+            val appWidgetIds = appWidgetManager.getAppWidgetIds(provider)
+            Timber.d("AppWidgetIds to update: ${appWidgetIds.joinToString(", ")}")
+
+            for (appWidgetId in appWidgetIds) {
+                val widgetPreferences = WidgetPreferences(context)
+                val deckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidget(appWidgetId)
+                updateWidget(context, appWidgetManager, appWidgetId, deckIds)
             }
         }
     }
