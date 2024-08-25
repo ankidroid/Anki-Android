@@ -68,12 +68,6 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         const val ACTION_APPWIDGET_UPDATE = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
         /**
-         * Custom action to update the widget.
-         * This constant is used to trigger the widget update via a custom broadcast intent.
-         */
-        const val ACTION_UPDATE_WIDGET = "com.ichi2.widget.ACTION_UPDATE_WIDGET"
-
-        /**
          * Key used for passing the selected deck IDs in the intent extras.
          */
         const val EXTRA_SELECTED_DECK_IDS = "deck_picker_widget_selected_deck_ids"
@@ -174,6 +168,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 Timber.d("Selected deck IDs: ${selectedDeckIds.joinToString(", ")} for widget ID: $widgetId")
                 updateWidget(context, appWidgetManager, widgetId, selectedDeckIds)
             }
+            setRecurringAlarm(context, widgetId, DeckPickerWidget::class.java)
         }
 
         Timber.d("Widget update process completed for appWidgetIds: ${appWidgetIds.joinToString(", ")}")
@@ -217,6 +212,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
                 if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
                     Timber.d("Deleting widget with ID: $appWidgetId")
+                    cancelRecurringAlarm(context, appWidgetId, DeckPickerWidget::class.java)
                     widgetPreferences.deleteDeckPickerWidgetData(appWidgetId)
                 } else {
                     Timber.e("Invalid widget ID received in ACTION_APPWIDGET_DELETED")
@@ -249,6 +245,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         val widgetPreferences = WidgetPreferences(context)
 
         appWidgetIds?.forEach { widgetId ->
+            cancelRecurringAlarm(context, widgetId, DeckPickerWidget::class.java)
             widgetPreferences.deleteDeckPickerWidgetData(widgetId)
         }
     }
