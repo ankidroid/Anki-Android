@@ -33,6 +33,7 @@ import anki.collection.OpChangesAfterUndo
 import anki.collection.OpChangesOnly
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
+import anki.collection.opChanges
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
@@ -102,6 +103,29 @@ object ChangeManager {
             else -> TODO("unhandled change type")
         }
         notifySubscribers(opChanges, initiator)
+    }
+
+    fun notifySubscribersAllValuesChanged(handler: Any? = null) {
+        notifySubscribers(ALL, handler)
+    }
+
+    /**
+     * An OpChanges that ensures that all data should be considered as potentially changed.
+     */
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    internal val ALL = opChanges {
+        card = true
+        note = true
+        deck = true
+        tag = true
+        notetype = true
+        config = true
+        deckConfig = true
+        mtime = true
+        browserTable = true
+        browserSidebar = true
+        noteText = true
+        studyQueues = true
     }
 }
 

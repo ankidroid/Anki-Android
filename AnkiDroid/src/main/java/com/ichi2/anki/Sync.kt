@@ -33,6 +33,7 @@ import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.worker.SyncMediaWorker
+import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.fullUploadOrDownload
 import com.ichi2.libanki.syncCollection
@@ -161,6 +162,7 @@ fun DeckPicker.handleNewSync(
             throw exc
         }
         withCol { notetypes.clearCache() }
+        notifySubscribersAllValuesChanged(deckPicker)
         setLastSyncTimeToNow()
         refreshState()
     }
