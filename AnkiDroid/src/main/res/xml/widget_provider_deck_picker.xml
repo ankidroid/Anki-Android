@@ -12,7 +12,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/widget_deck_picker_large"
     android:initialLayout="@layout/widget_deck_picker_large"
-    android:configure="com.ichi2.widget.DeckPickerWidgetConfig"
+    android:configure="com.ichi2.widget.deckpicker.DeckPickerWidgetConfig"
     android:widgetFeatures="reconfigurable"
     android:minWidth="203dp"
     android:minHeight="50dp"

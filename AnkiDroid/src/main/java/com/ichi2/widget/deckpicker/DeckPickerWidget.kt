@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.widget
+package com.ichi2.widget.deckpicker
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -29,6 +29,11 @@ import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.pages.DeckOptions
+import com.ichi2.widget.ACTION_UPDATE_WIDGET
+import com.ichi2.widget.AnalyticsWidgetProvider
+import com.ichi2.widget.WidgetPreferences
+import com.ichi2.widget.cancelRecurringAlarm
+import com.ichi2.widget.setRecurringAlarm
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
