@@ -99,6 +99,8 @@ sharedPreferencesMock = "1.2.4"
 slackKeeper = "0.16.1"
 slf4jTimber = "3.1"
 timber = "5.0.1"
+# https://github.com/Triple-T/gradle-play-publisher/releases
+# In the past, releases have been published before the changelog
 triplet = "3.10.1"
 turbine = "1.1.0"
 
