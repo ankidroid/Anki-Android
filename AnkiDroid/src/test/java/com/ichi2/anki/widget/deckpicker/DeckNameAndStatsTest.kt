@@ -14,11 +14,11 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.widget
+package com.ichi2.anki.widget.deckpicker
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.widget.getDeckNameAndStats
+import com.ichi2.widget.deckpicker.getDeckNameAndStats
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals

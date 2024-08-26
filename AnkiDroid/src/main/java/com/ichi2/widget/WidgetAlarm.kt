@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
+import com.ichi2.widget.deckpicker.AppWidgetId
 import timber.log.Timber
 import kotlin.time.Duration.Companion.minutes
 

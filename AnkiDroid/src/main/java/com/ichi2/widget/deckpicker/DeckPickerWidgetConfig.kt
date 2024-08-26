@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.widget
+package com.ichi2.widget.deckpicker
 
 import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver
@@ -44,6 +44,8 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.widget.WidgetConfigScreenAdapter
+import com.ichi2.widget.WidgetPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

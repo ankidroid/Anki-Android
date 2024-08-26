@@ -60,7 +60,7 @@ import com.ichi2.utils.ExceptionUtil
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.LanguageUtil
 import com.ichi2.utils.Permissions
-import com.ichi2.widget.DeckPickerWidget
+import com.ichi2.widget.deckpicker.DeckPickerWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

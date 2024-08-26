@@ -48,7 +48,7 @@ import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
-import com.ichi2.widget.DeckPickerWidgetConfig
+import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
 import java.util.function.Function

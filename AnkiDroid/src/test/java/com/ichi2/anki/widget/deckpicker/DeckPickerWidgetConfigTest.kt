@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.widget
+package com.ichi2.anki.widget.deckpicker
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
@@ -27,8 +27,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.widget.DeckPickerWidgetConfig
 import com.ichi2.widget.WidgetPreferences
+import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
