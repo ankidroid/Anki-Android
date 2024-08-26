@@ -2280,7 +2280,6 @@ open class DeckPicker :
         dueTree = result
         launchCatchingTask { renderPage(collectionHasNoCards) }
         // Update the mini statistics bar as well
-        reviewSummaryTextView.setSingleLine()
         launchCatchingTask {
             reviewSummaryTextView.text = withCol {
                 sched.studiedToday()
