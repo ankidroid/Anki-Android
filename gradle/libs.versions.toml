@@ -99,7 +99,7 @@ sharedPreferencesMock = "1.2.4"
 slackKeeper = "0.16.1"
 slf4jTimber = "3.1"
 timber = "5.0.1"
-triplet = "3.10.1"
+triplet = "3.11.0"
 turbine = "1.1.0"
 
 [libraries]
