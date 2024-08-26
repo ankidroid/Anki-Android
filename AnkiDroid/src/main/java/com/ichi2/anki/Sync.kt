@@ -37,6 +37,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.async.AsyncOperation
+import com.ichi2.libanki.ChangeManager.notifySubscribersAllValuesChanged
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.fullUploadOrDownload
 import com.ichi2.libanki.syncCollection
@@ -167,6 +168,7 @@ fun DeckPicker.handleNewSync(
             throw exc
         }
         withCol { notetypes.clearCache() }
+        notifySubscribersAllValuesChanged(deckPicker)
         setLastSyncTimeToNow()
         refreshState()
     }
