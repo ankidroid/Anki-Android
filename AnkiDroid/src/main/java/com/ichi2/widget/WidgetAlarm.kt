@@ -84,7 +84,7 @@ private fun getPendingIntent(
 }
 
 /**
- * Ensure a recurring alarm is set to update the widget every 10 minutes.
+ * Ensure a recurring alarm is set to update the widget every 1 minute.
  *
  * If the alarm is already set for the widget, this method does nothing.
  * This ensures that multiple alarms are not created for the same widget,
@@ -109,18 +109,15 @@ fun setRecurringAlarm(
     Timber.v("Creating a new recurring alarm PendingIntent for widget ID: $appWidgetId")
 
     val alarmManager = alarmManager(context)
-    val newPendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = true)
+    val newPendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = true) ?: return
 
-    // Set alarm to trigger every 10 minutes
-    val TEN_MINUTES_MILLIS = 10.minutes.inWholeMilliseconds
-    if (newPendingIntent != null) {
-        alarmManager.setRepeating(
-            AlarmManager.ELAPSED_REALTIME,
-            SystemClock.elapsedRealtime() + TEN_MINUTES_MILLIS,
-            TEN_MINUTES_MILLIS,
-            newPendingIntent
-        )
-    }
+    val ONE_MINUTE_MILLIS = 1.minutes.inWholeMilliseconds
+    alarmManager.setRepeating(
+        AlarmManager.ELAPSED_REALTIME,
+        SystemClock.elapsedRealtime() + ONE_MINUTE_MILLIS,
+        ONE_MINUTE_MILLIS,
+        newPendingIntent
+    )
 }
 
 /**

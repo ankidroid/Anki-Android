@@ -92,9 +92,6 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
          *                Each ID corresponds to a specific deck, and the view will
          *                contain exactly the decks whose IDs are in this list.
          *
-         * TODO: If the deck is completely empty (no cards at all), display a Snackbar or Toast message
-         *       saying "The deck is empty" instead of opening any activity.
-         *
          */
         fun updateWidget(
             context: Context,
@@ -264,7 +261,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
     override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
         if (context == null) {
-            Timber.e("Context is null in onDeleted")
+            Timber.w("Context is null in onDeleted")
             return
         }
 

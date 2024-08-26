@@ -29,6 +29,8 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.widget.WidgetPreferences
 import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -85,8 +87,8 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
         activity.saveSelectedDecksToPreferencesDeckPickerWidget()
 
         // Verify saved decks
-        val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidget(1)
-        assert(selectedDeckIds.contains(deck1.deckId))
+        val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidget(1).toList()
+        assertThat(selectedDeckIds.contains(deck1.deckId), equalTo(true))
     }
 
     /**
@@ -112,7 +114,7 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
         val adapter = recyclerView.adapter
 
         // Verify the adapter has the correct item count
-        assert(adapter != null && adapter.itemCount == deckIds.size)
+        assertThat(adapter?.itemCount, equalTo(deckIds.size))
     }
 
     /**
@@ -128,16 +130,16 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
 
         // Initially, no decks should be selected
         activity.updateViewVisibility()
-        assert(noDecksPlaceholder.visibility == View.VISIBLE)
-        assert(widgetConfigContainer.visibility == View.GONE)
+        assertThat(noDecksPlaceholder.visibility, equalTo(View.VISIBLE))
+        assertThat(widgetConfigContainer.visibility, equalTo(View.GONE))
 
         // Add a deck and update view visibility
         val deck = DeckSelectionDialog.SelectableDeck(1, "Deck 1")
         activity.deckAdapter.addDeck(deck)
         activity.updateViewVisibility()
 
-        assert(noDecksPlaceholder.visibility == View.GONE)
-        assert(widgetConfigContainer.visibility == View.VISIBLE)
+        assertThat(noDecksPlaceholder.visibility, equalTo(View.GONE))
+        assertThat(widgetConfigContainer.visibility, equalTo(View.VISIBLE))
     }
 
     /**
@@ -153,6 +155,6 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
 
         // Verify deck is added to adapter
         val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks)
-        assert(recyclerView.adapter?.itemCount == 1)
+        assertThat(recyclerView.adapter?.itemCount, equalTo(1))
     }
 }

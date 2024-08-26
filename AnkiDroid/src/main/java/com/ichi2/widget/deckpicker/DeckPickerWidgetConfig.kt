@@ -145,6 +145,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         setupDoneButton()
 
         // TODO: Implement multi-select functionality so that user can select desired decks in once.
+        // TODO: Implement a functionality to hide already selected deck.
         findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker).setOnClickListener {
             showDeckSelectionDialog()
         }
