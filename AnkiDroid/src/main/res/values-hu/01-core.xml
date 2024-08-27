@@ -52,10 +52,8 @@
     <string name="help">Segítség</string>
     <string name="drawing">Rajz</string>
     <string name="send_feedback">Visszajelzés küldése</string>
-    <string name="studyoptions_due_today">Ma esedékes:</string>
-    <string name="studyoptions_new_total">Összes új kártya:</string>
-    <string name="studyoptions_total_cards">Összes kártya:</string>
     <string name="studyoptions_start">Gyakorlás</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Nagyítás</string>
     <string name="collapse">Összecsukás</string>

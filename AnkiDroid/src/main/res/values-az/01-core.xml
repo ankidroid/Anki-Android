@@ -52,10 +52,8 @@
     <string name="help">Kömək</string>
     <string name="drawing">Rəsm</string>
     <string name="send_feedback">Çətinliyi bildir</string>
-    <string name="studyoptions_due_today">Bugün vaxtı bitir:</string>
-    <string name="studyoptions_new_total">Ümumi yeni kart:</string>
-    <string name="studyoptions_total_cards">Ümumi kart:</string>
     <string name="studyoptions_start">Öyrənməyə başla</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Genişləndir</string>
     <string name="collapse">Daralt</string>

@@ -52,10 +52,8 @@
     <string name="help">Yordam</string>
     <string name="drawing">Rasm chizish</string>
     <string name="send_feedback">Fikr-mulohazalarni jo\'natish</string>
-    <string name="studyoptions_due_today">Bugun tugashi lozim:</string>
-    <string name="studyoptions_new_total">Barcha yangi kartalar:</string>
-    <string name="studyoptions_total_cards">Barcha kartalar:</string>
     <string name="studyoptions_start">O\'rganish</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>

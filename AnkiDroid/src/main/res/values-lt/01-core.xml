@@ -52,10 +52,8 @@
     <string name="help">Pagalba</string>
     <string name="drawing">Brėžiniai</string>
     <string name="send_feedback">Siųsti atsiliepimą</string>
-    <string name="studyoptions_due_today">Šiandien numatyta:</string>
-    <string name="studyoptions_new_total">Iš viso naujų kortelių:</string>
-    <string name="studyoptions_total_cards">Iš viso kortelių:</string>
     <string name="studyoptions_start">Mokytis</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Išskleisti</string>
     <string name="collapse">Suskleisti</string>

@@ -52,10 +52,8 @@
     <string name="help">Даведка</string>
     <string name="drawing">Маляванне</string>
     <string name="send_feedback">Адправіць водгук</string>
-    <string name="studyoptions_due_today">На сёння:</string>
-    <string name="studyoptions_new_total">Усяго новых картак:</string>
-    <string name="studyoptions_total_cards">Усяго картак:</string>
     <string name="studyoptions_start">Вучыць</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Разгарнуць</string>
     <string name="collapse">Згарнуць</string>

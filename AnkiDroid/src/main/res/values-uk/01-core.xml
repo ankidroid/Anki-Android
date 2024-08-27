@@ -52,10 +52,8 @@
     <string name="help">Допомога</string>
     <string name="drawing">Креслення</string>
     <string name="send_feedback">Надіслати відгук</string>
-    <string name="studyoptions_due_today">На сьогодні:</string>
-    <string name="studyoptions_new_total">Всього нових карток:</string>
-    <string name="studyoptions_total_cards">Всього карток:</string>
     <string name="studyoptions_start">Вивчати</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Розгорнути</string>
     <string name="collapse">Згорнути</string>

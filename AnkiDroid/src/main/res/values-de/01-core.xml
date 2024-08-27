@@ -52,10 +52,8 @@
     <string name="help">Hilfe</string>
     <string name="drawing">Zeichnung</string>
     <string name="send_feedback">Rückmeldung senden</string>
-    <string name="studyoptions_due_today">Heute fällig:</string>
-    <string name="studyoptions_new_total">Neue Karten gesamt:</string>
-    <string name="studyoptions_total_cards">Karten gesamt:</string>
     <string name="studyoptions_start">Lernen</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Ausklappen</string>
     <string name="collapse">Einklappen</string>

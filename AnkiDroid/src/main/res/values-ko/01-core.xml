@@ -52,10 +52,8 @@
     <string name="help">도움말</string>
     <string name="drawing">그리기</string>
     <string name="send_feedback">의견 보내기</string>
-    <string name="studyoptions_due_today">오늘 학습할 카드:</string>
-    <string name="studyoptions_new_total">전체 새 카드:</string>
-    <string name="studyoptions_total_cards">전체 카드:</string>
     <string name="studyoptions_start">학습</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">확장</string>
     <string name="collapse">감추기</string>

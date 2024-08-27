@@ -52,10 +52,8 @@
     <string name="help">Кӯмак</string>
     <string name="drawing">Расмкашӣ</string>
     <string name="send_feedback">Фикру мулоҳиза фиристодан</string>
-    <string name="studyoptions_due_today">Имрӯз</string>
-    <string name="studyoptions_new_total">Ҳамаги кортҳои нав</string>
-    <string name="studyoptions_total_cards">Ҳамаги кортҳо</string>
     <string name="studyoptions_start">Омӯхтан</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Васеъ кардан </string>
     <string name="collapse">Фурӯпушоӣ</string>

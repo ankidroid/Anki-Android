@@ -52,10 +52,8 @@
     <string name="help">Hjálp</string>
     <string name="drawing">Drawing</string>
     <string name="send_feedback">Send feedback</string>
-    <string name="studyoptions_due_today">Due today:</string>
-    <string name="studyoptions_new_total">Samtal nýrra spilanna:</string>
-    <string name="studyoptions_total_cards">Samtal spilanna:</string>
     <string name="studyoptions_start">Læra</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>

@@ -52,10 +52,8 @@
     <string name="help">Palīdzība</string>
     <string name="drawing">Zīmējums</string>
     <string name="send_feedback">Sūtīt atsauksmes</string>
-    <string name="studyoptions_due_today">Paredzēts šodienai:</string>
-    <string name="studyoptions_new_total">Kopskaits jauno kāršu:</string>
-    <string name="studyoptions_total_cards">Kopskaits kāršu:</string>
     <string name="studyoptions_start">Mācīties</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>

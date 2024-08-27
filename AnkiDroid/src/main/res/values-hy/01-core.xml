@@ -52,10 +52,8 @@
     <string name="help">Օգնություն</string>
     <string name="drawing">Նկարչություն</string>
     <string name="send_feedback">Կարծիք թողնել</string>
-    <string name="studyoptions_due_today">Այսօրվա կրկնելիք՝</string>
-    <string name="studyoptions_new_total">Նոր քարտերի քանակը՝</string>
-    <string name="studyoptions_total_cards">Քարտերի քանակը՝</string>
     <string name="studyoptions_start">Սովորել</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Ընդարձակել</string>
     <string name="collapse">Կոծկել</string>

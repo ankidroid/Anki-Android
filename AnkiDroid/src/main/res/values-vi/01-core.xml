@@ -52,10 +52,8 @@
     <string name="help">Trợ giúp</string>
     <string name="drawing">Bản vẽ</string>
     <string name="send_feedback">Gửi phản hồi</string>
-    <string name="studyoptions_due_today">Tới hạn hôm nay:</string>
-    <string name="studyoptions_new_total">Tổng số thẻ mới:</string>
-    <string name="studyoptions_total_cards">Tổng số thẻ:</string>
     <string name="studyoptions_start">Bắt đầu học</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Mở rộng</string>
     <string name="collapse">Thu gọn</string>

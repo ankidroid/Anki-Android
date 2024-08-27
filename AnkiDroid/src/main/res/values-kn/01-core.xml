@@ -52,10 +52,8 @@
     <string name="help">ಸಹಾಯ </string>
     <string name="drawing">ಚಿತ್ರ</string>
     <string name="send_feedback">ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ </string>
-    <string name="studyoptions_due_today">ಈವತ್ತು ಕೊಡಬೇಕಿದೆ:</string>
-    <string name="studyoptions_new_total">ಒಟ್ಟು ಹೊಸ ಕಾರ್ಡ್‌ಗಳು: </string>
-    <string name="studyoptions_total_cards">ಒಟ್ಟು ಕಾರ್ಡ್‌ಗಳು:</string>
     <string name="studyoptions_start">ಅಧ್ಯಯನ </string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ವಿಸ್ತರಿಸಿ </string>
     <string name="collapse">ಬೀಳಿಸಿ</string>

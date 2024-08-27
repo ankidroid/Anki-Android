@@ -52,10 +52,8 @@
     <string name="help">Hulp</string>
     <string name="drawing">Skets</string>
     <string name="send_feedback">Stuur terugvoering</string>
-    <string name="studyoptions_due_today">Vandag uitstaande:</string>
-    <string name="studyoptions_new_total">Totaal nuwe kaarte:</string>
-    <string name="studyoptions_total_cards">Totaal kaarte:</string>
     <string name="studyoptions_start">Studeer</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Vergroot</string>
     <string name="collapse">Verklein</string>

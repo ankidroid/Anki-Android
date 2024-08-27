@@ -52,10 +52,8 @@
     <string name="help">Туслах хэсэг</string>
     <string name="drawing">Зураг нэмэх</string>
     <string name="send_feedback">Санал хүсэлт илгээх</string>
-    <string name="studyoptions_due_today">Өнөөдрийн дотор:</string>
-    <string name="studyoptions_new_total">Нийт шинэ картнуудын тоо:</string>
-    <string name="studyoptions_total_cards">Нийт картнууд:</string>
     <string name="studyoptions_start">Эхлэх</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Дэд цуглуулгуудыг харах</string>
     <string name="collapse">Дэд цуглуулгуудыг нуух</string>

@@ -52,10 +52,8 @@
     <string name="help">सहायता</string>
     <string name="drawing">चित्र कथा</string>
     <string name="send_feedback">अभिप्राय पाठवा</string>
-    <string name="studyoptions_due_today">आज शेवटचा दिवस:</string>
-    <string name="studyoptions_new_total">एकुण नविन कार्ड:</string>
-    <string name="studyoptions_total_cards">एकुण कार्ड:</string>
     <string name="studyoptions_start">अभ्यास शुरू करा</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>

@@ -52,10 +52,8 @@
     <string name="help">ሓገዝ</string>
     <string name="drawing">Drawing</string>
     <string name="send_feedback">ርእይቶ ስደድ</string>
-    <string name="studyoptions_due_today">ናይ ሎሚ ዕማም</string>
-    <string name="studyoptions_new_total">ጠቅላላ ሓደስቲ ካርድታት:</string>
-    <string name="studyoptions_total_cards">ጠቅላላ ካርድታት:</string>
     <string name="studyoptions_start">መጽናዕቲ</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ዘርግሕ</string>
     <string name="collapse">ኣብ ሓደ ኣኪብ</string>

@@ -52,10 +52,8 @@
     <string name="help">Ajutor</string>
     <string name="drawing">Desen</string>
     <string name="send_feedback">Trimite recenzie</string>
-    <string name="studyoptions_due_today">Pentru astăzi:</string>
-    <string name="studyoptions_new_total">Totalul cardurilor noi:</string>
-    <string name="studyoptions_total_cards">Total carduri:</string>
     <string name="studyoptions_start">Studiază Acum</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Extindeți</string>
     <string name="collapse">Restrângeți</string>

@@ -52,10 +52,8 @@
     <string name="help">مدد</string>
     <string name="drawing">تصور لگائے </string>
     <string name="send_feedback">فیڈ بیک بھیجیں</string>
-    <string name="studyoptions_due_today">آج کے لیے:</string>
-    <string name="studyoptions_new_total">کل نئے کارڈ:</string>
-    <string name="studyoptions_total_cards">کل کارڈ:</string>
     <string name="studyoptions_start">مطالعہ</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">پھیلائیں</string>
     <string name="collapse">بند کریں</string>

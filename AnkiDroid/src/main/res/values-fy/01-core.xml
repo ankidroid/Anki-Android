@@ -52,10 +52,8 @@
     <string name="help">Help</string>
     <string name="drawing">Tekenje</string>
     <string name="send_feedback">Weromkeppeling jaan</string>
-    <string name="studyoptions_due_today">Hjoed te ferhearre:</string>
-    <string name="studyoptions_new_total">Totaal nije oantal kaarten:</string>
-    <string name="studyoptions_total_cards">Totaal oantal kaarten:</string>
     <string name="studyoptions_start">Stúdzje</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Sjen litte</string>
     <string name="collapse">Ferbergje</string>

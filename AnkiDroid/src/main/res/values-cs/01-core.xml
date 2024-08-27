@@ -52,10 +52,8 @@
     <string name="help">Nápověda</string>
     <string name="drawing">Kreslení</string>
     <string name="send_feedback">Odeslat zpětnou vazbu</string>
-    <string name="studyoptions_due_today">Dnes ke zkoušení:</string>
-    <string name="studyoptions_new_total">Celkem nových karet:</string>
-    <string name="studyoptions_total_cards">Celkem karet:</string>
     <string name="studyoptions_start">Studovat</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbalit</string>
     <string name="collapse">Sbalit</string>
