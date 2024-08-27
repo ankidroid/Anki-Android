@@ -24,7 +24,6 @@ import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.getMediaBaseUrl
 import com.ichi2.anki.AndroidTtsError
-import com.ichi2.anki.AndroidTtsError.TtsErrorCode
 import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper.getMediaDirectory
@@ -341,7 +340,7 @@ class CardMediaPlayer : Closeable {
         }
         if (player == null) {
             Timber.v("timeout waiting for TTS Player")
-            val error = AndroidTtsError(TtsErrorCode.APP_TTS_INIT_TIMEOUT)
+            val error = AndroidTtsError.InitTimeout
             soundErrorListener?.onTtsError(error, isAutomaticPlayback)
         }
         return player
