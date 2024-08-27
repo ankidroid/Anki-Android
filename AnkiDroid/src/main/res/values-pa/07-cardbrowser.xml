@@ -50,8 +50,8 @@
         <item quantity="other">%d ਕਾਰਡ ਦਿਖਾਏ ਗਏ</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d ਨੋਟ ਦਿਖਾਏ ਗਏ</item>
+        <item quantity="other">%d ਨੋਟ ਦਿਖਾਏ ਗਏ</item>
     </plurals>
     <string name="card_browser_all_decks">ਸਾਰੇ ਡੇਕ</string>
     <plurals name="card_browser_delete_cards">
@@ -63,27 +63,27 @@
         <item quantity="other">ਨੋਟਸ ਮਿਟਾਓ</item>
     </plurals>
     <string name="card_browser_change_deck">ਡੇਕ ਬਦਲੋ</string>
-    <string name="delete_card_title">Delete note?</string>
+    <string name="delete_card_title">ਕੀ ਨੋਟ ਮਿਟਾਉਣਾ ਹੈ?</string>
     <string name="card_browser_show_marked">ਫਿਲਟਰ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ</string>
     <string name="card_browser_show_suspended">ਫਿਲਟਰ ਮੁਅੱਤਲ ਕੀਤਾ ਗਿਆ</string>
     <string name="card_browser_search_by_tag">ਟੈਗ ਦੁਆਰਾ ਫਿਲਟਰ ਕਰੋ</string>
     <string name="card_browser_search_by_flag">ਫਲੈਗ ਦੁਆਰਾ ਫਿਲਟਰ ਕਰੋ</string>
     <string name="card_browser_list_my_searches">ਮੇਰੀ ਖੋਜ</string>
-    <string name="card_browser_list_my_searches_save">Save search</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
-    <string name="no_note_to_edit">No note to edit</string>
-    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-    <string name="card_browser_change_display_order">Change display order</string>
-    <string name="card_browser_change_display_order_title">Choose display order</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_list_my_searches_save">ਖੋਜ ਨੂੰ ਸੰਭਾਲੋ</string>
+    <string name="card_browser_list_my_searches_title">ਇੱਕ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਖੋਜ ਚੁਣੋ</string>
+    <string name="card_browser_list_my_searches_new_name">ਮੌਜੂਦਾ ਖੋਜ ਲਈ ਨਾਮ</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">ਤੁਸੀਂ ਨਾਮ ਤੋਂ ਬਿਨਾਂ ਖੋਜ ਨੂੰ ਸੁਰੱਖਿਅਤ ਨਹੀਂ ਕਰ ਸਕਦੇ</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">ਨਾਮ ਮੌਜੂਦ ਹੈ</string>
+    <string name="no_note_to_edit">ਸੰਪਾਦਨ ਕਰਨ ਲਈ ਕੋਈ ਨੋਟ ਨਹੀਂ ਹਨ</string>
+    <string name="card_browser_list_my_searches_remove_content">ਕੀ “%1$s” ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</string>
+    <string name="card_browser_change_display_order">ਡਿਸਪਲੇ ਆਰਡਰ ਬਦਲੋ</string>
+    <string name="card_browser_change_display_order_title">ਡਿਸਪਲੇ ਆਰਡਰ ਚੁਣੋ</string>
+    <string name="card_details_tags">ਟੈਗਸ</string>
     <string-array name="card_browser_order_labels">
-        <item>No sorting (faster)</item>
-        <item>By sort field</item>
-        <item>By created time</item>
-        <item>By note modification time</item>
+        <item>ਕੋਈ ਛਾਂਟੀ ਨਹੀਂ (ਤੇਜ਼)</item>
+        <item>ਖੇਤਰ ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ</item>
+        <item>ਸ੍ਰਿਸ਼ਟੀ ਦੇ ਸਮੇਂ ਦੁਆਰਾ</item>
+        <item>ਸਮੇਂ ਅਨੁਸਾਰ ਸੋਧ ਨੋਟ ਕਰੋ</item>
         <item>By card modification time</item>
         <item>By due time</item>
         <item>By interval</item>
@@ -102,15 +102,15 @@
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">ਕਾਰਡ ਨਿਰਯਾਤ ਕਰੋ</item>
+        <item quantity="other">ਕਾਰਡ ਨਿਰਯਾਤ ਕਰੋ</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">ਨੋਟ ਨਿਰਯਾਤ ਕਰੋ</item>
+        <item quantity="other">ਨੋਟ ਨਿਰਯਾਤ ਕਰੋ</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d ਕਾਰਡ ਮਿਟਾਇਆ ਗਿਆ</item>
+        <item quantity="other">%d ਕਾਰਡ ਮਿਟਾਇਆ ਗਿਆ</item>
     </plurals>
 </resources>

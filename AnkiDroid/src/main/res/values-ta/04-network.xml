@@ -45,26 +45,26 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
+    <string name="youre_offline">ஆஃப்லைனில் உள்ளீர்கள்</string>
     <string name="sync_error">Sync error</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
-    <string name="retry">Retry</string>
+    <string name="vague_error" comment="Network error dialog title">பிழை</string>
+    <string name="retry">மீண்டும் முயற்சிக்கவும்</string>
     <string name="menu_get_shared_decks">Get shared decks</string>
     <string name="connection_error_message">A network error has occurred</string>
     <string name="not_logged_in_title">Log in to AnkiWeb</string>
     <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
+    <string name="username">மின்னஞ்சல் முகவரி</string>
+    <string name="password">கடவுச்சொல்</string>
+    <string name="log_in">உள்நுழைக</string>
+    <string name="sign_up_description">AnkiWeb கணக்கு இல்லையா? இது இலவசம்!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
+    <string name="sign_up">பதிவு செய்யவும்</string>
+    <string name="logged_as">என உள்நுழைந்துள்ளார்</string>
     <string name="log_out">Log out</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="reset_password">கடவுச்சொல்லை மீட்டமைக்கவும்</string>
+    <string name="lost_mail_instructions">உங்கள் மின்னஞ்சலை மறந்துவிட்டீர்களா?</string>
+    <string name="sign_in">நான் உள்நுழைகிறேன்</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_title">Synchronization</string>

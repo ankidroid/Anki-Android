@@ -344,6 +344,6 @@
     <string name="play_recording">ఆడండి</string>
     <string name="next_recording">తర్వాత</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_title">కార్డ్ రకాన్ని తొలగించడం సాధ్యం కాదు</string>
+    <string name="orphan_note_message">ఈ కార్డ్ రకాన్ని తొలగించడం వలన కొన్ని గమనికలు కార్డ్‌లు లేకుండా ఉంటాయి.</string>
 </resources>

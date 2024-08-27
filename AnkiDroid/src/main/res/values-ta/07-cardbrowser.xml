@@ -46,8 +46,8 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card shown</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="one">%d கார்டுகள் காட்டப்பட்டுள்ளன</item>
+        <item quantity="other">%d கார்டுகள் காட்டப்பட்டுள்ளன</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">%d note shown</item>
@@ -55,44 +55,44 @@
     </plurals>
     <string name="card_browser_all_decks">All decks</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">அட்டையை அகற்று</item>
+        <item quantity="other">அட்டைகளை அகற்று</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
-        <item quantity="other">Delete notes</item>
+        <item quantity="one">குறிப்பை நீக்கு</item>
+        <item quantity="other">குறிப்புகளை நீக்கு</item>
     </plurals>
     <string name="card_browser_change_deck">Change deck</string>
-    <string name="delete_card_title">Delete note?</string>
-    <string name="card_browser_show_marked">Filter marked</string>
-    <string name="card_browser_show_suspended">Filter suspended</string>
-    <string name="card_browser_search_by_tag">Filter by tag</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">My searches</string>
-    <string name="card_browser_list_my_searches_save">Save search</string>
-    <string name="card_browser_list_my_searches_title">Choose a saved search</string>
-    <string name="card_browser_list_my_searches_new_name">Name for the current search</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">You can’t save a search without a name</string>
+    <string name="delete_card_title">குறிப்பை நீக்கவா?</string>
+    <string name="card_browser_show_marked">வடிகட்டி குறிக்கப்பட்டுள்ளது</string>
+    <string name="card_browser_show_suspended">வடிகட்டி இடைநிறுத்தப்பட்டுள்ளது</string>
+    <string name="card_browser_search_by_tag">குறிச்சொல் மூலம் வடிகட்டவும்</string>
+    <string name="card_browser_search_by_flag">கொடி மூலம் வடிகட்டவும்</string>
+    <string name="card_browser_list_my_searches">எனது தேடல்கள்</string>
+    <string name="card_browser_list_my_searches_save">தேடலைச் சேமிக்கவும்</string>
+    <string name="card_browser_list_my_searches_title">சேமித்த தேடலைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="card_browser_list_my_searches_new_name">தற்போதைய தேடலுக்கான பெயர்</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">பெயர் இல்லாமல் தேடலைச் சேமிக்க முடியாது</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Name exists</string>
     <string name="no_note_to_edit">No note to edit</string>
-    <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
-    <string name="card_browser_change_display_order">Change display order</string>
-    <string name="card_browser_change_display_order_title">Choose display order</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_list_my_searches_remove_content">“%1$s” ஐ நீக்கவா?</string>
+    <string name="card_browser_change_display_order">காட்சி வரிசையை மாற்றவும்</string>
+    <string name="card_browser_change_display_order_title">காட்சி வரிசையைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="card_details_tags">குறிச்சொற்கள்</string>
     <string-array name="card_browser_order_labels">
-        <item>No sorting (faster)</item>
-        <item>By sort field</item>
-        <item>By created time</item>
+        <item>வரிசைப்படுத்துதல் இல்லை (வேகமாக)</item>
+        <item>வரிசைப்படுத்து புலம் மூலம்</item>
+        <item>அது உருவாக்கப்பட்ட நேரத்தில்</item>
         <item>By note modification time</item>
         <item>By card modification time</item>
-        <item>By due time</item>
+        <item>உரிய நேரத்தில்</item>
         <item>By interval</item>
         <item>By ease</item>
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
+    <string name="card_browser_select_all">அனைத்தையும் தேர்ந்தெடுக்கவும்</string>
+    <string name="card_browser_select_none">எதையும் தேர்ந்தெடுக்கவும்</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>
@@ -102,15 +102,15 @@
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
     <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">ஏற்றுமதி அட்டை</item>
+        <item quantity="other">ஏற்றுமதி அட்டைகள்</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">ஏற்றுமதி குறிப்பு</item>
+        <item quantity="other">குறிப்புகளை ஏற்றுமதி செய்யுங்கள்</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d கார்டு நீக்கப்பட்டது</item>
+        <item quantity="other">%d கார்டுகள் அகற்றப்பட்டன</item>
     </plurals>
 </resources>
