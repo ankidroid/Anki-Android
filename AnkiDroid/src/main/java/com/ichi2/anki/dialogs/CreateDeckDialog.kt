@@ -18,6 +18,7 @@ package com.ichi2.anki.dialogs
 
 import android.app.Activity
 import android.content.Context
+import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -91,10 +92,11 @@ class CreateDeckDialog(
             negativeButton(R.string.dialog_cancel)
             setView(R.layout.dialog_generic_text_input)
         }.input(prefill = initialDeckName, displayKeyboard = true, waitForPositiveButton = false) { dialog, text ->
-            // defining the action of done button in keyboard
+
+            // defining the action of done button in ImeKeyBoard and enter button in physical keyBoard
             val inputField = dialog.getInputField()
-            inputField.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+            inputField.setOnEditorActionListener { _, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
                     onPositiveButtonClicked()
                     true
                 } else {
