@@ -31,9 +31,5 @@ class FileOperation {
             f.readFully(b)
             return b
         }
-
-        fun getFileContents(exportedFile: File): String {
-            return String(getFileContentsBytes(exportedFile))
-        }
     }
 }

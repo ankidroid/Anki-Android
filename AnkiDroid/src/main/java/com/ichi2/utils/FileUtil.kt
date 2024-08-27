@@ -24,8 +24,6 @@ import android.os.StatFs
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
 import java.util.AbstractMap
@@ -124,89 +122,6 @@ object FileUtil {
     }
 
     /**
-     * Calculates the size of a [File].
-     * If it is a file, returns the size.
-     * If the file does not exist, returns 0
-     * If the file is a directory, recursively explore the directory tree and summing the length of each
-     * file. The time taken to calculate directory size is proportional to the number of files in the directory
-     * and all of its sub-directories. See: [DirectoryContentInformation.fromDirectory]
-     * It is assumed that directory contains no symbolic links.
-     *
-     * @param file Abstract representation of the file/directory whose size needs to be calculated
-     * @return Size of the File/Directory in bytes. 0 if the [File] does not exist
-     */
-    fun getSize(file: File): Long {
-        if (file.isFile) {
-            return file.length()
-        } else if (!file.exists()) {
-            return 0L
-        }
-        return DirectoryContentInformation.fromDirectory(file).totalBytes
-    }
-
-    /**
-     * Information about the content of a directory `d`.
-     */
-    data class DirectoryContentInformation(
-        /**
-         * Size of all files contained in `d` directly or indirectly.
-         * Ignore the extra size taken by file system.
-         */
-        val totalBytes: Long,
-        /**
-         * Number of subdirectories of `d`, directly or indirectly. Not counting `d`.
-         */
-        val numberOfSubdirectories: Int,
-        /**
-         * Number of files contained in `d` directly or indirectly.
-         */
-        val numberOfFiles: Int
-    ) {
-        companion object {
-            /**
-             * @throws IOException [root] does not exist
-             */
-            fun fromDirectory(root: File): DirectoryContentInformation {
-                var totalBytes = 0L
-                var numberOfDirectories = 0
-                var numberOfFiles = 0
-                val directoriesToProcess = mutableListOf(root)
-                while (directoriesToProcess.isNotEmpty()) {
-                    val dir = directoriesToProcess.removeLast()
-                    listFiles(dir).forEach {
-                        if (it.isDirectory) {
-                            numberOfDirectories++
-                            directoriesToProcess.add(it)
-                        } else {
-                            numberOfFiles++
-                            totalBytes += it.length()
-                        }
-                    }
-                }
-
-                return DirectoryContentInformation(totalBytes, numberOfDirectories, numberOfFiles)
-            }
-        }
-    }
-
-    /**
-     * If dir exists, it must be a directory.
-     * If not, it is created, along with any necessary parent directories (see [File.mkdirs]).
-     * @param dir Abstract representation of a directory
-     * @throws IOException if dir is not a directory or could not be created
-     */
-    @Throws(IOException::class)
-    fun ensureFileIsDirectory(dir: File) {
-        if (dir.exists()) {
-            if (!dir.isDirectory) {
-                throw IOException("$dir exists but is not a directory")
-            }
-        } else if (!dir.mkdirs() && !dir.isDirectory) {
-            throw IOException("$dir directory cannot be created")
-        }
-    }
-
-    /**
      * Wraps [File.listFiles] and throws an exception instead of returning `null` if dir does not
      * denote an actual directory.
      *
@@ -234,46 +149,4 @@ object FileUtil {
     }
 
     fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
-
-    enum class FilePrefix {
-        EQUAL,
-        STRICT_PREFIX,
-        STRICT_SUFFIX,
-        NOT_PREFIX
-    }
-
-    /**
-     * @return whether how [potentialPrefixFile] related to [fullFile] as far as prefix goes
-     * @throws FileNotFoundException if a file is not found
-     * @throws IOException If an I/O error occurs
-     */
-    fun isPrefix(potentialPrefixFile: File, fullFile: File): FilePrefix {
-        var potentialPrefixBuffer: FileInputStream? = null
-        var fullFileBuffer: FileInputStream? = null
-        try {
-            potentialPrefixBuffer = FileInputStream(potentialPrefixFile)
-            fullFileBuffer = FileInputStream(fullFile)
-            while (true) {
-                val prefixContent = potentialPrefixBuffer.read()
-                val fullFileContent = fullFileBuffer.read()
-                val prefixFileEnded = prefixContent == -1
-                val fullFileEnded = fullFileContent == -1
-                if (prefixFileEnded && fullFileEnded) {
-                    return FilePrefix.EQUAL
-                }
-                if (prefixFileEnded) {
-                    return FilePrefix.STRICT_PREFIX
-                }
-                if (fullFileEnded) {
-                    return FilePrefix.STRICT_SUFFIX
-                }
-                if (prefixContent != fullFileContent) {
-                    return FilePrefix.NOT_PREFIX
-                }
-            }
-        } finally {
-            potentialPrefixBuffer?.close()
-            fullFileBuffer?.close()
-        }
-    }
 }

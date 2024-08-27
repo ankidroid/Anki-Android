@@ -17,13 +17,10 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.backend.backendError
 import com.ichi2.anki.common.utils.android.isRobolectric
-import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
-import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
@@ -374,26 +371,6 @@ object CollectionManager {
             ensureClosedInner()
             ensureBackendInner()
             importCollectionPackage(backend!!, collectionPathInValidFolder(), colpkgPath)
-        }
-    }
-
-    /** Migrate collection and media databases to scoped storage.
-     * * Closes the collection, and performs the work in our queue so no
-     * other code can open the collection while the operation runs. Reopens
-     * at the end, and rolls back the path change if reopening fails.
-     */
-    suspend fun migrateEssentialFiles(context: Context, folders: ValidatedMigrationSourceAndDestination) {
-        withQueue {
-            ensureClosedInner()
-            val migrator = MigrateEssentialFiles(context, folders)
-            migrator.migrateFiles()
-            migrator.updateCollectionPath()
-            try {
-                ensureOpenInner()
-            } catch (e: Exception) {
-                migrator.restoreOldCollectionPath()
-                throw e
-            }
         }
     }
 

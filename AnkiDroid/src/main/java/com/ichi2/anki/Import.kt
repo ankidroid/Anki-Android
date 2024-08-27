@@ -21,15 +21,12 @@ import android.content.Intent
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
@@ -90,13 +87,6 @@ fun DeckPicker.showImportDialog() {
 }
 
 fun DeckPicker.showImportDialog(options: ImportOptions) {
-    if (ScopedStorageService.mediaMigrationIsInProgress(this)) {
-        showSnackbar(
-            R.string.functionality_disabled_during_storage_migration,
-            Snackbar.LENGTH_SHORT
-        )
-        return
-    }
     showDialogFragment(ImportFileSelectionFragment.newInstance(options))
 }
 

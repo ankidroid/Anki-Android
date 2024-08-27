@@ -123,7 +123,6 @@ import com.ichi2.anki.reviewer.MotionEventHandler
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
-import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -333,8 +332,6 @@ abstract class AbstractFlashcardViewer :
         automaticAnswer.onShowAnswer()
         displayCardAnswer()
     }
-
-    internal val migrationService by migrationServiceWhileStartedOrNull()
 
     /**
      * Changes which were received when the viewer was in the background
@@ -2334,10 +2331,6 @@ abstract class AbstractFlashcardViewer :
             view: WebView,
             request: WebResourceRequest
         ): WebResourceResponse? {
-            val url = request.url
-            if (url.toString().startsWith("file://")) {
-                url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
-            }
             resourceHandler.shouldInterceptRequest(request)?.let { return it }
             return null
         }

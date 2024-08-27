@@ -46,16 +46,6 @@ object ExceptionUtil {
         return ret.toString()
     }
 
-    /** Whether the exception is, or contains a cause of a given type  */
-    @KotlinCleanup("convert to containsCause<T>(ex)")
-    fun <T> containsCause(ex: Throwable, clazz: Class<T>): Boolean {
-        if (clazz.isInstance(ex)) {
-            return true
-        }
-        val cause = ex.cause ?: return false
-        return containsCause(cause, clazz)
-    }
-
     fun getFullStackTrace(ex: Throwable): String {
         val sw = StringWriter()
         ex.printStackTrace(PrintWriter(sw))
