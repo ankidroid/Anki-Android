@@ -25,7 +25,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
-import com.ichi2.anki.canSync
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.millisecondsSinceLastSync
 import com.ichi2.anki.preferences.sharedPrefs
@@ -242,10 +241,6 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         // If we are on a 'full' build, the user can always restore access to their collection.
         // But we want them to sync regularly as a backup
         if (isLoggedIn()) {
-            // If we're unable to sync, there's no point in showing the dialog
-            if (!canSync(windowContext)) {
-                return false
-            }
             // Show dialog to sync if user hasn't synced in a while
             val preferences = windowContext.sharedPrefs()
             return millisecondsSinceLastSync(preferences) >= ONE_DAY_IN_MS * 7

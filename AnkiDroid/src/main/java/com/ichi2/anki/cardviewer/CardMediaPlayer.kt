@@ -57,7 +57,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 import java.io.Closeable
-import java.io.File
 
 /**
  * Handles the two ways an Anki card defines sound:
@@ -419,15 +418,6 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
     return object : SoundErrorListener {
         private var handledError: HashSet<String> = hashSetOf()
 
-        private fun AbstractFlashcardViewer.handleStorageMigrationError(file: File): Boolean {
-            val migrationService = migrationService ?: return false
-            if (handledError.contains(file.absolutePath)) {
-                return false
-            }
-            handledError.add(file.absolutePath)
-            return migrationService.migrateFileImmediately(file)
-        }
-
         override fun onMediaPlayerError(
             mp: MediaPlayer?,
             which: Int,
@@ -454,10 +444,6 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
                 // There is a multitude of transient issues with the MediaPlayer. (1, -1001) for example
                 // Retrying fixes most of these
                 if (file.exists()) return RETRY_AUDIO
-                // file doesn't exist - may be due to scoped storage
-                if (handleStorageMigrationError(file)) {
-                    return RETRY_AUDIO
-                }
                 // just doesn't exist - process the error
                 AbstractFlashcardViewer.mediaErrorHandler.processMissingSound(file) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
                 return CONTINUE_AUDIO

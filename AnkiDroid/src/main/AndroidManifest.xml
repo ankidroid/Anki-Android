@@ -483,10 +483,6 @@
         <!-- Service to perform web API queries -->
         <service android:name="com.ichi2.widget.AnkiDroidWidgetSmall$UpdateService" />
 
-        <service
-            android:name="com.ichi2.anki.services.MigrationService"
-            android:foregroundServiceType="dataSync"
-            />
 
         <!-- Don't disable/enable the widgets here until min API>=31, see issue #15747 & https://issuetracker.google.com/issues/36914010 -->
         <!-- small widget -->

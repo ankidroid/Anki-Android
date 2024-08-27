@@ -19,7 +19,6 @@ package com.ichi2.anki
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Resources
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -30,13 +29,10 @@ import anki.sync.syncAuth
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.worker.SyncMediaWorker
-import com.ichi2.async.AsyncOperation
 import com.ichi2.libanki.createBackup
 import com.ichi2.libanki.fullUploadOrDownload
 import com.ichi2.libanki.syncCollection
@@ -143,8 +139,6 @@ fun isLoggedIn() =
     AnkiDroidApp.instance.sharedPrefs().getString(SyncPreferences.HKEY, "")!!.isNotEmpty()
 
 fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
-
-fun canSync(context: Context) = !ScopedStorageService.mediaMigrationIsInProgress(context)
 
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
@@ -402,28 +396,6 @@ suspend fun monitorMediaSync(
         } finally {
             dialog.dismiss()
         }
-    }
-}
-
-/**
- * Called from [DeckPicker.onMediaSyncCompleted] -> [DeckPicker.migrate] if the app is backgrounded
- */
-class MigrateStorageOnSyncSuccess(res: Resources) : AsyncOperation() {
-    override val notificationMessage = res.getString(R.string.storage_migration_sync_notification)
-    override val notificationTitle = res.getString(R.string.sync_database_acknowledge)
-
-    override val handlerMessage: DialogHandlerMessage
-        get() = MigrateOnSyncSuccessHandler()
-
-    class MigrateOnSyncSuccessHandler : DialogHandlerMessage(
-        which = WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS,
-        analyticName = "SyncSuccessHandler"
-    ) {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
-            deckPicker.migrate()
-        }
-
-        override fun toMessage() = emptyMessage(this.what)
     }
 }
 

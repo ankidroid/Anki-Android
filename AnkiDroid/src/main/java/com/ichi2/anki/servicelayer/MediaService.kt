@@ -16,23 +16,13 @@
 
 package com.ichi2.anki.servicelayer
 
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.MediaCheckResult
 
-suspend fun AnkiActivity.checkMedia(): MediaCheckResult? {
-    if (ScopedStorageService.mediaMigrationIsInProgress(this)) {
-        showSnackbar(
-            R.string.functionality_disabled_during_storage_migration,
-            Snackbar.LENGTH_SHORT
-        )
-        return null
-    }
-
+suspend fun AnkiActivity.checkMedia(): MediaCheckResult {
     return withProgress(R.string.check_media_message) {
         CollectionManager.withCol { media.check() }
     }

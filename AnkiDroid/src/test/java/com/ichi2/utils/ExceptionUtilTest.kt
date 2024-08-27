@@ -15,7 +15,6 @@
  */
 package com.ichi2.utils
 
-import com.ichi2.utils.ExceptionUtil.containsCause
 import com.ichi2.utils.ExceptionUtil.getExceptionMessage
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual.equalTo
@@ -57,29 +56,5 @@ class ExceptionUtilTest {
         val message = getExceptionMessage(e)
 
         assertThat(message, equalTo("Hello"))
-    }
-
-    @Test
-    fun containsCauseExact() {
-        val ex: Exception = IllegalStateException()
-        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(true))
-    }
-
-    @Test
-    fun containsCauseNested() {
-        val ex = Exception(IllegalStateException())
-        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(true))
-    }
-
-    @Test
-    fun containsCauseMissing() {
-        val ex = Exception()
-        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(false))
-    }
-
-    @Test
-    fun containsCauseMissingNested() {
-        val ex = Exception(Exception())
-        assertThat(containsCause(ex, IllegalStateException::class.java), equalTo(false))
     }
 }

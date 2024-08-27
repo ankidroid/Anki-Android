@@ -55,7 +55,6 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMP
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
@@ -146,10 +145,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
-                } else if (!ScopedStorageService.mediaMigrationIsInProgress(requireContext())) {
-                    // fix integrity
-                    options.add(res.getString(R.string.check_db))
-                    values.add(1)
                 }
                 // repair db with sqlite
                 if (sqliteInstalled) {

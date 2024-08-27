@@ -17,10 +17,8 @@
 package com.ichi2.testutils
 
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.model.DiskFile
 import org.acra.util.IOUtils
 import java.io.File
-import java.util.NoSuchElementException
 import java.util.Scanner
 
 object FileUtil {
@@ -55,7 +53,6 @@ object FileUtil {
     }
 }
 
-fun DiskFile.length(): Long = this.file.length()
 fun Directory.exists(): Boolean = this.directory.exists()
 
 /** Adds a file to the directory with the provided name and content */

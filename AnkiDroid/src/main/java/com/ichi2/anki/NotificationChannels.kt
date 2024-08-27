@@ -23,7 +23,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.os.Build
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import timber.log.Timber
@@ -48,7 +47,7 @@ object NotificationChannels {
         for (channel in Channel.entries) {
             val id = channel.id
             val name = channel.getName(res)
-            val importance = channel.importance()
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
             Timber.i("Creating notification channel with id/name: %s/%s", id, name)
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel = NotificationChannel(id, name, importance)
@@ -59,19 +58,10 @@ object NotificationChannels {
     }
 }
 
-/**
- * The importance of this channel.
- */
-// Not in the enum, as otherwise the enum values could only be accessed starting at API N.
-@TargetApi(Build.VERSION_CODES.N)
-fun Channel.importance() =
-    if (this == Channel.SCOPED_STORAGE_MIGRATION) NotificationManager.IMPORTANCE_LOW else NotificationManager.IMPORTANCE_DEFAULT
-
 enum class Channel(val id: String, @StringRes val nameId: Int) {
     GENERAL("General Notifications", R.string.app_name),
     SYNC("Synchronization", R.string.sync_title),
     GLOBAL_REMINDERS("Global Reminders", R.string.widget_minimum_cards_due_notification_ticker_title),
-    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders),
-    SCOPED_STORAGE_MIGRATION("Scoped Storage", R.string.scoped_storage_title) ;
+    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders);
     fun getName(res: Resources) = res.getString(nameId)
 }

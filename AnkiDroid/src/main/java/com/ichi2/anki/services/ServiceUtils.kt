@@ -54,7 +54,7 @@ abstract class ServiceWithALifecycleScope : Service() {
  * Bind to a service and run [block],
  * unbinding from the service after the block has finished, or if the coroutine is cancelled.
  *
- *     withBoundTo<MigrationService> { service ->
+ *     withBoundTo<Service> { service ->
  *         // Bound to service
  *     }
  *     // Unbound from service
