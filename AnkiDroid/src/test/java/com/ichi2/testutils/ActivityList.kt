@@ -47,6 +47,7 @@ import com.ichi2.anki.services.ReminderService.Companion.getReviewDeckIntent
 import com.ichi2.anki.ui.windows.managespace.ManageSpaceActivity
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam.Companion.get
+import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
 import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
 import org.robolectric.Robolectric
 import org.robolectric.android.controller.ActivityController
@@ -90,7 +91,8 @@ object ActivityList {
             get(CardViewerActivity::class.java),
             get(InstantNoteEditorActivity::class.java),
             get(MultimediaActivity::class.java),
-            get(DeckPickerWidgetConfig::class.java)
+            get(DeckPickerWidgetConfig::class.java),
+            get(CardAnalysisWidgetConfig::class.java)
         )
     }
 

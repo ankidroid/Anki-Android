@@ -1,0 +1,66 @@
+/*
+ *  Copyright (c) 2024 Anoop <xenonnn4w@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 3 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ *  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.ichi2.widget.cardanalysis
+
+import android.content.Context
+import androidx.core.content.edit
+
+class CardAnalysisWidgetPreferences(context: Context) {
+
+    /**
+     * Prefix for the SharedPreferences key used to store the selected deck for the Card Analysis Widget.
+     * The full key is constructed by appending the appWidgetId to this prefix, ensuring that each
+     * widget instance has a unique key. This approach helps prevent typos and ensures consistency
+     * across the codebase when accessing or modifying the stored deck selections.
+     */
+
+    private val cardAnalysisWidgetSharedPreferences = context.getSharedPreferences("CardAnalysisExtraWidgetPrefs", Context.MODE_PRIVATE)
+
+    /**
+     * Deletes the selected deck ID from the shared preferences for the given widget ID.
+     */
+    fun deleteDeckData(appWidgetId: Int) {
+        cardAnalysisWidgetSharedPreferences.edit {
+            remove(getCardAnalysisExtraWidgetKey(appWidgetId))
+        }
+    }
+
+    fun getSelectedDeckIdFromPreferences(appWidgetId: Int): LongArray {
+        val selectedDeckString = cardAnalysisWidgetSharedPreferences.getString(
+            getCardAnalysisExtraWidgetKey(appWidgetId),
+            ""
+        )
+        return if (!selectedDeckString.isNullOrEmpty()) {
+            selectedDeckString.split(",").map { it.toLong() }.toLongArray()
+        } else {
+            longArrayOf()
+        }
+    }
+
+    fun saveSelectedDeck(appWidgetId: Int, selectedDeck: List<String>) {
+        cardAnalysisWidgetSharedPreferences.edit {
+            putString(getCardAnalysisExtraWidgetKey(appWidgetId), selectedDeck.joinToString(","))
+        }
+    }
+}
+
+/**
+ * Generates the key for the shared preferences for the given widget ID.
+ */
+private fun getCardAnalysisExtraWidgetKey(appWidgetId: Int): String {
+    return "card_analysis_extra_widget_selected_deck_$appWidgetId"
+}
