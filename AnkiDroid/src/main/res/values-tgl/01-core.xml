@@ -52,10 +52,8 @@
     <string name="help">Tulong</string>
     <string name="drawing">Drawing</string>
     <string name="send_feedback">Magpadala ng puna</string>
-    <string name="studyoptions_due_today">Kailangan na ngayong araw:</string>
-    <string name="studyoptions_new_total">Bilang ng mga bagong baraha:</string>
-    <string name="studyoptions_total_cards">Bilang ng mga baraha:</string>
     <string name="studyoptions_start">Pagaralan</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
     <string name="collapse">Ipakita lamang ang balangkas</string>

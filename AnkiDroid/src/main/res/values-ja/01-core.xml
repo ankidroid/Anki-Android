@@ -52,10 +52,8 @@
     <string name="help">ヘルプ</string>
     <string name="drawing">手書き</string>
     <string name="send_feedback">フィードバックを送信</string>
-    <string name="studyoptions_due_today">今日の課題:</string>
-    <string name="studyoptions_new_total">新規カード:</string>
-    <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_start">学習開始</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">折りたたみ</string>

@@ -52,10 +52,8 @@
     <string name="help">Ajuda</string>
     <string name="drawing">Dibuix</string>
     <string name="send_feedback">Envia comentaris</string>
-    <string name="studyoptions_due_today">Venç avui:</string>
-    <string name="studyoptions_new_total">Total de noves fitxes:</string>
-    <string name="studyoptions_total_cards">Total de fitxes:</string>
     <string name="studyoptions_start">Estudiar</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>

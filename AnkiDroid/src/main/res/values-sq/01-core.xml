@@ -52,10 +52,8 @@
     <string name="help">Ndihmë</string>
     <string name="drawing">Vizatime</string>
     <string name="send_feedback">Dërgo përshtypje</string>
-    <string name="studyoptions_due_today">Afati sot:</string>
-    <string name="studyoptions_new_total">Totali i kartave të reja:</string>
-    <string name="studyoptions_total_cards">Totali i kartave:</string>
     <string name="studyoptions_start">Mësim</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Zgjero</string>
     <string name="collapse">Kolapsi</string>

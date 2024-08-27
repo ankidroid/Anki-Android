@@ -52,10 +52,8 @@
     <string name="help">Hjelp</string>
     <string name="drawing">Teikning</string>
     <string name="send_feedback">Send tilbakemelding</string>
-    <string name="studyoptions_due_today">Går ut i dag:</string>
-    <string name="studyoptions_new_total">Mengd nye kort:</string>
-    <string name="studyoptions_total_cards">Mengd kort:</string>
     <string name="studyoptions_start">Gransk</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Utvid</string>
     <string name="collapse">Skjul</string>

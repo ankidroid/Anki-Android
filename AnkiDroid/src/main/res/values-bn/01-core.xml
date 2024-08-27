@@ -52,10 +52,8 @@
     <string name="help">সাহায্য</string>
     <string name="drawing">অঙ্কন</string>
     <string name="send_feedback">মতামত পাঠান</string>
-    <string name="studyoptions_due_today">আজ বাকি:</string>
-    <string name="studyoptions_new_total">মোট নতুন কার্ড:</string>
-    <string name="studyoptions_total_cards">মোট কার্ড:</string>
     <string name="studyoptions_start">অধ্যয়ন</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">প্রসারণ করুন</string>
     <string name="collapse">সঙ্কোচন</string>

@@ -52,10 +52,8 @@
     <string name="help">یارمەتی</string>
     <string name="drawing">وێنەکێشان</string>
     <string name="send_feedback">پێڕاگەیاندنەوە بنێرە</string>
-    <string name="studyoptions_due_today">بۆ ئەمڕۆ:</string>
-    <string name="studyoptions_new_total">هەموو کارتە نوێکان:</string>
-    <string name="studyoptions_total_cards">گشت کارتەکان:</string>
     <string name="studyoptions_start">بخوێنە</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">فراوانکردن</string>
     <string name="collapse">نووشتانەوە</string>

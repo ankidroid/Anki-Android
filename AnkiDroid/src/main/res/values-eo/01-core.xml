@@ -52,10 +52,8 @@
     <string name="help">Helpo</string>
     <string name="drawing">Desegnado</string>
     <string name="send_feedback">Sendi opinion</string>
-    <string name="studyoptions_due_today">Lernendaj hodiaŭ:</string>
-    <string name="studyoptions_new_total">Novaj kartoj tute:</string>
-    <string name="studyoptions_total_cards">Kartoj tute:</string>
     <string name="studyoptions_start">Lerni</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Etendi</string>
     <string name="collapse">Maletendi</string>

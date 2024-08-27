@@ -52,10 +52,8 @@
     <string name="help">Abi</string>
     <string name="drawing">Joonistus</string>
     <string name="send_feedback">Saada tagasiside</string>
-    <string name="studyoptions_due_today">Tänaseks:</string>
-    <string name="studyoptions_new_total">Kokku uusi kaarte:</string>
-    <string name="studyoptions_total_cards">Kokku kaarte:</string>
     <string name="studyoptions_start">Õpi</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Laienda</string>
     <string name="collapse">Kahanda</string>

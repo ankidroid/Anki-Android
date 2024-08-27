@@ -52,10 +52,8 @@
     <string name="help">సహాయం</string>
     <string name="drawing">బొమ్మ </string>
     <string name="send_feedback">స్పందన పంపండి</string>
-    <string name="studyoptions_due_today">నేడు గడువు:</string>
-    <string name="studyoptions_new_total">అన్ని కొత్త కార్డులు:</string>
-    <string name="studyoptions_total_cards">మొత్తం కార్డులు:</string>
     <string name="studyoptions_start">స్టడీ</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">విస్తరించు</string>
     <string name="collapse">కుదించు</string>

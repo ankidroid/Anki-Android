@@ -52,10 +52,8 @@
     <string name="help">Bantuan</string>
     <string name="drawing">Lukisan</string>
     <string name="send_feedback">Beri maklum balas</string>
-    <string name="studyoptions_due_today">Tunggakan hari ini:</string>
-    <string name="studyoptions_new_total">Jumlah kad baru:</string>
-    <string name="studyoptions_total_cards">Jumlah kad:</string>
     <string name="studyoptions_start">Ulang kaji</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Perluaskan</string>
     <string name="collapse">Sembunyikan</string>

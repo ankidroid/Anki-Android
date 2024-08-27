@@ -52,10 +52,8 @@
     <string name="help">幫助</string>
     <string name="drawing">繪圖</string>
     <string name="send_feedback">提供意見</string>
-    <string name="studyoptions_due_today">今天到期:</string>
-    <string name="studyoptions_new_total">新卡總數:</string>
-    <string name="studyoptions_total_cards">卡片總數:</string>
     <string name="studyoptions_start">開始學習</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">摺疊</string>

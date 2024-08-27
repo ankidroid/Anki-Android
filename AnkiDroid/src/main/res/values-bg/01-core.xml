@@ -52,10 +52,8 @@
     <string name="help">Помощ</string>
     <string name="drawing">Рисуване</string>
     <string name="send_feedback">Изпратете отзив</string>
-    <string name="studyoptions_due_today">Оставащи днес:</string>
-    <string name="studyoptions_new_total">Общо нови карти:</string>
-    <string name="studyoptions_total_cards">Общо карти:</string>
     <string name="studyoptions_start">Учене</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Разширяване</string>
     <string name="collapse">Свиване</string>

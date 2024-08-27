@@ -52,10 +52,8 @@
     <string name="help">အကူအညီ</string>
     <string name="drawing">ရုပ်ပုံရေးဆွဲ</string>
     <string name="send_feedback">တုန့်ပြန်ချက်ပေးပို့ပါ</string>
-    <string name="studyoptions_due_today">တစ်နေ့တာလေ့လာမှုပမာဏ</string>
-    <string name="studyoptions_new_total">ကတ်အသစ်စုစုပေါင်း</string>
-    <string name="studyoptions_total_cards">ကတ်စုစုပေါင်း</string>
     <string name="studyoptions_start">လေ့လာ</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">တိုးချဲ့ပါ</string>
     <string name="collapse">ဖျက်</string>

@@ -52,10 +52,8 @@
     <string name="help">Axuda</string>
     <string name="drawing">Drawing</string>
     <string name="send_feedback">Enviar suxestións</string>
-    <string name="studyoptions_due_today">Pendentes hoxe:</string>
-    <string name="studyoptions_new_total">Total de cartóns novos:</string>
-    <string name="studyoptions_total_cards">Total de cartóns:</string>
     <string name="studyoptions_start">Estudar</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Contraer</string>

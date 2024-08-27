@@ -52,10 +52,8 @@
     <string name="help">עזרה</string>
     <string name="drawing">ציור</string>
     <string name="send_feedback">שליחת משוב</string>
-    <string name="studyoptions_due_today">להיום:</string>
-    <string name="studyoptions_new_total">סך כל הקלפים החדשים:</string>
-    <string name="studyoptions_total_cards">סך כל הקלפים:</string>
     <string name="studyoptions_start">לימוד</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>

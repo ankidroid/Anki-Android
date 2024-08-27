@@ -52,10 +52,8 @@
     <string name="help">Aide</string>
     <string name="drawing">Dessin</string>
     <string name="send_feedback">Envoyer un commentaire</string>
-    <string name="studyoptions_due_today">Prévues aujourd’hui :</string>
-    <string name="studyoptions_new_total">Cartes inédites :</string>
-    <string name="studyoptions_total_cards">Total cartes :</string>
     <string name="studyoptions_start">Réviser</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Développer</string>
     <string name="collapse">Regrouper</string>

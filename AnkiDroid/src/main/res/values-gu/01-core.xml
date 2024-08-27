@@ -52,10 +52,8 @@
     <string name="help">મદદ</string>
     <string name="drawing">આકૃતિ</string>
     <string name="send_feedback">અનુભવ કહો</string>
-    <string name="studyoptions_due_today">આજનાં બાકી</string>
-    <string name="studyoptions_new_total">ટોટલ નવા</string>
-    <string name="studyoptions_total_cards">ટોટલ પત્તા</string>
     <string name="studyoptions_start">શરૂ કરો</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">></string>
     <string name="collapse">સંકોચવું</string>

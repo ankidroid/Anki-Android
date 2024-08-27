@@ -52,10 +52,8 @@
     <string name="help">உதவி</string>
     <string name="drawing">வரைபொருள்</string>
     <string name="send_feedback">கருத்தினை அனுப்பவும்</string>
-    <string name="studyoptions_due_today">இன்று காரணமாக</string>
-    <string name="studyoptions_new_total">புதிய அட்டைகளின் எண்ணிக்கை</string>
-    <string name="studyoptions_total_cards">மொத்த அட்டைகள்</string>
     <string name="studyoptions_start">படி</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>

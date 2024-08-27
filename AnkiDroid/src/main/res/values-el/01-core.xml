@@ -52,10 +52,8 @@
     <string name="help">Βοήθεια</string>
     <string name="drawing">Σχέδιο</string>
     <string name="send_feedback">Αποστολή αξιολόγησης</string>
-    <string name="studyoptions_due_today">Για σήμερα:</string>
-    <string name="studyoptions_new_total">Σύνολο νέων καρτών:</string>
-    <string name="studyoptions_total_cards">Σύνολο καρτών:</string>
     <string name="studyoptions_start">Μελέτη</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Ανάπτυξη</string>
     <string name="collapse">Σύμπτυξη</string>

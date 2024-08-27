@@ -52,10 +52,8 @@
     <string name="help">المساعدة</string>
     <string name="drawing">رسم</string>
     <string name="send_feedback">ارسل انطباعك</string>
-    <string name="studyoptions_due_today">المستحق اليوم:</string>
-    <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
-    <string name="studyoptions_total_cards">مجموع البطاقات:</string>
     <string name="studyoptions_start">دراسة</string>
+    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
