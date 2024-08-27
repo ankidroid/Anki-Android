@@ -55,9 +55,9 @@
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
+    <string name="cram_deck_conf_order_order_added">ஆர்டர் சேர்க்கப்பட்டது</string>
+    <string name="cram_deck_conf_order_order_due">ஆர்டர் நிலுவையில் உள்ளது</string>
+    <string name="cram_deck_conf_order_latest_added_first">சமீபத்தியது முதலில் சேர்க்கப்பட்டது</string>
     <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Use current deck</string>
@@ -65,15 +65,15 @@
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
+    <string name="day_theme_light">ஒளி</string>
     <string name="day_theme_plain">Plain</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
+    <string name="night_theme_black">கருப்பு</string>
     <string name="night_theme_dark">Dark</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_xx_small">xx-சிறியது</string>
+    <string name="html_size_code_x_small">x-சிறியது</string>
+    <string name="html_size_code_small">சிறிய</string>
     <string name="html_size_code_medium">medium</string>
     <string name="html_size_code_large">large</string>
     <string name="html_size_code_x_large">x-large</string>

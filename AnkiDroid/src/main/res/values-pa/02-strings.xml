@@ -217,15 +217,15 @@
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="menu_font_size">ਫੌਂਟ ਦਾ ਆਕਾਰ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ਟੂਲਬਾਰ ਦਿਖਾਓ</string>
+    <string name="format_insert_bold">ਬੋਲਡ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
+    <string name="format_insert_italic">ਇਟਾਲਿਕ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
+    <string name="format_insert_underline">ਅੰਡਰਲਾਈਨ ਵਜੋਂ ਫਾਰਮੈਟ ਕਰੋ</string>
+    <string name="insert_horizontal_line">ਹਰੀਜੱਟਲ ਲਾਈਨ ਪਾਓ</string>
     <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="format_font_size">ਫੌਂਟ ਦਾ ਆਕਾਰ ਬਦਲੋ</string>
+    <string name="insert_mathjax">ਮੈਥਜੈਕਸ ਸਮੀਕਰਨ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
@@ -255,28 +255,28 @@
     <string name="download_deck">ਡੇਕ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰੋ</string>
     <string name="try_again">ਫਿਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
     <string name="cancel_download">ਡਾਊਨਲੋਡ ਰੱਦ ਕਰੋ</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
+    <string name="cancel_download_question_title">ਕੀ ਡਾਊਨਲੋਡ ਰੱਦ ਕਰਨਾ ਹੈ?</string>
     <string name="downloading_file">%s ਨੂੰ ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="import_deck">ਡੈੱਕ ਆਯਾਤ ਕਰੋ</string>
     <string name="something_wrong">ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ, ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="download_failed">ਡਾਊਨਲੋਡ ਅਸਫਲ ਰਿਹਾ</string>
+    <string name="deck_download_progress_message">ਜਦੋਂ ਡਾਊਨਲੋਡ ਚੱਲ ਰਿਹਾ ਹੋਵੇ ਤਾਂ ਤੁਸੀਂ ਹੋਰ ਐਪਸ ਦੀ ਵਰਤੋਂ ਕਰ ਸਕਦੇ ਹੋ</string>
+    <string name="check_network">ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="search_using_deck_name">ਡੇਕ ਨਾਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਖੋਜ ਕਰੋ</string>
+    <string name="external_storage_unavailable">ਡਾਊਨਲੋਡ ਅਧੂਰਾ ਛੱਡਿਆ ਗਿਆ, ਕੋਈ ਬਾਹਰੀ ਸਟੋਰੇਜ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
+    <string name="home">ਘਰ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">ਕਾਰਡ ਦੱਬਿਆ ਗਿਆ।</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d ਕਾਰਡ ਮੁਅੱਤਲ ਕੀਤਾ ਗਿਆ।</item>
+        <item quantity="other">%d ਕਾਰਡ ਮੁਅੱਤਲ ਕੀਤੇ ਗਏ।</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">ਖੇਤਰ %s ਨੂੰ ਸਟਿੱਕੀ ਬਣਾਓ</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_learn_more">ਜਿਆਦਾ ਜਾਣੋ</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">ਖੋਜ ਨੇ ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ ਦਿੱਤਾ</string>
@@ -286,7 +286,7 @@
 \nStorage migration will continue in the background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
+    <string name="could_not_create_dir">ਡਾਇਰੈਕਟਰੀ %s ਬਣਾਈ ਨਹੀਂ ਜਾ ਸਕੀ</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
@@ -294,28 +294,28 @@
     <string name="expand_tag">Expand tag \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">ਇੱਕ ਨਵੀਂ ਨੋਟ ਕਿਸਮ ਸ਼ਾਮਲ ਕਰੋ</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_ankidroid_tagline_two">ਹੋਰ ਯਾਦ ਰੱਖੋ</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ਸ਼ੁਰੂ ਕਰੋ</string>
+    <string name="intro_sync_from_ankiweb">AnkiWeb ਤੋਂ ਸਿੰਕ ਕਰੋ</string>
     <!-- IntentHandler -->
-    <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="app_not_initialized_new">AnkiDroid ਨੂੰ ਅਜੇ ਲਾਂਚ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ AnkiDroid ਖੋਲ੍ਹੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
+    <string name="already_logged_in">ਪਹਿਲਾਂ ਹੀ ਲੌਗ ਇਨ ਹੈ</string>
     <!-- Deck Creation -->
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">ਡੈੱਕ ਮਿਟਾਇਆ ਗਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਸ਼ਾਰਟਕੱਟ ਹਟਾਓ</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ਕਾਰਡ</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ਨੋਟਸ</string>
+    <string name="toggle_cards_notes">ਕਾਰਡ/ਨੋਟਸ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="toggle_browser_mode_help">ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਕਾਰਡ ਜਾਂ ਨੋਟ ਦਿਖਾਉਣ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="browser_options_dialog_heading">ਬ੍ਰਾਊਜ਼ਰ ਵਿਕਲਪ</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>

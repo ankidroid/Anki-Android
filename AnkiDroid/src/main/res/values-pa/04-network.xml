@@ -45,26 +45,26 @@
 
 -->
 <resources>
-    <string name="youre_offline">You are offline</string>
-    <string name="sync_error">Sync error</string>
+    <string name="youre_offline">ਤੁਸੀਂ ਔਫਲਾਈਨ ਹੋ</string>
+    <string name="sync_error">ਸਮਕਾਲੀਕਰਨ ਗੜਬੜ</string>
     <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Retry</string>
-    <string name="menu_get_shared_decks">Get shared decks</string>
-    <string name="connection_error_message">A network error has occurred</string>
-    <string name="not_logged_in_title">Log in to AnkiWeb</string>
-    <string name="login_create_account_message">You must log in to a third party account to use the cloud sync service. You can create one in the next step.</string>
+    <string name="menu_get_shared_decks">ਇੱਕ ਸਾਂਝਾ ਡੈੱਕ ਪ੍ਰਾਪਤ ਕਰੋ</string>
+    <string name="connection_error_message">ਇੱਕ ਨੈੱਟਵਰਕ ਗਲਤੀ ਆਈ ਹੈ</string>
+    <string name="not_logged_in_title">AnkiWeb ਵਿੱਚ ਲੌਗ ਇਨ ਕਰੋ</string>
+    <string name="login_create_account_message">ਤੁਹਾਨੂੰ ਕਲਾਉਡ ਸਿੰਕ ਸੇਵਾ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਕਿਸੇ ਤੀਜੀ ਧਿਰ ਦੇ ਖਾਤੇ ਵਿੱਚ ਲੌਗ ਇਨ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ। ਤੁਸੀਂ ਅਗਲੇ ਪੜਾਅ ਵਿੱਚ ਇੱਕ ਬਣਾ ਸਕਦੇ ਹੋ।</string>
     <!-- MyAccount.kt -->
-    <string name="username">Email address</string>
-    <string name="password">Password</string>
-    <string name="log_in">Log in</string>
-    <string name="sign_up_description">Don’t have an AnkiWeb account? It’s free!</string>
+    <string name="username">ਈਮੇਲ ਪਤਾ</string>
+    <string name="password">ਪਾਸਵਰਡ</string>
+    <string name="log_in">ਲਾਗਿਨ</string>
+    <string name="sign_up_description">ਕੀ ਕੋਈ AnkiWeb ਖਾਤਾ ਨਹੀਂ ਹੈ? ਇਹ ਮੁਫ਼ਤ ਹੈ!</string>
     <string name="sign_up_not_affiliated">Note: AnkiWeb is not affiliated with AnkiDroid</string>
-    <string name="sign_up">Sign up</string>
-    <string name="logged_as">Logged in as</string>
-    <string name="log_out">Log out</string>
-    <string name="reset_password">Reset password</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_up">ਸਾਇਨ ਅਪ</string>
+    <string name="logged_as">ਵਜੋਂ ਲੌਗਇਨ ਕੀਤਾ</string>
+    <string name="log_out">ਲੌਗ ਆਊਟ ਕਰੋ</string>
+    <string name="reset_password">ਪਾਸਵਰਡ ਰੀਸੈਟ ਕਰੋ</string>
+    <string name="lost_mail_instructions">ਈਮੇਲ ਭੁੱਲ ਗਏ ਹੋ?</string>
+    <string name="sign_in">ਸਾਈਨ ਇਨ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
     <string name="sync_title">Synchronization</string>
@@ -73,8 +73,8 @@
     <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
     <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_sanity_local">Local</string>
-    <string name="sync_sanity_remote">Remote</string>
+    <string name="sync_sanity_local">ਸਥਾਨਕ</string>
+    <string name="sync_sanity_remote">ਰਿਮੋਟ</string>
     <string name="one_way_sync_title">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
