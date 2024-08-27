@@ -18,6 +18,7 @@ package com.ichi2.widget.deckpicker
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -31,7 +32,6 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.pages.DeckOptions
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
-import com.ichi2.widget.WidgetPreferences
 import com.ichi2.widget.cancelRecurringAlarm
 import com.ichi2.widget.setRecurringAlarm
 import kotlinx.coroutines.launch
@@ -67,11 +67,6 @@ data class DeckPickerWidgetData(
 class DeckPickerWidget : AnalyticsWidgetProvider() {
 
     companion object {
-        /**
-         * Action identifier to trigger updating the app widget.
-         * This constant is used to trigger the update of all widgets by the AppWidgetManager.
-         */
-        const val ACTION_APPWIDGET_UPDATE = AppWidgetManager.ACTION_APPWIDGET_UPDATE
 
         /**
          * Key used for passing the selected deck IDs in the intent extras.
@@ -159,8 +154,8 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             Timber.d("AppWidgetIds to update: ${appWidgetIds.joinToString(", ")}")
 
             for (appWidgetId in appWidgetIds) {
-                val widgetPreferences = WidgetPreferences(context)
-                val deckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidget(appWidgetId)
+                val widgetPreferences = DeckPickerWidgetPreferences(context)
+                val deckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
                 updateWidget(context, appWidgetManager, appWidgetId, deckIds)
             }
         }
@@ -172,13 +167,13 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         appWidgetIds: IntArray,
         usageAnalytics: UsageAnalytics
     ) {
-        Timber.d("Performing widget update for appWidgetIds: ${appWidgetIds.joinToString(", ")}")
+        Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
 
-        val widgetPreferences = WidgetPreferences(context)
+        val widgetPreferences = DeckPickerWidgetPreferences(context)
 
         for (widgetId in appWidgetIds) {
             Timber.d("Updating widget with ID: $widgetId")
-            val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferencesDeckPickerWidget(widgetId)
+            val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(widgetId)
 
             /**Explanation of behavior when selectedDeckIds is empty
              * If selectedDeckIds is empty, the widget will retain the previous deck list.
@@ -204,7 +199,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         }
         super.onReceive(context, intent)
 
-        val widgetPreferences = WidgetPreferences(context)
+        val widgetPreferences = DeckPickerWidgetPreferences(context)
 
         when (intent.action) {
             ACTION_APPWIDGET_UPDATE -> {
@@ -236,7 +231,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
                     Timber.d("Deleting widget with ID: $appWidgetId")
                     cancelRecurringAlarm(context, appWidgetId, DeckPickerWidget::class.java)
-                    widgetPreferences.deleteDeckPickerWidgetData(appWidgetId)
+                    widgetPreferences.deleteDeckData(appWidgetId)
                 } else {
                     Timber.e("Invalid widget ID received in ACTION_APPWIDGET_DELETED")
                 }
@@ -265,11 +260,11 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             return
         }
 
-        val widgetPreferences = WidgetPreferences(context)
+        val widgetPreferences = DeckPickerWidgetPreferences(context)
 
         appWidgetIds?.forEach { widgetId ->
             cancelRecurringAlarm(context, widgetId, DeckPickerWidget::class.java)
-            widgetPreferences.deleteDeckPickerWidgetData(widgetId)
+            widgetPreferences.deleteDeckData(widgetId)
         }
     }
 }

@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.widget.deckpicker
+package com.ichi2.anki.widget.cardanalysis
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
@@ -25,8 +25,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
-import com.ichi2.widget.deckpicker.DeckPickerWidgetConfig
-import com.ichi2.widget.deckpicker.DeckPickerWidgetPreferences
+import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
+import com.ichi2.widget.cardanalysis.CardAnalysisWidgetPreferences
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
@@ -35,31 +35,32 @@ import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 
 @RunWith(AndroidJUnit4::class)
-class DeckPickerWidgetConfigTest : RobolectricTest() {
+class CardAnalysisWidgetConfigTest : RobolectricTest() {
 
-    private lateinit var activity: DeckPickerWidgetConfig
-    private lateinit var widgetPreferences: DeckPickerWidgetPreferences
+    private lateinit var activity: CardAnalysisWidgetConfig
+    private lateinit var widgetPreferences: CardAnalysisWidgetPreferences
 
     /**
      * Sets up the test environment before each test.
      *
-     * Initializes the `DeckPickerWidgetConfig` activity and associated components like
+     * Initializes the `CardAnalysisWidgetConfig` activity and associated components like
      * `WidgetPreferences`. This setup is executed before each test method.
      */
     @Before
     override fun setUp() {
         super.setUp()
-        val intent = Intent(ApplicationProvider.getApplicationContext(), DeckPickerWidgetConfig::class.java).apply {
+        val intent = Intent(ApplicationProvider.getApplicationContext(), CardAnalysisWidgetConfig::class.java).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1)
         }
 
-        activity = Robolectric.buildActivity(DeckPickerWidgetConfig::class.java, intent)
+        activity = Robolectric.buildActivity(CardAnalysisWidgetConfig::class.java, intent)
             .create()
             .start()
             .resume()
             .get()
 
-        widgetPreferences = DeckPickerWidgetPreferences(ApplicationProvider.getApplicationContext())
+        // Initialize widget preferences
+        widgetPreferences = CardAnalysisWidgetPreferences(ApplicationProvider.getApplicationContext())
 
         // Ensure deckAdapter is initialized
         activity.initializeUIComponents()
@@ -78,10 +79,10 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
         activity.deckAdapter.addDeck(deck1)
 
         // Save selected decks
-        activity.saveSelectedDecksToPreferencesDeckPickerWidget()
+        activity.saveSelectedDecksToPreferencesCardAnalysisWidget()
 
         // Verify saved decks
-        val selectedDeckIds = widgetPreferences.getSelectedDeckIdsFromPreferences(1).toList()
+        val selectedDeckIds = widgetPreferences.getSelectedDeckIdFromPreferences(1).toList()
         assertThat(selectedDeckIds.contains(deck1.deckId), equalTo(true))
     }
 
@@ -95,7 +96,7 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
     fun testLoadSavedPreferences() {
         // Save decks to preferences
         val deckIds = listOf(1L)
-        widgetPreferences.saveSelectedDecks(1, deckIds.map { it.toString() })
+        widgetPreferences.saveSelectedDeck(1, deckIds.map { it.toString() })
 
         // Load preferences
         activity.updateViewWithSavedPreferences()

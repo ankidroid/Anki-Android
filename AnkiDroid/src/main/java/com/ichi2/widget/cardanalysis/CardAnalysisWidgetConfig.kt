@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.widget.deckpicker
+package com.ichi2.widget.cardanalysis
 
 import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver
@@ -28,7 +28,6 @@ import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -51,22 +50,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-/**
- * Activity for configuring the Deck Picker Widget.
- * This activity allows the user to select decks from deck selection dialog to be displayed in the widget.
- * User can Select up to 5 decks.
- * User Can remove, reorder decks and reconfigure by holding the widget.
- */
-class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackbarBuilderProvider {
+class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackbarBuilderProvider {
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
-    private lateinit var deckPickerWidgetPreferences: DeckPickerWidgetPreferences
+    private lateinit var cardAnalysisWidgetPreferences: CardAnalysisWidgetPreferences
 
     /**
      * Maximum number of decks allowed in the widget.
      */
-    private val MAX_DECKS_ALLOWED = 5
+    private val MAX_DECKS_ALLOWED = 1
     private var hasUnsavedChanges = false
     private var isAdapterObserverRegistered = false
     private lateinit var onBackPressedCallback: OnBackPressedCallback
@@ -84,7 +77,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
         setContentView(R.layout.widget_deck_picker_config)
 
-        deckPickerWidgetPreferences = DeckPickerWidgetPreferences(this)
+        cardAnalysisWidgetPreferences = CardAnalysisWidgetPreferences(this)
 
         appWidgetId = intent.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -101,7 +94,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         lifecycleScope.launch {
             if (isCollectionEmpty()) {
                 showThemedToast(
-                    this@DeckPickerWidgetConfig,
+                    this@CardAnalysisWidgetConfig,
                     R.string.app_not_initialized_new,
                     false
                 )
@@ -137,15 +130,11 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
         findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks).apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = this@DeckPickerWidgetConfig.deckAdapter
-            val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-            itemTouchHelper.attachToRecyclerView(this)
+            adapter = this@CardAnalysisWidgetConfig.deckAdapter
         }
 
         setupDoneButton()
 
-        // TODO: Implement multi-select functionality so that user can select desired decks in once.
-        // TODO: Implement a functionality to hide already selected deck.
         findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker).setOnClickListener {
             showDeckSelectionDialog()
         }
@@ -160,16 +149,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         onBackPressedCallback = object : OnBackPressedCallback(false) {
             override fun handleOnBackPressed() {
                 if (hasUnsavedChanges) {
-                    DiscardChangesDialog.showDialog(
-                        context = this@DeckPickerWidgetConfig,
-                        positiveMethod = {
-                            // Set flag to indicate that changes are discarded
-                            hasUnsavedChanges = false
-                            finish()
-                        }
-                    )
-                } else {
-                    finish()
+                    showDiscardChangesDialog()
                 }
             }
         }
@@ -185,6 +165,17 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
             })
             isAdapterObserverRegistered = true
         }
+    }
+
+    private fun showDiscardChangesDialog() {
+        DiscardChangesDialog.showDialog(
+            context = this@CardAnalysisWidgetConfig,
+            positiveMethod = {
+                // Discard changes and finish the activity
+                hasUnsavedChanges = false
+                finish()
+            }
+        )
     }
 
     private fun updateCallbackState() {
@@ -206,14 +197,6 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         anchorView = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
     }
 
-    /**
-     * Configures the "Done" button based on the number of selected decks.
-     *
-     *   If no decks are selected: The button is hidden.
-     *   If decks are selected: The button is visible with the text "Save".
-     *   When clicked, the selected decks are saved, the widget is updated,
-     *   and the activity is finished.
-     */
     private fun setupDoneButton() {
         val doneButton = findViewById<Button>(R.id.submit_button)
         val saveText = getString(R.string.save).uppercase()
@@ -221,19 +204,19 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         // Set the button text and click listener only once during initialization
         doneButton.text = saveText
         doneButton.setOnClickListener {
-            saveSelectedDecksToPreferencesDeckPickerWidget()
+            saveSelectedDecksToPreferencesCardAnalysisWidget()
             hasUnsavedChanges = false
             setUnsavedChanges(false)
 
-            val selectedDeckIds = deckPickerWidgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
+            val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
 
             val appWidgetManager = AppWidgetManager.getInstance(this)
-            DeckPickerWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
+            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
 
             val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             setResult(RESULT_OK, resultValue)
 
-            sendBroadcast(Intent(this, DeckPickerWidget::class.java))
+            sendBroadcast(Intent(this, CardAnalysisWidget::class.java))
 
             finish()
         }
@@ -250,33 +233,14 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     /** Updates the visibility of the FloatingActionButton based on the number of selected decks */
     private fun updateFabVisibility() {
         lifecycleScope.launch {
-            val defaultDeckEmpty = isDefaultDeckEmpty()
-
-            val totalSelectableDecks = getTotalSelectableDecks()
-
-            // Adjust totalSelectableDecks if the default deck is empty
-            var adjustedTotalSelectableDecks = totalSelectableDecks
-            if (defaultDeckEmpty) {
-                adjustedTotalSelectableDecks -= 1
-            }
-
+            // Directly check if there's exactly one deck selected
             val selectedDeckCount = deckAdapter.itemCount
 
+            // Find the FloatingActionButton by its ID
             val fab = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
-            fab.isVisible = !(selectedDeckCount >= MAX_DECKS_ALLOWED || selectedDeckCount >= adjustedTotalSelectableDecks)
-        }
-    }
 
-    /**
-     * Returns the total number of selectable decks.
-     *
-     * The operation involves accessing the collection, which might be a time-consuming
-     * I/O-bound task. Hence, we switch to the IO dispatcher
-     * to avoid blocking the main thread and ensure a smooth user experience.
-     */
-    private suspend fun getTotalSelectableDecks(): Int {
-        return withContext(Dispatchers.IO) {
-            SelectableDeck.fromCollection(includeFiltered = false).size
+            // Make the FAB visible only if no deck is selected (allow adding one deck)
+            fab.isVisible = selectedDeckCount == 0
         }
     }
 
@@ -286,7 +250,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
     /** Updates the view according to the saved preference for appWidgetId.*/
     fun updateViewWithSavedPreferences() {
-        val selectedDeckIds = deckPickerWidgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
+        val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
         if (selectedDeckIds.isNotEmpty()) {
             lifecycleScope.launch {
                 val decks = fetchDecks()
@@ -331,21 +295,9 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
             return
         }
 
-        val isDeckAlreadySelected = deckAdapter.deckIds.contains(deck.deckId)
-
-        if (isDeckAlreadySelected) {
-            // TODO: Eventually, ensure that the user can't select a deck that is already selected.
-            showSnackbar(getString(R.string.deck_already_selected_message))
-            return
-        }
-
         // Check if the deck is being added to a fully occupied selection
         if (deckAdapter.itemCount >= MAX_DECKS_ALLOWED) {
-            // Snackbar will only be shown when adding the 5th deck
-            if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
-            }
-            // The FAB visibility should be handled in updateFabVisibility()
+            showSnackbar(R.string.deck_limit_one)
         } else {
             // Add the deck and update views
             deckAdapter.addDeck(deck)
@@ -355,9 +307,8 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
             hasUnsavedChanges = true
             setUnsavedChanges(true)
 
-            // Show snackbar if the deck is the 5th deck
             if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(resources.getQuantityString(R.plurals.deck_limit_reached, MAX_DECKS_ALLOWED, MAX_DECKS_ALLOWED))
+                showSnackbar(R.string.deck_limit_one) // Show Snackbar if the limit is now reached
             }
         }
     }
@@ -367,63 +318,19 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         val noDecksPlaceholder = findViewById<View>(R.id.no_decks_placeholder)
         val widgetConfigContainer = findViewById<View>(R.id.widgetConfigContainer)
 
-        if (deckAdapter.itemCount > 0) {
-            noDecksPlaceholder.visibility = View.GONE
-            widgetConfigContainer.visibility = View.VISIBLE
-        } else {
-            noDecksPlaceholder.visibility = View.VISIBLE
-            widgetConfigContainer.visibility = View.GONE
-        }
+        noDecksPlaceholder.isVisible = deckAdapter.itemCount == 0
+        widgetConfigContainer.isVisible = deckAdapter.itemCount > 0
     }
 
-    /** ItemTouchHelper callback for handling drag and drop of decks. */
-    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-        0
-    ) {
-        override fun getDragDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-            val selectedDeckCount = deckAdapter.itemCount
-            return if (selectedDeckCount > 1) {
-                super.getDragDirs(recyclerView, viewHolder)
-            } else {
-                0 // Disable drag if there's only one item
-            }
-        }
-
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            val fromPosition = viewHolder.bindingAdapterPosition
-            val toPosition = target.bindingAdapterPosition
-            deckAdapter.moveDeck(fromPosition, toPosition)
-            hasUnsavedChanges = true
-            setUnsavedChanges(true)
-            return true
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            // No swipe action
-        }
-    }
-
-    /**
-     * Saves the selected deck IDs to SharedPreferences and triggers a widget update.
-     *
-     * This function retrieves the selected decks from the `deckAdapter`, converts their IDs
-     * to a comma-separated string, and stores it in SharedPreferences.
-     * It then sends a broadcast to update the widget with the new deck selection.
-     */
-    fun saveSelectedDecksToPreferencesDeckPickerWidget() {
+    fun saveSelectedDecksToPreferencesCardAnalysisWidget() {
         val selectedDecks = deckAdapter.deckIds.map { it }
-        deckPickerWidgetPreferences.saveSelectedDecks(appWidgetId, selectedDecks.map { it.toString() })
+        cardAnalysisWidgetPreferences.saveSelectedDeck(appWidgetId, selectedDecks.map { it.toString() })
 
-        val updateIntent = Intent(this, DeckPickerWidget::class.java).apply {
+        val updateIntent = Intent(this, CardAnalysisWidget::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
 
-            putExtra("deck_picker_widget_selected_deck_ids", selectedDecks.toList().toLongArray())
+            putExtra("card_analysis_widget_selected_deck_ids", selectedDecks.toList().toLongArray())
         }
 
         sendBroadcast(updateIntent)
@@ -441,20 +348,10 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
                 return
             }
 
-            context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
+            context?.let { cardAnalysisWidgetPreferences.deleteDeckData(appWidgetId) }
         }
     }
 
-    /**
-     * Returns whether the deck picker displays any deck.
-     * Technically, it means that there is a non default deck, or that the default deck is non-empty.
-     *
-     * This function is specifically implemented to address an issue where the default deck
-     * isn't handled correctly when a second deck is added to the
-     * collection. In this case, the deck tree may incorrectly appear as non-empty when it contains
-     * only the default deck and no other cards.
-     *
-     */
     private suspend fun isCollectionEmpty(): Boolean {
         val tree = withCol { sched.deckDueTree() }
         if (tree.children.size == 1 && tree.children[0].did == 1L) {
@@ -464,19 +361,6 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     }
 }
 
-/**
- * Unregisters a broadcast receiver from the context silently.
- *
- * This extension function attempts to unregister a broadcast receiver from the context
- * without throwing an exception if the receiver is not registered.
- * It catches the `IllegalArgumentException` that is thrown when attempting to unregister
- * a receiver that is not registered, allowing the operation to fail gracefully without crashing.
- *
- * @param receiver The broadcast receiver to be unregistered.
- *
- * @see ContextWrapper.unregisterReceiver
- * @see IllegalArgumentException
- */
 fun ContextWrapper.unregisterReceiverSilently(receiver: BroadcastReceiver) {
     try {
         unregisterReceiver(receiver)

@@ -14,18 +14,12 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.widget
+package com.ichi2.widget.deckpicker
 
 import android.content.Context
 import androidx.core.content.edit
 
-/**
- * This class is currently used for the Deck Picker Widget but is designed to be extendable
- * for use with other widgets, such as the Card Analysis Widget, in the future.
- *
- * @param context the context used to access the shared preferences
- */
-class WidgetPreferences(context: Context) {
+class DeckPickerWidgetPreferences(context: Context) {
 
     /**
      * Prefix for the SharedPreferences key used to store the selected decks for the DeckPickerWidget.
@@ -39,7 +33,7 @@ class WidgetPreferences(context: Context) {
     /**
      * Deletes the selected deck IDs from the shared preferences for the given widget ID.
      */
-    fun deleteDeckPickerWidgetData(appWidgetId: Int) {
+    fun deleteDeckData(appWidgetId: Int) {
         deckPickerSharedPreferences.edit {
             remove(getDeckPickerWidgetKey(appWidgetId))
         }
@@ -49,7 +43,7 @@ class WidgetPreferences(context: Context) {
      * Retrieves the selected deck IDs from the shared preferences for the given widget ID.
      * Note: There's no guarantee that these IDs still represent decks that exist at the time of execution.
      */
-    fun getSelectedDeckIdsFromPreferencesDeckPickerWidget(appWidgetId: Int): LongArray {
+    fun getSelectedDeckIdsFromPreferences(appWidgetId: Int): LongArray {
         val selectedDecksString = deckPickerSharedPreferences.getString(getDeckPickerWidgetKey(appWidgetId), "")
         return if (!selectedDecksString.isNullOrEmpty()) {
             selectedDecksString.split(",").map { it.toLong() }.toLongArray()

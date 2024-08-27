@@ -1,0 +1,28 @@
+<!-- JPG type of file used in previewImage property because the SVG format is not supported on all devices.
+     The widths and heights parameters are determined as follows:
+     The default is 3 cells in width and 2 in height.
+     Following https://developer.android.com/develop/ui/views/appwidgets/layouts#anatomy_determining_size
+     we used the portrait mode cell size for the width and the landscape mode cell size for the height. Leading to:
+     * height between 102 and 315
+     * width 203 and 276 -->
+
+<!-- TODO: Use updatePeriodMillis instead of the 10-minute alarm for simpler widget updates.-->
+
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/widget_card_analysis"
+    android:initialLayout="@layout/widget_card_analysis"
+    android:configure="com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig"
+    android:widgetFeatures="reconfigurable"
+    android:minWidth="203dp"
+    android:minHeight="102dp"
+    android:minResizeWidth="203dp"
+    android:minResizeHeight="102dp"
+    android:maxResizeWidth="276dp"
+    android:maxResizeHeight="315dp"
+    android:previewImage="@drawable/widget_card_analysis_drawable"
+    android:previewLayout="@layout/widget_card_analysis_drawable_v31"
+    android:resizeMode="horizontal|vertical"
+    android:targetCellHeight="2"
+    android:targetCellWidth="3"
+    android:widgetCategory="home_screen"
+    />
