@@ -66,4 +66,16 @@
         <item quantity="other">Liko %d min.</item>
     </plurals>
     <string name="widget_add_note_button">Pridėti naują „AnkiDroid“ užrašą</string>
+    <string name="deck_picker_widget_description">Deck Picker</string>
+    <!-- Strings to explain usage in Deck Picker Widget Configuration screen -->
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select decks</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <plurals name="deck_limit_reached">
+        <item quantity="one">You can select up to %d deck.</item>
+        <item quantity="few">You can select up to %d decks.</item>
+        <item quantity="many">You can select up to %d decks.</item>
+        <item quantity="other">You can select up to %d decks.</item>
+    </plurals>
 </resources>
