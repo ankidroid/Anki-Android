@@ -66,7 +66,7 @@
     <plurals name="reviewer_window_title_days_new">
         <item quantity="other">還剩%1$d天%2$d小時</item>
     </plurals>
-    <string name="no_cards_placeholder_title">空牌組</string>
+    <string name="no_cards_placeholder_title">收藏為空</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n
 開始新增卡片</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
@@ -125,7 +125,7 @@
     <string name="custom_study_deck_name">自訂學程</string>
     <string name="custom_study_deck_exists">請先重新命名現有的「自訂學習」牌組。</string>
     <string name="search_deck" comment="Deck search for selecting it">牌組搜尋</string>
-    <string name="empty_deck">這個牌組是空的</string>
+    <string name="empty_deck">這是個空牌組</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">牌組搜尋</string>
     <string name="invalid_deck_name">無效牌組名稱</string>
     <string name="studyoptions_congrats_finished">恭喜！你完成今天的進度了。</string>

@@ -345,6 +345,6 @@
     <string name="play_recording">播放</string>
     <string name="next_recording">下一個錄音</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_title">無法刪除此卡類型</string>
+    <string name="orphan_note_message">刪除此卡類型會使某些筆記本沒有任何卡片。</string>
 </resources>
