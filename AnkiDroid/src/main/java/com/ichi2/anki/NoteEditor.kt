@@ -1917,14 +1917,14 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     }
 
     @NeedsTest("If a field is sticky after synchronization, the toggleStickyButton should be activated.")
-    private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton?, index: Int) {
+    private fun setToggleStickyButtonListener(toggleStickyButton: ImageButton, index: Int) {
         if (currentFields.getJSONObject(index).getBoolean("sticky")) {
             toggleStickyText.getOrPut(index) { "" }
         }
         if (toggleStickyText[index] == null) {
-            toggleStickyButton!!.background.alpha = 64
+            toggleStickyButton.background.alpha = 64
         } else {
-            toggleStickyButton!!.background.alpha = 255
+            toggleStickyButton.background.alpha = 255
         }
         toggleStickyButton.setOnClickListener {
             onToggleStickyText(
@@ -1934,15 +1934,15 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
     }
 
-    private fun onToggleStickyText(toggleStickyButton: ImageButton?, index: Int) {
+    private fun onToggleStickyText(toggleStickyButton: ImageButton, index: Int) {
         val text = editFields!![index].fieldText
         if (toggleStickyText[index] == null) {
             toggleStickyText[index] = text
-            toggleStickyButton!!.background.alpha = 255
+            toggleStickyButton.background.alpha = 255
             Timber.d("Saved Text:: %s", toggleStickyText[index])
         } else {
             toggleStickyText.remove(index)
-            toggleStickyButton!!.background.alpha = 64
+            toggleStickyButton.background.alpha = 64
         }
     }
 
