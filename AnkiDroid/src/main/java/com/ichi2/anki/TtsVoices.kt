@@ -59,6 +59,17 @@ object TtsVoices {
     private var buildLocalesJob: Job? = null
 
     /**
+     * The package name of the default speech synthesis engine.
+     *
+     * @return Package name of the Tts engine that the user has chosen as their default.
+     * 'null' if the system has no engine or if an error occurs
+     *
+     * @see TextToSpeech.getDefaultEngine
+     */
+    var ttsEngine: String? = null
+        private set
+
+    /**
      * Returns the list of available locales for use in TTS
      *
      * This is a blocking function in the worst case scenario, but under all normal circumstances
@@ -188,6 +199,7 @@ object TtsVoices {
             textToSpeech = TextToSpeech(context) { status ->
                 if (status == TextToSpeech.SUCCESS) {
                     Timber.v("TTS creation success")
+                    ttsEngine = textToSpeech?.defaultEngine
                     continuation.resume(textToSpeech)
                 } else {
                     Timber.e("TTS creation failed. status: %d", status)
