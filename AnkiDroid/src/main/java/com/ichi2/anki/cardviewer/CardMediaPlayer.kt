@@ -28,10 +28,12 @@ import com.ichi2.anki.AndroidTtsPlayer
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper.getMediaDirectory
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.CONTINUE_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.RETRY_AUDIO
 import com.ichi2.anki.cardviewer.SoundErrorBehavior.STOP_AUDIO
+import com.ichi2.anki.dialogs.TtsPlaybackErrorDialog
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.snackbar.showSnackbar
@@ -429,7 +431,13 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
 
         override fun onTtsError(error: TtsPlayer.TtsError, isAutomaticPlayback: Boolean) {
             AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
-                activity.showSnackbar(error.localizedErrorMessage(activity))
+                when (error) {
+                    is AndroidTtsError.MissingVoiceError ->
+                        TtsPlaybackErrorDialog.ttsPlaybackErrorDialog(activity, supportFragmentManager, error.tag)
+                    is AndroidTtsError.InvalidVoiceError ->
+                        activity.showSnackbar(getString(R.string.voice_not_supported))
+                    else -> activity.showSnackbar(error.localizedErrorMessage(activity))
+                }
             }
         }
 
