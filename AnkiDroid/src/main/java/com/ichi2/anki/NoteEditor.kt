@@ -1938,12 +1938,14 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     }
 
     private fun updateFieldsFromStickyText() {
+        loadingStickyFields = true
         for ((key, value) in toggleStickyText) {
             // handle fields for different note type with different size
             if (key < editFields!!.size) {
                 editFields!![key].setText(value)
             }
         }
+        loadingStickyFields = false
     }
 
     @VisibleForTesting
@@ -2608,9 +2610,16 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         noteTypeSpinner!!.setSelection(position)
     }
 
+    /**
+     * Whether sticky fields are currently being loaded. In this card, don't consider the text chagned.
+     */
+    private var loadingStickyFields = false
     private inner class EditFieldTextWatcher(private val index: Int) : TextWatcher {
+
         override fun afterTextChanged(arg0: Editable) {
-            isFieldEdited = true
+            if (!loadingStickyFields) {
+                isFieldEdited = true
+            }
             if (index == 0) {
                 setDuplicateFieldStyles()
             }
