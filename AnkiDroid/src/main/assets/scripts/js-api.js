@@ -123,6 +123,7 @@ Object.keys(jsApiList).forEach(method => {
             const data = JSON.stringify({ noteId, tag });
             return await this.handleRequest(endpoint, data);
         };
+        return;
     }
     if (method === "ankiTtsSpeak") {
         AnkiDroidJS.prototype[method] = async function (text, queueMode = 0) {
