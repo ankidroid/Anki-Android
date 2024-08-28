@@ -170,7 +170,7 @@
     <string name="show_large_answer_buttons" maxLength="41">顯示大的答案按鍵</string>
     <string name="show_large_answer_buttons_summ">答案顯示二行的內容</string>
     <string name="show_top_bar" maxLength="41">顯示頂部列</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">在頂部列顯示卡片計數、回答計時器、旗標和標記</string>
     <string name="show_progress" maxLength="41">顯示剩餘數量</string>
     <string name="show_progress_summ">顯示剩餘卡片數量</string>
     <string name="show_eta" maxLength="41">顯示預計完成時間</string>
@@ -277,7 +277,7 @@
     <string name="user_action_7" maxLength="41">用戶動作 7</string>
     <string name="user_action_8" maxLength="41">用戶動作 8</string>
     <string name="user_action_9" maxLength="41">用戶動作 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">切換自動提前</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">選取卡面</string>
     <string name="card_side_question">問題</string>
