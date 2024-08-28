@@ -254,7 +254,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     /* indicates which activity called Note Editor */
     private var caller = 0
-    private var editFields: LinkedList<FieldEditText?>? = null
+    private var editFields: LinkedList<FieldEditText>? = null
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
     private lateinit var toolbar: Toolbar
@@ -740,9 +740,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                         .replaceFirst("\\[".toRegex(), "\u001f" + sourceText!![0] + "\u001f")
                     contents = contents.substring(0, contents.length - 1)
                 } else if (!editFields!!.isEmpty()) {
-                    editFields!![0]!!.setText(sourceText!![0])
+                    editFields!![0].setText(sourceText!![0])
                     if (editFields!!.size > 1) {
-                        editFields!![1]!!.setText(sourceText!![1])
+                        editFields!![1].setText(sourceText!![1])
                     }
                 }
             } else {
@@ -782,9 +782,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         if (editFields != null && !editFields!!.isEmpty()) {
             // EXTRA_TEXT_FROM_SEARCH_VIEW takes priority over other intent inputs
             if (!getTextFromSearchView.isNullOrEmpty()) {
-                editFields!!.first()!!.setText(getTextFromSearchView)
+                editFields!!.first().setText(getTextFromSearchView)
             }
-            editFields!!.first()!!.requestFocus()
+            editFields!!.first().requestFocus()
         }
 
         if (caller == CALLER_IMG_OCCLUSION) {
@@ -1069,7 +1069,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         // changed fields?
         if (isFieldEdited) {
             for (value in editFields!!) {
-                if (value?.text.toString() != "") {
+                if (value.text.toString() != "") {
                     return true
                 }
             }
@@ -1103,7 +1103,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             closeEditorAfterSave = true
             closeIntent = Intent().apply { putExtra(EXTRA_ID, requireArguments().getString(EXTRA_ID)) }
         } else if (!editFields!!.isEmpty()) {
-            editFields!!.first()!!.focusWithKeyboard()
+            editFields!!.first().focusWithKeyboard()
         }
 
         if (closeEditorAfterSave) {
@@ -1289,7 +1289,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
         if (editFields != null) {
             for (i in editFields!!.indices) {
-                val fieldText = editFields!![i]!!.text
+                val fieldText = editFields!![i].text
                 if (!fieldText.isNullOrEmpty()) {
                     menu.findItem(R.id.action_copy_note).isEnabled = true
                     break
@@ -1379,7 +1379,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             putBoolean(PREF_NOTE_EDITOR_CAPITALIZE, value)
         }
         for (f in editFields!!) {
-            f!!.setCapitalize(value)
+            f.setCapitalize(value)
         }
     }
 
@@ -1390,7 +1390,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         Timber.i("Setting font size to %d", fontSizeSp)
         this.sharedPrefs().edit { putInt(PREF_NOTE_EDITOR_FONT_SIZE, fontSizeSp) }
         for (f in editFields!!) {
-            f!!.textSize = fontSizeSp.toFloat()
+            f.textSize = fontSizeSp.toFloat()
         }
     }
 
@@ -1402,7 +1402,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             // Note: We're not being accurate here - the initial value isn't actually what's supplied in the layout.xml
             // So a value of 18sp in the XML won't be 18sp on the TextView, but it's close enough.
             // Values are setFontSize are whole when returned.
-            val sp = TextViewUtil.getTextSizeSp(editFields!!.first()!!)
+            val sp = TextViewUtil.getTextSizeSp(editFields!!.first())
             return sp.roundToInt().toString()
         }
 
@@ -1432,7 +1432,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     suspend fun performPreview() {
         val convertNewlines = shouldReplaceNewlines()
         fun String?.toFieldText(): String = NoteService.convertToHtmlNewline(this.toString(), convertNewlines)
-        val fields = editFields?.mapTo(mutableListOf()) { it!!.fieldText.toFieldText() } ?: mutableListOf()
+        val fields = editFields?.mapTo(mutableListOf()) { it.fieldText.toFieldText() } ?: mutableListOf()
         val tags = selectedTags ?: mutableListOf()
 
         val ord = if (editorNote!!.notetype.isCloze) {
@@ -1902,8 +1902,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             // Completely replace text for text fields (because current text was passed in)
             val formattedValue = field.formattedValue
             if (field.type === EFieldType.TEXT) {
-                fieldEditText!!.setText(formattedValue)
-            } else if (fieldEditText!!.text != null) {
+                fieldEditText.setText(formattedValue)
+            } else if (fieldEditText.text != null) {
                 insertStringInField(fieldEditText, formattedValue)
             }
             changed = true
@@ -1935,7 +1935,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     }
 
     private fun onToggleStickyText(toggleStickyButton: ImageButton?, index: Int) {
-        val text = editFields!![index]!!.fieldText
+        val text = editFields!![index].fieldText
         if (toggleStickyText[index] == null) {
             toggleStickyText[index] = text
             toggleStickyButton!!.background.alpha = 255
@@ -1951,7 +1951,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         for ((key) in toggleStickyText.toMap()) {
             // handle fields for different note type with different size
             if (key < editFields!!.size) {
-                toggleStickyText[key] = editFields!![key]?.fieldText
+                toggleStickyText[key] = editFields!![key].fieldText
             } else {
                 toggleStickyText.remove(key)
             }
@@ -1962,7 +1962,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         for ((key, value) in toggleStickyText) {
             // handle fields for different note type with different size
             if (key < editFields!!.size) {
-                editFields!![key]!!.setText(value)
+                editFields!![key].setText(value)
             }
         }
     }
@@ -2082,9 +2082,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         }
         for (i in editFields!!.indices) {
             if (i < len) {
-                editFields!![i]!!.setText(fields!![i])
+                editFields!![i].setText(fields!![i])
             } else {
-                editFields!![i]!!.setText("")
+                editFields!![i].setText("")
             }
         }
     }
@@ -2101,9 +2101,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         val dupeCode = editorNote!!.fieldsCheck(getColUnsafe)
         // Change bottom line color of text field
         if (dupeCode == NoteFieldsCheckResponse.State.DUPLICATE) {
-            field!!.setDupeStyle()
+            field.setDupeStyle()
         } else {
-            field!!.setDefaultStyle()
+            field.setDefaultStyle()
         }
         // Put back the old value so we don't interfere with modification detection
         editorNote!!.values()[0] = oldValue
@@ -2121,7 +2121,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     /** Returns the value of the field at the given index  */
     private fun getCurrentFieldText(index: Int): String {
-        val fieldText = editFields!![index]!!.text ?: return ""
+        val fieldText = editFields!![index].text ?: return ""
         return fieldText.toString()
     }
 
@@ -2601,7 +2601,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 editFields!!.size
             )
             for (e in editFields!!) {
-                val editable = e!!.text
+                val editable = e.text
                 val fieldValue = editable?.toString() ?: ""
                 fieldValues.add(fieldValue)
             }
@@ -2613,13 +2613,13 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     @VisibleForTesting
     fun setFieldValueFromUi(i: Int, newText: String?) {
         val editText = editFields!![i]
-        editText!!.setText(newText)
+        editText.setText(newText)
         EditFieldTextWatcher(i).afterTextChanged(editText.text!!)
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getFieldForTest(index: Int): FieldEditText {
-        return editFields!![index]!!
+        return editFields!![index]
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
