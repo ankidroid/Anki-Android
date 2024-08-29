@@ -219,7 +219,6 @@
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <!-- Deck Picker -->
     <string name="search_decks">Шукати колоди</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показати прогрес перенесення даних</string>
     <string name="ankidroid_init_failed_webview_title">Критична помилка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -282,16 +281,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Зробити поле %s липким</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Перенесення сховища</string>
     <string name="scoped_storage_learn_more">Докладніше</string>
-    <string name="scoped_storage_postpone">Відкласти</string>
-    <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Нічого не знайдено</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid повинен перенести своє сховище, щоб відповідати політиці безпеки Android 10.\n\nЦе покращить продуктивність синхронізації медіа.&lt;br&gt;&lt;br&gt;Під час перенесення сховища ви не зможете синхронізуватися та деякі налаштування будуть відключені. Перед тим, як почнеться перенесення сховища, відбудеться медіа-синхронізація, щоб ваші дані були в безпеці.&lt;br&gt;&lt;br&gt;Ви можете використовувати або закривати AnkiDroid під час цього процесу.</string>
-    <string name="start_migration_progress_message">Починається перенесення сховища. Незабаром ви зможете продовжити використовувати AnkiDroid.</string>
-    <string name="migration_part_1_done_resume">Ви можете продовжити використовувати AnkiDroid.
-\nПеренесення сховища буде відбуватись у фоновому режимі.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s не є дійсним пакетом доповнення JavaScript</string>
     <string name="could_not_create_dir">Не вдалося створити каталог %s</string>
@@ -324,10 +315,6 @@
     <string name="toggle_browser_mode_help">Перемкнути показ карток або записів у браузері</string>
     <string name="truncate_content_help">Скоротіть висоту кожного рядка браузера, щоб показати лише перші 3 рядки вмісту</string>
     <string name="browser_options_dialog_heading">Параметри браузера</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Ця функція недоступна під час перенесення сховища</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Натисніть, щоб почати перенесення сховища</string>
-    <string name="media_sync_required_title">Необхідна синхронізація медіа</string>
-    <string name="media_sync_unavailable_message">Синхронізацію мультимедійних файлів вимкнено в налаштуваннях. Будь ласка, синхронізуйте та створіть резервну копію всіх медіафайлів, які не були синхронізовані, перш ніж продовжити</string>
     <string name="audio_saved">Запис аудіо збережено</string>
     <string name="deleting_selected_notes">Видалення вибраних записів</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Натисніть на голос, щоб прослухати

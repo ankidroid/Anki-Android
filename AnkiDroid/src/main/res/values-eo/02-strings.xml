@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
     <!-- Deck Picker -->
     <string name="search_decks">Serĉi en kartaroj</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Montri progreson de migrado</string>
     <string name="ankidroid_init_failed_webview_title">Neriparebla eraro</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid necesas la komponanton System WebView, kiu estas nedisponebla. Tio ĉi povas okazi, kiam la operaciumo instalas ĝisdatigojn. Reprovu post kelkaj minutoj.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Alpingli la kampon %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Movado de datumoj</string>
     <string name="scoped_storage_learn_more">Pli da informoj</string>
-    <string name="scoped_storage_postpone">Ne nun</string>
-    <string name="scoped_storage_migrate">Movi datumojn</string>
     <string name="search_card_js_api_no_results">Serĉ-rezulto estas malplena</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid devas migri sian konservejon por kongrui kun la sekureca politiko de Android 10.\n\nTio ĉi plirapidigos samtempigadon de aŭdvidaĵoj.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;Dum la migrado vi ne povos samtempigi dosierojn kaj kelkaj agordoj estos malaktivaj. Antaŭ la migrado la aplikaĵo samtempigos aŭdvidaĵojn por certigi sekurecon de viaj datumoj.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;Dum tiu ĉi procedo estos sekure uzi aŭ fermi AnkiDroid.</string>
-    <string name="start_migration_progress_message">Ekigado de migri konservvejon. Baldaŭ vi povos pluigi uzi AnkiDroid.</string>
-    <string name="migration_part_1_done_resume">Vi povas pluigi uzi AnkiDroid.
-\nMigrado de konservejo pluos fone.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s ne estas ĝusta JavaScript-aldonaĵ-pakaĵo</string>
     <string name="could_not_create_dir">Ne povis krei dosierujon %s</string>
@@ -316,10 +307,6 @@
     <string name="toggle_browser_mode_help">Baskuli montri kartojn aŭ notojn en foliumilo</string>
     <string name="truncate_content_help">Senpintigi alton de ĉiu vico de la foliumilo por montri nur 3 unuajn liniojn de enhavo</string>
     <string name="browser_options_dialog_heading">Agordoj pri foliumilo</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Tiu ĉi eblo estas nedisponebla dum migrado de konservejo.</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Frapetu por ekigi migri konservejon</string>
-    <string name="media_sync_required_title">Necesas migri aŭdvidaĵojn</string>
-    <string name="media_sync_unavailable_message">Samtempigo de aŭdvidaĵoj estas malaktiva en agordoj. Antaŭ ol pluigi, plenumu samtempigon kaj sekurkopiu ĉiujn nesamtempigitajn aŭdvidaĵojn</string>
     <string name="audio_saved">Sonaĵo konservita</string>
     <string name="deleting_selected_notes">Forigado de elektitaj notoj</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Frapetu voĉon por aŭskulti</string>

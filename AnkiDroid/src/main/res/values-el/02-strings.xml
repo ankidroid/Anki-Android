@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Σφάλμα περιεχομένου κάρτας: Αποτυχία φόρτωσης του ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks">Αναζήτηση τραπουλών</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Εμφάνιση προόδου μετεγκατάστασης</string>
     <string name="ankidroid_init_failed_webview_title">Κρίσιμο σφάλμα</string>
     <string name="ankidroid_init_failed_webview">Το AnkiDroid βασίζεται στο System WebView το οποίο δεν είναι διαθέσιμο. Αυτό μπορεί να συμβεί αν το σύστημα εγκαθιστά ενημερώσεις. Παρακαλώ δοκιμάστε ξανά σε λίγα λεπτά.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Μετεγκατάσταση αποθηκευτικού χώρου</string>
     <string name="scoped_storage_learn_more">Μάθετε περισσότερα</string>
-    <string name="scoped_storage_postpone">Αναβολή</string>
-    <string name="scoped_storage_migrate">Μετεγκατάσταση</string>
     <string name="search_card_js_api_no_results">Η αναζήτηση δεν επέστρεψε αποτελέσματα</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">Μπορείτε να συνεχίσετε να χρησιμοποιείτε το AnkiDroid. 
-\nΗ μετεγκατάσταση αποθήκευσης θα συνεχιστεί στο παρασκήνιο.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Αδυναμία δημιουργίας καταλόγου %s</string>
@@ -316,11 +307,6 @@
     <string name="toggle_browser_mode_help">Εναλλαγή εμφάνισης Καρτών ή Σημειώσεων στον περιηγητή</string>
     <string name="truncate_content_help">Περιορίστε το ύψος κάθε γραμμής του Περιηγητή για εμφάνιση μόνο των 3 πρώτων γραμμών περιεχομένου</string>
     <string name="browser_options_dialog_heading">Επιλογές Περιηγητή</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Αυτή η λειτουργία δεν είναι διαθέσιμη κατά την διάρκεια μετεγκατάστασης αποθηκευτικού χώρου
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Πατήστε για να ξεκινήσει η μεταφορά αποθ. χώρου</string>
-    <string name="media_sync_required_title">Απαιτείται Συγχρονισμός Πολυμέσων</string>
-    <string name="media_sync_unavailable_message">Ο συγχρονισμός πολυμέσων είναι απενεργοποιημένος στις ρυθμίσεις. Παρακαλώ συγχρονίστε και δημιουργήστε αντίγραφα ασφαλείας όσων πολυμέσων που δεν έχουν συγχρονιστεί πριν συνεχίσετε</string>
     <string name="audio_saved">Η ηχογράφηση αποθηκεύτηκε</string>
     <string name="deleting_selected_notes">Διαγραφή επιλεγμένων σημειώσεων</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen

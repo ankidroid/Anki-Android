@@ -214,7 +214,6 @@
     <string name="card_viewer_could_not_find_image">کارڈ کے مواد کی خرابی: \'%s\' لوڈ کرنے میں ناکام</string>
     <!-- Deck Picker -->
     <string name="search_decks">ڈیکس تلاش کریں</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">منتقلی کی پیشرفت دکھائیں</string>
     <string name="ankidroid_init_failed_webview_title">مہلک غلطی</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid سسٹم WebView پر انحصار کرتا ہے جو دستیاب نہیں ہے۔ اگر سسٹم اپ ڈیٹس انسٹال کر رہا ہو تو ایسا ہو سکتا ہے۔ براہ کرم چند منٹوں میں دوبارہ کوشش کریں۔\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -275,16 +274,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">فیلڈ %s کو چپچپا بنائیں</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">اسٹوریج کی منتقلی</string>
     <string name="scoped_storage_learn_more">اورجانیے</string>
-    <string name="scoped_storage_postpone">ملتوی کرنا</string>
-    <string name="scoped_storage_migrate">ہجرت کریں۔</string>
     <string name="search_card_js_api_no_results">تلاش نے کوئی نتیجہ نہیں دیا</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android 10 سیکیورٹی پالیسی کی تعمیل کرنے کے لیے AnkiDroid کو اپنے اسٹوریج کو منتقل کرنے کی ضرورت ہے۔\n\nاس سے میڈیا کی مطابقت پذیری کی کارکردگی بہتر ہوگی۔ آپ کے ڈیٹا کو محفوظ رکھنے کے لیے منتقلی شروع ہونے سے پہلے میڈیا کی مطابقت پذیری ہوگی۔&lt;br&gt;&lt;br&gt;اس عمل کے دوران AnkiDroid کا استعمال یا بند کرنا محفوظ ہے۔</string>
-    <string name="start_migration_progress_message">اسٹوریج کی منتقلی شروع ہو رہی ہے۔ آپ جلد ہی AnkiDroid کا استعمال دوبارہ شروع کر سکتے ہیں۔</string>
-    <string name="migration_part_1_done_resume">آپ AnkiDroid کا استعمال دوبارہ شروع کر سکتے ہیں۔
-\nذخیرہ کی منتقلی پس منظر میں جاری رہے گی۔</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s ایک درست جاوا اسکرپٹ ایڈون پیکج نہیں ہے۔</string>
     <string name="could_not_create_dir">ڈائرکٹری %s نہیں بن سکی</string>
@@ -317,10 +308,6 @@
     <string name="toggle_browser_mode_help">براؤزر میں کارڈز یا نوٹ دکھانا ٹوگل کریں</string>
     <string name="truncate_content_help">مواد کی صرف پہلی 3 لائنیں دکھانے کے لیے براؤزر کی ہر قطار کی اونچائی کو چھوٹا کریں۔</string>
     <string name="browser_options_dialog_heading">براؤزر کے اختیارات</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">اسٹوریج کی منتقلی کے دوران یہ فعالیت دستیاب نہیں ہے۔</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">اسٹوریج کی منتقلی شروع کرنے کے لیے تھپتھپائیں۔</string>
-    <string name="media_sync_required_title">میڈیا کی مطابقت پذیری کی ضرورت ہے</string>
-    <string name="media_sync_unavailable_message">میڈیا کی مطابقت پذیری ترتیبات میں غیر فعال ہے۔ براہ کرم کسی بھی میڈیا کو مطابقت پذیر اور بیک اپ کریں جو جاری رکھنے سے پہلے مطابقت پذیر نہیں ہوا ہے</string>
     <string name="audio_saved">ریکارڈنگ محفوظ ہو گئی</string>
     <string name="deleting_selected_notes">منتخب نوٹوں کو حذف کیا جا رہا ہے</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        سننے کے لیے آواز کو تھپتھپائیں

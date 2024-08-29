@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Fehler im Karteninhalt: Laden von »%s« fehlgeschlagen</string>
     <!-- Deck Picker -->
     <string name="search_decks">Stapel durchsuchen</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Migrationsfortschritt anzeigen</string>
     <string name="ankidroid_init_failed_webview_title">Schwerer Fehler</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Updates installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feld %s anpinnen</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Datenmigration</string>
     <string name="scoped_storage_learn_more">Erfahren Sie mehr</string>
-    <string name="scoped_storage_postpone">Aufschieben</string>
-    <string name="scoped_storage_migrate">Daten verschieben</string>
     <string name="search_card_js_api_no_results">Suche lieferte keine Ergebnisse</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid muss seinen Speicher migrieren, um die Android-10-Sicherheitsrichtlinien zu erfüllen.\n\nDies verbessert die Mediensynchronisationsleistung.&lt;br&gt;&lt;br&gt;Während der Migration können Sie nicht synchronisieren und einige Einstellungen werden deaktiviert. Vor dem Start der Migration wird eine Mediendynchronisation durchgeführt, um Ihre Daten sicher zu halten.&lt;br&gt;&lt;br&gt; Sie können AnkiDroid während dieses Prozesses sicher benutzen oder schließen.</string>
-    <string name="start_migration_progress_message">Die Speichermigration hat begonnen. Du wirst AnkiDroid in Kürze weiterverwenden können.</string>
-    <string name="migration_part_1_done_resume">Du kannst jetzt AnkiDroid weiterverwenden.
-\nDie Speichermigration wird im Hintergrund fortfahren.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s ist kein gültiges JavaScript-Erweiterungspaket.</string>
     <string name="could_not_create_dir">Verzeichnis %s konnte nicht erstellt werden </string>
@@ -316,10 +307,6 @@
     <string name="toggle_browser_mode_help">Das Anzeigen von Karten oder Notizen umschalten</string>
     <string name="truncate_content_help">Die Höhe jeder Zeile der Kartenübersicht anpassen, sodass nur die ersten 3 Zeilen des Inhalts zu sehen sind.</string>
     <string name="browser_options_dialog_heading">Kartenübersichts-Einstellungen</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Diese Funktion ist während der Speichermigration nicht verfügbar</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tippen, um die Speichermigration zu starten</string>
-    <string name="media_sync_required_title">Medien-Synchronisation erforderlich</string>
-    <string name="media_sync_unavailable_message">Die Medien-Synchronisation ist in den Einstellungen deaktiviert. Bitte synchronisieren und sichern Sie alle Medien, die nicht synchronisiert wurden, bevor Sie fortfahren</string>
     <string name="audio_saved">Aufnahme gespeichert</string>
     <string name="deleting_selected_notes">Lösche ausgewählte Notizen</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Stimme berühren, um sie anzuhören

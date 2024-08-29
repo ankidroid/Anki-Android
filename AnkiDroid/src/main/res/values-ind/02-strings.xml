@@ -210,7 +210,6 @@
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
     <!-- Deck Picker -->
     <string name="search_decks">Cari dek</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tampilkan progress migrasi</string>
     <string name="ankidroid_init_failed_webview_title">Kegagalan fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid membutuhkan System Webview yang sekarang sedang tidak ada. Hal ini dapat terjadi karena sistem sedang meng-install pembaruan. Mohon mencoba lagi dalam beberapa menit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -270,16 +269,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Buat kolom %s menempel</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Migrasi penyimpanan</string>
     <string name="scoped_storage_learn_more">Pelajari Lebih Lanjut</string>
-    <string name="scoped_storage_postpone">Tunda</string>
-    <string name="scoped_storage_migrate">Migrasi</string>
     <string name="search_card_js_api_no_results">Tidak menemukan hasil dari pencarian</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid perlu memigrasikan penyimpanannya untuk mematuhi kebijakan keamanan Android 10.\n\nHal ini akan meningkatkan kinerja sinkronisasi media.&lt;br&gt;&lt;br&gt;Selama migrasi, Anda tidak akan dapat melakukan sinkronisasi dan beberapa pengaturan akan dinonaktifkan. Sinkronisasi media akan dilakukan sebelum migrasi dimulai untuk menjaga keamanan data Anda.&lt;br&gt;&lt;br&gt;Anda dapat menggunakan atau menutup AnkiDroid dengan aman selama proses ini berjalan.</string>
-    <string name="start_migration_progress_message">Memulai migrasi penyimpanan. Anda akan dapat melanjutkan menggunakan AnkiDroid setelah ini.</string>
-    <string name="migration_part_1_done_resume">Anda dapat melanjutkan penggunaan AnkiDroid.
-\nMigrasi penyimpanan akan dilanjutkan di latar belakang.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s bukan merupakan paket pengaya JavaScript yang valid</string>
     <string name="could_not_create_dir">Tidak dapat membuat direktori %s</string>
@@ -312,11 +303,6 @@
     <string name="toggle_browser_mode_help">Saklar Penampilan kartu atau catatan dalam peramban</string>
     <string name="truncate_content_help">Kurangi ketinggian setiap baris dari Peramban untuk hanya menampilkan 3 baris pertama dari konten</string>
     <string name="browser_options_dialog_heading">Opsi Peramban</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Fungsi ini tidak tersedia saat migrasi penyimpanan
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Ketuk untuk memulai migrasi penyimpanan</string>
-    <string name="media_sync_required_title">Sinkronisasi Media Diperlukan</string>
-    <string name="media_sync_unavailable_message">Sinkronisasi media dinonaktifkan dalam pengaturan. Silakan sinkronisasikan dan cadangkan media apa pun yang belum disinkron sebelum melanjutkan</string>
     <string name="audio_saved">Rekaman disimpan</string>
     <string name="deleting_selected_notes">Menghapus catatan yang dipilih</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Ketuk sebuah suara untuk didengarkan

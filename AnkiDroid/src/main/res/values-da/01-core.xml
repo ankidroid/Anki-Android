@@ -135,7 +135,6 @@
     <string name="studyoptions_no_cards_due">Ingen kort i kø</string>
     <string name="sd_card_not_mounted">Enhedslagring er ikke tilkoblet</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
-    <string name="button_upgrade" comment="Text of the sync button">Flyt til privat lagring</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vil du annullere synkroniseringen? </string>
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsæt synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering annulleret</string>
@@ -188,49 +187,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Kan ikke skrive til eller oprette filen %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Flere fejl, seneste: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Flere på hinanden følgende fejl uden fremskridt, seneste: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Flytter databasefiler</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Kopierer&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Flytter medier</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Beregner overførselsstørrelse&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%1$s af %2$s flyttet</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Flytning gennemført</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Dine data er blevet flyttet.
-        AnkiDroid er fuldt funktionel igen, og du kan synkronisere.
-        \n
-        \nBemærk, at din samling nu er placeret i en mappe, der fjernes, når du afinstallerer appen.
-        Sørg for, at dine data er sikre ved regelmæssigt at synkronisere eller eksportere sikkerhedskopier.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Flytning mislykkedes</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Kopiering af databasefiler mislykkedes med fejlen: %1$s.
-        <br><br>
-        Ændringerne blev tilbageført.
-        <br><br>
-        Prøv at køre flytningen igen.
-        For at løse problemet kan du være nødt til at frigøre noget diskplads
-        eller gentilslutte det flytbare lager, der indeholder din samling.
-        <br><br>
-        <a href="%2$s">Lær mere og få hjælp</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Flytning af mediefiler er sat på pause efter fejlen er mislykkedes med fejlen: %1$s.
-        <br><br>
-        Ændringerne blev <i>ikke</i> tilbageført.
-        Selvom ingen data burde være gået tabt,
-        kan mediefilerne være blevet delt op i den gamle og nye mappe.
-        <br><br>
-        Prøv at køre flytningen igen.
-        For at løse problemet kan du være nødt til at frigøre noget diskplads
-        eller gentilslutte det flytbare lager, der indeholder din samling.
-        <br><br>
-        <a href="%2$s">Lær mere og få hjælp</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Lagermigration er sat på pause efter fejlen med fejlen: %1$s.
-        <br><br>
-        <a href="%2$s">Få mere at vide og få hjælp</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Genoptag flytning</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Utilgængelig samling</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Vi kan ikke tilgå din samling, når AnkiDroid er afinstalleret på grund af en ændring i Play Store Policy\n\nDine data er sikre og kan gendannes. Det er placeret på\n%s\n\nVælg en mulighed nedenfor for at gendanne:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android har fjernet AnkiDroids %1$s -tilladelse på grund af app-inaktivitet.\n\nDine data er sikre og kan gendannes. Det er placeret på\n%2$s\n\nVælg en mulighed nedenfor for at gendanne:</string>

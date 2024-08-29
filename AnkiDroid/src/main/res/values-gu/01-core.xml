@@ -135,7 +135,6 @@
     <string name="studyoptions_no_cards_due">હજુ સુધી કોઈ કાર્ડ બાકી નથી</string>
     <string name="sd_card_not_mounted">ઉપકરણ સંગ્રહ માઉન્ટ થયેલ નથી</string>
     <string name="button_sync" comment="Text of the sync button">સમન્વયન</string>
-    <string name="button_upgrade" comment="Text of the sync button">સ્કોપ્ડ સ્ટોરેજ પર સ્થાનાંતરિત કરો</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">શું તમે સમન્વયન રદ કરવા માંગો છો?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">સિંક કરવાનું ચાલુ રાખો</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">સમન્વયન રદ કર્યું</string>
@@ -188,49 +187,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ફાઇલ %s પર લખી અથવા બનાવી શકાતી નથી</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"બહુવિધ ભૂલો, સૌથી તાજેતરની: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">પ્રગતિ વિના એકથી વધુ સળંગ ભૂલો, સૌથી તાજેતરની: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">ડેટાબેઝ ફાઇલોનું સ્થળાંતર</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">કૉપિ કરી રહ્યાં છીએ&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">સ્થાનાંતરિત મીડિયા</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">ટ્રાન્સફરના કદની ગણતરી કરી રહ્યાં છીએ&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$s માંથી %1$s ખસેડ્યું</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">સ્થળાંતર સફળ</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        તમારો ડેટા સફળતાપૂર્વક સ્થાનાંતરિત કરવામાં આવ્યો છે.
-        AnkiDroid ફરીથી સંપૂર્ણપણે કાર્યરત છે, અને તમે સમન્વયિત કરી શકો છો.
-        \n
-        \nનોંધ કરો કે તમારો સંગ્રહ હવે એવા ફોલ્ડરમાં સ્થિત છે જે એપ્લિકેશનને અનઇન્સ્ટોલ કરતી વખતે દૂર કરવામાં આવે છે.
-        કૃપા કરીને ખાતરી કરો કે તમારો ડેટા નિયમિતપણે સમન્વયિત અથવા બેકઅપ નિકાસ કરીને સુરક્ષિત છે.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">સ્થળાંતર નિષ્ફળ થયું</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        ડેટાબેઝ ફાઇલોની નકલ કરવામાં ભૂલ સાથે નિષ્ફળ: %1$s.
-        <br><br>
-        ફેરફારો પાછા ફર્યા.
-        <br><br>
-        કૃપા કરીને સ્થળાંતર ફરીથી ચલાવવાનો પ્રયાસ કરો.
-        સમસ્યાને ઉકેલવા માટે, તમારે કેટલીક ડિસ્ક જગ્યા ખાલી કરવાની જરૂર પડી શકે છે,
-        અથવા દૂર કરી શકાય તેવા સ્ટોરેજને ફરીથી કનેક્ટ કરો કે જે તમારા સંગ્રહને ધરાવે છે.
-        <br><br>
-        <a href="%2$s">વધુ જાણો અને મદદ મેળવો</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        ભૂલ સાથે નિષ્ફળ થયા પછી મીડિયા ફાઇલોને ખસેડવાનું થોભાવવામાં આવ્યું છે: %1$s.
-        <br><br>
-        ફેરફારો હતા <i>નથી</i> પાછો ફર્યો
-        જ્યારે કોઈ ડેટા ગુમ ન થવો જોઈએ,
-        મીડિયા ફાઇલો જૂના અને નવા ફોલ્ડર વચ્ચે વિભાજિત થઈ શકે છે.
-        <br><br>
-        કૃપા કરીને સ્થળાંતર ફરીથી ચલાવવાનો પ્રયાસ કરો.
-        સમસ્યાને ઉકેલવા માટે, તમારે કેટલીક ડિસ્ક જગ્યા ખાલી કરવાની જરૂર પડી શકે છે,
-        અથવા દૂર કરી શકાય તેવા સ્ટોરેજને ફરીથી કનેક્ટ કરો કે જે તમારા સંગ્રહને ધરાવે છે.
-        <br><br>
-        <a href="%2$s">વધુ જાણો અને મદદ મેળવો</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        ભૂલ સાથે નિષ્ફળ થયા પછી સ્ટોરેજ સ્થાનાંતરણ થોભાવવામાં આવ્યું છે:%1$s.
-        <br><br>
-        <a href="%2$s">વધુ જાણો અને મદદ મેળવો</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">સ્થળાંતર ફરી શરૂ કરો</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">અપ્રાપ્ય સંગ્રહ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">પ્લે સ્ટોર નીતિમાં ફેરફારને કારણે AnkiDroid અનઇન્સ્ટોલ થયા પછી અમે તમારા સંગ્રહને ઍક્સેસ કરવામાં અસમર્થ છીએ\n\nતમારો ડેટા સુરક્ષિત છે અને તેને પુનઃસ્થાપિત કરી શકાય છે. તે\n%s પર સ્થિત છે\n\nપુનઃસ્થાપિત કરવા માટે નીચેનો વિકલ્પ પસંદ કરો:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ઍપ નિષ્ક્રિયતાને કારણે Android એ AnkiDroid ની %1$s પરવાનગી કાઢી નાખી છે.\n\nતમારો ડેટા સુરક્ષિત છે અને તેને પુનઃસ્થાપિત કરી શકાય છે. તે\n%2$s પર સ્થિત છે\n\nપુનઃસ્થાપિત કરવા માટે નીચેનો વિકલ્પ પસંદ કરો:</string>

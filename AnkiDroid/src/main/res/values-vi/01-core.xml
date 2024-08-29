@@ -132,7 +132,6 @@
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
     <string name="button_sync" comment="Text of the sync button">Đồng bộ</string>
-    <string name="button_upgrade" comment="Text of the sync button">Chuyển đổi sang lưu trữ được phân quyền</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Bạn có muốn huỷ đồng bộ?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Tiếp tục đồng bộ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Đã huỷ đồng bộ</string>
@@ -182,49 +181,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Không thể ghi hoặc tạo tệp %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Nhiều lỗi, gần đây nhất: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Nhiều lỗi liên tục mà không có tiến triển, gần đây nhất: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Đang di chuyển các tệp dữ liệu</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Đang sao chép&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Đang chuyển dữ liệu</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Đang tính toán dung lượng cài đặt&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Đã chuyển %1$s trên tổng số %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Chuyển thành công </string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Đã chuyển đổi dữ liệu thành công
-        AnkiDroid đã có thể được sử dụng trở lại, bạn có thể đồng bộ dữ liệu
-        \n
-        \nBộ sưu tập của bạn hiện đang trong thư mục mà sẽ bị xóa nếu xóa bỏ ứng dụng
-        Hãy chắc chán rằng dữ liệu của bạn an toàn bằng việc đồng bộ dữ liệu hoặc tạo các bản sao lưu.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Chuyển không thành công</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Sao chép tệp dữ liệu không thành công khi gặp lỗi: %1$s.
-        <br><br>
-        Các thay đổi đã được hoàn nguyên.
-        <br><br>
-        Vui lòng chạy lại chức năng di chuyển dữ liệu.
-        Để giải quyết vấn đề, bạn có lẽ cần giải phóng dung lượng bộ nhớ,
-        hoặc kết nối lại với bộ nhớ di động lưu trữ dữ liệu của bạn.
-        <br><br>
-        <a href="%2$s">Tìm hiểu thêm và nhận trợ giúp</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Di chuyển tệp phương tiện bị tạm dừng khi gặp lỗi: %1$s.
-        <br><br>
-        Các thay đổi <i>không được</i> hoàn nguyên.
-        Mặc dù không có dữ liệu nào bị mất,
-        nhưng các tệp phương tiện có thể sẽ được phân chia giữa thư mục cũ và mới.
-        <br><br>
-        Vui lòng chạy lại chức năng di chuyển dữ liệu.
-        Để giải quyết vấn đề, bạn có lẽ cần giải phóng dung lượng bộ nhớ,
-        hoặc kết nối lại với bộ nhớ di động lưu trữ dữ liệu của bạn.
-        <br><br>
-        <a href="%2$s">Tìm hiểu thêm và nhận trợ giúp</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Quá trình chuyển dữ liệu bị tạm dừng sau khi gặp lỗi:  %1$s.
-        <br><br>
-        <a href="%2$s">Tìm hiểu thêm và nhận trợ giúp</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Tiếp tục di chuyển</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Bộ sưu tập không thể truy cập được</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Chúng tôi không thể truy cập vào bộ sưu tập của bạn sau khi gỡ cài đặt AnkiDroid do thay đổi trong Chính sách của Cửa hàng Play\n\nDữ liệu của bạn an toàn và có thể được khôi phục. Nó hiện ở \n%s\n\nLựa chọn 1 tùy chọn ở dưới để khôi phục:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android đã xóa quyền %1$s của AnkiDroid do ứng dụng không hoạt động.\n\nDữ liệu của bạn an toàn và có thể được khôi phục. Nó nằm ở\n%2$s\n\nChọn một tùy chọn bên dưới để khôi phục:</string>

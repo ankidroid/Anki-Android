@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">కార్డ్ కంటెంట్ లోపం: \'%s\'ని లోడ్ చేయడంలో విఫలమైంది</string>
     <!-- Deck Picker -->
     <string name="search_decks">సెర్చ్ డెక్స్</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">వలస పురోగతిని చూపు</string>
     <string name="ankidroid_init_failed_webview_title">తీవ్రమైన లోపం</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid అందుబాటులో లేని సిస్టమ్ WebViewపై ఆధారపడుతుంది. సిస్టమ్ అప్‌డేట్‌లను ఇన్‌స్టాల్ చేస్తున్నప్పుడు ఇది జరగవచ్చు. దయచేసి కొన్ని నిమిషాల్లో మళ్లీ ప్రయత్నించండి.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">ఫీల్డ్ %sని అంటుకునేలా చేయండి</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">నిల్వ తరలింపు</string>
     <string name="scoped_storage_learn_more">ఇంకా నేర్చుకో</string>
-    <string name="scoped_storage_postpone">వాయిదా వేయండి</string>
-    <string name="scoped_storage_migrate">వలసపోతారు</string>
     <string name="search_card_js_api_no_results">శోధన ఫలితాలు ఏవీ అందించబడలేదు</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android 10 భద్రతా విధానానికి అనుగుణంగా ఉండటానికి AnkiDroid దాని నిల్వను తరలించాలి.\n\nఇది మీడియా సమకాలీకరణ పనితీరును మెరుగుపరుస్తుంది.&lt;br&gt;&lt;br&gt;మైగ్రేషన్ సమయంలో మీరు సమకాలీకరించలేరు మరియు కొన్ని సెట్టింగ్‌లు నిలిపివేయబడతాయి. మీ డేటాను సురక్షితంగా ఉంచడానికి మైగ్రేషన్ ప్రారంభమయ్యే ముందు మీడియా సమకాలీకరణ జరుగుతుంది.&lt;br&gt;&lt;br&gt;ఈ ప్రక్రియలో AnkiDroidని ఉపయోగించడం లేదా మూసివేయడం సురక్షితం.</string>
-    <string name="start_migration_progress_message">స్టోరేజ్ మైగ్రేషన్‌ను ప్రారంభిస్తోంది. మీరు త్వరలో AnkiDroidని ఉపయోగించడం కొనసాగించవచ్చు.</string>
-    <string name="migration_part_1_done_resume">మీరు AnkiDroidని ఉపయోగించడం కొనసాగించవచ్చు.
-\nస్టోరేజ్ మైగ్రేషన్ నేపథ్యంలో కొనసాగుతుంది.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s చెల్లుబాటు అయ్యే JavaScript యాడ్ఆన్ ప్యాకేజీ కాదు</string>
     <string name="could_not_create_dir">%s డైరెక్టరీని సృష్టించడం సాధ్యపడలేదు</string>
@@ -316,10 +307,6 @@
     <string name="toggle_browser_mode_help">బ్రౌజర్‌లో కార్డ్‌లు లేదా గమనికలను చూపడాన్ని టోగుల్ చేయండి</string>
     <string name="truncate_content_help">కంటెంట్‌లోని మొదటి 3 లైన్‌లను మాత్రమే చూపడానికి బ్రౌజర్‌లో ప్రతి అడ్డు వరుస ఎత్తును కుదించండి</string>
     <string name="browser_options_dialog_heading">బ్రౌజర్ ఎంపికలు</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">స్టోరేజ్ మైగ్రేషన్ సమయంలో ఈ ఫంక్షనాలిటీ అందుబాటులో ఉండదు</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">స్టోరేజ్ మైగ్రేషన్ ప్రారంభించడానికి నొక్కండి</string>
-    <string name="media_sync_required_title">మీడియా సమకాలీకరణ అవసరం</string>
-    <string name="media_sync_unavailable_message">సెట్టింగ్‌లలో మీడియా సమకాలీకరణ నిలిపివేయబడింది. దయచేసి కొనసాగించడానికి ముందు ఏదైనా సమకాలీకరించని మీడియాను సమకాలీకరించండి మరియు బ్యాకప్ చేయండి</string>
     <string name="audio_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
     <string name="deleting_selected_notes">ఎంచుకున్న గమనికలను తొలగిస్తోంది</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">వినడానికి వాయిస్ నొక్కండి</string>

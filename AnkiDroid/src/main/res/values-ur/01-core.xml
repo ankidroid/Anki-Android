@@ -135,7 +135,6 @@
     <string name="studyoptions_no_cards_due">ابھی تک کوئی کارڈ باقی نہیں ہے</string>
     <string name="sd_card_not_mounted">ڈیوائس اسٹوریج نصب نہیں ہے</string>
     <string name="button_sync" comment="Text of the sync button">ہم وقت سازی</string>
-    <string name="button_upgrade" comment="Text of the sync button">اسکوپڈ اسٹوریج میں منتقل کریں</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">کیا آپ مطابقت پذیری کو منسوخ کرنا چاہتے ہیں؟</string>
     <string name="continue_sync" tools:ignore="UnusedResources">مطابقت پذیری جاری رکھیں</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">مطابقت پذیری منسوخ کر دی گئی</string>
@@ -188,45 +187,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">فائل %s پر نہیں لکھ سکتا اور نہ ہی بنا سکتا ہے۔</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"متعدد خرابیاں، تازہ ترین: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">پیش رفت کے بغیر ایک سے زیادہ مسلسل خرابیاں، تازہ ترین: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">ڈیٹا بیس فائلوں کو منتقل کرنا</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">کاپی ہو رہا ہے&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">ہجرت کرنے والا میڈیا</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">منتقلی کے سائز کا حساب لگایا جا رہا ہے&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%2$s میں سے %1$s کو منتقل کر دیا گیا۔</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">ہجرت کامیاب</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">آپ کا ڈیٹا کامیابی سے منتقل ہو گیا ہے۔
-        AnkiDroid دوبارہ مکمل طور پر فعال ہے، اور آپ مطابقت پذیری کر سکتے ہیں۔
-        \n
-        \nنوٹ کریں کہ آپ کا مجموعہ اب ایک فولڈر میں موجود ہے جو ایپ کو ان انسٹال کرتے وقت ہٹا دیا جاتا ہے۔
-        براہ کرم یقینی بنائیں کہ آپ کا ڈیٹا باقاعدگی سے بیک اپ کو مطابقت پذیر یا برآمد کرکے محفوظ ہے۔</string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">منتقلی ناکام ہوگئی</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[ڈیٹا بیس فائلوں کو کاپی کرنا اس خرابی کے ساتھ ناکام ہو گیا: %1$s۔
-        <br><br>
-        تبدیلیاں واپس کر دی گئیں۔
-        <br><br>
-        براہ کرم ہجرت کو دوبارہ چلانے کی کوشش کریں۔
-        مسئلہ کو حل کرنے کے لیے، آپ کو ڈسک کی کچھ جگہ خالی کرنے کی ضرورت ہو سکتی ہے،
-        یا ہٹانے کے قابل اسٹوریج کو دوبارہ جوڑیں جس میں آپ کا مجموعہ ہے۔
-        <br><br>
-        <a href="%2$s">مزید جانیں اور مدد حاصل کریں</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[خرابی کے ساتھ ناکام ہونے کے بعد میڈیا فائلوں کو منتقل کرنا موقوف ہے: %1$s۔
-        <br><br>
-        تبدیلیاں <i>نہیں</i> واپس کی گئیں۔
-        جبکہ کوئی ڈیٹا ضائع نہیں ہونا چاہیے،
-        میڈیا فائلوں کو پرانے اور نئے فولڈر میں تقسیم کیا جا سکتا ہے۔
-        <br><br>
-        براہ کرم ہجرت کو دوبارہ چلانے کی کوشش کریں۔
-        مسئلہ کو حل کرنے کے لیے، آپ کو ڈسک کی کچھ جگہ خالی کرنے کی ضرورت ہو سکتی ہے،
-        یا ہٹانے کے قابل اسٹوریج کو دوبارہ جوڑیں جس میں آپ کا مجموعہ ہے۔
-        <br><br>
-        <a href="%2$s">مزید جانیں اور مدد حاصل کریں</a>]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[اس خرابی کے ساتھ ناکام ہونے کے بعد اسٹوریج کی منتقلی موقوف ہے: %1$s۔
-        <br><br>
-        <a href="%2$s">مزید جانیں اور مدد حاصل کریں</a>]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">ہجرت دوبارہ شروع کریں</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ناقابل رسائی مجموعہ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store کی پالیسی میں تبدیلی کی وجہ سے AnkiDroid کے ان انسٹال ہونے کے بعد ہم آپ کے کلیکشن تک رسائی حاصل کرنے سے قاصر ہیں\n\nآپ کا ڈیٹا محفوظ ہے اور اسے بحال کیا جا سکتا ہے۔ یہ پر واقع ہے\n%s\n\nبحال کرنے کے لیے نیچے ایک آپشن منتخب کریں:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">اینڈرائیڈ نے ایپ کی غیر فعالیت کی وجہ سے AnkiDroid کی %1$s کی اجازت ہٹا دی ہے۔\n\nآپ کا ڈیٹا محفوظ ہے اور اسے بحال کیا جا سکتا ہے۔ یہ \n%2$s پر واقع ہے\n\nبحال کرنے کے لیے نیچے ایک آپشن منتخب کریں:</string>

@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Erro no conteúdo da ficha: Falhou ao carregar ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks">Procurar baralhos</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar progresso de migração</string>
     <string name="ankidroid_init_failed_webview_title">Erro fatal</string>
     <string name="ankidroid_init_failed_webview">O AnkiDroid depende da \"WebView\" de sistema, e esta encontra-se indisponível. Isto pode ocorrer durante a instalação de actualizações. Por favor, volte a tentar dentro de alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Manter o texto do campo %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Migração de Dados</string>
     <string name="scoped_storage_learn_more">Descubra mais</string>
-    <string name="scoped_storage_postpone">Adiar</string>
-    <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">A pesquisa não obteve resultados</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">O AnkiDroid precisa de migrar os seus dados para estar de acordo com as novas políticas de segurança do Android 10.\n\nIsto irá melhorar o desempenho no que toca à sincronização de ficheiros de multimédia.&lt;br&gt;&lt;br&gt;Durante a migração, não poderá sincronizar, e algumas definições estarão desactivadas. Será realizada uma sincronização de multimédia antes da migração, para garantir que os seus dados não são perdidos.&lt;br&gt;&lt;br&gt;É seguro utilizar ou mesmo fechar o AnkiDroid durante este processo.</string>
-    <string name="start_migration_progress_message">A começar migração de dados. Pode voltar a usar o AnkiDroid em breve.</string>
-    <string name="migration_part_1_done_resume">Pode voltar a usar o AnkiDroid.
-\nA migração dos dados continuará a decorrer em segundo plano.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">O %s não é um pacote de JavaScript válido</string>
     <string name="could_not_create_dir">Não foi possível criar a pasta %s</string>
@@ -316,11 +307,6 @@
     <string name="toggle_browser_mode_help">Alternar entre mostrar fichas e notas no explorador</string>
     <string name="truncate_content_help">Mostrar apenas as primeiras três linhas de conteúdo, de cada uma das linhas do explorador.</string>
     <string name="browser_options_dialog_heading">Opções do Explorador</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Esta funcionalidade está indiponível durante a migração dos dados
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toque  para iniciar a migração dos dados</string>
-    <string name="media_sync_required_title">Sincronização de Multimédia Necessária</string>
-    <string name="media_sync_unavailable_message">A sincronização de ficheiros de multimédia está desactivada nas definições. Por favor, sincronize e faça cópias de segurança de todos os ficheiros de multimédia que ainda não foram sincronizados, antes de continuar</string>
     <string name="audio_saved">Gravação guardada</string>
     <string name="deleting_selected_notes">Apagar as notas selecionadas</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Toque numa voz para a ouvir

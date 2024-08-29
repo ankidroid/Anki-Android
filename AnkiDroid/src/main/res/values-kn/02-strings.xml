@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">ಕಾರ್ಡ್ ವಿಷಯ ದೋಷ: ‘%s’ ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
     <!-- Deck Picker -->
     <string name="search_decks">ಹುಡುಕಾಟ ಡೆಕ್‌ಗಳು</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">ವಲಸೆಯ ಪ್ರಗತಿಯನ್ನು ತೋರಿಸಿ</string>
     <string name="ankidroid_init_failed_webview_title">ಗಂಭೀರವಾದ ತಪ್ಪು</string>
     <string name="ankidroid_init_failed_webview">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆಯನ್ನು ಅವಲಂಬಿಸಿದೆ, ಅದು ಲಭ್ಯವಿಲ್ಲ. ಸಿಸ್ಟಮ್ ನವೀಕರಣಗಳನ್ನು ಸ್ಥಾಪಿಸುತ್ತಿದ್ದರೆ ಇದು ಸಂಭವಿಸಬಹುದು. ದಯವಿಟ್ಟು ಕೆಲವು ನಿಮಿಷಗಳಲ್ಲಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s ಕ್ಷೇತ್ರವನ್ನು ಅಂಟದಂತೆ ಮಾಡಿ</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">ಶೇಖರಣಾ ಸ್ಥಳಾಂತರ</string>
     <string name="scoped_storage_learn_more">ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ</string>
-    <string name="scoped_storage_postpone">ಮುಂದೂಡಿ</string>
-    <string name="scoped_storage_migrate">ವಲಸೆ</string>
     <string name="search_card_js_api_no_results">ಹುಡುಕಾಟವು ಯಾವುದೇ ಫಲಿತಾಂಶಗಳನ್ನು ನೀಡಲಿಲ್ಲ</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android 10 ಭದ್ರತಾ ನೀತಿಯನ್ನು ಅನುಸರಿಸಲು AnkiDroid ತನ್ನ ಸಂಗ್ರಹಣೆಯನ್ನು ಸ್ಥಳಾಂತರಿಸುವ ಅಗತ್ಯವಿದೆ.\n\nಇದು ಮಾಧ್ಯಮ ಸಿಂಕ್ ಕಾರ್ಯಕ್ಷಮತೆಯನ್ನು ಸುಧಾರಿಸುತ್ತದೆ.&lt;br&gt;&lt;br&gt;ವಲಸೆಯ ಸಮಯದಲ್ಲಿ ನೀವು ಸಿಂಕ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ ಮತ್ತು ಕೆಲವು ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗುತ್ತದೆ. ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಸುರಕ್ಷಿತವಾಗಿರಿಸಲು ವಲಸೆ ಪ್ರಾರಂಭವಾಗುವ ಮೊದಲು ಮಾಧ್ಯಮ ಸಿಂಕ್ ಸಂಭವಿಸುತ್ತದೆ.&lt;br&gt;&lt;br&gt;ಈ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿ AnkiDroid ಅನ್ನು ಬಳಸುವುದು ಅಥವಾ ಮುಚ್ಚುವುದು ಸುರಕ್ಷಿತವಾಗಿದೆ.</string>
-    <string name="start_migration_progress_message">ಶೇಖರಣಾ ಸ್ಥಳಾಂತರವನ್ನು ಪ್ರಾರಂಭಿಸಲಾಗುತ್ತಿದೆ. ನೀವು ಶೀಘ್ರದಲ್ಲೇ AnkiDroid ಬಳಸಿಕೊಂಡು ಪುನರಾರಂಭಿಸಬಹುದು.</string>
-    <string name="migration_part_1_done_resume">ನೀವು AnkiDroid ಬಳಸಿಕೊಂಡು ಪುನರಾರಂಭಿಸಬಹುದು.
-\n ಶೇಖರಣಾ ಸ್ಥಳಾಂತರವು ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಮುಂದುವರಿಯುತ್ತದೆ.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s ಮಾನ್ಯವಾದ JavaScript addon ಪ್ಯಾಕೇಜ್ ಅಲ್ಲ</string>
     <string name="could_not_create_dir">ಡೈರೆಕ್ಟರಿ %s ಅನ್ನು ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
@@ -316,10 +307,6 @@
     <string name="toggle_browser_mode_help">ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಕಾರ್ಡ್‌ಗಳು ಅಥವಾ ಟಿಪ್ಪಣಿಗಳನ್ನು ತೋರಿಸುವುದನ್ನು ಟಾಗಲ್ ಮಾಡಿ</string>
     <string name="truncate_content_help">ವಿಷಯದ ಮೊದಲ 3 ಸಾಲುಗಳನ್ನು ಮಾತ್ರ ತೋರಿಸಲು ಬ್ರೌಸರ್‌ನ ಪ್ರತಿ ಸಾಲಿನ ಎತ್ತರವನ್ನು ಟ್ರಿಮ್ ಮಾಡಿ</string>
     <string name="browser_options_dialog_heading">ಬ್ರೌಸರ್ ಆಯ್ಕೆಗಳು</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">ಶೇಖರಣಾ ಸ್ಥಳಾಂತರದ ಸಮಯದಲ್ಲಿ ಈ ಕಾರ್ಯವು ಲಭ್ಯವಿರುವುದಿಲ್ಲ</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">ಸಂಗ್ರಹಣೆ ವರ್ಗಾವಣೆಯನ್ನು ಪ್ರಾರಂಭಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
-    <string name="media_sync_required_title">ಮಾಧ್ಯಮ ಸಿಂಕ್ ಅಗತ್ಯವಿದೆ</string>
-    <string name="media_sync_unavailable_message">ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಮಾಧ್ಯಮ ಸಿಂಕ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ. ಮುಂದುವರಿಯುವ ಮೊದಲು ಯಾವುದೇ ಸಿಂಕ್ ಮಾಡದ ಮಾಧ್ಯಮವನ್ನು ದಯವಿಟ್ಟು ಸಿಂಕ್ ಮಾಡಿ ಮತ್ತು ಬ್ಯಾಕಪ್ ಮಾಡಿ</string>
     <string name="audio_saved">ರೆಕಾರ್ಡಿಂಗ್ ಅನ್ನು ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="deleting_selected_notes">ಆಯ್ದ ಟಿಪ್ಪಣಿಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">ಕೇಳಲು ಧ್ವನಿಯನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ</string>

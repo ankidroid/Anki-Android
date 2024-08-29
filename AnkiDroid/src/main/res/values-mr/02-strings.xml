@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटी: ‘%s’ लोड करण्यात अयशस्वी</string>
     <!-- Deck Picker -->
     <string name="search_decks">शोध डेक</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">स्थलांतर प्रगती दर्शवा</string>
     <string name="ankidroid_init_failed_webview_title">गंभीर त्रुटी</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid अनुपलब्ध सिस्टम वेब दृश्यावर अवलंबून आहे. सिस्टम अद्यतने स्थापित करीत असल्यास हे होऊ शकते. कृपया काही मिनिटांत पुन्हा प्रयत्न करा.. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">फील्ड %s चिकट करा</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">स्टोरेज स्थलांतर</string>
     <string name="scoped_storage_learn_more">अधिक जाणून घ्या</string>
-    <string name="scoped_storage_postpone">पुढे ढकलणे</string>
-    <string name="scoped_storage_migrate">स्थलांतर</string>
     <string name="search_card_js_api_no_results">शोधाने कोणतेही परिणाम दिले नाहीत</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android 10 सुरक्षा धोरणाचे पालन करण्यासाठी AnkiDroid ला त्याचे स्टोरेज स्थलांतरित करणे आवश्यक आहे.\n\nयामुळे मीडिया सिंक कार्यप्रदर्शन सुधारेल.&lt;br&gt;&lt;br&gt;माइग्रेशन दरम्यान तुम्ही सिंक करू शकणार नाही आणि काही सेटिंग्ज अक्षम केल्या जातील. तुमचा डेटा सुरक्षित ठेवण्यासाठी स्थलांतर सुरू होण्यापूर्वी मीडिया सिंक होईल.&lt;br&gt;&lt;br&gt;या प्रक्रियेदरम्यान AnkiDroid वापरणे किंवा बंद करणे सुरक्षित आहे.</string>
-    <string name="start_migration_progress_message">स्टोरेज स्थलांतर सुरू करत आहे. तुम्ही लवकरच पुन्हा AnkiDroid वापरणे सुरू करू शकता.</string>
-    <string name="migration_part_1_done_resume">तुम्ही AnkiDroid वापरून पुन्हा सुरू करू शकता.
-\nपार्श्वभूमीत स्टोरेज स्थलांतर सुरू राहील.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s हे वैध JavaScript ॲडऑन पॅकेज नाही</string>
     <string name="could_not_create_dir">निर्देशिका %s तयार करू शकलो नाही</string>
@@ -316,10 +307,6 @@
     <string name="toggle_browser_mode_help">ब्राउझरमध्ये कार्ड किंवा नोट्स दाखवण्यासाठी टॉगल करा</string>
     <string name="truncate_content_help">सामग्रीच्या फक्त पहिल्या 3 ओळी दर्शविण्यासाठी ब्राउझरच्या प्रत्येक पंक्तीची उंची कापून टाका</string>
     <string name="browser_options_dialog_heading">ब्राउझर पर्याय</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">स्टोरेज माइग्रेशन दरम्यान ही कार्यक्षमता अनुपलब्ध आहे</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">स्टोरेज स्थलांतर सुरू करण्यासाठी टॅप करा</string>
-    <string name="media_sync_required_title">मीडिया सिंक आवश्यक आहे</string>
-    <string name="media_sync_unavailable_message">सेटिंग्जमध्ये मीडिया सिंक अक्षम केले आहे. कृपया सुरू ठेवण्यापूर्वी कोणताही सिंक न केलेला मीडिया सिंक आणि बॅकअप घ्या</string>
     <string name="audio_saved">रेकॉर्डिंग सेव्ह केले</string>
     <string name="deleting_selected_notes">निवडलेल्या टिपा हटवत आहे</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">ऐकण्यासाठी आवाज टॅप करा</string>

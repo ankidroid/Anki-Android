@@ -210,7 +210,6 @@
     <string name="card_viewer_could_not_find_image">Lỗi hiện thị nội dung thẻ: Không thể mở ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks">Tìm kiếm bộ thẻ</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Hiển thị tiến trình di chuyển</string>
     <string name="ankidroid_init_failed_webview_title">Lỗi nghiêm trọng</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid dựa trên WebView hệ thống không khả dụng. Điều này có thể xảy ra nếu hệ thống đang cài đặt các bản cập nhật. Vui lòng thử lại sau vài phút.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -270,16 +269,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Làm cho trường %s cố định</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
     <string name="scoped_storage_learn_more">Tìm hiểu thêm</string>
-    <string name="scoped_storage_postpone">Trì hoãn</string>
-    <string name="scoped_storage_migrate">Di chuyển</string>
     <string name="search_card_js_api_no_results">Không có kết quả tìm kiếm</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid cần di dời bộ nhớ của mình để tuân thủ chính sách bảo mật của Android 10.\n\nĐiều này sẽ cải thiện hiệu suất đồng bộ đa phương tiện.&lt;br&gt;&lt;br&gt;Trong quá trình di chuyển, bạn sẽ không thể đồng bộ hóa và một số cài đặt sẽ bị tắt. Đồng bộ đa phương tiện sẽ diễn ra trước khi quá trình di chuyển bắt đầu để giữ an toàn cho dữ liệu của bạn.&lt;br&gt;&lt;br&gt;Việc sử dụng hoặc đóng AnkiDroid trong quá trình này là an toàn.</string>
-    <string name="start_migration_progress_message">Bắt đầu di chuyển bộ nhớ. Bạn có thể tiếp tục sử dụng AnkiDroid trong thời gian ngắn.</string>
-    <string name="migration_part_1_done_resume">Bạn có thể tiếp tục sử dụng AnkiDroid.
-\nQuá trình di chuyển bộ nhớ sẽ tiếp tục ở chế độ nền.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s không phải là gói tiện ích JavaScript hợp lệ</string>
     <string name="could_not_create_dir">Không thể tạo thư mục %s</string>
@@ -312,11 +303,6 @@
     <string name="toggle_browser_mode_help">Chuyển đổi giữa hiển thị thẻ hoặc ghi chú trong trình duyệt</string>
     <string name="truncate_content_help">Cắt bớt chiều cao của mỗi hàng của Trình duyệt để chỉ hiển thị 3 dòng nội dung đầu tiên</string>
     <string name="browser_options_dialog_heading">Tuỳ chọn trình duyệt</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Chức năng này không khả dụng trong quá trình di chuyển lưu trữ
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Chạm để bắt đầu di chuyển bộ nhớ</string>
-    <string name="media_sync_required_title">Yêu cầu đồng bộ hóa phương tiện</string>
-    <string name="media_sync_unavailable_message">Chức năng đồng bộ dữ liệu đã bị tắt trong cài đặt. Vui lòng đồng bộ và sao lưu bất kỳ dữ liệu nào chưa được đồng bộ trước khi tiếp tục</string>
     <string name="audio_saved">Đã lưu bản ghi âm</string>
     <string name="deleting_selected_notes">Xoá ghi chú đã chọn</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Nhấn vào một giọng nói để nghe

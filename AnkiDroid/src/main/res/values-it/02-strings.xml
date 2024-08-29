@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Errore nel contenuto della carta: impossibile caricare «%s»</string>
     <!-- Deck Picker -->
     <string name="search_decks">Cerca mazzi</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostra l\'avanzamento della migrazione </string>
     <string name="ankidroid_init_failed_webview_title">Errore Fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basa sulla WebView di Sistema che non è disponibile. Questo può verificarsi se il sistema sta installando aggiornamenti. Sei pregato di riprovare tra qualche minuto.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,15 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Ancora il campo %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Migrazione dei dati</string>
     <string name="scoped_storage_learn_more">Per saperne di più</string>
-    <string name="scoped_storage_postpone">Posticipa</string>
-    <string name="scoped_storage_migrate">Migra</string>
     <string name="search_card_js_api_no_results">La ricerca non ha restituito alcun risultato</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid ha bisogno di migrare i propri dati per rispettare la politica di sicurezza di Android 10.\n\nQuesto migliorerà le prestazioni di sincronizzazione dei media.&lt;br&gt;&lt;br&gt;Durante la migrazione non sarai in grado di sincronizzare e alcune impostazioni saranno disabilitate. Una sincronizzazione multimediale avverrà prima che la migrazione inizi a mantenere i tuoi dati al sicuro.&lt;br&gt;&lt;br&gt;È sicuro usare o chiudere AnkiDroid durante questo processo.</string>
-    <string name="start_migration_progress_message">Avvio migrazione dell\'archivio. Potrai riprendere a usare AnkiDroid a breve.</string>
-    <string name="migration_part_1_done_resume">Puoi riprendere l\'uso di AnkiDroid. \n La migrazione dell\'archivio continuerà in background.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s non è un componente aggiuntivo JavaScript valido</string>
     <string name="could_not_create_dir">Impossibile creare la cartella %s</string>
@@ -315,11 +307,6 @@
     <string name="toggle_browser_mode_help">Passa a Visualizzazione di carte o note nel browser</string>
     <string name="truncate_content_help">Tronca l\'altezza di ogni riga del browser per mostrare solo le prime 3 righe di contenuto</string>
     <string name="browser_options_dialog_heading">Opzioni browser</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Questa funzionalità non è disponibile durante la migrazione nell\'archivio
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tocca per avviare la migrazione</string>
-    <string name="media_sync_required_title">Sincronizzazione del media richiesta</string>
-    <string name="media_sync_unavailable_message">La sincronizzazione media è disabilitata nelle impostazioni. Si prega di sincronizzare ed eseguire il backup di qualsiasi supporto che non è stato sincronizzato prima di continuare</string>
     <string name="audio_saved">Registrazione salvata</string>
     <string name="deleting_selected_notes">Eliminazione delle note selezionate</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Clicca su una voce per ascoltare
