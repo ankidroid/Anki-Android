@@ -712,11 +712,12 @@ open class CardBrowser :
                 if (event.isCtrlPressed && event.isAltPressed) {
                     Timber.i("Ctrl+Alt+T: Toggle cards/notes")
                     showOptionsDialog()
-                } else {
-                    Timber.i("T: Show filter by tags dialog")
+                    return true
+                } else if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+T: Show filter by tags dialog")
                     showFilterByTagsDialog()
+                    return true
                 }
-                return true
             }
             KeyEvent.KEYCODE_S -> {
                 if (event.isCtrlPressed && event.isShiftPressed) {
