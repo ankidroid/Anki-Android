@@ -210,7 +210,6 @@
     <string name="card_viewer_could_not_find_image">カードコンテンツエラー: ’%s’ の読み込みに失敗しました</string>
     <!-- Deck Picker -->
     <string name="search_decks">デッキ名を検索</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">移行の進行状況を表示</string>
     <string name="ankidroid_init_failed_webview_title">重大なエラー</string>
     <string name="ankidroid_init_failed_webview">AnkiDroidはAndroidシステムのWebViewに依存していますが、このWebViewが現在使用できません。この状況は、システムがアップデートプログラムをインストールしている場合に発生する可能性があります。数分後に再試行してください。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -270,16 +269,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">フィールド「%s」の内容を固定する</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">ストレージ移行</string>
     <string name="scoped_storage_learn_more">詳細</string>
-    <string name="scoped_storage_postpone">後で</string>
-    <string name="scoped_storage_migrate">移行</string>
     <string name="search_card_js_api_no_results">検索対象が見つかりませんでした</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Android10のセキュリティポリシーに準拠するためには、AnkiDroidのストレージを移行（AnkiDroidのデータをアプリ専用の新しい保存場所へ移動）する必要があります。\n\n移行を行うと、メディアの同期が従来より短時間で行えるようになります。&lt;br&gt;&lt;br&gt;移行処理中は、同期機能の使用や、一部の設定の変更ができなくなります。移行処理を開始する前に、万一のデータ損失に備え、メディアを含めての同期を実行します。&lt;br&gt;&lt;br&gt;移行処理中もAnkiDroidを使用可能です。また、移行処理中にAnkiDroidの画面を閉じても問題ありません。</string>
-    <string name="start_migration_progress_message">ストレージの移行を開始します。AnkiDroidの使用はまもなく再開できます。</string>
-    <string name="migration_part_1_done_resume">AnkiDroidの使用を再開できます。
-\nストレージの移行はバックグラウンドで続行されます。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s は有効なJavaScriptアドオンパッケージではありません</string>
     <string name="could_not_create_dir">%s というディレクトリを作成できませんでした</string>
@@ -312,11 +303,6 @@
     <string name="toggle_browser_mode_help">カードブラウザのリスト画面で、カードとノート、どちらのリストを表示するかを切り替えます</string>
     <string name="truncate_content_help">リスト画面において、カードまたはノートの内容の表示を１件につき３行までに制限します</string>
     <string name="browser_options_dialog_heading">ブラウザ オプション</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ストレージ移行中はこの機能は利用できません
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">タップしてストレージ移行を開始</string>
-    <string name="media_sync_required_title">メディアの同期が必要です</string>
-    <string name="media_sync_unavailable_message">メディアの同期が設定で無効になっています。続行する前に、まだ同期していないメディアを同期することによってバックアップをとってください</string>
     <string name="audio_saved">録音を保存しました</string>
     <string name="deleting_selected_notes">選択したノートを削除しています</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        読み上げる音声をタップ 

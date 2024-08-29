@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
     <!-- Deck Picker -->
     <string name="search_decks">Rechercher dans les paquets</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Afficher la progression de la migration</string>
     <string name="ankidroid_init_failed_webview_title">Erreur fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid s\'appuie sur la WebView du système qui n\'est pas disponible. Ceci peut se produire si le système installe des mises à jour. Veuillez réessayer dans quelques minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Rendre le champ %s collant</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Transfert du stockage</string>
     <string name="scoped_storage_learn_more">En savoir plus</string>
-    <string name="scoped_storage_postpone">Reporter</string>
-    <string name="scoped_storage_migrate">Transférer</string>
     <string name="search_card_js_api_no_results">La recherche n\'a pas donné de résultats</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid a besoin de migrer son stockage pour se conformer à la politique de sécurité d\'Android 10.\n\nCeci améliorera les performances de la synchronisation des médias.&lt;br&gt;&lt;br&gt;Durant la migration, vous ne pourrez pas faire de synchronisation et certains paramètres seront désactivés. Une synchronisation des médias se produira avant que la migration ne commence à sécuriser vos données.&lt;br&gt;&lt;br&gt;Il est sécurisé d\'utiliser ou de fermer AnkiDroid pendant ce processus.</string>
-    <string name="start_migration_progress_message">Démarrage de la migration du stockage. Vous pouvez reprendre votre utilisation d\'AnkiDroid sous peu.</string>
-    <string name="migration_part_1_done_resume">Vous pouvez continuer à utiliser AnkiDroid.
-\nLa migration du stockage continuera en arrière-plan.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s n\'est pas un package d\'extension JavaScript valide</string>
     <string name="could_not_create_dir">Impossible de créer le répertoire %s</string>
@@ -316,10 +307,6 @@
     <string name="toggle_browser_mode_help">Activer/désactiver l\'affichage des cartes ou des notes dans le navigateur</string>
     <string name="truncate_content_help">Tronquer la hauteur de chaque ligne du navigateur pour ne montrer que les 3 premières lignes de contenu</string>
     <string name="browser_options_dialog_heading">Options du navigateur</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Cette fonctionnalité n\'est pas disponible durant la migration de stockage</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Appuyez pour démarrer la migration de stockage</string>
-    <string name="media_sync_required_title">Synchronisation des médias requise</string>
-    <string name="media_sync_unavailable_message">La synchronisation des médias est désactivée dans les paramètres. Veuillez synchroniser et sauvegarder tout média qui n\'a pas encore été synchronisé avant de continuer.</string>
     <string name="audio_saved">Enregistrement sauvegardé</string>
     <string name="deleting_selected_notes">Suppression des notes sélectionnées</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Touchez une voix pour l\'écouter

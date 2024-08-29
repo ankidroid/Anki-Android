@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Hibás kártya tartalom: \"%s\" betöltése sikertelen</string>
     <!-- Deck Picker -->
     <string name="search_decks">Keresés a paklikban</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Áttelepítés állapota</string>
     <string name="ankidroid_init_failed_webview_title">Végzetes hiba</string>
     <string name="ankidroid_init_failed_webview">Az AnkiDroid a System WebView-t használja, ami jelenleg nem elérhető. Lehetséges, hogy a rendszer frissítéseket telepít. Próbáld újra pár perc múlva.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">A %s mező kitűzőcédulára</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Tárhely mozgatás</string>
     <string name="scoped_storage_learn_more">Tudj meg többet</string>
-    <string name="scoped_storage_postpone">Elhalasztás</string>
-    <string name="scoped_storage_migrate">Áttelepítés</string>
     <string name="search_card_js_api_no_results">A keresés nem adott vissza találatokat.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Az AnkiDroidnak át kell telepítenie a tárhelyét, hogy megfeleljen az Android 10 biztonsági szabályzatának.\n\nEz javítja a médiaszinkronizálás teljesítményét.&lt;br&gt;&lt;br&gt;Az áttelepítés során nem lesz lehetőség a szinkronizálásra, és néhány beállítás le lesz tiltva. Az áttelepítés megkezdése előtt médiaszinkronizálásra kerül sor, hogy az adatok biztonságban legyenek.&lt;br&gt;&lt;br&gt;Az AnkiDroid használata vagy bezárása biztonságos a folyamat alatt.</string>
-    <string name="start_migration_progress_message">A tároló áttelepítése elindult. Hamarosan folytathatja az AnkiDroid használatát.</string>
-    <string name="migration_part_1_done_resume">Folytathatja az AnkiDroid használatát.
-\nA tároló áttelepítése folytatódik a háttérben.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">Nem sikerült létrehozni a könyvtárat: 
@@ -317,10 +308,6 @@
     <string name="toggle_browser_mode_help">Kártyák vagy jegyzetek megjelenítésének váltása</string>
     <string name="truncate_content_help">A böngésző minden sorának magasságát úgy állítja be, hogy csak az első 3 sor legyen látható.</string>
     <string name="browser_options_dialog_heading">Böngésző beállításai</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Ez a funkció nem érhető el a tároló áttelepítése alatt.</string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tároló áttelepítésének elindítása</string>
-    <string name="media_sync_required_title">Média szinkronizálása szükséges</string>
-    <string name="media_sync_unavailable_message">A média szinkronizálás ki van kapcsolva a beállításokban. Folytatás előtt szinkronizálj és készíts biztonsági másolatot minden olyan médiáról, amely még nem volt szinkronizálva.</string>
     <string name="audio_saved">Felvétel mentve</string>
     <string name="deleting_selected_notes">A kijelölt jegyzetek törlése.</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">Nyomj egy hangra a meghallgatáshoz</string>

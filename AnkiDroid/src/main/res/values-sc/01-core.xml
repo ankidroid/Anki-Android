@@ -137,7 +137,6 @@
     <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
-    <string name="button_upgrade" comment="Text of the sync button">Tràmuda a sa memòria cun punna</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Chetes annullare sa sincronizatzione?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Sighi a sincronizare</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizatzione annullada</string>
@@ -192,49 +191,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Non faghet a iscrìere o creare su documentu %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Errores mùltiplos, su prus reghente: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Errores mùltiplos s\'unu in fatu a s\'àteru chene progressu, su prus reghente: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Tramudende sos archìvios de sa base de datos</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copiende&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Tramudende sos mèdios</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Carculende sa mannària de su tramudòngiu&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Mòvidos %1$s de %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Tramudòngiu fatu</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Sos datos tuos sunt istados tramudados chene problema.
-        AnkiDroid funtzionat torra de su totu, e podes sincronizare.
-        \n
-        \nTene in contu chi sa colletzione tua como est posta in una cartella chi benit iscantzellada cando disinstallas s\'aplicatzione.
-        Assegura·ti chi sos datos tuos siant seguros sincronizende o esportende còpias de seguresa in manera regulare.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Tramudòngiu fallidu</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Còpia de sos archìvios de sa base de datos fallida cun s\'errore: %1$s.
-        <br><br>
-        Sas modìficas sunt istadas annulladas.
-        <br><br>
-        Proa a torrare a esecutare sa tràmuda.
-        Pro risòlvere su problema dias pòdere dèpere liberare unu pagu de ispàtziu de discu,
-        o torrare a connètere sa memòria rimovìbile chi tenet sa colletzione tua.
-        <br><br>
-        <a href="%2$s">Impara de prus e retzi agiudu</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Su movimentu de documentos multimediales est in pàusa a pustis de su fallimentu cun s\'errore: %1$s.
-        <br><br>
-        Sas modìficas <i>non</i> sunt istadas annulladas.
-        Dae chi perunu datu i diat dèpere èssere pèrdidu,
-        Sos documentos multimediales diant pòdere èssere partzidos intre sa cartella betza e sa noa.
-        <br><br>
-        Proa a torrare a fàghere su tramudòngiu.
-        Pro risòlvere su problema dias pòdere dèpere liberare unu pagu de ispàtziu in su discu,
-        o torrare a connètere sa memòria rimovìbile in ue tenes sa colletzione tua.
-        <br><br>
-        <a href="%2$s">Impara de prus e retzi agiudu</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Su tramudòngiu de sa memòria est in pàusa a pustis de su fallimentu cun s\'errore: %1$s.
-        <br><br>
-        <a href="%2$s">Impara de prus e retzi agiudu</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Sighi cun su tramudòngiu</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Non faghet a atzèdere a sa colletzione</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non semus in gradu de atzèdere a sa colletzione tua a pustis de sa disinstallatzione de AnkiDroid pro neghe de una modìfica in sa polìtica de su Play Store\n\nSos datos tuos sunt seguros e si podent ripristinare. Sunt postos in\n%s\n\nSeletziona un\'optzione in suta pro ripristinare:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>

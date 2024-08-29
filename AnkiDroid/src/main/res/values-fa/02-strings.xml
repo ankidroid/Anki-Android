@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">خطا در محتویات کارت:‌ بارگیری \'%s\' ناموفق بود</string>
     <!-- Deck Picker -->
     <string name="search_decks">جستجو در تمام دسته‌ها</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">نمایش فرآیند مهاجرت</string>
     <string name="ankidroid_init_failed_webview_title">خطای مخرب</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid بر روی سیستم WebView تکیه میکند که غیرقابل دسترسی است. این میتواند اتفاق بیفتد اگر سیستم در حال نسب کردن آپدیت باشد. لطفا دقایقی دیگر تلاش کنید.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,15 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">بخش %s را بچسبان</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">مهاجرت انبار</string>
     <string name="scoped_storage_learn_more">بیشتر بدانید</string>
-    <string name="scoped_storage_postpone">به تعویق انداختن</string>
-    <string name="scoped_storage_migrate">انتقال</string>
     <string name="search_card_js_api_no_results">جست و جوی شما نتیجه‌ای نداشت</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">انکی‌دروید نیاز دارد که حافظه خود را برای تطبیق با قوانین امنیتی اندروید ۱۰، انتقال بدهد. \n\nاین کار باعث بهبود عملیات همگام سازی رسانه ها خواهد شد.&lt;br&gt;&lt;br&gt;در زمان انتقال شما نمی‌توانید همگام سازی انجام دهید و برخی از تنظیمات نیز غیرفعال خواهند شد. یکبار همگام کردن رسانه قبل از مهاجرت، باعث خواهد شد که اطلاعات شما امن بمانند.&lt;br&gt;&lt;br&gt;بستن انکی‌دروید در حین انجام این فرآیند خطری ندارد.</string>
-    <string name="start_migration_progress_message">مهاجرت حافظه شروع شد. به زودی می‌توانید دوباره از انکی‌دروید استفاده کنید.</string>
-    <string name="migration_part_1_done_resume">شما می‌توانید از انکی‌دروید استفاده کنید.\nمهاجرت حافظه در پس‌زمینه ادامه خواهد داشت.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s یک بسته افزونه جاوا اسکریپت معتبر نیست</string>
     <string name="could_not_create_dir">ساخت فهرست %s ناموفق بود</string>
@@ -315,10 +307,6 @@
     <string name="toggle_browser_mode_help">نمایش کارت‌ها یا یادداشت‌ها در مرورگر را تغییر دهید</string>
     <string name="truncate_content_help">ارتفاع هر ردیف از مرورگر را کوتاه کنید تا فقط 3 خط اول محتوا نشان داده شود</string>
     <string name="browser_options_dialog_heading">تنظیمات نمایشگر</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        این عملکرد، در زمان مهاجرت حافظه، در دسترس نیست    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">برای شروع انتقال حافظه، ضربه بزنید.</string>
-    <string name="media_sync_required_title">همگام سازی رسانه ها نیاز است</string>
-    <string name="media_sync_unavailable_message">همگام سازی رسانه ها در بخش تنظیمات، غیرفعال شده است. لطفاً هر رسانه ای که همگام سازی نشده است را قبل از ادامه دادن، همگام و پشتیبان گیری کنید</string>
     <string name="audio_saved">مورد ضبط شده ذخیره شد</string>
     <string name="deleting_selected_notes">در حال حذف یادداشت های انتخاب شده</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">                برای گوش دادن روی صدا ضربه بزنید

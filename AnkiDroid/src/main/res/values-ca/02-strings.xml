@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
     <!-- Deck Picker -->
     <string name="search_decks">Cerca de paquets</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostra el progrés de la migració</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confia en el sistema WebView que no està disponible. Això pot passar si el sistema instal·la actualitzacions. Torneu-ho a provar d\'aquí a uns quants minuts.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feu que el camp %s sigui enganxós</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Migració de la carpeta</string>
     <string name="scoped_storage_learn_more">Vull saber-ne més</string>
-    <string name="scoped_storage_postpone">Ajorna-ho</string>
-    <string name="scoped_storage_migrate">Migra</string>
     <string name="search_card_js_api_no_results">La cerca ha tornat cap resultat</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">S\'està iniciant la migració. Podreu reprendre l\'ús d\'AnkiDroid en breu.</string>
-    <string name="migration_part_1_done_resume">Podeu tornar a utilitzar l\'AnkiDroid.
-\nLa migració continuarà en segon pla.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">No s\'ha pogut crear la carpeta %s</string>
@@ -316,11 +307,6 @@
     <string name="toggle_browser_mode_help">Alterna entre mostrar targetes i notes al navegador</string>
     <string name="truncate_content_help">Trunca l\'alçada de cada fila del navegador per mostrar només les 3 primeres línies de contingut</string>
     <string name="browser_options_dialog_heading">Opcions del navegador</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Aquesta funcionalitat no està disponible durant una migració d\'emmagatzematge
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toqueu per iniciar la migració d\'emmagatzematge</string>
-    <string name="media_sync_required_title">Cal sincronitzar els mitjans</string>
-    <string name="media_sync_unavailable_message">La sincronització multimèdia està desactivada als paràmetres. Si us plau, abans de continuar, sincronitzeu i feu una còpia de seguretat de qualsevol mitjà que no s\'hagi sincronitzat</string>
     <string name="audio_saved">Recording saved</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen

@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">कार्ड सामग्री त्रुटि: ‘%s’ लोड करने में विफल</string>
     <!-- Deck Picker -->
     <string name="search_decks">खोज डेक</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">माइग्रेशन प्रगति दिखाएं</string>
     <string name="ankidroid_init_failed_webview_title">फ़ॉन्ट आकार</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid सिस्टम WebView पर निर्भर करता है जो अनुपलब्ध है। यह तब हो सकता है जब सिस्टम अपडेट स्थापित कर रहा है। कृपया कुछ मिनटों में पुन: प्रयास करें। \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">फ़ील्ड %s को चिपचिपा बनाएं</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">भंडारण प्रवासन</string>
     <string name="scoped_storage_learn_more">और अधिक जानें</string>
-    <string name="scoped_storage_postpone">स्थगित करें</string>
-    <string name="scoped_storage_migrate">माइग्रेट करें</string>
     <string name="search_card_js_api_no_results">खोज का कोई परिणाम नहीं निकला</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">एंड्रॉइड 10 की सुरक्षा नीति का अनुपालन करने के लिए, अंकीड्रॉइड के स्टोरेज को माइग्रेट करना (अंकीड्रॉइड के डेटा को ऐप को समर्पित एक नए स्टोरेज स्थान पर ले जाना) आवश्यक है। \n\nमाइग्रेशन आपको अपने मीडिया को पहले की तुलना में तेज़ी से सिंक्रोनाइज़ करने की अनुमति देता है। &lt;br&gt;&lt;br&gt;माइग्रेशन प्रक्रिया के दौरान, आप सिंक सुविधा का उपयोग नहीं कर पाएंगे या कुछ सेटिंग्स नहीं बदल पाएंगे। माइग्रेशन प्रक्रिया शुरू करने से पहले, डेटा हानि की स्थिति में मीडिया सहित एक सिंक्रोनाइज़ेशन करें। &lt;br&gt;&lt;br&gt;माइग्रेशन प्रक्रिया के दौरान आप अभी भी AnkiDroid का उपयोग कर सकते हैं। साथ ही, यदि आप माइग्रेशन प्रक्रिया के दौरान AnkiDroid स्क्रीन बंद कर देते हैं तो कोई समस्या नहीं है।</string>
-    <string name="start_migration_progress_message">स्टोरेज माइग्रेशन प्रारंभ हो रहा है. आप शीघ्र ही अंकीड्रॉइड का उपयोग फिर से शुरू कर सकते हैं।</string>
-    <string name="migration_part_1_done_resume">आप अंकीड्रॉइड का उपयोग फिर से शुरू कर सकते हैं.
-\nस्टोरेज माइग्रेशन पृष्ठभूमि में जारी रहेगा.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s एक वैध जावास्क्रिप्ट एडऑन पैकेज नहीं है</string>
     <string name="could_not_create_dir">निर्देशिका नहीं बन सका %s</string>
@@ -316,11 +307,6 @@
     <string name="toggle_browser_mode_help">ब्राउज़र में कार्ड्ज़ और नोट्स दिखाना टॉगल करें</string>
     <string name="truncate_content_help">सामग्री की केवल पहली 3 पंक्तियाँ दिखाने के लिए ब्राउज़र की प्रत्येक पंक्ति की ऊँचाई को छोटा करें</string>
     <string name="browser_options_dialog_heading">ब्राउज़र विकल्प</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        स्टोरेज माइग्रेशन के दौरान यह कार्यक्षमता अनुपलब्ध है
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">संग्रहण माइग्रेशन प्रारंभ करने के लिए टैप करें</string>
-    <string name="media_sync_required_title">मीडिया सिंक आवश्यक</string>
-    <string name="media_sync_unavailable_message">सेटिंग्स में मीडिया सिंक अक्षम है। जारी रखने से पहले जो भी मीडिया सिंक नहीं हुआ है उसे सिंक और बैकअप करें</string>
     <string name="audio_saved">रिकॉर्डिंग को सहेजा गया</string>
     <string name="deleting_selected_notes">चयनित नोट्स हटाये जा रहे हैं</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">सुनने के लिए किसी आवाज़ पर टैप करें

@@ -210,7 +210,6 @@
     <string name="card_viewer_could_not_find_image">卡片內容錯誤：載入 ‘%s’ 失敗</string>
     <!-- Deck Picker -->
     <string name="search_decks">搜尋牌組</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">顯示遷移進度</string>
     <string name="ankidroid_init_failed_webview_title">嚴重錯誤</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依賴於系統 WebView，但其不可用。這可能在系統安裝更新時發生。請等待幾分鐘後再試。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -270,16 +269,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">固定欄位 %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">儲存空間遷移</string>
     <string name="scoped_storage_learn_more">瞭解更多</string>
-    <string name="scoped_storage_postpone">延後</string>
-    <string name="scoped_storage_migrate">遷移</string>
     <string name="search_card_js_api_no_results">搜尋沒有任何結果</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid 需要遷移儲存空間以符合 Android 10 安全政策。\n\n這會改善媒體同步效能。&lt;br&gt;&lt;br&gt;在遷移過程中，您將無法進行同步，某些設定也會停用。在遷移開始前會進行媒體同步，以確保資料安全。&lt;br&gt;&lt;br&gt;在此過程中使用或關閉 AnkiDroid 都是安全的。</string>
-    <string name="start_migration_progress_message">開始儲存遷移。 不久後您就可以繼續使用 AnkiDroid。</string>
-    <string name="migration_part_1_done_resume">您可以繼續使用 AnkiDroid 了。
-\n儲存遷移將在背景繼續。</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s 不是有效的 JavaScript 附加元件套件</string>
     <string name="could_not_create_dir">無法建立目錄 %s</string>
@@ -312,11 +303,6 @@
     <string name="toggle_browser_mode_help">在瀏覽器中切換顯示卡片或筆記</string>
     <string name="truncate_content_help">截斷瀏覽器每行高度僅顯示內容前三行</string>
     <string name="browser_options_dialog_heading">瀏覽器選項</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        此功能在儲存空間移轉期間無法使用
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">點選開始儲存轉移</string>
-    <string name="media_sync_required_title">須執行媒體同步</string>
-    <string name="media_sync_unavailable_message">媒體同步已在設定中停用。在繼續之前，請同步並備份任何尚未同步的媒體。</string>
     <string name="audio_saved">錄音已儲存</string>
     <string name="deleting_selected_notes">刪除選取的筆記</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen

@@ -141,7 +141,6 @@
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
     <string name="button_sync" comment="Text of the sync button">Синхронізувати</string>
-    <string name="button_upgrade" comment="Text of the sync button">Перенесення до зашифрованого сховища (scoped storage)</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Ви хочете скасувати синхронізацію?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Продовжити синхронізацію</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронізацію скасовано</string>
@@ -200,48 +199,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Неможливо записати чи створити файл %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Декілька помилок, остання: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”."> Декілька послідовних помилок без виконання, остання: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Міграція файлів бази даних</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Копіювання&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Міграція медіа</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Розрахунок розміру файлів, що переносяться&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Переміщено %1$s з %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Дані успішно перенесено</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Ваші дані успішно перенесено.
-        AnkiDroid знову повністю працює, і ви можете синхронізуватися.
-        \n
-        \nЗауважте, що ваша колекція тепер знаходиться у папці, яка видалиться при видаленні додатку.
-        Будь ласка, дбайте, щоб ваші дані були в безпеці, регулярно синхронізуючись або експортуючи резервні копії.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Не вдалось перенести дані</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[         Копіювання файлів бази даних закінчилося невдачею з помилкою: %1$s.
-         <br><br>
-         Зміни скасовано.
-         <br><br>
-         Спробуйте повторно запустити міграцію.
-         Щоб розв\'язати проблему, вам може знадобитися звільнити місце на диску,
-         або повторно під\'єднайте знімний носій, у якому зберігається ваша колекція.
-         <br><br>
-         <a href="%2$s">Дізнайтеся більше та отримайте допомогу</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Переміщення мультимедійних файлів поки зупинено через невдачу з помилкою: %1$s.
-         <br><br>
-         Зміни <i>не</i> скасовано.
-         Хоча дані не мають втратитися,
-         медіафайли можуть розділитися між старою та новою теками.
-         <br><br>
-         Спробуйте повторно запустити міграцію.
-         Щоб розв\'язати проблему, вам може знадобитися звільнити місце на диску,
-         або повторно під\'єднайте знімний носій, у якому зберігається ваша колекція.
-         <br><br>
-         <a href="%2$s">Дізнайтеся більше та отримайте допомогу</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Перенесення сховища призупинено після збою з помилкою: %1$s.
-        <br><br>
-        <a href="%2$s">Дізнатися більше та отримати допомогу</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Продовжити перенесення файлів</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступна колекція</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Ми не можемо отримати доступ до вашої колекції після видалення AnkiDroid через зміну політики Play Store\n\nВаші дані в безпеці і можуть бути відновлені. Місцезнаходження даних \n%s\n\nВиберіть опцію нижче для відновлення:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android видалив дозвіл AnkiDroid %1$s через неактивність додатку.\n\nВаші дані в безпеці та можуть бути відновлені. Вони знаходяться в\n%2$s\n\nВиберіть опцію нижче, щоб їх відновити:</string>

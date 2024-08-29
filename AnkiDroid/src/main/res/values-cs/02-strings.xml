@@ -219,7 +219,6 @@
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
     <!-- Deck Picker -->
     <string name="search_decks">Hledat balíčky</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Zobrazit průběh přesunu dat</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -282,16 +281,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Pamatovat si obsah pole %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Přesun úložiště</string>
     <string name="scoped_storage_learn_more">Zjistit více</string>
-    <string name="scoped_storage_postpone">Odložit</string>
-    <string name="scoped_storage_migrate">Přesunout</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid potřebuje přesunout své úložiště, aby splňoval zásady zabezpečení Androidu 10.\n\nTo zlepší výkon synchronizace multimédií.&lt;br&gt;&lt;br&gt;Během přesunu dat nebudete moci synchronizovat a některá nastavení budou zakázána. Před spuštěním přesunu dat dojde k synchronizaci multimédií, aby byla vaše data v bezpečí.&lt;br&gt;&lt;br&gt;Během tohoto procesu je bezpečné používat AnkiDroid nebo ho zavřít.</string>
-    <string name="start_migration_progress_message">Začíná přesun úložiště. Brzy můžete pokračovat v používání AnkiDroid.</string>
-    <string name="migration_part_1_done_resume">Můžete pokračovat v používání AnkiDroid.
-\nPřesun úložiště bude pokračovat na pozadí.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s není platný balíček JavaScript doplňku</string>
     <string name="could_not_create_dir">Nepodařilo se vytvořit adresář %s</string>
@@ -324,11 +315,6 @@
     <string name="toggle_browser_mode_help">Přepnout zobrazení karet nebo poznámek v prohlížeči</string>
     <string name="truncate_content_help">Zkrátit výšku každého řádku prohlížeče, aby se zobrazily pouze první 3 řádky obsahu</string>
     <string name="browser_options_dialog_heading">Možnosti prohlížeče</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Tato funkcionalita není k dispozici během přesunu úložiště
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Klepnutím spustíte přesun úložiště</string>
-    <string name="media_sync_required_title">Je vyžadována synchronizace multimédií</string>
-    <string name="media_sync_unavailable_message">Synchronizace multimédií je zakázána v nastavení. Před pokračováním prosím synchronizujte a zazálohujte multimédia, která nebyla synchronizována</string>
     <string name="audio_saved">Nahrávka uložena</string>
     <string name="deleting_selected_notes">Mažou se vybrané poznámky</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Klepnutím na hlas poslechnout

@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
     <!-- Deck Picker -->
     <string name="search_decks">Deste ara</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Taşıma ilerlemesini göster</string>
     <string name="ankidroid_init_failed_webview_title">Kritik Hata</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid şu an ulaşılamayan System WebView\'a dayanır. Bu sistem güncelleme yüklerken olabilir. Lütfen birkaç dakika sonra tekrar deneyin.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s alanını yapışkan yap</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Depolama geçişi</string>
     <string name="scoped_storage_learn_more">Daha fazlasını öğren</string>
-    <string name="scoped_storage_postpone">Ertele</string>
-    <string name="scoped_storage_migrate">Taşı</string>
     <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid\'in Android 10 güvenlik poliçesine uyum sağlamak için depolamasını taşıması gerekiyor.\n\nBu, medya senkronizasyon performansını yükseltecek.&lt;br&gt;&lt;br&gt;Taşıma sırasında senkronizasyon yapılamaz ve bazı ayarlar değiştirilemez. Verilerinizi güvende tutmak için taşıma başlamadan önce bir medya senkronizasyonu gerçekleşecek.&lt;br&gt;&lt;br&gt;Bu işlem sırasında AnkiDroid\'i kullanmak veya kapatmak güvenlidir.</string>
-    <string name="start_migration_progress_message">Depolama geçişi başlatılıyor. Kısa bir süre sonra AnkiDroid\'i kullanmaya devam edebilirsiniz.</string>
-    <string name="migration_part_1_done_resume">AnkiDroid\'i kullanmaya devam edebilirsiniz.
-\nDepolama geçişi arkaplanda devam edecek.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s geçerli bir JavaScript eklenti paketi değil</string>
     <string name="could_not_create_dir">Klasör oluşturma hatası %s</string>
@@ -316,11 +307,6 @@
     <string name="toggle_browser_mode_help">Kartları veya notları tarayıcıda göstermeyi aç/kapat</string>
     <string name="truncate_content_help">Tarayıcının her sırasının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde kırp</string>
     <string name="browser_options_dialog_heading">Tarayıcı Seçenekleri</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Bu işlev depolama taşıması sırasında kullanılamıyor
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Depolama taşımayı başlatmak için dokunun</string>
-    <string name="media_sync_required_title">Medya Senkronizasyonu Gerekiyor</string>
-    <string name="media_sync_unavailable_message">Medya senkronizasyonu ayarlardan kapalı. Lütfen devam etmeden önce senkronize edilmemiş medyayı senkronize edin ve yedekleyin.</string>
     <string name="audio_saved">Alınan kayıtlar kaydedildi. </string>
     <string name="deleting_selected_notes">Seçili notlar siliniyor</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Bir sesi dinlemek için dokunun

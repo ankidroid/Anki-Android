@@ -135,7 +135,6 @@
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
     <string name="button_sync" comment="Text of the sync button">Συγχρονισμός</string>
-    <string name="button_upgrade" comment="Text of the sync button">Μετεγκατάσταση σε εμβέλεια αποθήκευσης</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Θέλετε να ακυρώσετε τον συγχρονισμό;</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Συνέχεια συγχρονισμού</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Ο συγχρονισμός ακυρώθηκε</string>
@@ -188,47 +187,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Αδυναμία γραφής σε ή δημιουργίας αρχείου %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Πολλαπλά σφάλματα, πιο πρόσφατα: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Πολλαπλά διαδοχικά σφάλματα χωρίς πρόοδο, πιο πρόσφατα: %s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Μετεγκατάσταση αρχείων βάσης δεδομένων</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Αντιγραφή&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Μετεγκατάσταση πολυμέσων</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Υπολογισμός μεγέθους μεταφοράς&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Μετακινήθηκαν %1$s από %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Επιτυχής μετεγκατάσταση</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Τα δεδομένα σας έχουν μετεγκατασταθεί με επιτυχία.
-        Το AnkiDroid είναι ξανά πλήρως λειτουργικό και μπορείτε να συγχρονίσετε.
-        \n
-        \nΣημειώστε ότι η συλλογή σας βρίσκεται τώρα σε ένα φάκελο που αφαιρείται κατά την απεγκατάσταση της εφαρμογής.
-        Παρακαλώ βεβαιωθείτε ότι τα δεδομένα σας είναι ασφαλή συγχρονίζοντας τακτικώς ή εξάγοντας αντίγραφα ασφαλείας.
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Αποτυχία μετεγκατάστασης</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Η αντιγραφή των αρχείων βάσης δεδομένων απέτυχε με το σφάλμα: %1$s.
-        <br><br>
-        Οι αλλαγές επαναφέρθηκαν.
-        Παρακαλώ ξαναπροσπαθήστε την μετεγκατάσταση.
-        Για την επίλυση του προβλήματος, μπορεί να χρειαστεί να απελευθερώσετε κάποιο χώρο στο δίσκο, ή να επανασυνδέστε τα αφαιρούμενα μέσα που έχουν την συλλογή σας.
-        <br><br>
-        <a href="%2$s">Μάθετε περισσότερα και λάβετε βοήθεια</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Η μετακίνηση αρχείων πολυμέσων τίθεται σε παύση μετά από αποτυχία με το σφάλμα: %1$s.
-        <br><br>
-        Οι αλλαγές <i>δεν</i> επανήλθαν.
-        Αν και δε θα πρέπει να έχουν χαθεί δεδομένα,
-        τα αρχεία πολυμέσων ενδέχεται να χωριστούν μεταξύ του παλιού και του νέου φακέλου.
-        <br><br>
-        Παρακαλώ δοκιμάστε να εκτελέσετε ξανά τη μετεγκατάσταση.
-        Για να επιλύσετε το πρόβλημα, ίσως χρειαστεί να ελευθερώσετε χώρο στο δίσκο,
-        ή επανασυνδέστε τον αφαιρούμενο χώρο αποθήκευσης που περιέχει τη συλλογή σας.
-        <br><br>
-        <a href="%2$s">Μάθετε περισσότερα και λάβετε βοήθεια</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Η μετανάστευση αποθήκευσης είναι σε παύση μετά αποτυχία με το σφάλμα: %1$s.
-        <br><br>
-        <a href="%2$s">Μάθετε περισσότερα και λάβετε βοήθεια</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Συνέχιση μετεγκατάστασης</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Μη προσβάσιμη συλλογή</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Δεν είναι δυνατή η πρόσβαση στη συλλογή σας μετά την απεγκατάσταση του AnkiDroid λόγω αλλαγής στην Πολιτική Play Store\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να αποκατασταθούν. Βρίσκονται στο\n%s\n\nΕπιλέξτε μια παρακάτω επιλογή για επαναφορά:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Το Android έχει αφαιρέσει την άδεια %1$s του AnkiDroid λόγω αδράνειας εφαρμογών.\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να επαναφερθούν. Βρίσκεται στο\n%2$s\n\nΕπιλέξτε μια επιλογή παρακάτω για επαναφορά:</string>

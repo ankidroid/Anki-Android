@@ -225,7 +225,6 @@
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
     <!-- Deck Picker -->
     <string name="search_decks">بحث في الرزم</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">إظهار تقدم النقل</string>
     <string name="ankidroid_init_failed_webview_title">خطأٌ فادح</string>
     <string name="ankidroid_init_failed_webview">يعتمد أنكيدرويد على عارض الويب الخاص بالنظام وهو غير متوفر. يمكن أن يحدث هذا إذا كان النظام ينصب تحديثات. الرجاء المحاولة مجددًا بعد بضع دقائق.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -290,15 +289,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">تفعيل ثبات النص لـ %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">نقل التخزين</string>
     <string name="scoped_storage_learn_more">تعلم المزيد</string>
-    <string name="scoped_storage_postpone">تأجيل</string>
-    <string name="scoped_storage_migrate">نقل</string>
     <string name="search_card_js_api_no_results">لم يجد البحث أي نتائج</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">يحتاج أنكيدرويد إلى ترحيل وحدة التخزين الخاصة به للامتثال لسياسة أمان الأندرويد 10.\n\nسيؤدي هذا إلى تحسين أداء مزامنة الوسائط.&lt;br&gt;&lt;br&gt;أثناء الترحيل لن تتمكن من المزامنة وسيتم تعطيل بعض الإعدادات. ستحدث مزامنة الوسائط قبل أن تبدأ عملية الترحيل للحفاظ على البيانات الخاصة بك آمنة.&lt;br&gt;&lt;br&gt;من الآمن استخدام أنكيدرويد أو إغلاقها خلال هذه العملية.</string>
-    <string name="start_migration_progress_message">OKey</string>
-    <string name="migration_part_1_done_resume">تستطيع المواظبة باستخدام أنكيدرويد.\nستستمر عملية نقل البيانات في الخلفية.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">فشل إنشاء المجلد %s</string>
@@ -331,11 +323,6 @@
     <string name="toggle_browser_mode_help">تبديل عرض البطاقات أو الملحوظات في المتصفح</string>
     <string name="truncate_content_help">حد ارتفاع كل صف من المتصفح لإظهار أول 3 سطور فقط</string>
     <string name="browser_options_dialog_heading">خيارات المتصفح</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        هذه الوظيفة غير متوفرة أثناء نقل وحدة التخزين
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">انقر لبدء نقل التخزين</string>
-    <string name="media_sync_required_title">مزامنة الوسائط مطلوبة</string>
-    <string name="media_sync_unavailable_message">مزامنة الوسائط معطلة في الإعدادات. الرجاء مزامنة النسخ الاحتياطي لأي وسائط لم تتم مزامنتها قبل المتابعة</string>
     <string name="audio_saved">تم حفظ التسجيل</string>
     <string name="deleting_selected_notes">حذف الملحوظات المحددة</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        انقر على صوت للاستماع

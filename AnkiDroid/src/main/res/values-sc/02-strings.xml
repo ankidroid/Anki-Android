@@ -216,7 +216,6 @@
     <string name="card_viewer_could_not_find_image">Errore de cuntenutu de sa carta: carrigamentu de ‘%s’ fallidu</string>
     <!-- Deck Picker -->
     <string name="search_decks">Chirca matzos</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Ammustra su protzessu de tramudòngiu</string>
     <string name="ankidroid_init_failed_webview_title">Faddina fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basat in subrade sa WebView de sistema chi no est a disponimentu. Custu podet acontèssere si su sistema est installende atualizatziones. Torra a proare a pustis de una paja de minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -277,16 +276,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fissa su campu %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Tràmuda de sos datos</string>
     <string name="scoped_storage_learn_more">Àteras informatziones</string>
-    <string name="scoped_storage_postpone">Postìtzipa</string>
-    <string name="scoped_storage_migrate">Tràmuda</string>
     <string name="search_card_js_api_no_results">Sa chirca no at frunidu resurtados</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid tenet bisòngiu de tramudare sa memòria sua pro rispetare sa polìtica de riservadesa de Android 10.\n\nCustu at a megiorare su rendimentu de sa sincronizatzione.&lt;br&gt;&lt;br&gt;Durante su tramudòngiu no as a pòdere sincronizare e unas cantas impostatziones ant a èssere disabilitadas. Una sincronizatzione de sos documentos multimediales s\'at a fàghere in antis de su tramudòngiu pro mantènnere seguros sos datos tuos.&lt;br&gt;&lt;br&gt;Est seguru a impreare o serrare AnkiDroid durante custu protzessu.</string>
-    <string name="start_migration_progress_message">Incumintzende sa tràmuda de sa memòria. As a pòdere sighire a impreare AnkiDroid luego.</string>
-    <string name="migration_part_1_done_resume">Podes sighire a impreare AnkiDroid.
-\nSa tràmuda de sa memòria at a sighire in s\'isfundu.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
     <string name="could_not_create_dir">No at fatu a creare sa cartella %s</string>
@@ -319,11 +310,6 @@
     <string name="toggle_browser_mode_help">Cola a sa visualizatzione de cartas o notas in su navigadore</string>
     <string name="truncate_content_help">Mutza s\'artària de cada riga de su navigadore pro ammustrare petzi sas primas 3 rigas de cuntenutu</string>
     <string name="browser_options_dialog_heading">Optziones de su navigadore</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Custa funtzionalidade no est a disponimentu durante unu tramudòngiu de memòria
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toca pro incumintzare sa tràmuda de memòria</string>
-    <string name="media_sync_required_title">Sincronizatzione de sos mèdios netzessària</string>
-    <string name="media_sync_unavailable_message">Sa sincronizatzione multimediale est disabilitada in sas impostatziones. Pro praghere sincroniza e faghe una còpia de seguresa de cale si siat mèdiu chi non siat istadu sincronizadu in antis de sighire</string>
     <string name="audio_saved">Recording saved</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen

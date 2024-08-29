@@ -53,7 +53,7 @@
     <string name="drawing">繪圖</string>
     <string name="send_feedback">提供意見</string>
     <string name="studyoptions_start">開始學習</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
+    <string name="studyoptions_buried_count">+%d 暫時隱藏</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">摺疊</string>
@@ -133,7 +133,6 @@
     <string name="studyoptions_no_cards_due">尚無到期的卡片。</string>
     <string name="sd_card_not_mounted">儲存裝置未掛載</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
-    <string name="button_upgrade" comment="Text of the sync button">遷移到作用域存儲</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">你要取消同步嗎？</string>
     <string name="continue_sync" tools:ignore="UnusedResources">繼續同步</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同步已取消</string>
@@ -183,48 +182,6 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">無法寫入或建立檔案 %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"發生了許多錯誤，其中最後一個是：%s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">多於一個連續錯誤發生並沒有任何進度，最新：%s</string>
-    <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">正在遷移數據</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">複製中&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">遷移資料中</string>
-    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">計算傳輸檔案大小</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">已遷移 %1$s / %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">遷移成功</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        您的數據已經成功轉移。
-        AnkiDroid 已經恢復正常工作，你可以進行同步。
-        \n
-        \n請注意，您的收藏現在位於卸載應用程式時刪除的資料夾中。
-        請定期同步或匯出備份，確保您的資料安全。
-    </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">遷移失敗</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        複製數據出現問題，錯誤：%1$s
-        <br><br>
-        所有更改沒有還原
-        <br><br>
-        請重新遷移
-        解決此問題需要釋放一些磁碟空問
-        或重新連接儲存了文件亦能被刪除的空間
-        <br>
-        <a href="%2$s">了解更多並取得援助</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        複製數據出現問題，錯誤：%1$s
-        <br><br>
-        所有更改<i>沒有</i>被還原
-        雖然數據沒有遺失，媒體數文件有機會於新與舊的文件夾內散開
-        <br><br>
-        請重新進行遷移
-        解决此問题可能需要釋放一些磁碟空間，
-        或重新連接儲存了文件亦能被刪除的空間
-        <br>
-        <a href="%2$s">了解更多並取得援助</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        數據遷移已暫停，由於此錯誤出現：%1$s.
-        <br><br>
-        <a href="%2$s">了解更多並獲取援助</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">重新遷移</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">無法存取收藏</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">AnkiDroid 被卸載後，由於 Google Play 政策有改動，我們不能讀取你的收藏\n\n您的資料安全有能修復，您的資料置於\n%s\n\n選擇以下一項選項以修復資料：</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android 已移除 AnkiDroid 的 %1$s 權限，原因是應用程式不活動。

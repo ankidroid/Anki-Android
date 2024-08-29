@@ -213,7 +213,6 @@
     <string name="card_viewer_could_not_find_image">அட்டை உள்ளடக்கப் பிழை: ‘%s’ ஐ ஏற்றுவதில் தோல்வி</string>
     <!-- Deck Picker -->
     <string name="search_decks">தேடல் தளங்கள்</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">இடம்பெயர்வு முன்னேற்றத்தைக் காட்டு</string>
     <string name="ankidroid_init_failed_webview_title">அபாயகரமான பிழை</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid கணினி WebView ஐ நம்பியுள்ளது, இது கிடைக்கவில்லை. கணினி புதுப்பிப்புகளை நிறுவினால் இது நிகழலாம். சில நிமிடங்களில் மீண்டும் முயற்சிக்கவும்.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -274,16 +273,8 @@
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s புலத்தை ஒட்டக்கூடியதாக மாற்றவும்</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">சேமிப்பு இடம்பெயர்வு</string>
     <string name="scoped_storage_learn_more">மேலும் அறிக</string>
-    <string name="scoped_storage_postpone">ஒத்திவைக்கவும்</string>
-    <string name="scoped_storage_migrate">இடம்பெயர்</string>
     <string name="search_card_js_api_no_results">தேடல் முடிவுகள் கிடைக்கவில்லை</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">சேமிப்பக நகர்வைத் தொடங்குகிறது. நீங்கள் விரைவில் AnkiDroid ஐப் பயன்படுத்தத் தொடங்கலாம்.</string>
-    <string name="migration_part_1_done_resume">நீங்கள் AnkiDroid ஐப் பயன்படுத்தி மீண்டும் தொடங்கலாம்.
-\n சேமிப்பக இடம்பெயர்வு பின்னணியில் தொடரும்.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s என்பது சரியான JavaScript addon தொகுப்பு அல்ல</string>
     <string name="could_not_create_dir">%s கோப்பகத்தை உருவாக்க முடியவில்லை</string>
@@ -316,11 +307,6 @@
     <string name="toggle_browser_mode_help">உலாவியில் கார்டுகள் அல்லது குறிப்புகளைக் காண்பிப்பதை நிலைமாற்று</string>
     <string name="truncate_content_help">உள்ளடக்கத்தின் முதல் 3 வரிகளை மட்டும் காண்பிக்க உலாவியின் ஒவ்வொரு வரிசையின் உயரத்தையும் துண்டிக்கவும்</string>
     <string name="browser_options_dialog_heading">உலாவி விருப்பங்கள்</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        நகர்வின்போதுவஇந்தச் செயல்பாடுசெயல்பாடு கிடைக்காது
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">சேமிப்பக நகர்வைத் தொடங்க தட்டவும்</string>
-    <string name="media_sync_required_title">மீடியா ஒத்திசைவு தேவை</string>
-    <string name="media_sync_unavailable_message">அமைப்புகளில் மீடியா ஒத்திசைவு முடக்கப்பட்டுள்ளது. தொடர்வதற்கு முன் ஒத்திசைக்கப்படாத மீடியாவை ஒத்திசைத்து காப்புப் பிரதி எடுக்கவும்</string>
     <string name="audio_saved">பதிவு சேமிக்கப்பட்டது</string>
     <string name="deleting_selected_notes">தேர்ந்தெடுக்கப்பட்ட குறிப்புகளை நீக்குகிறது</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        கேட்க ஒரு குரலைத் தட்டவும்

@@ -213,7 +213,6 @@ Context | Request Context    [1]</string>
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
     <!-- Deck Picker -->
     <string name="search_decks">덱 검색</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">마이그레이션 진행 상황 표시</string>
     <string name="ankidroid_init_failed_webview_title">심각한 오류</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid이 필요한 시스템 WebView를 사용할 수 없습니다. 이 문제는 시스템이 업데이트를 설치하는 경우 발생할 수도 있습니다. 잠시 후 다시 시도하십시오.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -273,16 +272,8 @@ Context | Request Context    [1]</string>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s 필드 고정하기</string>
-    <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">저장 공간 마이그레이션</string>
     <string name="scoped_storage_learn_more">더 알아보기</string>
-    <string name="scoped_storage_postpone">나중에 하기</string>
-    <string name="scoped_storage_migrate">옮기기</string>
     <string name="search_card_js_api_no_results">검색 결과가 없습니다.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">안드로이드 10 보안 정책에 따라 AnkiDroid는 저장 공간을 옮겨야 합니다.\n\n작업을 수행할 시 미디어 동기화 성능이 개선됩니다.&lt;br&gt;&lt;br&gt;마이그레이션 중 동기화 및 일부 설정이 비활성화됩니다. 데이터 보호를 위해 마이그레이션 작업 전에 미디어 동기화가 진행됩니다.&lt;br&gt;&lt;br&gt;이 작업 동안 AnkiDroid를 사용 또는 종료하실 수 있습니다.</string>
-    <string name="start_migration_progress_message">저장 공간 마이그레이션을 시작합니다. 곧 다시 AnkiDroid를 사용하실 수 있습니다.</string>
-    <string name="migration_part_1_done_resume">AnkiDroid를 사용하실 수 있습니다.
-\n저장 공간 마이그레이션 작업이 백그라운드에서 진행됩니다.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon_package">%s 패키지는 유효한 자바스크립트 애드온 패키지가 아닙니다.</string>
     <string name="could_not_create_dir">%s 디렉토리를 생성할 수 없습니다.</string>
@@ -315,11 +306,6 @@ Context | Request Context    [1]</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser Options</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
     <string name="audio_saved">Recording saved</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>
     <string name="tts_voices_default_text" comment="The default text to speak when selecting     Text to speech voices">        Tap a voice to listen
