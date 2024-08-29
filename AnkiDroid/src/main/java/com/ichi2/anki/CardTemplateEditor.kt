@@ -375,8 +375,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
                 else -> return super.onKeyUp(keyCode, event)
             }
+            return true
         }
-        return true
+        return super.onKeyUp(keyCode, event)
     }
 
     @get:VisibleForTesting
