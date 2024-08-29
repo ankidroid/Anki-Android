@@ -656,9 +656,15 @@ open class CardBrowser :
                     Timber.i("Ctrl+E: Add Note")
                     launchCatchingTask { addNoteFromCardBrowser() }
                     return true
-                } else {
+                } else if (searchView?.isIconified == true) {
                     Timber.i("E: Edit note")
+                    // search box is not available so treat the event as a shortcut
                     openNoteEditorForCurrentlySelectedNote()
+                    return true
+                } else {
+                    Timber.i("E: Character added")
+                    // search box might be available and receiving input so treat this as usual text
+                    return false
                 }
             }
             KeyEvent.KEYCODE_D -> {
