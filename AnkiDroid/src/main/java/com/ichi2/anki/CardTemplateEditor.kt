@@ -639,9 +639,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     insertField(bundle.getString(InsertFieldDialog.KEY_INSERTED_FIELD)!!)
                 }
             }
-            if (!templateEditor.fragmented) {
-                setupMenu()
-            }
+            setupMenu()
         }
 
         private fun initTabLayoutMediator() {
@@ -670,7 +668,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             (requireActivity() as MenuHost).addMenuProvider(
                 object : MenuProvider {
                     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                        menu.clear()
                         menuInflater.inflate(R.menu.card_template_editor, menu)
                         setupCommonMenu(menu)
                     }

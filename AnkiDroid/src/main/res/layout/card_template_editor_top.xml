@@ -14,7 +14,9 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ActionBarStyle"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
-        app:navigationIcon="?attr/homeAsUpIndicator"/>
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:menu="@menu/card_template_editor"
+        />
 
     <com.google.android.material.tabs.TabLayout
         style="@style/TabLayoutStyle"
