@@ -18,6 +18,7 @@
 
 package com.ichi2.anki.api
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
@@ -542,6 +543,7 @@ public class AddContentApi(context: Context) {
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
     public val apiHostSpecVersion: Int
+        @SuppressLint("WrongConstant") // ComponentInfoFlags bug: GET_META_DATA.toLong() was invalid
         get() {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
             // GET_META_DATA seems to work anyway
