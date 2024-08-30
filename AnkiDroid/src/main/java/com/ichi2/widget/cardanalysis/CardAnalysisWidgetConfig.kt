@@ -103,6 +103,11 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             }
 
             initializeUIComponents()
+            // Show the Deck selection dialog only when there are no decks selected while opening the configuration screen.
+            val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
+            if (selectedDeckIds.isEmpty()) {
+                showDeckSelectionDialog()
+            }
         }
     }
 
@@ -123,7 +128,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             showSnackbar(R.string.deck_removed_from_widget)
             updateViewVisibility()
             updateFabVisibility()
-            updateDoneButtonVisibility()
             hasUnsavedChanges = true
             setUnsavedChanges(true)
         }
@@ -133,7 +137,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             adapter = this@CardAnalysisWidgetConfig.deckAdapter
         }
 
-        setupDoneButton()
+        findViewById<Button>(R.id.submit_button).visibility = View.GONE
 
         findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker).setOnClickListener {
             showDeckSelectionDialog()
@@ -160,7 +164,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         if (!isAdapterObserverRegistered) {
             deckAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                 override fun onChanged() {
-                    updateDoneButtonVisibility() // Update visibility when data changes
                 }
             })
             isAdapterObserverRegistered = true
@@ -197,39 +200,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         anchorView = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
     }
 
-    private fun setupDoneButton() {
-        val doneButton = findViewById<Button>(R.id.submit_button)
-        val saveText = getString(R.string.save).uppercase()
-
-        // Set the button text and click listener only once during initialization
-        doneButton.text = saveText
-        doneButton.setOnClickListener {
-            saveSelectedDecksToPreferencesCardAnalysisWidget()
-            hasUnsavedChanges = false
-            setUnsavedChanges(false)
-
-            val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
-
-            val appWidgetManager = AppWidgetManager.getInstance(this)
-            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
-
-            val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            setResult(RESULT_OK, resultValue)
-
-            sendBroadcast(Intent(this, CardAnalysisWidget::class.java))
-
-            finish()
-        }
-
-        // Initially set the visibility based on the number of selected decks
-        updateDoneButtonVisibility()
-    }
-
-    private fun updateDoneButtonVisibility() {
-        val doneButton = findViewById<Button>(R.id.submit_button)
-        doneButton.isVisible = deckAdapter.itemCount != 0
-    }
-
     /** Updates the visibility of the FloatingActionButton based on the number of selected decks */
     private fun updateFabVisibility() {
         lifecycleScope.launch {
@@ -258,7 +228,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
                 selectedDecks.forEach { deckAdapter.addDeck(it) }
                 updateViewVisibility()
                 updateFabVisibility()
-                setupDoneButton()
             }
         }
     }
@@ -289,7 +258,14 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         dialog.show(supportFragmentManager, "DeckSelectionDialog")
     }
 
-    /** Called when a deck is selected from the deck selection dialog. */
+    /**
+     * Called when a deck is selected from the deck selection dialog.
+     *
+     * This method adds the selected deck to the `deckAdapter`, updates the visibility of views,
+     * and immediately saves the selected deck to preferences.
+     *
+     * @param deck The selected deck, or `null` if no deck was selected.
+     */
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
             return
@@ -297,19 +273,30 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
         // Check if the deck is being added to a fully occupied selection
         if (deckAdapter.itemCount >= MAX_DECKS_ALLOWED) {
-            showSnackbar(R.string.deck_limit_one)
+            return
         } else {
             // Add the deck and update views
             deckAdapter.addDeck(deck)
             updateViewVisibility()
             updateFabVisibility()
-            setupDoneButton()
             hasUnsavedChanges = true
             setUnsavedChanges(true)
 
-            if (deckAdapter.itemCount == MAX_DECKS_ALLOWED) {
-                showSnackbar(R.string.deck_limit_one) // Show Snackbar if the limit is now reached
-            }
+            // Save the selected deck immediately
+            saveSelectedDecksToPreferencesCardAnalysisWidget()
+            hasUnsavedChanges = false
+            setUnsavedChanges(false)
+
+            val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
+            val appWidgetManager = AppWidgetManager.getInstance(this)
+            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
+
+            val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            setResult(RESULT_OK, resultValue)
+
+            sendBroadcast(Intent(this, CardAnalysisWidget::class.java))
+
+            finish()
         }
     }
 

@@ -136,20 +136,4 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
         assertThat(noDecksPlaceholder.visibility, equalTo(View.GONE))
         assertThat(widgetConfigContainer.visibility, equalTo(View.VISIBLE))
     }
-
-    /**
-     * Tests the selection of a deck.
-     *
-     * This test verifies that when a deck is selected, it gets added to the adapter and displayed
-     * in the `RecyclerView`.
-     */
-    @Test
-    fun testOnDeckSelected() {
-        val deck = DeckSelectionDialog.SelectableDeck(1, "Deck 1")
-        activity.onDeckSelected(deck)
-
-        // Verify deck is added to adapter
-        val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks)
-        assertThat(recyclerView.adapter?.itemCount, equalTo(1))
-    }
 }

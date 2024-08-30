@@ -317,7 +317,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     /** Displays the deck selection dialog with the provided list of decks. */
     private fun displayDeckSelectionDialog(decks: List<SelectableDeck>) {
         val dialog = DeckSelectionDialog.newInstance(
-            title = getString(R.string.select_deck_title),
+            title = getString(R.string.select_decks_title),
             summaryMessage = null,
             keepRestoreDefaultButton = false,
             decks = decks

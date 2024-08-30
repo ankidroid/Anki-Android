@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -75,6 +76,28 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 val deckData = getDeckNameAndStats(deckId.toList())
 
                 if (deckData.isEmpty()) {
+                    // If the deck was deleted, clear the stored deck ID
+                    val widgetPreferences = CardAnalysisWidgetPreferences(context)
+                    val selectedDeck = longArrayOf().map { it.toString() }
+                    widgetPreferences.saveSelectedDeck(appWidgetId, selectedDeck)
+
+                    // Show empty_widget and set click listener to open configuration
+                    remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
+                    remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
+                    remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
+
+                    val configIntent = Intent(context, CardAnalysisWidgetConfig::class.java).apply {
+                        putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    val configPendingIntent = PendingIntent.getActivity(
+                        context,
+                        appWidgetId,
+                        configIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                    remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
+
                     appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
                     return@launch
                 }
@@ -84,6 +107,11 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 remoteViews.setTextViewText(R.id.deckNew_card_analysis_widget, deck.newCount.toString())
                 remoteViews.setTextViewText(R.id.deckDue_card_analysis_widget, deck.reviewCount.toString())
                 remoteViews.setTextViewText(R.id.deckLearn_card_analysis_widget, deck.learnCount.toString())
+
+                // Hide empty_widget and show the actual widget content
+                remoteViews.setViewVisibility(R.id.empty_widget, View.GONE)
+                remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.VISIBLE)
+                remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.VISIBLE)
 
                 val isEmptyDeck = deck.newCount == 0 && deck.reviewCount == 0 && deck.learnCount == 0
 
