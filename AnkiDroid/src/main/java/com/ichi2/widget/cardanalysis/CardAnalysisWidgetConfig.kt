@@ -104,8 +104,8 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
             initializeUIComponents()
             // Show the Deck selection dialog only when there are no decks selected while opening the configuration screen.
-            val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
-            if (selectedDeckIds.isEmpty()) {
+            val selectedDeckId = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
+            if (selectedDeckId == null) {
                 showDeckSelectionDialog()
             }
         }
@@ -123,7 +123,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
     }
 
     fun initializeUIComponents() {
-        deckAdapter = WidgetConfigScreenAdapter { deck, position ->
+        deckAdapter = WidgetConfigScreenAdapter { deck, _ ->
             deckAdapter.removeDeck(deck.deckId)
             showSnackbar(R.string.deck_removed_from_widget)
             updateViewVisibility()
@@ -220,15 +220,13 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
     /** Updates the view according to the saved preference for appWidgetId.*/
     fun updateViewWithSavedPreferences() {
-        val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
-        if (selectedDeckIds.isNotEmpty()) {
-            lifecycleScope.launch {
-                val decks = fetchDecks()
-                val selectedDecks = decks.filter { it.deckId in selectedDeckIds }
-                selectedDecks.forEach { deckAdapter.addDeck(it) }
-                updateViewVisibility()
-                updateFabVisibility()
-            }
+        val selectedDeckId = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: return
+        lifecycleScope.launch {
+            val decks = fetchDecks()
+            val selectedDecks = decks.filter { it.deckId == selectedDeckId }
+            selectedDecks.forEach { deckAdapter.addDeck(it) }
+            updateViewVisibility()
+            updateFabVisibility()
         }
     }
 
@@ -287,9 +285,9 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             hasUnsavedChanges = false
             setUnsavedChanges(false)
 
-            val selectedDeckIds = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
+            val selectedDeckId = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
             val appWidgetManager = AppWidgetManager.getInstance(this)
-            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckIds)
+            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckId)
 
             val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             setResult(RESULT_OK, resultValue)
@@ -310,14 +308,14 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
     }
 
     fun saveSelectedDecksToPreferencesCardAnalysisWidget() {
-        val selectedDecks = deckAdapter.deckIds.map { it }
-        cardAnalysisWidgetPreferences.saveSelectedDeck(appWidgetId, selectedDecks.map { it.toString() })
+        val selectedDeck = deckAdapter.deckIds.getOrNull(0)
+        cardAnalysisWidgetPreferences.saveSelectedDeck(appWidgetId, selectedDeck)
 
         val updateIntent = Intent(this, CardAnalysisWidget::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
 
-            putExtra("card_analysis_widget_selected_deck_ids", selectedDecks.toList().toLongArray())
+            putExtra("card_analysis_widget_selected_deck_ids", selectedDeck)
         }
 
         sendBroadcast(updateIntent)
