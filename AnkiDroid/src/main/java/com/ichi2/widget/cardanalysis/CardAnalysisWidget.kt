@@ -30,9 +30,11 @@ import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.pages.DeckOptions
+import com.ichi2.libanki.DeckId
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.cancelRecurringAlarm
+import com.ichi2.widget.deckpicker.DeckWidgetData
 import com.ichi2.widget.deckpicker.getDeckNameAndStats
 import com.ichi2.widget.setRecurringAlarm
 import kotlinx.coroutines.launch
@@ -68,71 +70,88 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
-            deckId: LongArray
+            deckId: DeckId?
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
-
+            if (deckId == null) {
+                showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
+                return
+            }
             AnkiDroidApp.applicationScope.launch {
-                val deckData = getDeckNameAndStats(deckId.toList())
+                val deckData = getDeckNameAndStats(deckId)
 
-                if (deckData.isEmpty()) {
+                if (deckData == null) {
                     // If the deck was deleted, clear the stored deck ID
-                    val widgetPreferences = CardAnalysisWidgetPreferences(context)
-                    val selectedDeck = longArrayOf().map { it.toString() }
-                    widgetPreferences.saveSelectedDeck(appWidgetId, selectedDeck)
-
-                    // Show empty_widget and set click listener to open configuration
-                    remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
-                    remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
-                    remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
-
-                    val configIntent = Intent(context, CardAnalysisWidgetConfig::class.java).apply {
-                        putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }
-                    val configPendingIntent = PendingIntent.getActivity(
-                        context,
-                        appWidgetId,
-                        configIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
-                    remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
-
-                    appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+                    CardAnalysisWidgetPreferences(context).saveSelectedDeck(appWidgetId, null)
+                    showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
                     return@launch
                 }
-
-                val deck = deckData[0]
-                remoteViews.setTextViewText(R.id.deckNameCardAnalysis, deck.name)
-                remoteViews.setTextViewText(R.id.deckNew_card_analysis_widget, deck.newCount.toString())
-                remoteViews.setTextViewText(R.id.deckDue_card_analysis_widget, deck.reviewCount.toString())
-                remoteViews.setTextViewText(R.id.deckLearn_card_analysis_widget, deck.learnCount.toString())
-
-                // Hide empty_widget and show the actual widget content
-                remoteViews.setViewVisibility(R.id.empty_widget, View.GONE)
-                remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.VISIBLE)
-                remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.VISIBLE)
-
-                val isEmptyDeck = deck.newCount == 0 && deck.reviewCount == 0 && deck.learnCount == 0
-
-                val intent = if (!isEmptyDeck) {
-                    Intent(context, Reviewer::class.java).apply {
-                        action = Intent.ACTION_VIEW
-                        putExtra("deckId", deck.deckId)
-                    }
-                } else {
-                    DeckOptions.getIntent(context, deck.deckId)
-                }
-                val pendingIntent = PendingIntent.getActivity(
-                    context,
-                    deck.deckId.toInt(),
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
-                remoteViews.setOnClickPendingIntent(R.id.deckNameCardAnalysis, pendingIntent)
-
-                appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+                showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckData)
             }
+        }
+
+        private fun showMissingDeck(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int,
+            remoteViews: RemoteViews
+        ) {
+            // Show empty_widget and set click listener to open configuration
+            remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
+            remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
+            remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
+
+            val configIntent = Intent(context, CardAnalysisWidgetConfig::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val configPendingIntent = PendingIntent.getActivity(
+                context,
+                appWidgetId,
+                configIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
+
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+        }
+
+        private fun showDeck(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int,
+            remoteViews: RemoteViews,
+            deckData: DeckWidgetData
+        ) {
+            remoteViews.setTextViewText(R.id.deckNameCardAnalysis, deckData.name)
+            remoteViews.setTextViewText(R.id.deckNew_card_analysis_widget, deckData.newCount.toString())
+            remoteViews.setTextViewText(R.id.deckDue_card_analysis_widget, deckData.reviewCount.toString())
+            remoteViews.setTextViewText(R.id.deckLearn_card_analysis_widget, deckData.learnCount.toString())
+
+            // Hide empty_widget and show the actual widget content
+            remoteViews.setViewVisibility(R.id.empty_widget, View.GONE)
+            remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.VISIBLE)
+            remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.VISIBLE)
+
+            val isEmptyDeck = deckData.newCount == 0 && deckData.reviewCount == 0 && deckData.learnCount == 0
+
+            val intent = if (!isEmptyDeck) {
+                Intent(context, Reviewer::class.java).apply {
+                    action = Intent.ACTION_VIEW
+                    putExtra("deckId", deckData.deckId)
+                }
+            } else {
+                DeckOptions.getIntent(context, deckData.deckId)
+            }
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                deckData.deckId.toInt(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            remoteViews.setOnClickPendingIntent(R.id.deckNameCardAnalysis, pendingIntent)
+
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }
 
         /**
@@ -207,7 +226,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID && selectedDeckId != -1L) {
                     Timber.d("Updating widget with ID: $appWidgetId")
                     // Wrap selectedDeckId into a LongArray
-                    updateWidget(context, appWidgetManager, appWidgetId, longArrayOf(selectedDeckId))
+                    updateWidget(context, appWidgetManager, appWidgetId, selectedDeckId)
                     Timber.d("Widget update process completed for widget ID: $appWidgetId")
                 }
             }

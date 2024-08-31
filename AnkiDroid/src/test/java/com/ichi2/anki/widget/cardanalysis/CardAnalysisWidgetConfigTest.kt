@@ -82,8 +82,8 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
         activity.saveSelectedDecksToPreferencesCardAnalysisWidget()
 
         // Verify saved decks
-        val selectedDeckIds = widgetPreferences.getSelectedDeckIdFromPreferences(1).toList()
-        assertThat(selectedDeckIds.contains(deck1.deckId), equalTo(true))
+        val selectedDeckId = widgetPreferences.getSelectedDeckIdFromPreferences(1)
+        assertThat(selectedDeckId, equalTo(deck1.deckId))
     }
 
     /**
@@ -95,8 +95,8 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
     @Test
     fun testLoadSavedPreferences() {
         // Save decks to preferences
-        val deckIds = listOf(1L)
-        widgetPreferences.saveSelectedDeck(1, deckIds.map { it.toString() })
+        val deckId = 1L
+        widgetPreferences.saveSelectedDeck(1, deckId)
 
         // Load preferences
         activity.updateViewWithSavedPreferences()
@@ -109,7 +109,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
         val adapter = recyclerView.adapter
 
         // Verify the adapter has the correct item count
-        assertThat(adapter?.itemCount, equalTo(deckIds.size))
+        assertThat(adapter?.itemCount, equalTo(1))
     }
 
     /**

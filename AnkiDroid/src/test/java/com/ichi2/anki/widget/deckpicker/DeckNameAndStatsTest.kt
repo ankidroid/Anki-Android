@@ -18,7 +18,7 @@ package com.ichi2.anki.widget.deckpicker
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.widget.deckpicker.getDeckNameAndStats
+import com.ichi2.widget.deckpicker.getDeckNamesAndStats
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
@@ -32,7 +32,7 @@ class DeckNameAndStatsTest : RobolectricTest() {
         val deck2Id = addDeck("Deck 2")
         val deckIds = listOf(deck1Id, deck2Id)
 
-        val result = getDeckNameAndStats(deckIds)
+        val result = getDeckNamesAndStats(deckIds)
 
         assertEquals(2, result.size)
         assertEquals("Deck 1", result[0].name)
@@ -48,7 +48,7 @@ class DeckNameAndStatsTest : RobolectricTest() {
         val deckCId = addDeck("Deck C")
         val deckIds = listOf(deckCId, deckAId, deckBId)
 
-        val result = getDeckNameAndStats(deckIds)
+        val result = getDeckNamesAndStats(deckIds)
 
         assertEquals(3, result.size)
         assertEquals("Deck C", result[0].name)
@@ -65,7 +65,7 @@ class DeckNameAndStatsTest : RobolectricTest() {
         val child1Id = addDeck("Deck 1::Child 1")
         val deckIds = listOf(deck1Id, child1Id)
 
-        val result = getDeckNameAndStats(deckIds)
+        val result = getDeckNamesAndStats(deckIds)
 
         assertEquals(2, result.size)
         assertEquals("Deck 1", result[0].name)

@@ -30,6 +30,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.pages.DeckOptions
+import com.ichi2.libanki.DeckId
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.cancelRecurringAlarm
@@ -37,7 +38,6 @@ import com.ichi2.widget.setRecurringAlarm
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-typealias DeckId = Long
 typealias AppWidgetId = Int
 
 /**
@@ -49,7 +49,7 @@ typealias AppWidgetId = Int
  * @property learnCount The number of cards in the learning phase.
  * @property newCount The number of new cards.
  */
-data class DeckPickerWidgetData(
+data class DeckWidgetData(
     val deckId: DeckId,
     val name: String,
     val reviewCount: Int,
@@ -97,7 +97,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_deck_picker_large)
 
             AnkiDroidApp.applicationScope.launch {
-                val deckData = getDeckNameAndStats(deckIds.toList())
+                val deckData = getDeckNamesAndStats(deckIds.toList())
 
                 remoteViews.removeAllViews(R.id.deckCollection)
 
@@ -274,18 +274,22 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
  *
  * Note: This operation may be slow, as it involves processing the entire deck collection.
  *
- * @param deckIds the list of deck IDs to retrieve data for
+ * @param deckId the list of deck ID to retrieve data for
  * @return a list of DeckPickerWidgetData objects containing deck names and statistics
  */
-suspend fun getDeckNameAndStats(deckIds: List<DeckId>): List<DeckPickerWidgetData> {
-    val result = mutableListOf<DeckPickerWidgetData>()
+suspend fun getDeckNameAndStats(deckId: DeckId): DeckWidgetData? {
+    return getDeckNamesAndStats(listOf(deckId)).getOrNull(0)
+}
+
+suspend fun getDeckNamesAndStats(deckIds: List<DeckId>): List<DeckWidgetData> {
+    val result = mutableListOf<DeckWidgetData>()
 
     val deckTree = withCol { sched.deckDueTree() }
 
     deckTree.forEach { node ->
         if (node.did !in deckIds) return@forEach
         result.add(
-            DeckPickerWidgetData(
+            DeckWidgetData(
                 deckId = node.did,
                 name = node.lastDeckNameComponent,
                 reviewCount = node.revCount,
