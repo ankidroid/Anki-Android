@@ -26,6 +26,7 @@ import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.DeckUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -78,6 +79,12 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 return
             }
             AnkiDroidApp.applicationScope.launch {
+                val isCollectionEmpty = DeckUtils.isCollectionEmpty()
+                if (isCollectionEmpty) {
+                    showCollectionDeck(context, appWidgetManager, appWidgetId, remoteViews)
+                    return@launch
+                }
+
                 val deckData = getDeckNameAndStats(deckId)
 
                 if (deckData == null) {
@@ -88,6 +95,20 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 }
                 showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckData)
             }
+        }
+
+        private fun showCollectionDeck(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: Int,
+            remoteViews: RemoteViews
+        ) {
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.app_not_initialized_new))
+            remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
+            remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
+            remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
+
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }
 
         private fun showMissingDeck(
