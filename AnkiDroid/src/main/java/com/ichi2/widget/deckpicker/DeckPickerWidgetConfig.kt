@@ -34,8 +34,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckUtils
+import com.ichi2.anki.DeckUtils.isCollectionEmpty
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -443,24 +443,6 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
             context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
         }
-    }
-
-    /**
-     * Returns whether the deck picker displays any deck.
-     * Technically, it means that there is a non default deck, or that the default deck is non-empty.
-     *
-     * This function is specifically implemented to address an issue where the default deck
-     * isn't handled correctly when a second deck is added to the
-     * collection. In this case, the deck tree may incorrectly appear as non-empty when it contains
-     * only the default deck and no other cards.
-     *
-     */
-    private suspend fun isCollectionEmpty(): Boolean {
-        val tree = withCol { sched.deckDueTree() }
-        if (tree.children.size == 1 && tree.children[0].did == 1L) {
-            return isDefaultDeckEmpty()
-        }
-        return false
     }
 }
 

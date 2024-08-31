@@ -52,4 +52,22 @@ object DeckUtils {
             }
         }
     }
+
+    /**
+     * Returns whether the deck picker displays any deck.
+     * Technically, it means that there is a non default deck, or that the default deck is non-empty.
+     *
+     * This function is specifically implemented to address an issue where the default deck
+     * isn't handled correctly when a second deck is added to the
+     * collection. In this case, the deck tree may incorrectly appear as non-empty when it contains
+     * only the default deck and no other cards.
+     *
+     */
+    suspend fun isCollectionEmpty(): Boolean {
+        val tree = withCol { sched.deckDueTree() }
+        if (tree.children.size == 1 && tree.children[0].did == 1L) {
+            return isDefaultDeckEmpty()
+        }
+        return false
+    }
 }

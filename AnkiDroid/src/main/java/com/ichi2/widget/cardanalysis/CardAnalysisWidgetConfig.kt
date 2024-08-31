@@ -33,8 +33,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.DeckUtils
+import com.ichi2.anki.DeckUtils.isCollectionEmpty
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -214,10 +213,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         }
     }
 
-    private suspend fun isDefaultDeckEmpty(): Boolean {
-        return DeckUtils.isDefaultDeckEmpty()
-    }
-
     /** Updates the view according to the saved preference for appWidgetId.*/
     fun updateViewWithSavedPreferences() {
         val selectedDeckId = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: return
@@ -335,14 +330,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
             context?.let { cardAnalysisWidgetPreferences.deleteDeckData(appWidgetId) }
         }
-    }
-
-    private suspend fun isCollectionEmpty(): Boolean {
-        val tree = withCol { sched.deckDueTree() }
-        if (tree.children.size == 1 && tree.children[0].did == 1L) {
-            return isDefaultDeckEmpty()
-        }
-        return false
     }
 }
 
