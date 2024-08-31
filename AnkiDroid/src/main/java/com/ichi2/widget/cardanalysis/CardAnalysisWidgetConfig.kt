@@ -127,6 +127,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             showSnackbar(R.string.deck_removed_from_widget)
             updateViewVisibility()
             updateFabVisibility()
+            updateSubmitButtonText()
             hasUnsavedChanges = true
             setUnsavedChanges(true)
         }
@@ -136,7 +137,13 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             adapter = this@CardAnalysisWidgetConfig.deckAdapter
         }
 
-        findViewById<Button>(R.id.submit_button).visibility = View.GONE
+        // Find and update the submit button text based on the initial deck selection state
+        val submitButton = findViewById<Button>(R.id.submit_button)
+        updateSubmitButtonText()
+
+        submitButton.setOnClickListener {
+            finish() // Close the configuration screen when the button is clicked
+        }
 
         findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker).setOnClickListener {
             showDeckSelectionDialog()
@@ -166,6 +173,17 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
                 }
             })
             isAdapterObserverRegistered = true
+        }
+    }
+
+    /** Updates the text of the submit button based on the selected deck count. */
+    private fun updateSubmitButtonText() {
+        val submitButton = findViewById<Button>(R.id.submit_button)
+        if (deckAdapter.itemCount > 0) {
+            submitButton.text = getString(R.string.dialog_cancel)
+            submitButton.visibility = View.VISIBLE
+        } else {
+            submitButton.visibility = View.GONE
         }
     }
 
@@ -222,6 +240,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             selectedDecks.forEach { deckAdapter.addDeck(it) }
             updateViewVisibility()
             updateFabVisibility()
+            updateSubmitButtonText()
         }
     }
 
