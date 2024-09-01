@@ -51,8 +51,8 @@
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
+    <string name="cram_deck_conf_order_random">சீரற்ற</string>
+    <string name="cram_deck_conf_order_increasing_intervals">அதிகரிக்கும் இடைவெளிகள்</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
     <string name="cram_deck_conf_order_order_added">ஆர்டர் சேர்க்கப்பட்டது</string>
@@ -69,37 +69,37 @@
     <string name="day_theme_plain">Plain</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">கருப்பு</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_dark">இருள்</string>
     <!-- html_size_code_labels -->
     <string name="html_size_code_xx_small">xx-சிறியது</string>
     <string name="html_size_code_x_small">x-சிறியது</string>
     <string name="html_size_code_small">சிறிய</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
+    <string name="html_size_code_medium">நடுத்தர</string>
+    <string name="html_size_code_large">பெரிய</string>
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Play media</string>
+    <string name="answer_again">மீண்டும் பதில்</string>
+    <string name="answer_hard">கடுமையாக பதில் சொல்லுங்கள்</string>
+    <string name="answer_good">நல்ல பதில்</string>
+    <string name="answer_easy">எளிதாக பதில் சொல்லுங்கள்</string>
+    <string name="gesture_play">மீடியாவை விளையாடு</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
+    <string name="gesture_flag_orange">ஆரஞ்சு கொடியை நிலைமாற்றவும்</string>
+    <string name="gesture_flag_green">பச்சைக் கொடியை மாற்றவும்</string>
+    <string name="gesture_flag_blue">நீலக் கொடியை மாற்று</string>
+    <string name="gesture_flag_pink">இளஞ்சிவப்பு கொடியை மாற்றவும்</string>
     <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
     <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
+    <string name="gesture_flag_remove">கொடியை அகற்று</string>
+    <string name="gesture_page_up">பக்கம் மேலே</string>
+    <string name="gesture_page_down">பக்கம் கீழே</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
+    <string name="gesture_show_hint">குறிப்பைக் காட்டு</string>
     <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
+    <string name="record_voice">குரல் பதிவு</string>
     <string name="replay_voice">Replay Voice</string>
     <string name="save_voice">Save Recording</string>
 </resources>

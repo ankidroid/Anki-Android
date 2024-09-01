@@ -102,8 +102,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Пацвердзіць</string>
     <string name="dialog_no">Не</string>
     <string name="dialog_yes">Так</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Пакінуць</string>
+    <string name="dialog_remove">Выдаліць</string>
     <string name="dialog_continue">Працягнуць</string>
     <string name="dialog_processing">Апрацоўка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Стварыць</string>
@@ -183,7 +183,7 @@
     <string name="boot_service_failed_to_schedule_notifications">Не атрымалася запланаваць напаміны</string>
     <string name="boot_service_too_many_notifications">Запланавана вельмі многа напамінаў. Некаторыя з іх не будуць адлюстраваныя</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title_new">Set Language</string>
+    <string name="locale_selection_dialog_title_new">Задаць мову</string>
     <string name="locale_selection_dialog_summary">Некаторыя шматмоўныя клавіятуры (напрыклад, GBoard) падтрымліваюць змену мовы падчас рэдагавання тэксту\n\nКалі ласка, запытайце функцыю “setImeHintLocales” ад распрацоўшчыка клавіятуры, калі яна не змяняе мову.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">Выкарыстанне AnkiDroid</string>
@@ -199,7 +199,7 @@
     <string name="help_item_support_develop_ankidroid">Распрацоўка</string>
     <string name="help_item_support_rate_ankidroid">Ацаніць</string>
     <string name="help_item_support_other_ankidroid">Іншае</string>
-    <string name="multimedia_editor_trans_translate">Перакласці</string>
+    <string name="multimedia_editor_trans_translate">Дапамагчы з перакладам</string>
     <string name="help_title_community">Супольнасць</string>
     <string name="help_item_anki_forums">Форумы Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -211,7 +211,7 @@
     <string name="help_item_ankiweb_terms_and_conditions">Умовы і палажэнні AnkiWeb</string>
     <string name="help_title_send_exception">Адправіць справаздачу пра няспраўнасць</string>
     <string name="help_dialog_exception_report_debounce">Справаздача ўжо адпраўлялася</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">Справаздача адпраўлена!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="one">Аўтаматычная сінхранізацыя можа пачацца праз %d секунду</item>
@@ -219,7 +219,7 @@
         <item quantity="many">Аўтаматычная сінхранізацыя можа пачацца праз %d секунд</item>
         <item quantity="other">Аўтаматычная сінхранізацыя можа пачацца праз %d секунды</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Ваш пастаўшчык паслуг інтэрнэту можа спаганяць грашовыя сродкі за выкарыстанне даных</string>
     <string name="deck_picker_new">Колькасць новых картак, якія можна ўбачыць за сёння ў гэтай калодзе.</string>
     <string name="deck_picker_rev">Колькасць картак на сёння ў гэтай калодзе.</string>
     <string name="deck_picker_lrn">Колькасць картак, якія вывучаюцца ў гэтай калодзе.</string>
@@ -246,7 +246,7 @@
     <string name="dismiss_backup_warning_upgrade">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі стануць недаступны
     
     </string>
-    <string name="deck_already_exists">Deck already exists</string>
+    <string name="deck_already_exists">Калода ўжо існуе</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>

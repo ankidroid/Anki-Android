@@ -46,22 +46,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">தரவுத்தளத்தைச் சரிபார்க்கவா?</string>
     <string name="check_db_warning">இதற்கு நீண்ட நேரம் ஆகலாம்</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="contextmenu_deckpicker_delete_deck">தளத்தை நீக்கு</string>
+    <string name="delete_deck_title">டெக்கை நீக்கவா?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டு உள்ளது</item>
+        <item quantity="other">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டுகள் உள்ளன</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
+    <string name="delete_cram_deck_message">வடிகட்டப்பட்ட டெக்கை %sஐ நீக்கி, எல்லா கார்டுகளையும் அவற்றின் அசல் டெக்குகளுக்கு அனுப்பவா?</string>
+    <string name="no_tts_available_message">உரையிலிருந்து பேச்சு மொழி இல்லை</string>
     <string name="tts_no_tts">பேசாதே</string>
     <string name="unused_strings">\n\nபயன்படுத்தப்படாத கோப்புகள்:\n</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">புதிய அட்டையை மாற்றவும்</string>
+    <string name="reposition_card_dialog_message">தொடக்க நிலை:</string>
+    <string name="reposition_card_not_new_error">புதிய அட்டைகளை மட்டுமே இடமாற்றம் செய்ய முடியும்</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d கார்டு மாற்றப்பட்டது</item>
+        <item quantity="other">%d கார்டுகள் இடமாற்றம் செய்யப்பட்டன</item>
     </plurals>
     <string name="reset_card_dialog_title">அட்டையின் முன்னேற்றத்தை மீட்டமைக்கவும்</string>
     <plurals name="reset_cards_dialog_acknowledge">
@@ -69,12 +69,12 @@
         <item quantity="other">%d கார்டுகள் மீட்டமைக்கப்பட்டது</item>
     </plurals>
     <string name="answering_error_title">தரவுத்தள பிழை</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
-    <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
+    <string name="answering_error_message">தொகுப்பிற்கு எழுதுவது தோல்வியடைந்தது. தரவுத்தளம் சிதைந்திருக்கலாம் அல்லது வட்டில் போதுமான காலி இடம் இல்லாமல் இருக்கலாம்.\n\nஇது அடிக்கடி நடந்தால், தரவுத்தளத்தைச் சரிபார்த்து, சேகரிப்பைச் சரிசெய்து அல்லது காப்புப்பிரதியிலிருந்து மீட்டமைக்க முயற்சிக்கவும். அதற்கான \"விருப்பங்களை\" தொடவும்.\n\அல்லது அது AnkiDroid பிழையாகவும் இருக்கலாம்; தயவு செய்து பிழையைப் புகாரளிக்கவும், இதன் மூலம் நாங்கள் இதைச் சரிபார்க்க முடியும்.</string>
+    <string name="answering_error_report">பிழையைப் புகாரளிக்கவும்</string>
+    <string name="storage_full_message">AnkiDroid ஐ திறக்கப் போதுமான இலவச சேமிப்பிடம் இல்லை. தொடர்வதற்கு சிறிது இடத்தை விடுவிக்கவும்.</string>
+    <string name="repair_deck_dialog">நீங்கள் உண்மையில் தரவுத்தளத்தைச் சரிசெய்ய முயற்சிக்க விரும்புகிறீர்களா?\n\nமுயற்சியைத் தொடங்கும் முன், \"%s\" என்ற துணைக் கோப்புறையில் ஒரு நகல் உருவாக்கப்படும்.</string>
+    <string name="intent_aedict_empty">\"இயல்புநிலை\" வகை காலியாக உள்ளது</string>
+    <string name="intent_aedict_category">AnkiDroid இல் கார்டுகளைச் சேர்க்க அனைத்து நோட்பேட் வகைகளையும் அகற்றவும் அல்லது \"இயல்புநிலை\" என்று பெயரிடப்பட்ட ஒன்றைச் சேர்க்கவும்</string>
     <string name="custom_study_new_total_new">New cards in deck: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
