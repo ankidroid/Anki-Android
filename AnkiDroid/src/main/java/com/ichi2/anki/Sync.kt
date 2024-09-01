@@ -358,6 +358,7 @@ suspend fun monitorMediaSync(
 ) {
     val backend = CollectionManager.getBackend()
     val scope = CoroutineScope(Dispatchers.IO)
+    var isAborted = false
 
     val dialog = withContext(Dispatchers.Main) {
         AlertDialog.Builder(deckPicker)
@@ -367,6 +368,7 @@ suspend fun monitorMediaSync(
                 scope.cancel()
             }
             .setNegativeButton(TR.syncAbortButton()) { _, _ ->
+                isAborted = true
                 cancelMediaSync(backend)
             }
             .show()
@@ -386,7 +388,7 @@ suspend fun monitorMediaSync(
                 dialog.setMessage(text)
                 delay(100)
             }
-            showMessage(TR.syncMediaComplete())
+            showMessage(if (isAborted) TR.syncMediaAborted() else TR.syncMediaComplete())
         } catch (_: BackendInterruptedException) {
             showMessage(TR.syncMediaAborted())
         } catch (_: CancellationException) {
