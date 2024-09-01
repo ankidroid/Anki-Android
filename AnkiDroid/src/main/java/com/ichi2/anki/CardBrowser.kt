@@ -82,6 +82,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -473,6 +474,33 @@ open class CardBrowser :
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
     }
 
+    private fun showSaveChangessDialog(launcher: NoteEditorLauncher) {
+        DiscardChangesDialog.showDialog(
+            context = this,
+            positiveButtonText = this.getString(R.string.save),
+            negativeButtonText = this.getString(R.string.discard),
+            message = this.getString(R.string.save_changes_message),
+            positiveMethod = {
+                launchCatchingTask {
+                    fragment?.saveNote()
+                    loadNoteEditorFragment(launcher)
+                }
+            },
+            negativeMethod = {
+                loadNoteEditorFragment(launcher)
+            },
+        )
+    }
+
+    private fun loadNoteEditorFragment(launcher: NoteEditorLauncher) {
+        val noteEditor = NoteEditor.newInstance(launcher)
+        supportFragmentManager.commit {
+            replace(R.id.note_editor_frame, noteEditor)
+        }
+        // Invalidate options menu so that note editor menu will show
+        invalidateOptionsMenu()
+    }
+
     /**
      * Retrieves the `NoteEditor` fragment if it is present in the fragment container
      */
@@ -499,12 +527,13 @@ open class CardBrowser :
         if (!noteEditorFrame!!.isVisible) {
             noteEditorFrame!!.isVisible = true
         }
-        val noteEditor = NoteEditor.newInstance(launcher)
-        supportFragmentManager.commit {
-            replace(R.id.note_editor_frame, noteEditor)
+
+        // If there are unsaved changes in NoteEditor then show dialog for confirmation
+        if (fragment?.hasUnsavedChanges() == true) {
+            showSaveChangessDialog(launcher)
+        } else {
+            loadNoteEditorFragment(launcher)
         }
-        // invalidate options menu so that note editor menu will show
-        invalidateOptionsMenu()
     }
 
     fun notifyDataSetChanged() {
