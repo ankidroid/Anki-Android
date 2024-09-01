@@ -34,13 +34,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.DeckUtils
-import com.ichi2.anki.DeckUtils.isCollectionEmpty
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.isCollectionEmpty
+import com.ichi2.anki.isDefaultDeckEmpty
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -278,10 +278,6 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         return withContext(Dispatchers.IO) {
             SelectableDeck.fromCollection(includeFiltered = false).size
         }
-    }
-
-    private suspend fun isDefaultDeckEmpty(): Boolean {
-        return DeckUtils.isDefaultDeckEmpty()
     }
 
     /** Updates the view according to the saved preference for appWidgetId.*/

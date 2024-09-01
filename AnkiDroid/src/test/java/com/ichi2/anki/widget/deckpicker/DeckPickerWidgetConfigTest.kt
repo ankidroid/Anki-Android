@@ -20,7 +20,6 @@ import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
@@ -38,7 +37,7 @@ import org.robolectric.Robolectric
 class DeckPickerWidgetConfigTest : RobolectricTest() {
 
     private lateinit var activity: DeckPickerWidgetConfig
-    private lateinit var widgetPreferences: DeckPickerWidgetPreferences
+    private val widgetPreferences = DeckPickerWidgetPreferences(targetContext)
 
     /**
      * Sets up the test environment before each test.
@@ -49,7 +48,7 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        val intent = Intent(ApplicationProvider.getApplicationContext(), DeckPickerWidgetConfig::class.java).apply {
+        val intent = Intent(targetContext, DeckPickerWidgetConfig::class.java).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1)
         }
 
@@ -58,8 +57,6 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
             .start()
             .resume()
             .get()
-
-        widgetPreferences = DeckPickerWidgetPreferences(ApplicationProvider.getApplicationContext())
 
         // Ensure deckAdapter is initialized
         activity.initializeUIComponents()
