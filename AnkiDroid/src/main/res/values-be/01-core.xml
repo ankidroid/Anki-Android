@@ -58,10 +58,10 @@
     <string name="expand">Разгарнуць</string>
     <string name="collapse">Згарнуць</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="few">%d minutes left</item>
-        <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">Засталася %d хвіліна</item>
+        <item quantity="few">Засталося %d хвіліны</item>
+        <item quantity="many">Засталося %d хвілін</item>
+        <item quantity="other">Засталося %d хвілін</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
@@ -88,7 +88,7 @@
     <string name="ease_button_easy">Лёгка</string>
     <string name="menu_import">Імпартаваць</string>
     <string name="undo">Адмяніць</string>
-    <string name="redo">Redo</string>
+    <string name="redo">Вярнуць</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Адрабіць штрых</string>
     <string name="move_all_to_deck">Перамясціць усё ў калоду</string>
     <string name="unbury">Вярнуць</string>
@@ -115,8 +115,8 @@
     <string name="menu_search">Шукаць у %1$s</string>
     <string name="menu_mark_note">Пазначыць нататку</string>
     <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
-    <string name="menu_enable_voice_playback">Уключыць галасавое прайграванне</string>
-    <string name="menu_disable_voice_playback">Адключыць галасавое прайграванне</string>
+    <string name="menu_enable_voice_playback">Уключыць узнаўленне голасу</string>
+    <string name="menu_disable_voice_playback">Адключыць узнаўленне голасу</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="new_dynamic_deck">Стварыць фільтраваную калоду</string>
     <string name="directory_inaccessible">Каталог AnkiDroid недаступны</string>
@@ -136,8 +136,8 @@
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук калоды</string>
     <string name="invalid_deck_name">Памылковая назва калоды</string>
-    <string name="studyoptions_congrats_finished">Віншуем! Пакуль няма картак для навучання.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Калода скончана! %s</string>
+    <string name="studyoptions_congrats_finished">Віншуем! На сёння ўсе карткі вывучаны.</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Калода скончылася! %s</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
@@ -209,9 +209,9 @@
     <string name="create_new_collection">Стварыць новую калекцыю</string>
     <string name="new_unsafe_collection">Новая калекцыя будзе выдалена з вашай прылады, калі вы выдаліце AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid мае патрэбу ў некаторых дазволах для працы</string>
+    <string name="permissions_screen_headline">AnkiDroid неабходны некаторыя дазволы для працы</string>
     <string name="storage_access_title">Доступ да сховішча</string>
-    <string name="storage_access_summary">Захаванне калекцыі ў бяспечным месцы, якое не будзе выдалена пры выдаленні праграмы</string>
+    <string name="storage_access_summary">Захавае вашу калекцыю ў бяспечным месцы, што дазволіць пакінуць яе пасля выдалення праграмы</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Доступ да ўсіх файлаў</string>
     <string name="image_occlusion">Аклюзія відарыса</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Выдаліць уліковы запіс</string>

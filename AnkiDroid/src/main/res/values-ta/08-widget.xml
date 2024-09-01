@@ -47,27 +47,27 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
+        <item quantity="one">%d AnkiDroid கார்டு நிலுவையில் உள்ளது</item>
         <item quantity="other">%d AnkiDroid cards due</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid சிறியது</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d கார்டு நிலுவையில் உள்ளது</item>
+        <item quantity="other">%d கார்டுகள் நிலுவையில் உள்ளன</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d நிமிடங்கள் உள்ளன</item>
+        <item quantity="other">%d நிமிடங்கள் உள்ளன</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
-    <string name="deck_picker_widget_description">Deck Picker</string>
+    <string name="widget_add_note_button">புதிய AnkiDroid குறிப்பைச் சேர்க்கவும்</string>
+    <string name="deck_picker_widget_description">டெக் பிக்கர்</string>
     <!-- Strings to explain usage in Deck Picker Widget Configuration screen -->
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">விட்ஜெட்டில் காட்ட லேயர்களைத் தேர்ந்தெடுக்கவும். + ஐகான் கொண்ட அடுக்குகளைத் தேர்ந்தெடுக்கவும்.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">இந்த தளம் ஏற்கனவே தேர்ந்தெடுக்கப்பட்டது</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">You can select up to %d deck.</item>
+        <item quantity="one">நீங்கள் %d தளங்கள் வரை தேர்ந்தெடுக்கலாம்.</item>
         <item quantity="other">You can select up to %d decks.</item>
     </plurals>
 </resources>
