@@ -250,7 +250,7 @@ internal val mainHelpMenuItems = arrayOf(
 internal val supportMenuItems = arrayOf(
     HelpItem(
         titleResId = R.string.help_item_support_opencollective_donate,
-        iconResId = R.drawable.ic_donate_black_24dp,
+        iconResId = R.drawable.ic_round_favorite_24,
         analyticsId = Actions.OPENED_DONATE,
         id = 5,
         action = OpenUrlResource(R.string.link_opencollective_donate)
