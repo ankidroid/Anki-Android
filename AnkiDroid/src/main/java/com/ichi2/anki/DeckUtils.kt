@@ -17,57 +17,43 @@
 package com.ichi2.anki
 
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.libanki.Decks
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 
-object DeckUtils {
+/**
+ * Checks if a given deck, including its subdecks if specified, is empty.
+ *
+ * @param deckId The ID of the deck to check.
+ * @param includeSubdecks If true, includes subdecks in the check. Default is true.
+ * @return `true` if the deck (and subdecks if specified) is empty, otherwise `false`.
+ */
+private fun Collection.isDeckEmpty(deckId: Long, includeSubdecks: Boolean = true): Boolean {
+    val deckIds = decks.deckAndChildIds(deckId)
+    val totalCardCount = decks.cardCount(*deckIds.toLongArray(), includeSubdecks = includeSubdecks)
+    return totalCardCount == 0
+}
 
-    /**
-     * Checks if a given deck, including its subdecks if specified, is empty.
-     *
-     * @param decks The [Decks] instance containing the decks to check.
-     * @param deckId The ID of the deck to check.
-     * @param includeSubdecks If true, includes subdecks in the check. Default is true.
-     * @return `true` if the deck (and subdecks if specified) is empty, otherwise `false`.
-     */
-    private fun isDeckEmpty(decks: Decks, deckId: Long, includeSubdecks: Boolean = true): Boolean {
-        val deckIds = decks.deckAndChildIds(deckId)
-        val totalCardCount = decks.cardCount(*deckIds.toLongArray(), includeSubdecks = includeSubdecks)
-        return totalCardCount == 0
-    }
+/**
+ * Checks if the default deck is empty.
+ *
+ * This method runs on an IO thread and accesses the collection to determine if the default deck (with ID 1) is empty.
+ *
+ * @return `true` if the default deck is empty, otherwise `false`.
+ */
+suspend fun isDefaultDeckEmpty(): Boolean = withCol { isDeckEmpty(Consts.DEFAULT_DECK_ID) }
 
-    /**
-     * Checks if the default deck is empty.
-     *
-     * This method runs on an IO thread and accesses the collection to determine if the default deck (with ID 1) is empty.
-     *
-     * @return `true` if the default deck is empty, otherwise `false`.
-     */
-    suspend fun isDefaultDeckEmpty(): Boolean {
-        val defaultDeckId = 1L
-        return withContext(Dispatchers.IO) {
-            withCol {
-                isDeckEmpty(decks, defaultDeckId)
-            }
-        }
-    }
-
-    /**
-     * Returns whether the deck picker displays any deck.
-     * Technically, it means that there is a non default deck, or that the default deck is non-empty.
-     *
-     * This function is specifically implemented to address an issue where the default deck
-     * isn't handled correctly when a second deck is added to the
-     * collection. In this case, the deck tree may incorrectly appear as non-empty when it contains
-     * only the default deck and no other cards.
-     *
-     */
-    suspend fun isCollectionEmpty(): Boolean {
-        val tree = withCol { sched.deckDueTree() }
-        if (tree.children.size == 1 && tree.children[0].did == 1L) {
-            return isDefaultDeckEmpty()
-        }
-        return false
-    }
+/**
+ * Returns whether the deck picker displays any deck.
+ * Technically, it means that there is a non-default deck, or that the default deck is non-empty.
+ *
+ * This function is specifically implemented to address an issue where the default deck
+ * isn't handled correctly when a second deck is added to the
+ * collection. In this case, the deck tree may incorrectly appear as non-empty when it contains
+ * only the default deck and no other cards.
+ *
+ */
+suspend fun isCollectionEmpty(): Boolean {
+    val tree = withCol { sched.deckDueTree() }
+    val onlyDefaultDeckAvailable = tree.children.singleOrNull()?.did == Consts.DEFAULT_DECK_ID
+    return onlyDefaultDeckAvailable && isDefaultDeckEmpty()
 }

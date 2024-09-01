@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,12 +34,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.DeckUtils.isCollectionEmpty
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -48,6 +49,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+
+// TODO: Ensure that the Deck Selection Dialog does not close automatically while the user is interacting with it.
 
 class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackbarBuilderProvider {
 
@@ -62,6 +65,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
     private var hasUnsavedChanges = false
     private var isAdapterObserverRegistered = false
     private lateinit var onBackPressedCallback: OnBackPressedCallback
+    private val EXTRA_SELECTED_DECK_IDS = "card_analysis_widget_selected_deck_ids"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -117,7 +121,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         )
     }
 
-    fun showSnackbar(messageResId: Int) {
+    fun showSnackbar(@StringRes messageResId: Int) {
         showSnackbar(getString(messageResId))
     }
 
@@ -128,7 +132,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             updateViewVisibility()
             updateFabVisibility()
             updateSubmitButtonText()
-            hasUnsavedChanges = true
             setUnsavedChanges(true)
         }
 
@@ -156,9 +159,9 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
         registerReceiver(widgetRemovedReceiver, IntentFilter(AppWidgetManager.ACTION_APPWIDGET_DELETED))
 
-        onBackPressedCallback = object : OnBackPressedCallback(false) {
+        onBackPressedCallback = object : OnBackPressedCallback(hasUnsavedChanges) {
             override fun handleOnBackPressed() {
-                if (hasUnsavedChanges) {
+                if (isEnabled) {
                     showDiscardChangesDialog()
                 }
             }
@@ -291,17 +294,16 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             deckAdapter.addDeck(deck)
             updateViewVisibility()
             updateFabVisibility()
-            hasUnsavedChanges = true
             setUnsavedChanges(true)
 
             // Save the selected deck immediately
             saveSelectedDecksToPreferencesCardAnalysisWidget()
-            hasUnsavedChanges = false
             setUnsavedChanges(false)
 
-            val selectedDeckId = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
+            // Update the widget with the new selected deck ID
+            cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
             val appWidgetManager = AppWidgetManager.getInstance(this)
-            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId, selectedDeckId)
+            CardAnalysisWidget.updateWidget(this, appWidgetManager, appWidgetId)
 
             val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             setResult(RESULT_OK, resultValue)
@@ -328,8 +330,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         val updateIntent = Intent(this, CardAnalysisWidget::class.java).apply {
             action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
-
-            putExtra("card_analysis_widget_selected_deck_ids", selectedDeck)
+            putExtra(EXTRA_SELECTED_DECK_IDS, selectedDeck)
         }
 
         sendBroadcast(updateIntent)
@@ -347,7 +348,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
                 return
             }
 
-            context?.let { cardAnalysisWidgetPreferences.deleteDeckData(appWidgetId) }
+            cardAnalysisWidgetPreferences.deleteDeckData(appWidgetId)
         }
     }
 }

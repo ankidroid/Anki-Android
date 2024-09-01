@@ -26,12 +26,13 @@ import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.DeckUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.pages.DeckOptions
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
 import com.ichi2.widget.AnalyticsWidgetProvider
 import com.ichi2.widget.cancelRecurringAlarm
@@ -60,41 +61,51 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
          * Updates the widget with the deck data.
          *
          * This method updates the widget view content with the deck data corresponding
-         * to the provided deck ID. If the deck is deleted, the widget will be cleared.
+         * to the provided deck ID. If the deck is deleted, the widget will be show a message "Missing deck. Please reconfigure".
          *
          * @param context the context of the application
          * @param appWidgetManager the AppWidgetManager instance
          * @param appWidgetId the ID of the app widget
-         * @param deckId the ID of the deck to be displayed in the widget.
          */
         fun updateWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int,
-            deckId: DeckId?
+            appWidgetId: Int
         ) {
+            val deckId = getDeckIdForWidget(context, appWidgetId)
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
-            if (deckId == null) {
+
+            if (deckId == NOT_FOUND_DECK_ID) {
+                // If deckId is null, it means no deck was selected or the selected deck was deleted.
+                // In this case, we don't save the null value to preferences because we want to
+                // keep the previous deck ID if the user reconfigures the widget later.
+                // Instead, we show a message prompting the user to reconfigure the widget.
                 showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
                 return
             }
+
             AnkiDroidApp.applicationScope.launch {
-                val isCollectionEmpty = DeckUtils.isCollectionEmpty()
+                val isCollectionEmpty = isCollectionEmpty()
                 if (isCollectionEmpty) {
                     showCollectionDeck(context, appWidgetManager, appWidgetId, remoteViews)
                     return@launch
                 }
 
                 val deckData = getDeckNameAndStats(deckId)
-
                 if (deckData == null) {
-                    // If the deck was deleted, clear the stored deck ID
-                    CardAnalysisWidgetPreferences(context).saveSelectedDeck(appWidgetId, null)
+                    // The deck was found but no data could be fetched, so update the preferences to remove the deck.
+                    // This ensures that the widget does not retain a reference to a non-existent or invalid deck.
+                    CardAnalysisWidgetPreferences(context).saveSelectedDeck(appWidgetId, NOT_FOUND_DECK_ID)
                     showMissingDeck(context, appWidgetManager, appWidgetId, remoteViews)
                     return@launch
                 }
                 showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckData)
             }
+        }
+
+        private fun getDeckIdForWidget(context: Context, appWidgetId: Int): DeckId {
+            val widgetPreferences = CardAnalysisWidgetPreferences(context)
+            return widgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: NOT_FOUND_DECK_ID
         }
 
         private fun showCollectionDeck(
@@ -160,6 +171,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                 Intent(context, Reviewer::class.java).apply {
                     action = Intent.ACTION_VIEW
                     putExtra("deckId", deckData.deckId)
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
             } else {
                 DeckOptions.getIntent(context, deckData.deckId)
@@ -189,9 +201,8 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             Timber.d("AppWidgetIds to update: ${appWidgetIds.joinToString(", ")}")
 
             for (appWidgetId in appWidgetIds) {
-                val widgetPreferences = CardAnalysisWidgetPreferences(context)
-                val deckId = widgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId)
-                updateWidget(context, appWidgetManager, appWidgetId, deckId)
+                getDeckIdForWidget(context, appWidgetId)
+                updateWidget(context, appWidgetManager, appWidgetId)
             }
         }
     }
@@ -204,13 +215,14 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
     ) {
         Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
 
-        val widgetPreferences = CardAnalysisWidgetPreferences(context)
-
         for (widgetId in appWidgetIds) {
             Timber.d("Updating widget with ID: $widgetId")
-            val selectedDeckId = widgetPreferences.getSelectedDeckIdFromPreferences(widgetId)
 
-            /**Explanation of behavior when selectedDeckId is empty
+            // Get the selected deck ID internally
+            val selectedDeckId = getDeckIdForWidget(context, widgetId)
+
+            /**
+             * Explanation of behavior when selectedDeckId is empty
              * If selectedDeckId is empty, the widget will retain the previous deck.
              * This behavior ensures that the widget does not display an empty view, which could be
              * confusing to the user. Instead, it maintains the last known state until a new valid
@@ -218,7 +230,10 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
              * user experience over showing an empty or default state.
              */
             Timber.d("Selected deck ID: $selectedDeckId for widget ID: $widgetId")
-            updateWidget(context, appWidgetManager, widgetId, selectedDeckId)
+
+            // Update the widget with the selected deck ID
+            updateWidget(context, appWidgetManager, widgetId)
+            // Set the recurring alarm for the widget
             setRecurringAlarm(context, widgetId, CardAnalysisWidget::class.java)
         }
 
@@ -244,19 +259,23 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
                 Timber.d("Received ACTION_APPWIDGET_UPDATE with widget ID: $appWidgetId and selectedDeckId: $selectedDeckId")
 
-                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID && selectedDeckId != -1L) {
+                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
                     Timber.d("Updating widget with ID: $appWidgetId")
-                    // Wrap selectedDeckId into a LongArray
-                    updateWidget(context, appWidgetManager, appWidgetId, selectedDeckId)
+
+                    // Update the widget using the internally fetched deck ID
+                    updateWidget(context, appWidgetManager, appWidgetId)
+
                     Timber.d("Widget update process completed for widget ID: $appWidgetId")
                 }
             }
-            // This custom action is received to update a specific widget.
-            // It is triggered by the setRecurringAlarm method to refresh the widget's data periodically.
+            // Custom action to update a specific widget, triggered by the setRecurringAlarm method
             ACTION_UPDATE_WIDGET -> {
                 val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
                 if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
                     Timber.d("Received ACTION_UPDATE_WIDGET for widget ID: $appWidgetId")
+
+                    // Update the widget using the internally fetched deck ID
+                    updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId)
                 }
             }
             AppWidgetManager.ACTION_APPWIDGET_DELETED -> {

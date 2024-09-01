@@ -43,7 +43,7 @@
 
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select deck</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
