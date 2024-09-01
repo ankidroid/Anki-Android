@@ -90,4 +90,6 @@
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
+
+    <string name="save_changes_message">Do you want to save changes?</string>
 </resources>

@@ -31,11 +31,12 @@ object DiscardChangesDialog {
         positiveButtonText: String = context.getString(R.string.discard),
         negativeButtonText: String = CollectionManager.TR.addingKeepEditing(),
         message: String = CollectionManager.TR.addingDiscardCurrentInput(),
+        negativeMethod: () -> Unit = {},
         positiveMethod: () -> Unit
     ) = AlertDialog.Builder(context).show {
         Timber.i("showing 'discard changes' dialog")
         message(text = message)
         positiveButton(text = positiveButtonText) { positiveMethod() }
-        negativeButton(text = negativeButtonText)
+        negativeButton(text = negativeButtonText) { negativeMethod() }
     }
 }
