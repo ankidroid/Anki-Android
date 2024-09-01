@@ -77,6 +77,7 @@ import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
 import com.ichi2.anki.dialogs.CardBrowserOrderDialog
+import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -927,6 +928,7 @@ open class CardBrowser :
                     subMenu ->
                 setupFlags(subMenu, Mode.SINGLE_SELECT)
             }
+            menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mySearchesItem = menu.findItem(R.id.action_list_my_searches)
@@ -1251,8 +1253,25 @@ open class CardBrowser :
             R.id.action_export_selected -> {
                 exportSelected()
             }
+            R.id.action_create_filtered_deck -> {
+                showCreateFilteredDeckDialog()
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showCreateFilteredDeckDialog() {
+        val dialog = CreateDeckDialog(this, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
+        dialog.onNewDeckCreated = {
+            val intent = Intent(this, FilteredDeckOptions::class.java)
+            intent.putExtra("search", viewModel.searchTerms)
+            startActivity(intent)
+        }
+        launchCatchingTask {
+            withProgress {
+                dialog.showFilteredDeckDialog()
+            }
+        }
     }
 
     /**
