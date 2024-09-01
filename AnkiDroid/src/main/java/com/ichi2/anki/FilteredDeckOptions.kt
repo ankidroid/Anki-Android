@@ -26,6 +26,7 @@ import android.preference.EditTextPreference
 import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceCategory
+import androidx.core.content.edit
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
@@ -222,6 +223,11 @@ class FilteredDeckOptions :
         } else {
             pref = DeckPreferenceHack()
             pref.registerOnSharedPreferenceChangeListener(this)
+            extras?.getString("search")?.let { search ->
+                pref.edit {
+                    putString("search", search)
+                }
+            }
             addPreferences(col)
             buildLists()
             updateSummaries()
