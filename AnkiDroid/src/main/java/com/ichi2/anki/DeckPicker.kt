@@ -2152,9 +2152,8 @@ open class DeckPicker :
             val res = resources
 
             if (due != null && supportActionBar != null) {
-                val cardCount = withCol { cardCount() }
-                val subTitle: String = if (due == 0) {
-                    res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
+                val subTitle = if (due == 0) {
+                    null
                 } else {
                     res.getQuantityString(R.plurals.widget_cards_due, due, due)
                 }
