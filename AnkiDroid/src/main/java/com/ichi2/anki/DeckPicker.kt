@@ -212,7 +212,7 @@ const val OLDEST_WORKING_WEBVIEW_VERSION = 77
  *   * Allows users to study the decks
  *   * Displays deck progress
  *   * A long press opens a menu allowing modification of the deck
- *   * Filtering decks (if more than 10) [toolbarSearchView]
+ *   * Filtering decks and starting a card browser search [toolbarSearchView]
  * * Controlling syncs
  *   * A user may [pull down][pullToSyncWrapper] on the 'tree view' to sync
  *   * A [button][updateSyncIconFromState] which relies on [SyncStatus] to display whether a sync is needed
@@ -834,7 +834,6 @@ open class DeckPicker :
             setupMediaSyncMenuItem(menu)
             // redraw menu synchronously to avoid flicker
             updateMenuFromState(menu)
-            updateSearchVisibilityFromState(menu)
         }
         // ...then launch a task to possibly update the visible icons.
         // Store the job so that tests can easily await it. In the future
@@ -842,7 +841,6 @@ open class DeckPicker :
         // into CollectionManager, and awaiting that.
         createMenuJob = launchCatchingTask {
             updateMenuState()
-            updateSearchVisibilityFromState(menu)
             if (!fragmented) {
                 updateMenuFromState(menu)
             }
@@ -898,11 +896,17 @@ open class DeckPicker :
             queryHint = getString(R.string.search_decks)
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    clearFocus()
+                    // on submit, open the card browser with the search query
+                    val intent = Intent(this@DeckPicker, CardBrowser::class.java).apply {
+                        putExtra("search_query", query)
+                        putExtra("all_decks", true)
+                    }
+                    startActivity(intent)
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
+                    // on typing, filter the deck list
                     val adapter = recyclerView.adapter as Filterable?
                     adapter!!.filter.filter(newText)
                     return true
@@ -925,12 +929,6 @@ open class DeckPicker :
                 undoLabel = undoLabel(),
                 undoAvailable = undoAvailable()
             )
-        }
-    }
-
-    private fun updateSearchVisibilityFromState(menu: Menu) {
-        optionsMenuState?.run {
-            menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
         }
     }
 
@@ -981,13 +979,12 @@ open class DeckPicker :
     @VisibleForTesting
     suspend fun updateMenuState() {
         optionsMenuState = withOpenColOrNull {
-            val searchIcon = decks.count() >= 10
             val undoLabel = undoLabel()
             val undoAvailable = undoAvailable()
-            Triple(searchIcon, undoLabel, undoAvailable)
-        }?.let { (searchIcon, undoLabel, undoAvailable) ->
+            Pair(undoLabel, undoAvailable)
+        }?.let { (undoLabel, undoAvailable) ->
             val syncIcon = fetchSyncStatus()
-            OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable)
+            OptionsMenuState(undoLabel, syncIcon, undoAvailable)
         }
     }
 
@@ -2536,7 +2533,6 @@ open class DeckPicker :
  * the current state is stored in the deck picker so that we can redraw the
  * menu immediately. */
 data class OptionsMenuState(
-    val searchIcon: Boolean,
     /** If undo is available, a string describing the action. */
     val undoLabel: String?,
     val syncIcon: SyncIconState,
