@@ -34,18 +34,8 @@
             app:layout_constraintBottom_toTopOf="@id/image_size_textview"
             style="@style/CardView.PreviewerStyle" >
 
-            <TextView
-                android:id="@+id/no_image_textview"
-                android:paddingBottom="30dp"
-                android:gravity="center"
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <ImageView
-                android:src="@drawable/ic_image_not_supported"
-                android:id="@+id/image_preview"
-                android:scaleType="fitCenter"
+            <WebView
+                android:id="@+id/multimedia_webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
