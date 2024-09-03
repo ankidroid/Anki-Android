@@ -60,7 +60,8 @@ object MultimediaUtils {
      */
     private const val RAW_DOCUMENTS_FILE_PREFIX = "raw:"
 
-    const val IMAGE_LIMIT = 1024 * 1024 // 1MB in bytes
+    /** 100MB in bytes upstream limit https://faqs.ankiweb.net/are-there-limits-on-file-sizes-on-ankiweb.html **/
+    const val IMAGE_LIMIT = 1024 * 1024 * 100
 
     /**
      * Get image name based on uri and selection args
