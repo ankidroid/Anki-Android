@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
+    <string name="front_field_name">ፊት ለፊት</string>
+    <string name="back_field_name">ጀርባ</string>
 </resources>
