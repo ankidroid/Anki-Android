@@ -102,7 +102,7 @@
     <string name="select">Chọn</string>
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Không tìm thấy loại ghi chú nào</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Đã đạt đến giới hạn thời gian</string>
     <plurals name="timebox_reached">
@@ -130,7 +130,7 @@
     <string name="delete_deck">Đang xoá bộ thẻ&#8230;</string>
     <string name="info_rate">Đánh giá AnkiDroid</string>
     <string name="import_title">Đang nhập</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">Đang chuẩn bị tệp tin để nhập vào&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Thêm</string>
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
     <string name="import_dialog_message_add">Thêm “%s” vào bộ sưu tập? Việc này có thể mất nhiều thời gian</string>
@@ -281,7 +281,7 @@
     <string name="expand_tag">Mở rộng thẻ \'%s\'</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Truy cập bộ sưu tập thất bại. Vui lòng thử lại!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="cd_manage_notetypes_add">Thêm loại ghi chú mới</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Học ít</string>
     <string name="intro_ankidroid_tagline_two">Nhớ nhiều hơn</string>
@@ -327,9 +327,9 @@
         <item quantity="other">%d cards unburied</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position">Đặt lại vị trí</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="play_recording">Play</string>
+    <string name="start_recording">Ghi âm</string>
+    <string name="stop_recording">Dừng</string>
+    <string name="play_recording">Phát</string>
     <string name="next_recording">Next</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>

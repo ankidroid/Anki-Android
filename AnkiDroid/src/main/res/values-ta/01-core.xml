@@ -53,7 +53,7 @@
     <string name="drawing">வரைபொருள்</string>
     <string name="send_feedback">கருத்தினை அனுப்பவும்</string>
     <string name="studyoptions_start">படி</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
+    <string name="studyoptions_buried_count">+%d புதைக்கப்பட்டது</string>
     <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>
@@ -187,22 +187,22 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s கோப்பை எழுதவோ உருவாக்கவோ முடியாது</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">அணுக முடியாத சேகரிப்பு</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store கொள்கையில் ஏற்பட்ட மாற்றத்தின் காரணமாக AnkiDroid நிறுவல் நீக்கப்பட்ட பிறகு உங்கள் சேகரிப்பை எங்களால் அணுக முடியவில்லை\n\nஉங்கள் தரவு பாதுகாப்பாக உள்ளது மற்றும் மீட்டெடுக்க முடியும். இது \n%s\n\nஇல் உள்ளது மீட்டமைக்க கீழே உள்ள விருப்பத்தைத் தேர்ந்தெடுக்கவும்:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ஆப்ஸ் செயலற்ற தன்மையின் காரணமாக AnkiDroid இன் %1$s அனுமதியை Android அகற்றியுள்ளது.\n\nஉங்கள் தரவு பாதுகாப்பாக உள்ளது மற்றும் மீட்டெடுக்க முடியும். இது \n%2$s\n\nமீட்டெடுக்க கீழே உள்ள விருப்பத்தைத் தேர்ந்தெடுக்கவும்:</string>
+    <string name="restore_data_from_ankiweb">AnkiWeb இலிருந்து மீட்டமை (பரிந்துரைக்கப்படுகிறது)</string>
+    <string name="install_non_play_store_ankidroid_recommended">கோப்புறை அணுகலை மீட்டமை (பரிந்துரைக்கப்படுகிறது)</string>
+    <string name="install_non_play_store_ankidroid">கோப்புறை அணுகலை மீட்டமை (மேம்பட்டது)</string>
+    <string name="restore_data_from_backup">.colpkg காப்புப்பிரதியிலிருந்து மீட்டமை (மேம்பட்டது)</string>
+    <string name="create_new_collection">புதிய தொகுப்பை உருவாக்கவும்</string>
+    <string name="new_unsafe_collection">நீங்கள் AnkiDroid ஐ நிறுவல் நீக்கினால், புதிய சேகரிப்பு உங்கள் மொபைலிலிருந்து நீக்கப்படும்</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="permissions_screen_headline">AnkiDroid வேலை செய்யச் சில அனுமதிகள் தேவை</string>
+    <string name="storage_access_title">சேமிப்பக அணுகல்</string>
+    <string name="storage_access_summary">உங்கள் சேகரிப்பை பாதுகாப்பான இடத்தில் சேமிக்கிறது, ஆப்ஸ் நிறுவல் நீக்கப்பட்டால் அது நீக்கப்படாது</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ஃபைல்கள் அனைத்திற்குமான அணுகல்</string>
+    <string name="image_occlusion">பட அடைப்பு</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">கணக்கை அகற்று</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">உடனடி அட்டை</string>
 </resources>

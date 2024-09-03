@@ -45,10 +45,10 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Delete note type</string>
-    <string name="model_browser_rename" comment="Rename a note type">Rename</string>
+    <string name="model_browser_rename" comment="Rename a note type">እንደገና ይሰይሙ</string>
     <string name="model_browser_template">Edit cards</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">ማስታወሻ አይነቱን እንደገና ይሰይሙ</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
@@ -66,7 +66,7 @@
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s </string>
+    <string name="model_browser_add_add">ያክሉ: %1$s</string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Clone: %1$s </string>
     <!--Browser Appearance-->

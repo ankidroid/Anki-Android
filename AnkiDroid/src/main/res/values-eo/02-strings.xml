@@ -62,8 +62,8 @@
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Konservi skribtabulon</string>
-    <string name="enable_stylus">Ebligi grifelan skribadon.</string>
-    <string name="disable_stylus">Malebligi grifelan skribadon.</string>
+    <string name="enable_stylus">Ebligi grifelan skribadon</string>
+    <string name="disable_stylus">Malebligi grifelan skribadon</string>
     <string name="enable_whiteboard">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>
     <string name="show_whiteboard">Montri skribtabulon</string>
@@ -266,7 +266,7 @@
     <string name="home">Hejmo</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Karto enfosita.</string>
+    <string name="card_buried">Karto kaŝita por tago.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d karto enfosita.</item>
         <item quantity="other">%d kartoj enfositaj.</item>

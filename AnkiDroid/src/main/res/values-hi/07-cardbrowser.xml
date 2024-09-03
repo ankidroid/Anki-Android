@@ -53,7 +53,7 @@
         <item quantity="one">%d नोट दिखाए जा रहे हैं</item>
         <item quantity="other">%d नोट्स दिखाए जा रहे हैं</item>
     </plurals>
-    <string name="card_browser_all_decks">सरे डेक</string>
+    <string name="card_browser_all_decks">सभी डेक्स</string>
     <plurals name="card_browser_delete_cards">
         <item quantity="one">कार्ड हटाएं</item>
         <item quantity="other">कार्ड्स को हटाएं</item>

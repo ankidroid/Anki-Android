@@ -53,7 +53,7 @@
     <string name="drawing">Маляванне</string>
     <string name="send_feedback">Адправіць водгук</string>
     <string name="studyoptions_start">Вучыць</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
+    <string name="studyoptions_buried_count">+%d адкладзеная</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Разгарнуць</string>
     <string name="collapse">Згарнуць</string>
@@ -64,16 +64,16 @@
         <item quantity="other">Засталося %d хвілін</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Засталася %1$d гадзіна %2$d</item>
+        <item quantity="few">Засталося %1$d гадзіны %2$d</item>
+        <item quantity="many">Засталося %1$d гадзін %2$d</item>
+        <item quantity="other">Засталося %1$d гадзін %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="many">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Застаўся %1$d дзень %2$d</item>
+        <item quantity="few">Засталося %1$d дні %2$d</item>
+        <item quantity="many">Засталося %1$d дзён %2$d</item>
+        <item quantity="other">Засталося %1$d дзён %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Калекцыя пустая</string>
     <string name="no_cards_placeholder_description">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
@@ -147,7 +147,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі&#8230;\nГэта можа заняць некаторы час.</string>
     <string name="syncing_media">Сінхранізацыя медыяфайлаў</string>
     <string name="export_deck">Экспартаваць калоду</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Экспартаваць калекцыю</string>
     <string name="nothing">Нічога</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Тыпы картак</string>
@@ -201,7 +201,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">Немагчыма запісаць або стварыць файл %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недаступная калекцыя</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Мы не можам атрымаць доступ да вашай калекцыі пасля выдалення AnkiDroid па прычыне змены палітыкі Play Store\n\nВашы даныя знаходзяцца ў бяспецы і могуць быць адноўлены. Яны размяшчаюцца ў\n%s\n\nВыберыце параметр ніжэй, каб аднавіць:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android выдаліў дазвол AnkiDroid %1$s па прычыне не актыўнасці праграмы.\n\nВашы даныя знаходзяцца ў бяспецы і могуць быць адноўлены. Яны размяшчаюцца ў\n%2$s\n\nВыберыце параметр ніжэй, каб аднавіць іх:</string>
     <string name="restore_data_from_ankiweb">Аднавіць з AnkiWeb (рэкамендавана)</string>
     <string name="install_non_play_store_ankidroid_recommended">Аднавіць доступ да папкі (рэкамендавана)</string>
     <string name="install_non_play_store_ankidroid">Аднавіць доступ да папкі (пашырана)</string>
@@ -216,5 +216,5 @@
     <string name="image_occlusion">Аклюзія відарыса</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Выдаліць уліковы запіс</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Імгненнае дабаўленне карткі</string>
 </resources>

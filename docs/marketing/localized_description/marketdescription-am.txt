@@ -1,21 +1,21 @@
-Memorize anything with AnkiDroid!
+በ አንኪድሮይድ ማንኛውንም ነገር ያስታውሱ!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+አንኪድሮይድ ከመርሳትዎ በፊት ፍላሽ ካርዶችን በማሳየት በብቃት ለመማር ያስችልዎታል። ለዊንዶውስ፣ ሊኑክስ እና ማክኦኤስ ከሚገኘው ባዶ ተደጋጋሚ መደጋገሚያ ሶፍትዌር Anki (ማመሳሰልን ጨምሮ) ሙሉ በሙሉ ተኳሃኝ ነው።
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+በፈለጉት ቦታ እና ጊዜ ሁሉንም ይነት ነገሮች ያጥኑ። በአውቶቡስ ጉዞዎት፣ በሱፐርማርኬት ወረፋ ወይም በማንኛውም ሌላ የሚያቆይ ሰልፍ ሁኔታ ያሉ ጊዜዎ አግባብ ባለው ሁኔታ ይጠቀሙ!
 
 Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
 
-Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+በአንኪ የዴስክቶፕ መተግበሪያ ወይም በቀጥታ በአንኪድሮይድ በኩል የሚጠኑ ፅሁፎችን ያክሉ። The application even supports adding material automatically from a dictionary!
 
 ★ Key features:
 • supported flashcard contents: text, images, sounds, LaTeX
 • spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
+ከፅሁፍ - ወደ - ንግግር  ማስተባበሪያ
 • more than 6000 premade decks
 • progress widget
 • detailed statistics
-• syncing with AnkiWeb
+ከአንኪዌብ ጋር ማመሳሰል
 • open source
 
 ★ Additional features:
@@ -27,10 +27,10 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 • import existing collection files (via Anki Desktop)
 • add cards by intent from other applications like dictionaries
 • custom font support
-• full backup system
+ሙሉ የመጠባበቂያ ስርዓት
 • navigation by swipe, tap
 • customisable
 • dynamic deck handling
 • night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+27 የቋንቋ አማራጮች
+ሁሉንም የቀድሞ የአንኪድሮይድ ስሪቶች ከዌብሳይቱ ላይ ሊያወርዱ ይችላሉ።
