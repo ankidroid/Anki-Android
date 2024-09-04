@@ -20,6 +20,8 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.provider.Settings
 import android.view.WindowManager
 import android.view.WindowManager.BadTokenException
 import androidx.annotation.StringRes
@@ -60,6 +62,9 @@ import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.coroutines.resume
@@ -169,8 +174,12 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.w(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
             }
-            is BackendNetworkException, is BackendSyncException -> {
-                // these exceptions do not generate worthwhile crash reports
+            is BackendSyncException -> {
+                // this exceptions do not generate worthwhile crash reports
+                showInvalidClockDialog(this, exc.localizedMessage!!, exc)
+            }
+            is BackendNetworkException -> {
+                // this exceptions do not generate worthwhile crash reports
                 showError(this, exc.localizedMessage!!, exc, false)
             }
             is BackendException -> {
@@ -271,6 +280,31 @@ fun showError(context: Context, msg: String, exception: Throwable, crashReport: 
                     )
                 }
             }
+        }
+    } catch (ex: BadTokenException) {
+        // issue 12718: activity provided by `context` was not running
+        Timber.w(ex, "unable to display error dialog")
+    }
+}
+
+fun showInvalidClockDialog(context: Context, msg: String, exception: Throwable) {
+    if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
+    try {
+        val currentTime = LocalDateTime.now()
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a", Locale.getDefault())
+        val formattedTime = currentTime.format(dateFormatter)
+        val invalidClockMessage = context.getString(R.string.InvalidClockDialog)
+
+        val fullMessage = "$msg\n\n$invalidClockMessage\n$formattedTime"
+        AlertDialog.Builder(context).show {
+            title(R.string.vague_error)
+            message(text = fullMessage)
+            positiveButton(R.string.dialog_go_to_setting) {
+                // Navigate to Date and Time settings
+                val intent = Intent(Settings.ACTION_DATE_SETTINGS)
+                context.startActivity(intent)
+            }
+            negativeButton(R.string.dialog_cancel)
         }
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
