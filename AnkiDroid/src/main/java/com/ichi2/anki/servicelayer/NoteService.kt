@@ -51,31 +51,30 @@ object NoteService {
     /**
      * Creates an empty Note from given Model
      *
-     * @param model the model in JSOBObject format
-     * @return a new note instance
+     * @param model the model in JSONObject format
+     * @return a new MultimediaEditableNote instance
      */
-    fun createEmptyNote(model: JSONObject): MultimediaEditableNote? {
+    fun createEmptyNote(model: JSONObject): MultimediaEditableNote {
+        val note = MultimediaEditableNote()
         try {
             val fieldsArray = model.getJSONArray("flds")
             val numOfFields = fieldsArray.length()
-            if (numOfFields > 0) {
-                val note = MultimediaEditableNote()
-                note.setNumFields(numOfFields)
-                for (i in 0 until numOfFields) {
-                    val fieldObject = fieldsArray.getJSONObject(i)
-                    val uiTextField = TextField()
-                    uiTextField.name = fieldObject.getString("name")
-                    uiTextField.text = fieldObject.getString("name")
-                    note.setField(i, uiTextField)
+            note.setNumFields(numOfFields)
+
+            for (i in 0 until numOfFields) {
+                val fieldObject = fieldsArray.getJSONObject(i)
+                val uiTextField = TextField().apply {
+                    name = fieldObject.getString("name")
+                    text = fieldObject.getString("name")
                 }
-                note.modelId = model.getLong("id")
-                return note
+                note.setField(i, uiTextField)
             }
+            note.modelId = model.getLong("id")
         } catch (e: JSONException) {
-            // TODO Auto-generated catch block
-            Timber.w(e)
+            Timber.w(e, "Error parsing model: %s", model)
+            // Return note with default/empty fields
         }
-        return null
+        return note
     }
 
     fun updateMultimediaNoteFromFields(

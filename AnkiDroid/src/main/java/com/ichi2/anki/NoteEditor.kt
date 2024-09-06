@@ -537,7 +537,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         // ImageIntentManager.saveImageUri(imageUri)
         // the field won't exist so it will always be a new card
         val note = getCurrentMultimediaEditableNote()
-        if (note == null) {
+        if (note.isEmpty) {
             Timber.w("Note is null, returning")
             return
         }
@@ -1582,11 +1582,10 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         insertStringInField(getFieldForTest(fieldIndex), newString)
     }
 
-    @KotlinCleanup("fix the requireNoNulls")
-    private suspend fun getCurrentMultimediaEditableNote(): MultimediaEditableNote? {
+    private suspend fun getCurrentMultimediaEditableNote(): MultimediaEditableNote {
         val note = NoteService.createEmptyNote(editorNote!!.notetype)
         val fields = currentFieldStrings.requireNoNulls()
-        withCol { NoteService.updateMultimediaNoteFromFields(this@withCol, fields, editorNote!!.mid, note!!) }
+        withCol { NoteService.updateMultimediaNoteFromFields(this@withCol, fields, editorNote!!.mid, note) }
 
         return note
     }
@@ -1749,7 +1748,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     private fun handleMultimediaActions(fieldIndex: Int) {
         // Based on the type of multimedia action received, perform the corresponding operation
         lifecycleScope.launch {
-            val note: MultimediaEditableNote = getCurrentMultimediaEditableNote() ?: return@launch
+            val note: MultimediaEditableNote = getCurrentMultimediaEditableNote()
+            if (note.isEmpty) return@launch
 
             multimediaViewModel.multimediaAction.first { action ->
                 when (action) {
@@ -1870,7 +1870,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     private fun addMediaFileToField(index: Int, field: IField) {
         lifecycleScope.launch {
             val note = getCurrentMultimediaEditableNote()
-            note?.setField(index, field)
+            note.setField(index, field)
             val fieldEditText = editFields!![index]
 
             // Import field media
