@@ -102,7 +102,7 @@
     <string name="select">Выбраць</string>
     <string name="field_remapping">%1$s (з “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдалены. Калі нататка не мае ніводнай карткі, то яна будзе згублена. Вы сапраўды хочаце працягнуць?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">Такі тып нататкі не знойдзены</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">Дасягнутыя абмежаванні па часе</string>
     <plurals name="timebox_reached">
@@ -189,7 +189,7 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">Не знойдзены браўзер для адкрыцця спасылкі: %s</string>
     <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
@@ -238,9 +238,9 @@
     <string name="edit_toolbar_item">Рэдагаваць элемент панэлі інструментаў</string>
     <string name="toolbar_item_explain_edit_or_remove">Увядзіце HTML, які будзе ўстаўлены да і пасля вылучанага тэксту\n\nДоўгі націск на элемент панэлі інструментаў дазволіць адрэдагаваць або выдаліць яго</string>
     <string name="remove_toolbar_item">Выдаліць элемент панэлі інструментаў?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">Занадта вялікі відарыс, паспрабуйце ўставіць відарыс уручную</string>
+    <string name="note_editor_video_too_large">Занадта вялікі відэафайл, паспрабуйце ўставіць відэа ўручную</string>
+    <string name="note_editor_audio_too_large">Занадта вялікі аўдыяфайл, паспрабуйце ўставіць аўдыя ўручную</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Адбываецца рэзервовае капіяванне аперацыйнай сістэмы. Паспрабуйце яшчэ раз</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Паспрабуйце скарыстацца праграмай iManager для таго, каб дазволіць AnkiDroid дадаваць ярлыкі</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш галоўны экран не дазваляе праграме дадаваць ярлыкі</string>
@@ -284,7 +284,7 @@
     <string name="scoped_storage_learn_more">Падрабязней</string>
     <string name="search_card_js_api_no_results">Пошук не даў ніякіх вынікаў</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
+    <string name="not_valid_js_addon_package">%s не з\'яўляецца сапраўдным пакетам дапаўнення JavaScript</string>
     <string name="could_not_create_dir">Не атрымалася стварыць каталог %s</string>
     <string name="malicious_archive_entry_outside">Шкодны архіў. Змяшчае запіс па-за межамі мэтавага каталога: %s</string>
     <string name="malicious_archive_exceeds_limit">Шкодны архіў. Памер перавышае %1$s або змяшчае больш %2$d файлаў</string>
@@ -344,5 +344,5 @@
     <string name="next_recording">Далей</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Немагчыма выдаліць тып карткі</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_message">Выдаленне гэтага тыпу карткі пакіне некаторыя нататкі без ніводнай карткі.</string>
 </resources>
