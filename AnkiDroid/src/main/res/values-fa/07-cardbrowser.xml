@@ -74,7 +74,7 @@
     <string name="card_browser_list_my_searches_new_name">نام گذاری جستجوی فعلی</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">شما نمی توانید جستجو را بدون نام ذخیره کنید</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">نام وجود دارد</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">هیچ یادداشتی برای ویرایش ندلرید</string>
     <string name="card_browser_list_my_searches_remove_content">%1$s حذف شود؟</string>
     <string name="card_browser_change_display_order">تغییر تنظیم صفحه نمایش</string>
     <string name="card_browser_change_display_order_title">تغییر تنظیم صفحه نمایش</string>

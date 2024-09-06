@@ -52,7 +52,7 @@
     <string name="menu_get_shared_decks">Атрымаць агульнадаступныя калоды</string>
     <string name="connection_error_message">Узніклі праблемы са злучэннем</string>
     <string name="not_logged_in_title">Увайсці ў AnkiWeb</string>
-    <string name="login_create_account_message">Вам неабходна аўтарызавацца ў адным з воблачных сэрвісаў, каб скарыстацца гэтым тыпам сінхранізацыі. Вы можаце зарэгістравацца ў воблачным сэрвісе на наступным кроку.</string>
+    <string name="login_create_account_message">Вам неабходна аўтарызавацца ў адным з воблачных сэрвісаў, каб скарыстацца гэтым тыпам сінхранізацыі. Вы можаце зрабіць гэта на наступным кроку.</string>
     <!-- MyAccount.kt -->
     <string name="username">Электронная пошта</string>
     <string name="password">Пароль</string>

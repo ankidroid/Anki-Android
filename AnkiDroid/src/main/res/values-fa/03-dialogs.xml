@@ -258,8 +258,8 @@
     <string name="change_cloze_number">تغییر شماره Cloze</string>
     <string name="cloze_number">شماره Cloze:</string>
     <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="open_note_editor">ویرایشگر یادداشت را باز کن</string>
+    <string name="change_cloze_mode">حالت کلوز را تغییر بده</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView سیستم قدیمی است. برخی ویژگی‌ها به درستی کار نخواهند کرد. لطفاً آن را به‌روزرسانی کنید. \n\nنسخه نصب‌شده: %1$d\nحداقل نسخه مورد نیاز: %2$d</string>
 </resources>
