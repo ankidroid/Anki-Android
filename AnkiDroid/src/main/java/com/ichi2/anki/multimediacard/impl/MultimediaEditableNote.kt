@@ -105,6 +105,9 @@ class MultimediaEditableNote : IMultimediaEditableNote {
         return IOUtils.deserialize(IField::class.java, IOUtils.serialize(f!!))
     }
 
+    val isEmpty: Boolean
+        get() = fields.isNullOrEmpty()
+
     companion object {
         private const val serialVersionUID = -6161821367135636659L
     }
