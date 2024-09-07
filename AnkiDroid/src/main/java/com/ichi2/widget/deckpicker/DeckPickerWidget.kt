@@ -115,6 +115,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                         val intent = Intent(context, Reviewer::class.java).apply {
                             action = Intent.ACTION_VIEW
                             putExtra("deckId", deck.deckId)
+                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         }
                         val pendingIntent = PendingIntent.getActivity(
                             context,
