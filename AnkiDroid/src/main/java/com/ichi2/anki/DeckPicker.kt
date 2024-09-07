@@ -2196,6 +2196,7 @@ open class DeckPicker :
                 Intent(context, Reviewer::class.java)
                     .setAction(Intent.ACTION_VIEW)
                     .putExtra("deckId", did)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             )
             .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
             .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
