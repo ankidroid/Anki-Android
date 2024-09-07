@@ -25,6 +25,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -69,6 +70,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.DecimalFormat
 
+private const val SVG_IMAGE = "image/svg+xml"
+
 @NeedsTest("Ensure correct option is executed i.e. gallery or camera")
 class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_image) {
     override val title: String
@@ -99,7 +102,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 }
 
                 Activity.RESULT_OK -> {
-                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
                     val data = result.data
                     if (data == null) {
                         Timber.w("handleSelectImageIntent() no intent provided")
@@ -131,7 +133,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 }
 
                 Activity.RESULT_OK -> {
-                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
                     val intent = result.data ?: return@registerForActivityResult
                     Timber.d("Intent not null, handling the result")
                     handleDrawingResult(intent)
@@ -157,7 +158,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
                 isPictureTaken -> {
                     Timber.d("Image successfully captured")
-                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
                     handleTakePictureResult(viewModel.currentMultimediaPath.value)
                 }
 
@@ -277,7 +277,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun handleImageUri() {
         if (imageUri != null) {
-            view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
             handleSelectImageIntent(imageUri)
         } else {
             handleSelectedImageOptions()
@@ -452,24 +451,33 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun handleSelectImageIntent(imageUri: Uri?) {
         val mimeType = imageUri?.let { context?.contentResolver?.getType(it) }
-        if (mimeType == "image/svg+xml") {
-            Timber.i("Selected image is an SVG.")
-            view?.findViewById<TextView>(R.id.no_image_textview)?.apply {
-                text = resources.getString(R.string.multimedia_editor_svg_preview)
-                visibility = View.VISIBLE
-            }
-        } else {
-            // reset the no preview text
-            view?.findViewById<TextView>(R.id.no_image_textview)?.apply {
-                text = null
-                visibility = View.GONE
-            }
-        }
 
         if (imageUri == null) {
             Timber.w("handleSelectImageIntent() selectedImage was null")
             showSomethingWentWrong()
             return
+        }
+
+        if (mimeType == SVG_IMAGE) {
+            Timber.i("Selected image is an SVG.")
+
+            view?.findViewById<ImageView>(R.id.image_preview)?.visibility = View.GONE
+
+            view?.findViewById<WebView>(R.id.multimedia_webview)?.apply {
+                visibility = View.VISIBLE
+
+                imageUri.let { imageData ->
+                    val svgData = loadSvgFromUri(imageData)
+                    svgData?.let {
+                        loadDataWithBaseURL(null, it, SVG_IMAGE, "UTF-8", null)
+                    } ?: run {
+                        Timber.w("Failed to load SVG from URI")
+                        view?.findViewById<ImageView>(R.id.image_preview)?.setImageResource(R.drawable.ic_image_not_supported)
+                    }
+                }
+            }
+        } else {
+            view?.findViewById<ImageView>(R.id.image_preview)?.visibility = View.VISIBLE
         }
 
         val internalizedPick = internalizeUri(imageUri)
@@ -495,6 +503,22 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         val imageUri = viewModel.currentMultimediaUri.value ?: return
         val intent = com.ichi2.imagecropper.ImageCropperLauncher.ImageUri(imageUri).getIntent(requireContext())
         imageCropperLauncher.launch(intent)
+    }
+
+    /**
+     * Loads an SVG file from the given URI and returns its content as a string.
+     *
+     * @param uri The URI of the SVG file to be loaded.
+     * @return The content of the SVG file as a string, or null if an error occurs.
+     */
+    private fun loadSvgFromUri(uri: Uri): String? {
+        return try {
+            val inputStream = context?.contentResolver?.openInputStream(uri)
+            inputStream?.bufferedReader()?.use { it.readText() }
+        } catch (e: Exception) {
+            Timber.e(e, "Error reading SVG from URI")
+            null
+        }
     }
 
     private fun handleCropResultError(error: Exception) {
