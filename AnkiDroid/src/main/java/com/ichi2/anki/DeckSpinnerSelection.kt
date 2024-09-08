@@ -202,7 +202,7 @@ class DeckSpinnerSelection(
      * Displays a [DeckSelectionDialog]
      */
     suspend fun displayDeckSelectionDialog() {
-        val decks = fromCollection(includeFiltered = false).toMutableList()
+        val decks = fromCollection(includeFiltered = showFilteredDecks).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }
