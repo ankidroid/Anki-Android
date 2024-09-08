@@ -174,7 +174,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>
     <string name="show_large_answer_buttons_summ">Показувати кнопку відповіді в 2 рядках</string>
     <string name="show_top_bar" maxLength="41">Показувати верхню панель</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">Показувати кількість карток, таймер відповідей, прапорець і позначку у верхній панелі</string>
     <string name="show_progress" maxLength="41">Показувати ті, що залишилися</string>
     <string name="show_progress_summ">Показувати кількість карток, що залишилися</string>
     <string name="show_eta" maxLength="41">Показувати приблизний час, що залишився</string>
@@ -284,7 +284,7 @@
     <string name="user_action_7" maxLength="41">Дія 7</string>
     <string name="user_action_8" maxLength="41">Дія 8</string>
     <string name="user_action_9" maxLength="41">Дія 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">Перемкнути автоматичне просування</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Вибрати сторону картки</string>
     <string name="card_side_question">Питання</string>
@@ -375,5 +375,5 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Всі</string>
     <string name="ignore_display_cutout" maxLength="41">Ігнорувати виріз дисплею</string>
     <string name="hide_answer_buttons" maxLength="41">Приховати кнопки відповіді</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">Приховати кнопки \'Важкий\' і \'Легкий\'</string>
 </resources>

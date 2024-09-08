@@ -53,7 +53,7 @@
     <string name="drawing">Նկարչություն</string>
     <string name="send_feedback">Կարծիք թողնել</string>
     <string name="studyoptions_start">Սովորել</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
+    <string name="studyoptions_buried_count">+%d թաղված</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Ընդարձակել</string>
     <string name="collapse">Կոծկել</string>
@@ -102,7 +102,7 @@
     <string name="menu_suspend">Հեռացնել</string>
     <string name="menu_delete_note">Ջնջել գրառումը</string>
     <string name="menu_flag">Դրոշ</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Վերանվանել դրոշները</string>
     <string name="menu_flag_card">Ավելացնել դրոշ</string>
     <string name="menu_edit_tags">Խմբագրել պիտակները</string>
     <string name="delete_note_message">Ջնջե՞լ այս գրառումը և նրա բոլոր քարտերը:\n%s</string>
@@ -129,9 +129,9 @@
     <string name="search_deck" comment="Deck search for selecting it">Կապուկների որոնում</string>
     <string name="empty_deck">Այս կապուկը դատարկ է</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Կապուկների որոնում</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="invalid_deck_name">Կապուկի անվավեր անվանում</string>
+    <string name="studyoptions_congrats_finished">Կեցցե՜ք։ Դուք առայժմ ավարտել եք:</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Առայժմ կապուկն ավարտվե՜լ է։ %s</string>
     <string name="studyoptions_no_cards_due">Կրկնելիք քարտեր դեռ չկան</string>
     <string name="sd_card_not_mounted">Սարքի պահեստը տեղադրված չէ</string>
     <string name="button_sync" comment="Text of the sync button">Համաժամեցում</string>
@@ -139,19 +139,19 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Շարունակել համաժամեցումը</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Համաժամեցումը չեղարկվեց</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Չեղարկվում է&#8230;\n Սա կարող է որոշ ժամանակ տևել:</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Համաժամեցում</string>
     <string name="export_deck">Արտահանել կապուկը</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Արտահանել հավաքածուն</string>
     <string name="nothing">Ոչինչ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Քարտերի տեսակներ</string>
     <string name="card_template_editor_front">Հարցի կաղապար</string>
     <string name="card_template_editor_back">Պատասխանի կաղապար</string>
     <string name="card_template_editor_styling">Ոճավորում</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Զննիչի տեսք</string>
+    <string name="card_template_editor_deck_override">Հատուկ կապուկ</string>
+    <string name="card_template_editor_insert_field">Տեղադրել դաշտ</string>
+    <string name="card_template_editor_select_field">Ընտրել դաշտը</string>
     <string name="card_template_editor_cant_delete">Անհրաժեշտ է քարտի առնվազն մեկ տեսակ</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Սա կստեղծի %1$d քարտ: Շարունակե՞լ:</item>
@@ -164,21 +164,21 @@
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Զննիչի տեսք</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Քարտի մասին տեղեկություն</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Կարդալ և գրել AnkiDroid-ի շտեմարանի մեջ</string>
     <string name="read_write_permission_description">մատչել առկա գրառումները, քարտերը, գրառումների տեսակները և կապուկները, ինչպես նաև նորերը ստեղծելը</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Զննիչ</string>
     <string name="context_menu_anki_card_label">Anki քարտ</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Հավաքածուները չեն կարող իրար միանալ։ Ո՞ր հավաքածուն եք ուզում պահպանել։</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
+    <string name="sync_conflict_remote_confirm_new">Փոխարինե՞լ ձեր AnkiDroid-ի հավաքածուն ձեր AnkiWeb-ի հավաքածուով։</string>
+    <string name="sync_conflict_local_confirm_new">Փոխարինե՞լ ձեր AnkiWeb-ի հավաքածուն ձեր AnkiDroid-ի հավաքածուով։</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Replace collection</string>
     <plurals name="deckpicker_title_zero_due">
@@ -195,14 +195,14 @@
     <string name="install_non_play_store_ankidroid">Վերականգնել թղթապանակի հասանելիությունը (խորացված)</string>
     <string name="restore_data_from_backup">Վերականգնել .colpkg պատճենից (խորացված)</string>
     <string name="create_new_collection">Ստեղծել նոր հավաքածու</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="new_unsafe_collection">AnkiDroid-ը ձեր հեռախոսից ջնջելու դեպքում կջնջվի նաև նոր հավաքածուն</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid-ի աշխատանքի համար հարկավոր է մի քանի թույլտվություն</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="storage_access_title">Հիշողություն</string>
+    <string name="storage_access_summary">Պահպանում է ձեր հավաքածուն ապահով վայրում, որը ծրագիրը ջնջելու դեպքում չի ջնջվի</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Բոլոր ֆայլերի հասանելիություն</string>
+    <string name="image_occlusion">Նկարի ծածկում</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Հեռացնել հաշիվը</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Նոր քարտ</string>
 </resources>

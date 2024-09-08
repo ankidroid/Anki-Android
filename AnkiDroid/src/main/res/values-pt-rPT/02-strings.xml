@@ -337,6 +337,6 @@
     <string name="play_recording">Reproduzir</string>
     <string name="next_recording">Próxima</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
+    <string name="orphan_note_title">Não é possível apagar este tipo de ficha</string>
+    <string name="orphan_note_message">Apagar este tipo de ficha implica deixar algumas notas sem fichas.</string>
 </resources>

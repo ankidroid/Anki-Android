@@ -99,7 +99,7 @@
     <string name="menu_suspend">Tạm hoãn</string>
     <string name="menu_delete_note">Xoá ghi chú</string>
     <string name="menu_flag">Gắn cờ</string>
-    <string name="rename_flag">Rename flags</string>
+    <string name="rename_flag">Đổi tên nhãn đánh dấu</string>
     <string name="menu_flag_card">Gắn cờ thẻ</string>
     <string name="menu_edit_tags">Sửa tag</string>
     <string name="delete_note_message">Bạn thực sự muốn xoá ghi chú này cùng toàn bộ thẻ của nó?\n%s</string>

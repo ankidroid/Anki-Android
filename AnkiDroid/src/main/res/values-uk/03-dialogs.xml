@@ -49,12 +49,12 @@
     <string name="contextmenu_deckpicker_delete_deck">Видалити колоду</string>
     <string name="delete_deck_title">Видалити колоду?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="many">Delete all cards in %1$s? It contains %2$d cards</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Видалити всі картки в %1$s? Він містить %2$d картку</item>
+        <item quantity="few">Видалити всі картки в %1$s? Він містить %2$d карток</item>
+        <item quantity="many">Видалити всі картки в %1$s? Він містить %2$d карток</item>
+        <item quantity="other">Видалити всі картки в %1$s? Він містить %2$d карток</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Видалити відфільтровану колоду %s і повернути всі карти до оригінальних колод?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
@@ -275,9 +275,9 @@
     <string name="open">Відкрити</string>
     <string name="change_cloze_number">Змінити номер Cloze</string>
     <string name="cloze_number">Номер Cloze:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_editor_mode">Змінити режим редактора</string>
+    <string name="open_note_editor">Відкрити редактор нотаток</string>
+    <string name="change_cloze_mode">Змінити режим закриття</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Системний WebView застарілий. Деякі функції не будуть правильно працювати. Оновіть його, будь ласка.\n\nВстановлена версія: %1$d\nЯк мінімум потрібна версія: %2$d</string>
 </resources>
