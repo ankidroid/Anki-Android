@@ -1057,6 +1057,11 @@ open class DeckPicker :
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
                 return true
             }
+            R.id.action_export_collection -> {
+                Timber.i("DeckPicker:: Export menu item selected")
+                ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }
