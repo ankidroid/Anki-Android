@@ -67,8 +67,10 @@
     </plurals>
     <string name="widget_add_note_button">Добавить запись в AnkiDroid</string>
     <string name="deck_picker_widget_description">Выбор колоды</string>
-    <!-- Strings to explain usage in Deck Picker Widget Configuration screen -->
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Выберите колоды</string>
+    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Выберите колоды для отображения в виджете. Выберите колоды с помощью кнопки +</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Колода удаленна</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Эта колода уже выбрана</string>
@@ -78,4 +80,5 @@
         <item quantity="many">Вы можете выбрать до %d колод</item>
         <item quantity="other">Вы можете выбрать до %d колод</item>
     </plurals>
+    <string name="empty_widget" comment="To denote the widget is empty">Missing deck. Please reconfigure</string>
 </resources>
