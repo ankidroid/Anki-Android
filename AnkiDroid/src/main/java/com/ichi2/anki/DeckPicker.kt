@@ -165,6 +165,7 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.ClipboardUtil.IMPORT_MIME_TYPES
@@ -322,7 +323,7 @@ open class DeckPicker :
     var importColpkgListener: ImportColpkgListener? = null
 
     private var toolbarSearchItem: MenuItem? = null
-    private var toolbarSearchView: SearchView? = null
+    private var toolbarSearchView: AccessibleSearchView? = null
     private lateinit var customStudyDialogFactory: CustomStudyDialogFactory
 
     override val permissionScreenLauncher = recreateActivityResultLauncher()
@@ -823,7 +824,7 @@ open class DeckPicker :
         menu.findItem(R.id.deck_picker_action_filter)?.let {
             toolbarSearchItem = it
             setupSearchIcon(it)
-            toolbarSearchView = it.actionView as SearchView
+            toolbarSearchView = it.actionView as AccessibleSearchView
         }
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
 
@@ -894,7 +895,7 @@ open class DeckPicker :
             }
         })
 
-        (menuItem.actionView as SearchView).run {
+        (menuItem.actionView as AccessibleSearchView).run {
             queryHint = getString(R.string.search_decks)
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {

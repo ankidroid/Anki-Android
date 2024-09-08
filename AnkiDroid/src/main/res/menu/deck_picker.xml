@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_search_white"
         android:title="@string/search_decks"
         android:visible="false"
-        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+        ankidroid:actionViewClass="com.ichi2.ui.AccessibleSearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
     <group android:id="@+id/commonItems">
         <item

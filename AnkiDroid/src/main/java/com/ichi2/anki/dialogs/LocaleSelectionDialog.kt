@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
+import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.ui.RecyclerSingleTouchAdapter
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TypedFilter
@@ -98,7 +99,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         tagsDialogView.findViewById<Toolbar>(R.id.locale_dialog_selection_toolbar).apply {
             inflateMenu(R.menu.locale_dialog_search_bar)
             setNavigationOnClickListener { dialogHandler!!.onLocaleSelectionCancelled() }
-            (menu.findItem(R.id.locale_dialog_action_search).actionView as SearchView).apply {
+            (menu.findItem(R.id.locale_dialog_action_search).actionView as AccessibleSearchView).apply {
                 imeOptions = EditorInfo.IME_ACTION_DONE
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {

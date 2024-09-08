@@ -18,7 +18,7 @@
         android:id="@+id/search_item"
         android:title="@android:string/search_go"
         android:icon="@drawable/ic_search_white"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:actionViewClass="com.ichi2.ui.AccessibleSearchView"
         app:showAsAction="ifRoom|collapseActionView"
         />
 </menu>
