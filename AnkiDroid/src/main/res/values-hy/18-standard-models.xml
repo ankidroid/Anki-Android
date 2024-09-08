@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
+    <string name="front_field_name">Առջև</string>
+    <string name="back_field_name">Հետև</string>
 </resources>
