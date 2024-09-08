@@ -210,6 +210,9 @@ class DecksTest : JvmTest() {
         assertThat("filtered deck", decks.cardCount(filteredDeck, includeSubdecks = false), equalTo(1))
 
         assertThat("filtered and home deck", decks.cardCount(deckWithNoChildren, filteredDeck, includeSubdecks = false), equalTo(3))
+
+        val dids = listOf(parentDid, deckWithNoChildren)
+        assertThat("passing in a list", decks.cardCount(dids, includeSubdecks = false), equalTo(4))
     }
 
     companion object {

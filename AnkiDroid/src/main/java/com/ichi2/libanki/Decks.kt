@@ -34,7 +34,6 @@ import anki.deck_config.UpdateDeckConfigsRequest
 import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
-import anki.decks.deck
 import com.google.protobuf.kotlin.toByteStringUtf8
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
@@ -43,6 +42,7 @@ import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.append
 import com.ichi2.libanki.utils.len
 import com.ichi2.utils.jsonObjectIterable
+import kotlinx.coroutines.NonCancellable.children
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -250,6 +250,14 @@ class Decks(private val col: Collection) {
         val strIds = Utils.ids2str(dids)
         return col.db.queryScalar("select count() from cards where did in $strIds or odid in $strIds")
     }
+
+    /** @see cardCount */
+    // Allows calling `cardCount` without `*deckIds.toLongArray()`
+    @NotInLibAnki
+    fun cardCount(deckIds: List<DeckId>, includeSubdecks: Boolean) = cardCount(
+        decks = deckIds.toLongArray(),
+        includeSubdecks = includeSubdecks
+    )
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("get")
