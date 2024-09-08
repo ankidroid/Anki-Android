@@ -62,7 +62,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
@@ -137,6 +136,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
+import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
@@ -2198,7 +2198,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         val button = toolbar.insertItem(0, drawable) { insertCloze(type) }.apply {
             contentDescription = description
         }
-        TooltipCompat.setTooltipText(button, description)
+        button.setTooltipTextCompat(description)
     }
 
     private fun updateToolbar() {
@@ -2258,7 +2258,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         drawable!!.setTint(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
         addButton.contentDescription = resources.getString(R.string.add_toolbar_item)
-        TooltipCompat.setTooltipText(addButton, resources.getString(R.string.add_toolbar_item))
+        addButton.setTooltipTextCompat(resources.getString(R.string.add_toolbar_item))
     }
 
     private val toolbarButtons: ArrayList<CustomToolbarButton>
