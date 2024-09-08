@@ -964,7 +964,7 @@ open class CardBrowser :
                 }
             })
             searchView = (searchItem!!.actionView as CardBrowserSearchView).apply {
-                queryHint = resources.getString(R.string.deck_conf_cram_search)
+                queryHint = resources.getString(R.string.card_browser_search_hint)
                 setMaxWidth(Integer.MAX_VALUE)
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextChange(newText: String): Boolean {
