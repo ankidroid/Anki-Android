@@ -968,7 +968,7 @@ open class CardBrowser :
                 setMaxWidth(Integer.MAX_VALUE)
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextChange(newText: String): Boolean {
-                        if (this@apply.shouldIgnoreValueChange()) {
+                        if (this@apply.ignoreValueChange) {
                             return true
                         }
                         viewModel.updateQueryText(newText)

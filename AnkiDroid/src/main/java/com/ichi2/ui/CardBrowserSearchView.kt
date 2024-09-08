@@ -26,12 +26,8 @@ class CardBrowserSearchView : SearchView {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     /** Whether an action to set text should be ignored  */
-    private var ignoreValueChange = false
-
-    /** Whether an action to set text should be ignored  */
-    fun shouldIgnoreValueChange(): Boolean {
-        return ignoreValueChange
-    }
+    var ignoreValueChange = false
+        private set
 
     override fun onActionViewCollapsed() {
         try {
