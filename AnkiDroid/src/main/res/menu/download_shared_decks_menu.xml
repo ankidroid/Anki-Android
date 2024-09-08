@@ -13,5 +13,5 @@
         android:title="@string/search_for_download_deck"
         android:icon="@drawable/ic_search_white"
         app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+        app:actionViewClass="com.ichi2.ui.AccessibleSearchView" />
 </menu>

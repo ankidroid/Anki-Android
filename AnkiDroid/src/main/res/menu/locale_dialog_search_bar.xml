@@ -22,7 +22,7 @@
         android:id="@+id/locale_dialog_action_search"
         android:title="@string/menu_search"
         android:icon="@drawable/ic_search_white"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:actionViewClass="com.ichi2.ui.AccessibleSearchView"
         app:showAsAction="ifRoom|collapseActionView"
         />
 </menu>

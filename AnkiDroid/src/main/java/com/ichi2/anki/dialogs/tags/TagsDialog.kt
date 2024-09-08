@@ -33,6 +33,7 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.customView
@@ -76,7 +77,7 @@ class TagsDialog : AnalyticsDialogFragment {
     private var positiveText: String? = null
     private var dialogTitle: String? = null
     private var tagsArrayAdapter: TagsArrayAdapter? = null
-    private var toolbarSearchView: SearchView? = null
+    private var toolbarSearchView: AccessibleSearchView? = null
     private var toolbarSearchItem: MenuItem? = null
     private var noTagsTextView: TextView? = null
     private var tagsListRecyclerView: RecyclerView? = null
@@ -254,7 +255,7 @@ class TagsDialog : AnalyticsDialogFragment {
         }
         toolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
         val toolbarSearchItem: MenuItem? = toolbarSearchItem
-        toolbarSearchView = toolbarSearchItem?.actionView as SearchView
+        toolbarSearchView = toolbarSearchItem?.actionView as AccessibleSearchView
         val queryET = toolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         toolbarSearchView!!.queryHint = getString(R.string.filter_tags)
@@ -343,7 +344,7 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    internal fun getSearchView(): SearchView? {
+    internal fun getSearchView(): AccessibleSearchView? {
         return toolbarSearchView
     }
 

@@ -43,6 +43,7 @@ import com.ichi2.libanki.getNotetypeNameIdUseCount
 import com.ichi2.libanki.getNotetypeNames
 import com.ichi2.libanki.removeNotetype
 import com.ichi2.libanki.updateNotetype
+import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.getInputField
 import com.ichi2.utils.input
 import com.ichi2.utils.message
@@ -104,7 +105,7 @@ class ManageNotetypes : AnkiActivity() {
 
         val searchItem = menu.findItem(R.id.search_item)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = searchItem?.actionView as? SearchView
+        val searchView = searchItem?.actionView as? AccessibleSearchView
         searchView?.maxWidth = Integer.MAX_VALUE
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 

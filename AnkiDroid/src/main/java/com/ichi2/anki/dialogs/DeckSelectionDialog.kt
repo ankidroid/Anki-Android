@@ -50,6 +50,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.sched.DeckNode
+import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import com.ichi2.utils.create
@@ -159,7 +160,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         toolbar.title = title
         toolbar.inflateMenu(R.menu.deck_picker_dialog_menu)
         val searchItem = toolbar.menu.findItem(R.id.deck_picker_dialog_action_filter)
-        val searchView = searchItem.actionView as SearchView
+        val searchView = searchItem.actionView as AccessibleSearchView
         searchView.queryHint = getString(R.string.deck_picker_dialog_filter_decks)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
