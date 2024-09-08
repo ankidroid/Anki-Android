@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
@@ -29,6 +30,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.pages.DeckOptions
 import com.ichi2.libanki.DeckId
 import com.ichi2.widget.ACTION_UPDATE_WIDGET
@@ -92,18 +94,47 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            deckIds: LongArray
+            deckIds: LongArray?
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_deck_picker_large)
-
+            if (deckIds == null || deckIds.isEmpty()) {
+                showEmptyWidget(context, appWidgetManager, appWidgetId, remoteViews)
+                return
+            }
             AnkiDroidApp.applicationScope.launch {
+                val isCollectionEmpty = isCollectionEmpty()
+                if (isCollectionEmpty) {
+                    showEmptyCollection(context, appWidgetManager, appWidgetId, remoteViews)
+                    return@launch
+                }
+
                 val deckData = getDeckNamesAndStats(deckIds.toList())
 
-                remoteViews.removeAllViews(R.id.deckCollection)
+                if (deckData.isEmpty()) {
+                    showEmptyWidget(context, appWidgetManager, appWidgetId, remoteViews)
+                    return@launch
+                }
 
+                showDeck(context, appWidgetManager, appWidgetId, remoteViews, deckIds)
+            }
+        }
+
+        private suspend fun showDeck(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: AppWidgetId,
+            remoteViews: RemoteViews,
+            deckIds: LongArray?
+        ) {
+            remoteViews.removeAllViews(R.id.deckCollection)
+
+            val deckData = deckIds?.let { getDeckNamesAndStats(it.toList()) }
+            if (deckData != null) {
                 for (deck in deckData) {
                     val deckView = RemoteViews(context.packageName, R.layout.widget_item_deck_main)
 
+                    remoteViews.setViewVisibility(R.id.empty_widget, View.GONE)
+                    remoteViews.setViewVisibility(R.id.deckCollection, View.VISIBLE)
                     deckView.setTextViewText(R.id.deckName, deck.name)
                     deckView.setTextViewText(R.id.deckNew, deck.newCount.toString())
                     deckView.setTextViewText(R.id.deckDue, deck.reviewCount.toString())
@@ -111,34 +142,66 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
                     val isEmptyDeck = deck.newCount == 0 && deck.reviewCount == 0 && deck.learnCount == 0
 
-                    if (!isEmptyDeck) {
-                        val intent = Intent(context, Reviewer::class.java).apply {
+                    val intent = if (!isEmptyDeck) {
+                        Intent(context, Reviewer::class.java).apply {
                             action = Intent.ACTION_VIEW
                             putExtra("deckId", deck.deckId)
                             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         }
-                        val pendingIntent = PendingIntent.getActivity(
-                            context,
-                            deck.deckId.toInt(),
-                            intent,
-                            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                        )
-                        deckView.setOnClickPendingIntent(R.id.deckName, pendingIntent)
                     } else {
-                        val intent = DeckOptions.getIntent(context, deck.deckId)
-                        val pendingIntent = PendingIntent.getActivity(
-                            context,
-                            deck.deckId.toInt(),
-                            intent,
-                            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                        )
-                        deckView.setOnClickPendingIntent(R.id.deckName, pendingIntent)
+                        DeckOptions.getIntent(context, deck.deckId)
                     }
 
+                    val pendingIntent = PendingIntent.getActivity(
+                        context,
+                        deck.deckId.toInt(),
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    deckView.setOnClickPendingIntent(R.id.deckName, pendingIntent)
                     remoteViews.addView(R.id.deckCollection, deckView)
                 }
-                appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
             }
+
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+        }
+
+        private fun showEmptyCollection(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: AppWidgetId,
+            remoteViews: RemoteViews
+        ) {
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.app_not_initialized_new))
+            remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
+            remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
+
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
+        }
+
+        private fun showEmptyWidget(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetId: AppWidgetId,
+            remoteViews: RemoteViews
+        ) {
+            remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
+            remoteViews.setViewVisibility(R.id.deckCollection, View.GONE)
+
+            val configIntent = Intent(context, DeckPickerWidgetConfig::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val configPendingIntent = PendingIntent.getActivity(
+                context,
+                appWidgetId,
+                configIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
+
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }
 
         /**
