@@ -957,9 +957,7 @@ open class DeckPicker :
             SyncIconState.OneWay -> R.string.sync_menu_title_one_way_sync
             SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            provider.setTooltipText(getString(tooltipText))
-        }
+        provider.setTooltipText(getString(tooltipText))
         when (state.syncIcon) {
             SyncIconState.Normal -> {
                 BadgeDrawableBuilder.removeBadge(provider)

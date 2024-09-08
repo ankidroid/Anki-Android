@@ -29,6 +29,8 @@ import android.os.Bundle
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.KEYCODE_PAGE_DOWN
 import android.view.KeyEvent.KEYCODE_PAGE_UP
+import android.view.View
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
 import com.ichi2.compat.CompatHelper.Companion.compat
 import java.io.Serializable
@@ -195,3 +197,18 @@ class CompatHelper private constructor() {
             ContextCompat.registerReceiver(this, receiver, filter, flags)
     }
 }
+
+/**
+ * Sets the tooltip text for the view.
+ *
+ * On API 26 and later, this method calls through to {@link View#setTooltipText(CharSequence)}.
+ *
+ * Prior to API 26, this method sets or clears (when tooltipText is {@code null}) the view's
+ * {@code OnLongClickListener} and {@code OnHoverListener}. A tooltip-like sub-panel will be
+ * created on long-click or mouse hover.
+ *
+ * @receiver the view on which to set the tooltip text
+ * @param tooltipText the tooltip text
+ */
+fun View.setTooltipTextCompat(tooltipText: CharSequence?) =
+    TooltipCompat.setTooltipText(this, tooltipText)
