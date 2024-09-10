@@ -343,4 +343,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">מחיקת סוג כרטיס זה תשאיר כמה הערות ללא כרטיס.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

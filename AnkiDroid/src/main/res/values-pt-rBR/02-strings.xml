@@ -339,4 +339,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">Deletar essa categoria de cartão deixará algumas notas sem cartão</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

@@ -337,4 +337,5 @@ Context | Request Context    [1]</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">카드 유형을 삭제할 수 없습니다</string>
     <string name="orphan_note_message">이 카드 유형을 삭제하면 카드 없이 일부 메모만 남습니다</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

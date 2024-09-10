@@ -348,4 +348,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Неможливо видалити тип картки</string>
     <string name="orphan_note_message">Якщо видалити цей тип картки, деякі нотатки залишаться без карток.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

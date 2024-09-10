@@ -349,4 +349,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Cannot Delete Card Type</string>
     <string name="orphan_note_message">Usunięcie tej karty spowoduje pozostawienie niektórych notatek bez żadnej karty.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>
