@@ -339,4 +339,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Kan kaarttype niet verwijderen</string>
     <string name="orphan_note_message">Als je dit kaarttype verwijdert, zullen sommige notities geen kaarten meer hebben.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

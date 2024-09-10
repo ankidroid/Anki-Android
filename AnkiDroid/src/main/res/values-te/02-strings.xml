@@ -333,4 +333,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">కార్డ్ రకాన్ని తొలగించడం సాధ్యం కాదు</string>
     <string name="orphan_note_message">ఈ కార్డ్ రకాన్ని తొలగించడం వలన కొన్ని గమనికలు కార్డ్‌లు లేకుండా ఉంటాయి.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

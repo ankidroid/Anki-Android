@@ -334,4 +334,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">无法删除卡片类型</string>
     <string name="orphan_note_message">删除此卡片类型将留使一些附注没有任何卡片。</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

@@ -333,4 +333,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">無法刪除此卡類型</string>
     <string name="orphan_note_message">刪除此卡類型會使某些筆記本沒有任何卡片。</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>

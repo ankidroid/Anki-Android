@@ -264,4 +264,9 @@
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView સિસ્ટમ જૂની છે. કેટલીક સુવિધાઓ યોગ્ય રીતે કામ કરશે નહીં. કૃપા કરીને તેને અપડેટ કરો.\n\nઇન્સ્ટોલ કરેલ સંસ્કરણ: %1$d\nન્યૂનતમ આવશ્યક સંસ્કરણ: %2$d</string>
+    <!-- Tts playback error dialog -->
+    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
 </resources>

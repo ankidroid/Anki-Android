@@ -339,4 +339,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Kart Türü Silinemiyor</string>
     <string name="orphan_note_message">Bu kart türünü silmek bazı notları kartsız bırakacak.</string>
+    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
 </resources>
