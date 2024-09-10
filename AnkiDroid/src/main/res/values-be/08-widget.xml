@@ -66,11 +66,11 @@
         <item quantity="other">Засталося %d хвілін</item>
     </plurals>
     <string name="widget_add_note_button">Дадаць новую нататку ў AnkiDroid</string>
-    <string name="deck_picker_widget_description">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="deck_picker_widget_description">Выбар калоды</string>
+    <string name="card_analysis_extra_widget_description">Аналіз карткі</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Выбар калод</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Выбар калоды</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Выберыце калоды для адлюстравання ў віджэце. Зрабіць гэта можна з дапамогай кнопкі \"+\"</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Калода выдалена</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Гэта калода ўжо выбрана</string>
@@ -80,5 +80,5 @@
         <item quantity="many">Вы можаце выбраць да %d калод.</item>
         <item quantity="other">Вы можаце выбраць да %d калод.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Missing deck. Please reconfigure</string>
+    <string name="empty_widget" comment="To denote the widget is empty">Прапушчаная калода. Сканфігурыйце яшчэ раз</string>
 </resources>

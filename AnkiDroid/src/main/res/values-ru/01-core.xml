@@ -89,7 +89,7 @@
     <string name="menu_import">Импортировать</string>
     <string name="undo">Отменить</string>
     <string name="redo">Вернуть</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Отменить штрих</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Отменить черту</string>
     <string name="move_all_to_deck">Переместить всё в колоду</string>
     <string name="unbury">Вернуть</string>
     <string name="rename_deck">Переименовать колоду</string>
@@ -147,7 +147,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Отмена&#8230;\nЭто может занять некоторое время.</string>
     <string name="syncing_media">Синхронизация медиафайлов</string>
     <string name="export_deck">Экспортировать колоду</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Экспортировать коллекцию</string>
     <string name="nothing">Ничего</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типы карточек</string>
