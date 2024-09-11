@@ -51,8 +51,8 @@ jobs:
 
                       https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process#how-to-get-paid
                     
-                      >[!NOTE]                      
-                      >PLEASE NOTE: The process was updated in August 2024. You should re-read the Payment Process page.
+                      >[! IMPORTANT]                      
+                      >PLEASE NOTE: The process was updated in August 2024. Re-read the Payment Process page if you have not already.
 
                       We only post one comment per person per month to avoid spamming you, regardless of the number of PRs merged, but this note applies to all PRs merged for this month
 
