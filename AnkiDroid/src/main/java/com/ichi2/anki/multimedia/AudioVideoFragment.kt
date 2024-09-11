@@ -39,6 +39,7 @@ import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.multimedia.AudioVideoFragment.MediaOption.AUDIO_CLIP
+import com.ichi2.anki.multimedia.AudioVideoFragment.MediaOption.VIDEO_CLIP
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTIONS
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
@@ -88,7 +89,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      * Lazily initialized instance of MultimediaMenu.
      * The instance is created only when first accessed.
      */
-    @NeedsTest("The menu drawable icon shoule be correctly set")
+    @NeedsTest("The menu drawable icon should be correctly set")
     private val multimediaMenu by lazy {
         MultimediaMenuProvider(
             menuResId = R.menu.multimedia_menu,
@@ -143,7 +144,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
 
     private fun handleSelectedMediaOptions() {
         when (selectedMediaOptions) {
-            MediaOption.AUDIO_CLIP -> {
+            AUDIO_CLIP -> {
                 Timber.d("Opening chooser for audio file")
                 openMediaChooser(
                     "audio/*",
@@ -152,7 +153,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 )
             }
 
-            MediaOption.VIDEO_CLIP -> {
+            VIDEO_CLIP -> {
                 Timber.d("Opening chooser for video file")
                 openMediaChooser(
                     "video/*",
@@ -173,7 +174,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         mediaFileSize = requireView().findViewById(R.id.media_size_textview)
         playerView.setControllerAnimationEnabled(true)
 
-        if (selectedMediaOptions == MediaOption.AUDIO_CLIP) {
+        if (selectedMediaOptions == AUDIO_CLIP) {
             Timber.d("Media file is of audio type, setting default artwork")
             playerView.defaultArtwork =
                 ContextCompat.getDrawable(requireContext(), R.drawable.round_audio_file_24)
@@ -403,8 +404,8 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      */
     private fun getTitleForFragment(mediaOption: MediaOption, context: Context): String {
         return when (mediaOption) {
-            MediaOption.AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)
-            MediaOption.VIDEO_CLIP -> context.getString(R.string.multimedia_editor_popup_video_clip)
+            AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)
+            VIDEO_CLIP -> context.getString(R.string.multimedia_editor_popup_video_clip)
         }
     }
 }
