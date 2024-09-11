@@ -31,6 +31,8 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
@@ -169,7 +171,12 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     private fun setupMediaPlayer() {
         Timber.d("Setting up media player")
         playerView = requireView().findViewById(R.id.player_view)
-        mediaPlayer = ExoPlayer.Builder(requireContext()).build()
+        mediaPlayer = ExoPlayer.Builder(requireContext()).setAudioAttributes(
+            AudioAttributes.Builder().setContentType(
+                C.AUDIO_CONTENT_TYPE_MUSIC
+            ).build(),
+            true
+        ).build()
         playerView.player = mediaPlayer
         mediaFileSize = requireView().findViewById(R.id.media_size_textview)
         playerView.setControllerAnimationEnabled(true)
