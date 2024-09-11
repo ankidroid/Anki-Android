@@ -21,6 +21,7 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.media.AudioFocusRequestCompat
 import androidx.media.AudioManagerCompat
@@ -130,10 +131,14 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
                 return continuation.resumeWithException(exception)
             }
 
-            requestAudioFocus()
-            continuation.ensureActive()
-            Timber.d("starting sound tag")
-            start()
+            if (requestAudioFocus() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                continuation.ensureActive()
+                Timber.d("starting sound tag")
+                start()
+            } else {
+                Timber.d("unable to get audio focus, cancelling work")
+                continuation.cancel()
+            }
         }
     }
 
@@ -187,14 +192,15 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
         prepare()
     }
 
-    private fun requestAudioFocus() {
+    @CheckResult
+    private fun requestAudioFocus(): Int {
         Timber.d("Requesting audio focus")
-        AudioManagerCompat.requestAudioFocus(audioManager, audioFocusRequest)
+        return AudioManagerCompat.requestAudioFocus(audioManager, audioFocusRequest)
     }
 
-    private fun abandonAudioFocus() {
+    private fun abandonAudioFocus(): Int {
         Timber.d("Abandoning audio focus")
-        AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
+        return AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     }
 }
 
