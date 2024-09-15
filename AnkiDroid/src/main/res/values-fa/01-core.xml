@@ -53,7 +53,7 @@
     <string name="drawing">نقاشی</string>
     <string name="send_feedback">ارسال بازخورد</string>
     <string name="studyoptions_start">مرور کردن</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
+    <string name="studyoptions_buried_count">%d کارت دفن شد</string>
     <!-- DeckPicker.kt -->
     <string name="expand">گسترش</string>
     <string name="collapse">بستن</string>
@@ -77,7 +77,7 @@
     <string name="show_answer">نمایش پاسخ</string>
     <string name="hide_answer">مخفی کردن پاسخ</string>
     <string name="ease_button_again">دوباره</string>
-    <string name="ease_button_hard">سخت</string>
+    <string name="ease_button_hard">دشوار</string>
     <string name="ease_button_good">خوب</string>
     <string name="ease_button_easy">آسان</string>
     <string name="menu_import">وارد کردن</string>

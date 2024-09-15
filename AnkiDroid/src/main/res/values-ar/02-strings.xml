@@ -128,7 +128,7 @@
     <string name="card_editor_reset_card">إعادة تعيين التقدم</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">إعادة الجدولة</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">نسخ كـ ماركداون</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
     <string name="checks_action">تحقق</string>
@@ -140,7 +140,7 @@
     <string name="delete_deck">يجري حذف الرزمة...</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="import_title">استيراد</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">تجهيز الملف للاستيراد&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
     <string name="import_dialog_message_add">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا</string>
@@ -168,7 +168,7 @@
         ]]></string>
     <string name="export_choice_share">مشاركة</string>
     <string name="export_choice_save_to">حفظ في</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_saving_exported_collection">حفظ الملف المصدّر&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
     <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
@@ -244,9 +244,9 @@
     <string name="edit_toolbar_item">تعديل عنصر شريط الأدوات</string>
     <string name="toolbar_item_explain_edit_or_remove">أدخل أكواد HTML التي يجب إضافتها قبل النص المحدد وبعده.\n\nاضغط ضغطة مطولة على عنصر بشريط الأدوات لتعديله أو حذفه.</string>
     <string name="remove_toolbar_item">هل تريد حذف عنصر شريط الأدوات؟</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">الصورة كبيرة جدًا للصق، أضف الصورة يدويًا</string>
+    <string name="note_editor_video_too_large">مِلَفّ الفيديو كبير جدًا، يرجى إدخال الفيديو يدويًا</string>
+    <string name="note_editor_audio_too_large">الملف الصوتي كبير جداً، يرجى إدخال الصوت يدوياً</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        النسخ الاحتياطي للأندرويد قيد التقدم. الرجاء المحاولة مجددًا</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">قد تحتاج إلى استخدام iManager للسماح لأنكيدرويد بإضافة اختصارات</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">لا تسمح شاشتك الرئيسية لأنكيدرويد بإضافة اختصارات</string>

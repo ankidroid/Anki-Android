@@ -265,8 +265,8 @@
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">Dil desteklenmiyor</string>
+    <string name="tts_error_dialog_reason_text"><b>%1$s</b> metin okuma motoru şu dili desteklemiyor: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Motor değiştir</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Ses seçenekleri</string>
 </resources>
