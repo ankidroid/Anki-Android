@@ -74,5 +74,5 @@
     <string name="select_image_failed">"انتخاب تصویر انجام نشد، لطفاً دوباره تلاش کنید"</string>
     <string name="activity_result_unexpected">نرم‌افزار مقداری نامعتبر را وارد کرد. احتمالاً باید از نرم‌افزار دیگری استفاده کنید</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">محتوای قسمت</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect">انتخاب دوباره</string>
 </resources>

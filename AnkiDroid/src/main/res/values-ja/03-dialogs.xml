@@ -256,8 +256,8 @@
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">「AndroidシステムのWebView 」（または「Android System WebView」）が古くなっています。いくつかの機能が正しく動作しません。更新してください。\n\nインストールされているバージョン: %1$d\n最低限必要なバージョン: %2$d</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">サポートされていない言語</string>
+    <string name="tts_error_dialog_reason_text">テキスト読み上げエンジン <b>%1$s</b> は次の言語をサポートしていません: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">エンジンを変更</string>
+    <string name="tts_error_dialog_supported_voices_button_text">読み上げオプション</string>
 </resources>

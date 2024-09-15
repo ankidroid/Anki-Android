@@ -334,5 +334,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">カードタイプを削除できません</string>
     <string name="orphan_note_message">このカードタイプを削除すると、カードが無いノートが生じます。</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">読み上げ音声がサポートされていません。別の音声を試すか、音声エンジンをインストールしてください。</string>
 </resources>

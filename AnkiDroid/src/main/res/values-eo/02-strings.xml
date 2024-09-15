@@ -333,5 +333,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Ne povis forigi tiun ĉi kart-tipon</string>
     <string name="orphan_note_message">Forigi tiun ĉi kart-tipon kaŭzos, ke kelkaj notoj havos neniun karton.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">Voĉo ne estas subtenata. Elektu alian aŭ instalu parolsintezilon.</string>
 </resources>
