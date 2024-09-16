@@ -191,12 +191,6 @@
     <string name="sync_conflict_local_confirm_new">Nahradiť vašu kolekciu AnkiWeb kolekciou z AnkiDroid?</string>
     <string name="sync_conflict_title_new">Vyberte kolekciu, ktorú chcete ponechať</string>
     <string name="sync_conflict_replace_title">Nahradiť kolekciu</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d kartička (0 na preskúšanie)</item>
-        <item quantity="few">%1$d kartičky (0 na preskúšanie)</item>
-        <item quantity="many">%1$d kartičiek (0 na preskúšanie)</item>
-        <item quantity="other">%1$d kartičiek (0 na preskúšanie)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>

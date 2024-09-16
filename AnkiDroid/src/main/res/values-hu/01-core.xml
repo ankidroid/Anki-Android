@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">Felülírjuk az AnkiWeb-en levő gyűjteményt az AnkiDroid-dal?</string>
     <string name="sync_conflict_title_new">Válassza ki melyik gyűjteményt tartja meg</string>
     <string name="sync_conflict_replace_title">A gyűjtemény cseréje</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d kártya (0 esedékes)</item>
-        <item quantity="other">%1$d kártya (0 esedékes)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nem lehet írni vagy létrehozni %s fájlt</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Gyűjtemény nem elérhelő</string>

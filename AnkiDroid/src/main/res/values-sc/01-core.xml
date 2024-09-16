@@ -185,10 +185,6 @@
     <string name="sync_conflict_local_confirm_new">Cheres remplasare sa colletzione tua in AnkiWeb cun sa colletzione tua dae AnkiDroid?</string>
     <string name="sync_conflict_title_new">Issèbera sa colletzione de mantènnere</string>
     <string name="sync_conflict_replace_title">Remplasa sa colletzione</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d carta (0 de revisionare)</item>
-        <item quantity="other">%1$d cartas (0 de revisionare)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Non faghet a iscrìere o creare su documentu %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Non faghet a atzèdere a sa colletzione</string>

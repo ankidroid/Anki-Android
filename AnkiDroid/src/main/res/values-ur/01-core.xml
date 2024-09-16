@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb پر اپنے کلیکشن کو AnkiDroid کے اپنے کلیکشن سے بدلیں؟</string>
     <string name="sync_conflict_title_new">رکھنے کے لیے مجموعہ منتخب کریں۔</string>
     <string name="sync_conflict_replace_title">مجموعہ کو تبدیل کریں۔</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d کارڈ (0 واجب الادا)</item>
-        <item quantity="other">%1$d کارڈز (0 واجب الادا)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">فائل %s پر نہیں لکھ سکتا اور نہ ہی بنا سکتا ہے۔</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ناقابل رسائی مجموعہ</string>

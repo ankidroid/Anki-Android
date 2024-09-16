@@ -191,12 +191,6 @@
     <string name="sync_conflict_local_confirm_new">Заменить коллекцию на AnkiWeb коллекцией из AnkiDroid?</string>
     <string name="sync_conflict_title_new">Выберите, какую коллекцию оставить</string>
     <string name="sync_conflict_replace_title">Заменить коллекцию</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d карточка (0 к просмотру)</item>
-        <item quantity="few">%1$d карточки (0 к просмотру)</item>
-        <item quantity="many">%1$d карточек (0 к просмотру)</item>
-        <item quantity="other">%1$d карточек (0 к просмотру)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Не удалось записать или создать файл %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Коллекция недоступна</string>

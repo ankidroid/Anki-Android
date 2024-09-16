@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">Palitan ang koleksyon mo sa AnkiWeb ng koleksyon mo mula sa AnkiDroid?</string>
     <string name="sync_conflict_title_new">Piliin ang koleksyon na panatilihin</string>
     <string name="sync_conflict_replace_title">Pinapalitan ang koleksyon</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d na card (0 takda)</item>
-        <item quantity="other">%1$d na mga card (0 takda)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Hindi maisulat o magawa ang file na %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Hindi ma-access ang koleksyon</string>

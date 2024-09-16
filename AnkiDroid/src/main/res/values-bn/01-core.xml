@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">আনকি-ওয়েব এর সংকলন টি কে কি আনকি-ড্রয়েড এর সংকলন দ্বারা প্রতিস্থাপন করতে চাইছেন?</string>
     <string name="sync_conflict_title_new">কোন সংকলন টি রাখতে চান?</string>
     <string name="sync_conflict_replace_title">সংকলন প্রতিস্থাপন করুন</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d টি কার্ড (বাকি 0)</item>
-        <item quantity="other">%1$d টি কার্ড (বাকি 0)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s এ লিখা বা তৈরি করা যাচ্ছে না</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">দুর্গম সংগ্রহ</string>

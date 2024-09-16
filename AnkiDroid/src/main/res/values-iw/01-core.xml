@@ -192,12 +192,6 @@
     <string name="sync_conflict_local_confirm_new">להחליף את האוסף שבאתר לאוסף שנמצא ביישום?</string>
     <string name="sync_conflict_title_new">בחר את האוסף לשמירה</string>
     <string name="sync_conflict_replace_title">החלפת אוסף</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">כרטיס %1$d (0 נותרו)</item>
-        <item quantity="two">%1$d קלפים (0 נותרו)</item>
-        <item quantity="many">%1$d קלפים (0 נותרו)</item>
-        <item quantity="other">%1$d קלפים (0 נותרו)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">לא ניתן לכתוב או ליצור קובץ %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">אין גישה לאוסף</string>

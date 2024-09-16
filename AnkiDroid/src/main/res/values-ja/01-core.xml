@@ -176,9 +176,6 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb上のコレクションのデータを、AnkiDroid内のコレクションのデータで上書きしますか？</string>
     <string name="sync_conflict_title_new">保持するコレクションを選択</string>
     <string name="sync_conflict_replace_title">コレクションを上書き</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d枚 (現在の課題なし)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>

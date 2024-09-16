@@ -176,9 +176,6 @@
     <string name="sync_conflict_local_confirm_new">Thay thế bộ thẻ của bạn trên AnkiWeb bằng bộ thẻ của bạn từ AnkiDroid?</string>
     <string name="sync_conflict_title_new">Chọn bộ thẻ cần giữ lại</string>
     <string name="sync_conflict_replace_title">Thay thế bộ thẻ</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d (0 thẻ đến hạn)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Không thể ghi hoặc tạo tệp %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Bộ sưu tập không thể truy cập được</string>

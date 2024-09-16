@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb ରେ ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଆପଣଙ୍କ AnkiDroid ର ସଂଗ୍ରହ ସହିତ ବଦଳାଇବେ କି?</string>
     <string name="sync_conflict_title_new">ରଖିବାକୁ ଚାହୁଁଥିବା ସଂଗ୍ରହ ବାଛନ୍ତୁ</string>
     <string name="sync_conflict_replace_title">ସଂଗ୍ରହକୁ ବଦଳାନ୍ତୁ</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$dଟିଏ ପତ୍ର (0 ବାକି)</item>
-        <item quantity="other">%1$dଟି ପତ୍ର (0 ବାକି)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s ଫାଇଲ୍‌ରେ ଲେଖିହେଉନି କିମ୍ୱା ସୃଷ୍ଟି କରିହେଉନି</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ଅଗମ୍ୟ ସଂଗ୍ରହ</string>

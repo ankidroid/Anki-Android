@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">ಆಂಕಿಡ್ರಾಯ್ಡ್‌ನಿಂದ ನಿಮ್ಮ ಸಂಗ್ರಹದೊಂದಿಗೆ ಅಂಕಿವೆಬ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಸಂಗ್ರಹವನ್ನು ಬದಲಾಯಿಸಬೇಕೆ?</string>
     <string name="sync_conflict_title_new">ಇರಿಸಿಕೊಳ್ಳಲು ಸಂಗ್ರಹವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="sync_conflict_replace_title">ಸಂಗ್ರಹಣೆಯನ್ನು ಬದಲಾಯಿಸಿ</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d ಕಾರ್ಡ್ (0 ಬಾಕಿ)</item>
-        <item quantity="other">%1$d ಕಾರ್ಡ್‌ಗಳು (0 ಬಾಕಿ)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ಫೈಲ್ ಅನ್ನು ಬರೆಯಲು ಅಥವಾ ರಚಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ಪ್ರವೇಶಿಸಲಾಗದ ಸಂಗ್ರಹ</string>

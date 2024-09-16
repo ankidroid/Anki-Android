@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">Substituir sua coleção no AnkiWeb pela sua coleção no AnkiDroid?</string>
     <string name="sync_conflict_title_new">Selecione a coleção para manter</string>
     <string name="sync_conflict_replace_title">Substituir coleção</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d cartão (0 pendente)</item>
-        <item quantity="other">%1$d cartões (0 pendentes)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Não é possível gravar ou criar o arquivo %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Coleção inacessível</string>

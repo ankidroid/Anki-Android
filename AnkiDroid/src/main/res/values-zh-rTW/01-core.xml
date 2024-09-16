@@ -177,9 +177,6 @@
     <string name="sync_conflict_local_confirm_new">用來自你的 AnkiDroid 的收藏替換 AnkiWeb 上的收藏嗎？</string>
     <string name="sync_conflict_title_new">選擇要保留的收藏</string>
     <string name="sync_conflict_replace_title">取代收藏</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d張卡片待複習 (0張到期)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">無法寫入或建立檔案 %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">無法存取收藏</string>
