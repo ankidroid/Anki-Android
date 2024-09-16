@@ -201,14 +201,6 @@
     <string name="sync_conflict_local_confirm_new">هل تريد استبدال مجموعتك التي في أنكي ويب بمجموعتك التي في أنكيدرويد؟</string>
     <string name="sync_conflict_title_new">حدد مجموعة للإبقاء عليها</string>
     <string name="sync_conflict_replace_title">استبدال المجموعة</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="zero">%1$d بطاقة (ولا واحدة مستحقة)</item>
-        <item quantity="one">%1$d بطاقة (ولا واحدة مستحقة)</item>
-        <item quantity="two">%1$d بطاقة (ولا واحدة مستحقة)</item>
-        <item quantity="few">%1$d بطاقات (ولا واحدة مستحقة)</item>
-        <item quantity="many">%1$d بطاقة (ولا واحدة مستحقة)</item>
-        <item quantity="other">%1$d بطاقة (ولا واحدة مستحقة)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">يتعذر تعديل أو إنشاء ملف %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">فشل في الوصول إلى المجموعة</string>

@@ -176,9 +176,6 @@
     <string name="sync_conflict_local_confirm_new">Ganti koleksi anda di AnkiWeb dengan koleksi dari AnkiDroid?</string>
     <string name="sync_conflict_title_new">Pilih koleksi untuk simpan</string>
     <string name="sync_conflict_replace_title">Ganti koleksi</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d kad (0 tunggakan)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Gagal menulis atau mencipta fail %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksi tidak dapat dicapai</string>

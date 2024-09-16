@@ -176,9 +176,6 @@
     <string name="sync_conflict_local_confirm_new">用来自 AnkiDroid 的集合替换您在 AnkiWeb 上的集合吗？</string>
     <string name="sync_conflict_title_new">选择要保留的集合</string>
     <string name="sync_conflict_replace_title">替换集合</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d 张卡片（0 到期）</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">无法写入或创建文件 %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">无法访问牌组</string>

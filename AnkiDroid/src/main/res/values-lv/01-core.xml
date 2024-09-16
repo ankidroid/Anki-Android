@@ -186,11 +186,6 @@
     <string name="sync_conflict_local_confirm_new">Aizstāt AnkiWeb krājumu ar AnkiDroid?</string>
     <string name="sync_conflict_title_new">Izvēlies krājumu, kuru paturēt</string>
     <string name="sync_conflict_replace_title">Aizstāt krājumu</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="zero">%1$d kārtis (0 paredzētas)</item>
-        <item quantity="one">%1$d kārts (0 paredzētas)</item>
-        <item quantity="other">%1$d kārtis (0 paredzētas)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nespēj uzrakstīt vai izveidot dotni %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepieejams krājums</string>

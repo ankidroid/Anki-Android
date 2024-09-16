@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb वरील तुमचा संग्रह AnkiDroid वरील तुमच्या संग्रहाने बदलायचा?</string>
     <string name="sync_conflict_title_new">संग्रहाला  निवडा ठेवण्यासाठी </string>
     <string name="sync_conflict_replace_title">संग्रह पून्हास्तित करा</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d कार्ड (0 देय)</item>
-        <item quantity="other">%1$d कार्ड (0 देय)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">फाइलवर लिहू किंवा तयार करू शकत नाही %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">अगम्य संग्रह</string>

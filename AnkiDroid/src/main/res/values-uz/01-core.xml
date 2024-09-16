@@ -181,11 +181,6 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">Select collection to keep</string>
     <string name="sync_conflict_replace_title">Jamlanmani almashtirish</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d karta (0 lozim)
-%1$d kartalar (0 lozim)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>

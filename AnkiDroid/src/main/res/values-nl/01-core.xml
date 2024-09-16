@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">Je verzameling op AnkiWeb vervangen door je verzameling van AnkiDroid?</string>
     <string name="sync_conflict_title_new">Verzameling selecteren om te bewaren</string>
     <string name="sync_conflict_replace_title">Vervang verzameling</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d kaart (0 te doen)</item>
-        <item quantity="other">%1$d kaarten (0 te doen)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Kan niet schrijven naar of creëren van bestand %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Ontoegankelijke collectie</string>

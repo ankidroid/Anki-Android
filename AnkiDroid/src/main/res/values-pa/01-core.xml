@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
     <string name="sync_conflict_title_new">ਰੱਖਣ ਲਈ ਸੰਗ੍ਰਹਿ ਚੁਣੋ</string>
     <string name="sync_conflict_replace_title">ਸੰਗ੍ਰਹਿ ਨੂੰ ਬਦਲੋ</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d ਕਾਰਡ (0 ਬਕਾਇਆ)</item>
-        <item quantity="other">%1$d ਕਾਰਡ (0 ਬਕਾਇਆ)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ਫਾਈਲ %s ਨੂੰ ਨਹੀਂ ਲਿਖ ਸਕਦਾ ਜਾਂ ਨਹੀਂ ਬਣਾ ਸਕਦਾ</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ਸੰਗ੍ਰਹਿ ਪਹੁੰਚ ਤੋਂ ਬਾਹਰ</string>

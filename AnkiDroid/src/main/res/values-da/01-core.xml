@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">Erstat din samling på AnkiWeb med din samling fra AnkiDroid?</string>
     <string name="sync_conflict_title_new">Vælg den samling, der skal bevares</string>
     <string name="sync_conflict_replace_title">Erstat samling</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d kort (0 i kø)</item>
-        <item quantity="other">%1$d kort (0 i kø)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Kan ikke skrive til eller oprette filen %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Utilgængelig samling</string>

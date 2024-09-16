@@ -181,10 +181,6 @@
     <string name="sync_conflict_local_confirm_new">AnkiWeb-ലെ നിങ്ങളുടെ ശേഖരം AnkiDroid-ൽ നിന്നുള്ള നിങ്ങളുടെ ശേഖരം ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കണോ?</string>
     <string name="sync_conflict_title_new">സൂക്ഷിക്കാൻ ശേഖരം തിരഞ്ഞെടുക്കുക</string>
     <string name="sync_conflict_replace_title">ശേഖരം മാറ്റിസ്ഥാപിക്കുക</string>
-    <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d കാർഡ് (0 കുടിശ്ശിക)</item>
-        <item quantity="other">%1$d കാർഡുകൾ (0 കുടിശ്ശിക)</item>
-    </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s എന്ന ഫയലിലേക്ക് എഴുതാനോ സൃഷ്ടിക്കാനോ കഴിയില്ല</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">അപ്രാപ്യമായ ശേഖരം</string>
