@@ -339,5 +339,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Não é possível apagar este tipo de ficha</string>
     <string name="orphan_note_message">Apagar este tipo de ficha implica deixar algumas notas sem fichas.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">Voz não suportada. Tente outra ou instale um motor de voz.</string>
 </resources>
