@@ -257,8 +257,8 @@
     <string name="cloze_note_required">É necessário um cartão do tipo Omissão de palavras</string>
     <string name="cloze_not_found_message">Não foi encontrado cartões do tipo Omissão de Palavras. Abra o Editor de Notas ou tente novamente após adicionar um cartão do tipo Omissão de palavras.</string>
     <string name="open">Abrir</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
+    <string name="change_cloze_number">Alterar número de omissão</string>
+    <string name="cloze_number">Número da omissão:</string>
     <string name="change_editor_mode">Change editor mode</string>
     <string name="open_note_editor">Open note editor</string>
     <string name="change_cloze_mode">Change cloze mode</string>

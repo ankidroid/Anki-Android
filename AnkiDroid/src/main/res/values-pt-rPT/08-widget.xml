@@ -61,16 +61,16 @@
     </plurals>
     <string name="widget_add_note_button">Adicionar nova nota de AnkiDroid</string>
     <string name="deck_picker_widget_description">Seleccionador de Baralhos</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="card_analysis_extra_widget_description">Análise da Ficha</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Escolher baralhos para mostrar no widget utilizando o botão +.</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Escolha baralhos</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Escolha um baralho</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Escolha baralhos para mostrar no widget utilizando o botão +.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Baralho eliminado</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Este baralho já se encontra seleccionado</string>
     <plurals name="deck_limit_reached">
         <item quantity="one">Pode seleccionar até %d baralho.</item>
         <item quantity="other">Pode seleccionar até %d baralhos.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Missing deck. Please reconfigure</string>
+    <string name="empty_widget" comment="To denote the widget is empty">Baralho em falta. Por favor, reconfigure.</string>
 </resources>

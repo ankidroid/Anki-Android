@@ -257,8 +257,8 @@
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">系統 WebView 已經過時。某些功能無法正常運作。請更新。\n\n安裝版本：%1$d%1$d最低要求版本：%2$d</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">不支援的語言</string>
+    <string name="tts_error_dialog_reason_text">文字轉語音引擎 <b>%1$s</b>不支援下列語言：<b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">變更引擎</string>
+    <string name="tts_error_dialog_supported_voices_button_text">語音選項</string>
 </resources>
