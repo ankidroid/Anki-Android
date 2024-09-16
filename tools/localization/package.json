@@ -21,16 +21,16 @@
         "axios": "^1.7.7",
         "dotenv": "^16.4.4",
         "extract-zip": "^2.0.1",
-        "typescript": "^5.3.3"
+        "typescript": "^5.6.2"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.1.0",
-        "@eslint/js": "^9.9.1",
-        "@types/jest": "^29.5.12",
-        "@types/node": "^22.5.4",
-        "@typescript-eslint/eslint-plugin": "^8.4.0",
-        "@typescript-eslint/parser": "^8.4.0",
-        "eslint": "^9.9.1",
+        "@eslint/js": "^9.10.0",
+        "@types/jest": "^29.5.13",
+        "@types/node": "^22.5.5",
+        "@typescript-eslint/eslint-plugin": "^8.5.0",
+        "@typescript-eslint/parser": "^8.5.0",
+        "eslint": "^9.10.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-config-standard": "^17.1.0",
         "eslint-plugin-import": "^2.30.0",
