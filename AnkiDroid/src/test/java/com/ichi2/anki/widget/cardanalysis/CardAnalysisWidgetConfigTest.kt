@@ -26,6 +26,7 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetPreferences
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
@@ -47,6 +48,8 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
+        ensureNonEmptyCollection()
+
         val intent = Intent(targetContext, CardAnalysisWidgetConfig::class.java).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1)
         }
@@ -54,7 +57,7 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
         activity = startActivityNormallyOpenCollectionWithIntent(CardAnalysisWidgetConfig::class.java, intent)
 
         // Ensure deckAdapter is initialized
-        activity.initializeUIComponents()
+        runBlocking { activity.initTask.join() }
     }
 
     /**
