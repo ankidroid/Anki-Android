@@ -222,16 +222,14 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
     /** Updates the visibility of the FloatingActionButton based on the number of selected decks */
     private fun updateFabVisibility() {
-        lifecycleScope.launch {
-            // Directly check if there's exactly one deck selected
-            val selectedDeckCount = deckAdapter.itemCount
+        // Directly check if there's exactly one deck selected
+        val selectedDeckCount = deckAdapter.itemCount
 
-            // Find the FloatingActionButton by its ID
-            val fab = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
+        // Find the FloatingActionButton by its ID
+        val fab = findViewById<FloatingActionButton>(R.id.fabWidgetDeckPicker)
 
-            // Make the FAB visible only if no deck is selected (allow adding one deck)
-            fab.isVisible = selectedDeckCount == 0
-        }
+        // Make the FAB visible only if no deck is selected (allow adding one deck)
+        fab.isVisible = selectedDeckCount == 0
     }
 
     /** Updates the view according to the saved preference for appWidgetId.*/
