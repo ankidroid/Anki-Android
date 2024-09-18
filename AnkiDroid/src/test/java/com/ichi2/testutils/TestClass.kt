@@ -18,6 +18,7 @@ package com.ichi2.testutils
 
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
+import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -142,6 +143,11 @@ interface TestClass {
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
+    }
+
+    /** Ensures [isCollectionEmpty] returns `false` */
+    fun ensureNonEmptyCollection() {
+        addNotes(1)
     }
 
     fun selectDefaultDeck() {

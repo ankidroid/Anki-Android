@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -47,6 +48,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.widget.WidgetConfigScreenAdapter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -70,6 +72,10 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     private var hasUnsavedChanges = false
     private var isAdapterObserverRegistered = false
     private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    /** Tracks coroutine running [initializeUIComponents]: must be run on a non-empty collection */
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    internal lateinit var initTask: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -98,7 +104,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         }
 
         // Check if the collection is empty before proceeding and if the collection is empty, show a toast instead of the configuration view.
-        lifecycleScope.launch {
+        this.initTask = lifecycleScope.launch {
             if (isCollectionEmpty()) {
                 Timber.w("Closing: Collection is empty")
                 showThemedToast(
@@ -125,7 +131,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         showSnackbar(getString(messageResId))
     }
 
-    fun initializeUIComponents() {
+    private fun initializeUIComponents() {
         deckAdapter = WidgetConfigScreenAdapter { deck, position ->
             deckAdapter.removeDeck(deck.deckId)
             showSnackbar(R.string.deck_removed_from_widget)
