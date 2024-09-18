@@ -153,7 +153,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
             showDeckSelectionDialog()
         }
 
-        updateViewWithSavedPreferences()
+        lifecycleScope.launch { updateViewWithSavedPreferences() }
 
         // Update the visibility of the "no decks" placeholder and the widget configuration container
         updateViewVisibility()
@@ -234,16 +234,15 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
     }
 
     /** Updates the view according to the saved preference for appWidgetId.*/
-    fun updateViewWithSavedPreferences() {
+    suspend fun updateViewWithSavedPreferences() {
         val selectedDeckId = cardAnalysisWidgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: return
-        lifecycleScope.launch {
-            val decks = fetchDecks()
-            val selectedDecks = decks.filter { it.deckId == selectedDeckId }
-            selectedDecks.forEach { deckAdapter.addDeck(it) }
-            updateViewVisibility()
-            updateFabVisibility()
-            updateSubmitButtonText()
-        }
+
+        val decks = fetchDecks()
+        val selectedDecks = decks.filter { it.deckId == selectedDeckId }
+        selectedDecks.forEach { deckAdapter.addDeck(it) }
+        updateViewVisibility()
+        updateFabVisibility()
+        updateSubmitButtonText()
     }
 
     /** Asynchronously displays the list of deck in the selection dialog. */

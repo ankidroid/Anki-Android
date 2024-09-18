@@ -151,7 +151,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
             showDeckSelectionDialog()
         }
 
-        updateViewWithSavedPreferences()
+        lifecycleScope.launch { updateViewWithSavedPreferences() }
 
         // Update the visibility of the "no decks" placeholder and the widget configuration container
         updateViewVisibility()
@@ -282,17 +282,15 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     }
 
     /** Updates the view according to the saved preference for appWidgetId.*/
-    fun updateViewWithSavedPreferences() {
+    suspend fun updateViewWithSavedPreferences() {
         val selectedDeckIds = deckPickerWidgetPreferences.getSelectedDeckIdsFromPreferences(appWidgetId)
         if (selectedDeckIds.isNotEmpty()) {
-            lifecycleScope.launch {
-                val decks = fetchDecks()
-                val selectedDecks = decks.filter { it.deckId in selectedDeckIds }
-                selectedDecks.forEach { deckAdapter.addDeck(it) }
-                updateViewVisibility()
-                updateFabVisibility()
-                setupDoneButton()
-            }
+            val decks = fetchDecks()
+            val selectedDecks = decks.filter { it.deckId in selectedDeckIds }
+            selectedDecks.forEach { deckAdapter.addDeck(it) }
+            updateViewVisibility()
+            updateFabVisibility()
+            setupDoneButton()
         }
     }
 
