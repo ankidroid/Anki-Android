@@ -129,6 +129,7 @@ const val GET_ATTRIBUTIONS = -0x80000000 // API 31
 
 @LongDef(
     flag = true,
+    open = true, // HACK: AGP 8.6.1 broke .toLong(): https://issuetracker.google.com/issues/367752734
     // prefix = ["GET_", "MATCH_"],
     value = [
         AndroidPackageManager.GET_ACTIVITIES.toLong(),
