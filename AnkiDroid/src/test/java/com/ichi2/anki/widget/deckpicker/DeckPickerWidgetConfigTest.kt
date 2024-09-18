@@ -31,7 +31,6 @@ import org.hamcrest.Matchers.equalTo
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.Robolectric
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerWidgetConfigTest : RobolectricTest() {
@@ -85,16 +84,13 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
      * `RecyclerView` displays the correct number of items based on the saved preferences.
      */
     @Test
-    fun testLoadSavedPreferences() {
+    fun testLoadSavedPreferences() = runTest {
         // Save decks to preferences
         val deckIds = listOf(1L)
         widgetPreferences.saveSelectedDecks(1, deckIds.map { it.toString() })
 
         // Load preferences
         activity.updateViewWithSavedPreferences()
-
-        // Ensure all tasks on the UI thread are completed
-        Robolectric.flushForegroundThreadScheduler()
 
         // Get the RecyclerView and its adapter
         val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks)
