@@ -152,6 +152,7 @@ const val MATCH_DIRECT_BOOT_UNAWARE = 0x00040000
 
 @LongDef(
     flag = true,
+    open = true, // HACK: AGP 8.6.1 broke .toLong(): https://issuetracker.google.com/issues/367752734
     // prefix = ["GET_", "MATCH_"],
     value = [
         GET_META_DATA.toLong(),
