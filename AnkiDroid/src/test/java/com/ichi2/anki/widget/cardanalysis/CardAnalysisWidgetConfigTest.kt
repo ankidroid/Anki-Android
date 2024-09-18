@@ -28,7 +28,6 @@ import com.ichi2.widget.cardanalysis.CardAnalysisWidgetConfig
 import com.ichi2.widget.cardanalysis.CardAnalysisWidgetPreferences
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -53,20 +52,10 @@ class CardAnalysisWidgetConfigTest : RobolectricTest() {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1)
         }
 
-        activity = Robolectric.buildActivity(CardAnalysisWidgetConfig::class.java, intent)
-            .create()
-            .start()
-            .resume()
-            .get()
+        activity = startActivityNormallyOpenCollectionWithIntent(CardAnalysisWidgetConfig::class.java, intent)
 
         // Ensure deckAdapter is initialized
         activity.initializeUIComponents()
-    }
-
-    @After
-    override fun tearDown() {
-        super.tearDown()
-        activity.finish()
     }
 
     /**
