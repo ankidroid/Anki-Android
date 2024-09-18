@@ -52,11 +52,7 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1)
         }
 
-        activity = Robolectric.buildActivity(DeckPickerWidgetConfig::class.java, intent)
-            .create()
-            .start()
-            .resume()
-            .get()
+        activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerWidgetConfig::class.java, intent)
 
         // Ensure deckAdapter is initialized
         activity.initializeUIComponents()
