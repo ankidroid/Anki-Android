@@ -96,6 +96,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         // Check if the collection is empty before proceeding and if the collection is empty, show a toast instead of the configuration view.
         lifecycleScope.launch {
             if (isCollectionEmpty()) {
+                Timber.w("Closing: Collection is empty")
                 showThemedToast(
                     this@CardAnalysisWidgetConfig,
                     R.string.app_not_initialized_new,
