@@ -167,7 +167,7 @@
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/tag_command_key"
-            android:title="@string/add_tag"
+            android:title="@string/menu_edit_tags"
             android:icon="@drawable/ic_tag"
             />
         <com.ichi2.preferences.ControlPreference
