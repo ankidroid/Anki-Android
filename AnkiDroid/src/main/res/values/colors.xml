@@ -139,5 +139,6 @@
     <!-- color used for bury count in study options(same as anki for light and dark) -->
     <color name="disabled_gray_light">#858585</color>
     <color name="disabled_gray_dark">#fcfcfc</color>
+    <color name="ankiweb_text">#25272A</color>
 </resources>
 
