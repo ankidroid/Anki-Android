@@ -38,6 +38,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.userAcceptsSchemaChange
 import com.ichi2.anki.withProgress
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.getNotetype
 import com.ichi2.libanki.getNotetypeNameIdUseCount
 import com.ichi2.libanki.getNotetypeNames
@@ -57,6 +58,9 @@ class ManageNotetypes : AnkiActivity() {
     private lateinit var noteTypesList: RecyclerView
 
     private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
+
+    // Store search query
+    private var searchQuery: String = ""
 
     private val notetypesAdapter: NotetypesAdapter by lazy {
         NotetypesAdapter(
@@ -115,18 +119,28 @@ class ManageNotetypes : AnkiActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val filteredList = if (newText.isNullOrEmpty()) {
-                    currentNotetypes
-                } else {
-                    currentNotetypes.filter {
-                        it.name.lowercase().contains(newText.lowercase())
-                    }
-                }
-                notetypesAdapter.submitList(filteredList)
+                // Update the search query
+                searchQuery = newText.orEmpty()
+                filterNoteTypes(searchQuery)
                 return true
             }
         })
         return true
+    }
+
+    /**
+     * Filters and updates the note types list based on the query
+     */
+    @NeedsTest("verify note types list still filtered by search query after rename or delete")
+    private fun filterNoteTypes(query: String) {
+        val filteredList = if (query.isEmpty()) {
+            currentNotetypes
+        } else {
+            currentNotetypes.filter {
+                it.name.lowercase().contains(query.lowercase())
+            }
+        }
+        notetypesAdapter.submitList(filteredList)
     }
 
     @SuppressLint("CheckResult")
@@ -215,7 +229,7 @@ class ManageNotetypes : AnkiActivity() {
 
         currentNotetypes = updatedNotetypes
 
-        notetypesAdapter.submitList(updatedNotetypes)
+        filterNoteTypes(searchQuery)
         actionBar.subtitle = resources.getQuantityString(
             R.plurals.model_browser_types_available,
             updatedNotetypes.size,
