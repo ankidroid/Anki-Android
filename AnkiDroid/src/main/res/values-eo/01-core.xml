@@ -161,7 +161,7 @@
         <item quantity="one">Ĉu forigi la kart-tipon “%2$s” kaj ĝian %1$d karton?</item>
         <item quantity="other">Ĉu forigi la kart-tipon “%2$s” kaj ĝiajn %1$d kartojn?</item>
     </plurals>
-    <string name="card_template_editor_save_error">Fiaskis konservi ŝanĝojn al ŝablono de karto: %s</string>
+    <string name="card_template_editor_save_error">Malsukcesis konservi ŝanĝojn al ŝablono de karto: %s</string>
     <string name="template_for_current_card_deleted">La speco de karto por la nuna karto estis forigita.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aspekto de foliumilo</string>
@@ -185,7 +185,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">Ne povas skribi aĭ krei la dosieron %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Kolekto nealirebla</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Pro ŝanĝi politikon en la vendejo Play Store, AnkiDroid ne povis aliri vian kolekton post malinstali.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%s\n\nElektu ion el la suba listo por restarigi viajn datumojn:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android senigis la aplikaĵon AnkiDroid je la permeso %1$s pro longa malaktiveco de aplikaĵo.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%2$s\n\nElektu ion el la suba listo por restarigi viajn datumojn.</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android senigis la aplikaĵon AnkiDroid je la permeso %1$s pro longa malaktiveco.\n\nViaj datumoj estas sekuraj kaj povas esti restarigitaj. Ili troviĝas en la dosierujo:\n%2$s\n\nElektu ion el la suba listo por restarigi viajn datumojn.</string>
     <string name="restore_data_from_ankiweb">restarigi el AnkiWeb (konsilinda)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restarigi aliron al dosierujo (konsilinda)</string>
     <string name="install_non_play_store_ankidroid">restarigi aliron al dosierujo (altnivela)</string>

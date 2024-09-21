@@ -263,8 +263,8 @@
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">సిస్టమ్ WebView పాతది. కొన్ని ఫీచర్‌లు సరిగ్గా పని చేయవు. దయచేసి దీన్ని అప్‌డేట్ చేయండి.\n\nఇన్‌స్టాల్ చేసిన వెర్షన్: %1$d\nకనీసం అవసరమైన వెర్షన్: %2$d</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">భాషకు మద్దతు లేదు</string>
+    <string name="tts_error_dialog_reason_text">టెక్స్ట్ టు స్పీచ్ ఇంజిన్ <b>%1$s</b> కింది భాషకు మద్దతు ఇవ్వదు: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">ఇంజిన్ మార్చండి</string>
+    <string name="tts_error_dialog_supported_voices_button_text">వాయిస్ ఎంపికలు</string>
 </resources>
