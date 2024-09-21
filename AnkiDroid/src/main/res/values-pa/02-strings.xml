@@ -45,24 +45,24 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Close drawer</string>
+    <string name="drawer_open">ਦਰਾਜ਼ ਖੋਲ੍ਹੋ</string>
+    <string name="drawer_close">ਦਰਾਜ਼ ਬੰਦ ਕਰੋ</string>
     <string name="CardEditorCardDeck">ਕਾਰਡ ਡੈੱਕ:</string>
     <string name="CardEditorNoteDeck">ਡੈੱਕ:</string>
     <string name="CardEditorModel">ਕਿਸਮ:</string>
     <string name="CardEditorTags">ਟੈਗਸ: %1$s</string>
     <string name="CardEditorCards">ਕਾਰਡ: %1$s</string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">ਮੌਕਿਆਂ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="tag_name">ਟੈਗ ਨਾਮ</string>
     <string name="add_new_filter_tags">ਟੈਗ ਜੋੜੋ/ਫਿਲਟਰ ਕਰੋ</string>
     <string name="add_tag">ਟੈਗ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="check_all_tags">ਸਾਰੇ ਟੈਗਾਂ ਨੂੰ ਚੈੱਕ/ਅਨਚੈਕ ਕਰੋ</string>
     <string name="filter_tags">ਫਿਲਟਰ ਟੈਗ</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="no_tags">ਤੁਸੀਂ ਅਜੇ ਤੱਕ ਕੋਈ ਵੀ ਟੈਗ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਹਨ</string>
+    <string name="updated_version">ਸੰਸਕਰਣ %s ਵਿੱਚ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="save_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰੋ</string>
+    <string name="enable_stylus">ਸਟਾਈਲਸ ਲਿਖਣ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ</string>
     <string name="disable_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਅਯੋਗ ਕਰੋ</string>
@@ -129,12 +129,12 @@
     <string name="empty_cards">ਖਾਲੀ ਕਾਰਡ</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="delete_deck">ਡੈੱਕ ਨੂੰ ਮਿਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
+    <string name="info_rate">AnkiDroid ਨੂੰ ਰੇਟ ਕਰੋ</string>
+    <string name="import_title">ਆਯਾਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
+    <string name="import_preparing_file">ਆਯਾਤ ਲਈ ਫ਼ਾਈਲ ਤਿਆਰ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
+    <string name="import_message_replace_confirm">ਇਹ ਤੁਹਾਡੇ ਮੌਜੂਦਾ ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾ ਦੇਵੇਗਾ ਅਤੇ ਇਸਨੂੰ %s ਫਾਈਲ ਦੇ ਡੇਟਾ ਨਾਲ ਬਦਲ ਦੇਵੇਗਾ</string>
     <string name="import_dialog_message_add">ਕੀ ਸੰਗ੍ਰਹਿ ਵਿੱਚ \"%s\" ਨੂੰ ਜੋੜਨਾ ਹੈ? ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
     <string name="import_log_no_apkg">ਇਹ ਇੱਕ ਵੈਧ ਸੰਖਿਆਤਮਕ ਪੈਕੇਜ ਫਾਈਲ ਨਹੀਂ ਹੈ</string>
     <string name="import_title_error" comment="Title of error dialog">ਗਲਤੀ</string>
@@ -166,25 +166,25 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ਅਧਿਐਨ ਦੇ ਵਿਕਲਪ</string>
     <string name="select_tts">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="custom_study">ਕਸਟਮ ਅਧਿਐਨ</string>
-    <string name="more_options">More</string>
+    <string name="more_options">ਹੋਰ</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
-    <string name="steps_error">Steps must be numbers greater than 0</string>
-    <string name="steps_min_error">At least one step is required</string>
-    <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+    <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
+    <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>
+    <string name="tag_editor_add_feedback">\"%1$s\" ਨੂੰ ਜੋੜਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ \"%2$s\" ਨੂੰ ਛੋਹਵੋ।</string>
+    <string name="tag_editor_add_feedback_existing">ਮੌਜੂਦਾ ਟੈਗ “%1$s” ਚੁਣਿਆ ਗਿਆ</string>
     <!-- Time spans -->
-    <string name="reminder_title">Do not forget to study today!</string>
+    <string name="reminder_title">ਅੱਜ ਦਾ ਅਧਿਐਨ ਕਰਨਾ ਨਾ ਭੁੱਲੋ!</string>
     <plurals name="reminder_text">
-        <item quantity="one">%2$d card to review in %1$s</item>
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="one">%1$s ਵਿੱਚ ਸਮੀਖਿਆ ਕਰਨ ਲਈ %2$d ਕਾਰਡ</item>
+        <item quantity="other">%1$s ਵਿੱਚ ਸਮੀਖਿਆ ਕਰਨ ਲਈ %2$d ਕਾਰਡ</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Error sharing apkg file</string>
+    <string name="apk_share_error">apkk ਫਾਈਲ ਨੂੰ ਸਾਂਝਾ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <!-- Import and export v2 feedback -->
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
-    <string name="web_page_error">Error loading page: %s</string>
+    <string name="activity_start_failed">ਸਿਸਟਮ ਵਿੱਚ ਕੋਈ ਐਪ ਸਥਾਪਤ ਨਹੀਂ ਹੈ ਜੋ ਇਹ ਕਾਰਵਾਈ ਕਰ ਸਕੇ।</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[ਕੈਮਰੇ ਦੀਆਂ ਤਸਵੀਰਾਂ ਵੱਡੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ। ਤੁਸੀਂ ਮੀਡੀਆ ਡਾਇਰੈਕਟਰੀ ਵਿੱਚ ਚਿੱਤਰਾਂ ਨੂੰ ਸੰਕੁਚਿਤ ਅਤੇ ਮੁੜ ਆਕਾਰ ਦੇਣਾ ਚਾਹ ਸਕਦੇ ਹੋ]]></string>
+    <string name="no_browser_msg">ਲਿੰਕ ਖੋਲ੍ਹਣ ਲਈ ਕੋਈ ਬ੍ਰਾਊਜ਼ਰ ਨਹੀਂ ਮਿਲਿਆ: %s</string>
+    <string name="web_page_error">ਪੰਨਾ ਲੋਡ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">ਪਿਛੋਕੜ</string>
@@ -198,22 +198,22 @@
     <string name="white_board_image_saved">ਵ੍ਹਾਈਟਬੋਰਡ ਚਿੱਤਰ %s ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ</string>
     <string name="title_whiteboard_pen_color">ਵ੍ਹਾਈਟਬੋਰਡ ਪੈੱਨ ਦਾ ਰੰਗ</string>
     <string name="title_whiteboard_editor">ਵ੍ਹਾਈਟਬੋਰਡ ਸੰਪਾਦਕ</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="user_is_a_robot">ਖੋਜਿਆ ਆਟੋਮੈਟਿਕ ਟੈਸਟ. ਜੇਕਰ ਤੁਸੀਂ ਮਨੁੱਖ ਹੋ, ਤਾਂ AnkiDroid ਸਹਾਇਤਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
+    <string name="invalid_json_data">ਕਾਰਡ ਨੇ ਅਵੈਧ ਡੇਟਾ ਪ੍ਰਦਾਨ ਕੀਤਾ। %s</string>
+    <string name="valid_js_api_version">ਅਵੈਧ AnkiDroid JS API ਸੰਸਕਰਣ। ਡਿਵੈਲਪਰ %s ਨਾਲ ਸੰਪਰਕ ਕਰੋ, ਜਾਂ ਵਿਕੀ ਵੇਖੋ</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">ਦੇਖੋ</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">ਕਲਿੱਪਬੋਰਡ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
+    <string name="about_ankidroid_error_copy_debug_info">ਡੀਬੱਗ ਜਾਣਕਾਰੀ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
+    <string name="card_viewer_could_not_find_image">ਕਾਰਡ ਸਮੱਗਰੀ ਅਸ਼ੁੱਧੀ: \'%s\' ਲੋਡ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="search_decks">ਖੋਜ ਡੈੱਕ</string>
+    <string name="ankidroid_init_failed_webview_title">ਘਾਤਕ ਗਲਤੀ</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ਫੌਂਟ ਦਾ ਆਕਾਰ</string>
@@ -225,22 +225,22 @@
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">ਫੌਂਟ ਦਾ ਆਕਾਰ ਬਦਲੋ</string>
     <string name="insert_mathjax">ਮੈਥਜੈਕਸ ਸਮੀਕਰਨ ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="note_editor_toolbar_icon">ਬਟਨ ਟੈਕਸਟ</string>
+    <string name="before_text">ਚੋਣ ਤੋਂ ਪਹਿਲਾਂ HTML</string>
+    <string name="after_text">ਚੋਣ ਤੋਂ ਬਾਅਦ HTML</string>
+    <string name="add_toolbar_item">ਇੱਕ ਟੂਲਬਾਰ ਆਈਟਮ ਬਣਾਓ</string>
+    <string name="edit_toolbar_item">ਟੂਲਬਾਰ ਆਈਟਮ ਦਾ ਸੰਪਾਦਨ ਕਰੋ</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="remove_toolbar_item">ਕੀ ਟੂਲਬਾਰ ਆਈਟਮ ਨੂੰ ਹਟਾਉਣਾ ਹੈ?</string>
+    <string name="note_editor_image_too_large">ਚਿੱਤਰ ਬਹੁਤ ਵੱਡਾ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਚਿੱਤਰ ਨੂੰ ਹੱਥੀਂ ਪਾਓ</string>
+    <string name="note_editor_video_too_large">ਵੀਡੀਓ ਫਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਹੱਥੀਂ ਵੀਡੀਓ ਪਾਓ</string>
+    <string name="note_editor_audio_too_large">ਆਡੀਓ ਫ਼ਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਆਡੀਓ ਨੂੰ ਹੱਥੀਂ ਪਾਓ</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android ਬੈਕਅੱਪ ਜਾਰੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">ਤੁਹਾਨੂੰ AnkiDroid ਨੂੰ ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ iManager ਦੀ ਵਰਤੋਂ ਕਰਨ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">ਤੁਹਾਡੀ ਹੋਮ ਸਕ੍ਰੀਨ AnkiDroid ਨੂੰ ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਦਿੰਦੀ</string>
+    <string name="create_shortcut_error">ਸ਼ਾਰਟਕੱਟ ਜੋੜਨ ਵਿੱਚ ਤਰੁੱਟੀ: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ਵਾਕਾਂ ਨੂੰ ਵੱਡਾ ਕਰੋ</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ਸਕ੍ਰੋਲ ਟੂਲਬਾਰ</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>

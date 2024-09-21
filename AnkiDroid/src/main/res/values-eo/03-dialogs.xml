@@ -53,7 +53,7 @@
         <item quantity="other">Ĉu forigi ĉiujn kartojn el %1$s? Ĝi enhavas %2$d kartojn</item>
     </plurals>
     <string name="delete_cram_deck_message">Ĉu forigi la filtritan kartaron %s kaj movi ĉiujn ĝiajn kartojn reen al iliaj originalaj kartaroj?</string>
-    <string name="no_tts_available_message">Neniu parol-sintezilo disponebla</string>
+    <string name="no_tts_available_message">Neniu parolsintezilo disponebla</string>
     <string name="tts_no_tts">Ne paroli</string>
     <string name="unused_strings">\n\nNeuzataj dosieroj:\n</string>
     <string name="reposition_card_dialog_title">Repozicii novan karton</string>
