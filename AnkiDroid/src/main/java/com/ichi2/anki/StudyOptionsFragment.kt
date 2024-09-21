@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -83,8 +84,6 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     private lateinit var reviewCountText: TextView
     private lateinit var reviewBuryText: TextView
     private var toolbar: Toolbar? = null
-
-    private var createMenuJob: Job? = null
 
     /** Current activity.*/
     private val deckPicker: DeckPicker
@@ -152,8 +151,10 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
         fragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
         initAllContentViews(studyOptionsView)
         toolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
+        if (fragmented) {
+            toolbar!!.visibility = View.GONE
+        }
         if (toolbar != null) {
-            toolbar!!.inflateMenu(R.menu.deck_picker)
             toolbar!!.inflateMenu(R.menu.study_options_fragment)
             configureToolbar()
         }
@@ -296,8 +297,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 deckPicker.exportDeck(col!!.decks.selected())
                 return true
             }
-            // If the menu item is not specific to study options, delegate it to the deck picker
-            else -> return deckPicker.onOptionsItemSelected(item)
+            else -> return false
         }
     }
 
@@ -325,17 +325,16 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     }
 
     private fun configureToolbar() {
-        configureToolbarInternal(true)
+        configureToolbarInternal(true, toolbar!!.menu)
     }
 
     // This will allow a maximum of one recur in order to workaround database closes
     // caused by sync on startup where this might be running then have the collection close
     @NeedsTest("test whether the navigationIcon and navigationOnClickListener are set properly")
-    private fun configureToolbarInternal(recur: Boolean) {
+    fun configureToolbarInternal(recur: Boolean, menu: Menu) {
         Timber.i("configureToolbarInternal()")
         try {
             toolbar!!.setOnMenuItemClickListener(this)
-            val menu = toolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
             if (col != null && col!!.decks.isFiltered(col!!.decks.selected())) {
                 menu.findItem(R.id.action_rebuild).isVisible = true
@@ -354,7 +353,6 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
             }
             // Switch on rename / delete / export if tablet layout
             if (fragmented) {
-                menu.setGroupVisible(R.id.commonItems, true)
                 menu.findItem(R.id.action_rename).isVisible = true
                 menu.findItem(R.id.action_delete).isVisible = true
                 menu.findItem(R.id.action_export).isVisible = true
@@ -369,19 +367,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                     exportMenu?.add(0, R.id.action_export_collection, 0, R.string.export_collection)
                 }
                 menu.removeItem(R.id.action_export_collection)
-
-                deckPicker.setupMediaSyncMenuItem(menu)
-                deckPicker.updateMenuFromState(menu)
-                /**
-                 * Launch a task to possibly update the visible icons.
-                 * Save the job in a member variable to manage the lifecycle
-                 */
-                createMenuJob = launchCatchingTask {
-                    deckPicker.updateMenuState()
-                    deckPicker.updateMenuFromState(menu)
-                }
             } else {
-                menu.setGroupVisible(R.id.commonItems, false)
                 menu.findItem(R.id.action_rename).isVisible = false
                 menu.findItem(R.id.action_delete).isVisible = false
                 menu.findItem(R.id.action_export).isVisible = false
@@ -420,7 +406,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                         Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.")
                         Thread.currentThread().interrupt()
                     }
-                    configureToolbarInternal(false)
+                    configureToolbarInternal(false, toolbar!!.menu)
                 } else {
                     Timber.w(e, "Database closed while working. No re-tries left.")
                 }
