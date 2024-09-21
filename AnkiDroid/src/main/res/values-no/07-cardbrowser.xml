@@ -77,6 +77,7 @@
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Slette “%1$s”?</string>
     <string name="card_browser_change_display_order">Endre visningsrekkefølgen</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
     <string name="card_browser_change_display_order_title">Velg visningsrekkefølge</string>
     <string name="card_details_tags">Emneord</string>
     <string-array name="card_browser_order_labels">
