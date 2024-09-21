@@ -845,29 +845,29 @@ open class DeckPicker :
         // and having the activity be responsible for it. This change should reduce complexity.
         // We should have two menu files for the DeckPicker (fragmented/non), and one for the Options (non-fragmented)
         menuInflater.inflate(R.menu.deck_picker, menu)
+        if (fragmented) {
+            menuInflater.inflate(R.menu.study_options_fragment, menu)
+            fragment?.configureToolbarInternal(false, menu)
+        } else {
+            menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
+            setupMediaSyncMenuItem(menu)
+            // redraw menu synchronously to avoid flicker
+            updateMenuFromState(menu)
+        }
+        menu.findItem(R.id.action_export_collection)?.title = TR.exportingExport()
+        setupMediaSyncMenuItem(menu)
         menu.findItem(R.id.deck_picker_action_filter)?.let {
             toolbarSearchItem = it
             setupSearchIcon(it)
             toolbarSearchView = it.actionView as AccessibleSearchView
         }
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
-
-        if (fragmented && studyoptionsFrame!!.visibility == View.VISIBLE) {
-            menu.setGroupVisible(R.id.commonItems, false)
-        } else {
-            menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
-            setupMediaSyncMenuItem(menu)
-            // redraw menu synchronously to avoid flicker
-            updateMenuFromState(menu)
-            updateSearchVisibilityFromState(menu)
-        }
         // ...then launch a task to possibly update the visible icons.
         // Store the job so that tests can easily await it. In the future
         // this may be better done by injecting a custom test scheduler
         // into CollectionManager, and awaiting that.
         createMenuJob = launchCatchingTask {
             updateMenuState()
-            updateSearchVisibilityFromState(menu)
             if (!fragmented) {
                 updateMenuFromState(menu)
             }
@@ -950,12 +950,6 @@ open class DeckPicker :
                 undoLabel = undoLabel(),
                 undoAvailable = undoAvailable()
             )
-        }
-    }
-
-    private fun updateSearchVisibilityFromState(menu: Menu) {
-        optionsMenuState?.run {
-            menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
         }
     }
 
@@ -1085,7 +1079,7 @@ open class DeckPicker :
                 ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
                 return true
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> return fragmented && fragment!!.onMenuItemClick(item)
         }
     }
 
@@ -1901,6 +1895,7 @@ open class DeckPicker :
         supportFragmentManager.commit {
             replace(R.id.studyoptions_fragment, details)
         }
+        invalidateOptionsMenu()
     }
 
     val fragment: StudyOptionsFragment?
