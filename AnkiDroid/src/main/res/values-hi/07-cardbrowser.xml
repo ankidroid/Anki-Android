@@ -77,6 +77,7 @@
     <string name="no_note_to_edit">संपादित करने के लिए कोई नोट नहीं</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" को मिटाएँ?</string>
     <string name="card_browser_change_display_order">प्रदर्शन क्रम बदलें</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
     <string name="card_browser_change_display_order_title">प्रदर्शन क्रम बदलें</string>
     <string name="card_details_tags">टैग</string>
     <string-array name="card_browser_order_labels">

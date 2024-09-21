@@ -85,6 +85,7 @@
     <string name="no_note_to_edit">Нет записей для редактирования</string>
     <string name="card_browser_list_my_searches_remove_content">Удалить «%1$s»?</string>
     <string name="card_browser_change_display_order">Изменить сортировку</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
     <string name="card_browser_change_display_order_title">Выберите тип сортировки</string>
     <string name="card_details_tags">Метки</string>
     <string-array name="card_browser_order_labels">

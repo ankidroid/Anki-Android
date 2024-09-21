@@ -85,6 +85,7 @@
     <string name="no_note_to_edit">Няма нататак для рэдагавання</string>
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Змяніць парадак адлюстравання</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>
     <string name="card_details_tags">Меткі</string>
     <string-array name="card_browser_order_labels">
