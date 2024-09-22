@@ -104,8 +104,8 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: prNumber,
-                body: `Old APK size: ${oldSize}
-                      New APK size: ${newSize}`
+                body: `${oldSize}: Old APK size
+                      ${newSize}: New APK size`
               })
             }
             await addComment(prNumber, process.env.OLDSIZE, process.env.NEWSIZE);
