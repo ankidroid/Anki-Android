@@ -30,10 +30,6 @@
     </plurals>
 
     <string name="card_browser_all_decks">All decks</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Delete note</item>
         <item quantity="other">Delete notes</item>
