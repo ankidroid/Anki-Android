@@ -462,6 +462,13 @@ class CardBrowserViewModel(
 
     fun selectedRowCount(): Int = selectedRows.size
 
+    fun selectedNoteCount() = if (cardsOrNotes == NOTES) {
+        selectedRowCount()
+    } else {
+        // Selected cards should still be loaded, so this should be doable without any database access to reload card.
+        selectedRows.map { it.card.nid }.toSet().size
+    }
+
     suspend fun changeCardOrder(which: SortType): Job? {
         val changeType = when {
             which != order -> ChangeCardOrder.OrderChange(which)

@@ -1085,17 +1085,10 @@ open class CardBrowser :
             }
         }
         actionBarMenu.findItem(R.id.action_delete_card).apply {
-            this.title = if (viewModel.cardsOrNotes == CARDS) {
-                resources.getQuantityString(
-                    R.plurals.card_browser_delete_cards,
-                    viewModel.selectedRowCount()
-                )
-            } else {
-                resources.getQuantityString(
-                    R.plurals.card_browser_delete_notes,
-                    viewModel.selectedRowCount()
-                )
-            }
+            this.title = resources.getQuantityString(
+                R.plurals.card_browser_delete_notes,
+                viewModel.selectedNoteCount()
+            )
         }
         actionBarMenu.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
