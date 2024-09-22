@@ -647,11 +647,11 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
             reviewCountText.text = result.revCardsToday.toString()
             // set bury numbers
             buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
-            newBuryText.text = getString(R.string.studyoptions_buried_count, result.buriedNew)
+            newBuryText.text = requireContext().resources.getQuantityString(R.plurals.studyoptions_buried_count, result.buriedNew, result.buriedNew)
             newBuryText.isVisible = result.buriedNew != 0
-            learningBuryText.text = getString(R.string.studyoptions_buried_count, result.buriedLearning)
+            learningBuryText.text = requireContext().resources.getQuantityString(R.plurals.studyoptions_buried_count, result.buriedLearning, result.buriedLearning)
             learningBuryText.isVisible = result.buriedLearning != 0
-            reviewBuryText.text = getString(R.string.studyoptions_buried_count, result.buriedReview)
+            reviewBuryText.text = requireContext().resources.getQuantityString(R.plurals.studyoptions_buried_count, result.buriedReview, result.buriedReview)
             reviewBuryText.isVisible = result.buriedReview != 0
             // Rebuild the options menu
             configureToolbar()
