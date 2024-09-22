@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       prNumber:
-        description: "Number of PR to calculate sizes for"
+        description: "You want to measure the impact of PR number:"
         required: true
         type: number
 
