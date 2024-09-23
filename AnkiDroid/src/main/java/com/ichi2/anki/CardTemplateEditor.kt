@@ -203,12 +203,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 tags = note.tags,
                 fillEmpty = true
             )
-            val fragment = TemplatePreviewerFragment.newInstance(args)
+            val backgroundColor = ThemeUtils.getThemeAttrColor(this@CardTemplateEditor, R.attr.alternativeBackgroundColor)
+            val fragment = TemplatePreviewerFragment.newInstance(args, backgroundColor)
             supportFragmentManager.commitNow {
                 replace(R.id.fragment_container, fragment)
             }
-            val backgroundColor = ThemeUtils.getThemeAttrColor(this@CardTemplateEditor, R.attr.alternativeBackgroundColor)
-            fragment.requireView().setBackgroundColor(backgroundColor)
         }
     }
 

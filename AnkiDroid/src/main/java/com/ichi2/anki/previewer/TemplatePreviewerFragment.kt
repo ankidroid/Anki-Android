@@ -29,6 +29,7 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.utils.BundleUtils.getNullableInt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -65,14 +66,28 @@ class TemplatePreviewerFragment :
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
         }
+
+        arguments?.getNullableInt(ARG_BACKGROUND_OVERRIDE_COLOR)?.let { color ->
+            view.setBackgroundColor(color)
+        }
     }
 
     companion object {
         const val ARGS_KEY = "templatePreviewerArgs"
+        private const val ARG_BACKGROUND_OVERRIDE_COLOR = "arg_background_override_color"
 
-        fun newInstance(arguments: TemplatePreviewerArguments): TemplatePreviewerFragment {
+        /**
+         * @param backgroundOverrideColor optional color to be used as background on the root view
+         * of this fragment
+         */
+        fun newInstance(
+            arguments: TemplatePreviewerArguments,
+            backgroundOverrideColor: Int? = null
+        ): TemplatePreviewerFragment {
             return TemplatePreviewerFragment().apply {
-                this.arguments = bundleOf(ARGS_KEY to arguments)
+                val args = bundleOf(ARGS_KEY to arguments)
+                backgroundOverrideColor?.let { args.putInt(ARG_BACKGROUND_OVERRIDE_COLOR, backgroundOverrideColor) }
+                this.arguments = args
             }
         }
     }
