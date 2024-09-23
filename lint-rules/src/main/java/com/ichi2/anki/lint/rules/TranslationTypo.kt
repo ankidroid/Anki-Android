@@ -55,8 +55,9 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         )
 
         // copied from tools/localization/src/constants.ts
-        // excludes marketdescription as it is .txt
+        // excludes marketdescription and language-name as it is .txt
         private val I18N_FILES = listOf(
+            "00-language-name",
             "01-core",
             "02-strings",
             "03-dialogs",

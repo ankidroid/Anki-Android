@@ -24,6 +24,8 @@ import {
     RES_VALUES_LANG_DIR,
     OLD_VER_MARKET_DESC_FILE,
     MARKET_DESC_LANG,
+    LANGUAGE_NAME_LANG,
+    OLD_VER_LANGUAGE_NAME_FILE,
 } from "./constants";
 
 let anyError = false;
@@ -79,7 +81,7 @@ async function replacechars(fileName: string): Promise<boolean> {
  * @returns extension string
  */
 function fileExtFor(f: string): string {
-    if (f == "14-marketdescription") return ".txt";
+    if (f == "00-language-name" || f == "14-marketdescription") return ".txt";
     else return ".xml";
 }
 
@@ -95,7 +97,64 @@ export function createDirIfNotExisting(directory: string) {
 }
 
 /**
- * For existing directory update xml files in res/value dir for each languages
+ * Update text file `f` with `translatedContent` for `language`.
+ *
+ * @param translatedContent content of target language xml file
+ * @param f txt, xml file name
+ * @param language language code
+ * @returns boolean for successfully replaced invalid string and copied updated files
+ */
+function update_txt(translatedContent: string, f: string, language: string): boolean {
+    let oldfile: string;
+    let folder: string;
+    if (f == "00-language-name") {
+        oldfile = OLD_VER_LANGUAGE_NAME_FILE;
+        folder = LANGUAGE_NAME_LANG;
+    } else {
+        // f == "14-marketdescription"
+        oldfile = OLD_VER_MARKET_DESC_FILE;
+        folder = MARKET_DESC_LANG;
+    }
+    const newfile = path.join(folder + language + ".txt");
+
+    fs.writeFileSync(newfile, translatedContent);
+
+    const oldContent = fs.readFileSync(oldfile).toString();
+    const newContent = fs.readFileSync(newfile).toString();
+
+    for (let i = 0; i < oldContent.length; i++) {
+        if (oldContent[i] != newContent[i]) {
+            process.stdout.write(".");
+            return true;
+        }
+    }
+
+    fs.unlinkSync(newfile);
+    console.log("File " + f + " is not translated into language " + language);
+    return true;
+}
+
+/**
+ * Update xml file `f` with `translatedContent` for `language`.
+ *
+ * @param valuesDirectory res/value dir for the language
+ * @param translatedContent content of target language xml file
+ * @param f txt, xml file name
+ * @returns boolean for successfully replaced invalid string and copied updated files
+ */
+async function update_xml(
+    valuesDirectory: string,
+    translatedContent: string,
+    f: string,
+) {
+    // Everything else is a regular file to translate into Android resources
+    const newfile = valuesDirectory + f + ".xml";
+    fs.writeFileSync(newfile, translatedContent);
+    return replacechars(newfile);
+}
+
+/**
+ * Update file `f` with `translatedContent` for `language`. See `update_txt` and `update_xml` for more details depending on the `fileExt`.
  *
  * @param valuesDirectory res/value dir for the language
  * @param translatedContent content of target language xml file
@@ -117,32 +176,10 @@ async function update(
     }
 
     // These are pulled into a special file
-    if (f == "14-marketdescription") {
-        const newfile = path.join(MARKET_DESC_LANG + language + fileExt);
-
-        fs.writeFileSync(newfile, translatedContent);
-
-        const oldContent = fs.readFileSync(OLD_VER_MARKET_DESC_FILE).toString();
-        const newContent = fs.readFileSync(newfile).toString();
-
-        for (let i = 0; i < oldContent.length; i++) {
-            if (oldContent[i] != newContent[i]) {
-                process.stdout.write(".");
-                return true;
-            }
-        }
-
-        fs.unlinkSync(newfile);
-        console.log(
-            "File marketdescription is not translated into language " + language,
-        );
-        return true;
+    if (fileExt == ".txt") {
+        return update_txt(translatedContent, f, language);
     }
-
-    // Everything else is a regular file to translate into Android resources
-    const newfile = valuesDirectory + f + ".xml";
-    fs.writeFileSync(newfile, translatedContent);
-    return replacechars(newfile);
+    return update_xml(valuesDirectory, translatedContent);
 }
 
 /**

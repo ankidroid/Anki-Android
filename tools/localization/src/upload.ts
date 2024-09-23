@@ -19,6 +19,7 @@ import {
     I18N_FILES,
     I18N_FILES_DIR,
     MARKET_DESC_FILE,
+    LANGUAGE_NAME_FILE,
 } from "./constants";
 
 // initialization of crowdin client
@@ -39,6 +40,11 @@ export async function uploadI18nFiles() {
             if (file == "14-marketdescription") {
                 I18N_FILE_TARGET_NAME = "14-marketdescription.txt";
                 I18N_FILE_SOURCE_NAME = MARKET_DESC_FILE;
+            }
+
+            if (file == "00-language-name") {
+                I18N_FILE_TARGET_NAME = "00-language-name.txt";
+                I18N_FILE_SOURCE_NAME = LANGUAGE_NAME_FILE;
             }
 
             if (fs.existsSync(I18N_FILE_SOURCE_NAME)) {
