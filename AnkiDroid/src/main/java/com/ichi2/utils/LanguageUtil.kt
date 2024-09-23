@@ -42,88 +42,88 @@ object LanguageUtil {
         "Afrikaans" to "af", // Afrikaans
         "አማርኛ" to "am", // Amharic
         "العربية" to "ar", // Arabic
-        "azərbaycan" to "az", // Azerbaijani
-        "беларуская" to "be", // Belarusian
-        "български" to "bg", // Bulgarian
+        "Azərbaycan" to "az", // Azerbaijani
+        "Беларуская" to "be", // Belarusian
+        "Български" to "bg", // Bulgarian
         "বাংলা" to "bn", // Bangla
-        "català" to "ca", // Catalan
+        "Català" to "ca", // Catalan
         "کوردیی ناوەندی" to "ckb", // Central Kurdish
-        "čeština" to "cs", // Czech
-        "dansk" to "da", // Danish
+        "Čeština" to "cs", // Czech
+        "Dansk" to "da", // Danish
         "Deutsch" to "de", // German
         "Ελληνικά" to "el", // Greek
         "English" to "en", // English
-        "esperanto" to "eo", // Esperanto
-        "español (Argentina)" to "es-AR", // Spanish (Argentina)
-        "español (España)" to "es-ES", // Spanish (Spain)
-        "eesti" to "et", // Estonian
-        "euskara" to "eu", // Basque
+        "Esperanto" to "eo", // Esperanto
+        "Español (Argentina)" to "es-AR", // Spanish (Argentina)
+        "Español (España)" to "es-ES", // Spanish (Spain)
+        "Eesti" to "et", // Estonian
+        "Euskara" to "eu", // Basque
         "فارسی" to "fa", // Persian
-        "suomi" to "fi", // Finnish
+        "Suomi" to "fi", // Finnish
         "Filipino" to "fil", // Filipino
-        "français" to "fr", // French
+        "Français" to "fr", // French
         "Frysk (Nederlân)" to "fy-NL", // Western Frisian (Netherlands)
         "Gaeilge (Éire)" to "ga-IE", // Irish (Ireland)
-        "galego" to "gl", // Galician
+        "Galego" to "gl", // Galician
         "Gothic" to "got", // Gothic
         "ગુજરાતી (ભારત)" to "gu-IN", // Gujarati (India)
         "עברית" to "heb", // Hebrew
         "हिन्दी" to "hi", // Hindi
-        "hrvatski" to "hr", // Croatian
-        "magyar" to "hu", // Hungarian
-        "հայերեն (Հայաստան)" to "hy-AM", // Armenian (Armenia)
+        "Hrvatski" to "hr", // Croatian
+        "Magyar" to "hu", // Hungarian
+        "Hայերեն (Հայաստան)" to "hy-AM", // Armenian (Armenia)
         "Indonesia" to "ind", // Indonesian
         "íslenska" to "is", // Icelandic
-        "italiano" to "it", // Italian
+        "Italiano" to "it", // Italian
         "日本語" to "ja", // Japanese
         "Jawa" to "jv", // Javanese
         "ქართული" to "ka", // Georgian
-        "қазақ тілі" to "kk", // Kazakh
+        "Қазақ тілі" to "kk", // Kazakh
         "ខ្មែរ" to "km", // Khmer
         "ಕನ್ನಡ" to "kn", // Kannada
         "한국어" to "ko", // Korean
-        "kurdî" to "ku", // Kurdish
-        "кыргызча" to "ky", // Kyrgyz
-        "lietuvių" to "lt", // Lithuanian
-        "latviešu" to "lv", // Latvian
-        "македонски" to "mk", // Macedonian
+        "Kurdî" to "ku", // Kurdish
+        "Кыргызча" to "ky", // Kyrgyz
+        "Lietuvių" to "lt", // Lithuanian
+        "Latviešu" to "lv", // Latvian
+        "Македонски" to "mk", // Macedonian
         "മലയാളം (ഇന്ത്യ)" to "ml-IN", // Malayalam (India)
-        "монгол" to "mn", // Mongolian
+        "Монгол" to "mn", // Mongolian
         "मराठी" to "mr", // Marathi
         "Melayu" to "ms", // Malay
         "မြန်မာ" to "my", // Burmese
         "Nederlands" to "nl", // Dutch
-        "nynorsk (Noreg)" to "nn-NO", // Norwegian Nynorsk (Norway)
-        "norsk" to "no", // Norwegian
+        "Nynorsk (Noreg)" to "nn-NO", // Norwegian Nynorsk (Norway)
+        "Norsk" to "no", // Norwegian
         "ଓଡ଼ିଆ" to "or", // Odia
         "ਪੰਜਾਬੀ (ਭਾਰਤ)" to "pa-IN", // Punjabi (India)
-        "polski" to "pl", // Polish
+        "Polski" to "pl", // Polish
         "Português (Brasil)" to "pt-BR", // Portuguese (Brazil)
         "Português (Portugal)" to "pt-PT", // Portuguese (Portugal)
-        "română" to "ro", // Romanian
-        "русский" to "ru", // Russian
+        "Română" to "ro", // Romanian
+        "Русский" to "ru", // Russian
         "Santali" to "sat", // Santali
         "Sardinian" to "sc", // Sardinian
-        "slovenčina" to "sk", // Slovak
-        "slovenščina" to "sl", // Slovenian
-        "shqip" to "sq", // Albanian
-        "српски" to "sr", // Serbian
+        "Slovenčina" to "sk", // Slovak
+        "Slovenščina" to "sl", // Slovenian
+        "Shqip" to "sq", // Albanian
+        "Српски" to "sr", // Serbian
         "Swati" to "ss", // Swati
-        "svenska (Sverige)" to "sv-SE", // Swedish (Sweden)
+        "Svenska (Sverige)" to "sv-SE", // Swedish (Sweden)
         "Kiswahili" to "sw", // Swahili
         "தமிழ்" to "ta", // Tamil
         "తెలుగు" to "te", // Telugu
-        "тоҷикӣ" to "tg", // Tajik
+        "Тоҷикӣ" to "tg", // Tajik
         "Tagalog" to "tgl", // Tagalog
         "ไทย" to "th", // Thai
         "ትግርኛ" to "ti", // Tigrinya
         "Tswana" to "tn", // Tswana
         "Türkçe" to "tr", // Turkish
         "Tsonga" to "ts", // Tsonga
-        "татар (Россия)" to "tt-RU", // Tatar (Russia)
-        "українська" to "uk", // Ukrainian
+        "Татар (Россия)" to "tt-RU", // Tatar (Russia)
+        "Українська" to "uk", // Ukrainian
         "اردو (پاکستان)" to "ur-PK", // Urdu (Pakistan)
-        "o‘zbek" to "uz", // Uzbek
+        "O‘zbek" to "uz", // Uzbek
         "Venda" to "ve", // Venda
         "Tiếng Việt" to "vi", // Vietnamese
         "Wolof" to "wo", // Wolof
@@ -132,7 +132,6 @@ object LanguageUtil {
         "中文 (中国)" to "zh-CN", // Chinese (China)
         "中文 (台灣)" to "zh-TW", // Chinese (Taiwan)
         "isiZulu" to "zu" // Zulu
-
     )
 
     /** Backend languages; may not include recently added ones.
