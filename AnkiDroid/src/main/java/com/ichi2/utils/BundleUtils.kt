@@ -49,4 +49,19 @@ object BundleUtils {
         }
         return getLong(key)
     }
+
+    /**
+     * Retrieves a [Int] value from a [Bundle] using a key, returns null if not found
+     *
+     * can be null to support nullable bundles like [androidx.fragment.app.Fragment.getArguments]
+     * @param key the key to use
+     * @return the int value, or null if not found
+     */
+    fun Bundle.getNullableInt(key: String): Int? {
+        return if (!containsKey(key)) {
+            null
+        } else {
+            getInt(key)
+        }
+    }
 }
