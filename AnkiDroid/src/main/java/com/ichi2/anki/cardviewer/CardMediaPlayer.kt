@@ -140,10 +140,11 @@ class CardMediaPlayer : Closeable {
         Timber.i("loading sounds for card %d", card.id)
         stopSounds()
         val renderOutput = withCol { card.renderOutput(this) }
+        val autoPlay = withCol { card.autoplay(this) }
         this.questions = renderOutput.questionAvTags
         this.answers = renderOutput.answerAvTags
 
-        if (!this::config.isInitialized || !config.appliesTo(card)) {
+        if (!this::config.isInitialized || !config.appliesTo(card) || (this::config.isInitialized && autoPlay != config.autoplay)) {
             config = withCol { CardSoundConfig.create(this@withCol, card) }
         }
     }
