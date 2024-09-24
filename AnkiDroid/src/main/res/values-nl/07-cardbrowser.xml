@@ -77,7 +77,7 @@
     <string name="no_note_to_edit">Geen notitie om te bewerken</string>
     <string name="card_browser_list_my_searches_remove_content">Verwijder “%1$s”?</string>
     <string name="card_browser_change_display_order">Weergavevolgorde wijzigen</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Zoeken</string>
     <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
     <string name="card_details_tags">Labels</string>
     <string-array name="card_browser_order_labels">

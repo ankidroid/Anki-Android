@@ -89,7 +89,7 @@
         <item>بر اساس موعد زمانی</item>
         <item>بر اساس مدت</item>
         <item>بر اساس سهولت</item>
-        <item>به وسیله مرورها</item>
+        <item>بر اساس مرورها</item>
         <item>بر اساس فاصله زمانی</item>
     </string-array>
     <string name="card_browser_select_all">انتخاب همه</string>

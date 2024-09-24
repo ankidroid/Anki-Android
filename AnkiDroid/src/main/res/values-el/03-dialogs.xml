@@ -96,8 +96,8 @@
     <string name="dialog_confirm" tools:ignore="UnusedResources">Επιβεβαίωση</string>
     <string name="dialog_no">Όχι</string>
     <string name="dialog_yes">Ναι</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Διατήρηση</string>
+    <string name="dialog_remove">Αφαίρεση</string>
     <string name="dialog_continue">Συνέχεια</string>
     <string name="dialog_processing">Επεξεργασία&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Δημιουργία</string>
@@ -198,8 +198,8 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Απόρρητο</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankidroid_privacy_policy">Πολιτική απορρήτου AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Πολιτική απορρήτου AnkiWeb</string>
     <string name="help_item_ankiweb_terms_and_conditions">Όροι και Προϋποθέσεις του AnkiWeb</string>
     <string name="help_title_send_exception">Αποστολή αναφοράς αντιμετώπισης προβλημάτων</string>
     <string name="help_dialog_exception_report_debounce">Η αναφορά έχει ήδη υποβληθεί</string>
@@ -247,12 +247,12 @@
         <item quantity="other">Show cards in range</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">ημέρα</item>
+        <item quantity="other">ημέρες</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Από</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Έως</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
@@ -267,6 +267,6 @@
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Language not supported</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_change_button_text">Αλλαγή μηχανής</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Επιλογές φωνής</string>
 </resources>

@@ -46,8 +46,8 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card visível</item>
-        <item quantity="other">%d cards visíveis</item>
+        <item quantity="one">%d Cartão visível</item>
+        <item quantity="other">%d Cartões visíveis</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">%d nota apresentada</item>
@@ -74,10 +74,10 @@
     <string name="card_browser_list_my_searches_new_name">Nome para a pesquisa atual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Você não pode salvar uma pesquisa sem um nome</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">O nome já existe</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Nenhuma nota para editar</string>
     <string name="card_browser_list_my_searches_remove_content">Excluir \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Alterar a ordem de exibição</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Buscar</string>
     <string name="card_browser_change_display_order_title">Escolha a ordem de exibição</string>
     <string name="card_details_tags">Tags</string>
     <string-array name="card_browser_order_labels">

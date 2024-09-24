@@ -167,13 +167,13 @@
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия (в мс)</string>
     <string name="pref_double_tap_time_interval_summary">Второе нажатие на ответ будет проигнорировано, если это время не истекло. Предотвращает случайное двойное нажатие</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">Время длительного нажатия для ответа</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time_summary">Минимальное время нажатия перед тем как кнопка \"показать\" регистрирует касание</string>
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
     <string name="show_large_answer_buttons_summ">Кнопки ответа в две строки</string>
     <string name="show_top_bar" maxLength="41">Показывать верхнюю панель</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">Показать счетчик карт, время ответа, флаг и отметку в верхней строке</string>
     <string name="show_progress" maxLength="41">Показать оставшиеся</string>
     <string name="show_progress_summ">Показывает число оставшихся карточек</string>
     <string name="show_eta" maxLength="41">Показывать оценку времени</string>
@@ -282,7 +282,7 @@
     <string name="user_action_7" maxLength="41">Пользовательское действие 7</string>
     <string name="user_action_8" maxLength="41">Пользовательское действие 8</string>
     <string name="user_action_9" maxLength="41">Пользовательское действие 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">Включить/выключить авто переход</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Выберите сторону карточки</string>
     <string name="card_side_question">Вопрос</string>

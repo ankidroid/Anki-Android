@@ -337,7 +337,7 @@
     <string name="play_recording">Reproduzir</string>
     <string name="next_recording">Próximo</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_title">Não é possível excluir tipo de cartão</string>
     <string name="orphan_note_message">Deletar essa categoria de cartão deixará algumas notas sem cartão</string>
     <string name="voice_not_supported">Voz não suportada. Tente outra ou instale um mecanismo de voz.</string>
 </resources>

@@ -49,10 +49,10 @@
     <string name="contextmenu_deckpicker_delete_deck">Excluir baralho</string>
     <string name="delete_deck_title">Excluir baralho?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Excluir todas as cartas em %1$s? Ele contém %2$d cartão</item>
+        <item quantity="other">Excluir todas as cartas em %1$s? Ele contém %2$d cartões</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Excluir baralho filtrado %s e enviar todas as cartas de volta para seus baralhos originais?</string>
     <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
     <string name="tts_no_tts">Não fale</string>
     <string name="unused_strings">\n\nArquivos não utilizados:\n</string>
@@ -259,14 +259,14 @@
     <string name="open">Abrir</string>
     <string name="change_cloze_number">Alterar número de omissão</string>
     <string name="cloze_number">Número da omissão:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_editor_mode">Alterar modo editor</string>
+    <string name="open_note_editor">Abrir editor de notas</string>
+    <string name="change_cloze_mode">Mudar modo cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema do WebView está desatualizado. Alguns recursos não funcionarão corretamente. Por favor, atualize-o.\n\nVersão instalada %1$d\nVersão mínima necessária: %2$d</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">Idioma não suportado</string>
+    <string name="tts_error_dialog_reason_text">O mecanismo de texto para fala <b>%1$s</b> não suporta o seguinte idioma: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Alterar mecanismo</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Opções de voz</string>
 </resources>
