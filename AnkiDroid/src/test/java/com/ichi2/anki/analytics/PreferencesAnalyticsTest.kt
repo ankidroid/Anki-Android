@@ -49,6 +49,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         "customSyncServerScreen",
         "appBarButtonsScreen",
         "pref_screen_advanced",
+        "backupsScreen",
         "backups_help",
         // Categories: don't have a value
         "appearance_preference_group",
