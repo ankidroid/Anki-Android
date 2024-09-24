@@ -77,7 +77,7 @@
     <string name="no_note_to_edit">Neniu noto por redakti</string>
     <string name="card_browser_list_my_searches_remove_content">Ĉu forigi “%1$s”?</string>
     <string name="card_browser_change_display_order">Ŝanĝi ordon de vidigo</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Serĉi</string>
     <string name="card_browser_change_display_order_title">Elekti ordon de vidigo</string>
     <string name="card_details_tags">Etikedoj</string>
     <string-array name="card_browser_order_labels">

@@ -67,7 +67,7 @@
     </plurals>
     <string name="widget_add_note_button">Добавить запись в AnkiDroid</string>
     <string name="deck_picker_widget_description">Выбор колоды</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="card_analysis_extra_widget_description">Анализ карты</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">Выберите колоды</string>
     <string name="select_deck_title" comment="Title for Deck Selection Dialog">Выберите колоду</string>

@@ -44,7 +44,7 @@
     <string name="multimedia_editor_popup_audio_clip">Προσθήκη κλιπ ήχου</string>
     <string name="multimedia_editor_popup_video_clip">Προσθήκη βίντεο κλιπ</string>
     <string name="multimedia_editor_popup_audio">Ηχογράφηση</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+    <string name="multimedia_editor_popup_cloze">Διαγραφή συμπλήρωσης κενών</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_audio">Ηχογράφηση</string>
@@ -66,7 +66,7 @@
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Αποτυχία ηχογράφησης</string>
     <string name="multimedia_editor_audio_view_playing_failed">Αποτυχία αναπαραγωγής</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Αδυναμία δημιουργίας γραμμής εργαλείων ηχογράφησης</string>
     <!-- Crop function-->
     <string name="crop_image">Θέλετε να περικόψετε αυτή την εικόνα;</string>
     <string name="crop_button">Περικοπή εικόνας</string>
@@ -74,5 +74,5 @@
     <string name="select_image_failed">"Η επιλογή εικόνας απέτυχε, Παρακαλώ προσπαθήστε ξανά"</string>
     <string name="activity_result_unexpected">Η εφαρμογή επέστρεψε μια μη αναμενόμενη τιμή. Μπορεί να χρειαστεί να χρησιμοποιήσετε μια διαφορετική εφαρμογή</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Περιεχόμενα Πεδίου</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect">Επανεπιλογή</string>
 </resources>

@@ -197,7 +197,7 @@
     <string name="storage_access_title">Πρόσβαση αποθηκευτικού χώρου</string>
     <string name="storage_access_summary">Αποθηκεύει τη συλλογή σας σε ασφαλές μέρος που δεν θα διαγραφεί αν η εφαρμογή απεγκατασταθεί</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Πρόσβαση σε όλα τα αρχεία</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Επικάλυψη εικόνας</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Αφαίρεση λογαριασμού</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Άμεση κάρτα</string>
