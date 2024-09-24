@@ -125,6 +125,8 @@ class HeaderFragment : PreferenceFragmentCompat() {
                     .addBreadcrumb(R.string.pref_cat_appearance)
                 index(R.xml.preferences_controls)
                 index(R.xml.preferences_accessibility)
+                index(R.xml.preferences_backup_limits)
+                ignorePreference(activity.getString(R.string.pref_backups_help_key))
             }
 
             // Some preferences and categories are only shown conditionally,
