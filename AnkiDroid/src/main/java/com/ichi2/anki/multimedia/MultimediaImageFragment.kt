@@ -48,6 +48,7 @@ import com.ichi2.anki.multimedia.MultimediaUtils.IMAGE_SAVE_MAX_WIDTH
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
 import com.ichi2.anki.multimedia.MultimediaUtils.createImageFile
 import com.ichi2.anki.multimedia.MultimediaUtils.createNewCacheImageFile
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -93,8 +94,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                         val resultData = Intent().apply {
                             putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
                         }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
+                        requireAnkiActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
+                        requireAnkiActivity().finish()
                     }
                 }
 
@@ -125,8 +126,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                         val resultData = Intent().apply {
                             putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
                         }
-                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                        requireActivity().finish()
+                        requireAnkiActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
+                        requireAnkiActivity().finish()
                     }
                 }
 
@@ -151,8 +152,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                     val resultData = Intent().apply {
                         putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
                     }
-                    requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                    requireActivity().finish()
+                    requireAnkiActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
+                    requireAnkiActivity().finish()
                 }
 
                 isPictureTaken -> {
@@ -321,8 +322,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 putExtra(MULTIMEDIA_RESULT, field)
                 putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
             }
-            requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-            requireActivity().finish()
+            requireAnkiActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
+            requireAnkiActivity().finish()
         }
     }
 
@@ -347,7 +348,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             viewModel.updateCurrentMultimediaPath(it.absolutePath)
             val photoURI: Uri = FileProvider.getUriForFile(
                 requireContext(),
-                requireActivity().applicationContext.packageName + ".apkgfileprovider",
+                requireAnkiActivity().applicationContext.packageName + ".apkgfileprovider",
                 it
             )
             cameraLauncher.launch(photoURI)
@@ -424,7 +425,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             return
         }
 
-        AlertDialog.Builder(requireActivity()).show {
+        AlertDialog.Builder(requireAnkiActivity()).show {
             message(text = message)
             positiveButton(R.string.dialog_yes) {
                 requestCrop()
@@ -576,7 +577,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
         return try {
             val returnFile =
-                FileUtil.internalizeUri(uri, internalFile, requireActivity().contentResolver)
+                FileUtil.internalizeUri(uri, internalFile, requireAnkiActivity().contentResolver)
             Timber.d("internalizeUri successful. Returning internalFile.")
             returnFile
         } catch (e: Exception) {

@@ -43,6 +43,7 @@ import com.ichi2.anki.multimedia.MultimediaActivity.Companion.EXTRA_MEDIA_OPTION
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.MultimediaUtils.createCachedFile
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
@@ -72,8 +73,8 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                     val resultData = Intent().apply {
                         putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
                     }
-                    requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                    requireActivity().finish()
+                    requireAnkiActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
+                    requireAnkiActivity().finish()
                 }
             }
             else -> {
@@ -195,8 +196,8 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 putExtra(MULTIMEDIA_RESULT, field)
                 putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
             }
-            requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-            requireActivity().finish()
+            requireAnkiActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
+            requireAnkiActivity().finish()
         }
     }
 

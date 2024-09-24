@@ -32,6 +32,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT_FIELD_INDEX
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.Permissions
@@ -110,8 +111,8 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
                 putExtra(MULTIMEDIA_RESULT, field)
                 putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
             }
-            requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-            requireActivity().finish()
+            requireAnkiActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
+            requireAnkiActivity().finish()
         }
     }
 
@@ -119,7 +120,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
     private fun initializeAudioRecorder() {
         try {
             audioRecordingController = AudioRecordingController(
-                context = requireActivity(),
+                context = requireAnkiActivity(),
                 linearLayout = view?.findViewById(R.id.audio_recorder_layout)!!,
                 viewModel = viewModel,
                 note = note

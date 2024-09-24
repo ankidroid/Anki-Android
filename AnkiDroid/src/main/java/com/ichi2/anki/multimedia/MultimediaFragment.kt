@@ -28,14 +28,13 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
-import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiFragment
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
@@ -51,7 +50,7 @@ import java.io.File
  * @param layout The layout resource ID to be inflated by this fragment.
  */
 // TODO: show discard dialog in case there are changes
-abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
+abstract class MultimediaFragment(@LayoutRes layout: Int) : AnkiFragment(layout) {
 
     abstract val title: String
 
@@ -65,7 +64,7 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AnkiActivity).setToolbarTitle(title)
+        requireAnkiActivity().setToolbarTitle(title)
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
@@ -93,8 +92,8 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 return FileProvider.getUriForFile(
-                    requireActivity(),
-                    requireActivity().applicationContext.packageName + ".apkgfileprovider",
+                    ankiActivity,
+                    ankiActivity.applicationContext.packageName + ".apkgfileprovider",
                     file
                 )
             }
@@ -107,7 +106,7 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     }
 
     fun setMenuItemIcon(menuItem: MenuItem, @DrawableRes icon: Int) {
-        menuItem.icon = ContextCompat.getDrawable(requireContext(), icon)
+        menuItem.icon = ContextCompat.getDrawable(ankiActivity, icon)
     }
 
     /**
@@ -115,12 +114,11 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
      *
      * @param menuProvider An instance of the `MenuProvider` class that will be responsible for inflating and configuring the menu.
      */
-    // TODO: move this to requireAnkiActivity().addMenuProvider()
     fun setupMenu(menuProvider: MenuProvider) {
-        (requireActivity() as MenuHost).addMenuProvider(menuProvider)
+        requireAnkiActivity().addMenuProvider(menuProvider)
     }
 
-    fun File.toHumanReadableSize(): String = Formatter.formatFileSize(requireContext(), this.length())
+    fun File.toHumanReadableSize(): String = Formatter.formatFileSize(ankiActivity, this.length())
 
     /**
      * Shows a Snackbar at the bottom of the screen with a predefined
@@ -136,10 +134,10 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
      * when clicked, finishes the current activity.
      */
     fun showErrorDialog(errorMessage: String? = null) {
-        AlertDialog.Builder(requireContext()).show {
+        AlertDialog.Builder(ankiActivity).show {
             setMessage(errorMessage ?: resources.getString(R.string.something_wrong))
             setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
-                requireActivity().finish()
+                requireAnkiActivity().finish()
             }
         }
     }
