@@ -22,6 +22,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.webkit.CookieManager
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -34,6 +35,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.AccessibleSearchView
 import timber.log.Timber
 import java.io.Serializable
@@ -93,6 +95,26 @@ class SharedDecksActivity : AnkiActivity() {
             return true
         }
 
+        private val cookieManager: CookieManager by lazy {
+            CookieManager.getInstance()
+        }
+
+        private val isLoggedInToAnkiWeb: Boolean
+            get() {
+                try {
+                    // cookies are null after the user logs out, or if the site is first visited
+                    val cookies = cookieManager.getCookie("https://ankiweb.net") ?: return false
+                    // ankiweb currently (2024-09-25) sets two cookies:
+                    // * `ankiweb`, which is base64-encoded JSON
+                    // * `has_auth`, which is 1
+                    return cookies.contains("has_auth=1")
+                } catch (e: Exception) {
+                    Timber.w(e, "Could not determine login status")
+                    return false
+                }
+            }
+
+        @NeedsTest("A user is not redirected to login/signup if they are logged in to AnkiWeb")
         override fun onReceivedHttpError(
             view: WebView?,
             request: WebResourceRequest?,
@@ -101,6 +123,12 @@ class SharedDecksActivity : AnkiActivity() {
             super.onReceivedHttpError(view, request, errorResponse)
 
             if (errorResponse?.statusCode != 429) return
+
+            // If a user is logged in, they see: "Daily limit exceeded; please try again tomorrow."
+            // We have nothing we can do here
+            if (isLoggedInToAnkiWeb) return
+
+            // The following cases are handled below:
             // "Please log in to download more decks." - on clicking "Download"
             // "Please log in to perform more searches" - on searching
 
