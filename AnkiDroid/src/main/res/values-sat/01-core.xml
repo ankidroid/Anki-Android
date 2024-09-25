@@ -66,8 +66,8 @@
         <item quantity="other">%1$d ᱚᱠᱛᱚ %2$d ᱦᱟᱹᱴᱤᱧ</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d ᱫᱤᱱ %2$d ᱮᱥᱠᱟᱨ</item>
-        <item quantity="other">%1$d ᱫᱤᱱ %2$d ᱦᱟᱹᱴᱤᱧ</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>

@@ -64,7 +64,7 @@
         <item quantity="other">還剩%1$d小時%2$d分鐘</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">還剩%1$d天%2$d小時</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">收藏為空</string>
     <string name="no_cards_placeholder_description">使用「+」符號\n

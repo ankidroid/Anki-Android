@@ -68,9 +68,9 @@
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="few">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Colecția este goală</string>
     <string name="no_cards_placeholder_description">Puteți începe a adăuga\ncarduri folosind iconiţa +</string>

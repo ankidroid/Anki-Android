@@ -66,8 +66,8 @@
         <item quantity="other">%1$d timer %2$d tilbage</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d dag %2$d tilbage</item>
-        <item quantity="other">%1$d dage %2$d tilbage</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Samlingen er tom</string>
     <string name="no_cards_placeholder_description">Tilføj kort\nved hjælp af +-ikonet.</string>

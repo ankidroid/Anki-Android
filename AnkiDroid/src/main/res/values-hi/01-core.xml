@@ -66,8 +66,8 @@
         <item quantity="other">%1$d घंटे %2$d शेष</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d दिन %2$d शेष है</item>
-        <item quantity="other">%1$d दिन %2$d शेष</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
     <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए \n+ आइकन का उपयोग करें।</string>

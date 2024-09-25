@@ -66,8 +66,8 @@
         <item quantity="other">%1$d horas %2$d restante</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d día %2$d restante</item>
-        <item quantity="other">%1$d días %2$d restante</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">La colección está vacía</string>
     <string name="no_cards_placeholder_description">Empieza añadiendo tarjetas usando el ícono +</string>
