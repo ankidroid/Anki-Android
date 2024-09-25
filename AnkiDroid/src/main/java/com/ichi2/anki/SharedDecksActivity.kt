@@ -122,7 +122,7 @@ class SharedDecksActivity : AnkiActivity() {
         ) {
             super.onReceivedHttpError(view, request, errorResponse)
 
-            if (errorResponse?.statusCode != 429) return
+            if (errorResponse?.statusCode != HTTP_STATUS_TOO_MANY_REQUESTS) return
 
             // If a user is logged in, they see: "Daily limit exceeded; please try again tomorrow."
             // We have nothing we can do here
@@ -131,22 +131,7 @@ class SharedDecksActivity : AnkiActivity() {
             // The following cases are handled below:
             // "Please log in to download more decks." - on clicking "Download"
             // "Please log in to perform more searches" - on searching
-
-            // TODO: the result of login is typically redirecting the user to their decks
-            // this should be improved
-
-            showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
-                if (isLoggedIn()) return@showSnackbar
-                setAction(R.string.sign_up) {
-                    webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
-                }
-            }
-            if (redirectTimes++ < 3) {
-                Timber.i("HTTP 429, redirecting to login")
-                webView.loadUrl(getString(R.string.shared_decks_login_url))
-            } else {
-                Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
-            }
+            redirectUserToSignUpOrLogin()
         }
 
         override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
@@ -154,11 +139,48 @@ class SharedDecksActivity : AnkiActivity() {
             shouldHistoryBeCleared = false
             super.onReceivedError(view, request, error)
         }
+
+        /**
+         * Redirects the user to a login page
+         *
+         * A message is shown informing the user they need to log in to download more decks
+         *
+         * If the user has not logged in **inside AnkiDroid** then the message provides
+         * the user with an action to sign up
+         *
+         * The redirect is not performed if [redirectTimes] is 3 or more
+         */
+        private fun redirectUserToSignUpOrLogin() {
+            // inform the user they need to log in as they've hit a rate limit
+            showSnackbar(R.string.shared_decks_login_required, LENGTH_INDEFINITE) {
+                if (isLoggedIn()) return@showSnackbar
+
+                // If a user is not logged in inside AnkiDroid, assume they have no AnkiWeb account
+                // and give them the option to sign up
+                setAction(R.string.sign_up) {
+                    webView.loadUrl(getString(R.string.shared_decks_sign_up_url))
+                }
+            }
+
+            // redirect user to /account/login
+            // TODO: the result of login is typically redirecting the user to their decks
+            // this should be improved
+
+            if (redirectTimes++ < 3) {
+                val url = getString(R.string.shared_decks_login_url)
+                Timber.i("HTTP 429, redirecting to login: '$url'")
+                webView.loadUrl(url)
+            } else {
+                // Ensure that we do not have an infinite redirect
+                Timber.w("HTTP 429 redirect limit exceeded, only displaying message")
+            }
+        }
     }
 
     companion object {
         const val SHARED_DECKS_DOWNLOAD_FRAGMENT = "SharedDecksDownloadFragment"
         const val DOWNLOAD_FILE = "DownloadFile"
+        private const val HTTP_STATUS_TOO_MANY_REQUESTS = 429
     }
 
     // Show WebView with AnkiWeb shared decks with the functionality to capture downloads and import decks.
