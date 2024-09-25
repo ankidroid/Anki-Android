@@ -74,12 +74,12 @@
         <item quantity="other">تبقى %1$d ساعة و%2$d دقيقة</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="zero">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="one">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="two">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="few">تبقى %1$d أيام و%2$d ساعة</item>
-        <item quantity="many">تبقى %1$d يوم و%2$d ساعة</item>
-        <item quantity="other">تبقى %1$d يوم و%2$d ساعة</item>
+        <item quantity="zero">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="two">%1$d days %2$dh left</item>
+        <item quantity="few">%1$d days %2$dh left</item>
+        <item quantity="many">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة البطاقات\nباستخدام أيقونة +.</string>

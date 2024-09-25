@@ -64,7 +64,7 @@
         <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">အစုအဝေး</string>
     <string name="no_cards_placeholder_description">ကတ်ထပ်ထည့်</string>

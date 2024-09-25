@@ -66,8 +66,8 @@
         <item quantity="other">%1$d soat %2$d minut qoldi</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d kun %2$d soat qoldi</item>
-        <item quantity="other">%1$d kun %2$d soat qoldi</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">To\'plam bo\'sh</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>

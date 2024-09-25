@@ -66,8 +66,8 @@
         <item quantity="other">დარჩენილია %1$d საათი და %2$d წუთი</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">დარჩენილია %1$d დღე და %2$d საათი</item>
-        <item quantity="other">დარჩენილია %1$d დღე და %2$d საათი</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">კოლექცია ცარიელია</string>
     <string name="no_cards_placeholder_description">ატვირთეთ ბარათები\n+ნიშნით</string>

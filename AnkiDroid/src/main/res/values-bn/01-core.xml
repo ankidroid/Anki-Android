@@ -66,8 +66,8 @@
         <item quantity="other">%1$d ঘণ্টা %2$d মিনিট বাকি</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d দিন %2$d ঘন্টা বাকি</item>
-        <item quantity="other">%1$d দিন %2$d ঘন্টা বাকি</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">সংগ্রহটি খালি</string>
     <string name="no_cards_placeholder_description">কার্ড অ্যাড করা শুরু করুন\n+ আইকন চেপে</string>

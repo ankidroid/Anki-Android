@@ -70,10 +70,10 @@
         <item quantity="other">נותרו %1$d שעות %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">נותר %1$d יום %2$d</item>
-        <item quantity="two">נותרו %1$d ימים %2$d</item>
-        <item quantity="many">נותרו %1$d ימים %2$d</item>
-        <item quantity="other">נותרו %1$d ימים %2$d</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="two">%1$d days %2$dh left</item>
+        <item quantity="many">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
     <string name="no_cards_placeholder_description">אפשר להוסיף כרטיסים\n

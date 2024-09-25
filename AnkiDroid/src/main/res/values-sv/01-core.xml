@@ -66,8 +66,8 @@
         <item quantity="other">%1$d timmar %2$d kvar</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d dag %2$d kvar</item>
-        <item quantity="other">%1$d dagar %2$d kvar</item>
+        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="other">%1$d days %2$dh left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Samlingen är tom</string>
     <string name="no_cards_placeholder_description">Börja lägga till kort\nmed + knappen</string>
