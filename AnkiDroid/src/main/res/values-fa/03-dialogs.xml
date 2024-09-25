@@ -50,9 +50,9 @@
     <string name="delete_deck_title">حذف دسته؟</string>
     <plurals name="delete_deck_message">
         <item quantity="one">حذف همه کارت ها در دسته ی %1$s؟ این دسته شامل %2$d کارت است</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="other">حذف همه کارت ها در دسته ی %1$s؟ این دسته شامل %2$d عدد کارت است</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">آبا می خواهید دسته فیلتر شده %s را حذف کنید و همه کارت ها را به دسته اصلیشان بفرستید؟</string>
     <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
     <string name="tts_no_tts">حرف نزن</string>
     <string name="unused_strings">\n\nفایل های استفاده نشده:\n</string>
@@ -257,14 +257,14 @@
     <string name="open">باز کن</string>
     <string name="change_cloze_number">تغییر شماره Cloze</string>
     <string name="cloze_number">شماره Cloze:</string>
-    <string name="change_editor_mode">Change editor mode</string>
+    <string name="change_editor_mode">حالت ویرایشگر را تغییر بده</string>
     <string name="open_note_editor">ویرایشگر یادداشت را باز کن</string>
     <string name="change_cloze_mode">حالت کلوز را تغییر بده</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView سیستم قدیمی است. برخی ویژگی‌ها به درستی کار نخواهند کرد. لطفاً آن را به‌روزرسانی کنید. \n\nنسخه نصب‌شده: %1$d\nحداقل نسخه مورد نیاز: %2$d</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">زبان پشتیبانی نشده است</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
+    <string name="tts_error_dialog_reason_text">موتور متن به گفتار <b>%1$s</b> این زبان را همایت نمیکند: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">موتور را تغییر بده</string>
     <string name="tts_error_dialog_supported_voices_button_text">گزینه های صدا</string>
 </resources>
