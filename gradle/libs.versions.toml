@@ -76,7 +76,7 @@ javaSemver = "0.10.2"
 json = "20240303"
 jsoup = "1.18.1"
 androidTestJunit = "1.2.1"
-junitJupiter= "5.11.0"
+junitJupiter= "5.11.1"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.0.20'
 kotlinxSerializationJson = "1.7.3"
