@@ -238,7 +238,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">Φίλτρο</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">Αναζήτηση</string>
     <string name="deck_conf_cram_limit" maxLength="41">Περιορισμός κατά</string>
-    <string name="deck_conf_cram_order" maxLength="41">Επιλογή καρτών κατά</string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Επαναπρογραμματισμός</string>
     <string name="deck_conf_cram_reschedule_summ">Επαναπρογραμματισμός καρτών με βάση τις απαντήσεις μου σε αυτή την τράπουλα</string>
     <string name="deck_conf_cram_filter_2_check">Ενεργοποίηση δεύτερου φίλτρου</string>

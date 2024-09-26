@@ -236,7 +236,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">వడపోత</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">శోధన</string>
     <string name="deck_conf_cram_limit" maxLength="41">పరిమితి</string>
-    <string name="deck_conf_cram_order" maxLength="41">కార్డులు ఎంపిక చేశాయి</string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">వాయిదా</string>
     <string name="deck_conf_cram_reschedule_summ">ఈ డెక్లో నా సమాధానాల ఆధారంగా కార్డులను రిచెస్ చేయండి</string>
     <string name="deck_conf_cram_filter_2_check">రెండవ ఫిల్టర్‌ని ప్రారంభించండి</string>
