@@ -45,7 +45,9 @@ class ControlsSettingsFragment : SettingsFragment() {
 
     private fun setDynamicTitle() {
         findPreference<ControlPreference>(getString(R.string.reschedule_command_key))?.let {
-            it.title = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            val preferenceTitle = TR.actionsSetDueDate().toSentenceCase(R.string.sentence_set_due_date)
+            it.title = preferenceTitle
+            it.dialogTitle = preferenceTitle
         }
         findPreference<ControlPreference>(getString(R.string.toggle_whiteboard_command_key))?.let {
             it.title = getString(R.string.gesture_toggle_whiteboard).toSentenceCase(R.string.sentence_gesture_toggle_whiteboard)
