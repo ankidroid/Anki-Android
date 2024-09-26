@@ -102,8 +102,8 @@ object LanguageUtil {
         "Português (Portugal)" to "pt-PT", // Portuguese (Portugal)
         "Română" to "ro", // Romanian
         "Русский" to "ru", // Russian
-        "Santali" to "sat", // Santali
-        "Sardinian" to "sc", // Sardinian
+        "ᱥᱟᱱᱛᱟᱲᱤ" to "sat", // Santali
+        "Sardu" to "sc", // Sardinian
         "Slovenčina" to "sk", // Slovak
         "Slovenščina" to "sl", // Slovenian
         "Shqip" to "sq", // Albanian
