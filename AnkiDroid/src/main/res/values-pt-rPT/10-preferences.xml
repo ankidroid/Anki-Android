@@ -238,7 +238,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">Filtro</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">Procurar</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limitar a</string>
-    <string name="deck_conf_cram_order" maxLength="41">fichas selecionadas por</string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reagendar</string>
     <string name="deck_conf_cram_reschedule_summ">Reagendar as fichas, com base nas minhas respostas neste baralho</string>
     <string name="deck_conf_cram_filter_2_check">Ativar segundo filtro</string>

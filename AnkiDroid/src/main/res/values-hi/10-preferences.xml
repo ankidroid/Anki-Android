@@ -234,7 +234,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">फ़िल्टर</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">खोज</string>
     <string name="deck_conf_cram_limit" maxLength="41">करने के लिए सीमा</string>
-    <string name="deck_conf_cram_order" maxLength="41">द्वारा चयनित कार्ड</string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">पुनः शेड्यूल करें</string>
     <string name="deck_conf_cram_reschedule_summ">इस डेक में मेरे जवाब के आधार पर कार्ड पुनर्निर्धारित</string>
     <string name="deck_conf_cram_filter_2_check">दूसरा फ़िल्टर सक्षम करें</string>

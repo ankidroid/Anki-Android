@@ -235,7 +235,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">フィルター</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">抽出条件</string>
     <string name="deck_conf_cram_limit" maxLength="41">抽出件数の上限</string>
-    <string name="deck_conf_cram_order" maxLength="41">抽出の順序</string>
+    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
