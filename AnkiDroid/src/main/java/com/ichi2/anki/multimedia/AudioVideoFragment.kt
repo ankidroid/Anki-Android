@@ -30,7 +30,6 @@ import androidx.annotation.OptIn
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -61,8 +60,6 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
 
     override val title: String
         get() = getTitleForFragment(selectedMediaOptions, requireContext())
-
-    private val viewModel: MultimediaViewModel by viewModels()
 
     /**
      * Launches an activity to pick audio or video file from the device

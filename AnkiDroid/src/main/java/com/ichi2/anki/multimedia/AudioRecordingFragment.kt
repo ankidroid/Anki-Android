@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.CrashReportService
@@ -41,8 +40,6 @@ import timber.log.Timber
 class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_recording) {
     override val title: String
         get() = resources.getString(R.string.multimedia_editor_field_editing_audio)
-
-    private val viewModel: MultimediaViewModel by viewModels()
 
     private var audioRecordingController: AudioRecordingController? = null
 

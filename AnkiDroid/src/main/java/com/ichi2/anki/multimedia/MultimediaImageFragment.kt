@@ -33,7 +33,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.os.BundleCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.canhub.cropper.CropException
 import com.google.android.material.button.MaterialButton
@@ -76,8 +75,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private lateinit var imagePreview: ImageView
     private lateinit var imageFileSize: TextView
-
-    private val viewModel: MultimediaViewModel by viewModels()
 
     private lateinit var selectedImageOptions: ImageOptions
 

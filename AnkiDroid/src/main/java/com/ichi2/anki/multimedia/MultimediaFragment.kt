@@ -23,6 +23,8 @@ import android.os.Bundle
 import android.text.format.Formatter
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
@@ -31,14 +33,20 @@ import androidx.core.content.FileProvider
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.show
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
@@ -50,10 +58,11 @@ import java.io.File
  *
  * @param layout The layout resource ID to be inflated by this fragment.
  */
-// TODO: show discard dialog in case there are changes
 abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
 
     abstract val title: String
+
+    val viewModel: MultimediaViewModel by viewModels()
 
     protected var ankiCacheDirectory: String? = null
 
@@ -62,6 +71,7 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     protected lateinit var note: IMultimediaEditableNote
     protected var imageUri: Uri? = null
 
+    @NeedsTest("test discard dialog shown in case there are changes")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -80,6 +90,26 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 }
             }
         }
+
+        val backCallback = object : OnBackPressedCallback(
+            enabled = viewModel.currentMultimediaPath.value != null
+        ) {
+            override fun handleOnBackPressed() {
+                DiscardChangesDialog.showDialog(requireContext()) {
+                    Timber.i("MultimediaFragment:: OK button pressed to confirm discard changes")
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.currentMultimediaPath.collectLatest { value ->
+                backCallback.isEnabled = value != null
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
     }
 
     /**
