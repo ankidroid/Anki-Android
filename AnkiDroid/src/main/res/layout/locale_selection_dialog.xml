@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ActionBarStyle"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/appBarColor"
         android:layout_alignParentTop="true"
         app:title="@string/locale_selection_dialog_title_new"
         app:popupTheme="@style/ActionBar.Popup"
