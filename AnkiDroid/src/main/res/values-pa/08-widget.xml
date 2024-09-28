@@ -45,32 +45,32 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">ਕਾਰਡ ਬਕਾਇਆ</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d AnkiDroid ਕਾਰਡ ਬਕਾਇਆ ਹੈ</item>
+        <item quantity="other">%d AnkiDroid ਕਾਰਡ ਬਕਾਇਆ ਹੈ</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid ਛੋਟਾ</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d ਕਾਰਡ ਬਕਾਇਆ ਹੈ</item>
+        <item quantity="other">%d ਕਾਰਡ ਬਕਾਇਆ ਹਨ</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d ਮਿੰਟ ਬਾਕੀ</item>
+        <item quantity="other">%d ਮਿੰਟ ਬਾਕੀ</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
-    <string name="deck_picker_widget_description">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="widget_add_note_button">ਨਵਾਂ AnkiDroid ਨੋਟ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="deck_picker_widget_description">ਡੈੱਕ ਚੋਣਕਾਰ</string>
+    <string name="card_analysis_extra_widget_description">ਕਾਰਡ ਵਿਸ਼ਲੇਸ਼ਣ</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">ਡੇਕ ਚੁਣੋ</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">ਇੱਕ ਡੇਕ ਚੁਣੋ</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">ਵਿਜੇਟ ਵਿੱਚ ਪ੍ਰਦਰਸ਼ਿਤ ਕਰਨ ਲਈ ਡੇਕ ਚੁਣੋ। + ਆਈਕਨ ਨਾਲ ਡੈੱਕ ਚੁਣੋ।</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">ਡੇਕ ਹਟਾਇਆ ਗਿਆ</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">ਇਹ ਡੈੱਕ ਪਹਿਲਾਂ ਹੀ ਚੁਣਿਆ ਹੋਇਆ ਹੈ</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">You can select up to %d deck.</item>
-        <item quantity="other">You can select up to %d decks.</item>
+        <item quantity="one">ਤੁਸੀਂ %d ਡੇਕ ਤੱਕ ਚੁਣ ਸਕਦੇ ਹੋ।</item>
+        <item quantity="other">ਤੁਸੀਂ %d ਡੇਕ ਤੱਕ ਚੁਣ ਸਕਦੇ ਹੋ।</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Missing deck. Please reconfigure</string>
+    <string name="empty_widget" comment="To denote the widget is empty">ਗੁੰਮ ਡੇਕ। ਕਿਰਪਾ ਕਰਕੇ ਮੁੜ ਸੰਰਚਿਤ ਕਰੋ</string>
 </resources>

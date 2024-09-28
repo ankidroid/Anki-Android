@@ -77,7 +77,7 @@
     <string name="no_note_to_edit">ਸੰਪਾਦਨ ਕਰਨ ਲਈ ਕੋਈ ਨੋਟ ਨਹੀਂ ਹਨ</string>
     <string name="card_browser_list_my_searches_remove_content">ਕੀ “%1$s” ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</string>
     <string name="card_browser_change_display_order">ਡਿਸਪਲੇ ਆਰਡਰ ਬਦਲੋ</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">ਖੋਜ</string>
     <string name="card_browser_change_display_order_title">ਡਿਸਪਲੇ ਆਰਡਰ ਚੁਣੋ</string>
     <string name="card_details_tags">ਟੈਗਸ</string>
     <string-array name="card_browser_order_labels">
@@ -85,23 +85,23 @@
         <item>ਖੇਤਰ ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ</item>
         <item>ਸ੍ਰਿਸ਼ਟੀ ਦੇ ਸਮੇਂ ਦੁਆਰਾ</item>
         <item>ਸਮੇਂ ਅਨੁਸਾਰ ਸੋਧ ਨੋਟ ਕਰੋ</item>
-        <item>By card modification time</item>
-        <item>By due time</item>
-        <item>By interval</item>
-        <item>By ease</item>
-        <item>By reviews</item>
-        <item>By lapses</item>
+        <item>ਕਾਰਡ ਸੋਧ ਸਮੇਂ ਦੁਆਰਾ</item>
+        <item>ਨਿਰਧਾਰਤ ਸਮੇਂ ਦੁਆਰਾ</item>
+        <item>ਅੰਤਰਾਲ ਦੁਆਰਾ</item>
+        <item>ਆਸਾਨੀ ਨਾਲ</item>
+        <item>ਸਮੀਖਿਆਵਾਂ ਦੁਆਰਾ</item>
+        <item>ਲਪੇਟਿਆ</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="card_browser_select_all">ਸਭ ਨੂੰ ਚੁਣੋ</string>
+    <string name="card_browser_select_none">ਕੋਈ ਨਹੀਂ ਚੁਣੋ</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ਨਵਾਂ)</string>
+    <string name="card_browser_due_filtered_card">(ਫਿਲਟਰ ਕੀਤਾ)</string>
+    <string name="card_browser_interval_learning_card">(ਸਿੱਖਣਾ)</string>
+    <string name="card_browser_no_cards_in_deck">ਡੇਕ \'%s\' ਵਿੱਚ ਕੋਈ ਕਾਰਡ ਨਹੀਂ ਮਿਲਿਆ</string>
+    <string name="card_browser_search_all_decks">ਸਾਰੇ ਡੇਕ ਖੋਜੋ</string>
+    <string name="card_browser_unknown_deck_name">ਅਗਿਆਤ</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">ਸਮੱਗਰੀ ਨੂੰ ਕੱਟੋ</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">ਅੱਜ \'0 %1$s\' ਹੈ, ਕੱਲ੍ਹ \'1 %2$s\' ਹੈ, ਆਦਿ&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">ਕਾਰਡ ਨਿਰਯਾਤ ਕਰੋ</item>
         <item quantity="other">ਕਾਰਡ ਨਿਰਯਾਤ ਕਰੋ</item>
