@@ -7,17 +7,19 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.Permissions.hasLegacyStorageAccessPermission
 import timber.log.Timber
 import java.util.Calendar
 
+@NeedsTest("Check on various Android versions that this can execute")
 class BootService : BroadcastReceiver() {
     private var failedToShowNotifications = false
     override fun onReceive(context: Context, intent: Intent) {
@@ -25,7 +27,7 @@ class BootService : BroadcastReceiver() {
             Timber.d("BootService - Already run")
             return
         }
-        if (!hasLegacyStorageAccessPermission(context)) {
+        if (!grantedStoragePermissions(context, showToast = false)) {
             Timber.w("Boot Service did not execute - no permissions")
             return
         }
@@ -67,7 +69,7 @@ class BootService : BroadcastReceiver() {
         // getInstance().getColSafe
         return try {
             CollectionManager.getColUnsafe()
-        } catch (e: Exception) {
+        } catch (e: Error) { // java.lang.UnsatisfiedLinkError occurs in tests
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
             null
         }
