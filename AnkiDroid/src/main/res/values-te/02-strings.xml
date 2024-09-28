@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">కార్డులు యాదృచ్ఛిక ఎంపిక అధ్యయనం</string>
     <string name="custom_study_preview_new">క్రొత్త కార్డులను పరిదృశ్యం చేయండి</string>
     <string name="custom_study_limit_tags">నిర్దిష్ట ట్యాగ్లకు పరిమితం చేయండి</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
     <string name="discard">విస్మరించండి</string>

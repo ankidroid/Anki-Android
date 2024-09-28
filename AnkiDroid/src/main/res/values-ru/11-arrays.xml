@@ -84,7 +84,7 @@
     <string name="answer_good">Хороший ответ</string>
     <string name="answer_easy">Простой ответ</string>
     <string name="gesture_play">Воспроизвести медиафайл</string>
-    <string name="gesture_abort_learning">Прервать учёбу</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Красный флажок</string>
     <string name="gesture_flag_orange">Оранжевый флажок</string>
     <string name="gesture_flag_green">Зелёный флажок</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Убрать флажок</string>
     <string name="gesture_page_up">На страницу вверх</string>
     <string name="gesture_page_down">На страницу вниз</string>
-    <string name="gesture_abort_sync">Отменить обучение и синхронизацию</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Переключить доску</string>
     <string name="gesture_show_hint">Показать подсказку</string>
     <string name="gesture_show_all_hints">Показать все подсказки</string>

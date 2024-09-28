@@ -89,6 +89,12 @@
     <string name="custom_study_random_selection">Учить случайный набор карточек</string>
     <string name="custom_study_preview_new">Просмотреть новые</string>
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="few">+%d buried</item>
+        <item quantity="many">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Править запись</string>
     <string name="discard">Отменить</string>

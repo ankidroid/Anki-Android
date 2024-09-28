@@ -53,7 +53,6 @@
     <string name="drawing">ଚିତ୍ରାଙ୍କନ</string>
     <string name="send_feedback">ମତାମତ ପଠାନ୍ତୁ</string>
     <string name="studyoptions_start">ଅଧ୍ୟୟନ</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>

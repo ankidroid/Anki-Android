@@ -84,7 +84,7 @@
     <string name="answer_good">Jawab baik</string>
     <string name="answer_easy">Jawab Senang</string>
     <string name="gesture_play">Main media</string>
-    <string name="gesture_abort_learning">Batal pembelajaran</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Togel Tanda Merah</string>
     <string name="gesture_flag_orange">Togel Tanda Jingga</string>
     <string name="gesture_flag_green">Togel Tanda Hijau</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Buang Tanda</string>
     <string name="gesture_page_up">Laman Atas</string>
     <string name="gesture_page_down">Laman Bawah</string>
-    <string name="gesture_abort_sync">Batal Pembelajaran dan Penyegerakan</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Togel Papan Putih</string>
     <string name="gesture_show_hint">Beri Petunjuk</string>
     <string name="gesture_show_all_hints">Beri Semua Petunjuk</string>

@@ -89,6 +89,9 @@
     <string name="custom_study_random_selection">隨機選擇卡片來複習</string>
     <string name="custom_study_preview_new">預覽新卡片</string>
     <string name="custom_study_limit_tags">僅限特定標籤的卡片</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">編輯筆記</string>
     <string name="discard">捨棄</string>

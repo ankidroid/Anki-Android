@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Studia una selezione casuale di carte</string>
     <string name="custom_study_preview_new">Anteprima carte nuove</string>
     <string name="custom_study_limit_tags">Limita ad etichette particolari</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Modifica nota</string>
     <string name="discard">Scarta</string>

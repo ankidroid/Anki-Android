@@ -89,6 +89,9 @@
     <string name="custom_study_random_selection">Ulang kaji kad pilihan rawak</string>
     <string name="custom_study_preview_new">Pratonton kad baru</string>
     <string name="custom_study_limit_tags">Had kepada tag tertentu</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Sunting nota</string>
     <string name="discard">Discard</string>

@@ -84,7 +84,7 @@
     <string name="answer_good">Vastaa \"hyvä\"</string>
     <string name="answer_easy">Vastaa \"helppo\"</string>
     <string name="gesture_play">Toista media</string>
-    <string name="gesture_abort_learning">Keskeytä oppiminen</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Punainen lippu päälle/pois</string>
     <string name="gesture_flag_orange">Oranssi lippu päälle/pois</string>
     <string name="gesture_flag_green">Vihreä lippu päälle/pois</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Poista lippu</string>
     <string name="gesture_page_up">Sivu ylös</string>
     <string name="gesture_page_down">Sivu alas</string>
-    <string name="gesture_abort_sync">Keskeytä oppiminen ja synkronoi</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Kirjoitustaulu käyttöön/pois käytöstä</string>
     <string name="gesture_show_hint">Näytä vihje</string>
     <string name="gesture_show_all_hints">Näytä kaikki vihjeet</string>

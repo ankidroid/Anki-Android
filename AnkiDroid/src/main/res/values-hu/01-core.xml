@@ -53,7 +53,6 @@
     <string name="drawing">Rajz</string>
     <string name="send_feedback">Visszajelzés küldése</string>
     <string name="studyoptions_start">Gyakorlás</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Nagyítás</string>
     <string name="collapse">Összecsukás</string>

@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Kārḍān̄cī ēka yādr̥cchika nivaḍa abhyāsa</string>
     <string name="custom_study_preview_new">Navīna kārḍsacē pūrvāvalōkana karā</string>
     <string name="custom_study_limit_tags">Viśiṣṭa ṭĕgasāṭhī maryādā</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Ṭīpa sampādita karā</string>
     <string name="discard">Discard</string>

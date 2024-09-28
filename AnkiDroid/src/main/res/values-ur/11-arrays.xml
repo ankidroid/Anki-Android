@@ -84,7 +84,7 @@
     <string name="answer_good">اچھا جواب دیں</string>
     <string name="answer_easy">آسان جواب دیں</string>
     <string name="gesture_play">میڈیا چلائیں۔</string>
-    <string name="gesture_abort_learning">سیکھنے کو روکنا</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>
     <string name="gesture_flag_orange">اورنج فلیگ ٹوگل کریں</string>
     <string name="gesture_flag_green">سبز پرچم ٹوگل کریں</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">جھنڈا ہٹا دیں</string>
     <string name="gesture_page_up">صفحہ اوپر</string>
     <string name="gesture_page_down">نیچے صفحہ</string>
-    <string name="gesture_abort_sync">سیکھنے اور مطابقت پذیری کو ختم کریں۔</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">وائٹ بورڈ کو ٹوگل کریں۔</string>
     <string name="gesture_show_hint">اشارہ دکھائیں</string>
     <string name="gesture_show_all_hints">تمام اشارے دکھائیں</string>

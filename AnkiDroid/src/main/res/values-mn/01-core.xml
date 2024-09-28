@@ -53,7 +53,6 @@
     <string name="drawing">Зураг нэмэх</string>
     <string name="send_feedback">Санал хүсэлт илгээх</string>
     <string name="studyoptions_start">Эхлэх</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Дэд цуглуулгуудыг харах</string>
     <string name="collapse">Дэд цуглуулгуудыг нуух</string>

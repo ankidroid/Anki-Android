@@ -53,7 +53,6 @@
     <string name="drawing">Gambar</string>
     <string name="send_feedback">Kirim Masukan</string>
     <string name="studyoptions_start">Belajar</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Perluas</string>
     <string name="collapse">Tutup</string>

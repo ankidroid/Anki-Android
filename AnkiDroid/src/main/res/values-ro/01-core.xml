@@ -53,7 +53,6 @@
     <string name="drawing">Desen</string>
     <string name="send_feedback">Trimite recenzie</string>
     <string name="studyoptions_start">Studiază Acum</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Extindeți</string>
     <string name="collapse">Restrângeți</string>

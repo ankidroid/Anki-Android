@@ -53,7 +53,6 @@
     <string name="drawing">Drawing</string>
     <string name="send_feedback">Пошаљи повратне информације</string>
     <string name="studyoptions_start">Започни учење</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Прошири</string>
     <string name="collapse">Умањи</string>

@@ -84,7 +84,7 @@
     <string name="answer_good">ଉତ୍ତର ଭଲ</string>
     <string name="answer_easy">ଉତ୍ତର ସହଜ</string>
     <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
-    <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରିବା</string>
     <string name="gesture_flag_orange">କମଳା ପତାକା ଟୋଗଲ୍ କରିବା</string>
     <string name="gesture_flag_green">ସବୁଜ ପତାକା ଟୋଗଲ୍ କରିବା</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">ପତାକା ହଟାନ୍ତୁ</string>
     <string name="gesture_page_up">ଉପର ପୃଷ୍ଠା</string>
     <string name="gesture_page_down">ତଳ ପୃଷ୍ଠା</string>
-    <string name="gesture_abort_sync">ପଢ଼ିବା ବନ୍ଦ କରି ସିଙ୍କ୍ କରନ୍ତୁ</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">ଧଳାପଟା ଟୋଗଲ୍ କରିବା</string>
     <string name="gesture_show_hint">ସଙ୍କେତ ଦେଖାଅ</string>
     <string name="gesture_show_all_hints">ସବୁ ସଙ୍କେତ ଦେଖାଅ</string>

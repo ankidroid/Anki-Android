@@ -84,7 +84,7 @@
     <string name="answer_good">Answer good</string>
     <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">미디어 재생</string>
-    <string name="gesture_abort_learning">학습 중단</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">빨간색 플래그 넣기 / 빼기</string>
     <string name="gesture_flag_orange">주황색 플래그 넣기 / 빼기</string>
     <string name="gesture_flag_green">초록색 플래그 넣기 / 빼기</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">플래그 빼기</string>
     <string name="gesture_page_up">페이지 위로</string>
     <string name="gesture_page_down">페이지 아래로</string>
-    <string name="gesture_abort_sync">학습을 중단하고 동기화</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">화이트보드 켜기 / 끄기</string>
     <string name="gesture_show_hint">Show Hint</string>
     <string name="gesture_show_all_hints">Show All Hints</string>

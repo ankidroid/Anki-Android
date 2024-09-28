@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Μελέτη μιας τυχαίας επιλογής καρτών</string>
     <string name="custom_study_preview_new">Προεπισκόπηση νέων καρτών</string>
     <string name="custom_study_limit_tags">Περιορισμός σε συγκεκριμένες ετικέτες</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
     <string name="discard">Απόρριψη</string>

@@ -53,7 +53,6 @@
     <string name="drawing">Teckning</string>
     <string name="send_feedback">Skicka feedback</string>
     <string name="studyoptions_start">Plugga nu</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Expandera</string>
     <string name="collapse">Minimera</string>

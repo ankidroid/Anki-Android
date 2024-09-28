@@ -89,6 +89,9 @@
     <string name="custom_study_random_selection">カードをランダムに選んで学習</string>
     <string name="custom_study_preview_new">新規カードを予習</string>
     <string name="custom_study_limit_tags">タグで抽出して学習</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ノートを編集</string>
     <string name="discard">破棄</string>

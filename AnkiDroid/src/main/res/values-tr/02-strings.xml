@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
     <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notu düzenle</string>
     <string name="discard">Vazgeç</string>

@@ -53,7 +53,6 @@
     <string name="drawing">绘图</string>
     <string name="send_feedback">畀意見</string>
     <string name="studyoptions_start">學習</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">展開</string>
     <string name="collapse">收起</string>

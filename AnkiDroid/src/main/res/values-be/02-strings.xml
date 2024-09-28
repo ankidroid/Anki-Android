@@ -89,6 +89,12 @@
     <string name="custom_study_random_selection">Вывучыць выпадкова адабраныя карткі</string>
     <string name="custom_study_preview_new">Папярэдні прагляд новых картак</string>
     <string name="custom_study_limit_tags">Абмежаваць вызначанымі меткамі</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="few">+%d buried</item>
+        <item quantity="many">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Рэдагаваць нататку</string>
     <string name="discard">Адхіліць</string>

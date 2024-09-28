@@ -84,7 +84,7 @@
     <string name="answer_good">छान उत्तर द्या</string>
     <string name="answer_easy">सहज उत्तर द्या</string>
     <string name="gesture_play">मीडिया प्ले करा</string>
-    <string name="gesture_abort_learning">शिक्षण रद्द करा</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">लाल ध्वज टॉगल करा</string>
     <string name="gesture_flag_orange">ऑरेंज ध्वज टॉगल करा</string>
     <string name="gesture_flag_green">ग्रीन ध्वज टॉगल करा</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">ध्वज काढा</string>
     <string name="gesture_page_up">पृष्ठ वर</string>
     <string name="gesture_page_down">पृष्ठ खाली</string>
-    <string name="gesture_abort_sync">निरस्त शिक्षण आणि संकालन</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">व्हाईटबोर्ड टॉगल करा</string>
     <string name="gesture_show_hint">इशारा दर्शवा</string>
     <string name="gesture_show_all_hints">सर्व सूचना दाखवा</string>

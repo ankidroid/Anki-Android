@@ -84,7 +84,7 @@
     <string name="answer_good">إجابة جيدة</string>
     <string name="answer_easy">إجابة سهلة</string>
     <string name="gesture_play">تشغيل الوسائط</string>
-    <string name="gesture_abort_learning">توقف عن التعلم</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">تفعيل المؤشر الأحمر</string>
     <string name="gesture_flag_orange">تفعيل المؤشر البرتقالي</string>
     <string name="gesture_flag_green">تفعيل المؤشر الأخضر</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">إزالة المؤشر</string>
     <string name="gesture_page_up">تمرير صفحة إلى الأعلى</string>
     <string name="gesture_page_down">تمرير صفحة إلى الأسفل</string>
-    <string name="gesture_abort_sync">إيقاف التعلم والمزامنة</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">تمكين اللوحة البيضاء</string>
     <string name="gesture_show_hint">إظهار التلميح</string>
     <string name="gesture_show_all_hints">إظهار كل التلميحات</string>

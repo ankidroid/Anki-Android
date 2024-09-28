@@ -84,7 +84,7 @@
     <string name="answer_good">Answer good</string>
     <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Пускане на медия</string>
-    <string name="gesture_abort_learning">Прекъсване на обучението</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
     <string name="gesture_flag_orange">Toggle Orange Flag</string>
     <string name="gesture_flag_green">Toggle Green Flag</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Премахване на знаме</string>
     <string name="gesture_page_up">Страница нагоре</string>
     <string name="gesture_page_down">Страница надолу</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
     <string name="gesture_show_hint">Show Hint</string>
     <string name="gesture_show_all_hints">Show All Hints</string>

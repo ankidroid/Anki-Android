@@ -90,6 +90,9 @@
     <string name="custom_study_random_selection">무작위 카드 학습하기</string>
     <string name="custom_study_preview_new">새로운 카드 미리보기</string>
     <string name="custom_study_limit_tags">특정 태그로만 제한하기</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">노트 편집하기</string>
     <string name="discard">삭제</string>

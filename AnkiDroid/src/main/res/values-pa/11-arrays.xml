@@ -84,7 +84,7 @@
     <string name="answer_good">ਵਧੀਆ ਜਵਾਬ ਦਿਓ</string>
     <string name="answer_easy">ਆਸਾਨ ਜਵਾਬ</string>
     <string name="gesture_play">ਮੀਡੀਆ ਚਲਾਓ</string>
-    <string name="gesture_abort_learning">Abort learning</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">ਲਾਲ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
     <string name="gesture_flag_orange">ਸੰਤਰੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
     <string name="gesture_flag_green">ਹਰੀ ਝੰਡੀ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">ਝੰਡਾ ਹਟਾਓ</string>
     <string name="gesture_page_up">ਪੰਨਾ ਅੱਪ</string>
     <string name="gesture_page_down">ਪੰਨਾ ਹੇਠਾਂ</string>
-    <string name="gesture_abort_sync">ਸਿੱਖਣ ਅਤੇ ਸਮਕਾਲੀਕਰਨ ਨੂੰ ਅਧੂਰਾ ਛੱਡੋ</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
     <string name="gesture_show_hint">ਸੰਕੇਤ ਦਿਖਾਓ</string>
     <string name="gesture_show_all_hints">Show All Hints</string>

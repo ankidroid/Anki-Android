@@ -89,6 +89,9 @@
     <string name="custom_study_random_selection">Học các thẻ được chọn ngẫu nhiên</string>
     <string name="custom_study_preview_new">Xem trước thẻ mới</string>
     <string name="custom_study_limit_tags">Giới hạn cho các đuôi cụ thể</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
     <string name="discard">Loại bỏ</string>

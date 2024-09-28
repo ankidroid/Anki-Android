@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Учи случаен подбор от карти</string>
     <string name="custom_study_preview_new">Преглед на нови карти</string>
     <string name="custom_study_limit_tags">Ограничаване до определени тагове</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Промяна на бележка</string>
     <string name="discard">Discard</string>

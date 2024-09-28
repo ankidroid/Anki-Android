@@ -84,7 +84,7 @@
     <string name="answer_good">Jawab baik</string>
     <string name="answer_easy">Jawab mudah</string>
     <string name="gesture_play">Putar media</string>
-    <string name="gesture_abort_learning">Batalkan belajar</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Setel Panji Merah</string>
     <string name="gesture_flag_orange">Setel Panji Jingga</string>
     <string name="gesture_flag_green">Setel Panji Hijau</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Hapus Panji</string>
     <string name="gesture_page_up">Halaman Atas</string>
     <string name="gesture_page_down">Halaman Bawah</string>
-    <string name="gesture_abort_sync">Tidak jadi Belajar dan Sinkronkan</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Atur Whiteboard</string>
     <string name="gesture_show_hint">Tampilkan Petunjuk</string>
     <string name="gesture_show_all_hints">Tampilkan Semua Petunjuk</string>

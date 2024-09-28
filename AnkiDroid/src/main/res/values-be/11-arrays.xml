@@ -84,7 +84,7 @@
     <string name="answer_good">Добры адказ</string>
     <string name="answer_easy">Просты адказ</string>
     <string name="gesture_play">Прайграць медыяфайлы</string>
-    <string name="gesture_abort_learning">Перарваць навучанне</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Пераключыць чырвоны сцяжок</string>
     <string name="gesture_flag_orange">Пераключыць аранжавы сцяжок</string>
     <string name="gesture_flag_green">Пераключыць зялёны сцяжок</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Прыбраць сцяжок</string>
     <string name="gesture_page_up">Папярэдняя старонка</string>
     <string name="gesture_page_down">Наступная старонка</string>
-    <string name="gesture_abort_sync">Перарваць навучанне і сінхранізацыю</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Пераключыць дошку</string>
     <string name="gesture_show_hint">Паказаць падказку</string>
     <string name="gesture_show_all_hints">Паказаць усе падказкі</string>

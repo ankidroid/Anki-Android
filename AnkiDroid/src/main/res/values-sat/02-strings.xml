@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">ᱨᱮᱱᱰᱚᱢ ᱥᱤᱞᱮᱠᱚᱱ ᱠᱟᱰ ᱠᱷᱚᱱ ᱯᱲᱦᱟᱣᱼᱜ ᱢᱮ </string>
     <string name="custom_study_preview_new">ᱱᱟᱶᱟ ᱠᱟᱰ ᱧᱮᱞᱡᱚᱝ ᱢᱮ </string>
     <string name="custom_study_limit_tags">ᱱᱤᱥᱪᱤᱛ ᱴᱮᱜ ᱛᱮ ᱞᱤᱢᱤᱴ ᱢᱮ</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="discard">Discard</string>
