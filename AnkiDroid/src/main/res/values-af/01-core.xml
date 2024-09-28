@@ -66,8 +66,8 @@
         <item quantity="other">%1$d ure en %2$d oor</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d dag %2$d uur oor</item>
+        <item quantity="other">%1$d dae %2$d uur oor</item>
     </plurals>
     <string name="no_cards_placeholder_title">U versameling is leeg</string>
     <string name="no_cards_placeholder_description">Druk die \"+\" om flitskaarte te maak</string>
@@ -189,7 +189,7 @@
     <string name="restore_data_from_ankiweb">herstel vanaf AnkiWeb (aanbeveel)</string>
     <string name="install_non_play_store_ankidroid_recommended">Herstel vouertoegang (aanbeveel)</string>
     <string name="install_non_play_store_ankidroid">Herstel vouertoegang (gevorderd)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
+    <string name="restore_data_from_backup">Herstel vanaf .colpkg rugsteun (gevorderd)</string>
     <string name="create_new_collection">Skep \'n nuwe versameling</string>
     <string name="new_unsafe_collection">Die nuwe versameling sal van jou foon verwyder word as jy AnkiDroid deïnstalleer.</string>
     <!-- Permissions screen -->

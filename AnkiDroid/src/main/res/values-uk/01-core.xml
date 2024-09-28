@@ -70,10 +70,10 @@
         <item quantity="other">Залишилося %1$d годин %2$d </item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="few">%1$d days %2$dh left</item>
-        <item quantity="many">%1$d days %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">Залишився %1$d день %2$d годин</item>
+        <item quantity="few">Залишилось %1$d днів %2$d годин</item>
+        <item quantity="many">Залишилось %1$d днів %2$d годин</item>
+        <item quantity="other">Залишилось %1$d днів %2$d годин</item>
     </plurals>
     <string name="no_cards_placeholder_title">Колекція порожня</string>
     <string name="no_cards_placeholder_description">Почніть додавати картки\nвикористовуючи значок +.</string>

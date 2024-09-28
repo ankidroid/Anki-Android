@@ -148,31 +148,31 @@
     <string name="card_template_editor_front">ਫਰੰਟ ਟੈਂਪਲੇਟ</string>
     <string name="card_template_editor_back">Back template</string>
     <string name="card_template_editor_styling">ਸਟਾਈਲਿੰਗ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_menu_card_browser_appearance">ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ ਦੀ ਦਿੱਖ</string>
+    <string name="card_template_editor_deck_override">ਡੈੱਕ ਓਵਰਰਾਈਡ</string>
+    <string name="card_template_editor_insert_field">ਖੇਤਰ ਸ਼ਾਮਲ ਕਰੋ</string>
     <string name="card_template_editor_select_field">Select field</string>
-    <string name="card_template_editor_cant_delete">At least one card type is required</string>
+    <string name="card_template_editor_cant_delete">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਾਰਡ ਕਿਸਮ ਦੀ ਲੋੜ ਹੈ</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="one">ਇਹ %1$d ਕਾਰਡ ਬਣਾਏਗਾ। ਅੱਗੇ ਵਧਣਾ?</item>
+        <item quantity="other">ਇਹ %1$d ਕਾਰਡ ਬਣਾਏਗਾ। ਅੱਗੇ ਵਧਣਾ?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
         <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
     </plurals>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_save_error">ਕਾਰਡ ਟੈਮਪਲੇਟ ਤਬਦੀਲੀਆਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਵਿੱਚ ਅਸਮਰੱਥ: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">ਬਰਾਊਜ਼ਰ ਦੀ ਦਿੱਖ</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">ਕਾਰਡ ਦੀ ਜਾਣਕਾਰੀ</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+    <string name="read_write_permission_label">AnkiDroid ਡੇਟਾਬੇਸ ਨੂੰ ਪੜ੍ਹੋ ਅਤੇ ਲਿਖੋ</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ</string>
+    <string name="context_menu_anki_card_label">ਅੰਕੀ ਕਾਰਡ</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

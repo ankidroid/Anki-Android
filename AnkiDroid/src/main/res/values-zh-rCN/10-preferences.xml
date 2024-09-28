@@ -235,7 +235,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">筛选器</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">搜索</string>
     <string name="deck_conf_cram_limit" maxLength="41">限制至</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">卡片选择标准</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
     <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>

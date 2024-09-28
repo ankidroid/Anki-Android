@@ -56,12 +56,12 @@
     <string name="no_tts_available_message">ਕੋਈ ਟੈਕਸਟ-ਟੂ-ਸਪੀਚ ਭਾਸ਼ਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
     <string name="tts_no_tts">ਨਾ ਬੋਲੋ</string>
     <string name="unused_strings">\n\nਅਣਵਰਤੀਆਂ ਫਾਈਲਾਂ:\n</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">ਨਵਾਂ ਕਾਰਡ ਬਦਲੋ</string>
+    <string name="reposition_card_dialog_message">ਸ਼ੁਰੂਆਤੀ ਸਥਿਤੀ:</string>
+    <string name="reposition_card_not_new_error">ਸਿਰਫ਼ ਨਵੇਂ ਕਾਰਡਾਂ ਨੂੰ ਹੀ ਮੁੜ-ਸਥਾਪਿਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="one">%d ਕਾਰਡ ਮੁੜ-ਸਥਾਪਤ ਕੀਤਾ ਗਿਆ</item>
+        <item quantity="other">%d ਕਾਰਡ ਮੁੜ-ਸਥਾਪਤ ਕੀਤੇ ਗਏ</item>
     </plurals>
     <string name="reset_card_dialog_title">ਕਾਰਡ ਦੀ ਪ੍ਰਗਤੀ ਨੂੰ ਰੀਸੈਟ ਕਰੋ</string>
     <plurals name="reset_cards_dialog_acknowledge">
@@ -82,12 +82,12 @@
     <string name="custom_study_forgotten">ਅੱਜ ਦੀ ਸਮੀਖਿਆ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
     <string name="custom_study_ahead">x ਦਿਨ ਅੱਗੇ ਦੀ ਸਮੀਖਿਆ ਕਰੋ:</string>
     <string name="custom_study_random">ਡੇਕ ਤੋਂ ਬੇਤਰਤੀਬੇ ਐਕਸ ਕਾਰਡ ਚੁਣੋ:</string>
-    <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
+    <string name="custom_study_preview">ਪਿਛਲੇ x ਦਿਨਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕੀਤੇ ਗਏ ਨਵੇਂ ਕਾਰਡਾਂ ਦੀ ਸੰਖੇਪ ਜਾਣਕਾਰੀ:</string>
+    <string name="custom_study_rebuild_deck_corrupt">ਕਸਟਮ ਸਟੱਡੀ ਡੈੱਕ ਨੂੰ ਦੁਬਾਰਾ ਨਹੀਂ ਬਣਾਇਆ ਜਾ ਸਕਿਆ</string>
     <string name="storage_full_title">ਸਟੋਰੇਜ ਭਰੀ ਹੋਈ ਹੈ</string>
     <string name="storage_almost_full_title">ਸਟੋਰੇਜ ਲਗਭਗ ਭਰੀ ਹੋਈ ਹੈ</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ਕੋਈ ਥਾਂ ਨਹੀਂ</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid ਨੂੰ ਜਾਰੀ ਰੱਖਣ ਲਈ %s ਖਾਲੀ ਸਟੋਰੇਜ ਸਪੇਸ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੁਝ ਥਾਂ ਖਾਲੀ ਕਰੋ</string>
     <string name="restore_backup_title">ਕੀ ਤੁਸੀਂ ਬੈਕਅੱਪ ਰੀਸਟੋਰ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">ਕੋਈ ਹੋਰ ਚੁਣੋ</string>
@@ -107,15 +107,15 @@
     <string name="dialog_positive_overwrite">ਓਵਰਰਾਈਟ ਕਰੋ</string>
     <string name="dialog_positive_repair">ਮੁਰੰਮਤ</string>
     <string name="dialog_positive_replace">ਤਬਦੀਲੀ</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_collection_path_not_dir">ਨਿਰਦਿਸ਼ਟ ਮਾਰਗ ਇੱਕ ਵੈਧ ਡਾਇਰੈਕਟਰੀ ਨਹੀਂ ਸੀ ਨਿਰਦਿਸ਼ਟ ਮਾਰਗ ਇੱਕ ਵੈਧ ਡਾਇਰੈਕਟਰੀ ਨਹੀਂ ਸੀ</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate_title">ਸਰਟੀਫਿਕੇਟ ਪਾਰਸ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
+    <string name="dialog_updated_custom_certificate">ਸਰਟੀਫਿਕੇਟ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
+    <string name="check_media_title">ਕੀ ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰਨੀ ਹੈ?</string>
+    <string name="check_media_warning">ਵੱਡੇ ਮੀਡੀਆ ਸੰਗ੍ਰਹਿ ਦੇ ਨਾਲ ਇਸ ਵਿੱਚ ਲੰਮਾ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ</string>
     <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_acknowledge">Media checked</string>
+    <string name="check_media_acknowledge">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕੀਤੀ ਗਈ</string>
     <string name="check_media_invalid">ਗਲਤ ਏਨਕੋਡਿੰਗ ਵਾਲੀਆਂ ਫਾਈਲਾਂ: %d</string>
     <string name="check_media_unused">ਮੀਡੀਆ ਫੋਲਡਰ ਵਿੱਚ ਫਾਈਲਾਂ ਪਰ ਕਿਸੇ ਵੀ ਕਾਰਡ ਦੁਆਰਾ ਨਹੀਂ ਵਰਤੀਆਂ ਗਈਆਂ: %d</string>
     <string name="check_media_nohave">ਫਾਈਲਾਂ ਕਾਰਡਾਂ \'ਤੇ ਵਰਤੀਆਂ ਗਈਆਂ ਪਰ ਮੀਡੀਆ ਫੋਲਡਰ ਵਿੱਚ ਨਹੀਂ: %d</string>
@@ -131,29 +131,29 @@
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">ਸਾਰੇ ਕਾਰਡ</string>
     <string name="tags_dialog_option_new_cards">ਨਵਾਂ</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ਬਕਾਇਆ</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ਖਾਲੀ ਕਾਰਡ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ&#8230;</string>
     <string name="empty_cards_count">ਮਿਟਾਉਣ ਲਈ ਕਾਰਡ: %d</string>
     <string name="empty_cards_deleted">ਕਾਰਡ ਮਿਟਾਏ ਗਏ: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਮਿਲ ਸਕੀ।</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_failed">ਮਲਟੀਮੀਡੀਆ ਸੰਪਾਦਕ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਅਸਫਲ</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
+    <string name="multimedia_editor_audio_permission_denied">ਆਡੀਓ ਰਿਕਾਰਡਿੰਗ ਦੀ ਇਜਾਜ਼ਤ ਅਸਵੀਕਾਰ ਕੀਤੀ ਗਈ</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid ਅੱਪਗਰੇਡ ਕੀਤਾ ਗਿਆ</string>
     <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
+    <string name="integrity_check_continue_anyway">ਕਿਸੇ ਵੀ ਤਰ੍ਹਾਂ ਜਾਰੀ ਰੱਖੋ</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nਤੁਹਾਡੇ ਕੋਲ ਇਸ ਵੇਲੇ %s ਮੁਫ਼ਤ ਹੈ।</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ਕਾਰਡ ਤੋਂ ਡਾਟਾ ਡੀਕੋਡ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">ਡਾਟਾਬੇਸ ਲਾਕ ਕੀਤਾ</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
+    <string name="database_locked_summary">AnkiDroid ਡੇਟਾਬੇਸ ਕਿਸੇ ਹੋਰ ਐਪਲੀਕੇਸ਼ਨ ਦੁਆਰਾ ਵਰਤੋਂ ਵਿੱਚ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੂਜੀ ਐਪਲੀਕੇਸ਼ਨ ਨੂੰ ਬੰਦ ਕਰੋ ਅਤੇ ਫਿਰ AnkiDroid ਨੂੰ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।</string>
     <string name="incompatible_database_version_title">ਅਸੰਗਤ ਡਾਟਾਬੇਸ ਸੰਸਕਰਣ</string>
     <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
     <!-- Deck Picker Background-->
@@ -163,24 +163,24 @@
     <string name="error_selecting_image">ਚਿੱਤਰ ਚੁਣਨ ਵਿੱਚ ਤਰੁੱਟੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂਅਲ ਵੇਖੋ। %s</string>
     <string name="error_deleting_image">ਚਿੱਤਰ ਨੂੰ ਮਿਟਾਉਣ ਵਿੱਚ ਤਰੁੱਟੀ</string>
     <string name="failed_to_apply_background_image">ਪਿਛੋਕੜ ਚਿੱਤਰ %s ਨੂੰ ਲਾਗੂ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
+    <string name="background_image_too_large">ਡੈੱਕ ਚੋਣ ਦੀ ਪਿੱਠਭੂਮੀ ਬਹੁਤ ਵੱਡੀ ਹੈ</string>
     <string name="image_max_size_allowed">ਅਧਿਕਤਮ ਚਿੱਤਰ ਦਾ ਆਕਾਰ %d MB ਹੈ</string>
     <string name="image_dimensions_too_large">ਚਿੱਤਰ ਦੇ ਮਾਪ ਬਹੁਤ ਵੱਡੇ ਹਨ (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">ਲੋੜੀਂਦੀ ਸਟੋਰੇਜ ਅਨੁਮਤੀ ਮੌਜੂਦ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਸਟੋਰੇਜ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ ਫਿਰ ਆਪਣੀ ਕਾਰਵਾਈ ਦੀ ਮੁੜ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">ਕਾਰਡ ਬ੍ਰਾਊਜ਼ਰ ਦ੍ਰਿਸ਼ ਨੂੰ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">ਰੀਮਾਈਂਡਰ ਨਿਯਤ ਕਰਨ ਵਿੱਚ ਅਸਫਲ</string>
+    <string name="boot_service_too_many_notifications">ਬਹੁਤ ਸਾਰੇ ਰੀਮਾਈਂਡਰ ਨਿਯਤ ਕੀਤੇ ਗਏ ਹਨ। ਕੁਝ ਦਿਖਾਈ ਨਹੀਂ ਦੇਣਗੇ</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title_new">ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">AnkiDroid ਦੀ ਵਰਤੋਂ ਕਰਨਾ</string>
     <string name="help_item_ankidroid_manual">AnkiDroid ਮੈਨੂਅਲ</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
+    <string name="help_item_anki_manual">ਅੰਕੀ ਮੈਨੁਅਲ</string>
     <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
     <string name="help_title_get_help">ਮਦਦ ਪ੍ਰਾਪਤ ਕਰੋ</string>
     <string name="help_item_mailing_list">ਮੇਲਿੰਗ ਸੂਚੀ</string>
@@ -190,10 +190,10 @@
     <string name="help_item_support_opencollective_donate">ਦਾਨ ਕਰੋ</string>
     <string name="help_item_support_develop_ankidroid">ਵਿਕਾਸ</string>
     <string name="help_item_support_rate_ankidroid">ਦਰ</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
+    <string name="help_item_support_other_ankidroid">ਹੋਰ</string>
     <string name="multimedia_editor_trans_translate">ਅਨੁਵਾਦ ਕਰੋ</string>
     <string name="help_title_community">ਭਾਈਚਾਰਾ</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">ਅੰਕੀ ਫੋਰਮ</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">ਫੇਸਬੁੱਕ</string>
     <string name="help_item_twitter">ਟਵਿੱਟਰ</string>
@@ -201,7 +201,7 @@
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid ਗੋਪਨੀਯਤਾ ਨੀਤੀ</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb ਗੋਪਨੀਯਤਾ ਨੀਤੀ</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
+    <string name="help_title_send_exception">ਸਮੱਸਿਆ ਨਿਪਟਾਰਾ ਰਿਪੋਰਟ ਭੇਜੋ</string>
     <string name="help_dialog_exception_report_debounce">ਰਿਪੋਰਟ ਪਹਿਲਾਂ ਹੀ ਸੌਂਪੀ ਜਾ ਚੁੱਕੀ ਹੈ</string>
     <string name="help_dialog_exception_report_sent">ਰਿਪੋਰਟ ਭੇਜੀ ਗਈ!</string>
     <!--Sync-->
@@ -225,9 +225,9 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">ਆਪਣੇ ਸੰਗ੍ਰਹਿ ਦਾ ਬੈਕਅੱਪ ਲਓ</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
+    <string name="button_backup">ਬੈਕਅੱਪ</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">ਬਾਅਦ ਵਿੱਚ</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ਦੁਬਾਰਾ ਨਾ ਦਿਖਾਓ</string>
     <string name="dismiss_backup_warning_title">ਡਾਟਾ ਖਰਾਬ ਹੋਣ ਦੀ ਚੇਤਾਵਨੀ</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled

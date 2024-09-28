@@ -66,8 +66,8 @@
         <item quantity="other">%1$d ساعت و %2$d دقیقه مانده</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d روز و %2$d ساعت مانده</item>
+        <item quantity="other">%1$d روز و %2$d ساعت مانده</item>
     </plurals>
     <string name="no_cards_placeholder_title">مجموعه خالی است</string>
     <string name="no_cards_placeholder_description">با استفاده از دکمه +\nشروع به اضافه کردن کارت‌ها کنيد</string>

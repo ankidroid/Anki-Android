@@ -146,7 +146,7 @@
     <string name="import_interrupted">درآمد میں رکاوٹ: AnkiDroid بند تھا۔</string>
     <string name="export_preparation_in_progress">برآمد کی تیاری کر رہا ہے&#8230;</string>
     <string name="export_ready_title">ایکسپورٹ تیار ہے۔</string>
-    <string name="export_send_no_handlers">apkg کو ہینڈل کرنے کے لیے کوئی ایپلیکیشن دستیاب نہیں ہے۔ محفوظ کر رہا ہے...</string>
+    <string name="export_send_no_handlers">apkg کو ہینڈل کرنے کے لیے کوئی ایپلیکیشن دستیاب نہیں ہے۔ محفوظ کر رہا ہے&#8230;</string>
     <string name="export_save_apkg_successful">انکی پیکج کو کامیابی کے ساتھ محفوظ کر لیا گیا۔</string>
     <string name="export_save_apkg_unsuccessful">انکی پیکج کو کامیابی کے ساتھ محفوظ کر لیا</string>
     <string name="export_share_title">کا استعمال کرتے ہوئے Anki پیکج بھیجیں</string>

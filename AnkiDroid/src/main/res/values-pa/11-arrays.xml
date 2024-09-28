@@ -54,14 +54,14 @@
     <string name="cram_deck_conf_order_random">ਬੇਤਰਤੀਬ</string>
     <string name="cram_deck_conf_order_increasing_intervals">ਵਧ ਰਹੇ ਅੰਤਰਾਲ</string>
     <string name="cram_deck_conf_order_decreasing_intervals">ਅੰਤਰਾਲ ਘਟਣਾ</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
+    <string name="cram_deck_conf_order_most_lapsed">ਜ਼ਿਆਦਾਤਰ ਗੋਦ</string>
+    <string name="cram_deck_conf_order_order_added">ਆਰਡਰ ਜੋੜਿਆ ਗਿਆ</string>
+    <string name="cram_deck_conf_order_order_due">ਆਰਡਰ ਬਕਾਇਆ</string>
     <string name="cram_deck_conf_order_latest_added_first">ਸਭ ਤੋਂ ਨਵਾਂ ਪਹਿਲਾਂ ਜੋੜਿਆ ਗਿਆ</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_relative_overdueness">ਸਾਪੇਖਿਕ ਬਕਾਇਆ</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">ਮੌਜੂਦਾ ਡੈੱਕ ਦੀ ਵਰਤੋਂ ਕਰੋ</string>
+    <string name="add_to_deck_decide_by_note_type">ਨੋਟ ਦੀ ਕਿਸਮ ਦੁਆਰਾ ਫੈਸਲਾ ਕਰੋ</string>
     <!-- theme labels -->
     <string name="theme_follow_system">ਸਿਸਟਮ ਦੀ ਪਾਲਣਾ ਕਰੋ</string>
     <!-- day_theme_labels -->
@@ -74,14 +74,14 @@
     <string name="html_size_code_xx_small">xx-ਛੋਟਾ</string>
     <string name="html_size_code_x_small">x-ਛੋਟਾ</string>
     <string name="html_size_code_small">ਛੋਟਾ</string>
-    <string name="html_size_code_medium">medium</string>
+    <string name="html_size_code_medium">ਮੱਧਮ</string>
     <string name="html_size_code_large">ਵੱਡਾ</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_x_large">x-ਵੱਡਾ</string>
+    <string name="html_size_code_xx_large">xx-ਵੱਡਾ</string>
     <!-- gestures_labels -->
     <string name="answer_again">ਦੁਬਾਰਾ ਜਵਾਬ ਦਿਓ</string>
     <string name="answer_hard">ਔਖਾ ਜਵਾਬ ਦਿਓ</string>
-    <string name="answer_good">Answer good</string>
+    <string name="answer_good">ਵਧੀਆ ਜਵਾਬ ਦਿਓ</string>
     <string name="answer_easy">ਆਸਾਨ ਜਵਾਬ</string>
     <string name="gesture_play">ਮੀਡੀਆ ਚਲਾਓ</string>
     <string name="gesture_abort_learning">Abort learning</string>
@@ -94,10 +94,10 @@
     <string name="gesture_flag_purple">ਜਾਮਨੀ ਝੰਡੇ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
     <string name="gesture_flag_remove">ਝੰਡਾ ਹਟਾਓ</string>
     <string name="gesture_page_up">ਪੰਨਾ ਅੱਪ</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
+    <string name="gesture_page_down">ਪੰਨਾ ਹੇਠਾਂ</string>
+    <string name="gesture_abort_sync">ਸਿੱਖਣ ਅਤੇ ਸਮਕਾਲੀਕਰਨ ਨੂੰ ਅਧੂਰਾ ਛੱਡੋ</string>
+    <string name="gesture_toggle_whiteboard">ਵ੍ਹਾਈਟਬੋਰਡ ਨੂੰ ਟੌਗਲ ਕਰੋ</string>
+    <string name="gesture_show_hint">ਸੰਕੇਤ ਦਿਖਾਓ</string>
     <string name="gesture_show_all_hints">Show All Hints</string>
     <string name="record_voice">ਆਵਾਜ਼ ਨੂੰ ਰਿਕਾਰਡ ਕਰੋ</string>
     <string name="replay_voice">ਆਵਾਜ਼ ਨੂੰ ਮੁੜ ਚਲਾਓ</string>
