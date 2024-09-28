@@ -14,7 +14,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.Permissions.hasStorageAccessPermission
+import com.ichi2.utils.Permissions.hasLegacyStorageAccessPermission
 import timber.log.Timber
 import java.util.Calendar
 
@@ -25,7 +25,7 @@ class BootService : BroadcastReceiver() {
             Timber.d("BootService - Already run")
             return
         }
-        if (!hasStorageAccessPermission(context)) {
+        if (!hasLegacyStorageAccessPermission(context)) {
             Timber.w("Boot Service did not execute - no permissions")
             return
         }

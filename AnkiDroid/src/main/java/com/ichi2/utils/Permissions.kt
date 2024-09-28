@@ -26,6 +26,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
@@ -116,11 +117,13 @@ object Permissions {
     /**
      * Check if we have read and write access permission to the external storage
      * Note: This can return true >= R on a debug build or if storage is preserved
+     *
+     * @see IntentHandler.grantedStoragePermissions
+     *
      * @param context
-     * @return
      */
     @JvmStatic // unit tests were flaky - maybe remove later
-    fun hasStorageAccessPermission(context: Context): Boolean {
+    fun hasLegacyStorageAccessPermission(context: Context): Boolean {
         return hasStorageReadAccessPermission(context) && hasStorageWriteAccessPermission(context)
     }
 

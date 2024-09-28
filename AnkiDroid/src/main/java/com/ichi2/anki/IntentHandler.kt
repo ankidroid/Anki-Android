@@ -40,7 +40,7 @@ import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.IntentUtil.resolveMimeType
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.Permissions
-import com.ichi2.utils.Permissions.hasStorageAccessPermission
+import com.ichi2.utils.Permissions.hasLegacyStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
 import timber.log.Timber
@@ -272,7 +272,7 @@ class IntentHandler : AbstractIntentHandler() {
          *  @return `true`: if granted, otherwise `false` and shows a missing permission toast
          */
         fun grantedStoragePermissions(context: Context, showToast: Boolean): Boolean {
-            val granted = !ScopedStorageService.isLegacyStorage(context) || hasStorageAccessPermission(context) || Permissions.isExternalStorageManagerCompat()
+            val granted = !ScopedStorageService.isLegacyStorage(context) || hasLegacyStorageAccessPermission(context) || Permissions.isExternalStorageManagerCompat()
 
             if (!granted && showToast) {
                 showThemedToast(context, context.getString(R.string.intent_handler_failed_no_storage_permission), false)
