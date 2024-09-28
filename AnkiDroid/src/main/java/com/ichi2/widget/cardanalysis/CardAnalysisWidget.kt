@@ -278,6 +278,9 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     updateWidget(context, AppWidgetManager.getInstance(context), appWidgetId)
                 }
             }
+            AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED -> {
+                // TODO: #17151 not yet handled. Exists to stop ACRA errors
+            }
             AppWidgetManager.ACTION_APPWIDGET_DELETED -> {
                 Timber.d("ACTION_APPWIDGET_DELETED received")
                 val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
