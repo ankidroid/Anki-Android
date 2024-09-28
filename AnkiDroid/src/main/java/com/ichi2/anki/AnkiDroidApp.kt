@@ -188,7 +188,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
         LanguageUtil.setDefaultBackendLanguages()
 
         // Create the AnkiDroid directory if missing. Send exception report if inaccessible.
-        if (Permissions.hasStorageAccessPermission(this)) {
+        if (Permissions.hasLegacyStorageAccessPermission(this)) {
             try {
                 val dir = CollectionHelper.getCurrentAnkiDroidDirectory(this)
                 CollectionHelper.initializeAnkiDroidDirectory(dir)
