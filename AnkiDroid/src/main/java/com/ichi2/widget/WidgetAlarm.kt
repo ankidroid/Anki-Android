@@ -43,16 +43,6 @@ private fun alarmManager(context: Context): AlarmManager {
 }
 
 /**
- * Generates the action string for the widget.
- *
- * @param widgetClass the class of the widget provider
- * @return the action string for the widget
- */
-private fun generateActionString(widgetClass: Class<out AnalyticsWidgetProvider>): String {
-    return "${widgetClass.name}.$ACTION_UPDATE_WIDGET"
-}
-
-/**
  * Retrieves or creates a PendingIntent for the widget.
  *
  * @param context the context of the application
@@ -68,7 +58,7 @@ private fun getPendingIntent(
     create: Boolean
 ): PendingIntent? {
     val intent = Intent(context, widgetClass).apply {
-        action = generateActionString(widgetClass)
+        action = ACTION_UPDATE_WIDGET
         putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
     }
     return PendingIntent.getBroadcast(
