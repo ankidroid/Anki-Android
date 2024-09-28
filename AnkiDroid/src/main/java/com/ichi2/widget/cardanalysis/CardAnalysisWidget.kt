@@ -195,7 +195,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             val appWidgetManager = AppWidgetManager.getInstance(context)
 
             val provider = ComponentName(context, CardAnalysisWidget::class.java)
-            Timber.d("Fetching appWidgetIds for provider: $provider")
+            Timber.d("Fetching appWidgetIds for provider: ${provider.shortClassName}")
 
             val appWidgetIds = appWidgetManager.getAppWidgetIds(provider)
             Timber.d("AppWidgetIds to update: ${appWidgetIds.joinToString(", ")}")
