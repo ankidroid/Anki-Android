@@ -89,6 +89,12 @@
     <string name="custom_study_random_selection">Studovat náhodný výběr karet</string>
     <string name="custom_study_preview_new">Náhled nových karet</string>
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="few">+%d buried</item>
+        <item quantity="many">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Upravit poznámku</string>
     <string name="discard">Zahodit</string>

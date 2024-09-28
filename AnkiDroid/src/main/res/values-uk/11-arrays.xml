@@ -84,7 +84,7 @@
     <string name="answer_good">Відповідь: добре</string>
     <string name="answer_easy">Відповідь: легко</string>
     <string name="gesture_play">Відтворити медіа</string>
-    <string name="gesture_abort_learning">Перервати навчання</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Переключити червоний прапорець</string>
     <string name="gesture_flag_orange">Переключити помаранчевий прапорець</string>
     <string name="gesture_flag_green">Переключити зелений прапорець</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Прибрати прапорець</string>
     <string name="gesture_page_up">Попередня сторінка</string>
     <string name="gesture_page_down">Наступна сторінка</string>
-    <string name="gesture_abort_sync">Перервати навчання та синхронізувати</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Дошка</string>
     <string name="gesture_show_hint">Показати підказку</string>
     <string name="gesture_show_all_hints">Показати всі підказки</string>

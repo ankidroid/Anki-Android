@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">ბარათების შემთხვევითი არჩევნის სწავლა</string>
     <string name="custom_study_preview_new">ახალი ბარათების წინასწარ ნახვა</string>
     <string name="custom_study_limit_tags">კონკრეტულ იარლიყებზე შეზღუდვა</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">შენიშვნის რედაქტირება</string>
     <string name="discard">წაშლა</string>

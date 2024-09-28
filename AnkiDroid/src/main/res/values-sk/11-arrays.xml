@@ -84,7 +84,7 @@
     <string name="answer_good">Answer good</string>
     <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Prehrať médium</string>
-    <string name="gesture_abort_learning">Prerušiť učenie</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Označiť červenou vlajkou</string>
     <string name="gesture_flag_orange">Označiť oranžovou vlajkou</string>
     <string name="gesture_flag_green">Označiť zelenou vlajkou</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Odstrániť vlajku</string>
     <string name="gesture_page_up">Strana nahor</string>
     <string name="gesture_page_down">Strana nadol</string>
-    <string name="gesture_abort_sync">Prerušiť učenie a synchronizáciu</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Zapnúť/vypnúť tabuľu</string>
     <string name="gesture_show_hint">Show Hint</string>
     <string name="gesture_show_all_hints">Show All Hints</string>

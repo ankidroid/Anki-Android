@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">مطالعه کارت ها به صورت تصادفی</string>
     <string name="custom_study_preview_new">پیش نمایش کارت های جدید</string>
     <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
     <string name="discard">صرف‌نظر کردن</string>

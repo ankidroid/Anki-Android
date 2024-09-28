@@ -89,6 +89,9 @@
     <string name="custom_study_random_selection">Pelajari kartu yang dipilih secara acak</string>
     <string name="custom_study_preview_new">Pratinjau kartu baru</string>
     <string name="custom_study_limit_tags">Batasi ke tag tertentu</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Edit catatan</string>
     <string name="discard">Buang</string>

@@ -84,7 +84,7 @@
     <string name="answer_good">Svara bra</string>
     <string name="answer_easy">Svara lätt</string>
     <string name="gesture_play">Spela upp media</string>
-    <string name="gesture_abort_learning">Avbryt inlärning</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Växla Röd flagga</string>
     <string name="gesture_flag_orange">Växla Orange flagga</string>
     <string name="gesture_flag_green">Växla Grön flagga</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Ta bort flagga</string>
     <string name="gesture_page_up">Sida upp</string>
     <string name="gesture_page_down">Sida ner</string>
-    <string name="gesture_abort_sync">Avbryt inlärning och synkronisera</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Växla Whiteboard</string>
     <string name="gesture_show_hint">Visa ledtråd</string>
     <string name="gesture_show_all_hints">Visa alla ledtrådar</string>

@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Studera ett slumpmässigt urval av kort</string>
     <string name="custom_study_preview_new">Förhandsgranska nya kort</string>
     <string name="custom_study_limit_tags">Begränsa till vissa etiketter</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Redigera not</string>
     <string name="discard">Kasta</string>

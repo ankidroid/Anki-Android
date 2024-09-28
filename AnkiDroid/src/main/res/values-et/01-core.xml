@@ -53,7 +53,6 @@
     <string name="drawing">Joonistus</string>
     <string name="send_feedback">Saada tagasiside</string>
     <string name="studyoptions_start">Õpi</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Laienda</string>
     <string name="collapse">Kahanda</string>

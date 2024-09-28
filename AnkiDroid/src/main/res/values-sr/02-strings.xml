@@ -89,6 +89,11 @@
     <string name="custom_study_random_selection">Учи случајну групу картица</string>
     <string name="custom_study_preview_new">Преглед нових картица</string>
     <string name="custom_study_limit_tags">Постави ограничење по ознакама</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="few">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Уреди белешку</string>
     <string name="discard">Discard</string>

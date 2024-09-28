@@ -84,7 +84,7 @@
     <string name="answer_good">Answer good</string>
     <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Reprodueix multimèdia</string>
-    <string name="gesture_abort_learning">Abandona l\'estudi</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Canviar bandera vermella</string>
     <string name="gesture_flag_orange">Canviar bandera taronja</string>
     <string name="gesture_flag_green">Canviar bandera verda</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Suprimir bandera</string>
     <string name="gesture_page_up">Pàgina amunt</string>
     <string name="gesture_page_down">Pàgina avall</string>
-    <string name="gesture_abort_sync">Interrompre aprenentatge i sincronització</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Activar/desactivar pissarra</string>
     <string name="gesture_show_hint">Mostra un suggeriment</string>
     <string name="gesture_show_all_hints">Mostra tots els suggeriments</string>

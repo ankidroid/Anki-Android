@@ -53,7 +53,6 @@
     <string name="drawing">Сурет</string>
     <string name="send_feedback">Пікір жіберу</string>
     <string name="studyoptions_start">Оқу</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Толығырақ</string>
     <string name="collapse">Жасыру</string>

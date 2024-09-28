@@ -89,6 +89,12 @@
     <string name="custom_study_random_selection">Вивчати випадковий набір карток</string>
     <string name="custom_study_preview_new">Переглянути нові картки</string>
     <string name="custom_study_limit_tags">Обмежити конкретними тегами</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="few">+%d buried</item>
+        <item quantity="many">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Редагувати запис</string>
     <string name="discard">Відкинути</string>

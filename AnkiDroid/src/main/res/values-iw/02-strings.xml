@@ -89,6 +89,12 @@
     <string name="custom_study_random_selection">לימוד מספר קלפים אקראי</string>
     <string name="custom_study_preview_new">מעבר מקדים על כרטסיות חדשות</string>
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="two">+%d buried</item>
+        <item quantity="many">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ערוך רשומה</string>
     <string name="discard">ביטול</string>

@@ -53,7 +53,6 @@
     <string name="drawing">وێنەکێشان</string>
     <string name="send_feedback">ناردنی تێبینی</string>
     <string name="studyoptions_start">Niha fêr bibe</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">درێژکردنەوە</string>
     <string name="collapse">ڕۆخان</string>

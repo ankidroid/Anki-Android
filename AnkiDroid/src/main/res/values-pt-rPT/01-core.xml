@@ -53,7 +53,6 @@
     <string name="drawing">Desenhar</string>
     <string name="send_feedback">Enviar comentários</string>
     <string name="studyoptions_start">Estudar</string>
-    <string name="studyoptions_buried_count">+%d adiada</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Recolher</string>

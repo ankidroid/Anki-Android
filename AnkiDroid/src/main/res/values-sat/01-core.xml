@@ -53,7 +53,6 @@
     <string name="drawing">ᱛᱮᱭᱟᱨ</string>
     <string name="send_feedback">ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="studyoptions_start">ᱯᱟᱲᱦᱟᱣ</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
     <string name="collapse">ᱦᱚᱯᱚᱱ ᱢᱮ</string>

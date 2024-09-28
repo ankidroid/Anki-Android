@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Véletlenszerű kártyák tanulása</string>
     <string name="custom_study_preview_new">Új kártyák átnézése</string>
     <string name="custom_study_limit_tags">Szűkítés címkékre</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Jegyzet szerkesztése</string>
     <string name="discard">Elvetés</string>

@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Mag-aral ng random na seleksyon ng mga baraha</string>
     <string name="custom_study_preview_new">I-preview ang mga bagong baraha</string>
     <string name="custom_study_limit_tags">Limitahan sa mga natatanging mga tag</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">I-edit ang paalala</string>
     <string name="discard">Discard</string>

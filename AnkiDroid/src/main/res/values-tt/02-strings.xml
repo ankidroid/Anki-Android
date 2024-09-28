@@ -89,6 +89,9 @@
     <string name="custom_study_random_selection">Очраклы кәрт сайланышын өйрәнү</string>
     <string name="custom_study_preview_new">Яңаларны карау</string>
     <string name="custom_study_limit_tags">Кайбер тамгаларны гына</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Язуны үзгәртү</string>
     <string name="discard">Discard</string>

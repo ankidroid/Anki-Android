@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">കാർഡുകളുടെ ക്രമരഹിതമായ തിരഞ്ഞെടുപ്പ് പഠിക്കുക</string>
     <string name="custom_study_preview_new">പുതിയ കാർഡുകൾ പ്രിവ്യൂ ചെയ്യുക</string>
     <string name="custom_study_limit_tags">പ്രത്യേക ടാഗുകളിലേക്ക് പരിമിതപ്പെടുത്തുക</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">കുറിപ്പ് എഡിറ്റുചെയ്യുക</string>
     <string name="discard">Discard</string>

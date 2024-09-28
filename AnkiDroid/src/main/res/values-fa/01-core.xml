@@ -53,7 +53,6 @@
     <string name="drawing">نقاشی</string>
     <string name="send_feedback">ارسال بازخورد</string>
     <string name="studyoptions_start">مرور کردن</string>
-    <string name="studyoptions_buried_count">%d کارت دفن شد</string>
     <!-- DeckPicker.kt -->
     <string name="expand">گسترش</string>
     <string name="collapse">بستن</string>

@@ -84,7 +84,7 @@
     <string name="answer_good">ᱜᱟᱞᱢᱟᱨᱟᱣ</string>
     <string name="answer_easy">ᱞᱟᱹᱱᱟᱹᱭ ᱜᱮᱭᱟ</string>
     <string name="gesture_play">ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</string>
-    <string name="gesture_abort_learning">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫ ᱛᱷᱟᱲ</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</string>
     <string name="gesture_flag_orange">ᱜᱮᱨᱩᱟ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
     <string name="gesture_flag_green">ᱦᱟᱹᱨᱤᱭᱟᱲ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟᱹᱞ</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">ᱯᱚᱛᱠᱟ ᱚᱪᱚᱜ ᱢᱮ</string>
     <string name="gesture_page_up">ᱥᱟᱠᱟᱢ ᱪᱮᱛᱟᱱ</string>
     <string name="gesture_page_down">ᱥᱟᱠᱟᱢ ᱞᱟᱛᱟᱨ</string>
-    <string name="gesture_abort_sync">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱟᱨ ᱥᱭᱸᱠ ᱢᱮ</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">ᱯᱩᱱᱰᱵᱚᱰ ᱴᱩᱜᱟᱹᱞ ᱢᱮ</string>
     <string name="gesture_show_hint">ᱦᱤᱱᱫᱤ ᱪᱤᱛᱟᱹᱨ</string>
     <string name="gesture_show_all_hints">ᱡᱚᱛᱚ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱮᱢ ᱢᱮ</string>

@@ -84,7 +84,7 @@
     <string name="answer_good">Trả lời tốt</string>
     <string name="answer_easy">Trả lời dễ</string>
     <string name="gesture_play">Phát file đa phương tiện</string>
-    <string name="gesture_abort_learning">Bỏ học</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Chuyển đổi cờ đỏ</string>
     <string name="gesture_flag_orange">Chuyển đổi cờ màu cam</string>
     <string name="gesture_flag_green">Chuyển đổi cờ xanh</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Xoá cờ</string>
     <string name="gesture_page_up">Trang lên</string>
     <string name="gesture_page_down">Trang dưới</string>
-    <string name="gesture_abort_sync">Bỏ học và đồng bộ hóa</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Chuyển đổi Bảng trắng</string>
     <string name="gesture_show_hint">Hiển thị gợi ý</string>
     <string name="gesture_show_all_hints">Hiện tất cả gợi ý</string>

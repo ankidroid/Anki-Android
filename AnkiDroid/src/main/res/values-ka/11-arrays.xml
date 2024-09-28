@@ -84,7 +84,7 @@
     <string name="answer_good">პასუხი: კარგი</string>
     <string name="answer_easy">პასუხი: მარტივი</string>
     <string name="gesture_play">მედიაფაილების დაკვრა</string>
-    <string name="gesture_abort_learning">სწავლის შეწყვეტა</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">წითელი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_orange">სტაფილოსფერი დროშის მიმაგრება/მოძრობა</string>
     <string name="gesture_flag_green">მწვანე დროშის მიმაგრება/მოძრობა</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">დროშის მოძრობა</string>
     <string name="gesture_page_up">გვერდით მაღლა</string>
     <string name="gesture_page_down">გვერდით დაბლა</string>
-    <string name="gesture_abort_sync">სწავლის შეწყვეტა და სინქრონიზაცია</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">დაფის ჩართვა/გამორთვა</string>
     <string name="gesture_show_hint">მინიშნების ჩვენება</string>
     <string name="gesture_show_all_hints">ყველა მინიშნების ჩვენება</string>

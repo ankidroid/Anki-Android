@@ -84,7 +84,7 @@
     <string name="answer_good">Odpowiedz \"Dobra\"</string>
     <string name="answer_easy">Odpowiedz \"Łatwa\"</string>
     <string name="gesture_play">Odtwarzaj</string>
-    <string name="gesture_abort_learning">Przerwij naukę</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Włącz/wyłącz czerwoną flagę</string>
     <string name="gesture_flag_orange">Włącz/wyłącz pomarańczową flagę</string>
     <string name="gesture_flag_green">Włącz/wyłącz zieloną flagę</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Usuń flagę</string>
     <string name="gesture_page_up">Przewiń w górę</string>
     <string name="gesture_page_down">Przewiń w dół</string>
-    <string name="gesture_abort_sync">Przerwij naukę i synchronizuj</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Przełącz Tablicę</string>
     <string name="gesture_show_hint">Pokaż podpowiedź</string>
     <string name="gesture_show_all_hints">Pokaż wszystkie podpowiedzi</string>

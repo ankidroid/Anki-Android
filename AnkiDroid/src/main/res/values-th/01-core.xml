@@ -53,7 +53,6 @@
     <string name="drawing">วาด</string>
     <string name="send_feedback">ส่งคำติชม</string>
     <string name="studyoptions_start">เริ่มเรียน</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ขยาย</string>
     <string name="collapse">ซ่อน</string>

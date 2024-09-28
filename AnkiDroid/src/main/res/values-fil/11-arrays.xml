@@ -84,7 +84,7 @@
     <string name="answer_good">Sagot - mabuti</string>
     <string name="answer_easy">Sagot - madali</string>
     <string name="gesture_play">I-play ang media</string>
-    <string name="gesture_abort_learning">Abort sa pag-aaral</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Maglagay ng Pulang Watawat</string>
     <string name="gesture_flag_orange">Maglagay ng Kahel na Watawat</string>
     <string name="gesture_flag_green">Maglagay ng Berdeng Watawat</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Tanggalin ang Watawat</string>
     <string name="gesture_page_up">Itaas ang Pahina</string>
     <string name="gesture_page_down">Ibaba ang Pahina</string>
-    <string name="gesture_abort_sync">Iudlot Ang Pag-Aaral at Pag-Sync</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Paganahin ang Puting Pisara</string>
     <string name="gesture_show_hint">Ipakita Ang Hint</string>
     <string name="gesture_show_all_hints">Ipakita Ang Lahat ng Hint</string>

@@ -53,7 +53,6 @@
     <string name="drawing">வரைபொருள்</string>
     <string name="send_feedback">கருத்தினை அனுப்பவும்</string>
     <string name="studyoptions_start">படி</string>
-    <string name="studyoptions_buried_count">+%d புதைக்கப்பட்டது</string>
     <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>

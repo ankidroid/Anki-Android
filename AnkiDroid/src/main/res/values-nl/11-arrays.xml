@@ -84,7 +84,7 @@
     <string name="answer_good">Goed antwoord</string>
     <string name="answer_easy">Gemakkelijk antwoord</string>
     <string name="gesture_play">Media afspelen</string>
-    <string name="gesture_abort_learning">Leren afbreken</string>
+    <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">Rode vlag in-/uitschakelen</string>
     <string name="gesture_flag_orange">Oranje vlag in-/uitschakelen</string>
     <string name="gesture_flag_green">Groene vlag in-/uitschakelen</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Vlag verwijderen</string>
     <string name="gesture_page_up">Pagina omhoog</string>
     <string name="gesture_page_down">Pagina omlaag</string>
-    <string name="gesture_abort_sync">Leren en synchroniseren afbreken</string>
+    <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">Schrijfbord in-/uitschakelen</string>
     <string name="gesture_show_hint">Tip weergeven</string>
     <string name="gesture_show_all_hints">Alle tips weergeven</string>

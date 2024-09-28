@@ -53,7 +53,6 @@
     <string name="drawing">Zīmējums</string>
     <string name="send_feedback">Sūtīt atsauksmes</string>
     <string name="studyoptions_start">Mācīties</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>

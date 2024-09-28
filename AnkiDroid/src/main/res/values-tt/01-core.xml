@@ -53,7 +53,6 @@
     <string name="drawing">Рәсем</string>
     <string name="send_feedback">Бәяләмә җибәрү</string>
     <string name="studyoptions_start">Өйрәнергә</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Тулысынча күрсәтү</string>
     <string name="collapse">Борып ябу</string>

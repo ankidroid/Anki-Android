@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">Սովորել քարտերի պատահական ընտրվածքը</string>
     <string name="custom_study_preview_new">Նոր քարտերի նախատեսք</string>
     <string name="custom_study_limit_tags">Սահմանափակել որոշակի պիտակներին</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Խմբագրել գրառումը</string>
     <string name="discard">Discard</string>

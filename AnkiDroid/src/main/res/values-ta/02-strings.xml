@@ -89,6 +89,10 @@
     <string name="custom_study_random_selection">சீரற்ற தேர்வு அட்டைகளைப் படிக்கவும்</string>
     <string name="custom_study_preview_new">புதிய அட்டைகளை முன்னோட்டமிடுங்கள்</string>
     <string name="custom_study_limit_tags">குறிப்பிட்ட குறிச்சொற்களுக்கு வரம்பு</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">குறிப்பைத் திருத்தவும்</string>
     <string name="discard">நிராகரி</string>

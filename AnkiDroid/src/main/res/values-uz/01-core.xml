@@ -53,7 +53,6 @@
     <string name="drawing">Rasm chizish</string>
     <string name="send_feedback">Fikr-mulohazalarni jo\'natish</string>
     <string name="studyoptions_start">O\'rganish</string>
-    <string name="studyoptions_buried_count">+%d buried</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Kengaytirish</string>
     <string name="collapse">Toraytirish</string>

@@ -89,6 +89,12 @@
     <string name="custom_study_random_selection">Studijuoti atsitiktine tvarka atrinktas korteles</string>
     <string name="custom_study_preview_new">Peržiūrėti naujas korteles</string>
     <string name="custom_study_limit_tags">Apriboti iki tam tikrų žymių</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="few">+%d buried</item>
+        <item quantity="many">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Keisti užrašą</string>
     <string name="discard">Discard</string>

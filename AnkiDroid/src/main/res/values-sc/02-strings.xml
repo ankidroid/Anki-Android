@@ -90,6 +90,10 @@
     <string name="custom_study_random_selection">Istùdia una seletzione casuale de cartas</string>
     <string name="custom_study_preview_new">Antiprima de sas cartas noas</string>
     <string name="custom_study_limit_tags">Lìmita a etichetas particulares</string>
+    <plurals name="studyoptions_buried_count">
+        <item quantity="one">+%d buried</item>
+        <item quantity="other">+%d buried</item>
+    </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Modìfica sa nota</string>
     <string name="discard">Discard</string>
