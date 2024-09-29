@@ -33,7 +33,7 @@
                 tools:text="912 notes"/>
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.ButtonBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
             <Button
@@ -60,7 +60,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/note_edit_cards"
-                app:layout_constraintEnd_toStartOf="@id/note_delete" />
+                app:layout_constraintEnd_toStartOf="@id/spacer" />
+
+            <android.widget.Space
+                android:id="@+id/spacer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_constraintStart_toEndOf="@id/note_rename"
+                app:layout_constraintEnd_toStartOf="@id/note_delete"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/note_delete"
@@ -72,6 +81,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.ButtonBarLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
