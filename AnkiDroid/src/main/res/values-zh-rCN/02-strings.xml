@@ -90,7 +90,7 @@
     <string name="custom_study_preview_new">预览新卡片</string>
     <string name="custom_study_limit_tags">仅限于特定标签</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="other">+%d buried</item>
+        <item quantity="other">+%d 被隐藏</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">编辑笔记</string>

@@ -44,25 +44,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Restore from backup</string>
-    <string name="backup_new_collection">New collection</string>
-    <string name="backup_del_collection">Delete collection and create new one</string>
-    <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
-    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
+    <string name="backup_deck_no_storage_left">ബാക്കപ്പ് സംരക്ഷിച്ചിട്ടില്ല. നിങ്ങളുടെ സംഭരണത്തിന് മതിയായ ഇടമില്ല. ബാക്കപ്പ് ഡെപ്ത് കുറയ്ക്കുക അല്ലെങ്കിൽ മറ്റ് ചില ഫയലുകൾ നീക്കം ചെയ്യുക.</string>
+    <string name="storage_warning">നിങ്ങളുടെ സ്‌റ്റോറേജിൽ %d MB-ൽ താഴെ ഇടം അവശേഷിക്കുന്നു.\nഡാറ്റ നഷ്‌ടപ്പെടാതിരിക്കാൻ കുറച്ച് ഇടം സൃഷ്‌ടിക്കുക.</string>
+    <string name="backup_restore">ബാക്കപ്പിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക</string>
+    <string name="backup_new_collection">പുതിയ ശേഖരം</string>
+    <string name="backup_del_collection">ശേഖരം ഇല്ലാതാക്കി പുതിയതൊന്ന് സൃഷ്‌ടിക്കുക</string>
+    <string name="backup_del_collection_question">ശേഖരം ഇല്ലാതാക്കി പുതിയൊരെണ്ണം സൃഷ്ടിക്കണോ? ഇത് നിങ്ങളുടെ എല്ലാ പഠന പുരോഗതിയും ഇല്ലാതാക്കുകയും എല്ലാ കാർഡുകളും ഇല്ലാതാക്കുകയും ചെയ്യും.</string>
+    <string name="backup_one_way_sync_from_server">സെർവറിൽ നിന്നുള്ള വൺ-വേ സമന്വയം</string>
     <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
-    <string name="error_handling_title">Error handling</string>
-    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Options</string>
-    <string name="backup_retry_opening">Retry opening</string>
-    <string name="backup_error_menu_repair">Repair database</string>
+    <string name="error_handling_title">കൈകാര്യം ചെയ്യുന്നതിൽ പിശക്</string>
+    <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ഓപ്ഷനുകൾ</string>
+    <string name="backup_retry_opening">വീണ്ടും തുറക്കാൻ ശ്രമിക്കുക</string>
+    <string name="backup_error_menu_repair">റിപ്പയർ ഡാറ്റാബേസ്</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Repairing database&#8230;</string>
-    <string name="backup_invalid_file_error">The selected backup file was invalid</string>
-    <string name="backup_restore_select_title">Select backup to restore</string>
+    <string name="backup_repair_deck_progress">ഡാറ്റാബേസ് നന്നാക്കുന്നു&#8230;</string>
+    <string name="backup_invalid_file_error">തിരഞ്ഞെടുത്ത ബാക്കപ്പ് ഫയൽ അസാധുവാണ്</string>
+    <string name="backup_restore_select_title">പുനഃസ്ഥാപിക്കാൻ ബാക്കപ്പ് തിരഞ്ഞെടുക്കുക</string>
     <string name="backup_restore_no_backups">No backups available on this device. If you have backups on your desktop computer, copy them manually into your AnkiDroid folder.</string>
-    <string name="open_collection_failed_title">Collection not opened</string>
+    <string name="open_collection_failed_title">ശേഖരം തുറന്നിട്ടില്ല</string>
     <string name="corrupt_db_message">Your collection has become corrupted.\n\nTouch “options” to restore from a backup, or if that doesn’t work, see the following instructions for manually repairing the database:\n%1$s</string>
     <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
-    <string name="deck_repair_error">Collection couldn’t be repaired</string>
+    <string name="deck_repair_error">ശേഖരം നന്നാക്കാൻ കഴിഞ്ഞില്ല</string>
 </resources>

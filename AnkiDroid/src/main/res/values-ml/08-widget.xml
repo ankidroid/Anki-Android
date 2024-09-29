@@ -60,17 +60,17 @@
         <item quantity="other">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
     </plurals>
     <string name="widget_add_note_button">പുതിയ AnkiDroid കുറിപ്പ് ചേർക്കുക</string>
-    <string name="deck_picker_widget_description">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="deck_picker_widget_description">ഡെക്ക് പിക്കർ</string>
+    <string name="card_analysis_extra_widget_description">കാർഡ് വിശകലനം</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">ഡെക്കുകൾ തിരഞ്ഞെടുക്കുക</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">ഒരു ഡെക്ക് തിരഞ്ഞെടുക്കുക</string>
     <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">ഡെക്ക് നീക്കം ചെയ്തു</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">ഈ ഡെക്ക് ഇതിനകം തിരഞ്ഞെടുത്തു</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">You can select up to %d deck.</item>
+        <item quantity="one">നിങ്ങൾക്ക് %d ഡെക്ക് വരെ തിരഞ്ഞെടുക്കാം.</item>
         <item quantity="other">You can select up to %d decks.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Missing deck. Please reconfigure</string>
+    <string name="empty_widget" comment="To denote the widget is empty">ഡെക്ക് കാണുന്നില്ല. ദയവായി വീണ്ടും ക്രമീകരിക്കുക</string>
 </resources>
