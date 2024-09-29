@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">Antaŭrigardi novajn kartojn</string>
     <string name="custom_study_limit_tags">Limigi al specialaj etikedoj</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d kaŝita (por tago)</item>
+        <item quantity="other">+%d kaŝitaj (por tago)</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Redakti noton</string>

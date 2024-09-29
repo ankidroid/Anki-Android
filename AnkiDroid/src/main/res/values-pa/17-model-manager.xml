@@ -57,8 +57,8 @@
     <string name="model_field_editor_delete">ਖੇਤਰ ਮਿਟਾਓ</string>
     <string name="model_field_editor_rename">ਖੇਤਰ ਦਾ ਨਾਮ ਬਦਲੋ</string>
     <string name="model_field_editor_language_hint">ਕੀਬੋਰਡ ਭਾਸ਼ਾ ਸੰਕੇਤ ਸੈੱਟ ਕਰੋ</string>
-    <string name="model_field_editor_reposition_menu">Reposition field</string>
-    <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
+    <string name="model_field_editor_reposition_menu">ਰੀਪੋਜੀਸ਼ਨ ਫੀਲਡ</string>
+    <string name="model_field_editor_reposition">ਰੀਪੋਜ਼ੀਸ਼ਨ ਫੀਲਡ (ਇੱਕ ਮੁੱਲ %1$d–%2$d ਦਾਖਲ ਕਰੋ)</string>
     <string name="model_field_editor_toggle_sticky">ਜੋੜਨ ਵੇਲੇ ਆਖਰੀ ਇਨਪੁਟ ਯਾਦ ਰੱਖੋ</string>
     <string name="model_field_editor_changing">ਖੇਤਰਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="model_field_editor_sort_field">ਇਸ ਖੇਤਰ ਦੁਆਰਾ ਕ੍ਰਮਬੱਧ ਕਰੋ</string>
@@ -74,12 +74,12 @@
     <string name="card_template_browser_appearance_question_format">ਪ੍ਰਸ਼ਨ ਫਾਰਮੈਟ</string>
     <string name="card_template_browser_appearance_answer_format">ਜਵਾਬ ਫਾਰਮੈਟ</string>
     <string name="card_template_browser_appearance_restore_default_dialog">ਕੀ ਪੂਰਵ-ਨਿਰਧਾਰਤ ਮੁੱਲਾਂ ਨੂੰ ਰੀਸਟੋਰ ਕਰਨਾ ਹੈ?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_saving_note">ਇਹ ਬਦਲਾਅ ਉਦੋਂ ਲਾਗੂ ਹੁੰਦੇ ਹਨ ਜਦੋਂ ਕਾਰਡ ਟੈਮਪਲੇਟ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਜਾਂਦਾ ਹੈ</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">ਡੈੱਕ ਓਵਰਰਾਈਡ (ਚਾਲੂ)</string>
     <string name="card_template_editor_deck_override_off">ਡੈੱਕ ਓਵਰਰਾਈਡ (ਬੰਦ)</string>
     <string name="model_manager_deck_override_added_message">\'%1$s\' ਡਿਫੌਲਟ ਡੈੱਕ ਨੂੰ \'%2$s\' \'ਤੇ ਸੈੱਟ ਕਰੋ</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' ਲਈ ਡਿਫੌਲਟ ਡੈੱਕ ਹਟਾਇਆ ਗਿਆ</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
+    <string name="deck_override_explanation">ਨਵੇਂ \'%s\' ਕਾਰਡਾਂ ਨੂੰ ਰੱਖਣ ਲਈ ਡੈੱਕ ਦੀ ਚੋਣ ਕਰੋ</string>
     <string name="deck_picker_dialog_filter_decks">ਫਿਲਟਰ ਡੈੱਕ</string>
 </resources>

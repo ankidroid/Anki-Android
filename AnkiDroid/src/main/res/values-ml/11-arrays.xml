@@ -43,14 +43,14 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">എപ്പോഴും റിപ്പോർട്ട് ചെയ്യുക</string>
+    <string name="error_reporting_choice_never_report">ഒരിക്കലും റിപ്പോർട്ട് ചെയ്യരുത്</string>
+    <string name="error_reporting_choice_ask_user">എന്നോട് ചോദിക്കുക</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">ആദ്യം കണ്ട ഏറ്റവും പഴയത്</string>
     <string name="cram_deck_conf_order_random">Random</string>
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>

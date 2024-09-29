@@ -57,9 +57,9 @@
     </plurals>
     <plurals name="widget_eta">
         <item quantity="one">%d minuto rimasto</item>
-        <item quantity="other">%d minuti rimasti</item>
+        <item quantity="other">%d minuti rimanenti</item>
     </plurals>
-    <string name="widget_add_note_button">Aggiungi nuova nota AnkiDroid</string>
+    <string name="widget_add_note_button">Aggiungi una nuova nota di AnkiDroid</string>
     <string name="deck_picker_widget_description">Deck Picker</string>
     <string name="card_analysis_extra_widget_description">Card Analysis</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->

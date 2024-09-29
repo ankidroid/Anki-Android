@@ -84,7 +84,7 @@
     <string name="answer_good">Respondi “facile”</string>
     <string name="answer_easy">Respondi “facilege”</string>
     <string name="gesture_play">Ludi aŭdvidaĵon</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
+    <string name="gesture_abort_learning">Fermi lernadan ekranon</string>
     <string name="gesture_flag_red">Baskuli ruĝan flagon</string>
     <string name="gesture_flag_orange">Baskuli oranĝkoloran flagon</string>
     <string name="gesture_flag_green">Baskuli verdan flagon</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Forigi flagon</string>
     <string name="gesture_page_up">Paĝo supren</string>
     <string name="gesture_page_down">Paĝo suben</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync">Fermi lernadan ekranon kaj samtempigi</string>
     <string name="gesture_toggle_whiteboard">Baskuli skribtabulon</string>
     <string name="gesture_show_hint">Montri konsilon</string>
     <string name="gesture_show_all_hints">Montri ĉiujn konsilojn</string>
