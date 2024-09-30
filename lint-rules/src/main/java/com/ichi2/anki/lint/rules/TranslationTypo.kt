@@ -27,6 +27,7 @@ import com.android.tools.lint.detector.api.XmlContext
 import com.android.tools.lint.detector.api.XmlScanner
 import com.google.common.annotations.VisibleForTesting
 import com.ichi2.anki.lint.utils.Constants
+import com.ichi2.anki.lint.utils.CrowdinContext.Companion.toCrowdinContext
 import com.ichi2.anki.lint.utils.ext.isRightToLeftLanguage
 import org.w3c.dom.Element
 
@@ -94,13 +95,17 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
             return
         }
 
+        val crowdinContext = context.toCrowdinContext()
+
         /** Helper function to report 'TranslationTypo' issues */
         fun Element.reportIssue(message: String) {
             val elementToReport = this
+            val crowdinEditUrl = crowdinContext?.getEditUrl(elementToReport)
+                ?.let { url -> "; $url" } ?: ""
             context.report(
                 issue = ISSUE,
                 location = context.getElementLocation(elementToReport),
-                message = message
+                message = message + crowdinEditUrl
             )
         }
 

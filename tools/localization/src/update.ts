@@ -171,6 +171,7 @@ export async function updateI18nFiles() {
             androidLanguages = [language.split("-", 1)[0]]; // Example: es-ES becomes es
         }
 
+        // Also update mappings for CrowdinLanguageTag in Crowdin.kt.
         switch (language) {
             case "yu":
                 androidLanguages = ["yue"];
