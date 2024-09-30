@@ -16,6 +16,9 @@
 # debugging stack traces.
 -keepattributes SourceFile,LineNumberTable
 
+# We do not have commercial interests to protect, so optimize for easier debugging
+-dontobfuscate
+
 # Used through Reflection
 -keep class com.ichi2.anki.**.*Fragment { *; }
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
