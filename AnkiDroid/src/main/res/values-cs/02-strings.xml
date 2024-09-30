@@ -90,10 +90,10 @@
     <string name="custom_study_preview_new">Náhled nových karet</string>
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="few">+%d buried</item>
-        <item quantity="many">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d přeskočená</item>
+        <item quantity="few">+%d přeskočené</item>
+        <item quantity="many">+%d přeskočené</item>
+        <item quantity="other">+%d přeskočených</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Upravit poznámku</string>
@@ -244,9 +244,9 @@
     <string name="edit_toolbar_item">Upravit položku nástrojové lišty</string>
     <string name="toolbar_item_explain_edit_or_remove">Zadejte HTML, které se vloží před a za vybraný text\n\nDlouze stiskněte položku nástrojové lišty, abyste ji upravili nebo odstranili</string>
     <string name="remove_toolbar_item">Odstranit položku nástrojové lišty?</string>
-    <string name="note_editor_image_too_large">Obrázek je příliš velký; vložte prosím obrázek ručně</string>
-    <string name="note_editor_video_too_large">Video je příliš velké; vložte ho prosím ručně</string>
-    <string name="note_editor_audio_too_large">Zvukový soubor je příliš velký; vložte ho prosím ručně</string>
+    <string name="note_editor_image_too_large">Obrázek je příliš velký, vložte ho prosím ručně</string>
+    <string name="note_editor_video_too_large">Video je příliš velké, vložte ho prosím ručně</string>
+    <string name="note_editor_audio_too_large">Zvukový soubor je příliš velký, vložte ho prosím ručně</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Probíhá zálohování Androidu. Zkuste to prosím znovu</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Prosím použijte iManager, abyste povolili přidávání zástupců AnkiDroid</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Vaše domovská obrazovka neumožňuje AnkiDroidu přidávat zástupce</string>
@@ -353,7 +353,7 @@
     <string name="play_recording">Přehrát</string>
     <string name="next_recording">Další</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="orphan_note_title">Typ karty nelze odstranit</string>
+    <string name="orphan_note_message">Smazání tohoto typu karty zanechá některé poznámky bez jakýchkoliv karet.</string>
+    <string name="voice_not_supported">Hlas není podporován. Zkuste jiný nebo nainstalujte hlasový modul.</string>
 </resources>

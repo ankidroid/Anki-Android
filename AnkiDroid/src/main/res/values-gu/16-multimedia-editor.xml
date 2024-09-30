@@ -72,7 +72,7 @@
     <string name="crop_button">છબીને કાપો</string>
     <string name="save_dialog_content">વર્તમાન છબીનું કદ %sMB છે. ડિફૉલ્ટ છબી કદ મર્યાદા 1MB છે. શું તમે તેને કાપવા માંગો છો?</string>
     <string name="select_image_failed">"છબી પસંદ કરવામાં નિષ્ફળ, કૃપા કરીને ફરી પ્રયાસ કરો"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="reselect">Reselect</string>
+    <string name="activity_result_unexpected">ஆப்ஸ் எதிர்பாராத மதிப்பை வழங்கியது. நீங்கள் வேறு ஆப்ஸைப் பயன்படுத்த வேண்டியிருக்கலாம்</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">புல உள்ளடக்கங்கள்</string>
+    <string name="reselect">மீண்டும் தேர்ந்தெடுக்கவும்</string>
 </resources>

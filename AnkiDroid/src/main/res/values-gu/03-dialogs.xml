@@ -49,10 +49,10 @@
     <string name="contextmenu_deckpicker_delete_deck">ડેક કાઢી નાખો</string>
     <string name="delete_deck_title">ડેક કાઢી નાખીએ?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டுகள் உள்ளன</item>
+        <item quantity="other">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டுகள் உள்ளன</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">வடிகட்டப்பட்ட %s டெக்கை அகற்றிவிட்டு, எல்லா கார்டுகளையும் அவற்றின் அசல் டெக்குகளுக்குத் திருப்பிவிடவா?</string>
     <string name="no_tts_available_message">કોઈ ટેક્સ્ટ-ટુ-સ્પીચ ભાષા ઉપલબ્ધ નથી</string>
     <string name="tts_no_tts">બોલશો નહીં</string>
     <string name="unused_strings">\n\nન વપરાયેલ ફાઇલો:\n</string>
@@ -259,14 +259,14 @@
     <string name="open">ખુલ્લા</string>
     <string name="change_cloze_number">કલમ નંબર બદલો</string>
     <string name="cloze_number">બંધ નંબર:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
+    <string name="change_editor_mode">எடிட்டர் பயன்முறையை மாற்றவும்</string>
+    <string name="open_note_editor">குறிப்பு எடிட்டரைத் திறக்கவும்</string>
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView સિસ્ટમ જૂની છે. કેટલીક સુવિધાઓ યોગ્ય રીતે કામ કરશે નહીં. કૃપા કરીને તેને અપડેટ કરો.\n\nઇન્સ્ટોલ કરેલ સંસ્કરણ: %1$d\nન્યૂનતમ આવશ્યક સંસ્કરણ: %2$d</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_title">மொழி ஆதரிக்கப்படவில்லை</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_supported_voices_button_text">குரல் விருப்பங்கள்</string>
 </resources>
