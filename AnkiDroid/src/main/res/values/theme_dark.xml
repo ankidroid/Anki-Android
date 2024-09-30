@@ -149,6 +149,8 @@
         <!-- AlertDialogTheme-->
         <item name="alertDialogTheme">@style/ThemeOverlay.AnkiDroid.AlertDialog</item>
         <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
     <style name="Theme_Dark" parent="Base.Theme.Dark"/>
