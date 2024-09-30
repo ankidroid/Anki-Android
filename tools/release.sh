@@ -141,6 +141,9 @@ for FLAVOR in $FLAVORS; do
   cp AnkiDroid/build/outputs/apk/"$FLAVOR"/release/AnkiDroid-"$FLAVOR"-universal-release.apk AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
 
+# Pack up our proguard mapping file for debugging in case needed
+tar -zcf proguard-mappings.tar.gz AnkiDroid/build/outputs/mapping
+
 # Push to Github Releases.
 GITHUB_TOKEN=$(cat ~/src/my-github-personal-access-token)
 export GITHUB_TOKEN
@@ -174,11 +177,12 @@ for ABI in $ABIS; do
   echo "Adding full APK for $ABI to Github release"
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
 done
-# Copy flavor universal APKs to cwd
 for FLAVOR in $FLAVORS; do
   echo "Adding universal APK for $FLAVOR to Github release"
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk --file AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
+echo "Adding proguard mappings file to Github release"
+github-release upload --tag v"$VERSION" --name proguard-mappings.tar.gz --file proguard-mappings.tar.gz
 
 # Not publishing to amazon pending: https://github.com/ankidroid/Anki-Android/issues/14161
 #if [ "$PUBLIC" = "public" ]; then
