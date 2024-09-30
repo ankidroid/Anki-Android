@@ -101,7 +101,7 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         fun Element.reportIssue(message: String) {
             val elementToReport = this
             val crowdinEditUrl = crowdinContext?.getEditUrl(elementToReport)
-                ?.let { url -> "; $url" } ?: ""
+                ?.let { url -> "\n$url" } ?: ""
             context.report(
                 issue = ISSUE,
                 location = context.getElementLocation(elementToReport),
