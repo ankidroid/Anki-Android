@@ -51,7 +51,7 @@
     <plurals name="delete_deck_message">
         <item quantity="one">Vymazat všechny karty v %1$s? Obsahuje %2$d kartu</item>
         <item quantity="few">Vymazat všechny karty v %1$s? Obsahuje %2$d karty</item>
-        <item quantity="many">Vymazat všechny karty v %1$s? Obsahuje %2$d karet</item>
+        <item quantity="many">Vymazat všechny karty v %1$s? Obsahuje %2$d karty</item>
         <item quantity="other">Vymazat všechny karty v %1$s? Obsahuje %2$d karet</item>
     </plurals>
     <string name="delete_cram_deck_message">Vymazat filtrovaný balíček %s a poslat všechny karty zpět do jejich původních balíčků?</string>
@@ -281,7 +281,7 @@
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Systémový WebView je zastaralý. Některé funkce nebudou fungovat správně. Aktualizujte jej prosím.\n\nNainstalovaná verze: %1$d\nMinimální požadovaná verze: %2$d</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
+    <string name="tts_error_dialog_title">Jazyk není podporován</string>
     <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>

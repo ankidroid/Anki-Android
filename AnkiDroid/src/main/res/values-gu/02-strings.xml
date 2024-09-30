@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">નવા કાર્ડ્સનું પૂર્વાવલોકન કરો</string>
     <string name="custom_study_limit_tags">ચોક્કસ ટૅગ્સ સુધી મર્યાદિત કરો</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d புதைக்கப்பட்டது</item>
+        <item quantity="other">+%d புதைக்கப்பட்டது</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">નોંધ સંપાદિત કરો</string>
@@ -236,8 +236,8 @@
     <string name="edit_toolbar_item">ટૂલબાર આઇટમ સંપાદિત કરો</string>
     <string name="toolbar_item_explain_edit_or_remove">પસંદ કરેલ ટેક્સ્ટ પહેલાં અને પછી દાખલ કરવા માટે HTML દાખલ કરો\n\nટૂલબાર આઇટમને સંપાદિત કરવા અથવા દૂર કરવા માટે તેને લાંબા સમય સુધી દબાવો</string>
     <string name="remove_toolbar_item">ટૂલબાર આઇટમ દૂર કરીએ?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
+    <string name="note_editor_image_too_large">படம் மிகவும் பெரிதாக உள்ளது, படத்தை கைமுறையாக செருகவும்</string>
+    <string name="note_editor_video_too_large">வீடியோ கோப்பு மிகவும் பெரியதாக உள்ளது, வீடியோவை கைமுறையாக செருகவும்</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android બેકઅપ ચાલુ છે. મહેરબાની કરીને ફરીથી પ્રયતન કરો</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid ને શૉર્ટકટ્સ ઉમેરવાની મંજૂરી આપવા માટે તમારે iManager નો ઉપયોગ કરવાની જરૂર પડી શકે છે</string>
@@ -340,7 +340,7 @@
     <string name="play_recording">પ્લે</string>
     <string name="next_recording">આગલું</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="orphan_note_title">அட்டை வகையை நீக்க முடியாது</string>
+    <string name="orphan_note_message">இந்த கார்டு வகையை நீக்கினால் சில குறிப்புகள் கார்டு இல்லாமல் இருக்கும்.</string>
+    <string name="voice_not_supported">குரல் மெமோ ஆதரிக்கப்படுகிறது. மற்றொரு குரல் இயந்திரத்தை நிறுவ முயற்சிக்கவும்.</string>
 </resources>

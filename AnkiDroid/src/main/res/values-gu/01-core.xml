@@ -65,8 +65,8 @@
         <item quantity="other">%1$d કલાક %2$d બાકી</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d நாள் %2$dh மீதமுள்ளது</item>
+        <item quantity="other">%1$d நாட்கள் %2$dh மீதமுள்ளது</item>
     </plurals>
     <string name="no_cards_placeholder_title">સૂચિ ખાલી છે</string>
     <string name="no_cards_placeholder_description">કાર્ડસ જોડવાનું શરૂ કરો \n તે માટે + ચિહ્ન વાપરો.</string>

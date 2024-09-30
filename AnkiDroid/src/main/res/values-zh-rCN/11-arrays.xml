@@ -84,7 +84,7 @@
     <string name="answer_good">回答“良好”</string>
     <string name="answer_easy">回答 “简单”</string>
     <string name="gesture_play">播放媒体</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
+    <string name="gesture_abort_learning">关闭复习程序</string>
     <string name="gesture_flag_red">切换红色旗标</string>
     <string name="gesture_flag_orange">切换橙色旗标</string>
     <string name="gesture_flag_green">切换绿色旗标</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">移除旗标</string>
     <string name="gesture_page_up">向上翻页</string>
     <string name="gesture_page_down">向下翻页</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync">关闭复习程序并同步</string>
     <string name="gesture_toggle_whiteboard">切换白板</string>
     <string name="gesture_show_hint">显示提示</string>
     <string name="gesture_show_all_hints">显示所有提示</string>
