@@ -43,17 +43,29 @@ fun Issue.assertXmlStringsHasErrorCount(@Language("XML") xmlFile: String, expect
         .expectErrorCount(expectedErrorCount)
 }
 
-fun Issue.assertXmlStringsHasError(@Language("XML") xmlFile: String, expectedError: String) {
+/**
+ * @param androidLanguageFolder the code used in the Android `values-XX` folder.
+ *  Cantonese: `yue`, not `yu`
+ * @param fileName The name of the xml file without extension: `01-core` etc...
+ */
+fun Issue.assertXmlStringsHasError(
+    @Language("XML") xmlFile: String,
+    expectedError: String,
+    androidLanguageFolder: String? = null,
+    fileName: String? = null
+) {
+    val languageQualifier = if (androidLanguageFolder != null) "-$androidLanguageFolder" else ""
+    val resourceFileName = fileName ?: "constants"
     TestLintTask.lint()
         .allowMissingSdk()
         .allowCompilationErrors()
-        .files(TestFiles.xml("res/values/constants.xml", xmlFile))
+        .files(TestFiles.xml("res/values$languageQualifier/$resourceFileName.xml", xmlFile))
         .issues(this)
         .run()
         .expectErrorCount(1)
         .check({ output: String ->
             assertTrue(
-                "check should fail wth '$expectedError', but was '$output'",
+                "check should fail with '$expectedError', but was '$output'",
                 output.contains(expectedError)
             )
         })

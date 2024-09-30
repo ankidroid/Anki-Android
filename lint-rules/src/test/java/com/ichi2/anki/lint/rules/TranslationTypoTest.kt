@@ -69,4 +69,67 @@ class TranslationTypoTest {
 
         TranslationTypo.ISSUE.assertXmlStringsNoIssues(stringRemoved)
     }
+
+    /** A link to the string on Crowdin should be provided */
+    @Test
+    fun crowdinEditLinkIsProvided() {
+        // Use links in the form: https://crowdin.com/editor/ankidroid/7290/en-af#q=create_subdeck
+        // where 7290 is 01-core.xml, `en-af` is Afrikaans, and `create_subdeck` is the key
+
+        // The actual link is https://crowdin.com/editor/ankidroid/7290/en-af#6534818, but
+        // we don't have context to map from `create_subdeck` to `6534818`
+
+        // We do not use '...', as this is not checked for RTL languages
+        val xmlWithIssue = """<resources>
+           <string name="create_subdeck">javascript</string>
+        </resources>"""
+
+        // 'standard' test
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlWithIssue,
+            expectedError = "https://crowdin.com/editor/ankidroid/7290/en-af#q=create_subdeck",
+            fileName = "01-core",
+            androidLanguageFolder = "af"
+        )
+
+        // 02-strings -> 7291
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlWithIssue,
+            expectedError = "https://crowdin.com/editor/ankidroid/7291/en-af#q=create_subdeck",
+            fileName = "02-strings",
+            androidLanguageFolder = "af"
+        )
+
+        // custom mapping: yue -> yu
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlWithIssue,
+            expectedError = "https://crowdin.com/editor/ankidroid/7290/en-yu#q=create_subdeck",
+            fileName = "01-core",
+            androidLanguageFolder = "yue"
+        )
+
+        // Used region specifier: Chinese
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlWithIssue,
+            expectedError = "https://crowdin.com/editor/ankidroid/7290/en-zhcn#q=create_subdeck",
+            fileName = "01-core",
+            androidLanguageFolder = "zh-rCN"
+        )
+
+        // no -> nnno
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlWithIssue,
+            expectedError = "https://crowdin.com/editor/ankidroid/7290/en-nnno#q=create_subdeck",
+            fileName = "01-core",
+            androidLanguageFolder = "nn"
+        )
+
+        // ur -> urpa
+        TranslationTypo.ISSUE.assertXmlStringsHasError(
+            xmlWithIssue,
+            expectedError = "https://crowdin.com/editor/ankidroid/7290/en-urpk#q=create_subdeck",
+            fileName = "01-core",
+            androidLanguageFolder = "ur"
+        )
+    }
 }
