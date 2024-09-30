@@ -243,4 +243,8 @@
         <item name="android:alertDialogStyle">@style/AlertDialogStyle</item>
     </style>
 
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+    </style>
+
 </resources>

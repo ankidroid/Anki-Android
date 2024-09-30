@@ -138,6 +138,8 @@
         <item name="checkMediaListForeground">@color/material_grey_700</item>
         <item name="progressDialogButtonTextColor">@color/material_light_blue_500</item>
         <item name="tabStyle">@style/Widget.MaterialComponents.TabLayout</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
     <style name="Theme_Light" parent="Base.Theme.Light"/>
