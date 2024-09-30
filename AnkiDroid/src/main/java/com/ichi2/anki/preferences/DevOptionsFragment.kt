@@ -21,6 +21,7 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.launchCatchingTask
@@ -62,6 +63,10 @@ class DevOptionsFragment : SettingsFragment() {
         }
         // Make it possible to test crash reporting
         requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
+            // If we don't delete the limiter data, our test crash may not go through,
+            // but we are triggering it very much on purpose, we want to see the crash in ACRA
+            this.context?.let { c -> CrashReportService.deleteACRALimiterData(c) }
+
             Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
             throw RuntimeException("This is a test crash")
         }
