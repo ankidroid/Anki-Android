@@ -38,16 +38,16 @@ import org.w3c.dom.Element
 class TranslationTypo : ResourceXmlDetector(), XmlScanner {
     companion object {
         @VisibleForTesting
-        val ID_TITLE_LENGTH = "TranslationTypo"
+        val ID_TRANSLATION_TYPO = "TranslationTypo"
 
         @VisibleForTesting
-        val EXPLANATION_TITLE_LENGTH = "Typo in translation"
+        val EXPLANATION_TRANSLATION_TYPO = "Typo in translation"
 
         private val implementation = Implementation(TranslationTypo::class.java, Scope.RESOURCE_FILE_SCOPE)
         val ISSUE: Issue = Issue.create(
-            ID_TITLE_LENGTH,
-            EXPLANATION_TITLE_LENGTH,
-            EXPLANATION_TITLE_LENGTH,
+            ID_TRANSLATION_TYPO,
+            EXPLANATION_TRANSLATION_TYPO,
+            EXPLANATION_TRANSLATION_TYPO,
             Constants.ANKI_XML_CATEGORY,
             Constants.ANKI_XML_PRIORITY,
             Constants.ANKI_XML_SEVERITY,
@@ -94,20 +94,30 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
             return
         }
 
+        /** Helper function to report 'TranslationTypo' issues */
+        fun Element.reportIssue(message: String) {
+            val elementToReport = this
+            context.report(
+                issue = ISSUE,
+                location = context.getElementLocation(elementToReport),
+                message = message
+            )
+        }
+
         // use the unicode character instead of three dots for ellipsis
         // ignore RTL to reduce maintenance: GitHub incorrectly displays ellipsis, so hard to review
         if (element.textContent.contains("...") && !context.isRightToLeftLanguage()) {
-            context.report(ISSUE, context.getElementLocation(element), "should use unicode '&#8230;' instead of three dots for ellipsis")
+            element.reportIssue("should use unicode '&#8230;' instead of three dots for ellipsis")
         }
 
         // casing of 'JavaScript'
         if (element.textContent.lowercase().contains("javascript") && !element.textContent.contains("JavaScript")) {
-            context.report(ISSUE, context.getElementLocation(element), "should be 'JavaScript'")
+            element.reportIssue("should be 'JavaScript'")
         }
 
         // remove empty strings
         if (element.textContent.isEmpty() && element.getAttribute("name") != "empty_string") {
-            context.report(ISSUE, context.getElementLocation(element), "should not be empty")
+            element.reportIssue("should not be empty")
         }
     }
 }
