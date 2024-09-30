@@ -52,7 +52,7 @@ androidxWebkit = "1.12.0"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.9.1"
 annotations = "25.0.0"
-ankiBackend = '0.1.40-anki24.06.3'
+ankiBackend = '0.1.40-anki24.10beta1'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 colorpicker = "1.2.0"
