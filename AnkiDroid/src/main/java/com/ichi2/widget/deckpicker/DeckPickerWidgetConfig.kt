@@ -239,9 +239,6 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
             val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             setResult(RESULT_OK, resultValue)
-
-            sendBroadcast(Intent(this, DeckPickerWidget::class.java))
-
             finish()
         }
 

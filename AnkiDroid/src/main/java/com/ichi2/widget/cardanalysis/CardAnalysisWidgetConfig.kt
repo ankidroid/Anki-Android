@@ -311,9 +311,6 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
             val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             setResult(RESULT_OK, resultValue)
-
-            sendBroadcast(Intent(this, CardAnalysisWidget::class.java))
-
             finish()
         }
     }
