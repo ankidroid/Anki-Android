@@ -289,4 +289,5 @@ also changes the interval of the card"
     <string name="tts_error_dialog_change_button_text">Change engine</string>
     <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
 
+    <string name="compress">Compress</string>
 </resources>
