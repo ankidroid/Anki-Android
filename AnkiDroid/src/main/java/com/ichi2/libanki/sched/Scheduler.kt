@@ -745,3 +745,6 @@ fun Collection.computeOptimalRetentionRaw(input: ByteArray): ByteArray {
 fun Collection.evaluateWeightsRaw(input: ByteArray): ByteArray {
     return backend.evaluateWeightsRaw(input = input)
 }
+fun Collection.simulateFsrsReviewRaw(input: ByteArray): ByteArray {
+    return backend.simulateFsrsReviewRaw(input = input)
+}
