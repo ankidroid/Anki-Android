@@ -98,6 +98,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.PreviewerFragment
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
+import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
@@ -419,6 +420,7 @@ open class CardBrowser :
         }
 
         setupFlows()
+        registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -1381,11 +1383,7 @@ open class CardBrowser :
 
     private fun onResetProgress() {
         if (warnUserIfInNotesOnlyMode()) return
-        launchCatchingTask {
-            val cardIds = viewModel.queryAllSelectedCardIds()
-            val dialog = ForgetCardsDialog.newInstance(cardIds = cardIds)
-            showDialogFragment(dialog)
-        }
+        showDialogFragment(ForgetCardsDialog())
     }
 
     @VisibleForTesting
