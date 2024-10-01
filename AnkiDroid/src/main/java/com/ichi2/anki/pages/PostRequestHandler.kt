@@ -36,6 +36,7 @@ import com.ichi2.libanki.getNotetypeNamesRaw
 import com.ichi2.libanki.sched.computeFsrsWeightsRaw
 import com.ichi2.libanki.sched.computeOptimalRetentionRaw
 import com.ichi2.libanki.sched.evaluateWeightsRaw
+import com.ichi2.libanki.sched.simulateFsrsReviewRaw
 import com.ichi2.libanki.stats.cardStatsRaw
 import com.ichi2.libanki.stats.getGraphPreferencesRaw
 import com.ichi2.libanki.stats.graphsRaw
@@ -69,6 +70,7 @@ suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): B
         "computeFsrsWeights" -> withCol { computeFsrsWeightsRaw(bytes) }
         "computeOptimalRetention" -> withCol { computeOptimalRetentionRaw(bytes) }
         "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
+        "simulateFsrsReview" -> withCol { simulateFsrsReviewRaw(bytes) }
         "getImageForOcclusion" -> withCol { getImageForOcclusionRaw(bytes) }
         "getImageOcclusionNote" -> withCol { getImageOcclusionNoteRaw(bytes) }
         "getImageForOcclusionFields" -> withCol { getImageOcclusionFieldsRaw(bytes) }
