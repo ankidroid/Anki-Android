@@ -91,7 +91,7 @@ jobs:
                       // Incidentally you cannot use arry.forEach() with async functions; it does not await. for or for...in is required.
                       for (const key of Object.keys(uniqueContributorsWithPR)) {
                         // skip some users, we don't allow bots to claim for their work, yet?
-                        if (key === 'github-actions' || key.includes('dependabot') || key.includes('[bot]')) {
+                        if (key === 'github-actions' || key.includes('dependabot') || key.includes('[bot]' || key.includes('machineaccount')) {
                           console.log(`ignoring pr with bot user ${key}`);
                           continue;
                         }
