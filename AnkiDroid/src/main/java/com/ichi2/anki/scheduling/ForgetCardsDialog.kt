@@ -25,7 +25,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
@@ -33,6 +32,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -159,8 +159,8 @@ private fun AnkiActivity.forgetCards(
         resetRepetitionAndLapseCounts
     )
     // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
-    val changes = withProgress(resources.getString(R.string.dialog_processing)) {
-        withCol {
+    withProgress(resources.getString(R.string.dialog_processing)) {
+        undoableOp {
             sched.forgetCards(
                 cardsIds,
                 restorePosition = restoreOriginalPositionIfPossible,
