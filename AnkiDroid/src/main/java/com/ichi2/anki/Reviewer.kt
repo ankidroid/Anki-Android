@@ -87,6 +87,7 @@ import com.ichi2.anki.reviewer.PeripheralKeymap
 import com.ichi2.anki.reviewer.ReviewerUi
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.scheduling.SetDueDateDialog
+import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.snackbar.showSnackbar
@@ -226,6 +227,7 @@ open class Reviewer :
             supportActionBar?.title = ""
         }
         startLoadingCollection()
+        registerOnForgetHandler { listOf(currentCardId!!) }
     }
 
     override fun onPause() {
@@ -681,8 +683,7 @@ open class Reviewer :
 
     private fun showResetCardDialog() {
         Timber.i("showResetCardDialog() Reset progress button pressed")
-        val dialog = ForgetCardsDialog.newInstance(listOf(currentCardId!!))
-        showDialogFragment(dialog)
+        showDialogFragment(ForgetCardsDialog())
     }
 
     fun addNote(fromGesture: Gesture? = null) {

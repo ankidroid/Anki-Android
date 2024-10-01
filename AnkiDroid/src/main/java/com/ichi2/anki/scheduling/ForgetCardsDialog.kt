@@ -18,19 +18,16 @@ package com.ichi2.anki.scheduling
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.annotation.CheckResult
-import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
@@ -45,84 +42,138 @@ import timber.log.Timber
 /**
  * Dialog for [Scheduler.forgetCards]
  *
- * Previously known as 'Reset Cards'
+ * Previously known as 'Reset Cards'.
+ * Moves cards back to the [new queue](https://docs.ankiweb.net/getting-started.html#types-of-cards)
  *
- * @see ForgetCardsViewModel
+ * docs:
+ * * https://docs.ankiweb.net/studying.html#editing-and-more
+ * * https://docs.ankiweb.net/browsing.html#cards
  */
 // TODO: Rename the labels opening this class once Anki Desktop's translations support plurals
 @NeedsTest("all")
 class ForgetCardsDialog : DialogFragment() {
-    val viewModel: ForgetCardsViewModel by activityViewModels<ForgetCardsViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val cardIds = requireNotNull(requireArguments().getLongArray(ARG_CARD_IDS)) { ARG_CARD_IDS }
-        viewModel.init(cardIds.toList())
-        Timber.d("Reset cards dialog: %d card(s)", cardIds.size)
-    }
+    /**
+     * Resets cards back to their original positions in the new queue
+     *
+     * This only works if the card was first studied using SchedV3 with backend >= 2.1.50+
+     *
+     * If `false`, cards are moved to the end of the new queue
+     */
+    private var restoreOriginalPositionIfPossible = true
+        set(value) {
+            Timber.i("restoreOriginalPositionIfPossible: %b", value)
+            field = value
+        }
+
+    /**
+     * Set the review and failure counters back to zero.
+     *
+     * This does not affect CardInfo/review history
+     */
+    private var resetRepetitionAndLapseCounts = false
+        set(value) {
+            Timber.i("resetRepetitionAndLapseCounts: %b", value)
+            field = value
+        }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        if (savedInstanceState != null) {
+            restoreOriginalPositionIfPossible = savedInstanceState.getBoolean(ARG_RESTORE_ORIGINAL, true)
+            resetRepetitionAndLapseCounts = savedInstanceState.getBoolean(ARG_RESET_REPETITION, false)
+        }
+        val contentView = layoutInflater.inflate(R.layout.dialog_forget_cards, null).apply {
+            findViewById<MaterialCheckBox>(R.id.restore_original_position)!!.apply {
+                isChecked = restoreOriginalPositionIfPossible
+                setOnCheckedChangeListener { _, isChecked ->
+                    restoreOriginalPositionIfPossible = isChecked
+                }
+                text = TR.schedulingRestorePosition()
+            }
+            findViewById<MaterialCheckBox>(R.id.reset_lapse_counts)!!.apply {
+                isChecked = resetRepetitionAndLapseCounts
+                setOnCheckedChangeListener { _, isChecked ->
+                    resetRepetitionAndLapseCounts = isChecked
+                }
+                text = TR.schedulingResetCounts()
+            }
+        }
         return MaterialAlertDialogBuilder(requireContext()).create {
             // BUG: this is 'Reset Card'/'Forget Card' in Anki Desktop (24.04)
             // title(text = TR.actionsForgetCard().toSentenceCase(R.string.sentence_forget_cards))
             // "Reset card progress" is less explicit on the singular/plural dimension
             title(text = getString(R.string.reset_card_dialog_title))
-            positiveButton(R.string.dialog_ok) { launchForgetCards() }
+            positiveButton(R.string.dialog_ok) {
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_KEY_FORGET,
+                    bundleOf(
+                        ARG_RESTORE_ORIGINAL to restoreOriginalPositionIfPossible,
+                        ARG_RESET_REPETITION to resetRepetitionAndLapseCounts
+                    )
+                )
+            }
             negativeButton(R.string.dialog_cancel)
-            setView(R.layout.dialog_forget_cards)
-        }.apply {
-            show() // needed for setupDialog
+            setView(contentView)
         }
     }
 
-    override fun setupDialog(dialog: Dialog, style: Int) {
-        super.setupDialog(dialog, style)
-        val alertDialog = dialog as AlertDialog
-
-        alertDialog.findViewById<MaterialCheckBox>(R.id.restore_original_position)!!.apply {
-            isChecked = viewModel.restoreOriginalPositionIfPossible
-            setOnCheckedChangeListener { _, isChecked ->
-                viewModel.restoreOriginalPositionIfPossible = isChecked
-            }
-            text = TR.schedulingRestorePosition()
-        }
-        alertDialog.findViewById<MaterialCheckBox>(R.id.reset_lapse_counts)!!.apply {
-            isChecked = viewModel.resetRepetitionAndLapseCounts
-            setOnCheckedChangeListener { _, isChecked ->
-                viewModel.resetRepetitionAndLapseCounts = isChecked
-            }
-            text = TR.schedulingResetCounts()
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+        outState.putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
     }
-
-    private fun launchForgetCards() = requireAnkiActivity().forgetCards(viewModel)
 
     companion object {
-        const val ARG_CARD_IDS = "ARGS_CARD_IDS"
-
-        @CheckResult
-        fun newInstance(cardIds: List<CardId>) = ForgetCardsDialog().apply {
-            arguments = bundleOf(ARG_CARD_IDS to cardIds.toLongArray())
-            Timber.i("Showing 'forget cards' dialog for %d cards", cardIds.size)
-        }
+        const val REQUEST_KEY_FORGET = "request_key_forget_cards"
+        const val ARG_RESTORE_ORIGINAL = "key_restore_original"
+        const val ARG_RESET_REPETITION = "key_reset_repetition"
     }
 }
 
-// this can outlive the lifetime of the fragment
-private fun AnkiActivity.forgetCards(viewModel: ForgetCardsViewModel) = this.launchCatchingTask {
-    // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
-    val count = withProgress(resources.getString(R.string.dialog_processing)) {
-        // this should be run on the viewModel
-        viewModel.resetCardsAsync().await()
+/**
+ * Listen for requests from [ForgetCardsDialog] and triggers backend calls to reset progress for
+ * current selected/reviewed card/cards. Callers need to supply the list of cards ids.
+ *
+ * @param cardsIdsProducer lambda which returns the list of cards for which to reset the progress
+ */
+internal fun AnkiActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -> List<CardId>) {
+    supportFragmentManager.setFragmentResultListener(ForgetCardsDialog.REQUEST_KEY_FORGET, this) { _, bundle: Bundle ->
+        forgetCards(
+            cardsIdsProducer = cardsIdsProducer,
+            restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL),
+            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.ARG_RESET_REPETITION)
+        )
     }
+}
 
-    Timber.d("forgot %d cards", count)
-
+private fun AnkiActivity.forgetCards(
+    cardsIdsProducer: suspend () -> List<CardId>,
+    restoreOriginalPositionIfPossible: Boolean,
+    resetRepetitionAndLapseCounts: Boolean
+) = launchCatchingTask {
+    val cardsIds = cardsIdsProducer()
+    Timber.i(
+        "forgetting %d cards, restorePosition = %b, resetCounts = %b",
+        cardsIds.size,
+        restoreOriginalPositionIfPossible,
+        resetRepetitionAndLapseCounts
+    )
+    // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
+    val changes = withProgress(resources.getString(R.string.dialog_processing)) {
+        withCol {
+            sched.forgetCards(
+                cardsIds,
+                restorePosition = restoreOriginalPositionIfPossible,
+                resetCounts = resetRepetitionAndLapseCounts
+            )
+        }
+    }
+    Timber.d("forgot %d cards", cardsIds.size)
     showSnackbar(
         resources.getQuantityString(
             R.plurals.reset_cards_dialog_acknowledge,
-            count,
-            count
+            cardsIds.size,
+            cardsIds.size
         ),
         Snackbar.LENGTH_SHORT
     )

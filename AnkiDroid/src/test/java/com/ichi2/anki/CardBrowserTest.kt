@@ -24,6 +24,7 @@ import android.widget.ListView
 import android.widget.Spinner
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
@@ -43,7 +44,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.scheduling.ForgetCardsViewModel
+import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.libanki.BrowserConfig
@@ -558,10 +559,14 @@ class CardBrowserTest : RobolectricTest() {
             equalTo(expectedDate)
         )
 
-        ForgetCardsViewModel().apply {
-            init(listOf(card.id))
-            resetCardsAsync().await()
-        }
+        // simulate the user using the ForgetCardsDialog to start the cards reset process
+        b.supportFragmentManager.setFragmentResult(
+            ForgetCardsDialog.REQUEST_KEY_FORGET,
+            bundleOf(
+                ForgetCardsDialog.ARG_RESTORE_ORIGINAL to true,
+                ForgetCardsDialog.ARG_RESET_REPETITION to false
+            )
+        )
 
         card.reload()
 
