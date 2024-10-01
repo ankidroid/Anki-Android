@@ -248,6 +248,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      */
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
+        // without this call the editor doesn't see the latest changes to notetypes, see #16630
+        @NeedsTest("Add test to check that renaming notetypes in ManageNotetypes is seen in CardTemplateEditor(#16630)")
+        col.notetypes.clearCache()
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
