@@ -97,7 +97,17 @@ class CreateDeckDialog(
             val inputField = dialog.getInputField()
             inputField.setOnEditorActionListener { _, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
-                    onPositiveButtonClicked()
+                    when {
+                        dialog.positiveButton.isEnabled -> {
+                            onPositiveButtonClicked()
+                        }
+                        text.isBlank() -> {
+                            dialog.getInputTextLayout().showSnackbar(context.getString(R.string.empty_deck_name), Snackbar.LENGTH_SHORT)
+                        }
+                        else -> {
+                            dialog.getInputTextLayout().showSnackbar(context.getString(R.string.deck_already_exists), Snackbar.LENGTH_SHORT)
+                        }
+                    }
                     true
                 } else {
                     false
