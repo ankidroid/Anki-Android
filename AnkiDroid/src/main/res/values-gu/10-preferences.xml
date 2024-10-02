@@ -70,8 +70,8 @@
     <string name="pref_cat_plugins" maxLength="41">પ્લગઈન્સ</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">સ્ટ્રોક પહોળાઈ</string>
-    <string name="use_input_tag" maxLength="41">Type answer into the card</string>
-    <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
+    <string name="use_input_tag" maxLength="41">કાર્ડમાં જવાબ લખો</string>
+    <string name="use_input_tag_summ">જવાબ લખવા માટે કાર્ડની અંદરના ટેક્સ્ટ ઇનપુટ બોક્સનો ઉપયોગ કરો</string>
     <string name="reset_languages" maxLength="41">ભાષાઓ રીસેટ કરો</string>
     <string name="reset_languages_summ">બધા ડેક માટે ભાષા સોંપણીઓ (ટેક્સ્ટ-ટુ-સ્પીચ અને શબ્દકોશ માટે) રીસેટ કરો</string>
     <string name="reset_languages_question">બધી ભાષા સોંપણીઓ રીસેટ કરીએ?</string>
@@ -81,7 +81,7 @@
     <string name="button_size" maxLength="41">જવાબ આપો બટનનું કદ</string>
     <string name="card_browser_font_size" maxLength="41">કાર્ડ બ્રાઉઝર ફોન્ટ સ્કેલિંગ</string>
     <string name="card_browser_hide_media" maxLength="41">કાર્ડ બ્રાઉઝરમાં ફાઇલનામો દર્શાવો</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">કાર્ડ બ્રાઉઝર Q/A ફીલ્ડમાં મીડિયા ફાઇલનામ દર્શાવો</string>
     <string name="col_path" maxLength="41">AnkiDroid ડિરેક્ટરી</string>
     <string name="fullscreen_review" maxLength="41">પૂર્ણસ્ક્રીન મોડ</string>
     <string name="full_screen_off">બંધ</string>
@@ -154,24 +154,24 @@
     <string name="timeout_answer_summ2">વપરાશકર્તા ઇનપુટ વિના આપમેળે જવાબ બતાવો. ડેક વિકલ્પોમાંથી ગોઠવો.</string>
     <string name="select_locale_title">ભાષા પસંદ કરો</string>
     <string name="software_render" maxLength="41">કાર્ડ હાર્ડવેર રેન્ડરને અક્ષમ કરો</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render_summ">હાર્ડવેર રેન્ડર ઝડપી છે પરંતુ ખાસ કરીને Android 8/8.1 પર સમસ્યાઓ આવી શકે છે. જો તમે કાર્ડ રિવ્યુ યુઝર ઈન્ટરફેસના ભાગો જોઈ શકતા નથી, તો આ સેટિંગ અજમાવી જુઓ.</string>
     <string name="safe_display" maxLength="41">સેફ ડિસ્પ્લે મોડ</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="safe_display_summ">તમામ એનિમેશન અક્ષમ કરો અને કાર્ડ દોરવા માટે સલામત પદ્ધતિનો ઉપયોગ કરો. ઇ-ઇંક ઉપકરણોને આની જરૂર પડી શકે છે.</string>
     <string name="disable_extended_text_ui" maxLength="41">સિંગલ-ફીલ્ડ એડિટ મોડને અક્ષમ કરો</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">જ્યારે લેન્ડસ્કેપ મોડમાં હોય ત્યારે સંદર્ભ મેનૂને \'કાઢી નાખવાનું બંધ\' કરવાની મંજૂરી આપે છે.</string>
     <string name="vertical_centering" maxLength="41">કેન્દ્રમાં સંરેખિત કરો</string>
     <string name="vertical_centering_summ">કાર્ડ્સની સામગ્રીને ઊભી રીતે કેન્દ્રમાં રાખો</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ડબલ ટેપ સમય અંતરાલ (મિલિસેકન્ડ)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press_time" maxLength="41">જવાબ લાંબો સમય દબાવવાનો સમય બતાવો</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="pref_show_answer_long_press_time_summary">શો જવાબ બટન રજીસ્ટર થાય તે પહેલા ન્યૂનતમ દબાવવાનો સમય વધારે છે.</string>
     <string name="show_estimates" maxLength="41">સમય બતાવો બટન</string>
-    <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_estimates_summ">જવાબ બટનો પર આગામી સમીક્ષા સમય બતાવો</string>
     <string name="show_large_answer_buttons" maxLength="41">મોટા જવાબ બટનો બતાવો</string>
     <string name="show_large_answer_buttons_summ">2 હરોળમાં જવાબ બટન બતાવો</string>
     <string name="show_top_bar" maxLength="41">ટોચની પટ્ટી બતાવો</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">ટોચના બારમાં કાર્ડની ગણતરી, જવાબ ટાઈમર, ધ્વજ અને આયકન બતાવો</string>
     <string name="show_progress" maxLength="41">બાકીના બતાવો</string>
     <string name="show_progress_summ">બાકીના કાર્ડની સંખ્યા બતાવો</string>
     <string name="show_eta" maxLength="41">ETA બતાવો</string>
@@ -189,7 +189,7 @@
     <string name="enable_api_title" maxLength="41">AnkiDroid API ને સક્ષમ કરો</string>
     <string name="enable_api_summary">અન્ય એપ્લિકેશનોને તમારા હસ્તક્ષેપ વિના AnkiDroid સાથે કનેક્ટ થવા દો અને ડેટા વાંચવા/લખવા દો</string>
     <string name="custom_buttons" maxLength="41">એપ્લિકેશન બાર બટનો</string>
-    <string name="custom_buttons_summary">Customize which actions appear in the app bar</string>
+    <string name="custom_buttons_summary">એપ્લિકેશન બારમાં કઈ ક્રિયાઓ દેખાય તે કસ્ટમાઇઝ કરો</string>
     <string name="custom_buttons_setting_always_show">હંમેશા બતાવો</string>
     <string name="custom_buttons_setting_if_room">જો રૂમ બતાવો</string>
     <string name="custom_buttons_setting_menu_only">માત્ર મેનુ</string>
@@ -199,14 +199,14 @@
     <string name="thirdparty_apps_title" maxLength="41">તૃતીય-પક્ષ API એપ્લિકેશન્સ</string>
     <string name="thirdparty_apps_summary">એપ્લીકેશનની યાદી જુઓ જે AnkiDroid API નો ઉપયોગ કરે છે જેમ કે શબ્દકોશો, ઉપયોગિતાઓ.</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
+    <string name="pref_cat_reviewer" maxLength="41">સમીક્ષક</string>
     <string name="show_deck_title" maxLength="41">ડેક શીર્ષક બતાવો</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">સુલભતા</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">ક્લિપબોર્ડ છબીઓને PNG તરીકે પેસ્ટ કરો</string>
     <string name="paste_as_png_summary">ડિફૉલ્ટ રીતે અંકી ડિસ્ક સ્પેસ બચાવવા માટે JPG ફાઇલો તરીકે ક્લિપબોર્ડ પર છબીઓ પેસ્ટ કરે છે. તમે તેના બદલે PNG છબીઓ તરીકે પેસ્ટ કરવા માટે આ વિકલ્પનો ઉપયોગ કરી શકો છો.</string>
     <string name="exit_via_double_tap_back" maxLength="41">પાછા જવા/બહાર જવા માટે બે વાર પાછા દબાવો</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back_summ">આકસ્મિક રીતે સમીક્ષક અથવા એપ્લિકેશન છોડવાનું ટાળવા માટે</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">મીડિયા આયાતમાં બધી ફાઇલોને મંજૂરી આપો</string>
     <string name="media_import_allow_all_files_summ">જો એન્ડ્રોઇડ મીડિયા ફાઇલને ઓળખતું નથી</string>
@@ -219,7 +219,7 @@
         <a href="%s">Learn more</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">url સમન્વયિત કરો</string>
-    <string name="custom_sync_certificate_title" maxLength="41">Custom root certificate (PEM)</string>
+    <string name="custom_sync_certificate_title" maxLength="41">કસ્ટમ રૂટ સર્ટિફિકેટ (PEM)</string>
     <!-- Key Bindings -->
     <string name="keyboard">કીબોર્ડ</string>
     <string name="bluetooth">બ્લુટુથ</string>
@@ -237,37 +237,37 @@
     <string name="deck_conf_cram_filter" maxLength="41">ફિલ્ટર કરો</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">શોધો</string>
     <string name="deck_conf_cram_limit" maxLength="41">સુધીની મર્યાદા</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Reschedule</string>
-    <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
+    <string name="deck_conf_cram_order" maxLength="41">દ્વારા પસંદ કરાયેલ કાર્ડ્સ</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">ફરીથી શેડ્યૂલ</string>
+    <string name="deck_conf_cram_reschedule_summ">આ ડેકમાં મારા જવાબોના આધારે કાર્ડને ફરીથી શેડ્યૂલ કરો</string>
     <string name="deck_conf_cram_filter_2_check">બીજા ફિલ્ટરને સક્ષમ કરો</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">કસ્ટમ સ્ટેપ્સ વ્યાખ્યાયિત કરો</string>
     <string name="deck_conf_cram_preview_delays" maxLength="41">પૂર્વાવલોકન વિલંબ</string>
-    <string name="deck_conf_cram_preview_delays_summ">Delays are in seconds. 0 returns card to original deck.</string>
+    <string name="deck_conf_cram_preview_delays_summ">વિલંબ સેકંડમાં છે. 0 કાર્ડ્સને મૂળ ડેક પર પરત કરે છે.</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid ને બહેતર બનાવવામાં મદદ કરો!</string>
     <string name="analytics_title" maxLength="41">સુવિધાનો ઉપયોગ શેર કરો</string>
-    <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
+    <string name="analytics_summ">તમે વિકાસ ટીમને લોકો કઈ સુવિધાઓનો ઉપયોગ કરે છે તે જોવામાં મદદ કરીને AnkiDroid માં યોગદાન આપી શકો છો</string>
+    <string name="note_editor_replace_newlines" maxLength="41">નવી લાઇનને HTML સાથે બદલો</string>
+    <string name="note_editor_replace_newlines_summ">નોંધ સંપાદકમાં, &lt;br&gt; કાર્ડ સંપાદિત કરતી વખતે નવી લાઇનમાં.</string>
     <string name="type_in_answer_focus" maxLength="41">\'જવાબ લખો\' પર ફોકસ કરો</string>
     <string name="type_in_answer_focus_summ">સમીક્ષકમાં આપમેળે \'ટાઈપ ઇન જવાબ\' ફીલ્ડ પર ફોકસ કરો</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">ચેન્જલોગ ખોલો</string>
     <string name="pref_cat_about_title" maxLength="41">વિશે</string>
     <string name="contributors_title">ફાળો આપનાર</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">લાઇસન્સ</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="donate_description"><![CDATA[તમે <a href=\"%1$s\">દાન</a> કરીને AnkiDroid ના વિકાસને સમર્થન આપી શકો છો. કોઈપણ રકમની ખૂબ પ્રશંસા કરવામાં આવે છે.]]></string>
     <!-- Controls -->
     <string name="binding_add_gesture">હાવભાવ ઉમેરો</string>
     <string name="binding_replace_gesture">હાવભાવ બદલો</string>
     <string name="binding_add_key">કી ઉમેરો</string>
     <string name="binding_replace_key">કી બદલો</string>
     <string name="key_picker_default_press_key">એક કી દબાવો</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
+    <string name="binding_add_axis">જોયસ્ટિક/મોશન કંટ્રોલર ઉમેરો</string>
+    <string name="axis_picker_move_joystick">જોયસ્ટીક/મોશન કંટ્રોલર ખસેડો</string>
     <string name="user_actions" maxLength="41">વપરાશકર્તા ક્રિયાઓ</string>
     <string name="user_actions_summary" maxLength="41">સમીક્ષા સ્ક્રીનમાંથી JavaScript ટ્રિગર કરો</string>
     <string name="user_action_1" maxLength="41">વપરાશકર્તા ક્રિયા 1</string>
@@ -279,18 +279,18 @@
     <string name="user_action_7" maxLength="41">વપરાશકર્તા ક્રિયા 7</string>
     <string name="user_action_8" maxLength="41">વપરાશકર્તા ક્રિયા 8</string>
     <string name="user_action_9" maxLength="41">વપરાશકર્તા ક્રિયા 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">ઑટો એડવાન્સ ટૉગલ કરો</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">કાર્ડ બાજુ પસંદ કરો</string>
     <string name="card_side_question">પ્રશ્ન</string>
-    <string name="card_side_answer">Answer</string>
+    <string name="card_side_answer">જવાબ આપો</string>
     <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">પ્રશ્ન: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">આ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' દૂર કરો</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="bindings_already_bound">પહેલેથી \'%s\' સાથે બંધાયેલ</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <string name="readtext_deprecation_warn">AnkiDroid has introduced a better TTS mechanism which is compatible with other Anki clients and includes more voices and improvements to language playback!\n\nPlease upgrade as soon as possible, as this setting will be removed soon</string>
@@ -299,8 +299,7 @@
     <string name="pref_cat_dev_options" maxLength="41">વિકાસકર્તા વિકલ્પો</string>
     <string name="dev_options_enabled_pref" maxLength="41">વિકાસકર્તા વિકલ્પો સક્ષમ કરો</string>
     <string name="disable_dev_options">વિકાસકર્તા વિકલ્પોને અક્ષમ કરો</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
-    </string>
+    <string name="dev_options_warning">વિકાસકર્તા વિકલ્પોને સક્ષમ કરતા પહેલા કૃપા કરીને ખાતરી કરો. આ વિકલ્પો ખતરનાક છે અને એપને તોડી શકે છે અથવા તમારા સંગ્રહને બગાડી શકે છે.\n\nનોંધ લો કે આ વિકલ્પો મોટાભાગના વપરાશકર્તાઓ માટે યોગ્ય નથી અને તેથી અનુવાદિત નથી, તેથી તેઓ અંગ્રેજીમાં છે.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -323,7 +322,7 @@
     <string name="pref__manage_space__screen_title">જગ્યા મેનેજ કરો</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">ગણતરી કરી રહ્યું છે-\nલેટીંગ&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d ફાઇલ\n%2$s</item>
         <item quantity="other">%1$d ફાઇલો\n%2$s</item>
@@ -346,12 +345,12 @@
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">બધું કાઢી નાખો</string>
     <string name="pref__delete_everything__summary">સ્ટોરેજ, મીડિયા, બેકઅપ અને સેટિંગ્સ કાઢી નાખો</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">બધું કાઢી નાખો</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">શું તમે ખરેખર બધો ડેટા કાઢી નાખવા માંગો છો? આમાં તમારો સ્ટોરેજ, મીડિયા, બેકઅપ અને પસંદગીઓનો સમાવેશ થાય છે.\n\nનોંધ: આ ક્રિયા વિન્ડોને બંધ કરશે.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">એપ્લિકેશન ડેટા કાઢી નાખો</string>
     <string name="pref__delete_app_data__summary">સેટિંગ્સ અને અન્ય એપ્લિકેશન ડેટા કાઢી નાખો</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">એપ્લિકેશન ડેટા કાઢી નાખો</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">શું તમે ખરેખર એપ્લિકેશન ડેટા કાઢી નાખવા માંગો છો? આમાં સેટિંગ્સ અને અન્ય એપ્લિકેશન ડેટાનો સમાવેશ થાય છે.\n\nનોંધ: આ ક્રિયા વિંડો બંધ કરશે.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
@@ -368,5 +367,5 @@
     <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">બધા</string>
     <string name="ignore_display_cutout" maxLength="41">ડિસ્પ્લે કટઆઉટને અવગણો</string>
     <string name="hide_answer_buttons" maxLength="41">જવાબ બટનો છુપાવો</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_hard_and_easy" maxLength="41">\'હાર્ડ\' અને \'ઇઝી\' બટનો છુપાવો</string>
 </resources>

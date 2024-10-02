@@ -40,39 +40,39 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
-    <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
+    <string name="multimedia_editor_popup_image">படத்தைச் சேர்க்கவும்</string>
+    <string name="multimedia_editor_popup_audio_clip">ஆடியோ கிளிப்பைச் சேர்க்கவும்</string>
+    <string name="multimedia_editor_popup_video_clip">வீடியோ கிளிப்பைச் சேர்க்கவும்</string>
+    <string name="multimedia_editor_popup_audio">ஆடியோ பதிவு</string>
+    <string name="multimedia_editor_popup_cloze">மூடல் நீக்கம்</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
-    <string name="multimedia_editor_field_editing_audio">Audio recording</string>
-    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Done</string>
+    <string name="multimedia_editor_field_editing_audio">ஆடியோ பதிவு</string>
+    <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">முடிந்தது</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
-    <string name="multimedia_editor_image_field_editing_photo">Camera</string>
+    <string name="multimedia_editor_image_field_editing_galery">தொகுப்பு</string>
+    <string name="multimedia_editor_image_field_editing_photo">கேமரா</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
-    <string name="multimedia_editor_something_wrong">Something went wrong</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="multimedia_editor_something_wrong">ஏதாவது தவறு</string>
+    <string name="multimedia_editor_svg_preview">SVGகள் மாதிரிக்காட்சிக்கு கிடைக்கவில்லை</string>
+    <string name="multimedia_editor_png_paste_error">கிளிப்போர்டு படத்தை png ஆக மாற்றுவதில் பிழை: %s</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">மல்டிமீடியா உள்ளடக்கத்தை %1$s புலத்துடன் இணைக்கவும்</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Recording failed</string>
-    <string name="multimedia_editor_audio_view_playing_failed">Playing failed</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_recording_failed">பதிவு செய்ய முடியவில்லை</string>
+    <string name="multimedia_editor_audio_view_playing_failed">விளையாடுவது தோல்வியடைந்தது</string>
+    <string name="multimedia_editor_audio_view_create_failed">ரெக்கார்டர் கருவிப்பட்டியை உருவாக்க முடியவில்லை</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
-    <string name="reselect">Reselect</string>
+    <string name="crop_image">இந்தப் படத்தைச் செதுக்க விரும்புகிறீர்களா?</string>
+    <string name="crop_button">படத்தைச் செதுக்கு</string>
+    <string name="save_dialog_content">தற்போதைய படத்தின் அளவு %sMB. இயல்புநிலை பட அளவு வரம்பு 1MB. அதைச் செதுக்க வேண்டுமா?</string>
+    <string name="select_image_failed">"படத்தைத் தேர்ந்தெடுக்க முடியவில்லை, மீண்டும் முயற்சிக்கவும்"</string>
+    <string name="activity_result_unexpected">ஆப்ஸ் எதிர்பாராத மதிப்பை வழங்கியது. நீங்கள் வேறு ஆப்ஸைப் பயன்படுத்த வேண்டியிருக்கலாம்</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">புல உள்ளடக்கங்கள்</string>
+    <string name="reselect">மீண்டும் தேர்ந்தெடு</string>
 </resources>

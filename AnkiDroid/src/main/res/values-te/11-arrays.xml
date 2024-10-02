@@ -84,7 +84,7 @@
     <string name="answer_good">సమాధానం బాగుంది</string>
     <string name="answer_easy">సులభంగా సమాధానం ఇవ్వండి</string>
     <string name="gesture_play">మీడియాను ప్లే చేయండి</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
+    <string name="gesture_abort_learning">దగ్గరి సమీక్షకుడు</string>
     <string name="gesture_flag_red">ఎరుపు జెండాను టోగుల్ చేయండి</string>
     <string name="gesture_flag_orange">నారింజ జెండాను టోగుల్ చేయండి</string>
     <string name="gesture_flag_green">ఆకుపచ్చ జెండాను టోగుల్ చేయండి</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">జెండాను తీసివేయండి</string>
     <string name="gesture_page_up">పేజీ పైకి</string>
     <string name="gesture_page_down">పేజీ డౌన్</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync">సమీక్షకుడు మరియు సమకాలీకరణను మూసివేయండి</string>
     <string name="gesture_toggle_whiteboard">వైట్‌బోర్డ్‌ని టోగుల్ చేయండి</string>
     <string name="gesture_show_hint">సూచనను చూపించు</string>
     <string name="gesture_show_all_hints">అన్ని సూచనలను చూపించు</string>

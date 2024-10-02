@@ -65,8 +65,8 @@
         <item quantity="other">%1$d గంటలు %2$d మిగిలి ఉన్నాయి</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d రోజు %2$dh మిగిలి ఉంది</item>
+        <item quantity="other">%1$d రోజులు %2$dh మిగిలి ఉన్నాయి</item>
     </plurals>
     <string name="no_cards_placeholder_title">సముదాయం ఖాళీ గా ఉంది </string>
     <string name="no_cards_placeholder_description">+ గుర్తు ని నొక్కి చీటీ కూర్చు</string>

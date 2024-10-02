@@ -60,17 +60,17 @@
         <item quantity="other">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
     </plurals>
     <string name="widget_add_note_button">ಹೊಸ AnkiDroid ಟಿಪ್ಪಣಿಯನ್ನು ಸೇರಿಸಿ</string>
-    <string name="deck_picker_widget_description">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="deck_picker_widget_description">ಡೆಕ್ ಪಿಕರ್</string>
+    <string name="card_analysis_extra_widget_description">ಕಾರ್ಡ್ ವಿಶ್ಲೇಷಣೆ</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
-    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Deck removed</string>
-    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">This deck is already selected</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">ಡೆಕ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">ಡೆಕ್ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">ವಿಜೆಟ್‌ನಲ್ಲಿ ಪ್ರದರ್ಶಿಸಲು ಡೆಕ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ. + ಐಕಾನ್‌ನೊಂದಿಗೆ ಡೆಕ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ.</string>
+    <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">ಡೆಕ್ ಅನ್ನು ತೆಗೆದುಹಾಕಲಾಗಿದೆ</string>
+    <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">ಈ ಡೆಕ್ ಅನ್ನು ಈಗಾಗಲೇ ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">You can select up to %d deck.</item>
-        <item quantity="other">You can select up to %d decks.</item>
+        <item quantity="one">ನೀವು %d ಡೆಕ್‌ಗಳವರೆಗೆ ಆಯ್ಕೆ ಮಾಡಬಹುದು.</item>
+        <item quantity="other">ನೀವು %d ಡೆಕ್‌ಗಳವರೆಗೆ ಆಯ್ಕೆ ಮಾಡಬಹುದು.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Missing deck. Please reconfigure</string>
+    <string name="empty_widget" comment="To denote the widget is empty">ಡೆಕ್ ಕಾಣೆಯಾಗಿದೆ. ದಯವಿಟ್ಟು ಮರುಸಂರಚಿಸಿ</string>
 </resources>
