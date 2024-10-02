@@ -17,7 +17,7 @@
         android:layout_marginStart="7dp"
         android:gravity="center"
         android:padding="30dp"
-        android:text="@string/empty_widget"
+        android:text="@string/empty_widget_state"
         android:visibility="gone" />/>
 
     <LinearLayout
