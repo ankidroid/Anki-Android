@@ -50,23 +50,23 @@
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">முதலில் பார்த்தது பழமையானது</string>
     <string name="cram_deck_conf_order_random">சீரற்ற</string>
     <string name="cram_deck_conf_order_increasing_intervals">அதிகரிக்கும் இடைவெளிகள்</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">இடைவெளிகளைக் குறைத்தல்</string>
+    <string name="cram_deck_conf_order_most_lapsed">மிகவும் தவறிவிட்டது</string>
     <string name="cram_deck_conf_order_order_added">ஆர்டர் சேர்க்கப்பட்டது</string>
     <string name="cram_deck_conf_order_order_due">ஆர்டர் நிலுவையில் உள்ளது</string>
     <string name="cram_deck_conf_order_latest_added_first">சமீபத்தியது முதலில் சேர்க்கப்பட்டது</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_relative_overdueness">ஒப்பீட்டளவில் தாமதம்</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">தற்போதைய தளத்தைப் பயன்படுத்தவும்</string>
+    <string name="add_to_deck_decide_by_note_type">குறிப்பு வகைமூலம் முடிவு செய்யுங்கள்</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">முறையைப் பின்பற்றவும்</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ஒளி</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_plain">வெற்று</string>
     <!-- night_theme_labels -->
     <string name="night_theme_black">கருப்பு</string>
     <string name="night_theme_dark">இருள்</string>
@@ -76,30 +76,30 @@
     <string name="html_size_code_small">சிறிய</string>
     <string name="html_size_code_medium">நடுத்தர</string>
     <string name="html_size_code_large">பெரிய</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_x_large">x-பெரிய</string>
+    <string name="html_size_code_xx_large">xx-பெரியது</string>
     <!-- gestures_labels -->
     <string name="answer_again">மீண்டும் பதில்</string>
     <string name="answer_hard">கடுமையாக பதில் சொல்லுங்கள்</string>
     <string name="answer_good">நல்ல பதில்</string>
     <string name="answer_easy">எளிதாக பதில் சொல்லுங்கள்</string>
     <string name="gesture_play">மீடியாவை விளையாடு</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
+    <string name="gesture_abort_learning">நெருக்கமான விமர்சகர்</string>
+    <string name="gesture_flag_red">சிவப்பு கொடியை மாற்றவும்</string>
     <string name="gesture_flag_orange">ஆரஞ்சு கொடியை நிலைமாற்றவும்</string>
     <string name="gesture_flag_green">பச்சைக் கொடியை மாற்றவும்</string>
     <string name="gesture_flag_blue">நீலக் கொடியை மாற்று</string>
     <string name="gesture_flag_pink">இளஞ்சிவப்பு கொடியை மாற்றவும்</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
+    <string name="gesture_flag_turquoise">டர்க்கைஸ் கொடியை மாற்று</string>
+    <string name="gesture_flag_purple">ஊதா கொடியை மாற்று</string>
     <string name="gesture_flag_remove">கொடியை அகற்று</string>
     <string name="gesture_page_up">பக்கம் மேலே</string>
     <string name="gesture_page_down">பக்கம் கீழே</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
+    <string name="gesture_abort_sync">மதிப்பாய்வாளர் மற்றும் ஒத்திசைவை மூடு</string>
+    <string name="gesture_toggle_whiteboard">ஒயிட்போர்டை நிலைமாற்று</string>
     <string name="gesture_show_hint">குறிப்பைக் காட்டு</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_all_hints">அனைத்து குறிப்புகளையும் காட்டு</string>
     <string name="record_voice">குரல் பதிவு</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="replay_voice">மீண்டும் ஒலி</string>
+    <string name="save_voice">பதிவை சேமிக்கவும்</string>
 </resources>

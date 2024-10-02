@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">புதிய அட்டைகளை முன்னோட்டமிடுங்கள்</string>
     <string name="custom_study_limit_tags">குறிப்பிட்ட குறிச்சொற்களுக்கு வரம்பு</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d புதைக்கப்பட்டது</item>
+        <item quantity="other">+%d புதைக்கப்பட்டது</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">குறிப்பைத் திருத்தவும்</string>
@@ -343,5 +343,5 @@
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">அட்டை வகையை நீக்க முடியாது</string>
     <string name="orphan_note_message">இந்தக் கார்டு வகையை நீக்கினால் சில குறிப்புகள் கார்டு இல்லாமல் இருக்கும்.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">குரல் ஆதரிக்கப்படவில்லை. வேறொன்றை முயற்சிக்கவும் அல்லது குரல் இயந்திரத்தை நிறுவவும்.</string>
 </resources>

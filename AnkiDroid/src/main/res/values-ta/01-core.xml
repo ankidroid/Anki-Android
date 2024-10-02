@@ -65,8 +65,8 @@
         <item quantity="other">%1$d மணிநேரம் %2$d மீதமுள்ளது</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d நாள் %2$dh மீதமுள்ளது</item>
+        <item quantity="other">%1$d நாட்கள் %2$dh மீதமுள்ளது</item>
     </plurals>
     <string name="no_cards_placeholder_title">தொகுப்பு காலியாக  உள்ளது</string>
     <string name="no_cards_placeholder_description">+ பொத்தானை அழுத்தி /n சேர்க்கவும்</string>

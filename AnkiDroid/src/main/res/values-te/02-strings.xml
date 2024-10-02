@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">క్రొత్త కార్డులను పరిదృశ్యం చేయండి</string>
     <string name="custom_study_limit_tags">నిర్దిష్ట ట్యాగ్లకు పరిమితం చేయండి</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d ఖననం చేయబడింది</item>
+        <item quantity="other">+%d ఖననం చేయబడింది</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">గమనికను సవరించండి</string>
