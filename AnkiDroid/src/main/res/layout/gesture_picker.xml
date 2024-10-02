@@ -18,8 +18,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
-    tools:layout_height="500dp"
-    tools:layout_width="400dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -42,6 +40,7 @@
         android:gravity="center_horizontal"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gestureDisplay"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/warning"/>
 
@@ -55,7 +54,7 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_gesture"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:drawableStart="@drawable/ic_warning"
         android:drawableTint="?attr/colorError"
         android:drawablePadding="4dp"
