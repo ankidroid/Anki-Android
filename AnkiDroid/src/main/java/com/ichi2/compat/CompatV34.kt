@@ -20,7 +20,7 @@ import android.annotation.TargetApi
 import android.view.MotionEvent
 
 @TargetApi(34)
-open class CompatV34 : CompatV33(), Compat {
+open class CompatV34 : CompatV33() {
     override val AXIS_GESTURE_X_OFFSET = MotionEvent.AXIS_GESTURE_X_OFFSET
     override val AXIS_GESTURE_Y_OFFSET = MotionEvent.AXIS_GESTURE_Y_OFFSET
     override val AXIS_GESTURE_SCROLL_X_DISTANCE = MotionEvent.AXIS_GESTURE_SCROLL_X_DISTANCE

@@ -39,7 +39,7 @@ import kotlin.time.Duration
 
 /** Implementation of [Compat] for SDK level 26 and higher. Check  [Compat]'s for more detail.  */
 @TargetApi(26)
-open class CompatV26 : CompatV24(), Compat {
+open class CompatV26 : CompatV24() {
     /**
      * In Oreo and higher, you must create a channel for all notifications.
      * This will create the channel if it doesn't exist, or if it exists it will update the name.

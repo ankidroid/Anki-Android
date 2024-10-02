@@ -29,7 +29,7 @@ import java.util.Locale
 
 /** Implementation of [Compat] for SDK level 24 and higher. Check [Compat]'s for more detail.  */
 @TargetApi(24)
-open class CompatV24 : CompatV23(), Compat {
+open class CompatV24 : CompatV23() {
     override fun normalize(locale: Locale): Locale {
         // ULocale isn't currently handled by Robolectric
         if (isRobolectric) {
