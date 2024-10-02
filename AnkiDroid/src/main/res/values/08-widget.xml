@@ -51,6 +51,7 @@
         <item quantity="one">You can select up to %d deck.</item>
         <item quantity="other">You can select up to %d decks.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Missing deck. Please reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>"
 
 </resources>
