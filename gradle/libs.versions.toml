@@ -10,7 +10,7 @@ acra = '5.11.4'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.6.1"
+androidGradlePlugin = "8.7.0"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.2"
 # https://developer.android.com/jetpack/androidx/releases/annotation

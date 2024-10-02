@@ -121,7 +121,7 @@ data class DeckNode(
         }
         if (node.level > 0 && startingLen == list.size) {
             // we don't include ourselves if no children matched
-            list.removeLast()
+            list.removeAt(list.lastIndex)
         }
     }
 
