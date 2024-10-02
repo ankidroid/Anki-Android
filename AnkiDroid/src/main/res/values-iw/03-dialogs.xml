@@ -244,6 +244,7 @@
     <string name="dismiss_backup_warning_new_user">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך יימחקו מהטלפון שלך אם האפליקציה תוסר</string>
     <string name="dismiss_backup_warning_upgrade">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך לא יהיו נגישים אם האפליקציה תוסר</string>
     <string name="deck_already_exists">החפיסה כבר קיימת</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">אם יש לך בעיות בסדר החפיסות (למשל, \'10\' מופיע לפני \'2\'), החלף את \'2\' ב-\'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">הגדר מרווח לערך דומה</string>

@@ -247,6 +247,7 @@
     
     </string>
     <string name="deck_already_exists">Калода ўжо існуе</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">Калі ў вас ёсць праблемы з парадкам калод (напрыклад, ‘10’  калода стаіць перад ‘2’), замяніце ‘2’ на ‘02’ </string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Задаць інтэрвал на тое ж самае значэнне</string>

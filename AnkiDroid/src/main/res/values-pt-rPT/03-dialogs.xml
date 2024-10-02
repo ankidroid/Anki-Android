@@ -235,6 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        Devido a alterações de privacidade do Android, não poderá aceder aos seus dados e cópias de segurança automáticas se a aplicação for desinstalada
     </string>
     <string name="deck_already_exists">Este baralho já existe</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">Se tem problemas de ordenação com o seu baralho (e.g. o ‘10’ aparece antes do ‘2’), substitua o ‘2’ por ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Atribuir o mesmo valor ao intervalo</string>

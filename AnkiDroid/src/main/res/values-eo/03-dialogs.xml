@@ -233,6 +233,7 @@
     <string name="dismiss_backup_warning_new_user">Pro privatecaj ŝanĝoj en la operaciumo Android, viaj datumoj kaj aŭtomataj sekurkopioj estos forigitaj el via telefono, se la aplikaĵo estos malinstalita</string>
     <string name="dismiss_backup_warning_upgrade">Pro privatecaj ŝanĝoj en la operaciumo Android, viaj datumoj kaj aŭtomataj sekurkopioj estos nealireblaj, se la aplikaĵo estos malinstalita</string>
     <string name="deck_already_exists">Kartaro jam ekzistas</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">Se vi havas problemojn pri karta ordigo (ekzemple “10” troviĝas antaŭ “2”), renomu “2” al “02”</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Agordi intertempon al la sama valoro</string>

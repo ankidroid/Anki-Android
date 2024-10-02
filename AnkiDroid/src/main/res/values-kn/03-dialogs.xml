@@ -233,6 +233,7 @@
     <string name="dismiss_backup_warning_new_user">Android ಗೌಪ್ಯತೆ ಬದಲಾವಣೆಗಳಿಂದಾಗಿ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದರೆ ನಿಮ್ಮ ಡೇಟಾ ಮತ್ತು ಸ್ವಯಂಚಾಲಿತ ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ನಿಮ್ಮ ಫೋನ್‌ನಿಂದ ಅಳಿಸಲಾಗುತ್ತದೆ</string>
     <string name="dismiss_backup_warning_upgrade">Android ಗೌಪ್ಯತೆ ಬದಲಾವಣೆಗಳಿಂದಾಗಿ, ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡುವುದರಿಂದ ನಿಮ್ಮ ಡೇಟಾ ಮತ್ತು ಸ್ವಯಂಚಾಲಿತ ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಲಾಗುವುದಿಲ್ಲ</string>
     <string name="deck_already_exists">ಡೆಕ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">ನೀವು ಡೆಕ್ ಆರ್ಡರ್ ಮಾಡುವ ಸಮಸ್ಯೆಗಳನ್ನು ಹೊಂದಿದ್ದರೆ (ಉದಾ \'10\' \'2\' ಮೊದಲು ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ), \'2\' ಅನ್ನು \'02\' ನೊಂದಿಗೆ ಬದಲಾಯಿಸಿ</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ಮಧ್ಯಂತರವನ್ನು ಅದೇ ಮೌಲ್ಯಕ್ಕೆ ಹೊಂದಿಸಿ</string>

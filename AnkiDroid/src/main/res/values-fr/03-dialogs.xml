@@ -233,6 +233,7 @@
     <string name="dismiss_backup_warning_new_user">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront supprimées de votre téléphone si l\'application est désinstallée</string>
     <string name="dismiss_backup_warning_upgrade">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront inaccessibles si l\'application est désinstallée</string>
     <string name="deck_already_exists">Le paquet existe déjà</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
