@@ -54,30 +54,27 @@
         <item quantity="other">%d കുറിപ്പുകൾ കാണിച്ചിരിക്കുന്നു</item>
     </plurals>
     <string name="card_browser_all_decks">എല്ലാ ഡെക്കുകളും</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">കാർഡ് ഇല്ലാതാക്കുക</item>
-        <item quantity="other">കാർഡുകൾ ഇല്ലാതാക്കുക</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">കുറിപ്പ് ഇല്ലാതാക്കുക</item>
         <item quantity="other">കുറിപ്പുകൾ ഇല്ലാതാക്കുക</item>
     </plurals>
     <string name="card_browser_change_deck">Change deck</string>
     <string name="delete_card_title">കുറിപ്പ് ഇല്ലാതാക്കണോ?</string>
-    <string name="card_browser_show_marked">ഫിൽട്ടർ അടയാളപ്പെടുത്തി</string>
-    <string name="card_browser_show_suspended">Filter suspended</string>
-    <string name="card_browser_search_by_tag">ടാഗ് പ്രകാരം ഫിൽട്ടർ ചെയ്യുക</string>
-    <string name="card_browser_search_by_flag">പതാക പ്രകാരം ഫിൽട്ടർ ചെയ്യുക</string>
-    <string name="card_browser_list_my_searches">എൻ്റെ തിരയലുകൾ</string>
-    <string name="card_browser_list_my_searches_save">തിരയൽ സംരക്ഷിക്കുക</string>
+    <string name="card_browser_show_marked" maxLength="29">ഫിൽട്ടർ അടയാളപ്പെടുത്തി</string>
+    <string name="card_browser_show_suspended" maxLength="29">Filter suspended</string>
+    <string name="card_browser_search_by_tag" maxLength="29">ടാഗ് പ്രകാരം ഫിൽട്ടർ ചെയ്യുക</string>
+    <string name="card_browser_search_by_flag" maxLength="29">പതാക പ്രകാരം ഫിൽട്ടർ ചെയ്യുക</string>
+    <string name="card_browser_list_my_searches" maxLength="29">എൻ്റെ തിരയലുകൾ</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">തിരയൽ സംരക്ഷിക്കുക</string>
     <string name="card_browser_list_my_searches_title">സംരക്ഷിച്ച തിരയൽ തിരഞ്ഞെടുക്കുക</string>
     <string name="card_browser_list_my_searches_new_name">നിലവിലെ തിരയലിൻ്റെ പേര്</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">പേരില്ലാതെ നിങ്ങൾക്ക് ഒരു തിരയൽ സംരക്ഷിക്കാൻ കഴിയില്ല</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">പേര് നിലവിലുണ്ട്</string>
     <string name="no_note_to_edit">എഡിറ്റ് ചെയ്യാൻ കുറിപ്പില്ല</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" ഇല്ലാതാക്കണോ?</string>
-    <string name="card_browser_change_display_order">ഡിസ്പ്ലേ ക്രമം മാറ്റുക</string>
+    <string name="card_browser_change_display_order" maxLength="29">ഡിസ്പ്ലേ ക്രമം മാറ്റുക</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">തിരയുക</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ഡിസ്പ്ലേ ഓർഡർ തിരഞ്ഞെടുക്കുക</string>
     <string name="card_details_tags">ടാഗുകൾ</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>By reviews</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
+    <string name="card_browser_select_all" maxLength="29">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
     <string name="card_browser_select_none">ഒന്നും തിരഞ്ഞെടുക്കരുത്</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(പുതിയത്)</string>
     <string name="card_browser_due_filtered_card">(ഫിൽറ്റർ ചെയ്‌തത്)</string>

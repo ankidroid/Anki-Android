@@ -129,7 +129,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Premiestniť</string>
     <string name="card_editor_reset_card">Vynulovať pokrok</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Preplánovať</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Náhľad</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Náhľad</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopírovať ako markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Premenovať</string>
@@ -171,7 +171,7 @@
     <string name="export_choice_share">Zdieľať</string>
     <string name="export_choice_save_to">Uložiť</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Možnosti</string>
     <string name="menu__deck_options">Možnosti balíčka</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti štúdia</string>
     <string name="select_tts">Nastaviť jazyk TTS (text na reč)</string>

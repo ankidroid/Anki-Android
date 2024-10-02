@@ -52,28 +52,26 @@
         <item quantity="other">顯示了 %d 條筆記</item>
     </plurals>
     <string name="card_browser_all_decks">所有牌組</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="other">刪除卡片</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="other">刪除筆記</item>
     </plurals>
     <string name="card_browser_change_deck">變更牌組</string>
     <string name="delete_card_title">刪除筆記？</string>
-    <string name="card_browser_show_marked">篩選有標記的卡片</string>
-    <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
-    <string name="card_browser_search_by_tag">按標籤篩選</string>
-    <string name="card_browser_search_by_flag">按標記篩選</string>
-    <string name="card_browser_list_my_searches">我的搜尋</string>
-    <string name="card_browser_list_my_searches_save">儲存搜尋</string>
+    <string name="card_browser_show_marked" maxLength="29">篩選有標記的卡片</string>
+    <string name="card_browser_show_suspended" maxLength="29">篩選出擱置的卡片</string>
+    <string name="card_browser_search_by_tag" maxLength="29">按標籤篩選</string>
+    <string name="card_browser_search_by_flag" maxLength="29">按標記篩選</string>
+    <string name="card_browser_list_my_searches" maxLength="29">我的搜尋</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">儲存搜尋</string>
     <string name="card_browser_list_my_searches_title">選擇一個已儲存的搜尋</string>
     <string name="card_browser_list_my_searches_new_name">目前搜尋的名稱</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">你不能儲存沒有名稱的搜尋</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">名稱已存在</string>
     <string name="no_note_to_edit">沒有可編輯的筆記</string>
     <string name="card_browser_list_my_searches_remove_content">刪除「%1$s」嗎？</string>
-    <string name="card_browser_change_display_order">更改顯示順序</string>
+    <string name="card_browser_change_display_order" maxLength="29">更改顯示順序</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">選擇顯示順序</string>
     <string name="card_details_tags">標籤</string>
     <string-array name="card_browser_order_labels">
@@ -88,7 +86,7 @@
         <item>依複習次數</item>
         <item>依忘記次數</item>
     </string-array>
-    <string name="card_browser_select_all">全選</string>
+    <string name="card_browser_select_all" maxLength="29">全選</string>
     <string name="card_browser_select_none">全不選</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新增)</string>
     <string name="card_browser_due_filtered_card">(已過濾)</string>

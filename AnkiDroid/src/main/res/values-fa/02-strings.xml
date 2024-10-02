@@ -123,7 +123,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">تغییر مکان</string>
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">برنامه ریزی مجدد</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نمایش</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">پیش نمایش</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">کپی markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d از %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">تغییر نام</string>
@@ -165,7 +165,7 @@
     <string name="export_choice_share">اشتراک گزاری</string>
     <string name="export_choice_save_to">ذخیره به</string>
     <string name="export_saving_exported_collection">در حال ذخیره فایل صادر شده&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">گزینه ها</string>
     <string name="menu__deck_options">گزینه های دسته</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">گزینه‌های مطالعه</string>
     <string name="select_tts">تنظیم زبان تبدیل متن به صدا TTS</string>

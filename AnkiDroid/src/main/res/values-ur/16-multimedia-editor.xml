@@ -70,7 +70,7 @@
     <!-- Crop function-->
     <string name="crop_image">کیا آپ اس تصویر کو تراشنا چاہتے ہیں؟</string>
     <string name="crop_button">تصویر کو تراشیں</string>
-    <string name="save_dialog_content">موجودہ تصویر کا سائز %sMB ہے۔ پہلے سے طے شدہ تصویر کے سائز کی حد 1MB ہے۔ کیا آپ اسے تراشنا چاہتے ہیں؟</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"تصویر کا انتخاب ناکام ہو گیا، براہ کرم دوبارہ کوشش کریں۔"</string>
     <string name="activity_result_unexpected">ایپ نے ایک غیر متوقع قدر لوٹائی۔ آپ کو ایک مختلف ایپ استعمال کرنے کی ضرورت پڑ سکتی ہے</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">فیلڈ کے مشمولات</string>

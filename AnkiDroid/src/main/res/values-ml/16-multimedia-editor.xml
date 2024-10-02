@@ -70,7 +70,7 @@
     <!-- Crop function-->
     <string name="crop_image">നിങ്ങൾക്ക് ഈ ചിത്രം ക്രോപ്പ് ചെയ്യണോ?</string>
     <string name="crop_button">ചിത്രം ക്രോപ്പ് ചെയ്യുക</string>
-    <string name="save_dialog_content">നിലവിലെ ചിത്രത്തിൻ്റെ വലുപ്പം %sMB ആണ്. ഡിഫോൾട്ട് ഇമേജ് സൈസ് പരിധി 1MB ആണ്. നിങ്ങൾക്കത് ക്രോപ്പ് ചെയ്യണോ?</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"ചിത്രം തിരഞ്ഞെടുക്കുന്നതിൽ പരാജയപ്പെട്ടു, വീണ്ടും ശ്രമിക്കുക
 "</string>
     <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>

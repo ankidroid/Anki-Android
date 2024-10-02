@@ -123,7 +123,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Herposisioneer</string>
     <string name="card_editor_reset_card">Herstel vordering</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Herskeduleer</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Voorskou</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Voorskou</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopieer as Afslag</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d van %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Hernoem</string>
@@ -165,7 +165,7 @@
     <string name="export_choice_share">Deel</string>
     <string name="export_choice_save_to">Stoor na</string>
     <string name="export_saving_exported_collection">Stoor uitgevoerde lêer&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsies</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Opsies</string>
     <string name="menu__deck_options">Dekopsies</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeer Opsies</string>
     <string name="select_tts">Stel TTS-taal</string>

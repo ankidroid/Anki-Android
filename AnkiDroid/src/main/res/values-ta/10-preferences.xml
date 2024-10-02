@@ -236,7 +236,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">பொது</string>
     <string name="deck_conf_reminders" maxLength="41">நினைவூட்டல்கள்</string>
     <string name="deck_conf_cram_filter" maxLength="41">வடிகட்டி</string>
-    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">தேடு</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">தேடு</string>
     <string name="deck_conf_cram_limit" maxLength="41">வரம்பு</string>
     <string name="deck_conf_cram_order" maxLength="41">மூலம் தேர்ந்தெடுக்கப்பட்ட கார்டுகள்</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">மறு அட்டவணை</string>
@@ -305,14 +305,14 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid உங்கள் சேகரிப்பை அவ்வப்போது காப்புப் பிரதி எடுக்கும்.
+        காப்புப்பிரதிகள் இரண்டு நாட்களுக்கு மேல் பழமையான பிறகு,
+        AnkiDroid வட்டு இடத்தை விடுவிக்க அவற்றில் சிலவற்றை அகற்றத் தொடங்கும்.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        மீடியா கோப்புகள் காப்புப் பிரதி எடுக்கப்படவில்லை என்பதை நினைவில் கொள்ளவும்.
+        பாதுகாப்பாக இருக்க, உங்கள் சேகரிப்பை அவ்வப்போது ஒத்திசைக்கவும் அல்லது அதன் ஏற்றுமதிகளை காப்புப் பிரதி எடுக்கவும்.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        நீங்கள் காப்புப்பிரதியிலிருந்து மீட்டெடுக்கலாம் மற்றும் டெக் பட்டியல் மெனுவில் உங்கள் சேகரிப்பை ஏற்றுமதி செய்யலாம்.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">தானியங்கி காப்புப்பிரதிகளுக்கு இடையில் நிமிடங்கள்</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">வைத்திருக்க வேண்டிய தினசரி காப்புப்பிரதிகள்</string>
@@ -359,7 +359,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">சேகரிப்பு இல்லை</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">பிழை</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">எடுக்கிறது&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">கணக்கிடுகிறது&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">சேகரிப்பு இல்லை</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">சிஸ்டம் பார்களை மறை</string>

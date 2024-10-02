@@ -264,6 +264,7 @@
     <string name="change_cloze_mode">क्लोज़ मोड बदलें</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">सिस्टम WebView पुराना हो चुका है. कुछ सुविधाएं ठीक से काम नहीं करेंगी. कृपया इसे अपडेट करें।\n\nस्थापित संस्करण: %1$d\nन्यूनतम आवश्यक संस्करण: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">भाषा समर्थित नहीं है</string>
     <string name="tts_error_dialog_reason_text">टेक्स्ट टू स्पीच इंजन <b>%1$s</b> निम्नलिखित भाषा का समर्थन नहीं करता: <b>%2$s</b></string>

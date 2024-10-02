@@ -123,7 +123,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">ریپوزیشن</string>
     <string name="card_editor_reset_card">پیشرفت کو دوبارہ ترتیب دیں۔</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">دوبارہ شیڈول</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نظارہ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">پیش نظارہ</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">مارک ڈاؤن کے بطور کاپی کریں</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d میں سے %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">نام تبدیل کریں</string>
@@ -165,7 +165,7 @@
     <string name="export_choice_share">بانٹیں</string>
     <string name="export_choice_save_to">محفوظ کریں</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">اختیارات</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">اختیارات</string>
     <string name="menu__deck_options">ڈیک کے اختیارات</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">مطالعہ کے اختیارات</string>
     <string name="select_tts">TTS زبان سیٹ کریں۔</string>

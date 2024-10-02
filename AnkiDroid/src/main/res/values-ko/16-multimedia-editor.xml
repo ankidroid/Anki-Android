@@ -70,7 +70,7 @@
     <!-- Crop function-->
     <string name="crop_image">이 이미지를 자르시겠습니까?</string>
     <string name="crop_button">이미지 자르기</string>
-    <string name="save_dialog_content">현재 이미지 용량은 %sMB입니다. 기본 이미지 용량 제한은 1MB입니다. 이미지를 자르시겠습니까?</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"이미지 선택 실패, 재시도하세요"</string>
     <string name="activity_result_unexpected">앱이 예상치 못한 값을 리턴했습니다. 다른 앱을 사용해 주세요</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">필드 내용</string>

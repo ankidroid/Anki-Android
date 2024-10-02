@@ -262,6 +262,7 @@
     <string name="change_cloze_mode">حالت کلوز را تغییر بده</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView سیستم قدیمی است. برخی ویژگی‌ها به درستی کار نخواهند کرد. لطفاً آن را به‌روزرسانی کنید. \n\nنسخه نصب‌شده: %1$d\nحداقل نسخه مورد نیاز: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">زبان پشتیبانی نشده است</string>
     <string name="tts_error_dialog_reason_text">موتور متن به گفتار <b>%1$s</b> این زبان را همایت نمیکند: <b>%2$s</b></string>

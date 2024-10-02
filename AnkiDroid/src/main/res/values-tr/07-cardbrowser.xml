@@ -54,30 +54,27 @@
         <item quantity="other">%d not gösteriliyor</item>
     </plurals>
     <string name="card_browser_all_decks">Bütün desteler</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Kartı sil</item>
-        <item quantity="other">Kartları sil</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Notu sil</item>
         <item quantity="other">Notları sil</item>
     </plurals>
     <string name="card_browser_change_deck">Desteyi değiştir</string>
     <string name="delete_card_title">Notu sil</string>
-    <string name="card_browser_show_marked">İşâretlileri göster</string>
-    <string name="card_browser_show_suspended">Askıdakileri göster</string>
-    <string name="card_browser_search_by_tag">Etikete göre filtrele</string>
-    <string name="card_browser_search_by_flag">Bayrağa göre filtrele</string>
-    <string name="card_browser_list_my_searches">Aramalarım</string>
-    <string name="card_browser_list_my_searches_save">Aramayı kaydet</string>
+    <string name="card_browser_show_marked" maxLength="29">İşâretlileri göster</string>
+    <string name="card_browser_show_suspended" maxLength="29">Askıdakileri göster</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Etikete göre filtrele</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Bayrağa göre filtrele</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Aramalarım</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Aramayı kaydet</string>
     <string name="card_browser_list_my_searches_title">Kayıtlı arama seç</string>
     <string name="card_browser_list_my_searches_new_name">Şu anki aramanın adı</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Adı olmadan arama kaydedemezsiniz.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Ad zaten var!</string>
     <string name="no_note_to_edit">Düzenlenecek not yok</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" silinsin mi?</string>
-    <string name="card_browser_change_display_order">Gösterme sırasını seç</string>
+    <string name="card_browser_change_display_order" maxLength="29">Gösterme sırasını seç</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Ara</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Gösterme sırasını seç</string>
     <string name="card_details_tags">Etiketler</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>Tekrarlara göre</item>
         <item>Hatalara göre</item>
     </string-array>
-    <string name="card_browser_select_all">Hepsini seç</string>
+    <string name="card_browser_select_all" maxLength="29">Hepsini seç</string>
     <string name="card_browser_select_none">Hiçbirini seçme</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(yeni)</string>
     <string name="card_browser_due_filtered_card">(filtrelendi)</string>

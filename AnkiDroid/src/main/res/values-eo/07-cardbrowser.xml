@@ -54,30 +54,27 @@
         <item quantity="other">%d notoj montrita</item>
     </plurals>
     <string name="card_browser_all_decks">Ĉiuj kartaroj</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Forigi karton</item>
-        <item quantity="other">Forigi kartojn</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Forgi noton</item>
         <item quantity="other">Forigi notojn</item>
     </plurals>
     <string name="card_browser_change_deck">Ŝanĝi kartaron</string>
     <string name="delete_card_title">Ĉu forigi noton?</string>
-    <string name="card_browser_show_marked">Filtri markitajn</string>
-    <string name="card_browser_show_suspended">Filtri daŭre kaŝitajn</string>
-    <string name="card_browser_search_by_tag">Filtri laŭ etikedo</string>
-    <string name="card_browser_search_by_flag">Filtri laŭ flago</string>
-    <string name="card_browser_list_my_searches">Miaj serĉoj</string>
-    <string name="card_browser_list_my_searches_save">Konservi serĉon</string>
+    <string name="card_browser_show_marked" maxLength="29">Filtri markitajn</string>
+    <string name="card_browser_show_suspended" maxLength="29">Filtri daŭre kaŝitajn</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Filtri laŭ etikedo</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Filtri laŭ flago</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Miaj serĉoj</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Konservi serĉon</string>
     <string name="card_browser_list_my_searches_title">Elekti konservitan serĉon</string>
     <string name="card_browser_list_my_searches_new_name">Nomo por la nuna serĉo</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Ne povas konservi serĉon sen nomo</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nomo jam ekzistas</string>
     <string name="no_note_to_edit">Neniu noto por redakti</string>
     <string name="card_browser_list_my_searches_remove_content">Ĉu forigi “%1$s”?</string>
-    <string name="card_browser_change_display_order">Ŝanĝi ordon de vidigo</string>
+    <string name="card_browser_change_display_order" maxLength="29">Ŝanĝi ordon de vidigo</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Serĉi</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Elekti ordon de vidigo</string>
     <string name="card_details_tags">Etikedoj</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>Laŭ ripetoj</item>
         <item>Laŭ misrespondoj</item>
     </string-array>
-    <string name="card_browser_select_all">Elekti ĉiujn</string>
+    <string name="card_browser_select_all" maxLength="29">Elekti ĉiujn</string>
     <string name="card_browser_select_none">Elekti neniujn</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nova)</string>
     <string name="card_browser_due_filtered_card">(filtrita)</string>

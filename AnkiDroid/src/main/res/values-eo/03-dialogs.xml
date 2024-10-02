@@ -262,6 +262,7 @@
     <string name="change_cloze_mode">Ŝanĝi reĝimon de truteksto</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">La operaciuma WebView estas neĝisdata. Kelkaj trajtoj povas ne funkcii ĝuste. Ĝisdatigu ĝin.\n\nInstalita versio: %1$d\nMinimuma postulata versio: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Lingvo nesubtenata</string>
     <string name="tts_error_dialog_reason_text">La lingvo <b>%2$s</b> ne estas subtenata de la parolsintezilo <b>%1$s</b>.</string>

@@ -58,12 +58,6 @@
         <item quantity="other">Паказана %d нататак</item>
     </plurals>
     <string name="card_browser_all_decks">Усе калоды</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Выдаліць картку</item>
-        <item quantity="few">Выдаліць карткі</item>
-        <item quantity="many">Выдаліць картак</item>
-        <item quantity="other">Выдаліць картак</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Выдаліць нататку</item>
         <item quantity="few">Выдаліць нататкі</item>
@@ -72,20 +66,21 @@
     </plurals>
     <string name="card_browser_change_deck">Змяніць калоду</string>
     <string name="delete_card_title">Выдаліць нататку?</string>
-    <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
-    <string name="card_browser_show_suspended">Фільтраваць прыпыненыя</string>
-    <string name="card_browser_search_by_tag">Фільтраваць па метках</string>
-    <string name="card_browser_search_by_flag">Фільтраваць па пазнаках</string>
-    <string name="card_browser_list_my_searches">Мае запыты пошуку</string>
-    <string name="card_browser_list_my_searches_save">Захаваць запыты пошуку</string>
+    <string name="card_browser_show_marked" maxLength="29">Фільтраваць пазначаныя</string>
+    <string name="card_browser_show_suspended" maxLength="29">Фільтраваць прыпыненыя</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Фільтраваць па метках</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Фільтраваць па пазнаках</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Мае запыты пошуку</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Захаваць запыты пошуку</string>
     <string name="card_browser_list_my_searches_title">Выберыце захаваны запыт пошуку</string>
     <string name="card_browser_list_my_searches_new_name">Назва запыту пошуку</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельга захаваць пошук без назвы</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такая назва ўжо існуе</string>
     <string name="no_note_to_edit">Няма нататак для рэдагавання</string>
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
-    <string name="card_browser_change_display_order">Змяніць парадак адлюстравання</string>
+    <string name="card_browser_change_display_order" maxLength="29">Змяніць парадак адлюстравання</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>
     <string name="card_details_tags">Меткі</string>
     <string-array name="card_browser_order_labels">
@@ -100,7 +95,7 @@
         <item>Па паўтарэннях</item>
         <item>Па памылках</item>
     </string-array>
-    <string name="card_browser_select_all">Выбраць усё</string>
+    <string name="card_browser_select_all" maxLength="29">Выбраць усё</string>
     <string name="card_browser_select_none">Адмяніць выбар</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(новыя)</string>
     <string name="card_browser_due_filtered_card">(фільтраваныя)</string>

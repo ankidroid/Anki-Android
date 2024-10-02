@@ -264,6 +264,7 @@
     <string name="change_cloze_mode">குளோஸ் பயன்முறையை மாற்றவும்</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">WebView அமைப்பு காலாவதியானது. சில அம்சங்கள் சரியாக வேலை செய்யாது. தயவுசெய்து அதைப் புதுப்பிக்கவும்.\n\nநிறுவப்பட்ட பதிப்பு: %1$d\nகுறைந்தபட்ச தேவையான பதிப்பு: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">மொழி ஆதரிக்கப்படவில்லை</string>
     <string name="tts_error_dialog_reason_text">உரையிலிருந்து பேச்சு இயந்திரம் <b>%1$s</b> பின்வரும் மொழியை ஆதரிக்காது: <b>%2$s</b></string>

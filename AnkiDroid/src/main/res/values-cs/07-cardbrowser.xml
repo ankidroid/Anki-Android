@@ -58,12 +58,6 @@
         <item quantity="other">zobrazeno %d poznámek</item>
     </plurals>
     <string name="card_browser_all_decks">Všechny balíčky</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Odstranit kartu</item>
-        <item quantity="few">Odstranit karty</item>
-        <item quantity="many">Odstranit karty</item>
-        <item quantity="other">Odstranit karty</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Odstranit poznámku</item>
         <item quantity="few">Odstranit poznámky</item>
@@ -72,20 +66,21 @@
     </plurals>
     <string name="card_browser_change_deck">Změnit balíček</string>
     <string name="delete_card_title">Odstranit poznámku?</string>
-    <string name="card_browser_show_marked">Filtrovat označené</string>
-    <string name="card_browser_show_suspended">Filtrovat vyřazené</string>
-    <string name="card_browser_search_by_tag">Filtrovat podle štítků</string>
-    <string name="card_browser_search_by_flag">Filtrovat podle příznaku</string>
-    <string name="card_browser_list_my_searches">Moje hledání</string>
-    <string name="card_browser_list_my_searches_save">Uložit hledání</string>
+    <string name="card_browser_show_marked" maxLength="29">Filtrovat označené</string>
+    <string name="card_browser_show_suspended" maxLength="29">Filtrovat vyřazené</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Filtrovat podle štítků</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Filtrovat podle příznaku</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Moje hledání</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Uložit hledání</string>
     <string name="card_browser_list_my_searches_title">Zvolte uložené hledání</string>
     <string name="card_browser_list_my_searches_new_name">Název aktuálního hledání</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nelze uložit hledání bez názvu.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Název již existuje</string>
     <string name="no_note_to_edit">Žádná poznámka k úpravě</string>
     <string name="card_browser_list_my_searches_remove_content">Odstranit „%1$s“?</string>
-    <string name="card_browser_change_display_order">Změnit řazení</string>
+    <string name="card_browser_change_display_order" maxLength="29">Změnit řazení</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Zvolte řazení</string>
     <string name="card_details_tags">Štítky</string>
     <string-array name="card_browser_order_labels">
@@ -100,7 +95,7 @@
         <item>Podle opakování</item>
         <item>Podle zapomínání</item>
     </string-array>
-    <string name="card_browser_select_all">Vybrat vše</string>
+    <string name="card_browser_select_all" maxLength="29">Vybrat vše</string>
     <string name="card_browser_select_none">Zrušit výběr</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nové)</string>
     <string name="card_browser_due_filtered_card">(filtrováno)</string>
