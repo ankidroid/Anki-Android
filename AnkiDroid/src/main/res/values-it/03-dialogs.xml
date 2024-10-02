@@ -235,6 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        A causa delle modifiche alla privacy di Android, i tuoi dati e i backup automatici verranno eliminati dal tuo telefono se l\'app viene disinstallata
     </string>
     <string name="deck_already_exists">Mazzo già esistente</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">In caso di problemi di ordine del mazzo (es. \'10\' appare prima di \'2\'), sostituire \'2\' con \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Imposta intervallo allo stesso valore</string>

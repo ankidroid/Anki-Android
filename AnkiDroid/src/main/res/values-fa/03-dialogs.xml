@@ -233,6 +233,7 @@
     <string name="dismiss_backup_warning_new_user">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک نیز حذف خواهند شد    </string>
     <string name="dismiss_backup_warning_upgrade">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک، از دسترس خارج خواهند شد    </string>
     <string name="deck_already_exists">دسته کارت از قبل وجود دارد</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">اگر مشکل ترتیب دسته کارت‌ها دارید (مثلاً ‘10’ قبل از ‘2’ ظاهر می‌شود)، ‘2’ را با ‘02’ جایگزین کنید</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">تنظیم فاصله زمانی به همان مقدار</string>

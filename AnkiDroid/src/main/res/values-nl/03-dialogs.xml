@@ -235,6 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        Door wijzigingen in de privacy van Android zullen uw gegevens en geautomatiseerde back-ups niet toegankelijk zijn als de app is verwijderd
     </string>
     <string name="deck_already_exists">Set bestaat al</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">Als je problemen met een leerset hebt (bijvoorbeeld ‘10’ treedt op voor ‘2’), vervang dan ‘2’ door ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Stel interval in op dezelfde waarde</string>

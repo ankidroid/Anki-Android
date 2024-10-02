@@ -235,6 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        એન્ડ્રોઇડ ગોપનીયતા ફેરફારોને કારણે, જો એપ્લિકેશન અનઇન્સ્ટોલ કરવામાં આવે તો તમારો ડેટા અને સ્વચાલિત બેકઅપ અગમ્ય હશે
     </string>
     <string name="deck_already_exists">ડેક પહેલેથી જ અસ્તિત્વમાં છે</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">જો તમને ડેક ઓર્ડરિંગ સમસ્યાઓ છે (દા.ત. \'10\' \'2\' પહેલાં દેખાય છે), તો \'2\' ને \'02\' સાથે બદલો</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">અંતરાલને સમાન મૂલ્ય પર સેટ કરો</string>

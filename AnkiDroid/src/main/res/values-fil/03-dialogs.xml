@@ -236,6 +236,7 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="dismiss_backup_warning_upgrade">        Dahil sa pagbabago ng praybasi ng Android, mabubura ang iyong datos at automated na backup sa iyong phone kapag inuninstall ang app.
     </string>
     <string name="deck_already_exists">Umiiral na ang deck na ito</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">Kung may mga isyu ka sa hanay ng iyong deck (hal. lumabas ang \'10\' bago ang \'2\'), palitan ang \'2\' ng \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">I-set ang pagitan sa parehong halaga</string>

@@ -235,6 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa veriniz ve otomatik yedekleriniz erişilemez hâle gelecek
     </string>
     <string name="deck_already_exists">Deste hâlihazırda var</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">Deste sıralamanızda sorun olursa (örn. \"10\"un \"2\"den önce gelmesi), \"2\" yerine \"02\" yazın</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Aralığı aynı değere ayarla</string>

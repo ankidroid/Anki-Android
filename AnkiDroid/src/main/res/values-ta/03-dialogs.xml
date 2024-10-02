@@ -235,6 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        Android தனியுரிமை மாற்றங்கள் காரணமாக, ஆப்ஸ் நிறுவல் நீக்கப்பட்டால், உங்கள் தரவு மற்றும் தானியங்கு காப்புப்பிரதிகளை அணுக முடியாது
     </string>
     <string name="deck_already_exists">டெக் ஏற்கனவே உள்ளது</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">டெக் ஆர்டர் செய்வதில் சிக்கல்கள் இருந்தால் (எ.கா. ‘10’ ‘2’க்கு முன் தோன்றும்), ‘2’ ஐ ‘02’ ஆக மாற்றவும்</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">இடைவெளியை அதே மதிப்புக்கு அமைக்கவும்</string>

@@ -233,6 +233,7 @@
     <string name="dismiss_backup_warning_new_user">Android गोपनीयता बदलांमुळे, ॲप अनइंस्टॉल केल्याने तुमचा डेटा आणि तुमच्या फोनवरून स्वयंचलित बॅकअप हटवले जातील</string>
     <string name="dismiss_backup_warning_upgrade">Android गोपनीयता बदलांमुळे, ॲप अनइंस्टॉल केल्यास तुमचा डेटा आणि स्वयंचलित बॅकअप प्रवेशयोग्य असतील</string>
     <string name="deck_already_exists">डेक आधीच अस्तित्वात आहे</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">तुम्हाला डेक ऑर्डरिंग समस्या असल्यास (उदा. \'10\' \'2\' च्या आधी दिसतो), \'2\' ला \'02\' ने बदला</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">मध्यांतर समान मूल्यावर सेट करा</string>

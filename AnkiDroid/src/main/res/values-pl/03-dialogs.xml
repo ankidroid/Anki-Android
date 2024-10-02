@@ -245,6 +245,7 @@
     <string name="dismiss_backup_warning_upgrade">        Ze względu na zmiany prywatności w systemie Android Twoje dane i automatyczne kopie zapasowe będą niedostępne, jeśli aplikacja zostanie odinstalowana
     </string>
     <string name="deck_already_exists">Taka talia już istnieje</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">W przypadku wystąpienia problemów związanych z kolejnością talii (np. „10” pojawia się przed „2”), „2” należy zastąpić „02”.</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Ustaw interwał na tę samą wartość</string>

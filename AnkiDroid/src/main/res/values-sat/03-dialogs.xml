@@ -235,6 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        ᱟᱱᱰᱨᱚᱭᱮᱰ ᱯᱨᱟᱭᱵᱷᱮᱴᱤ ᱪᱮᱱᱡᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ ᱟᱢᱟᱜ ᱰᱮᱴᱟ ᱟᱨ ᱚᱴᱚᱢᱮᱴᱤᱠ ᱵᱮᱠ-ᱟᱯ ᱠᱚ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱚᱫᱚᱞ ᱞᱮᱱ ᱠᱷᱟᱱ ᱵᱟᱝ ᱥᱮᱴᱮᱨᱚᱜ-ᱟ
     </string>
     <string name="deck_already_exists">ᱰᱮᱠ ᱱᱤᱛᱚᱜ ᱢᱮᱱᱟᱜᱼᱟ</string>
+    <string name="empty_deck_name">Deck name cannot be empty</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">ᱥᱚᱢᱟᱱ ᱢᱩᱞᱩᱠ ᱨᱮ ᱥᱮᱴᱮᱨ ᱢᱮ</string>
