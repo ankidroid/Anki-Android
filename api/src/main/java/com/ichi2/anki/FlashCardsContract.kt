@@ -8,6 +8,7 @@ package com.ichi2.anki
 
 import android.net.Uri
 import com.ichi2.anki.api.BuildConfig
+import com.ichi2.anki.api.Ease
 
 /**
  * The contract between AnkiDroid and applications. Contains definitions for the supported URIs and
@@ -688,10 +689,10 @@ public object FlashCardsContract {
      * JSONArray  | MEDIA_FILES       | read-only  | The media files, like images and sound files, contained in the cards.
      * --------------------------------------------------------------------------------------------------------------------
      * String     | EASE              | write-only | The ease of the card. Used when answering the card. One of:
-     *            |                   |            | com.ichi2.anki.AbstractFlashcardViewer.EASE_1
-     *            |                   |            | com.ichi2.anki.AbstractFlashcardViewer.EASE_2
-     *            |                   |            | com.ichi2.anki.AbstractFlashcardViewer.EASE_3
-     *            |                   |            | com.ichi2.anki.AbstractFlashcardViewer.EASE_4
+     *            |                   |            | com.ichi2.anki.api.Ease.EASE_1.value
+     *            |                   |            | com.ichi2.anki.api.Ease.EASE_2.value
+     *            |                   |            | com.ichi2.anki.api.Ease.EASE_3.value
+     *            |                   |            | com.ichi2.anki.api.Ease.EASE_4.value
      * --------------------------------------------------------------------------------------------------------------------
      * String     | TIME_TAKEN        | write_only | The it took to answer the card (in milliseconds). Used when answering the card.
      * --------------------------------------------------------------------------------------------------------------------
@@ -710,7 +711,7 @@ public object FlashCardsContract {
      *      ContentValues values = new ContentValues();
      *      long noteId = 123456789; //<-- insert real note id here
      *      int cardOrd = 0;   //<-- insert real card ord here
-     *      int ease = AbstractFlashcardViewer.EASE_3; //<-- insert real ease here
+     *      int ease = Ease.EASE_3.value; //<-- insert real ease here
      *      long timeTaken = System.currentTimeMillis() - cardStartTime; //<-- insert real time taken here
      *
      *      values.put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId);
@@ -772,9 +773,9 @@ public object FlashCardsContract {
          */
         public const val MEDIA_FILES: String = "media_files"
 
-        /*
+        /**
          * Ease of an answer. Is not set when requesting the scheduled cards.
-         * Can take values of AbstractFlashcardViewer e.g. EASE_1
+         * Can take values from the [Ease] enum e.g. [Ease.EASE_1.value].
          */
         public const val EASE: String = "answer_ease"
 
