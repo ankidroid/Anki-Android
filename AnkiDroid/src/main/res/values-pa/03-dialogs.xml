@@ -264,6 +264,7 @@
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">ਸਿਸਟਮ WebView ਪੁਰਾਣਾ ਹੈ। ਕੁਝ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਸਹੀ ਢੰਗ ਨਾਲ ਕੰਮ ਨਹੀਂ ਕਰਨਗੀਆਂ। ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।\n\nਸਥਾਪਿਤ ਸੰਸਕਰਣ: %1$d\nਘੱਟੋ-ਘੱਟ ਲੋੜੀਂਦਾ ਸੰਸਕਰਣ: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">ਭਾਸ਼ਾ ਸਮਰਥਿਤ ਨਹੀਂ ਹੈ</string>
     <string name="tts_error_dialog_reason_text">ਟੈਕਸਟ ਟੂ ਸਪੀਚ ਇੰਜਣ <b>%1$s</b> ਅੱਗੇ ਦਿੱਤੀ ਭਾਸ਼ਾ ਦਾ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦਾ ਹੈ: <b>%2$s</b></string>

@@ -256,6 +256,7 @@
     <string name="change_cloze_mode">更改填充测验模式</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">系统 WebView 已过时。有些功能将无法正常工作。请更新它。\n\n已安装版本： %1$d\n所需最低版本： %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">不支持的语言</string>
     <string name="tts_error_dialog_reason_text">文本转语音引擎 <b>%1$s</b>不支持下列语言：<b>%2$s</b></string>

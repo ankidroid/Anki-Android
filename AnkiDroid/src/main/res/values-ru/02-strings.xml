@@ -129,7 +129,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Переместить</string>
     <string name="card_editor_reset_card">Сбросить прогресс</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланировать</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Предпросмотр</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Предпросмотр</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Скопировать как Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d из %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Переименовать</string>
@@ -171,7 +171,7 @@
     <string name="export_choice_share">Поделиться</string>
     <string name="export_choice_save_to">Сохранить в</string>
     <string name="export_saving_exported_collection">Экспортированный файл сохраняется&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
     <string name="select_tts">Язык синтеза речи</string>

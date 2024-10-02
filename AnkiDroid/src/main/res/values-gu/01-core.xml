@@ -80,7 +80,7 @@
     <string name="ease_button_good">સારુ</string>
     <string name="ease_button_easy">સરળ</string>
     <string name="menu_import">આયાત</string>
-    <string name="undo">પૂર્વવત્ કરો</string>
+    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">પૂર્વવત્ કરો</string>
     <string name="redo">એ ફરી કરો</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">સ્ટ્રોક પૂર્વવત્ કરો</string>
     <string name="move_all_to_deck">બધી થપ્પી ખસેડી</string>
@@ -89,7 +89,7 @@
     <string name="create_shortcut">ટૂંકો રસ્તો બનાવો</string>
     <string name="browse_cards">કાર્ડસ જોવો</string>
     <string name="edit_deck_description" comment="edit the deck description">વર્ણન સંપાદિત કરો</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ઉમેરો</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">ઉમેરો</string>
     <string name="menu_add_note">નોંધ ઉમેરો</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો </string>
     <string name="menu_dismiss_note">છુપાવો / કાઢો</string>

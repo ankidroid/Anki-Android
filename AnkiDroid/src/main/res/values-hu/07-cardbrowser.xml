@@ -54,30 +54,27 @@
         <item quantity="other">%d jegyzetet mutat</item>
     </plurals>
     <string name="card_browser_all_decks">Minden pakli</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Delete note</item>
         <item quantity="other">Delete notes</item>
     </plurals>
     <string name="card_browser_change_deck">Pakli csere</string>
     <string name="delete_card_title">Jegyzet törlése?</string>
-    <string name="card_browser_show_marked">Megjelöltek szűrése</string>
-    <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
-    <string name="card_browser_search_by_tag">Címke szerinti szűrés</string>
-    <string name="card_browser_search_by_flag">Jelölő szerinti szűrés</string>
-    <string name="card_browser_list_my_searches">Kereséseim</string>
-    <string name="card_browser_list_my_searches_save">Keresés mentése</string>
+    <string name="card_browser_show_marked" maxLength="29">Megjelöltek szűrése</string>
+    <string name="card_browser_show_suspended" maxLength="29">Szűrés felfüggesztve</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Címke szerinti szűrés</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Jelölő szerinti szűrés</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Kereséseim</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Keresés mentése</string>
     <string name="card_browser_list_my_searches_title">Mentett keresés kiválasztása</string>
     <string name="card_browser_list_my_searches_new_name">Jelenlegi keresés neve</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Nem menthetsz keresést név nélkül</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">A név már létezik</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Törlés “%1$s”?</string>
-    <string name="card_browser_change_display_order">Megjelenítési sorrend módosítása</string>
+    <string name="card_browser_change_display_order" maxLength="29">Megjelenítési sorrend módosítása</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
     <string name="card_details_tags">Címkék</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>Ismétlésszám szerint</item>
         <item>Tévesztések szerint</item>
     </string-array>
-    <string name="card_browser_select_all">Összes kijelölése</string>
+    <string name="card_browser_select_all" maxLength="29">Összes kijelölése</string>
     <string name="card_browser_select_none">Nincs kijelölve semmi</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(új)</string>
     <string name="card_browser_due_filtered_card">(szűrt)</string>

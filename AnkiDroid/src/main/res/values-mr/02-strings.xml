@@ -123,7 +123,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">स्थान</string>
     <string name="card_editor_reset_card">Pragatī rīsēṭa karā</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">रीशेड्यूल</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pūrvāvalōkana</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Pūrvāvalōkana</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">मार्कडाउन म्हणून कॉपी करा</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d पैकी %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Punarnāmita karā</string>
@@ -165,7 +165,7 @@
     <string name="export_choice_share">शेअर करा</string>
     <string name="export_choice_save_to">मध्ये जतन करा</string>
     <string name="export_saving_exported_collection">निर्यात केलेली फाइल जतन करत आहे&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">पर्याय</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">पर्याय</string>
     <string name="menu__deck_options">डेक पर्याय</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">अभ्यासाचे पर्याय</string>
     <string name="select_tts">TTS भाषा सेट करा</string>

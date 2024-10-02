@@ -123,7 +123,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Repositionner</string>
     <string name="card_editor_reset_card">Remettre les compteurs à 0</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replanifier</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Aperçu</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Aperçu</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copier en tant que Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sur %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renommer</string>
@@ -165,7 +165,7 @@
     <string name="export_choice_share">Partager</string>
     <string name="export_choice_save_to">Enregistrer sous</string>
     <string name="export_saving_exported_collection">Enregistrement du fichier exporté&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Options</string>
     <string name="menu__deck_options">Options du deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>
     <string name="select_tts">Définir la langue de synthèse vocale</string>

@@ -264,6 +264,7 @@
     <string name="change_cloze_mode">Alterar modo de omissão</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema WebView está desatualizado. Alguns recursos não funcionarão corretamente. Atualize-o.\n\nVersão instalada: %1$d\nVersão mínima necessária: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Língua não suportada</string>
     <string name="tts_error_dialog_reason_text">O sistema de conversão de texto para fala <b>%1$s</b> não suporta a língua: <b>%2$s</b></string>

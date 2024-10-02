@@ -264,6 +264,7 @@
     <string name="change_cloze_mode">Mudar modo cloze</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema do WebView está desatualizado. Alguns recursos não funcionarão corretamente. Por favor, atualize-o.\n\nVersão instalada %1$d\nVersão mínima necessária: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Idioma não suportado</string>
     <string name="tts_error_dialog_reason_text">O mecanismo de texto para fala <b>%1$s</b> não suporta o seguinte idioma: <b>%2$s</b></string>

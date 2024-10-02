@@ -233,7 +233,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">常规</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
     <string name="deck_conf_cram_filter" maxLength="41">筛选器</string>
-    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">搜索</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">搜索</string>
     <string name="deck_conf_cram_limit" maxLength="41">限制至</string>
     <string name="deck_conf_cram_order" maxLength="41">卡片选择标准</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>

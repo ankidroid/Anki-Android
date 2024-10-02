@@ -120,7 +120,7 @@
     <string name="card_editor_reposition_card" comment="reposition a card in the new queue">更改位置</string>
     <string name="card_editor_reset_card">重设学习进度</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新安排</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">预览</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">预览</string>
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">以 Markdown 格式复制</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 中的 %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">重命名</string>
@@ -162,7 +162,7 @@
     <string name="export_choice_share">分享</string>
     <string name="export_choice_save_to">保存至</string>
     <string name="export_saving_exported_collection">正在保存导出文件&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">选项</string>
     <string name="menu__deck_options">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
     <string name="select_tts">设置 TTS 语言</string>

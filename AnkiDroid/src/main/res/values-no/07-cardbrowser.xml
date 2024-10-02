@@ -54,30 +54,27 @@
         <item quantity="other">%d notater vist</item>
     </plurals>
     <string name="card_browser_all_decks">Alle kortstokker</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Delete note</item>
         <item quantity="other">Delete notes</item>
     </plurals>
     <string name="card_browser_change_deck">Forandre kortstokk</string>
     <string name="delete_card_title">Slett notat</string>
-    <string name="card_browser_show_marked">Filtrer merkede</string>
-    <string name="card_browser_show_suspended">Filtrer suspenderte</string>
-    <string name="card_browser_search_by_tag">Filtrer etter emneord</string>
-    <string name="card_browser_search_by_flag">Filtrer etter flagg</string>
-    <string name="card_browser_list_my_searches">Mine søk</string>
-    <string name="card_browser_list_my_searches_save">Lagre søk</string>
+    <string name="card_browser_show_marked" maxLength="29">Filtrer merkede</string>
+    <string name="card_browser_show_suspended" maxLength="29">Filtrer suspenderte</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Filtrer etter emneord</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Filtrer etter flagg</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Mine søk</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Lagre søk</string>
     <string name="card_browser_list_my_searches_title">Velg et lagret søk</string>
     <string name="card_browser_list_my_searches_new_name">Navn for det gjeldende søket</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Du kan ikke lagre et søk uten navn</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Navnet finnes allerede</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Slette “%1$s”?</string>
-    <string name="card_browser_change_display_order">Endre visningsrekkefølgen</string>
+    <string name="card_browser_change_display_order" maxLength="29">Endre visningsrekkefølgen</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Velg visningsrekkefølge</string>
     <string name="card_details_tags">Emneord</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>Etter gjennomganger</item>
         <item>Etter antall feilsvar</item>
     </string-array>
-    <string name="card_browser_select_all">Velg alle</string>
+    <string name="card_browser_select_all" maxLength="29">Velg alle</string>
     <string name="card_browser_select_none">Velg ingen</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ny)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>

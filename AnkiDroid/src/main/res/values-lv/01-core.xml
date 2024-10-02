@@ -83,7 +83,7 @@
     <string name="ease_button_good">Labi</string>
     <string name="ease_button_easy">Viegli</string>
     <string name="menu_import">Ienest</string>
-    <string name="undo">Atsaukt</string>
+    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Atsaukt</string>
     <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Atsaukt vilkumu</string>
     <string name="move_all_to_deck">Pārnest visu uz kavu</string>
@@ -92,7 +92,7 @@
     <string name="create_shortcut">Izveidot saīsni</string>
     <string name="browse_cards">Pārlūkot kārtis</string>
     <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Pievienot</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Pievienot</string>
     <string name="menu_add_note">Pievienot rakstu</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Saskaņot kóntu</string>
     <string name="menu_dismiss_note">Slēpt / dzēst</string>

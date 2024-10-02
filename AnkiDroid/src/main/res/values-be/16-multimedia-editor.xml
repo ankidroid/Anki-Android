@@ -70,7 +70,7 @@
     <!-- Crop function-->
     <string name="crop_image">Вы сапраўды хочаце абрэзаць гэты відарыс?</string>
     <string name="crop_button">Абрэзаць відарыс</string>
-    <string name="save_dialog_content">Памер бягучага відарыса складае %s МБ. Стандартна, памер відарыса абмежаваны да 1 МБ. Хочаце абрэзаць гэты відарыс?</string>
+    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"Не атрымалася выбраць відарыс. Паўтарыце спробу"</string>
     <string name="activity_result_unexpected">Праграма вярнула нечаканае значэнне. Паспрабуйце скарыстацца іншай праграмай</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Змесціва поля</string>

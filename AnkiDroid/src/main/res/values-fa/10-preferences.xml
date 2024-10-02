@@ -236,7 +236,7 @@
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عمومی</string>
     <string name="deck_conf_reminders" maxLength="41">یادآورها</string>
     <string name="deck_conf_cram_filter" maxLength="41">فیلتر</string>
-    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query. It is also used outside fo the card filtered deck menu.">جستجو</string>
+    <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">جستجو</string>
     <string name="deck_conf_cram_limit" maxLength="41">محدود به</string>
     <string name="deck_conf_cram_order" maxLength="41">کارت های انتخاب شده بر اساس</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">برنا مه ریزی مجدد</string>

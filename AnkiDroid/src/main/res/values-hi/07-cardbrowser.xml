@@ -54,30 +54,27 @@
         <item quantity="other">%d नोट्स दिखाए जा रहे हैं</item>
     </plurals>
     <string name="card_browser_all_decks">सभी डेक्स</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">कार्ड हटाएं</item>
-        <item quantity="other">कार्ड्स को हटाएं</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">नोट को हटाएँ</item>
         <item quantity="other">नोट्स को हटाएँ</item>
     </plurals>
     <string name="card_browser_change_deck">डेक बदलें</string>
     <string name="delete_card_title">नोट मिटाएँ?</string>
-    <string name="card_browser_show_marked">चिह्नित नोटों को छानें</string>
-    <string name="card_browser_show_suspended">निलंबित पत्तों को छानें</string>
-    <string name="card_browser_search_by_tag">टैग से छानें</string>
-    <string name="card_browser_search_by_flag">ध्वज द्वारा फ़िल्टर करें</string>
-    <string name="card_browser_list_my_searches">मेरे खोज</string>
-    <string name="card_browser_list_my_searches_save">खोज सहेजें</string>
+    <string name="card_browser_show_marked" maxLength="29">चिह्नित नोटों को छानें</string>
+    <string name="card_browser_show_suspended" maxLength="29">निलंबित पत्तों को छानें</string>
+    <string name="card_browser_search_by_tag" maxLength="29">टैग से छानें</string>
+    <string name="card_browser_search_by_flag" maxLength="29">ध्वज द्वारा फ़िल्टर करें</string>
+    <string name="card_browser_list_my_searches" maxLength="29">मेरे खोज</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">खोज सहेजें</string>
     <string name="card_browser_list_my_searches_title">कोई सहेजी गई खोज चुने</string>
     <string name="card_browser_list_my_searches_new_name">वर्तमान खोज का नाम</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">आप नाम के बिना खोज सहेज नहीं सकते</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">नाम मौजूद है</string>
     <string name="no_note_to_edit">संपादित करने के लिए कोई नोट नहीं</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\" को मिटाएँ?</string>
-    <string name="card_browser_change_display_order">प्रदर्शन क्रम बदलें</string>
+    <string name="card_browser_change_display_order" maxLength="29">प्रदर्शन क्रम बदलें</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">प्रदर्शन क्रम बदलें</string>
     <string name="card_details_tags">टैग</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>समीक्षाओं से</item>
         <item>चूकों से</item>
     </string-array>
-    <string name="card_browser_select_all">सभी चुनें</string>
+    <string name="card_browser_select_all" maxLength="29">सभी चुनें</string>
     <string name="card_browser_select_none">कोई नहीं चुनें</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(नया)</string>
     <string name="card_browser_due_filtered_card">(छाना हुआ)</string>

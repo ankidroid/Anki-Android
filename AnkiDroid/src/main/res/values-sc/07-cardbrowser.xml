@@ -54,30 +54,27 @@
         <item quantity="other">%d notas ammustradas</item>
     </plurals>
     <string name="card_browser_all_decks">Totu sos matzos</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Delete note</item>
         <item quantity="other">Delete notes</item>
     </plurals>
     <string name="card_browser_change_deck">Càmbia matzu</string>
     <string name="delete_card_title">Iscantzellare sa nota?</string>
-    <string name="card_browser_show_marked">Filtra sas marcadas</string>
-    <string name="card_browser_show_suspended">Filtra sas suspèndidas</string>
-    <string name="card_browser_search_by_tag">Filtra pro eticheta</string>
-    <string name="card_browser_search_by_flag">Filtra pro bandera</string>
-    <string name="card_browser_list_my_searches">Chircas meas</string>
-    <string name="card_browser_list_my_searches_save">Sarva sa chirca</string>
+    <string name="card_browser_show_marked" maxLength="29">Filtra sas marcadas</string>
+    <string name="card_browser_show_suspended" maxLength="29">Filtra sas suspèndidas</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Filtra pro eticheta</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Filtra pro bandera</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Chircas meas</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Sarva sa chirca</string>
     <string name="card_browser_list_my_searches_title">Issèbera una chirca sarvada</string>
     <string name="card_browser_list_my_searches_new_name">Nùmene pro sa chirca atuale</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Non podes sarvare una chirca chene unu nùmene</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Su nùmene esistit giai</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Iscantzellare “%1$s”?</string>
-    <string name="card_browser_change_display_order">Modìfica s\'òrdine de visualizatzione</string>
+    <string name="card_browser_change_display_order" maxLength="29">Modìfica s\'òrdine de visualizatzione</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Issèbera s\'òrdine de visualizatzione</string>
     <string name="card_details_tags">Etichetas</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>Pro fatzilitade</item>
         <item>Pro intervallu</item>
     </string-array>
-    <string name="card_browser_select_all">Ischerta totu</string>
+    <string name="card_browser_select_all" maxLength="29">Ischerta totu</string>
     <string name="card_browser_select_none">Boga s\'ischerta</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(noa)</string>
     <string name="card_browser_due_filtered_card">(filtradu)</string>

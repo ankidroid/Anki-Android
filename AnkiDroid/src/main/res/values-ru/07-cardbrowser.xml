@@ -58,12 +58,6 @@
         <item quantity="other">%d записей показано</item>
     </plurals>
     <string name="card_browser_all_decks">Все колоды</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Удалить карту</item>
-        <item quantity="few">Удалить карты</item>
-        <item quantity="many">Удалить карты</item>
-        <item quantity="other">Удалить карты</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Удалить заметку</item>
         <item quantity="few">Удалить заметки</item>
@@ -72,20 +66,21 @@
     </plurals>
     <string name="card_browser_change_deck">Сменить колоду</string>
     <string name="delete_card_title">Удалить запись?</string>
-    <string name="card_browser_show_marked">Отфильтровать отмеченные</string>
-    <string name="card_browser_show_suspended">Отфильтровать исключённые</string>
-    <string name="card_browser_search_by_tag">Отфильтровать по меткам</string>
-    <string name="card_browser_search_by_flag">Отфильтровать по флажкам</string>
-    <string name="card_browser_list_my_searches">Мои поисковые запросы</string>
-    <string name="card_browser_list_my_searches_save">Сохранить поисковый запрос</string>
+    <string name="card_browser_show_marked" maxLength="29">Отфильтровать отмеченные</string>
+    <string name="card_browser_show_suspended" maxLength="29">Отфильтровать исключённые</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Отфильтровать по меткам</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Отфильтровать по флажкам</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Мои поисковые запросы</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Сохранить поисковый запрос</string>
     <string name="card_browser_list_my_searches_title">Выберите сохраненный запрос</string>
     <string name="card_browser_list_my_searches_new_name">Название запроса</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Нельзя сохранить запрос без названия</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Такое название уже существует</string>
     <string name="no_note_to_edit">Нет записей для редактирования</string>
     <string name="card_browser_list_my_searches_remove_content">Удалить «%1$s»?</string>
-    <string name="card_browser_change_display_order">Изменить сортировку</string>
+    <string name="card_browser_change_display_order" maxLength="29">Изменить сортировку</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Выберите тип сортировки</string>
     <string name="card_details_tags">Метки</string>
     <string-array name="card_browser_order_labels">
@@ -100,7 +95,7 @@
         <item>По повторениям</item>
         <item>По забытым</item>
     </string-array>
-    <string name="card_browser_select_all">Выбрать все</string>
+    <string name="card_browser_select_all" maxLength="29">Выбрать все</string>
     <string name="card_browser_select_none">Снять выделение</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(новые)</string>
     <string name="card_browser_due_filtered_card">(фильтрованные)</string>

@@ -54,30 +54,27 @@
         <item quantity="other">ნაჩვენებია %d შენიშვნა</item>
     </plurals>
     <string name="card_browser_all_decks">ყველა დასტა</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">ბარათის წაშლა</item>
-        <item quantity="other">ბარათების წაშლა</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">შენიშვნის წაშლა</item>
         <item quantity="other">შენიშვნების წაშლა</item>
     </plurals>
     <string name="card_browser_change_deck">დასტის შეცვლა</string>
     <string name="delete_card_title">წაიშალოს შენიშვნა?</string>
-    <string name="card_browser_show_marked">მონიშნულების გამოფილტვრა</string>
-    <string name="card_browser_show_suspended">გამოტოვებულების გამოფილტვრა</string>
-    <string name="card_browser_search_by_tag">გაფილტვრა იარლიყის მიხედვით</string>
-    <string name="card_browser_search_by_flag">გაფილტვრა დროშის მიხედვით</string>
-    <string name="card_browser_list_my_searches">ჩემი ძიებები</string>
-    <string name="card_browser_list_my_searches_save">ძიების შენახვა</string>
+    <string name="card_browser_show_marked" maxLength="29">მონიშნულების გამოფილტვრა</string>
+    <string name="card_browser_show_suspended" maxLength="29">გამოტოვებულების გამოფილტვრა</string>
+    <string name="card_browser_search_by_tag" maxLength="29">გაფილტვრა იარლიყის მიხედვით</string>
+    <string name="card_browser_search_by_flag" maxLength="29">გაფილტვრა დროშის მიხედვით</string>
+    <string name="card_browser_list_my_searches" maxLength="29">ჩემი ძიებები</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">ძიების შენახვა</string>
     <string name="card_browser_list_my_searches_title">აირჩიეთ შენახული ძიება</string>
     <string name="card_browser_list_my_searches_new_name">სახელი მიმდინარე ძიებისთვის</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">უსათაურო ძიებას ვერ შეინახავთ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">სახელი უკვე არსებობს</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">„%1$s“ წაიშალოს?</string>
-    <string name="card_browser_change_display_order">ჩვენების თანმიმდევრობის შეცვლა</string>
+    <string name="card_browser_change_display_order" maxLength="29">ჩვენების თანმიმდევრობის შეცვლა</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ჩვენების თანმიმდევრობის არჩევა</string>
     <string name="card_details_tags">იარლიყები</string>
     <string-array name="card_browser_order_labels">
@@ -92,7 +89,7 @@
         <item>გადახედვის სიხშირის მიხედვით</item>
         <item>გადავიწყების სიხშირის მიხედვით</item>
     </string-array>
-    <string name="card_browser_select_all">ყველას მონიშვნა</string>
+    <string name="card_browser_select_all" maxLength="29">ყველას მონიშვნა</string>
     <string name="card_browser_select_none">არცერთის მონიშვნა</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ახალი)</string>
     <string name="card_browser_due_filtered_card">(გაფილტრული)</string>

@@ -262,6 +262,7 @@
     <string name="change_cloze_mode">క్లోజ్ మోడ్‌ని మార్చండి</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">సిస్టమ్ WebView పాతది. కొన్ని ఫీచర్‌లు సరిగ్గా పని చేయవు. దయచేసి దీన్ని అప్‌డేట్ చేయండి.\n\nఇన్‌స్టాల్ చేసిన వెర్షన్: %1$d\nకనీసం అవసరమైన వెర్షన్: %2$d</string>
+    <string name="compress">Compress</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">భాషకు మద్దతు లేదు</string>
     <string name="tts_error_dialog_reason_text">టెక్స్ట్ టు స్పీచ్ ఇంజిన్ <b>%1$s</b> కింది భాషకు మద్దతు ఇవ్వదు: <b>%2$s</b></string>

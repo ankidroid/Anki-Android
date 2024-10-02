@@ -58,12 +58,6 @@
         <item quantity="other">Показано %d записів</item>
     </plurals>
     <string name="card_browser_all_decks">Всі колоди</string>
-    <plurals name="card_browser_delete_cards">
-        <item quantity="one">Видалити картку</item>
-        <item quantity="few">Видалити картки</item>
-        <item quantity="many">Видалити картки</item>
-        <item quantity="other">Видалити картки</item>
-    </plurals>
     <plurals name="card_browser_delete_notes">
         <item quantity="one">Видалити запис</item>
         <item quantity="few">Видалити записи</item>
@@ -72,20 +66,21 @@
     </plurals>
     <string name="card_browser_change_deck">Змінити колоду</string>
     <string name="delete_card_title">Видалити запис?</string>
-    <string name="card_browser_show_marked">Тільки з зірочокою</string>
-    <string name="card_browser_show_suspended">Тільки призупинені</string>
-    <string name="card_browser_search_by_tag">Фільтрувати за позначками</string>
-    <string name="card_browser_search_by_flag">Фільтрувати за прапорцями</string>
-    <string name="card_browser_list_my_searches">Мої запити</string>
-    <string name="card_browser_list_my_searches_save">Зберегти запис</string>
+    <string name="card_browser_show_marked" maxLength="29">Тільки з зірочокою</string>
+    <string name="card_browser_show_suspended" maxLength="29">Тільки призупинені</string>
+    <string name="card_browser_search_by_tag" maxLength="29">Фільтрувати за позначками</string>
+    <string name="card_browser_search_by_flag" maxLength="29">Фільтрувати за прапорцями</string>
+    <string name="card_browser_list_my_searches" maxLength="29">Мої запити</string>
+    <string name="card_browser_list_my_searches_save" maxLength="29">Зберегти запис</string>
     <string name="card_browser_list_my_searches_title">Оберіть збережений пошуковий запит</string>
     <string name="card_browser_list_my_searches_new_name">Назва для пошукового запиту</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можна зберегти пошуковий запит без назви</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Така назва вже існує!</string>
     <string name="no_note_to_edit">Немає нотаток для редагування</string>
     <string name="card_browser_list_my_searches_remove_content">Видалити «%1$s»?</string>
-    <string name="card_browser_change_display_order">Сортувати за</string>
+    <string name="card_browser_change_display_order" maxLength="29">Сортувати за</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Пошук</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Вибрати порядок відображення</string>
     <string name="card_details_tags">Позначки</string>
     <string-array name="card_browser_order_labels">
@@ -100,7 +95,7 @@
         <item>За кількістю повторень</item>
         <item>За кількістю забувань</item>
     </string-array>
-    <string name="card_browser_select_all">Обрати все</string>
+    <string name="card_browser_select_all" maxLength="29">Обрати все</string>
     <string name="card_browser_select_none">Зняти виділення</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(нова)</string>
     <string name="card_browser_due_filtered_card">(фільтрована)</string>
