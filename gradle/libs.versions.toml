@@ -10,7 +10,7 @@ acra = '5.11.4'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.6.1"
+androidGradlePlugin = "8.7.0"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.2"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -82,7 +82,7 @@ kotlin = '2.0.20'
 kotlinxSerializationJson = "1.7.3"
 ktlint = "11.6.1"
 leakcanaryAndroid = "2.14"
-lint = '31.6.1'
+lint = '31.7.0'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
