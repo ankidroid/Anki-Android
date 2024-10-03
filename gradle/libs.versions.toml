@@ -48,7 +48,7 @@ androidxTestUiAutomator = "2.3.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
 androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
-androidxWebkit = "1.12.0"
+androidxWebkit = "1.12.1"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.9.1"
 annotations = "25.0.0"
