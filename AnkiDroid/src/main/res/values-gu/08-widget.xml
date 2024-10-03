@@ -72,5 +72,6 @@
         <item quantity="one">நீங்கள் %d தளங்கள் வரை தேர்ந்தெடுக்கலாம்.</item>
         <item quantity="other">நீங்கள் %d தளங்கள் வரை தேர்ந்தெடுக்கலாம்.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">டெக் காணவில்லை. தயவுசெய்து மீண்டும் உருவாக்கவும்</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
 </resources>

@@ -72,5 +72,6 @@
         <item quantity="one">En fazla %d deste seçebilirsiniz.</item>
         <item quantity="other">En fazla %d deste seçebilirsiniz.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Deste eksik. Lütfen yeniden ayarlayın</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
 </resources>
