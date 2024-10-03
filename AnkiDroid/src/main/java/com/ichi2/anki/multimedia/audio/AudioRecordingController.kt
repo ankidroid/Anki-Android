@@ -302,7 +302,7 @@ class AudioRecordingController(
                 audioPlayer!!.reset()
             }
         } catch (e: IllegalStateException) {
-            Timber.w("Media Player couldn't be reset or already reset", e)
+            Timber.w(e, "Media Player couldn't be reset or already reset")
         }
     }
 
@@ -663,7 +663,7 @@ class AudioRecordingController(
         try {
             setupForNewRecording()
         } catch (e: Exception) {
-            Timber.d("Unable to reset the audio recorder", e)
+            Timber.d(e, "Unable to reset the audio recorder")
         }
     }
 
@@ -700,7 +700,7 @@ class AudioRecordingController(
                 audioWaveform.addAmplitude(maxAmplitude.toFloat())
             }
         } catch (e: IllegalStateException) {
-            Timber.d("Audio recorder interrupted")
+            Timber.d(e, "Audio recorder interrupted")
         }
     }
 
