@@ -80,5 +80,6 @@
         <item quantity="many">Ви можете вибрати до %d колод.</item>
         <item quantity="other">Ви можете вибрати до %d колод.</item>
     </plurals>
-    <string name="empty_widget" comment="To denote the widget is empty">Відсутня колода. Будь ласка, переналаштуйте</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
 </resources>
