@@ -55,6 +55,8 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.edit
@@ -2135,6 +2137,9 @@ open class DeckPicker :
                     res.getQuantityString(R.plurals.widget_cards_due, due, due)
                 }
                 supportActionBar!!.subtitle = subTitle
+
+                val toolbar = findViewById<Toolbar>(R.id.toolbar)
+                TooltipCompat.setTooltipText(toolbar, toolbar.subtitle)
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "RuntimeException setting time remaining")
