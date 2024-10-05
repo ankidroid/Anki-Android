@@ -16,6 +16,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="7dp"
         android:gravity="center"
+        android:layout_centerInParent="true"
         android:padding="30dp"
         android:text="@string/empty_widget_state"
         android:visibility="gone" />/>
