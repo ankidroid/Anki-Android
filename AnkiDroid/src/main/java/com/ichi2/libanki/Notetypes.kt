@@ -34,15 +34,18 @@ package com.ichi2.libanki
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithId
 import anki.notetypes.Notetype
+import anki.notetypes.NotetypeId
 import anki.notetypes.NotetypeNameId
 import anki.notetypes.NotetypeNameIdUseCount
 import anki.notetypes.StockNotetype
+import anki.notetypes.restoreNotetypeToStockRequest
 import com.google.protobuf.ByteString
 import com.ichi2.anki.CrashReportService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
+import com.ichi2.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.LibAnkiAlias
@@ -727,4 +730,33 @@ fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId {
 
 fun Collection.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString {
     return backend.getStockNotetypeLegacy(kind = kind)
+}
+
+fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson {
+    return NotetypeJson(fromJsonBytes(getStockNotetypeLegacy(kind)))
+}
+
+fun Collection.getStockNotetypes(): List<Pair<String, NotetypeJson>> {
+    val out = mutableListOf<Pair<String, NotetypeJson>>()
+    // add standard - this order should match the one in notetypes.proto
+    for (kind in listOf(
+        StockNotetype.Kind.KIND_BASIC,
+        StockNotetype.Kind.KIND_BASIC_AND_REVERSED,
+        StockNotetype.Kind.KIND_BASIC_OPTIONAL_REVERSED,
+        StockNotetype.Kind.KIND_BASIC_TYPING,
+        StockNotetype.Kind.KIND_CLOZE,
+        StockNotetype.Kind.KIND_IMAGE_OCCLUSION
+    )) {
+        val notetype = getStockNotetype(kind)
+        out.append(notetype.name to notetype)
+    }
+    return out.toList()
+}
+
+fun Collection.restoreNotetypeToStock(notetypeId: NotetypeId, forceKind: StockNotetype.Kind? = null): OpChanges {
+    val msg = restoreNotetypeToStockRequest {
+        this.notetypeId = notetypeId
+        forceKind?.let { this.forceKind = forceKind }
+    }
+    return backend.restoreNotetypeToStock(msg)
 }

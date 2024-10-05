@@ -18,6 +18,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -49,6 +50,8 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import anki.notetypes.StockNotetype
+import anki.notetypes.notetypeId
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -81,12 +84,16 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.getStockNotetypes
+import com.ichi2.libanki.restoreNotetypeToStock
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.listItems
+import com.ichi2.utils.show
 import net.ankiweb.rsdroid.Translations
 import org.json.JSONArray
 import org.json.JSONException
@@ -782,6 +789,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * Setups the part of the menu that can be used either in template editor or in previewer fragment.
          */
         fun setupCommonMenu(menu: Menu) {
+            menu.findItem(R.id.action_restore_to_default).title = CollectionManager.TR.cardTemplatesRestoreToDefault()
             if (noteTypeCreatesDynamicNumberOfNotes()) {
                 Timber.d("Editing cloze/occlusion model, disabling add/delete card template and deck override functionality")
                 menu.findItem(R.id.action_add).isVisible = false
@@ -866,6 +874,43 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 R.id.action_card_browser_appearance -> {
                     Timber.i("CardTemplateEditor::Card Browser Template button pressed")
                     openBrowserAppearance()
+                }
+                R.id.action_restore_to_default -> {
+                    Timber.i("CardTemplateEditor:: Restore to default button pressed")
+
+                    fun askUser(kind: StockNotetype.Kind? = null) {
+                        AlertDialog.Builder(requireContext()).show {
+                            setTitle(CollectionManager.TR.cardTemplatesRestoreToDefault())
+                            setMessage(CollectionManager.TR.cardTemplatesRestoreToDefaultConfirmation())
+                            setPositiveButton(R.string.dialog_ok) { _, _ ->
+                                launchCatchingTask {
+                                    val nid = notetypeId { ntid = tempModel.modelId }
+                                    withCol { restoreNotetypeToStock(nid, kind) }
+                                    onModelSaved()
+                                    showThemedToast(requireContext(), CollectionManager.TR.cardTemplatesRestoredToDefault(), shortLength = false)
+                                }
+                            }
+                            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                        }
+                    }
+
+                    if (tempModel.notetype.optInt("originalStockKind") != 0) {
+                        askUser()
+                        return true
+                    }
+
+                    launchCatchingTask {
+                        val notetypes = withCol { getStockNotetypes() }.map { it.first }
+                        AlertDialog.Builder(requireContext()).show {
+                            setTitle(CollectionManager.TR.cardTemplatesRestoreToDefault())
+                            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                            listItems(notetypes) { _: DialogInterface, index: Int ->
+                                val kind = StockNotetype.Kind.forNumber(index)
+                                askUser(kind)
+                            }
+                        }
+                    }
+                    true
                 }
                 else -> {
                     return false
