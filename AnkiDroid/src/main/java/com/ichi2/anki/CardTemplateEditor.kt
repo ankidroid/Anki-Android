@@ -18,6 +18,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -49,10 +50,14 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import anki.notetypes.StockNotetype
+import anki.notetypes.StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_UNKNOWN_VALUE
+import anki.notetypes.notetypeId
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.shortcut
@@ -83,12 +88,18 @@ import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.exception.ConfirmModSchemaException
+import com.ichi2.libanki.getStockNotetype
+import com.ichi2.libanki.getStockNotetypeKinds
+import com.ichi2.libanki.restoreNotetypeToStock
+import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.utils.listItems
+import com.ichi2.utils.show
 import net.ankiweb.rsdroid.Translations
 import org.json.JSONArray
 import org.json.JSONException
@@ -842,6 +853,7 @@ open class CardTemplateEditor :
          * Setups the part of the menu that can be used either in template editor or in previewer fragment.
          */
         fun setupCommonMenu(menu: Menu) {
+            menu.findItem(R.id.action_restore_to_default).title = CollectionManager.TR.cardTemplatesRestoreToDefault()
             if (noteTypeCreatesDynamicNumberOfNotes()) {
                 Timber.d("Editing cloze/occlusion model, disabling add/delete card template and deck override functionality")
                 menu.findItem(R.id.action_add).isVisible = false
@@ -874,11 +886,24 @@ open class CardTemplateEditor :
             menu.findItem(R.id.action_insert_field).isVisible = isInsertFieldItemVisible
         }
 
+        @NeedsTest("Notetype is restored to stock kind")
+        private suspend fun restoreNotetypeToStock(kind: StockNotetype.Kind? = null) {
+            val nid = notetypeId { ntid = tempModel.modelId }
+            undoableOp { restoreNotetypeToStock(nid, kind) }
+            onModelSaved()
+            showThemedToast(
+                requireContext(),
+                TR.cardTemplatesRestoredToDefault(),
+                shortLength = false,
+            )
+        }
+
         /**
          * Handles the part of the menu set by [setupCommonMenu].
          * @returns whether the given item was handled
          * @see [onMenuItemSelected] and [onMenuItemClick]
          */
+        @NeedsTest("Restore to default option")
         fun handleCommonMenuItemSelected(menuItem: MenuItem): Boolean {
             return when (menuItem.itemId) {
                 R.id.action_add -> {
@@ -927,6 +952,47 @@ open class CardTemplateEditor :
                 R.id.action_card_browser_appearance -> {
                     Timber.i("CardTemplateEditor::Card Browser Template button pressed")
                     openBrowserAppearance()
+                }
+                R.id.action_restore_to_default -> {
+                    Timber.i("CardTemplateEditor:: Restore to default button pressed")
+
+                    fun askUser(kind: StockNotetype.Kind? = null) {
+                        AlertDialog.Builder(requireContext()).show {
+                            setTitle(TR.cardTemplatesRestoreToDefault())
+                            setMessage(TR.cardTemplatesRestoreToDefaultConfirmation())
+                            setPositiveButton(R.string.dialog_ok) { _, _ ->
+                                launchCatchingTask {
+                                    restoreNotetypeToStock(kind)
+                                }
+                            }
+                            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                        }
+                    }
+
+                    val originalStockKind = tempModel.notetype.optInt("originalStockKind", ORIGINAL_STOCK_KIND_UNKNOWN_VALUE)
+                    if (originalStockKind != ORIGINAL_STOCK_KIND_UNKNOWN_VALUE) {
+                        Timber.d("Asking to restore to original stock kind %s", originalStockKind)
+                        askUser()
+                        return true
+                    }
+
+                    launchCatchingTask {
+                        Timber.d("Unknown stock kind: asking which kind to restore to")
+                        val stockNotetypeKinds = getStockNotetypeKinds()
+                        val stockNotetypesNames =
+                            withCol {
+                                stockNotetypeKinds.map { getStockNotetype(it).name }
+                            }
+                        AlertDialog.Builder(requireContext()).show {
+                            setTitle(TR.cardTemplatesRestoreToDefault())
+                            setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+                            listItems(stockNotetypesNames) { _: DialogInterface, index: Int ->
+                                val kind = stockNotetypeKinds[index]
+                                askUser(kind)
+                            }
+                        }
+                    }
+                    true
                 }
                 else -> {
                     return false
