@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/action_confirm"
         android:icon="@drawable/ic_done_white"
@@ -48,4 +49,9 @@
         android:id="@+id/action_copy_as_markdown"
         android:title="@string/copy_as_markdown"
         ankidroid:showAsAction="never" />
+    <item
+        android:id="@+id/action_restore_to_default"
+        tools:title="Restore to default..."
+        ankidroid:showAsAction="never"
+        />
 </menu>
