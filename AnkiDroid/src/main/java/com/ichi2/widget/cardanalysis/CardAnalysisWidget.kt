@@ -114,10 +114,22 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             appWidgetId: Int,
             remoteViews: RemoteViews
         ) {
-            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.app_not_initialized_new))
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
+
+            val configIntent = Intent(context, CardAnalysisWidgetConfig::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val configPendingIntent = PendingIntent.getActivity(
+                context,
+                appWidgetId,
+                configIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }
@@ -129,6 +141,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             remoteViews: RemoteViews
         ) {
             // Show empty_widget and set click listener to open configuration
+            remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_widget_state))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
