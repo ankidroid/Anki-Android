@@ -65,14 +65,14 @@
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Остался %1$d час %2$d</item>
         <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="many">%1$d hours %2$d left</item>
+        <item quantity="many">Осталось %1$d часов %2$d</item>
         <item quantity="other">Осталось %1$d часов %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
+        <item quantity="one">Остался %1$d день %2$dh</item>
         <item quantity="few">%1$d days %2$dh left</item>
-        <item quantity="many">%1$d days %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="many">Осталось %1$d дней %2$dh</item>
+        <item quantity="other">Осталось %1$d дней %2$dh</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция пуста</string>
     <string name="no_cards_placeholder_description">Добавляйте карточки\nс помощью значка «+».</string>
