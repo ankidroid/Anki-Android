@@ -90,10 +90,10 @@
     <string name="custom_study_preview_new">Просмотреть новые</string>
     <string name="custom_study_limit_tags">Отфильтровать по меткам</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="few">+%d buried</item>
-        <item quantity="many">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d отложен</item>
+        <item quantity="few">+%d отложено</item>
+        <item quantity="many">+%d отложено</item>
+        <item quantity="other">+%d отложено</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Править запись</string>

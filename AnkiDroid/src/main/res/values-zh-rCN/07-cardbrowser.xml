@@ -71,7 +71,7 @@
     <string name="card_browser_list_my_searches_remove_content">确认删除「%1$s」？</string>
     <string name="card_browser_change_display_order" maxLength="29">改变排序方式</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">搜索</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">搜索</string>
     <string name="card_browser_change_display_order_title">排序方式</string>
     <string name="card_details_tags">标签</string>
     <string-array name="card_browser_order_labels">
