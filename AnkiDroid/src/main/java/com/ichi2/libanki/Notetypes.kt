@@ -31,18 +31,22 @@
 
 package com.ichi2.libanki
 
+import androidx.annotation.CheckResult
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithId
 import anki.notetypes.Notetype
+import anki.notetypes.NotetypeId
 import anki.notetypes.NotetypeNameId
 import anki.notetypes.NotetypeNameIdUseCount
 import anki.notetypes.StockNotetype
+import anki.notetypes.restoreNotetypeToStockRequest
 import com.google.protobuf.ByteString
 import com.ichi2.anki.CrashReportService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
+import com.ichi2.libanki.backend.BackendUtils.fromJsonBytes
 import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.LibAnkiAlias
@@ -774,3 +778,29 @@ fun Collection.getNotetypeNames(): List<NotetypeNameId> = backend.getNotetypeNam
 fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId = backend.addNotetypeLegacy(json = json)
 
 fun Collection.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString = backend.getStockNotetypeLegacy(kind = kind)
+
+fun Collection.getStockNotetype(kind: StockNotetype.Kind): NotetypeJson = NotetypeJson(fromJsonBytes(getStockNotetypeLegacy(kind)))
+
+/**
+ * Restores a notetype to its original stock kind.
+ *
+ * @param notetypeId id of the changed notetype
+ * @param forceKind optional stock kind to be forced instead of the original kind.
+ * Older notetypes did not store their original stock kind, so we allow the UI
+ * to pass in an override to use when missing, or for tests.
+ */
+@CheckResult
+fun Collection.restoreNotetypeToStock(
+    notetypeId: NotetypeId,
+    forceKind: StockNotetype.Kind? = null,
+): OpChanges {
+    val msg =
+        restoreNotetypeToStockRequest {
+            this.notetypeId = notetypeId
+            forceKind?.let { this.forceKind = forceKind }
+        }
+    return backend.restoreNotetypeToStock(msg)
+}
+
+@NotInLibAnki
+fun getStockNotetypeKinds(): List<StockNotetype.Kind> = StockNotetype.Kind.entries.filter { it != StockNotetype.Kind.UNRECOGNIZED }
