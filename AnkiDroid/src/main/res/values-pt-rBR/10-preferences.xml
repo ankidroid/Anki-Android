@@ -369,4 +369,6 @@
     <string name="ignore_display_cutout" maxLength="41">Ignorar recorte da tela</string>
     <string name="hide_answer_buttons" maxLength="41">Ocultar botões de resposta</string>
     <string name="hide_hard_and_easy" maxLength="41">Ocultar botões \"Difícil\" e \"Fácil\"</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

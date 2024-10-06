@@ -60,7 +60,7 @@
         <item quantity="other">%d دقیقه باقیمانده</item>
     </plurals>
     <string name="widget_add_note_button">افزودن یادداشت جدید</string>
-    <string name="deck_picker_widget_description">انتخاب کننده دسته</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">انتخاب کننده دسته</string>
     <string name="card_analysis_extra_widget_description">تحلیل کارت</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">انتخاب دسته ها</string>

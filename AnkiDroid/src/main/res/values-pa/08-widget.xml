@@ -60,7 +60,7 @@
         <item quantity="other">%d ਮਿੰਟ ਬਾਕੀ</item>
     </plurals>
     <string name="widget_add_note_button">ਨਵਾਂ AnkiDroid ਨੋਟ ਸ਼ਾਮਲ ਕਰੋ</string>
-    <string name="deck_picker_widget_description">ਡੈੱਕ ਚੋਣਕਾਰ</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">ਡੈੱਕ ਚੋਣਕਾਰ</string>
     <string name="card_analysis_extra_widget_description">ਕਾਰਡ ਵਿਸ਼ਲੇਸ਼ਣ</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">ਡੇਕ ਚੁਣੋ</string>
