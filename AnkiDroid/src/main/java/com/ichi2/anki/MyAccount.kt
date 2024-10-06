@@ -58,7 +58,7 @@ open class MyAccount : AnkiActivity() {
 
     var toolbar: Toolbar? = null
     private lateinit var passwordLayout: TextInputLayout
-    private lateinit var ankidroidLogo: ImageView
+    private lateinit var loginLogo: ImageView
 
     // if the 'remove account' fragment is open, close it first
     private val onRemoveAccountBackCallback = object : OnBackPressedCallback(false) {
@@ -110,9 +110,9 @@ open class MyAccount : AnkiActivity() {
             switchToState(STATE_LOG_IN)
         }
         if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            ankidroidLogo.visibility = View.GONE
+            loginLogo.visibility = View.GONE
         } else {
-            ankidroidLogo.visibility = View.VISIBLE
+            loginLogo.visibility = View.VISIBLE
         }
         onBackPressedDispatcher.addCallback(this, onRemoveAccountBackCallback)
     }
@@ -181,7 +181,7 @@ open class MyAccount : AnkiActivity() {
             userNameLayout = it.findViewById(R.id.username_layout)
             password = it.findViewById(R.id.password)
             passwordLayout = it.findViewById(R.id.password_layout)
-            ankidroidLogo = it.findViewById(R.id.ankidroid_logo)
+            loginLogo = it.findViewById(R.id.login_logo)
         }
         val loginButton = loginToMyAccountView.findViewById<Button>(R.id.login_button)
         loginToMyAccountView.findViewById<Button>(R.id.privacy_policy_button).apply {
@@ -262,7 +262,7 @@ open class MyAccount : AnkiActivity() {
             findViewById<Button>(R.id.privacy_policy_button).apply {
                 setOnClickListener { openAnkiDroidPrivacyPolicy() }
             }
-            ankidroidLogo = findViewById(R.id.ankidroid_logo)
+            loginLogo = findViewById(R.id.login_logo)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -287,9 +287,9 @@ open class MyAccount : AnkiActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (isScreenSmall && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            ankidroidLogo.visibility = View.GONE
+            loginLogo.visibility = View.GONE
         } else {
-            ankidroidLogo.visibility = View.VISIBLE
+            loginLogo.visibility = View.VISIBLE
         }
     }
 
