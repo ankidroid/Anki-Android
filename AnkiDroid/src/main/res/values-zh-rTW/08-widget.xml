@@ -57,7 +57,7 @@
         <item quantity="other">剩餘 %d 分鐘</item>
     </plurals>
     <string name="widget_add_note_button">新增 AnkiDroid 筆記</string>
-    <string name="deck_picker_widget_description">牌組挑選器</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">牌組挑選器</string>
     <string name="card_analysis_extra_widget_description">卡片分析</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
     <string name="select_decks_title" comment="Title for Deck Selection Dialog">選擇所有卡組</string>

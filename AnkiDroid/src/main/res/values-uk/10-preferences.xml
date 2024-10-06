@@ -376,4 +376,6 @@
     <string name="ignore_display_cutout" maxLength="41">Ігнорувати виріз дисплею</string>
     <string name="hide_answer_buttons" maxLength="41">Приховати кнопки відповіді</string>
     <string name="hide_hard_and_easy" maxLength="41">Приховати кнопки \'Важкий\' і \'Легкий\'</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>

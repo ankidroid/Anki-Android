@@ -375,4 +375,6 @@
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="hide_answer_buttons" maxLength="41">הסתר כפתורי תשובה</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <!--Keyboard shortcuts dialog-->
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
 </resources>
