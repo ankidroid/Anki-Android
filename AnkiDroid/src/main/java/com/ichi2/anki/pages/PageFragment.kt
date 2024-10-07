@@ -54,6 +54,8 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
      */
     protected open fun onCreateWebViewClient(savedInstanceState: Bundle?) = PageWebViewClient()
 
+    protected open fun onWebViewCreated(webView: WebView) { }
+
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         webView = view.findViewById<WebView>(R.id.webview).apply {
@@ -66,6 +68,7 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
             webViewClient = onCreateWebViewClient(savedInstanceState)
             webChromeClient = PageChromeClient()
         }
+        onWebViewCreated(webView)
         requireActivity().setTransparentStatusBar()
         val arguments = requireArguments()
         val path = requireNotNull(arguments.getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }
