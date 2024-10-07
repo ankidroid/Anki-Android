@@ -61,7 +61,15 @@
                     tools:text="54"
                     />
 
-
+                <Chronometer
+                    android:id="@+id/card_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:textSize="14sp"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 

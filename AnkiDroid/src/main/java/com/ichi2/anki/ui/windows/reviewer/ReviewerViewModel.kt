@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.ui.windows.reviewer
 
+import android.os.SystemClock
 import android.text.style.RelativeSizeSpan
 import androidx.core.text.buildSpannedString
 import androidx.core.text.inSpans
@@ -54,6 +55,8 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+
+data class AnswerTimerInfo(val show: Boolean, val limit: Int, val base: Long)
 
 class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     CardViewerViewModel(cardMediaPlayer),
@@ -102,6 +105,11 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         withCol { config.get("estTimes") ?: true }
     }
 
+    val answerTimerInfoFlow = MutableStateFlow<AnswerTimerInfo?>(null)
+
+    private val elapsedRealTime
+        get() = SystemClock.elapsedRealtime()
+
     init {
         ChangeManager.subscribe(this)
         launchCatchingIO {
@@ -142,6 +150,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             while (!statesMutated) {
                 delay(50)
             }
+            stopTimer()
+            answerTimerInfoFlow.emit(null)
             updateNextTimes()
             showAnswerInternal()
             loadAndPlaySounds(CardSide.ANSWER)
@@ -313,6 +323,9 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     override suspend fun showQuestion() {
         super.showQuestion()
         runStateMutationHook()
+
+        startTimer()
+
         if (!autoAdvance.shouldWaitForAudio()) {
             autoAdvance.onShowQuestion()
         } // else run in onSoundGroupCompleted
@@ -371,6 +384,45 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         val card = currentCard.await()
         val isMarkedValue = withCol { card.note(this@withCol).hasTag(this@withCol, MARKED_TAG) }
         isMarkedFlow.emit(isMarkedValue)
+    }
+
+    private suspend fun startTimer() {
+        var card = currentCard.await()
+        var timerLimit = 0
+        var showTimer = false
+        withCol {
+            timerLimit = card.timeLimit(this)
+            showTimer = card.shouldShowTimer(this)
+        }
+        card.startTimer()
+        answerTimerInfoFlow.emit(AnswerTimerInfo(showTimer, timerLimit, elapsedRealTime))
+    }
+
+    suspend fun resumeTimer() {
+        var card = currentCard.await()
+
+        var timerLimit = 0
+        var showTimer = false
+        withCol {
+            timerLimit = card.timeLimit(this)
+            showTimer = card.shouldShowTimer(this)
+        }
+
+        card.resumeTimer()
+
+        if (showTimer) {
+            val newBase = elapsedRealTime - withCol { card.timeTaken(this@withCol) }
+            if (elapsedRealTime - newBase < timerLimit) {
+                answerTimerInfoFlow.emit(AnswerTimerInfo(showTimer, timerLimit, newBase))
+            } else {
+                answerTimerInfoFlow.emit(null)
+            }
+        }
+    }
+
+    suspend fun stopTimer() {
+        var card = currentCard.await()
+        card.stopTimer()
     }
 
     private suspend fun updateCurrentCard() {

@@ -18,12 +18,14 @@ package com.ichi2.anki.ui.windows.reviewer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
+import android.widget.Chronometer
 import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -40,6 +42,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
@@ -76,11 +79,31 @@ class ReviewerFragment :
         anchorView = this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
     }
 
+    private val answerTimer: Chronometer
+        get() = requireView().findViewById<Chronometer>(R.id.card_time)
+
+    override fun onPause() {
+        if (!requireActivity().isChangingConfigurations) {
+            lifecycleScope.launch { viewModel.stopTimer() }
+            answerTimer.stop()
+        }
+        super.onPause()
+    }
+
+    override fun onResume() {
+        if (!requireActivity().isChangingConfigurations && !viewModel.showingAnswer.value) {
+            lifecycleScope.launch { viewModel.resumeTimer() }
+        }
+        super.onResume()
+    }
+
     override fun onStop() {
-        super.onStop()
         if (!requireActivity().isChangingConfigurations) {
             viewModel.stopAutoAdvance()
+            lifecycleScope.launch { viewModel.stopTimer() }
+            answerTimer.stop()
         }
+        super.onStop()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,6 +142,14 @@ class ReviewerFragment :
                 viewModel.onStateMutationCallback()
             }
         }
+
+        viewModel.answerTimerInfoFlow.collectIn(lifecycleScope) { info ->
+            if (info != null) {
+                setupAnswerTimer(info)
+            } else {
+                answerTimer.stop()
+            }
+        }
     }
 
     // TODO
@@ -155,6 +186,22 @@ class ReviewerFragment :
             R.id.user_action_9 -> viewModel.userAction(9)
         }
         return true
+    }
+
+    private fun setupAnswerTimer(info: AnswerTimerInfo) {
+        if (info.show) {
+            answerTimer.setTextColor(MaterialColors.getColor(requireContext(), android.R.attr.textColor, 0))
+            answerTimer.setOnChronometerTickListener { chronometer: Chronometer ->
+                val elapsed: Long = SystemClock.elapsedRealtime() - chronometer.base
+                if (elapsed >= info.limit) {
+                    chronometer.setTextColor(MaterialColors.getColor(requireContext(), R.attr.maxTimerColor, 0))
+                    chronometer.stop()
+                }
+            }
+            answerTimer.isVisible = true
+            answerTimer.base = info.base
+            answerTimer.start()
+        }
     }
 
     private fun setupAnswerButtons(view: View) {
