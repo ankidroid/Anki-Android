@@ -181,6 +181,8 @@
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
     <string name="show_deck_title" maxLength="41">Show deck title</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="set_due_date" maxLength="41">Set due date</string>
+
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
