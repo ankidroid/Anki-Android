@@ -127,6 +127,7 @@ class DeckOptions : PageFragment() {
                 view: WebView?,
                 request: WebResourceRequest?
             ): Boolean {
+                // #16715: ensure that the fragment can't be used for general web browsing
                 val host = request?.url?.host ?: return shouldOverrideUrlLoading(view, request)
                 return if (ankiManualHostRegex.matches(host)) {
                     super.shouldOverrideUrlLoading(view, request)
