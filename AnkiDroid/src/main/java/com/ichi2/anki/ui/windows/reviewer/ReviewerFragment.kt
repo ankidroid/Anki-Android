@@ -38,6 +38,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
@@ -56,12 +58,39 @@ import com.ichi2.anki.previewer.CardViewerFragment
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.windows.reviewer.AnswerTimerInfo.AnswerTimerInactive
+import com.ichi2.anki.ui.windows.reviewer.AnswerTimerInfo.AnswerTimerUpdate
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import kotlinx.coroutines.launch
+
+class AnswerTimerObserver(val answerTimer: Chronometer, val viewModel: ReviewerViewModel) : DefaultLifecycleObserver {
+    override fun onPause(owner: LifecycleOwner) {
+        owner.lifecycleScope.launch { viewModel.stopTimer() }
+        answerTimer.stop()
+
+        super.onPause(owner)
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        if (!viewModel.showingAnswer.value || false == (viewModel.answerTimerInfoFlow.value as? AnswerTimerUpdate)?.stopOnAnswer) {
+            owner.lifecycleScope.launch { viewModel.resumeTimer() }
+        }
+
+        super.onResume(owner)
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        viewModel.stopAutoAdvance()
+        owner.lifecycleScope.launch { viewModel.stopTimer() }
+        answerTimer.stop()
+
+        super.onStop(owner)
+    }
+}
 
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
@@ -81,30 +110,6 @@ class ReviewerFragment :
 
     private val answerTimer: Chronometer
         get() = requireView().findViewById<Chronometer>(R.id.card_time)
-
-    override fun onPause() {
-        if (!requireActivity().isChangingConfigurations) {
-            lifecycleScope.launch { viewModel.stopTimer() }
-            answerTimer.stop()
-        }
-        super.onPause()
-    }
-
-    override fun onResume() {
-        if (!requireActivity().isChangingConfigurations && !viewModel.showingAnswer.value) {
-            lifecycleScope.launch { viewModel.resumeTimer() }
-        }
-        super.onResume()
-    }
-
-    override fun onStop() {
-        if (!requireActivity().isChangingConfigurations) {
-            viewModel.stopAutoAdvance()
-            lifecycleScope.launch { viewModel.stopTimer() }
-            answerTimer.stop()
-        }
-        super.onStop()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -144,12 +149,13 @@ class ReviewerFragment :
         }
 
         viewModel.answerTimerInfoFlow.collectIn(lifecycleScope) { info ->
-            if (info != null) {
-                setupAnswerTimer(info)
-            } else {
-                answerTimer.stop()
+            when (info) {
+                is AnswerTimerUpdate -> setupAnswerTimer(info)
+                is AnswerTimerInactive -> answerTimer.stop()
             }
         }
+
+        lifecycle.addObserver(AnswerTimerObserver(answerTimer, viewModel))
     }
 
     // TODO
@@ -188,20 +194,19 @@ class ReviewerFragment :
         return true
     }
 
-    private fun setupAnswerTimer(info: AnswerTimerInfo) {
-        if (info.show) {
-            answerTimer.setTextColor(MaterialColors.getColor(requireContext(), android.R.attr.textColor, 0))
-            answerTimer.setOnChronometerTickListener { chronometer: Chronometer ->
-                val elapsed: Long = SystemClock.elapsedRealtime() - chronometer.base
-                if (elapsed >= info.limit) {
-                    chronometer.setTextColor(MaterialColors.getColor(requireContext(), R.attr.maxTimerColor, 0))
-                    chronometer.stop()
-                }
+    private fun setupAnswerTimer(info: AnswerTimerUpdate) {
+        answerTimer.setTextColor(MaterialColors.getColor(requireContext(), android.R.attr.textColor, 0))
+        answerTimer.setOnChronometerTickListener { chronometer: Chronometer ->
+            val elapsed: Long = SystemClock.elapsedRealtime() - chronometer.base
+            if (elapsed >= info.limit) {
+                chronometer.setTextColor(MaterialColors.getColor(requireContext(), R.attr.maxTimerColor, 0))
+                chronometer.stop()
             }
-            answerTimer.isVisible = true
-            answerTimer.base = info.base
-            answerTimer.start()
         }
+
+        answerTimer.isVisible = true
+        answerTimer.base = info.base
+        answerTimer.start()
     }
 
     private fun setupAnswerButtons(view: View) {
