@@ -54,6 +54,7 @@ TODO: Add a unit test
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_schedule_card_key"
             tools:title="Set due date"
+            android:title="@string/set_due_date"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="2"

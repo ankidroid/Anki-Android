@@ -130,6 +130,7 @@
         <com.ichi2.preferences.ControlPreference
             android:key="@string/reschedule_command_key"
             tools:title="Set due date"
+            android:title="@string/set_due_date"
             android:icon="@drawable/ic_reschedule"
             />
         <com.ichi2.preferences.ControlPreference
