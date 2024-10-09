@@ -30,7 +30,7 @@ def robolectricAndroidSdkVersions = [
         [androidVersion: "11", frameworkSdkBuildVersion:  "6757853"],
 //        [androidVersion: "12", frameworkSdkBuildVersion:  "7732740"],
 //        [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
-        [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
+//        [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
         [androidVersion: "14", frameworkSdkBuildVersion: "10818077"],
 ]
 
@@ -42,7 +42,7 @@ tasks.register('robolectricSdkDownload') {
 
 // Generate the configuration and actual copy tasks.
 robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
-    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i4"
+    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i6"
 
     // Creating a configuration with a dependency allows Gradle to manage the actual resolution of
     // the jar file
