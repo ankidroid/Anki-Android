@@ -59,6 +59,7 @@ open class MyAccount : AnkiActivity() {
     var toolbar: Toolbar? = null
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var loginLogo: ImageView
+    private lateinit var loggedInLogo: ImageView
 
     // if the 'remove account' fragment is open, close it first
     private val onRemoveAccountBackCallback = object : OnBackPressedCallback(false) {
@@ -111,8 +112,10 @@ open class MyAccount : AnkiActivity() {
         }
         if (isScreenSmall && this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             loginLogo.visibility = View.GONE
+            loggedInLogo.visibility = View.GONE
         } else {
             loginLogo.visibility = View.VISIBLE
+            loggedInLogo.visibility = View.VISIBLE
         }
         onBackPressedDispatcher.addCallback(this, onRemoveAccountBackCallback)
     }
@@ -262,7 +265,7 @@ open class MyAccount : AnkiActivity() {
             findViewById<Button>(R.id.privacy_policy_button).apply {
                 setOnClickListener { openAnkiDroidPrivacyPolicy() }
             }
-            loginLogo = findViewById(R.id.login_logo)
+            loggedInLogo = findViewById(R.id.login_logo)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -288,8 +291,10 @@ open class MyAccount : AnkiActivity() {
         super.onConfigurationChanged(newConfig)
         if (isScreenSmall && newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             loginLogo.visibility = View.GONE
+            loggedInLogo.visibility = View.GONE
         } else {
             loginLogo.visibility = View.VISIBLE
+            loggedInLogo.visibility = View.VISIBLE
         }
     }
 
