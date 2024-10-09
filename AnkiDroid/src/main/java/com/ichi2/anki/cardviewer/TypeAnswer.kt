@@ -45,6 +45,9 @@ class TypeAnswer(
     var correct: String? = null
         private set
 
+    var combining: Boolean = true
+        private set
+
     /** What the learner actually typed (externally mutable) */
     var input = ""
 
@@ -85,6 +88,7 @@ class TypeAnswer(
      * @param card The next card to display
      */
     fun updateInfo(col: Collection, card: Card, res: Resources) {
+        combining = true
         correct = null
         val q = card.question(col)
         val m = PATTERN.matcher(q)
@@ -97,6 +101,10 @@ class TypeAnswer(
         if (fldTag.startsWith("cloze:")) {
             // get field and cloze position
             clozeIdx = card.ord + 1
+            fldTag = fldTag.split(":").toTypedArray()[1]
+        }
+        if (fldTag.startsWith("nc:")) {
+            combining = false
             fldTag = fldTag.split(":").toTypedArray()[1]
         }
         // loop through fields for a match
@@ -197,7 +205,7 @@ class TypeAnswer(
         val sb = StringBuilder()
         fun append(@Language("HTML") html: String) = sb.append(html)
 
-        val comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer)
+        val comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer, combining)
         append(Matcher.quoteReplacement(comparisonText))
         return m.replaceAll(sb.toString())
     }
