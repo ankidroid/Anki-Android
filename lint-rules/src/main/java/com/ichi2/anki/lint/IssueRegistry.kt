@@ -61,7 +61,9 @@ class IssueRegistry : IssueRegistry() {
                 NonPositionalFormatSubstitutions.ISSUE,
                 TranslationTypo.ISSUE,
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
+                FixedPreferencesTitleLength.MENU_ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
+                FixedPreferencesTitleLength.MENU_ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,
                 InvalidStringFormatDetector.ISSUE,
                 AvoidAlertDialogUsage.ISSUE
