@@ -20,11 +20,8 @@ import android.content.Intent
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.preference.ListPreference
 import androidx.preference.Preference
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
-import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
@@ -55,15 +52,6 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                 negativeButton(R.string.dialog_cancel)
             }
             true
-        }
-        setDynamicTitle()
-    }
-
-    private fun setDynamicTitle() {
-        findPreference<ListPreference>(getString(R.string.custom_button_schedule_card_key))?.let {
-            val preferenceTitle = TR.actionsSetDueDate().toSentenceCase(this, R.string.sentence_set_due_date)
-            it.title = preferenceTitle
-            it.dialogTitle = preferenceTitle
         }
     }
 
