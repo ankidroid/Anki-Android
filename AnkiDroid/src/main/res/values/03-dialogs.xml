@@ -87,6 +87,7 @@
     <string name="dialog_positive_overwrite">Overwrite</string>
     <string name="dialog_positive_repair">Repair</string>
     <string name="dialog_positive_replace">Replace</string>
+    <string name="dialog_go_to_setting">Go to setting</string>
 
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
@@ -222,6 +223,7 @@
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
+    <string name="InvalidClockDialog">Your clock is currently set to:</string>
 
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
