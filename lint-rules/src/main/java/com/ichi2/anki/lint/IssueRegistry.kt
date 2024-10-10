@@ -60,8 +60,8 @@ class IssueRegistry : IssueRegistry() {
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
                 TranslationTypo.ISSUE,
-                FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
-                FixedPreferencesTitleLength.ISSUE_TITLE_LENGTH,
+                FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
+                FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
                 VariableNamingDetector.ISSUE,
                 InvalidStringFormatDetector.ISSUE,
                 AvoidAlertDialogUsage.ISSUE
