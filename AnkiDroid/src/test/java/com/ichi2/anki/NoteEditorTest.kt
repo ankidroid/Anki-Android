@@ -198,7 +198,7 @@ class NoteEditorTest : RobolectricTest() {
         }
     }
 
-    @Test()
+    @Test
     fun testHandleMultimediaActionsDisplaysBottomSheet() {
         val intent = NoteEditorLauncher.AddNote().getIntent(targetContext)
         ActivityScenario.launchActivityForResult<SingleFragmentActivity>(intent).use { scenario ->

@@ -14,8 +14,6 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@file:Suppress("FunctionName")
-
 package com.ichi2.libanki.backend
 
 import com.google.protobuf.ByteString

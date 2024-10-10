@@ -43,9 +43,9 @@ class CardTest : JvmTest() {
         col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())
         assertEquals(0, col.noteCount())
-        assertEquals(0, col.db.queryScalar("select count() from notes"))
-        assertEquals(0, col.db.queryScalar("select count() from cards"))
-        assertEquals(2, col.db.queryScalar("select count() from graves"))
+        assertEquals(0, col.db.queryScalar("select count(*) from notes"))
+        assertEquals(0, col.db.queryScalar("select count(*) from cards"))
+        assertEquals(2, col.db.queryScalar("select count(*) from graves"))
     }
 
     @Test

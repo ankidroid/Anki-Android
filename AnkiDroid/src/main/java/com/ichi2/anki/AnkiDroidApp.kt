@@ -80,7 +80,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
     private var webViewError: Throwable? = null
     private val notifications = MutableLiveData<Void?>()
 
-    lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
+    private lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
     val sharedPrefsLastDeckIdRepository = SharedPreferencesLastDeckIdRepository()
 
     /** Used to avoid showing extra progress dialogs when one already shown. */

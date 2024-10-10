@@ -6,6 +6,7 @@ import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.ByteArrayOutputStream
 import kotlin.math.max
+import kotlin.system.exitProcess
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -99,7 +100,7 @@ if (jvmVersion != "17" && jvmVersion != "21") {
     println("**************************************************************************************************************")
     println("\n\n\n")
     println("ERROR: AnkiDroid builds with JVM version 17 or 21.")
-    println("  Incompatible major version detected: '" + jvmVersion + "'")
+    println("  Incompatible major version detected: '$jvmVersion'")
     println("\n\n\n")
     println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
     println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
@@ -107,7 +108,7 @@ if (jvmVersion != "17" && jvmVersion != "21") {
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
-    System.exit(1)
+    exitProcess(1)
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // works for Travis CI or Github Actions

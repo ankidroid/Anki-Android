@@ -45,7 +45,6 @@ import java.util.Locale
  * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
  * this may be extended to all operations at a later date.
  */
-@Suppress("unused")
 public class AddContentApi(context: Context) {
     private val context: Context = context.applicationContext
     private val resolver: ContentResolver = this.context.contentResolver
@@ -427,7 +426,7 @@ public class AddContentApi(context: Context) {
      * Get a map of all model ids and names
      * @return map of (id, name) pairs
      */
-    public val modelList: Map<Long, String>?
+    private val modelList: Map<Long, String>?
         get() = getModelList(1)
 
     /**
@@ -435,7 +434,7 @@ public class AddContentApi(context: Context) {
      * @param minNumFields minimum number of fields to consider the model for inclusion
      * @return map of (id, name) pairs or null if there was a problem
      */
-    public fun getModelList(minNumFields: Int): Map<Long, String>? {
+    private fun getModelList(minNumFields: Int): Map<Long, String>? {
         // Get the current model
         val allModelsQuery =
             resolver.query(Model.CONTENT_URI, null, null, null, null)
@@ -505,7 +504,7 @@ public class AddContentApi(context: Context) {
      * Get a list of all the deck id / name pairs
      * @return Map of (id, name) pairs, or null if there was a problem
      */
-    public val deckList: Map<Long, String>?
+    private val deckList: Map<Long, String>?
         get() {
             // Get the current model
             val allDecksQuery =
@@ -542,7 +541,7 @@ public class AddContentApi(context: Context) {
      *
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
-    public val apiHostSpecVersion: Int
+    private val apiHostSpecVersion: Int
         @SuppressLint("WrongConstant") // ComponentInfoFlags bug: GET_META_DATA.toLong() was invalid
         get() {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)

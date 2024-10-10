@@ -418,7 +418,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         override fun containsItem(id: Long): Boolean {
-            @Suppress("ConvertTwoComparisonsToRangeCheck") // more readable without the range check
             return (id - baseId < itemCount) && (id - baseId >= 0)
         }
 
@@ -630,7 +629,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
-        @Suppress("unused")
         private fun insertField(fieldName: String) {
             val start = max(editorEditText.selectionStart, 0)
             val end = max(editorEditText.selectionEnd, 0)

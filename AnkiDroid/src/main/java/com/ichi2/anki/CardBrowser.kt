@@ -1950,7 +1950,7 @@ open class CardBrowser :
         private val fontSizeScalePcent: Int
     ) : BaseAdapter() {
         private var originalTextSize = -1.0f
-        private val inflater: LayoutInflater
+        private val inflater: LayoutInflater = LayoutInflater.from(context)
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
             val v: View
@@ -2045,10 +2045,6 @@ open class CardBrowser :
 
         override fun getItemId(position: Int): Long {
             return position.toLong()
-        }
-
-        init {
-            inflater = LayoutInflater.from(context)
         }
     }
 

@@ -136,7 +136,6 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
                 return null
             }
 
-            @Suppress("unused")
             @KotlinCleanup("maybe remove this")
             val deckPreferenceHack: AbstractPreferenceHack
                 get() = this@AbstractPreferenceHack
