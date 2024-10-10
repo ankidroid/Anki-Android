@@ -27,7 +27,6 @@ TODO: Add a unit test
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/custom_buttons"
     android:key="@string/pref_app_bar_buttons_screen_key">
     <Preference
@@ -53,7 +52,7 @@ TODO: Add a unit test
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_schedule_card_key"
-            tools:title="Set due date"
+            android:title="@string/card_editor_reschedule_card"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="2"
