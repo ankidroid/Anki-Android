@@ -1675,10 +1675,10 @@ eslint-plugin-import@^2.31.0:
     string.prototype.trimend "^1.0.8"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-n@^17.11.0:
-  version "17.11.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-n/-/eslint-plugin-n-17.11.0.tgz#43458d2f12b07af93d7da93d3b922c806658c083"
-  integrity sha512-ayH6N5BjvYW6c5Sz3DcoICe3c54BTfgfkOPBh57Lhir0D8IYEemARp3uQzmqyt1rwFBg7JlvRbNFr640h278VQ==
+eslint-plugin-n@^17.11.1:
+  version "17.11.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-n/-/eslint-plugin-n-17.11.1.tgz#c5eeabef598e20751b4dcf31b64e69eb3ee9ae6b"
+  integrity sha512-93IUD82N6tIEgjztVI/l3ElHtC2wTa9boJHrD8iN+NyDxjxz/daZUZKfkedjBZNdg6EqDk4irybUsiPwDqXAEA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.4.0"
     enhanced-resolve "^5.17.0"
