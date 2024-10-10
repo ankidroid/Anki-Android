@@ -314,14 +314,10 @@ this formatter is used if the bind only applies to both the question and the ans
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41"
-        >Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41"
-        >Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41"
-        >Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41"
-        >Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
 
     <!-- #######################################################################################
          ################################# Manage space activity ###############################

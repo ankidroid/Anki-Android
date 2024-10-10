@@ -39,15 +39,15 @@
     <string name="updated_version">Updated to version %s</string>
 
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="save_whiteboard" maxLength="41">Save whiteboard</string>
+    <string name="enable_stylus" maxLength="41">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="enable_whiteboard">Enable whiteboard</string>
+    <string name="enable_whiteboard" maxLength="41">Enable whiteboard</string>
     <string name="disable_whiteboard">Disable whiteboard</string>
     <string name="show_whiteboard">Show whiteboard</string>
-    <string name="hide_whiteboard">Hide whiteboard</string>
-    <string name="clear_whiteboard">Clear whiteboard</string>
-    <string name="replay_audio">Replay audio</string>
+    <string name="hide_whiteboard" maxLength="41">Hide whiteboard</string>
+    <string name="clear_whiteboard" maxLength="41">Clear whiteboard</string>
+    <string name="replay_audio" maxLength="41">Replay audio</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="webview_crash_unknown">Unknown error</string>
@@ -59,7 +59,7 @@
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
 
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags" maxLength="41">Flags</string>
 
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
@@ -74,7 +74,7 @@
     </plurals>
 
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit note</string>
+    <string name="cardeditor_title_edit_card" maxLength="41">Edit note</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
@@ -153,9 +153,9 @@
     <string name="export_choice_save_to">Save to</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Options</string>
-    <string name="menu__deck_options">Deck options</string>
+    <string name="menu__deck_options" maxLength="41">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Set TTS language</string>
+    <string name="select_tts" maxLength="41">Set TTS language</string>
     <string name="custom_study">Custom study</string>
     <string name="more_options">More</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
@@ -179,8 +179,8 @@
     <string name="web_page_error">Error loading page: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Select image</string>
+    <string name="background_image_title" maxLength="41">Background</string>
+    <string name="choose_an_image" maxLength="41">Select image</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
@@ -191,8 +191,8 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
 
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor" maxLength="41">Whiteboard editor</string>
 
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
 
