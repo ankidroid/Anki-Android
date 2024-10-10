@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -86,7 +85,8 @@
         <FrameLayout
             android:id="@+id/buttons_area"
             android:layout_width="0dp"
-            android:layout_height="@dimen/touch_target"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/touch_target"
             android:layout_marginTop="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/webview_container"
@@ -115,7 +115,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/again_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:text="@string/ease_button_again"
                     android:backgroundTint="@color/again_button_bg"
                     android:textColor="@color/again_button_text"
@@ -130,7 +130,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/hard_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:text="@string/ease_button_hard"
                     android:backgroundTint="@color/hard_button_bg"
                     android:textColor="@color/hard_button_text"
@@ -145,7 +145,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/good_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:text="@string/ease_button_good"
                     android:backgroundTint="@color/good_button_bg"
                     android:textColor="@color/good_button_text"
@@ -160,7 +160,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/easy_button"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:padding="0dp"
                     android:text="@string/ease_button_easy"
                     android:backgroundTint="@color/easy_button_bg"
