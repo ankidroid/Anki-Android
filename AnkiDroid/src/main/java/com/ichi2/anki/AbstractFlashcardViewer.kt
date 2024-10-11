@@ -2341,6 +2341,19 @@ abstract class AbstractFlashcardViewer :
                 }
                 return true
             }
+            if (url.startsWith("missing-user-action:")) {
+                val actionNumber = url.substringAfter(":")
+                val message = getString(R.string.missing_user_action_dialog_message, actionNumber)
+                AlertDialog.Builder(this@AbstractFlashcardViewer).show {
+                    setTitle(R.string.vague_error)
+                    setMessage(message)
+                    setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                    setNeutralButton(R.string.help) { _, _ ->
+                        openUrl(R.string.link_user_actions_help)
+                    }
+                }
+                return true
+            }
             if (url.startsWith("videoended:")) {
                 // note: 'q:0' is provided
                 cardMediaPlayer.onVideoFinished()
