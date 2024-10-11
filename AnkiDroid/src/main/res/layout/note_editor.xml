@@ -36,8 +36,9 @@
                     android:orientation="horizontal" >
                     <com.ichi2.ui.FixedTextView
                         android:id="@+id/CardEditorModelText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dip"
                         android:layout_marginRight="8dip"
@@ -47,8 +48,9 @@
                         android:text="@string/CardEditorModel" />
                     <Spinner
                         android:id="@+id/note_type_spinner"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/touch_target"
+                        android:layout_weight="0.7"
                         />
                 </LinearLayout>
 
@@ -59,19 +61,23 @@
                     android:orientation="horizontal" >
                     <com.ichi2.ui.FixedTextView
                         android:id="@+id/CardEditorDeckText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dip"
                         android:layout_marginRight="8dip"
                         android:clickable="false"
+                        android:singleLine="false"
                         android:gravity="start|center_vertical"
                         android:textStyle="bold"
                         android:text="@string/CardEditorNoteDeck" />
                     <Spinner
                         android:id="@+id/note_deck_spinner"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target"
+                        android:layout_weight="0.7"
                         app:popupTheme="@style/ActionBar.Popup"/>
                 </LinearLayout>
 
