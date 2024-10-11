@@ -24,10 +24,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.themes.setTransparentStatusBar
@@ -56,7 +59,7 @@ data class MultimediaActivityExtra(
 /**
  * Multimedia activity that allows users to attach media files to an input field in NoteEditor.
  */
-class MultimediaActivity : AnkiActivity() {
+class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
 
     private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
         get() = extras?.getSerializableCompat(MULTIMEDIA_ARGS_EXTRA)
@@ -99,6 +102,17 @@ class MultimediaActivity : AnkiActivity() {
             Timber.d("MultimediaActivity:: Back pressed")
             onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    override val baseSnackbarBuilder: SnackbarBuilder = {
+        // if action_done exists in a fragment, use that as the anchor view
+
+        // This is a minor hack architecturally: AudioRecordingController should request that
+        // the host fragment/activity opens a snackbar, so the activity doesn't need knowledge
+        // of the layout of its hosted fragments
+
+        // If this doesn't work, anchorView remains null
+        anchorView = findViewById<MaterialButton>(R.id.action_done)
     }
 
     companion object {
