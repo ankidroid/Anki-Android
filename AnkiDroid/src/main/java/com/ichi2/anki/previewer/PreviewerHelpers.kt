@@ -73,8 +73,8 @@ fun stdHtml(
                 <html class="$docClass" dir="$languageDirectionality" data-bs-theme="$baseTheme">
                 <head>
                     <title>AnkiDroid</title>
-                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/root-vars.css">
-                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/web/reviewer.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/css/root-vars.css">
+                        <link rel="stylesheet" type="text/css" href="file:///android_asset/backend/css/reviewer.css">
                         <link rel="stylesheet" type="text/css" href="file:///android_asset/ankidroid.css">
                     <style>
                         .night-mode button { --canvas: #606060; --fg: #eee; }
@@ -85,11 +85,11 @@ fun stdHtml(
                     <div id="_mark" hidden>&#x2605;</div>
                     <div id="_flag" hidden>&#x2691;</div>
                     <div id="qa"></div>
-                    <script src="file:///android_asset/backend/web/jquery.min.js"></script>
-                    <script src="file:///android_asset/backend/web/mathjax.js"></script>
-                    <script src="file:///android_asset/backend/web/vendor/mathjax/tex-chtml-full.js"></script>
+                    <script src="file:///android_asset/backend/js/jquery.min.js"></script>
+                    <script src="file:///android_asset/backend/js/mathjax.js"></script>
+                    <script src="file:///android_asset/backend/js/vendor/mathjax/tex-chtml-full.js"></script>
                     <script src="file:///android_asset/scripts/ankidroid.js"></script>
-                    <script src="file:///android_asset/backend/web/reviewer.js"></script>
+                    <script src="file:///android_asset/backend/js/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>
                 </body>
                 </html>
