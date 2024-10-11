@@ -49,7 +49,7 @@ class ViewerResourceHandler(context: Context) {
         try {
             if (path.startsWith(MATHJAX_PATH_PREFIX)) {
                 val mathjaxAssetPath = Paths.get(
-                    "backend/web/vendor/mathjax",
+                    "backend/js/vendor/mathjax",
                     path.removePrefix(MATHJAX_PATH_PREFIX)
                 ).pathString
                 val inputStream = assetManager.open(mathjaxAssetPath)
