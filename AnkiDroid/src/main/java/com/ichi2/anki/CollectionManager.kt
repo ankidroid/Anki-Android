@@ -408,11 +408,16 @@ object CollectionManager {
 
     enum class CollectionOpenFailure {
         /** Raises [BackendException.BackendDbException.BackendDbLockedException] */
-        LOCKED;
+        LOCKED,
+
+        /** Raises [BackendException.BackendFatalError] */
+        FATAL_ERROR
+        ;
 
         fun triggerFailure() {
             when (this) {
                 LOCKED -> throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
+                FATAL_ERROR -> throw BackendException.BackendFatalError(backendError {})
             }
         }
     }
