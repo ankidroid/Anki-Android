@@ -36,6 +36,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
+import com.ichi2.anki.Reviewer
+import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaViewModel
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.AppendToRecording
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.RecordingState.ImmediatePlayback
@@ -60,6 +62,9 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 // TODO : stop audio time view flickering
+/**
+ * This may be hosted in the [Reviewer], or in a [AudioVideoFragment]
+ */
 class AudioRecordingController(
     val context: Context,
     val linearLayout: LinearLayout? = null,
