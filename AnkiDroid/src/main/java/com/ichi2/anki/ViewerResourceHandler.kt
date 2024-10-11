@@ -25,10 +25,14 @@ import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.nio.file.Paths
+import kotlin.io.path.pathString
 
 private const val RANGE_HEADER = "Range"
+private const val MATHJAX_PATH_PREFIX = "/_anki/js/vendor/mathjax"
 
 class ViewerResourceHandler(context: Context) {
+    private val assetManager = context.assets
     private val mediaDir = CollectionHelper.getMediaDirectory(context)
 
     fun shouldInterceptRequest(request: WebResourceRequest): WebResourceResponse? {
@@ -43,6 +47,15 @@ class ViewerResourceHandler(context: Context) {
         }
 
         try {
+            if (path.startsWith(MATHJAX_PATH_PREFIX)) {
+                val mathjaxAssetPath = Paths.get(
+                    "backend/web/vendor/mathjax",
+                    path.removePrefix(MATHJAX_PATH_PREFIX)
+                ).pathString
+                val inputStream = assetManager.open(mathjaxAssetPath)
+                return WebResourceResponse(guessMimeType(path), null, inputStream)
+            }
+
             val file = File(mediaDir, path)
             if (!file.exists()) {
                 return null
