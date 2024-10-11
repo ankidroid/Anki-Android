@@ -21,13 +21,11 @@ import com.ichi2.testutils.AnkiDroidAppWithFatalError
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import kotlin.test.Ignore
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = AnkiDroidAppWithFatalError::class)
 class AnkiDroidAppFailureTest : RobolectricTest() {
     @Test
-    @Ignore("#16963")
     fun `fatal error does not crash onCreate`() {
     }
 }
