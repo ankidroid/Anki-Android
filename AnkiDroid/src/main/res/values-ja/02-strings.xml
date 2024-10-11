@@ -90,7 +90,7 @@
     <string name="custom_study_preview_new">新規カードを予習</string>
     <string name="custom_study_limit_tags">タグで抽出して学習</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="other">+%d buried</item>
+        <item quantity="other">+%d 今日は非表示</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ノートを編集</string>
@@ -339,18 +339,18 @@
     <string name="orphan_note_message">このカードタイプを削除すると、カードが無いノートが生じます。</string>
     <string name="voice_not_supported">読み上げ音声がサポートされていません。別の音声を試すか、音声エンジンをインストールしてください。</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">キーボードショートカットを表示</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">デッキリスト</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">デッキを削除（確認なし）</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ノート編集画面</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">デッキを選択</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">ノートタイプを選択</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">タグを編集</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">カードテンプレートエディタ</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">表面テンプレートを編集</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">裏面テンプレートを編集</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">スタイルを編集</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">テンプレートをMarkdowin形式でコピー</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">カードブラウザ用の表示設定を編集</string>
+    <string name="show_shortcuts_message">キーボードショートカットを表示するには [Alt]+[K] を押してください</string>
 </resources>

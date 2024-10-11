@@ -63,7 +63,7 @@
         <item quantity="other">%1$d시간 %2$d분 남음</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d일 %2$d시간 남음</item>
     </plurals>
     <string name="no_cards_placeholder_title">이 컬렉션은 비어 있습니다</string>
     <string name="no_cards_placeholder_description">＋아이콘을 눌러 \n카드를 추가해 주십시오</string>

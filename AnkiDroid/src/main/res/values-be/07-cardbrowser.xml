@@ -79,8 +79,8 @@
     <string name="no_note_to_edit">Няма нататак для рэдагавання</string>
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
     <string name="card_browser_change_display_order" maxLength="29">Змяніць парадак адлюстравання</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Пошук</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Пошук</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>
     <string name="card_details_tags">Меткі</string>
     <string-array name="card_browser_order_labels">
@@ -124,6 +124,6 @@
         <item quantity="other">Выдалены %d картак</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Рэдагаваць дыялогавае акно з тэгамі</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Паказаць дыялогавае акно заказу</string>
 </resources>

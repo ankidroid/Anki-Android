@@ -235,7 +235,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">フィルター</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">抽出条件</string>
     <string name="deck_conf_cram_limit" maxLength="41">抽出件数の上限</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">抽出の順序</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">スケジュールを変更</string>
     <string name="deck_conf_cram_reschedule_summ">回答結果を元のデッキでのスケジュールに反映させます</string>
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
@@ -367,5 +367,5 @@
     <string name="hide_answer_buttons" maxLength="41">解答ボタン・回答ボタンを隠す</string>
     <string name="hide_hard_and_easy" maxLength="41">「難しい」ボタンと「簡単」ボタンを隠す</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">設定画面を開く</string>
 </resources>

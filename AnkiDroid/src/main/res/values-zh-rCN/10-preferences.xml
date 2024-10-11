@@ -367,5 +367,5 @@
     <string name="hide_answer_buttons" maxLength="41">隐藏回答按钮</string>
     <string name="hide_hard_and_easy" maxLength="41">隐藏“困难”和“简单”按钮</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">打开设置</string>
 </resources>

@@ -68,7 +68,7 @@
     <string name="answering_error_title">데이터베이스 오류</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">오류 보고하기</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">AnkiDroid를 열 저장 공간이 부족합니다. 계속하려면 여유 공간을 확보하세요.</string>
     <string name="repair_deck_dialog">데이터베이스를 복구하시겠습니까?\n\n 복구를 시작하기 전에 지정된 하위폴더에 복사본 파일이 저장됩니다\'%s\'.</string>
     <string name="intent_aedict_empty">\'기본값\' 카테고리가 비어 있습니다</string>
     <string name="intent_aedict_category">AnkiDroid에 카드를 추가하기 위해 모든 메모장 범주 삭제 또는 \'기본값\'으로 지정하기</string>
@@ -81,22 +81,22 @@
     <string name="custom_study_random">카드 묶음으로부터 x개의 카드를 무작위로 고르기:</string>
     <string name="custom_study_preview">최근 x일 내에 추가된 카드를 미리 학습하기:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">저장 공간이 가득 찼습니다.</string>
+    <string name="storage_almost_full_title">저장공간이 거의 가득 찼습니다.</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">빈 공간 없음</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
     <string name="restore_backup_title">백업을 복원할까요?</string>
     <string name="restore_backup">컬렉션이 기존의 것으로 대체됩니다. 저장되지 않은 모든 작업은 손실됩니다.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">다른 항목 선택</string>
     <string name="dialog_cancel">취소</string>
     <string name="dialog_ok">확인</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">확인</string>
     <string name="dialog_no">아니요</string>
     <string name="dialog_yes">예</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">취소</string>
+    <string name="dialog_remove">제거</string>
     <string name="dialog_continue">계속하기</string>
-    <string name="dialog_processing">Processing&#8230;</string>
+    <string name="dialog_processing">처리 중&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">만들기</string>
     <string name="dialog_positive_delete">삭제</string>
     <!-- Currently unsued, should be useful in the future -->
@@ -187,19 +187,19 @@
     <string name="help_item_support_develop_ankidroid">개발 지원하기</string>
     <string name="help_item_support_rate_ankidroid">평가하기</string>
     <string name="help_item_support_other_ankidroid">기타</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">번역</string>
     <string name="help_title_community">커뮤니티</string>
     <string name="help_item_anki_forums">Anki 포럼</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
+    <string name="help_title_privacy">개인 정보 보호</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid 개인 정보 보호 정책</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb 개인 정보 보호 정책</string>
+    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb 이용 약관</string>
     <string name="help_title_send_exception">문제 해결 보고서 보내기</string>
     <string name="help_dialog_exception_report_debounce">이미 제출한 보고서입니다.</string>
-    <string name="help_dialog_exception_report_sent">Report was sent!</string>
+    <string name="help_dialog_exception_report_sent">제출되었습니다!</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d초 안에 자동으로 동기화될 수 있습니다.</item>

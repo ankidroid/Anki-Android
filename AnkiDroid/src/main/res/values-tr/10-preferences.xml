@@ -369,5 +369,5 @@
     <string name="hide_answer_buttons" maxLength="41">Cevap düğmelerini gizle</string>
     <string name="hide_hard_and_easy" maxLength="41">\"Zor\" ve \"Kolay\" düğmelerini gizle</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Ayarları aç</string>
 </resources>
