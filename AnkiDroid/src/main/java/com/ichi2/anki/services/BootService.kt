@@ -69,7 +69,9 @@ class BootService : BroadcastReceiver() {
         // getInstance().getColSafe
         return try {
             CollectionManager.getColUnsafe()
-        } catch (e: Error) { // java.lang.UnsatisfiedLinkError occurs in tests
+        } catch (e: Throwable) { // Error and Exception paths are the same, so catch Throwable
+            // BackendException.BackendFatalError is a RuntimeException
+            // java.lang.UnsatisfiedLinkError occurs in tests
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
             null
         }
