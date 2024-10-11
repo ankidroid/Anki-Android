@@ -85,8 +85,9 @@ fun stdHtml(
                     <div id="_mark" hidden>&#x2605;</div>
                     <div id="_flag" hidden>&#x2691;</div>
                     <div id="qa"></div>
-                    <script src="file:///android_asset/jquery.min.js"></script>
-                    <script src="file:///android_asset/mathjax/tex-chtml.js"></script>
+                    <script src="file:///android_asset/backend/web/jquery.min.js"></script>
+                    <script src="file:///android_asset/backend/web/mathjax.js"></script>
+                    <script src="file:///android_asset/backend/web/vendor/mathjax/tex-chtml-full.js"></script>
                     <script src="file:///android_asset/scripts/ankidroid.js"></script>
                     <script src="file:///android_asset/backend/web/reviewer.js"></script>
                     <script>bridgeCommand = function(){};</script>

@@ -69,8 +69,8 @@ class AndroidCardRenderContext(
         val script = when (requiresMathjax) {
             false -> ""
             true ->
-                """        <script src="file:///android_asset/mathjax/conf.js"></script>
-        <script src="file:///android_asset/mathjax/tex-chtml.js"></script>"""
+                """        <script src="file:///android_asset/backend/web/mathjax.js"></script>
+        <script src="file:///android_asset/backend/web/vendor/mathjax/tex-chtml-full.js"></script>"""
         }
         val cardClass = cardAppearance.getCardClass(ord + 1) + if (requiresMathjax) " mathjax-needs-to-render" else ""
 
