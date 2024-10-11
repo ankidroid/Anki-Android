@@ -24,7 +24,6 @@ import android.text.format.Formatter
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
@@ -57,6 +56,8 @@ import java.io.File
  * including caching directories, managing fields and notes, and setting toolbar titles.
  *
  * @param layout The layout resource ID to be inflated by this fragment.
+ *
+ * @see MultimediaActivity
  */
 abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
 
