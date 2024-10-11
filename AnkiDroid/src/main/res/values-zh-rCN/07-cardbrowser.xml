@@ -106,6 +106,6 @@
         <item quantity="other">%d 张卡片已删除</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">编辑标签对话框</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">显示排序对话框</string>
 </resources>

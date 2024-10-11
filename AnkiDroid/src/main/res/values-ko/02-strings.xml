@@ -61,7 +61,7 @@
     <string name="no_tags">아직 추가된 태그가 없습니다.</string>
     <string name="updated_version">버전 %s로 업데이트됨</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">칠판 저장</string>
+    <string name="save_whiteboard">화이트보드 저장</string>
     <string name="enable_stylus">스타일러스 쓰기 켜기</string>
     <string name="disable_stylus">스타일러스 쓰기 끄기</string>
     <string name="enable_whiteboard">화이트보드 활성화</string>
@@ -72,7 +72,7 @@
     <string name="replay_audio">오디오 다시 재생</string>
     <string name="leech_suspend_notification">해당 카드에 leech 태그를 붙이고 비활성 시킴</string>
     <string name="leech_notification">해당 카드에 leech 태그를 붙임</string>
-    <string name="webview_crash_unknown">알수없는 오류</string>
+    <string name="webview_crash_unknown">알 수 없는 오류</string>
     <string name="webview_crash_unknwon_detailed">WebView의 내부적인 오류입니다.</string>
     <string name="webview_crash_oom">메모리 부족</string>
     <string name="webview_crash_oom_details">WebView이 시스템에 의해 강제종료 되었습니다. 보통 용랑이 큰 사진, 음성, 글꼴 등 미디어 파일 때문에 메모리가 부족해서 이런 일이 생길 수 있습니다.</string>
@@ -353,7 +353,7 @@ Context | Request Context    [1]</string>
     <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
     <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
     <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">마크다운으로 템플릿 복사</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="show_shortcuts_message">키보드 단축키를 보려면 Alt + K를 누르세요.</string>
 </resources>

@@ -84,7 +84,7 @@
     <string name="answer_good">回答 (正解)</string>
     <string name="answer_easy">回答 (簡単)</string>
     <string name="gesture_play">音声・動画を再生</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
+    <string name="gesture_abort_learning">学習画面を閉じる</string>
     <string name="gesture_flag_red">レッドフラグを付ける / 取りはずす</string>
     <string name="gesture_flag_orange">オレンジフラグを付ける / 取りはずす</string>
     <string name="gesture_flag_green">グリーンフラグを付ける / 取りはずす</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">フラグを取りはずす</string>
     <string name="gesture_page_up">１画面分上へスクロール</string>
     <string name="gesture_page_down">１画面分下へスクロール</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync">学習画面を閉じて同期</string>
     <string name="gesture_toggle_whiteboard">ホワイトボード機能をオン/オフ</string>
     <string name="gesture_show_hint">ヒントを表示</string>
     <string name="gesture_show_all_hints">すべてのヒントを表示</string>

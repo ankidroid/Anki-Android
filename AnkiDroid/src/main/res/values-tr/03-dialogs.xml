@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Veritabanı kontrol edilsin mi?</string>
+    <string name="check_db_title">Veritabanını denetle?</string>
     <string name="check_db_warning">Bu uzun sürebilir</string>
     <string name="contextmenu_deckpicker_delete_deck">Desteyi sil</string>
     <string name="delete_deck_title">Deste silinsin mi?</string>
@@ -235,7 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa veriniz ve otomatik yedekleriniz erişilemez hâle gelecek
     </string>
     <string name="deck_already_exists">Deste hâlihazırda var</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">Deste adı boş olamaz</string>
     <string name="create_deck_numeric_hint">Deste sıralamanızda sorun olursa (örn. \"10\"un \"2\"den önce gelmesi), \"2\" yerine \"02\" yazın</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Aralığı aynı değere ayarla</string>
@@ -265,7 +265,7 @@
     <string name="change_cloze_mode">Boşluk modunu değiştir</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Sistem WebView\'su güncel değil. Bazı özellikler doğru çalışmayacak. Lütfen güncelleyin.\n\nYüklü sürüm: %1$d\nGereken en düşük sürüm: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Sıkıştır</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Dil desteklenmiyor</string>
     <string name="tts_error_dialog_reason_text"><b>%1$s</b> metin okuma motoru şu dili desteklemiyor: <b>%2$s</b></string>

@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d gömülü</item>
+        <item quantity="other">+%d gömülü</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Notu düzenle</string>
@@ -345,18 +345,18 @@
     <string name="orphan_note_message">Bu kart türünü silmek bazı notları kartsız bırakacak.</string>
     <string name="voice_not_supported">Seslendirme desteklenmiyor. Başka bir seslendirme motoru deneyin ya da bir tane yükleyin.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Klavye kısayolları diyaloğunu göster</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deste Seçici</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Desteyi onay sormadan sil</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Not Düzenleyici</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Deste seç</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Not türü seç</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Etiket düzenleyici</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Kart Şablonu Düzenleyici</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Ön şablonu düzenle</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Arka şablonu düzenle</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Stili düzenle</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Şablonu markdown olarak kopyala</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Tarayıcı görünümünü düzenle</string>
+    <string name="show_shortcuts_message">Klavye kısayollarını göstermek için Alt+K\'ye basın</string>
 </resources>

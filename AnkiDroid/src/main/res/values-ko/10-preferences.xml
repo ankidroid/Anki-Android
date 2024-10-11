@@ -47,7 +47,7 @@
     <!-- generic strings -->
     <string name="disabled">비활성화됨</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d분</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->

@@ -90,10 +90,10 @@
     <string name="custom_study_preview_new">Переглянути нові картки</string>
     <string name="custom_study_limit_tags">Обмежити конкретними тегами</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="few">+%d buried</item>
-        <item quantity="many">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d відкладено</item>
+        <item quantity="few">+%d відкладено</item>
+        <item quantity="many">+%d відкладено</item>
+        <item quantity="other">+%d відкладено</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Редагувати запис</string>
@@ -356,18 +356,18 @@
     <string name="orphan_note_message">Якщо видалити цей тип картки, деякі нотатки залишаться без карток.</string>
     <string name="voice_not_supported">Голосовий канал не підтримується. Спробуйте інший або встановіть голосовий рушій.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Показати діалогове вікно комбінацій клавіш</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Вибір колоди</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Видалити колоду без підтвердження</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Редактор запису</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Виберіть колоду</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Виберіть тип запису</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Редактор тегів</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Редактор шаблонів карток</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Редагувати передній шаблон</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Редагувати задній шаблон</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Редагувати стиль</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Копіювати шаблон як розмітку</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Редагувати вигляд браузера</string>
+    <string name="show_shortcuts_message">Натисніть Alt+K, щоб показати комбінації клавіш</string>
 </resources>
