@@ -34,6 +34,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.work.Configuration
 import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
+import com.ichi2.anki.CollectionManager.CollectionOpenFailure
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.preferences.sharedPrefs
@@ -342,12 +343,12 @@ open class RobolectricTest : AndroidTest {
     protected fun enableNullCollection() {
         CollectionManager.closeCollectionBlocking()
         CollectionManager.setColForTests(null)
-        CollectionManager.emulateOpenFailure = true
+        CollectionManager.emulatedOpenFailure = CollectionOpenFailure.LOCKED
     }
 
     /** Restore regular collection behavior  */
     protected fun disableNullCollection() {
-        CollectionManager.emulateOpenFailure = false
+        CollectionManager.emulatedOpenFailure = null
     }
 
     @Throws(JSONException::class)

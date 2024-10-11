@@ -128,7 +128,7 @@ abstract class InstrumentedTest {
 
     /** Restore regular collection behavior  */
     private fun disableNullCollection() {
-        CollectionManager.emulateOpenFailure = false
+        CollectionManager.emulatedOpenFailure = null
     }
 
     // Instrumented tests can fail if there's a "App not responding"

@@ -58,8 +58,13 @@ object CollectionManager {
 
     private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
 
+    /**
+     * Test-only: emulates a number of failure cases when opening the collection
+     *
+     * @see [CollectionOpenFailure]
+     */
     @VisibleForTesting
-    var emulateOpenFailure = false
+    var emulatedOpenFailure: CollectionOpenFailure? = null
 
     private val testMutex = ReentrantLock()
 
@@ -233,9 +238,7 @@ object CollectionManager {
     /** See [ensureOpen]. This must only be run inside the queue. */
     private fun ensureOpenInner() {
         ensureBackendInner()
-        if (emulateOpenFailure) {
-            throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
-        }
+        emulatedOpenFailure?.triggerFailure()
         if (collection == null || collection!!.dbClosed) {
             val path = collectionPathInValidFolder()
             collection =
@@ -341,10 +344,10 @@ object CollectionManager {
     fun isOpenUnsafe(): Boolean {
         return logUIHangs {
             blockForQueue {
-                if (emulateOpenFailure) {
+                if (emulatedOpenFailure != null) {
                     false
                 } else {
-                    collection?.dbClosed == false
+                    collection?.dbClosed == false // non-failure mode.
                 }
             }
         }
@@ -399,6 +402,17 @@ object CollectionManager {
         return getBackend().setCustomCertificate(cert).apply {
             if (this) {
                 currentSyncCertificate = cert
+            }
+        }
+    }
+
+    enum class CollectionOpenFailure {
+        /** Raises [BackendException.BackendDbException.BackendDbLockedException] */
+        LOCKED;
+
+        fun triggerFailure() {
+            when (this) {
+                LOCKED -> throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
             }
         }
     }
