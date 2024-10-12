@@ -114,6 +114,8 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
 
     @NeedsTest("AudioRecordingController is correctly initialized")
     private fun initializeAudioRecorder() {
+        if (audioRecordingController != null) return
+        Timber.d("Initialising AudioRecordingController")
         try {
             audioRecordingController = AudioRecordingController(
                 context = requireActivity(),
