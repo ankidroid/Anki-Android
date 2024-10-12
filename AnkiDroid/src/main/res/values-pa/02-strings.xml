@@ -131,7 +131,6 @@
     <string name="check_db">ਡਾਟਾਬੇਸ ਦੀ ਜਾਂਚ ਕਰੋ</string>
     <string name="check_media">ਮੀਡੀਆ ਦੀ ਜਾਂਚ ਕਰੋ</string>
     <string name="empty_cards">ਖਾਲੀ ਕਾਰਡ</string>
-    <string name="empty_card_warning">ਇਹ ਕਾਰਡ ਖਾਲੀ ਹੈ। ਡੈੱਕ ਸੂਚੀ ਸਕ੍ਰੀਨ \'ਤੇ ਮੀਨੂ ਤੋਂ \"ਖਾਲੀ ਕਾਰਡ\" ਵਿਕਲਪ ਦੀ ਵਰਤੋਂ ਕਰੋ।</string>
     <string name="unknown_type_field_warning">ਜਵਾਬ ਟਾਈਪ ਕਰੋ: ਅਗਿਆਤ ਖੇਤਰ %s</string>
     <string name="delete_deck">ਡੈੱਕ ਨੂੰ ਮਿਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ&#8230;</string>
     <string name="info_rate">AnkiDroid ਨੂੰ ਰੇਟ ਕਰੋ</string>

@@ -131,7 +131,6 @@
     <string name="check_db">Verificar banco de dados</string>
     <string name="check_media">Verificar mídia</string>
     <string name="empty_cards">Cards vazios</string>
-    <string name="empty_card_warning">Este card está vazio. Use a opção \"Cards vazios\" do menu da lista de baralhos.</string>
     <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
     <string name="delete_deck">Excluindo baralho&#8230;</string>
     <string name="info_rate">Avalie o AnkiDroid</string>

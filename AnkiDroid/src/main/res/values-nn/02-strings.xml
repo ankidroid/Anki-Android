@@ -131,7 +131,6 @@
     <string name="check_db">Sjekk databasen</string>
     <string name="check_media">Sjekk media</string>
     <string name="empty_cards">Tomme kort</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Angi svar: ukjent felt %s</string>
     <string name="delete_deck">Slettar kortleiken &#8230;</string>
     <string name="info_rate">Bedøm AnkiDroid</string>

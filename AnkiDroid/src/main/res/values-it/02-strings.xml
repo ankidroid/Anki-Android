@@ -131,7 +131,6 @@
     <string name="check_db">Controlla database</string>
     <string name="check_media">Controlla file multimediali</string>
     <string name="empty_cards">Carte vuote</string>
-    <string name="empty_card_warning">Questa carta è vuota. Utilizza l\'opzione \"Carte vuote\" dal menu sulla schermata di elenco dei mazzi.</string>
     <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
     <string name="delete_deck">Eliminazione mazzo in corso&#8230;</string>
     <string name="info_rate">Valuta AnkiDroid</string>

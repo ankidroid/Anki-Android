@@ -137,7 +137,6 @@
     <string name="check_db">Sprawdź bazę danych</string>
     <string name="check_media">Sprawdź media</string>
     <string name="empty_cards">Puste karty</string>
-    <string name="empty_card_warning">Ta karta jest pusta. Użyj opcji \"Puste karty\" z menu na ekranie z listą talii.</string>
     <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
     <string name="delete_deck">Usuwanie talii&#8230;\nProszę czekać&#8230;</string>
     <string name="info_rate">Oceń AnkiDroid</string>

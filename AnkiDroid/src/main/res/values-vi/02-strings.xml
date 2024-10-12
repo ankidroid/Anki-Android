@@ -128,7 +128,6 @@
     <string name="check_db">Kiểm tra CSDL</string>
     <string name="check_media">Kiểm tra các tệp đa phương tiện</string>
     <string name="empty_cards">Các thẻ rỗng</string>
-    <string name="empty_card_warning">Thẻ này rỗng. Dùng tuỳ chọn \"Các thẻ rỗng\" từ trình đơn trên màn hình danh sách bộ thẻ.</string>
     <string name="unknown_type_field_warning">Gõ đáp án: trường lạ %s</string>
     <string name="delete_deck">Đang xoá bộ thẻ&#8230;</string>
     <string name="info_rate">Đánh giá AnkiDroid</string>

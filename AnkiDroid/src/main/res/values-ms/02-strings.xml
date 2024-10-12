@@ -128,7 +128,6 @@
     <string name="check_db">Periksa pangkalan data</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kad kosong</string>
-    <string name="empty_card_warning">Kad kosong. Gunakan pilihan “Kad kosong” dalam menu pada skrin senarai dek.</string>
     <string name="unknown_type_field_warning">Taip jawapan: medan %s tidak diketahui</string>
     <string name="delete_deck">Memadam dek&#8230;</string>
     <string name="info_rate">Nilaikan AnkiDroid</string>

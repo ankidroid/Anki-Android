@@ -129,7 +129,6 @@
     <string name="check_db">데이터베이스 점검하기</string>
     <string name="check_media">미디어 확인</string>
     <string name="empty_cards">빈 카드</string>
-    <string name="empty_card_warning">이 카드는 비어 있습니다. 카드 묶음 목록 화면의 메뉴에서 \"빈 카드\" 옵션을 사용하세요.</string>
     <string name="unknown_type_field_warning">정답 입력: 알 수 없는 필드 %s</string>
     <string name="delete_deck">카드 묶음 삭제 중&#8230;\n 잠시만 기다리세요.</string>
     <string name="info_rate">AnkiDroid 평가하기</string>

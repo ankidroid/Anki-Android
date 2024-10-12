@@ -131,7 +131,6 @@
     <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
     <string name="check_media">მედიაფაილების შემოწმება</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
-    <string name="empty_card_warning">ბარათი ცარიელია. გამოიყენეთ \"ცარიელი ბარათების\" ღილაკი დასტების სიის ეკრანზე არსებული მენიუდან</string>
     <string name="unknown_type_field_warning">პასუხის აკრეფა: უცნობი ველი %s</string>
     <string name="delete_deck">იშლება დასტა&#8230;</string>
     <string name="info_rate">შეაფასეთ AnkiDroid</string>

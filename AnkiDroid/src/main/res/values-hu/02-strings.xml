@@ -131,7 +131,6 @@
     <string name="check_db">Adatbázis ellenőrzése</string>
     <string name="check_media">Média ellenőrzése</string>
     <string name="empty_cards">Üres kártyák listája</string>
-    <string name="empty_card_warning">Ez a kártya üres. Használd az \"Üres kártyák\" funkciót a főképernyő menüjében.</string>
     <string name="unknown_type_field_warning">Válaszadás: ismeretlen mező: %s</string>
     <string name="delete_deck">Pakli törlése&#8230;\nKérlek, várj&#8230;</string>
     <string name="info_rate">AnkiDroid értékelése</string>

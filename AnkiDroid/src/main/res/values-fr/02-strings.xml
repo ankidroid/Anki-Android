@@ -131,7 +131,6 @@
     <string name="check_db">Vérifier la base de données</string>
     <string name="check_media">Vérifier les médias</string>
     <string name="empty_cards">Cartes vides</string>
-    <string name="empty_card_warning">Cette carte est vide. Utilisez l\'option \"cartes vides\" du menu sur l\'écran de la liste de paquets.</string>
     <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
     <string name="delete_deck">Suppression du paquet&#8230;</string>
     <string name="info_rate">Noter AnkiDroid</string>

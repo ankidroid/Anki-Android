@@ -137,7 +137,6 @@
     <string name="check_db">Проверить базу данных</string>
     <string name="check_media">Проверить медиафайлы</string>
     <string name="empty_cards">Пустые карточки</string>
-    <string name="empty_card_warning">Эта карточка пуста. Используйте опцию «Пустые карточки» из меню списка колод.</string>
     <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
     <string name="delete_deck">Колода удаляется&#8230;</string>
     <string name="info_rate">Оценить AnkiDroid</string>

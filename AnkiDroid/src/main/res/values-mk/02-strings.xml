@@ -132,7 +132,6 @@
     <string name="check_db">Проверете дата базата</string>
     <string name="check_media">Проверете медиата</string>
     <string name="empty_cards">Празни картички</string>
-    <string name="empty_card_warning">Картичка е празна. Користете ја опција \"Празни картички\" од менито на екранот на листата на палуби.</string>
     <string name="unknown_type_field_warning">Тип на одговор: непознато поле %s</string>
     <string name="delete_deck">Бришење на полото&#8230;</string>
     <string name="info_rate">Гласај AnkiDroid</string>

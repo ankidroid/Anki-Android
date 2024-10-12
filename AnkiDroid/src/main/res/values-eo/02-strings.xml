@@ -131,7 +131,6 @@
     <string name="check_db">Kontroli datumbazon</string>
     <string name="check_media">Kontroli aŭdvidaĵojn</string>
     <string name="empty_cards">Malplenaj kartoj</string>
-    <string name="empty_card_warning">Tiu ĉi karto estas malplena. Uzu la agon “Malplenaj kartoj” en la menuo ĉe la ekrano de kartaroj.</string>
     <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
     <string name="info_rate">Taksi AnkiDroid</string>

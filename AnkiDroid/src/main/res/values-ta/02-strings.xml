@@ -131,7 +131,6 @@
     <string name="check_db">தரவுத்தளத்தைச் சரிபார்க்கவும்</string>
     <string name="check_media">மீடியாவைச் சரிபார்க்கவும்</string>
     <string name="empty_cards">வெற்று அட்டைகள்</string>
-    <string name="empty_card_warning">இந்த அட்டை காலியாக உள்ளது. டெக் பட்டியல் திரையில் உள்ள மெனுவிலிருந்து \"காலி அட்டைகள்\" விருப்பத்தைப் பயன்படுத்தவும்.</string>
     <string name="unknown_type_field_warning">பதிலைத் தட்டச்சு செய்க: தெரியாத புலம் %s</string>
     <string name="delete_deck">தளத்தை நீக்குகிறது&#8230;</string>
     <string name="info_rate">AnkiDroid ஐ மதிப்பிடவும்</string>

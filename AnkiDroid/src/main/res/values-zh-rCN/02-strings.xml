@@ -128,7 +128,6 @@
     <string name="check_db">检查数据库</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
-    <string name="empty_card_warning">这张卡片是空的。请使用牌组列表界面右上角菜单中的「空白卡片」选项来查找空白卡片。</string>
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
     <string name="info_rate">给 AnkiDroid 评分</string>

@@ -131,7 +131,6 @@
     <string name="check_db">డేటాబేస్ను తనిఖీ చేయండి</string>
     <string name="check_media">మీడియా తనిఖీ చేయండి</string>
     <string name="empty_cards">ఖాళీ కార్డులు</string>
-    <string name="empty_card_warning">ఈ కార్డ్ ఖాళీగా ఉంది. డెక్ జాబితా తెరపై మెను నుండి \"ఖాళీ కార్డులు\" ఎంపికను ఉపయోగించండి.</string>
     <string name="unknown_type_field_warning">సమాధానం టైప్: తెలియని ఫీల్డ్ %s</string>
     <string name="delete_deck">డెక్ను తొలగిస్తోంది&#8230;</string>
     <string name="info_rate">రేట్ AnkiDroid</string>

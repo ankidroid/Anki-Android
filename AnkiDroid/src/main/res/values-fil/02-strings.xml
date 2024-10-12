@@ -131,7 +131,6 @@
     <string name="check_db">Suriin ang database</string>
     <string name="check_media">Suriin ang media</string>
     <string name="empty_cards">Mga walang lamang card</string>
-    <string name="empty_card_warning">Walang laman ang card na ito. Gamitin ang opsiyon na \"Mga walang lamang card\" mula sa menu sa screen ng listahan ng deck.</string>
     <string name="unknown_type_field_warning">I-type ang sagot: hindi kilalang patlang %s</string>
     <string name="delete_deck">Tinatanggal ang deck&#8230;</string>
     <string name="info_rate">I-rate ang AnkiDroid</string>

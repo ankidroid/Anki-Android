@@ -131,7 +131,6 @@
     <string name="check_db">ഡാറ്റാബേസ് പരിശോധിക്കുക</string>
     <string name="check_media">മീഡിയ പരിശോധിക്കുക</string>
     <string name="empty_cards">ശൂന്യമായ കാർഡുകൾ</string>
-    <string name="empty_card_warning">ഈ കാർഡ് ശൂന്യമാണ്. ഡെക്ക് ലിസ്റ്റ് സ്ക്രീനിലെ മെനുവിൽ നിന്ന് “ശൂന്യ കാർഡുകൾ” ഓപ്ഷൻ ഉപയോഗിക്കുക.</string>
     <string name="unknown_type_field_warning">ഉത്തരം ടൈപ്പ് ചെയ്യുക: അജ്ഞാത ഫീൽഡ് %s</string>
     <string name="delete_deck">ഡെക്ക് ഇല്ലാതാക്കുന്നു&#8230;</string>
     <string name="info_rate">അങ്കിഡ്രോയിഡ് റേറ്റുചെയ്യുക</string>

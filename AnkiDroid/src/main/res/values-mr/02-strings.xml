@@ -131,7 +131,6 @@
     <string name="check_db">Check database</string>
     <string name="check_media">Mīḍiyā tapāsā</string>
     <string name="empty_cards">Empty cards</string>
-    <string name="empty_card_warning">Hē kārḍa rikta āhē. Ḍēka sūcī skrīnavarīla mēnūmadhūna\"rikta kārḍē\" paryāya vāparā.</string>
     <string name="unknown_type_field_warning">Uttara dyā: Ajñāta phīlḍa %s</string>
     <string name="delete_deck">Ḍēka haṭavata āhē&#8230;</string>
     <string name="info_rate">AnkiDroid rēṭa karā</string>

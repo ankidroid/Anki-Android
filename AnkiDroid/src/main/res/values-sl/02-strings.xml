@@ -137,7 +137,6 @@
     <string name="check_db">Preveri podatkovno zbirko</string>
     <string name="check_media">Preveri predstavnost</string>
     <string name="empty_cards">Prazne kartice</string>
-    <string name="empty_card_warning">Ta kartica je prazna. Uporabite možnost \"Prazne kartice\" iz menija seznama kompletov.</string>
     <string name="unknown_type_field_warning">Vnos odgovora: neznano polje %s</string>
     <string name="delete_deck">Brisanje kompleta &#8230;</string>
     <string name="info_rate">Oceni AnkiDroid</string>

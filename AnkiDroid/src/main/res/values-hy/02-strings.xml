@@ -131,7 +131,6 @@
     <string name="check_db">Ստուգել շտեմարանը</string>
     <string name="check_media">Ստուգել մեդիան</string>
     <string name="empty_cards">Դատարկ քարտեր</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Deleting deck&#8230;</string>
     <string name="info_rate">Rate AnkiDroid</string>

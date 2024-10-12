@@ -128,7 +128,6 @@
     <string name="check_db">Мәгълүмәт базасын тикшерү</string>
     <string name="check_media">Медиафайлларны тикшерү</string>
     <string name="empty_cards">Буш кәртләр</string>
-    <string name="empty_card_warning">Бу кәрт буш. Колода исемлеге менюсыннан \"Буш кәртләр\" опциясен кулланыгыз.</string>
     <string name="unknown_type_field_warning">Беленмәгән юл төре: %s</string>
     <string name="delete_deck">Колода бетерелә&#8230;</string>
     <string name="info_rate">AnkiDroidны бәяләгез</string>

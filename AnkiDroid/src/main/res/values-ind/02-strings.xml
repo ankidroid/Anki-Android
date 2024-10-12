@@ -128,7 +128,6 @@
     <string name="check_db">Periksa basisdata</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kartu kosong</string>
-    <string name="empty_card_warning">Kartu ini kosong. Gunakan opsi \"Kosongkan kartu\" dari menu di halaman daftar dek.</string>
     <string name="unknown_type_field_warning">Ketik jawaban: bidang %s tidak diketahui</string>
     <string name="delete_deck">Menghapus dek&#8230;</string>
     <string name="info_rate">Beri AnkiDroid rating</string>

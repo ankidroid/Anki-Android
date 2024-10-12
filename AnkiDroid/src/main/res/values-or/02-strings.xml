@@ -131,7 +131,6 @@
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
     <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards">ଖାଲି ପତ୍ର</string>
-    <string name="empty_card_warning">ଏହି ପତ୍ରଟି ଖାଲି ଅଛି। ତାସଖଣ୍ଡ ତାଲିକା ସ୍କ୍ରୀନରେ ଥିବା ଅଧିକ ଵିକଳ୍ପ ମେନୁରୁ “ଖାଲି ପତ୍ର” ଵିକଳ୍ପ ଵ୍ୟଵହାର କରନ୍ତୁ।</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
     <string name="delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>

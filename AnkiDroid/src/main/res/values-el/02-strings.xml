@@ -131,7 +131,6 @@
     <string name="check_db">Έλεγχος βάσης δεδομένων</string>
     <string name="check_media">Έλεγχος πολυμέσων </string>
     <string name="empty_cards">Κενές κάρτες</string>
-    <string name="empty_card_warning">Αυτή η κάρτα είναι κενή. Χρησιμοποιήστε την επιλογή \"Άδειες κάρτες\" από το μενού στην οθόνη λίστας τραπουλών.</string>
     <string name="unknown_type_field_warning">Τύπος απάντησης: άγνωστο πεδίο %s</string>
     <string name="delete_deck">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>
     <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>

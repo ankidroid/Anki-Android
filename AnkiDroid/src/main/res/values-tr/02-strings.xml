@@ -131,7 +131,6 @@
     <string name="check_db">Veritabanını denetle</string>
     <string name="check_media">Medyayı kontrol et</string>
     <string name="empty_cards">Boş kartlar</string>
-    <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
     <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
     <string name="delete_deck">Deste siliniyor&#8230;</string>
     <string name="info_rate">AnkiDroid\'e oy ver</string>

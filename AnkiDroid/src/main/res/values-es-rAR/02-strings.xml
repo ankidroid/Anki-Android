@@ -131,7 +131,6 @@
     <string name="check_db">Comprobar base de datos</string>
     <string name="check_media">Comprobar archivo multimedia</string>
     <string name="empty_cards">Tarjetas vacías</string>
-    <string name="empty_card_warning">Esta tarjeta está vacía. Utilice la opción \"Tarjetas vacías\" del menú en la pantalla de la lista de mazos.</string>
     <string name="unknown_type_field_warning">Tipear respuesta: campo desconocido %s</string>
     <string name="delete_deck">Eliminando mazo&#8230;\nPor favor aguarde.</string>
     <string name="info_rate">Puntúe AnkiDroid</string>

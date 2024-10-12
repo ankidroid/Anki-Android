@@ -143,7 +143,6 @@
     <string name="check_db">فحص قاعدة البيانات</string>
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
-    <string name="empty_card_warning">هذه البطاقة فارغة. استخدم خيار «بطاقات فارغة» من القائمة في شاشة قائمة الرزم.</string>
     <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
     <string name="delete_deck">يجري حذف الرزمة...</string>
     <string name="info_rate">قيم أنكيدرويد</string>

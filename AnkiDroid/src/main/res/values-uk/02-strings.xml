@@ -137,7 +137,6 @@
     <string name="check_db">Перевірити базу даних</string>
     <string name="check_media">Перевірити медіафайли</string>
     <string name="empty_cards">Порожні картки</string>
-    <string name="empty_card_warning">Ця картка порожня. Скористайтеся опцією \"Порожні картки\" в меню на екрані зі списком колод.</string>
     <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
     <string name="delete_deck">Видалення колоди&#8230;\n Будь ласка, зачекайте.</string>
     <string name="info_rate">Оцініть AnkiDroid</string>

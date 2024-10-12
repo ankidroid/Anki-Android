@@ -131,7 +131,6 @@
     <string name="check_db">ડેટાબેઝ તપાસો</string>
     <string name="check_media">મીડિયા તપાસો</string>
     <string name="empty_cards">ખાલી કાર્ડ્સ</string>
-    <string name="empty_card_warning">આ કાર્ડ ખાલી છે. ડેક સૂચિ સ્ક્રીન પરના મેનૂમાંથી \"ખાલી કાર્ડ્સ\" વિકલ્પનો ઉપયોગ કરો.</string>
     <string name="unknown_type_field_warning">જવાબ લખો: અજ્ઞાત ફીલ્ડ %s</string>
     <string name="delete_deck">ડેક કાઢી રહ્યું છે&#8230;</string>
     <string name="info_rate">AnkiDroid ને રેટ કરો</string>

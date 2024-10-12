@@ -131,7 +131,6 @@
     <string name="check_db">Database controleren</string>
     <string name="check_media">Media controleren</string>
     <string name="empty_cards">Lege kaarten zoeken</string>
-    <string name="empty_card_warning">Deze kaart is leeg. Gebruik de optie \"Lege kaarten zoeken\" in het menu op het scherm van de lijst met leersets.</string>
     <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>
     <string name="delete_deck">Leerset verwijderen&#8230;\nEven wachten.</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>
