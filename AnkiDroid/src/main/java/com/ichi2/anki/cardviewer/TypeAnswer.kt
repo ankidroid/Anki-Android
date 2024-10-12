@@ -62,7 +62,7 @@ class TypeAnswer(
     /**
      * Optional warning for when a typed answer can't be displayed
      *
-     * * empty card [R.string.empty_card_warning]
+     * * empty card
      * * unknown field specified [R.string.unknown_type_field_warning]
      * */
     var warning: String? = null
@@ -118,7 +118,7 @@ class TypeAnswer(
         when (correct) {
             null -> {
                 warning = if (clozeIdx != 0) {
-                    res.getString(R.string.empty_card_warning)
+                    CollectionManager.TR.cardTemplateRenderingEmptyFront()
                 } else {
                     res.getString(R.string.unknown_type_field_warning, fldTag)
                 }
