@@ -353,5 +353,5 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">将模板复制为Markdown</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">编辑浏览器外观</string>
     <string name="show_shortcuts_message">按 Alt+K 显示键盘快捷键</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">此笔记类型中未设置用户操作 %s。请配置它</string>
 </resources>
