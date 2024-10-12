@@ -34,7 +34,6 @@ import anki.deck_config.UpdateDeckConfigsRequest
 import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
-import anki.decks.deck
 import com.google.protobuf.kotlin.toByteStringUtf8
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
@@ -51,6 +50,8 @@ import java.util.LinkedList
 
 typealias UpdateDeckConfigs = UpdateDeckConfigsRequest
 data class DeckNameId(val name: String, val id: DeckId)
+
+const val DEFAULT_DECK_CONF_ID: DeckConfigId = 1L
 
 // TODO: col was a weakref
 
@@ -97,17 +98,24 @@ class Decks(private val col: Collection) {
         return changes
     }
 
-    /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
-    @RustCleanup("add 'create' parameter + change return type")
-    fun id(name: String): DeckId {
-        val id = this.idForName(name)
+    /** Add a deck with NAME. Reuse deck if already exists. Return id as [DeckId] */
+    fun id(name: String, create: Boolean, type: DeckConfigId = 0L): DeckId? {
+        val id = idForName(name)
         if (id != null) {
             return id
+        } else if (!create) {
+            return null
         }
-        val deck = this.newDeckLegacy(false)
+
+        val deck = this.newDeckLegacy(type != 0L)
         deck.name = name
-        addDeckLegacy(deck)
-        return deck.id
+        val out = addDeckLegacy(deck)
+        return out.id
+    }
+
+    @NotInLibAnki
+    fun id(name: String, type: DeckConfigId = 0L): DeckId {
+        return id(name = name, create = true, type = type)!!
     }
 
     fun remove(deckIds: Iterable<Long>): OpChangesWithCount {
@@ -157,12 +165,11 @@ class Decks(private val col: Collection) {
         TODO()
     }
 
-    @RustCleanup("implement and make public")
+    /** Return a new normal deck. It must be added with [addDeck] after a name assigned. */
     @LibAnkiAlias("new_deck")
     @Suppress("unused")
-    /** "Return a new normal deck. It must be added with [addDeck] after a name assigned. */
-    private fun newDeck(): Deck {
-        TODO()
+    fun newDeck(): anki.decks.Deck {
+        return col.backend.newDeck()
     }
 
     @RustCleanup("implement and make public")
@@ -561,14 +568,12 @@ class Decks(private val col: Collection) {
      *************************************************************
      */
 
-    /** Return a new dynamic deck and set it as the current deck. */
+    /** For new code, prefer [getOrCreateFilteredDeck] */
     @LibAnkiAlias("new_filtered")
     fun newFiltered(name: String): DeckId {
-        val deck = this.newDeckLegacy(true)
-        deck.name = name
-        addDeckLegacy(deck)
-        this.select(deck.id)
-        return deck.id
+        val did = id(name, type = DEFAULT_DECK_CONF_ID)
+        select(did!!)
+        return did
     }
 
     @LibAnkiAlias("is_filtered")
