@@ -353,4 +353,5 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">テンプレートをMarkdowin形式でコピー</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">カードブラウザ用の表示設定を編集</string>
     <string name="show_shortcuts_message">キーボードショートカットを表示するには [Alt]+[K] を押してください</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
 </resources>
