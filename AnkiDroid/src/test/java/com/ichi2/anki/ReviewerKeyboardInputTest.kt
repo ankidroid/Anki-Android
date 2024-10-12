@@ -38,7 +38,14 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_1
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_2
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
+import com.ichi2.anki.AnkiDroidApp.Companion.sharedPrefs
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.reviewer.Binding.Companion.keyCode
+import com.ichi2.anki.reviewer.Binding.ModifierKeys
+import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.libanki.Card
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
@@ -174,6 +181,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
     @Test
     fun pressingZShouldUndoIfAvailable() {
+        ViewerCommand.UNDO.addBinding(sharedPrefs(), MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)))
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true)
         underTest.handleAndroidKeyPress(KEYCODE_Z)
         assertThat("Undo should be called", underTest.undoCalled)
@@ -181,6 +189,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
     @Test
     fun pressingZShouldNotUndoIfNotAvailable() {
+        ViewerCommand.UNDO.addBinding(sharedPrefs(), MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)))
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false)
         underTest.handleUnicodeKeyPress('z')
         assertThat("Undo is not available so should not be called", !underTest.undoCalled)
