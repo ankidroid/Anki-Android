@@ -74,6 +74,7 @@ open class CompatV24 : CompatV23() {
         // Don't show keyboard shortcuts dialog if there is no available shortcuts and also
         // if there's 1 item because shortcutsGroup always includes generalShortcutGroup.
         if (shortcutsGroup.size <= 1) return
+        Timber.i("displaying keyboard shortcut screen")
         activity.requestShowKeyboardShortcuts()
     }
 
