@@ -367,4 +367,5 @@
     <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Капіяваць стыль як разметку</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Рэдагаваць выгляд браўзера</string>
     <string name="show_shortcuts_message">Націсніце Alt+K, каб убачыць спалучэнні клавіш</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
 </resources>
