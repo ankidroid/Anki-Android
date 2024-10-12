@@ -179,7 +179,7 @@ enum class ViewerCommand(val resourceId: Int) {
                 REPLAY_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH))
                 RECORD_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, shift()))
                 SAVE_VOICE -> listOf(keyCode(KeyEvent.KEYCODE_S, CardSide.BOTH, shift()))
-                UNDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH))
+                UNDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ctrl()))
                 REDO -> listOf(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true, alt = false)))
                 TOGGLE_FLAG_RED -> listOf(keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ctrl()))
                 TOGGLE_FLAG_ORANGE -> listOf(keyCode(KeyEvent.KEYCODE_2, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.BOTH, ctrl()))
