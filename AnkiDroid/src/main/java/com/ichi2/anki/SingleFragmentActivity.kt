@@ -27,6 +27,7 @@ import androidx.fragment.app.commit
 import com.ichi2.compat.CompatV24
 import com.ichi2.compat.ShortcutGroupProvider
 import com.ichi2.utils.getInstanceFromClassName
+import timber.log.Timber
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -56,12 +57,16 @@ open class SingleFragmentActivity : AnkiActivity() {
         // avoid recreating the fragment on configuration changes
         // the fragment should handle state restoration
         if (savedInstanceState != null) {
+            Timber.d("not recreating fragment due to config changes")
             return
         }
 
         val fragmentClassName = requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
             "'$FRAGMENT_NAME_EXTRA' extra should be provided"
         }
+
+        Timber.d("Creating fragment %s", fragmentClassName)
+
         fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
             arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
         }
