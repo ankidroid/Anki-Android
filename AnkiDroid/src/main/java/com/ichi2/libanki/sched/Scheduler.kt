@@ -152,8 +152,10 @@ open class Scheduler(val col: Collection) {
         card.load(col)
     }
 
-    fun againIsLeech(info: CurrentQueueState): Boolean {
-        return col.backend.stateIsLeech(info.states.again)
+    /** True if new state marks the card as a leech. */
+    @LibAnkiAlias("state_is_leech")
+    fun stateIsLeech(state: SchedulingState): Boolean {
+        return col.backend.stateIsLeech(state)
     }
 
     fun buildAnswer(card: Card, states: SchedulingStates, ease: Int): CardAnswer {

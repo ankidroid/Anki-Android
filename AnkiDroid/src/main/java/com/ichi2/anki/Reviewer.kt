@@ -1070,7 +1070,7 @@ open class Reviewer :
         var wasLeech = false
         undoableOp(this) {
             sched.answerCard(state, ease).also {
-                wasLeech = sched.againIsLeech(state)
+                wasLeech = sched.stateIsLeech(state.states.again)
             }
         }.also {
             if (ease == Consts.BUTTON_ONE && wasLeech) {
