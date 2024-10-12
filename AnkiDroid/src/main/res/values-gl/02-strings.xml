@@ -131,7 +131,6 @@
     <string name="check_db">Verificar a base de datos</string>
     <string name="check_media">Verificar multimedia</string>
     <string name="empty_cards">Cartóns baleiros</string>
-    <string name="empty_card_warning">O cartón está baleiro. Emprega a opción \"Cartóns baleiros\" do menú na pantalla de listaxe de cartóns.</string>
     <string name="unknown_type_field_warning">Escribe a resposta: campo descoñecido %s</string>
     <string name="delete_deck">Eliminando a baralla&#8230;</string>
     <string name="info_rate">Valora AnkiDroid</string>

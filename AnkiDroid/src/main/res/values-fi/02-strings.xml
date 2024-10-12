@@ -131,7 +131,6 @@
     <string name="check_db">Tarkasta tietokanta</string>
     <string name="check_media">Tarkista media</string>
     <string name="empty_cards">Tyhjät kortit</string>
-    <string name="empty_card_warning">Tämä kortti on tyhjä. Käytä ”Tyhjät kortit” vaihtoehtoa pakka-luettelon -valikosta.</string>
     <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
     <string name="delete_deck">Poistetaan pakka&#8230;</string>
     <string name="info_rate">Arvostele AnkiDroid</string>

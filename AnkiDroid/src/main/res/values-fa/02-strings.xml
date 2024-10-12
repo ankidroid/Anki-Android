@@ -131,7 +131,6 @@
     <string name="check_db">بررسی پایگاه داده</string>
     <string name="check_media">بررسی رسانه ها</string>
     <string name="empty_cards">کارت های خالی</string>
-    <string name="empty_card_warning">این کارت خالی است. از گزینه \"کارت های خالی\" که در قسمت فهرست روی صفحه لیست دسته‌ها است استفاده کنید.</string>
     <string name="unknown_type_field_warning">پاسخ را تایپ کنید:فیلد نامشخص %s</string>
     <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
     <string name="info_rate">امتیازدهی به AnkiDroid</string>

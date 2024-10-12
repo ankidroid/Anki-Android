@@ -137,7 +137,6 @@
     <string name="check_db">Tikrinti duomenų bazę</string>
     <string name="check_media">Tikrinti laikmenas</string>
     <string name="empty_cards">Tuščios kortelės</string>
-    <string name="empty_card_warning">Ši kortelė yra tuščia. Naudokite parinktį „Tuščios kortelės“, esančią rinkinių sąrašo meniu.</string>
     <string name="unknown_type_field_warning">Atsakymo tipas: nežinomas laukelis %s</string>
     <string name="delete_deck">Rinkinys trinamas&#8230;</string>
     <string name="info_rate">Įvertinkite „AnkiDroid“</string>

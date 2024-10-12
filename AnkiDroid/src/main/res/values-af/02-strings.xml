@@ -131,7 +131,6 @@
     <string name="check_db">Kontroleer Databasis</string>
     <string name="check_media">Kontroleer media</string>
     <string name="empty_cards">Leë Kaarte</string>
-    <string name="empty_card_warning">Hierdie kaart is leeg. Gebruik die \"Leë kaarte\" opsie vanaf die spyskaart op die deklys skerm.</string>
     <string name="unknown_type_field_warning">Tik antwoord: onbekende veld %s</string>
     <string name="delete_deck">Dek verwyder&#8230;</string>
     <string name="info_rate">Beoordeel AnkiDroid</string>

@@ -131,7 +131,6 @@
     <string name="check_db">ডেটাবেজ চেক</string>
     <string name="check_media">মিডিয়া চেক</string>
     <string name="empty_cards">খালি কার্ডসমূহ</string>
-    <string name="empty_card_warning">এই কার্ডটি খালি। \"ডেক তালিকা\" স্ক্রিন থেকে \"খালি কার্ডসমূহ\" অপশনটি ব্যবহার করুন।</string>
     <string name="unknown_type_field_warning">উত্তর টাইপ করুন: অজানা ফিল্ড %s</string>
     <string name="delete_deck">ডেক মুছছি&#8230;</string>
     <string name="info_rate">আনকি-ড্রয়েডকে রেটিং দিন</string>

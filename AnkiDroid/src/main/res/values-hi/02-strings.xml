@@ -131,7 +131,6 @@
     <string name="check_db">डेटाबेस की जाँच करें</string>
     <string name="check_media">मीडिया जांचें</string>
     <string name="empty_cards">खाली कार्ड</string>
-    <string name="empty_card_warning">यह कार्ड खाली है । डेक सूची स्क्रीन पर मेनू से \"खाली कार्ड\" विकल्प का उपयोग करें ।</string>
     <string name="unknown_type_field_warning">उत्तर टाइप करें: अज्ञात फ़ील्ड %s</string>
     <string name="delete_deck">हटाने deck&#8230;\nPlease रुको।</string>
     <string name="info_rate">दर AnkiDroid</string>

@@ -131,7 +131,6 @@
     <string name="check_db">Проверка на базата данни</string>
     <string name="check_media">Проверка на медии</string>
     <string name="empty_cards">Празни карти</string>
-    <string name="empty_card_warning">Тази карта е празна. Използвайте опцията \"Празни карти\" от менюто на екрана със списъка с тестета.</string>
     <string name="unknown_type_field_warning">Въведете отговор: неизвестно поле %s</string>
     <string name="delete_deck">Изтриване на тесте&#8230;</string>
     <string name="info_rate">Оцени AnkiDroid</string>

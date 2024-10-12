@@ -133,7 +133,6 @@
     <string name="check_db">Verìfica sa base de datos</string>
     <string name="check_media">Verìfica sos documentos multimediales</string>
     <string name="empty_cards">Cartas bòidas</string>
-    <string name="empty_card_warning">Custa carta est bòida. Imprea s\'optzione “Cartas bòidas” dae su menù  in s\'ischermada de sa lista de matzos.</string>
     <string name="unknown_type_field_warning">Iscrie sa risposta: campu disconnotu %s</string>
     <string name="delete_deck">Iscantzellende su matzu&#8230;</string>
     <string name="info_rate">Dae unu votu a AnkiDroid</string>

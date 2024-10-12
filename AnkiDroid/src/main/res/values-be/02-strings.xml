@@ -137,7 +137,6 @@
     <string name="check_db">Праверыць базу даных</string>
     <string name="check_media">Праверыць медыяфайлы</string>
     <string name="empty_cards">Пустыя карткі</string>
-    <string name="empty_card_warning">Гэта картка пустая. Скарыстайцеся параметрам \"Пустыя карткі\" ў меню на экране спіса калод.</string>
     <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
     <string name="delete_deck">Выдаленне калоды&#8230;</string>
     <string name="info_rate">Ацаніць AnkiDroid</string>

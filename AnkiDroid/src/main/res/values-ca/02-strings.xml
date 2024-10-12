@@ -131,7 +131,6 @@
     <string name="check_db">Comprova la base de dades</string>
     <string name="check_media">Comprovar la multimèdia</string>
     <string name="empty_cards">Targetes buides</string>
-    <string name="empty_card_warning">Aquesta targeta està buida. Utilitza l\'opció del menú de \"Buit de targetes\" a la pantalla de llista de malls.</string>
     <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
     <string name="delete_deck">S\'està suprimint el paquet&#8230;\nUn moment si us plau.</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>

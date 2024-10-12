@@ -134,7 +134,6 @@
     <string name="check_db">Провера базе података</string>
     <string name="check_media">Провери медијске датотеке</string>
     <string name="empty_cards">Empty cards</string>
-    <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Врста одговора: непознато поље %s</string>
     <string name="delete_deck">Брисање шпила&#8230;\nМолим сачекајте.</string>
     <string name="info_rate">Оцени AnkiDroid</string>

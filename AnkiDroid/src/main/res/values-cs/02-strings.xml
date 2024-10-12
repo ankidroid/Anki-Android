@@ -137,7 +137,6 @@
     <string name="check_db">Zkontrolovat databázi</string>
     <string name="check_media">Zkontrolovat multimédia</string>
     <string name="empty_cards">Prázdné karty</string>
-    <string name="empty_card_warning">Tato karta je prázdná. Použijte možnost \"Prázdné karty\" z menu na obrazovce seznamu balíčků.</string>
     <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
     <string name="delete_deck">Odstraňuje se balíček&#8230;</string>
     <string name="info_rate">Ohodnotit AnkiDroid</string>

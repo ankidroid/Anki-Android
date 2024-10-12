@@ -131,7 +131,6 @@
     <string name="check_db">Suriin ang database</string>
     <string name="check_media">Suriin ang media</string>
     <string name="empty_cards">Tangalin ang mga baraha</string>
-    <string name="empty_card_warning">Walang laman ang baraha na ito. Gamitin ang option na \"Empty card\" mula sa menu sa screen ng listahan ng deck.</string>
     <string name="unknown_type_field_warning">I-type ang sagot: di kilalang field %s</string>
     <string name="delete_deck">Bunubura ang deck&#8230;</string>
     <string name="info_rate">I-rate ang AnkiDroid</string>

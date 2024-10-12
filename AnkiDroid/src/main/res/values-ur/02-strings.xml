@@ -131,7 +131,6 @@
     <string name="check_db">ڈیٹا بیس چیک کریں</string>
     <string name="check_media">میڈیا چیک کریں</string>
     <string name="empty_cards">خالی کارڈز</string>
-    <string name="empty_card_warning">یہ کارڈ خالی ہے۔ ڈیک لسٹ اسکرین پر مینو سے \"خالی کارڈز\" استعمال کریں۔</string>
     <string name="unknown_type_field_warning">جواب ٹائپ کریں۔:نامعلوم جگہ %s</string>
     <string name="delete_deck">ڈیک کو حذف کیا جا رہا ہے&#8230;</string>
     <string name="info_rate">AnkiDroid کی درجہ بندی کریں</string>

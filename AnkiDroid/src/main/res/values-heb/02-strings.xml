@@ -137,7 +137,6 @@
     <string name="check_db">בדוק מסד הנתונים</string>
     <string name="check_media">בדוק מדיה</string>
     <string name="empty_cards">כרטסיות ריקות</string>
-    <string name="empty_card_warning">הקלף הזה ריק. יש להשתמש באפשרות „קלפים ריקים” מהתפריט במסך רשימת החפיסות.</string>
     <string name="unknown_type_field_warning">הקלד תשובה: שדה אינו מוכר %s</string>
     <string name="delete_deck">מוחק חפיסה&#8230;</string>
     <string name="info_rate">דירוג AnkiDroid</string>

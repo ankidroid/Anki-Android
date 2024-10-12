@@ -131,7 +131,6 @@
     <string name="check_db">Verificar base de dados</string>
     <string name="check_media">Verificar multimédia</string>
     <string name="empty_cards">Fichas vazias</string>
-    <string name="empty_card_warning">Esta ficha está vazia. Utilize a opção \"Fichas vazias\" no menu da janela com a lista de baralhos.</string>
     <string name="unknown_type_field_warning">Escrever resposta: campo desconhecido %s</string>
     <string name="delete_deck">A eliminar o baralho&#8230;</string>
     <string name="info_rate">Classificar AnkiDroid</string>
