@@ -19,8 +19,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.KeyboardShortcutGroup
-import android.view.Menu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -107,15 +105,4 @@ open class SingleFragmentActivity : AnkiActivity() {
 
 interface DispatchKeyEventListener {
     fun dispatchKeyEvent(event: KeyEvent): Boolean
-}
-
-interface KeyboardShortcutEventListener {
-    /**
-     * @see AnkiActivity.onProvideKeyboardShortcuts
-     */
-    fun onProvideKeyboardShortcuts(
-        data: MutableList<KeyboardShortcutGroup>,
-        menu: Menu?,
-        deviceId: Int
-    )
 }
