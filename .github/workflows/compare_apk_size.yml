@@ -51,7 +51,7 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           ref: 'refs/pull/${{ github.event.inputs.prNumber }}/head'
 
       - name: Assemble PR APK
@@ -69,7 +69,7 @@ jobs:
       - name: Checkout Baseline for PR
         # we want to checkout the base for this PR on main, not just main - as main moves over time
         # and we want to know the isolated affect of this PR regardless of when the workflow executes
-        run: git checkout `git merge-base main HEAD`
+        run: git checkout `git merge-base origin/main HEAD`
 
       - name: Assemble Baseline APK
         # This makes sure we fetch gradle network resources with a retry
