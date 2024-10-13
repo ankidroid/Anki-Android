@@ -9,7 +9,7 @@ on:
         type: number
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.inputs.prNumber }}
   cancel-in-progress: true
 
 
