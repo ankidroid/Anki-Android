@@ -41,7 +41,7 @@ import kotlin.reflect.jvm.jvmName
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
 open class SingleFragmentActivity : AnkiActivity() {
-    // The displayed fragment.
+    /** The displayed fragment. */
     lateinit var fragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +57,12 @@ open class SingleFragmentActivity : AnkiActivity() {
         // avoid recreating the fragment on configuration changes
         // the fragment should handle state restoration
         if (savedInstanceState != null) {
-            Timber.d("not recreating fragment due to config changes")
-            return
+            Timber.d("restoring fragment due to config changes")
+            supportFragmentManager.findFragmentById(R.id.fragment_container)?.let { fragment ->
+                this.fragment = fragment
+                return
+            }
+            Timber.w("Fragment not found after config change. Recreating it")
         }
 
         val fragmentClassName = requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
