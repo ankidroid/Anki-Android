@@ -49,6 +49,8 @@ class Statistics :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        webView.isNestedScrollingEnabled = true
+
         requireActivity().setTransparentStatusBar()
         spinner = view.findViewById(R.id.deck_selector)
         view.findViewById<AppBarLayout>(R.id.app_bar)
