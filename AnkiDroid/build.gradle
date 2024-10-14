@@ -143,7 +143,7 @@ android {
         }
         named('release') {
             testCoverageEnabled = testReleaseBuild
-            minifyEnabled true
+            minifyEnabled System.getenv("MINIFY_ENABLED") ? System.getenv("MINIFY_ENABLED") != "false" : true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             testProguardFile 'proguard-test-rules.pro'
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`

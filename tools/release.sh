@@ -144,6 +144,17 @@ done
 # Pack up our proguard mapping file for debugging in case needed
 tar -zcf proguard-mappings.tar.gz AnkiDroid/build/outputs/mapping
 
+# Create a full universal build that disables minify, to help diagnose proguard issues
+./gradlew --stop
+echo Running assembleFullRelease target with universal APK flag and MINIFY_ENABLED=false
+if ! MINIFY_ENABLED=false ./gradlew assembleFullRelease -Duniversal-apk=true
+then
+  echo "unable to build full unminified APKs"
+  exit 1
+fi
+# Copy our unminified full universal release out
+cp AnkiDroid/build/outputs/apk/full/release/AnkiDroid-full-universal-release.apk AnkiDroid-"$VERSION"-full-universal-nominify.apk
+
 # Push to Github Releases.
 GITHUB_TOKEN=$(cat ~/src/my-github-personal-access-token)
 export GITHUB_TOKEN
@@ -181,6 +192,8 @@ for FLAVOR in $FLAVORS; do
   echo "Adding universal APK for $FLAVOR to Github release"
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk --file AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
+echo "Adding un-minified full universal APK to GitHub release"
+github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-full-universal-nominify.apk --file AnkiDroid-"$VERSION"-full-universal-nominify.apk
 echo "Adding proguard mappings file to Github release"
 github-release upload --tag v"$VERSION" --name proguard-mappings.tar.gz --file proguard-mappings.tar.gz
 
