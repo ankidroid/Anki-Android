@@ -72,6 +72,6 @@
         <item quantity="one">మీరు %d డెక్ వరకు ఎంచుకోవచ్చు.</item>
         <item quantity="other">మీరు గరిష్టంగా %d డెక్‌లను ఎంచుకోవచ్చు.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">డెక్ లేదు. మళ్లీ కాన్ఫిగర్ చేయడానికి నొక్కండి.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">సేకరణ ఖాళీగా ఉంది, డెక్‌లను జోడించడానికి యాప్‌ని ఉపయోగించి మళ్లీ కాన్ఫిగర్ చేయండి</string>
 </resources>

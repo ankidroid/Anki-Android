@@ -54,14 +54,14 @@
     <string name="CardEditorCards">Kartos: %1$s</string>
     <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Namo sokeiniwaurdis</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
+    <string name="add_new_filter_tags">Anaaiauk sokeiniwaurda</string>
     <string name="add_tag">Biaik sokeiniwaurd</string>
     <string name="check_all_tags">Check/uncheck all tags</string>
     <string name="filter_tags">Filter tags</string>
     <string name="no_tags">Nauh ni biaiaukt sokeiniwaurd</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="updated_version">Ananiujiþ du usmereinai %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Gafastai ƕeitabaurd</string>
     <string name="enable_stylus">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Brukei ƕeitabaurd</string>

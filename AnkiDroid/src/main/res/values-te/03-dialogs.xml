@@ -233,7 +233,7 @@
     <string name="dismiss_backup_warning_new_user">Android గోప్యతా మార్పుల కారణంగా, యాప్‌ను అన్‌ఇన్‌స్టాల్ చేయడం వలన మీ ఫోన్ నుండి మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్ తొలగించబడుతుంది</string>
     <string name="dismiss_backup_warning_upgrade">Android గోప్యతా మార్పుల కారణంగా, యాప్ అన్‌ఇన్‌స్టాల్ చేయబడితే మీ డేటా మరియు ఆటోమేటెడ్ బ్యాకప్‌లు యాక్సెస్ చేయబడవు</string>
     <string name="deck_already_exists">డెక్ ఇప్పటికే ఉంది</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">డెక్ పేరు ఖాళీగా ఉండకూడదు</string>
     <string name="create_deck_numeric_hint">మీకు డెక్ ఆర్డరింగ్ సమస్యలు ఉంటే (ఉదా. \'2\'కి ముందు \'10\' కనిపిస్తుంది), \'2\'ని \'02\'తో భర్తీ చేయండి</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">విరామాన్ని అదే విలువకు సెట్ చేయండి</string>
@@ -263,7 +263,7 @@
     <string name="change_cloze_mode">క్లోజ్ మోడ్‌ని మార్చండి</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">సిస్టమ్ WebView పాతది. కొన్ని ఫీచర్‌లు సరిగ్గా పని చేయవు. దయచేసి దీన్ని అప్‌డేట్ చేయండి.\n\nఇన్‌స్టాల్ చేసిన వెర్షన్: %1$d\nకనీసం అవసరమైన వెర్షన్: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">కుదించుము</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">భాషకు మద్దతు లేదు</string>
     <string name="tts_error_dialog_reason_text">టెక్స్ట్ టు స్పీచ్ ఇంజిన్ <b>%1$s</b> కింది భాషకు మద్దతు ఇవ్వదు: <b>%2$s</b></string>

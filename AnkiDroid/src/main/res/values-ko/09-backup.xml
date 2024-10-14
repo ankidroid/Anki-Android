@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning">%d MB 이하의 여유 공간이 남아 있습니다. 데이터 손실을 방지하려면 추가 공간을 확보하세요.</string>
     <string name="backup_restore">백업으로부터 복원</string>
     <string name="backup_new_collection">새 컬렉션</string>
     <string name="backup_del_collection">컬렉션 삭제 후 새 컬렉션 만들기</string>

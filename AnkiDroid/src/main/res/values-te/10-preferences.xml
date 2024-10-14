@@ -367,5 +367,5 @@
     <string name="hide_answer_buttons" maxLength="41">జవాబు బటన్లను దాచండి</string>
     <string name="hide_hard_and_easy" maxLength="41">\'హార్డ్\' మరియు \'ఈజీ\' బటన్లను దాచండి</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">సెట్టింగ్‌లను తెరవండి</string>
 </resources>
