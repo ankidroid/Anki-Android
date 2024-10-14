@@ -63,7 +63,7 @@
     <string name="add_to_deck_use_current_deck">현재 카드 묶음을 사용</string>
     <string name="add_to_deck_decide_by_note_type">노트 형식에 따라 결정</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">시스템 설정</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">밝음</string>
     <string name="day_theme_plain">플레인</string>
@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">매우 크게</string>
     <string name="html_size_code_xx_large">엄청나게 크게</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">다시</string>
+    <string name="answer_hard">어려움</string>
+    <string name="answer_good">괜찮음</string>
+    <string name="answer_easy">쉬움</string>
     <string name="gesture_play">미디어 재생</string>
     <string name="gesture_abort_learning">Close reviewer</string>
     <string name="gesture_flag_red">빨간색 플래그 넣기 / 빼기</string>
@@ -97,9 +97,9 @@
     <string name="gesture_page_down">페이지 아래로</string>
     <string name="gesture_abort_sync">Close reviewer and Sync</string>
     <string name="gesture_toggle_whiteboard">화이트보드 켜기 / 끄기</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_hint">힌트 보기</string>
+    <string name="gesture_show_all_hints">모든 힌트 보기</string>
     <string name="record_voice">목소리 녹음</string>
     <string name="replay_voice">목소리 녹음 재생</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="save_voice">녹음 저장</string>
 </resources>

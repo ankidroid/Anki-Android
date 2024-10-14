@@ -338,19 +338,19 @@
     <string name="orphan_note_message">ఈ కార్డ్ రకాన్ని తొలగించడం వలన కొన్ని గమనికలు కార్డ్‌లు లేకుండా ఉంటాయి.</string>
     <string name="voice_not_supported">వాయిస్ మద్దతు లేదు. మరొకటి ప్రయత్నించండి లేదా వాయిస్ ఇంజిన్‌ని ఇన్‌స్టాల్ చేయండి.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">కీబోర్డ్ సత్వరమార్గాల డైలాగ్‌ని చూపించు</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">డెక్ పికర్</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">నిర్ధారణ లేకుండా డెక్‌ను తొలగించండి</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">గమనిక ఎడిటర్</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">డెక్ ఎంచుకోండి</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">గమనిక రకాన్ని ఎంచుకోండి</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ట్యాగ్ ఎడిటర్</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">కార్డ్ టెంప్లేట్ ఎడిటర్</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">ముందు టెంప్లేట్‌ని సవరించండి</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">తిరిగి టెంప్లేట్‌ని సవరించండి</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">స్టైలింగ్‌ని సవరించండి</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">టెంప్లేట్‌ను మార్క్‌డౌన్‌గా కాపీ చేయండి</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">బ్రౌజర్ రూపాన్ని సవరించండి</string>
+    <string name="show_shortcuts_message">కీబోర్డ్ సత్వరమార్గాలను చూపడానికి Alt+K నొక్కండి</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">ఈ నోట్‌టైప్‌లో వినియోగదారు చర్య %s సెట్ చేయబడలేదు. దయచేసి దీన్ని కాన్ఫిగర్ చేయండి</string>
 </resources>

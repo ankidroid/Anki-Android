@@ -194,10 +194,10 @@
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
     <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="storage_access_summary">ആപ്പ് അൺഇൻസ്റ്റാൾ ചെയ്താൽ ഇല്ലാതാക്കപ്പെടാത്ത സുരക്ഷിതമായ ലൊക്കേഷനിൽ നിങ്ങളുടെ ശേഖരം സംരക്ഷിക്കുന്നു</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">എല്ലാ ഫയലുകളിലേക്കും പ്രവേശനം</string>
     <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">അക്കൗണ്ട് നീക്കം ചെയ്യുക</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">തൽക്ഷണ കാർഡ്</string>
 </resources>
