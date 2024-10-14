@@ -153,6 +153,7 @@
     <string name="link_install_non_play_store_install">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
     <string name="link_set_due_date_help">https://docs.ankiweb.net/browsing.html#cards</string>
+    <string name="link_full_storage_access">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
 
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>
