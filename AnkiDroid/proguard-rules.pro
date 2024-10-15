@@ -16,8 +16,12 @@
 # debugging stack traces.
 -keepattributes SourceFile,LineNumberTable
 
+# #17256: `-dontobfuscate` caused crashes in SDK 26 (release mode):
+# java.lang.NoSuchMethodError: No direct method <init>(II)V in class Lorg/apache/http/protocol/HttpRequestExecutor; or its super classes (declaration of 'org.apache.http.protocol.HttpRequestExecutor' appears in /system/framework/org.apache.http.legacy.boot.jar)
+# The underlying cause has not been investigated, reinstate this line when fixed
+
 # We do not have commercial interests to protect, so optimize for easier debugging
--dontobfuscate
+# -dontobfuscate
 
 # Used through Reflection
 -keep class com.ichi2.anki.**.*Fragment { *; }
