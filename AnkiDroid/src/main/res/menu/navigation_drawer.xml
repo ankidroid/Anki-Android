@@ -1,4 +1,5 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:id="@+id/group1"
         android:checkableBehavior="single">
@@ -16,6 +17,12 @@
             android:title="@string/statistics"/>
     </group>
     <group  android:id="@+id/group2">
+        <item
+            android:id="@+id/nav_addons"
+            android:icon="@drawable/ic_extension"
+            android:title="Addons"
+            android:visible="false"
+            tools:ignore="HardcodedText" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_black"

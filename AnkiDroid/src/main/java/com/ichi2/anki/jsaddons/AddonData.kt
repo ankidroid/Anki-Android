@@ -150,22 +150,23 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     val icon = if (addonData.addonType == NOTE_EDITOR_ADDON) addonData.icon!! else ""
 
     // return addon model, because it is validated
-    val addonModel =
-        AddonModel(
-            name = addonData.name,
-            addonTitle = addonData.addonTitle!!,
-            icon = icon,
-            version = addonData.version!!,
-            description = addonData.description!!,
-            main = addonData.main!!,
-            ankidroidJsApi = addonData.ankidroidJsApi!!,
-            addonType = addonData.addonType!!,
-            keywords = addonData.keywords,
-            author = addonData.author!!,
-            license = addonData.license!!,
-            homepage = addonData.homepage!!,
-            dist = addonData.dist!!,
-        )
+    val addonModel = AddonModel(
+        name = addonData.name,
+        addonTitle = addonData.addonTitle!!,
+        icon = icon,
+        version = addonData.version!!,
+        description = addonData.description!!,
+        main = addonData.main!!,
+        ankidroidJsApi = addonData.ankidroidJsApi!!,
+        addonType = addonData.addonType!!,
+        keywords = addonData.keywords,
+        author = addonData.author!!,
+        license = addonData.license!!,
+        homepage = addonData.homepage!!,
+        // package.json in tgz file does not contains dist but it is available when the file loaded
+        // from network, the dist contains .tgz url which will be used to download the file
+        dist = addonData.dist!!
+    )
 
     return Pair(addonModel, immutableList)
 }
