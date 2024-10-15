@@ -88,7 +88,7 @@
     <string name="gesture_flag_red">ചുവന്ന പതാക മാറ്റുക</string>
     <string name="gesture_flag_orange">ഓറഞ്ച് പതാക ടോഗിൾ ചെയ്യുക</string>
     <string name="gesture_flag_green">പച്ച പതാക മാറ്റുക</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
+    <string name="gesture_flag_blue">നീല പതാക ടോഗിൾ ചെയ്യുക</string>
     <string name="gesture_flag_pink">പിങ്ക് പതാക ടോഗിൾ ചെയ്യുക</string>
     <string name="gesture_flag_turquoise">ടർക്കോയ്സ് ഫ്ലാഗ് ടോഗിൾ ചെയ്യുക</string>
     <string name="gesture_flag_purple">പർപ്പിൾ ഫ്ലാഗ് ടോഗിൾ ചെയ്യുക</string>
@@ -98,7 +98,7 @@
     <string name="gesture_abort_sync">അവലോകനവും സമന്വയവും അടയ്ക്കുക</string>
     <string name="gesture_toggle_whiteboard">വൈറ്റ്ബോർഡ് ടോഗിൾ ചെയ്യുക</string>
     <string name="gesture_show_hint">സൂചന കാണിക്കുക</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_all_hints">എല്ലാ സൂചനകളും കാണിക്കുക</string>
     <string name="record_voice">വോയ്സ് റെക്കോർഡ് ചെയ്യുക</string>
     <string name="replay_voice">ശബ്ദം വീണ്ടും പ്ലേ ചെയ്യുക</string>
     <string name="save_voice">റെക്കോർഡിംഗ് സംരക്ഷിക്കുക</string>

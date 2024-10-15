@@ -27,7 +27,7 @@
 <resources>
     <!--Menu Labels-->
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">குறிப்பு வகைகளை நிர்வகிக்கவும்</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Manage fields</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">புலங்களை நிர்வகிக்கவும்</string>
     <!--Toasts-->
     <string name="toast_last_model">உங்கள் கடைசி குறிப்பு வகையை நீக்க முடியாது</string>
     <string name="toast_last_field">குறிப்பு வகைகளில் குறைந்தது ஒரு புலம் இருக்க வேண்டும்</string>
@@ -50,7 +50,7 @@
     <!--Rename-->
     <string name="rename_model">குறிப்பு வகையை மறுபெயரிடவும்</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">மொழி குறிப்பை %s ஆக அமைக்கவும்</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">புலங்களைத் திருத்து</string>
     <string name="model_field_editor_add">ஒரு புலத்தைச் சேர்க்கவும்</string>
@@ -58,8 +58,8 @@
     <string name="model_field_editor_rename">புலத்தை மறுபெயரிடவும்</string>
     <string name="model_field_editor_language_hint">விசைப்பலகை மொழி குறிப்பை அமைக்கவும்</string>
     <string name="model_field_editor_reposition_menu">இடமாற்ற புலம்</string>
-    <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_reposition">இடமாற்ற புலம் (%1$d–%2$d மதிப்பை உள்ளிடவும்)</string>
+    <string name="model_field_editor_toggle_sticky">சேர்க்கும்போது கடைசி உள்ளீட்டை நினைவில் கொள்ளுங்கள்</string>
     <string name="model_field_editor_changing">புதுப்பிப்பு புலங்கள்</string>
     <string name="model_field_editor_sort_field">இந்தப் புலத்தின்படி வரிசைப்படுத்தவும்</string>
     <!--Warnings-->
@@ -70,16 +70,16 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">குளோன்: %1$s</string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_summary">கார்டு உலாவி உங்கள் கார்டுகளைக் காண்பிக்கப் பயன்படுத்தும் டெம்ப்ளேட்டை உள்ளிடவும். இன்னும் சுருக்கமான பதிலைக் காண்பிக்க இதைப் பயன்படுத்தவும்.\n\n\n“{{நாட்டின்}} தலைநகரம்:”\nஇன் முன் டெம்ப்ளேட்டை அட்டை உலாவியில்\n“மூலதனம்: {{Country}}” என்று சுருக்கலாம்.</string>
+    <string name="card_template_browser_appearance_question_format">கேள்வி வடிவம்</string>
+    <string name="card_template_browser_appearance_answer_format">பதில் வடிவம்</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">இயல்புநிலை மதிப்புகளை மீட்டெடுக்கவா?</string>
+    <string name="card_template_browser_appearance_saving_note">கார்டு டெம்ப்ளேட் சேமிக்கப்படும்போது இந்த மாற்றங்கள் பயன்படுத்தப்படும்</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">டெக் ஓவர்ரைடு (ஆன்)</string>
+    <string name="card_template_editor_deck_override_off">டெக் ஓவர்ரைடு (ஆஃப்)</string>
+    <string name="model_manager_deck_override_added_message">‘%1$s’ இயல்புநிலை டெக்கை ‘%2$s’ ஆக அமைக்கவும்</string>
+    <string name="model_manager_deck_override_removed_message">‘%s’க்கான இயல்புநிலை தளம் அகற்றப்பட்டது</string>
+    <string name="deck_override_explanation">புதிய ‘%s’ கார்டுகளை வைக்க டெக்கைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="deck_picker_dialog_filter_decks">வடிகட்டி அடுக்குகள்</string>
 </resources>

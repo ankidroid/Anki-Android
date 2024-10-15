@@ -70,7 +70,7 @@
     <!-- Crop function-->
     <string name="crop_image">இந்தப் படத்தைச் செதுக்க விரும்புகிறீர்களா?</string>
     <string name="crop_button">படத்தைச் செதுக்கு</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">தற்போதைய படத்தின் அளவு %sMB. இயல்புநிலை பட அளவு வரம்பு 1MB. அதைச் சுருக்க வேண்டுமா?</string>
     <string name="select_image_failed">"படத்தைத் தேர்ந்தெடுக்க முடியவில்லை, மீண்டும் முயற்சிக்கவும்"</string>
     <string name="activity_result_unexpected">ஆப்ஸ் எதிர்பாராத மதிப்பை வழங்கியது. நீங்கள் வேறு ஆப்ஸைப் பயன்படுத்த வேண்டியிருக்கலாம்</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">புல உள்ளடக்கங்கள்</string>

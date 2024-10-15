@@ -74,7 +74,7 @@
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ஐ நீக்கவா?</string>
     <string name="card_browser_change_display_order" maxLength="29">காட்சி வரிசையை மாற்றவும்</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">தேடு</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">தேடு</string>
     <string name="card_browser_change_display_order_title">காட்சி வரிசையைத் தேர்ந்தெடுக்கவும்</string>
     <string name="card_details_tags">குறிச்சொற்கள்</string>
     <string-array name="card_browser_order_labels">
@@ -112,6 +112,6 @@
         <item quantity="other">%d கார்டுகள் அகற்றப்பட்டன</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">குறிச்சொற்களைத் திருத்து உரையாடல்</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">ஆர்டர் உரையாடலைக் காட்டு</string>
 </resources>

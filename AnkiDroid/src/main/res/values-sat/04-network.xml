@@ -63,23 +63,23 @@
     <string name="logged_as">ᱞᱮᱠᱷᱟ ᱵᱚᱞᱚᱣᱟᱠ </string>
     <string name="log_out">ᱵᱟᱦᱨᱮ ᱚᱰᱚᱠ</string>
     <string name="reset_password">ᱫᱚᱦᱲᱟ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="lost_mail_instructions">ᱤᱼᱢᱮᱞ ᱦᱤᱲᱤᱧᱮᱱᱟ ᱥᱮ?</string>
+    <string name="sign_in">ᱥᱮᱞᱮᱫᱚᱜ ᱢᱮ</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX ᱞᱟᱹᱜᱤᱫ ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
     <string name="sync_title">ᱟᱭᱩᱨ ᱤᱫᱤᱜ ᱪᱟᱹᱞᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="sync_log_uploading_message">ᱞᱚᱠᱟᱞ ᱠᱷᱚᱱ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ</string>
     <string name="sync_database_acknowledge">ᱴᱩᱢᱟᱹᱞ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">ᱥᱟᱸᱠᱨᱟᱱᱥ ᱟᱠᱟᱱᱟ. ᱢᱤᱰᱤᱭᱟ ᱫᱚ ᱛᱟᱭᱚᱢ ᱨᱮ ᱥᱤᱸᱠᱨᱚᱱ ᱦᱩᱭᱩᱜ ᱠᱟᱱᱟ.</string>
     <string name="sync_corrupt_database">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱮᱱᱟ ᱾ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱟᱲᱟᱹᱝ ᱨᱮ ᱴᱷᱤᱠ ᱢᱮ ᱾ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ \n\nᱧᱮᱞᱢᱮ %s ᱾</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ᱱᱚᱰᱮᱱᱟᱜ</string>
     <string name="sync_sanity_remote">ᱥᱟᱝᱜᱤᱧ ᱨᱮᱭᱟᱜ</string>
-    <string name="one_way_sync_title">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title">ᱢᱤᱫ ᱰᱟᱦᱟᱨ ᱥᱤᱸᱠᱨᱚᱱ</string>
+    <string name="one_way_sync_confirmation">ᱢᱤᱫ ᱫᱷᱟᱨᱟ ᱥᱤᱸᱠᱨᱚᱱ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
     <string name="full_sync_confirmation">ᱵᱚᱫᱚᱞᱠᱟᱱ ᱫᱚᱨᱠᱷᱥᱛᱚ ᱟᱢᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱩᱨᱟ ᱞᱟᱫᱮ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ ᱾  ᱚᱞᱜᱟ ᱰᱤᱵᱷᱟᱤᱥ ᱵᱟᱭ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱚᱜ ᱠᱷᱟᱱ ᱰᱟᱴᱟ ᱟᱫᱚᱜ ᱛᱟᱢᱮ, ᱞᱮᱛᱟᱲ ᱟᱢ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱟᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱹᱣ ᱧᱟᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">ᱥᱤᱸᱠᱨᱚᱱ (ᱵᱮᱠᱟᱱ)</string>
     <string name="sync_menu_title_no_account">ᱥᱭᱸᱠ (ᱵᱚᱞᱚᱱ ᱢᱮ)</string>
 </resources>

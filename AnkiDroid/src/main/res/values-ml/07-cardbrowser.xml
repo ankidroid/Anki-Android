@@ -83,17 +83,17 @@
         <item>സൃഷ്ടിച്ച സമയം കൊണ്ട്</item>
         <item>നോട്ട് പരിഷ്ക്കരണ സമയം പ്രകാരം</item>
         <item>കാർഡ് പരിഷ്ക്കരണ സമയം പ്രകാരം</item>
-        <item>By due time</item>
+        <item>കൃത്യസമയത്ത്</item>
         <item>ഇടവേള പ്രകാരം</item>
         <item>By ease</item>
-        <item>By reviews</item>
+        <item>അവലോകനങ്ങൾ വഴി</item>
         <item>By lapses</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="29">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
     <string name="card_browser_select_none">ഒന്നും തിരഞ്ഞെടുക്കരുത്</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(പുതിയത്)</string>
     <string name="card_browser_due_filtered_card">(ഫിൽറ്റർ ചെയ്‌തത്)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_interval_learning_card">(പഠനം)</string>
     <string name="card_browser_no_cards_in_deck">\'%s\' ഡെക്കിൽ കാർഡുകളൊന്നും കണ്ടെത്തിയില്ല</string>
     <string name="card_browser_search_all_decks">എല്ലാ ഡെക്കുകളും തിരയുക</string>
     <string name="card_browser_unknown_deck_name">അജ്ഞാതം</string>
@@ -112,6 +112,6 @@
         <item quantity="other">%d കാർഡുകൾ ഇല്ലാതാക്കി</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">ടാഗ് ഡയലോഗ് എഡിറ്റ് ചെയ്യുക</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">ഓർഡർ ഡയലോഗ് കാണിക്കുക</string>
 </resources>

@@ -69,8 +69,8 @@
         <item quantity="other">Залишилося %1$d годин %2$d </item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">Залишився %1$d день %2$d годин</item>
-        <item quantity="few">Залишилось %1$d днів %2$d годин</item>
+        <item quantity="one">Залишився %1$d день %2$d година</item>
+        <item quantity="few">Залишилось %1$d дні %2$d години</item>
         <item quantity="many">Залишилось %1$d днів %2$d годин</item>
         <item quantity="other">Залишилось %1$d днів %2$d годин</item>
     </plurals>
@@ -135,7 +135,7 @@
     <string name="empty_deck">Ця колода порожня</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук колоди</string>
     <string name="invalid_deck_name">Некоректна назва колоди</string>
-    <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
+    <string name="studyoptions_congrats_finished">Вітаємо! Наразі це все.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Колоду завершено! %s</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
