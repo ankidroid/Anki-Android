@@ -27,5 +27,5 @@
 <resources>
     <!--Fields-->
     <string name="front_field_name">முன்</string>
-    <string name="back_field_name">Back</string>
+    <string name="back_field_name">பின்</string>
 </resources>

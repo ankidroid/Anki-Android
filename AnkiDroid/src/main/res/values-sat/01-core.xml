@@ -65,8 +65,8 @@
         <item quantity="other">%1$d ᱚᱠᱛᱚ %2$d ᱦᱟᱹᱴᱤᱧ</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d ᱫᱤᱱ %2$d ᱮᱥᱠᱟᱨ</item>
+        <item quantity="other">%1$d ᱫᱤᱱ %2$d ᱦᱟᱹᱴᱤᱧ</item>
     </plurals>
     <string name="no_cards_placeholder_title">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
@@ -182,22 +182,22 @@
     <string name="sync_conflict_replace_title">ᱟᱨᱡᱟᱣ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s ᱨᱮᱫ ᱨᱮ ᱫᱚ ᱚᱞ ᱥᱮ ᱛᱮᱭᱟᱨ ᱵᱟᱭ ᱜᱟᱱᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ᱵᱟᱝ ᱥᱮᱴᱮᱨᱚᱜ ᱠᱟᱱ ᱥᱟᱠᱟᱢ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
     <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="create_new_collection">ᱱᱟᱣᱟ ᱥᱟᱠᱟᱢ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
+    <string name="new_unsafe_collection">ᱟᱢ ᱟᱢᱟᱜ ᱯᱷᱚᱱ ᱠᱷᱚᱱ ᱱᱟᱣᱟ ᱥᱟᱠᱟᱢ ᱠᱚ ᱵᱚᱫᱚᱞ ᱮᱫᱟᱭ ᱡᱩᱫᱤ ᱟᱢ AnkiDroid ᱵᱚᱫᱚᱞ ᱮᱫᱟᱭ</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
-    <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="permissions_screen_headline">AnkiDroid ᱫᱚ ᱠᱟᱹᱢᱤ ᱞᱟᱹᱜᱤᱫ ᱠᱤᱪᱷᱩ ᱫᱟᱹᱭᱠᱟᱹ ᱠᱚ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
+    <string name="storage_access_title">ᱥᱴᱳᱨᱮᱡᱽ ᱮᱠᱥᱮᱥ</string>
+    <string name="storage_access_summary">ᱟᱢᱟᱜ ᱥᱮᱠᱥᱚᱱ ᱢᱤᱫ ᱥᱤᱠᱷᱱᱟᱹᱛ ᱡᱟᱭᱜᱟ ᱨᱮ ᱥᱮᱵᱽ ᱟᱭᱟ ᱡᱟᱦᱟᱸ ᱫᱚ ᱮᱯ ᱟᱫ ᱟᱠᱟᱱ ᱠᱷᱟᱱ ᱵᱟᱝ ᱰᱤᱞᱤᱴ ᱦᱩᱭᱩᱜ ᱟ</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ᱡᱚᱛᱚ ᱯᱷᱤᱞ ᱠᱚ ᱥᱮᱴᱮᱨᱚᱜ</string>
+    <string name="image_occlusion">ᱪᱤᱛᱟᱹᱨ ᱚᱠᱞᱩᱥᱚᱱ</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">ᱮᱠᱟᱶᱩᱴ ᱦᱮᱡ ᱢᱮ</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">ᱚᱛᱱᱚᱜ ᱠᱟᱨᱰ</string>
 </resources>

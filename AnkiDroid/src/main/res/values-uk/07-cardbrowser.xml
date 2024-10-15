@@ -76,7 +76,7 @@
     <string name="card_browser_list_my_searches_new_name">Назва для пошукового запиту</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Не можна зберегти пошуковий запит без назви</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Така назва вже існує!</string>
-    <string name="no_note_to_edit">Немає нотаток для редагування</string>
+    <string name="no_note_to_edit">Немає записів для редагування</string>
     <string name="card_browser_list_my_searches_remove_content">Видалити «%1$s»?</string>
     <string name="card_browser_change_display_order" maxLength="29">Сортувати за</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Пошук</string>
@@ -125,5 +125,5 @@
     </plurals>
     <!--Keyboard shortcuts dialog-->
     <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Редагувати діалогове вікно тегів</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Показати діалогове вікно замовлення</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Показати діалогове вікно порядку</string>
 </resources>
