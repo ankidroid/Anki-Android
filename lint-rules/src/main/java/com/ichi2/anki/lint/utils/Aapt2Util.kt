@@ -172,7 +172,6 @@ object Aapt2Util {
      */
     private fun consumeDigits(s: String, index: Int): Int {
         var digits = 0
-        @Suppress("UseWithIndex")
         for (i in index until s.length) {
             if (!s[i].isDigit()) {
                 return digits

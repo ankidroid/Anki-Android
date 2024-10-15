@@ -104,7 +104,7 @@ class Collection(
      * Getters/Setters ********************************************************** *************************************
      */
 
-    val media: Media
+    val media: Media = Media(this)
 
     lateinit var decks: Decks
         protected set
@@ -140,7 +140,6 @@ class Collection(
     // END: SQL table columns
 
     init {
-        media = Media(this)
         tags = Tags(this)
         val created = reopen()
         startReps = 0
