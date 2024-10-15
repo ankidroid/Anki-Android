@@ -32,3 +32,5 @@
 # Ignore unused packages
 -dontwarn javax.naming.**
 -dontwarn org.ietf.jgss.**
+
+-keep class kotlin.Metadata
