@@ -359,4 +359,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Editar aparência do navegador</string>
     <string name="show_shortcuts_message">Pressione Alt+K para mostrar atalhos de teclado</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">A ação do usuário %s não está definida neste tipo de nota. Por favor, configure-a</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>
