@@ -353,4 +353,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">బ్రౌజర్ రూపాన్ని సవరించండి</string>
     <string name="show_shortcuts_message">కీబోర్డ్ సత్వరమార్గాలను చూపడానికి Alt+K నొక్కండి</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">ఈ నోట్‌టైప్‌లో వినియోగదారు చర్య %s సెట్ చేయబడలేదు. దయచేసి దీన్ని కాన్ఫిగర్ చేయండి</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>

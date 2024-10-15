@@ -353,4 +353,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">カードブラウザ用の表示設定を編集</string>
     <string name="show_shortcuts_message">キーボードショートカットを表示するには [Alt]+[K] を押してください</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
+    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
 </resources>
