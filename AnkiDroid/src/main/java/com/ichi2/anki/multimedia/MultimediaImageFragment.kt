@@ -21,15 +21,18 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.view.View
-import android.widget.ImageView
+import android.webkit.WebView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
 import androidx.core.os.BundleCompat
@@ -62,18 +65,20 @@ import com.ichi2.utils.show
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.DecimalFormat
 
+private const val SVG_IMAGE = "image/svg+xml"
+
 @NeedsTest("Ensure correct option is executed i.e. gallery or camera")
 class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_image) {
     override val title: String
         get() = resources.getString(R.string.multimedia_editor_popup_image)
 
-    private lateinit var imagePreview: ImageView
     private lateinit var imageFileSize: TextView
 
     private lateinit var selectedImageOptions: ImageOptions
@@ -96,7 +101,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 }
 
                 Activity.RESULT_OK -> {
-                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
                     val data = result.data
                     if (data == null) {
                         Timber.w("handleSelectImageIntent() no intent provided")
@@ -128,7 +132,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 }
 
                 Activity.RESULT_OK -> {
-                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
                     val intent = result.data ?: return@registerForActivityResult
                     Timber.d("Intent not null, handling the result")
                     handleDrawingResult(intent)
@@ -154,7 +157,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
                 isPictureTaken -> {
                     Timber.d("Image successfully captured")
-                    view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
                     handleTakePictureResult(viewModel.currentMultimediaPath.value)
                 }
 
@@ -186,7 +188,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                         updateAndDisplayImageSize(cropResultData.uriPath)
                         viewModel.updateCurrentMultimediaPath(cropResultData.uriPath)
                         viewModel.updateCurrentMultimediaUri(cropResultData.uriContent)
-                        imagePreview.setImageURI(cropResultData.uriContent)
+                        previewImage(cropResultData.uriContent)
                     }
                 }
                 else -> {
@@ -265,7 +267,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu(multimediaMenu)
-        imagePreview = view.findViewById(R.id.image_preview)
         imageFileSize = view.findViewById(R.id.image_size_textview)
 
         handleImageUri()
@@ -274,7 +275,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun handleImageUri() {
         if (imageUri != null) {
-            view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
             handleSelectImageIntent(imageUri)
         } else {
             handleSelectedImageOptions()
@@ -325,6 +325,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        if (intent.resolveActivity(requireActivity().packageManager) == null) {
+            Timber.w("No app available to handle the gallery intent")
+            showErrorDialog()
+            return
+        }
+
         pickImageLauncher.launch(intent)
     }
 
@@ -347,6 +354,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 requireActivity().applicationContext.packageName + ".apkgfileprovider",
                 it
             )
+            viewModel.updateCurrentMultimediaUri(photoURI)
             cameraLauncher.launch(photoURI)
         }
     }
@@ -378,7 +386,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         val drawImagePath = internalizedPick.absolutePath
         Timber.i("handleDrawingResult() Decoded image: '%s'", drawImagePath)
 
-        imagePreview.setImageURI(imageUri)
+        previewImage(imageUri)
         viewModel.updateCurrentMultimediaPath(drawImagePath)
         viewModel.updateCurrentMultimediaUri(imageUri)
         updateAndDisplayImageSize(drawImagePath)
@@ -390,6 +398,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             Timber.i("handleTakePictureResult appears to have an invalid picture")
             return
         }
+
+        viewModel.currentMultimediaUri.value?.let { previewImage(it) }
 
         updateAndDisplayImageSize(imagePath)
 
@@ -441,51 +451,141 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
     }
 
+    /**
+     * Handles the selected image from the intent by previewing it in a WebView and internalizing the URI.
+     * Updates the ViewModel with the selected image's path and size.
+     *
+     * @param imageUri The URI of the selected image.
+     */
     private fun handleSelectImageIntent(imageUri: Uri?) {
-        val mimeType = imageUri?.let { context?.contentResolver?.getType(it) }
-        if (mimeType == "image/svg+xml") {
-            Timber.i("Selected image is an SVG.")
-            view?.findViewById<TextView>(R.id.no_image_textview)?.apply {
-                text = resources.getString(R.string.multimedia_editor_svg_preview)
-                visibility = View.VISIBLE
-            }
-        } else {
-            // reset the no preview text
-            view?.findViewById<TextView>(R.id.no_image_textview)?.apply {
-                text = null
-                visibility = View.GONE
-            }
-        }
-
         if (imageUri == null) {
             Timber.w("handleSelectImageIntent() selectedImage was null")
             showSomethingWentWrong()
             return
         }
 
+        previewImage(imageUri)
+
+        // Handle internalizing the URI (optional)
         val internalizedPick = internalizeUri(imageUri)
         if (internalizedPick == null) {
-            Timber.w(
-                "handleSelectImageIntent() unable to internalize image from Uri %s",
-                imageUri
-            )
+            Timber.w("handleSelectImageIntent() unable to internalize image from Uri %s", imageUri)
             showSomethingWentWrong()
             return
         }
 
+        // Update ViewModel with image data
         val imagePath = internalizedPick.absolutePath
-
         viewModel.updateCurrentMultimediaUri(imageUri)
         viewModel.updateCurrentMultimediaPath(imagePath)
-        imagePreview.setImageURI(imageUri)
         viewModel.selectedMediaFileSize = internalizedPick.length()
+
+        // Optionally update and display the image size
         updateAndDisplayImageSize(imagePath)
+    }
+
+    /**
+     * Previews the selected image in a WebView.
+     * Handles both SVG and non-SVG images (e.g., JPG, PNG) and displays the image based on its MIME type.
+     *
+     * @param imageUri The URI of the selected image.
+     */
+    private fun previewImage(imageUri: Uri) {
+        val mimeType = context?.contentResolver?.getType(imageUri)
+
+        // Get the WebView and set it visible
+        view?.findViewById<WebView>(R.id.multimedia_webview)?.apply {
+            visibility = View.VISIBLE
+
+            // Load image based on its MIME type
+            when (mimeType) {
+                SVG_IMAGE -> loadSvgImage(imageUri)
+                else -> loadImage(imageUri)
+            }
+        }
+    }
+
+    /**
+     * Loads and previews an SVG image in the WebView.
+     *
+     * @param imageUri The URI of the SVG image.
+     */
+    private fun WebView.loadSvgImage(imageUri: Uri) {
+        val svgData = loadSvgFromUri(imageUri)
+        if (svgData != null) {
+            Timber.i("Selected image is an SVG.")
+
+            loadDataWithBaseURL(null, svgData, SVG_IMAGE, "UTF-8", null)
+        } else {
+            Timber.w("Failed to load SVG from URI")
+            showErrorInWebView()
+        }
+    }
+
+    /**
+     * Loads and previews a non-SVG image (e.g., JPG, PNG) in the WebView.
+     *
+     * @param imageUri The URI of the non-SVG image.
+     */
+    private fun WebView.loadImage(imageUri: Uri) {
+        val imagePath = imageUri.toString()
+        val htmlData = """
+        <html>
+            <body style="margin:0;padding:0;">
+                <img src="$imagePath" style="width:100%;height:auto;" />
+            </body>
+        </html>
+        """.trimIndent()
+
+        loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
+    }
+
+    private fun convertDrawableToBase64(context: Context, drawableResId: Int): String {
+        val drawable = ContextCompat.getDrawable(context, drawableResId)
+        val bitmap = (drawable as BitmapDrawable).bitmap
+
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        val byteArray = outputStream.toByteArray()
+
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }
+
+    private fun showErrorInWebView() {
+        val base64Image = convertDrawableToBase64(requireContext(), R.drawable.ic_image_not_supported)
+
+        val errorHtml = """
+        <html>
+            <body style="text-align:center;">
+                <img src="data:image/png;base64,$base64Image" alt="Error Image"/>
+            </body>
+        </html>
+        """.trimIndent()
+
+        view?.findViewById<WebView>(R.id.multimedia_webview)?.loadDataWithBaseURL(null, errorHtml, "text/html", "UTF-8", null)
     }
 
     private fun requestCrop() {
         val imageUri = viewModel.currentMultimediaUri.value ?: return
         val intent = com.ichi2.imagecropper.ImageCropperLauncher.ImageUri(imageUri).getIntent(requireContext())
         imageCropperLauncher.launch(intent)
+    }
+
+    /**
+     * Loads an SVG file from the given URI and returns its content as a string.
+     *
+     * @param uri The URI of the SVG file to be loaded.
+     * @return The content of the SVG file as a string, or null if an error occurs.
+     */
+    private fun loadSvgFromUri(uri: Uri): String? {
+        return try {
+            context?.contentResolver?.openInputStream(uri)?.use { inputStream ->
+                inputStream.bufferedReader().readText()
+            }
+        } catch (e: Exception) {
+            Timber.e(e, "Error reading SVG from URI")
+            null
+        }
     }
 
     private fun handleCropResultError(error: Exception) {
@@ -543,7 +643,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             // TODO: see if we can use one value to the viewModel
             viewModel.updateCurrentMultimediaUri(imageUri)
             viewModel.updateCurrentMultimediaPath(outFile.path)
-            imagePreview.setImageURI(imageUri)
+            previewImage(imageUri)
             viewModel.selectedMediaFileSize = outFile.length()
             updateAndDisplayImageSize(outFile.path)
 
