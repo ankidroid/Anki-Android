@@ -14,7 +14,7 @@ androidGradlePlugin = "8.7.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.2"
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidxAnnotation = "1.8.2"
+androidxAnnotation = "1.9.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidxAppCompat = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
