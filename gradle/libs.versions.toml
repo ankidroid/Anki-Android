@@ -12,7 +12,7 @@ acra = '5.11.4'
 # https://developer.android.com/build/releases/past-releases
 androidGradlePlugin = "8.7.1"
 # https://developer.android.com/jetpack/androidx/releases/activity
-androidxActivity = "1.9.2"
+androidxActivity = "1.9.3"
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidxAnnotation = "1.9.0"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
