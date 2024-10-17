@@ -40,7 +40,9 @@ import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.dialogs.help.HelpDialog
+import com.ichi2.anki.jsaddons.AddonsBrowserActivity
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
@@ -129,6 +131,10 @@ abstract class NavigationDrawerActivity :
         // Setup toolbar and hamburger
         navigationView = drawerLayout.findViewById(R.id.navdrawer_items_container)
         navigationView!!.setNavigationItemSelectedListener(this)
+        // show the addons option as well if the dev setting is enabled
+        if (sharedPrefs().getBoolean(getString(R.string.new_addons_screen_pref_key), false)) {
+            navigationView?.menu?.findItem(R.id.nav_addons)?.isVisible = true
+        }
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -315,6 +321,12 @@ abstract class NavigationDrawerActivity :
                 R.id.nav_stats -> {
                     Timber.i("Navigating to stats")
                     openStatistics()
+                }
+
+                R.id.nav_addons -> {
+                    Timber.i("Navigating to addons")
+                    val intent = Intent(this, AddonsBrowserActivity::class.java)
+                    startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
                 }
 
                 R.id.nav_settings -> {

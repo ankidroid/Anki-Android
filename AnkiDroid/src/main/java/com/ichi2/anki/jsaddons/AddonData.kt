@@ -151,6 +151,8 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
         author = addonData.author!!,
         license = addonData.license!!,
         homepage = addonData.homepage!!,
+        // package.json in tgz file does not contains dist but it is available when the file loaded
+        // from network, the dist contains .tgz url which will be used to download the file
         dist = addonData.dist!!
     )
 

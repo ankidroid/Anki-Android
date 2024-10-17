@@ -44,14 +44,9 @@ class AddonModelTest : RobolectricTest() {
     private lateinit var prefs: SharedPreferences
 
     @Before
-    fun before() {
-        prefs = targetContext.sharedPrefs()
-    }
-
-    @Before
     override fun setUp() {
         super.setUp()
-
+        prefs = targetContext.sharedPrefs()
         validNpmPackageJson = FileOperation.getFileResource("valid-ankidroid-js-addon-test.json")
         notValidNpmPackageJson = FileOperation.getFileResource("not-valid-ankidroid-js-addon-test.json")
         addonsPackageListTestJson = FileOperation.getFileResource("test-js-addon.json")

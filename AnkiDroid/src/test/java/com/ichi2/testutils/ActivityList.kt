@@ -39,6 +39,7 @@ import com.ichi2.anki.SharedDecksActivity
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity
+import com.ichi2.anki.jsaddons.AddonsBrowserActivity
 import com.ichi2.anki.multimedia.MultimediaActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.preferences.Preferences
@@ -92,7 +93,8 @@ object ActivityList {
             get(InstantNoteEditorActivity::class.java),
             get(MultimediaActivity::class.java),
             get(DeckPickerWidgetConfig::class.java),
-            get(CardAnalysisWidgetConfig::class.java)
+            get(CardAnalysisWidgetConfig::class.java),
+            get(AddonsBrowserActivity::class.java)
         )
     }
 
