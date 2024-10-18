@@ -385,12 +385,16 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun handleTakePictureResult(imagePath: String?) {
-        Timber.d("handleTakePictureResult")
+        Timber.d("handleTakePictureResult, imagePath: %s", imagePath)
         if (imagePath == null) {
             Timber.i("handleTakePictureResult appears to have an invalid picture")
             return
         }
 
+        val imageFile = File(imagePath)
+        viewModel.updateCurrentMultimediaPath(imagePath)
+        viewModel.updateCurrentMultimediaUri(getUriForFile(imageFile))
+        imagePreview.setImageURI(getUriForFile(imageFile))
         updateAndDisplayImageSize(imagePath)
 
         showCropDialog(getString(R.string.crop_image))
