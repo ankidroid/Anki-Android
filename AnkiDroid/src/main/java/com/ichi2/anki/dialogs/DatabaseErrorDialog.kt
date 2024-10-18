@@ -23,6 +23,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
+import android.util.Log
 import android.view.KeyEvent
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
@@ -30,6 +31,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
@@ -55,11 +57,13 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMP
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
+import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.create
 import com.ichi2.utils.listItems
 import com.ichi2.utils.listItemsAndMessage
@@ -69,6 +73,9 @@ import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.File
@@ -139,8 +146,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_ERROR_HANDLING -> {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                val options = ArrayList<String>(6)
-                val values = ArrayList<Int>(6)
+                val options = ArrayList<String>(7)
+                val values = ArrayList<Int>(7)
                 if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
@@ -162,6 +169,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // delete old collection and build new one
                 options.add(res.getString(R.string.backup_del_collection))
                 values.add(5)
+
+                // copy stack trace and debug info
+                options.add(res.getString(R.string.feedback_copy_debug))
+                values.add(6)
+
                 val titles = arrayOfNulls<String>(options.size).toMutableList()
                 repairValues = IntArray(options.size)
                 var i = 0
@@ -199,6 +211,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             5 -> {
                                 (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
                                 return@listItems
+                            }
+
+                            6 -> {
+                                copyStackTraceAndDebugInfo()
                             }
                             else -> throw RuntimeException("Unknown dialog selection: " + repairValues[index])
                         }
@@ -389,6 +405,24 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     cancelable(false)
                 }
             }
+        }
+    }
+
+    private fun copyStackTraceAndDebugInfo() {
+        lifecycleScope.launch {
+            var combinedInfo = ""
+            DeckPicker.exception?.let {
+                val stackTrace = Log.getStackTraceString(it)
+                combinedInfo += stackTrace + "\n"
+            }
+            val debugInfo = withContext(NonCancellable) {
+                DebugInfoService.getDebugInfo(requireActivity().applicationContext)
+            }
+            combinedInfo += debugInfo
+            requireContext().copyToClipboard(
+                combinedInfo,
+                failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+            )
         }
     }
 
