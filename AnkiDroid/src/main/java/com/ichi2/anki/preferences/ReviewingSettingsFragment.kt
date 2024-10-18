@@ -15,11 +15,13 @@
  */
 package com.ichi2.anki.preferences
 
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
 
@@ -34,10 +36,17 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Represents the collections pref "collapseTime": i.e.
         // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
         // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
+        @NeedsTest("#16645, changing the learn ahead limit shows expected cards in review queue")
         requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
             launchCatchingTask { setValue(withCol { sched.learnAheadSeconds() / 60 }) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set("collapseTime", (newValue as Int * 60)) } }
+                launchCatchingTask {
+                    withCol { config.set("collapseTime", (newValue as Int * 60)) }
+                    // reinitialize the scheduler in the collection by closing the collection, this
+                    // way any access to the collection from now on will recreate the scheduler
+                    // see issue #16645
+                    CollectionManager.closeCollectionBlocking()
+                }
             }
         }
         // Timebox time limit
