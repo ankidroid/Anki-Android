@@ -15,13 +15,20 @@
  */
 package com.ichi2.anki.preferences
 
+import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.undoableOp
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
+import timber.log.Timber
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class ReviewingSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -34,10 +41,11 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Represents the collections pref "collapseTime": i.e.
         // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
         // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
+        @NeedsTest("#16645, changing the learn ahead limit shows expected cards in review queue")
         requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
-            launchCatchingTask { setValue(withCol { sched.learnAheadSeconds() / 60 }) }
+            launchCatchingTask { setValue(getLearnAheadLimit().toInt(DurationUnit.MINUTES)) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set("collapseTime", (newValue as Int * 60)) } }
+                launchCatchingTask { setLearnAheadLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
             }
         }
         // Timebox time limit
@@ -59,5 +67,18 @@ class ReviewingSettingsFragment : SettingsFragment() {
                 launchCatchingTask { setDayOffset(requireContext(), newValue as Int) }
             }
         }
+    }
+
+    private suspend fun getLearnAheadLimit(): Duration =
+        withCol { getPreferences().scheduling.learnAheadSecs }.toDuration(DurationUnit.SECONDS)
+
+    private suspend fun setLearnAheadLimit(limit: Duration) {
+        val prefs = withCol { getPreferences() }
+        val newPrefs = prefs.copy {
+            scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
+        }
+
+        undoableOp { setPreferences(newPrefs) }
+        Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
     }
 }
