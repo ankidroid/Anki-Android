@@ -51,7 +51,7 @@ object InitialActivity {
     fun getStartupFailureType(context: Context): StartupFailure? {
         // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
         if (AnkiDroidApp.webViewFailedToLoad()) {
-            return StartupFailure.WEBVIEW_FAILED
+            return StartupFailure.WEBVIEW_FAILED()
         }
 
         val failure = try {
@@ -59,23 +59,23 @@ object InitialActivity {
             return null
         } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
             Timber.w(e)
-            StartupFailure.DATABASE_LOCKED
+            StartupFailure.DATABASE_LOCKED(e)
         } catch (e: BackendException.BackendDbException.BackendDbFileTooNewException) {
             Timber.w(e)
-            StartupFailure.FUTURE_ANKIDROID_VERSION
+            StartupFailure.FUTURE_ANKIDROID_VERSION(e)
         } catch (e: SQLiteFullException) {
             Timber.w(e)
-            StartupFailure.DISK_FULL
+            StartupFailure.DISK_FULL(e)
         } catch (e: Exception) {
             Timber.w(e)
             CrashReportService.sendExceptionReport(e, "InitialActivity::getStartupFailureType")
-            StartupFailure.DB_ERROR
+            StartupFailure.DB_ERROR(e)
         }
 
         if (!AnkiDroidApp.isSdCardMounted) {
-            return StartupFailure.SD_CARD_NOT_MOUNTED
+            return StartupFailure.SD_CARD_NOT_MOUNTED()
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
-            return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
+            return StartupFailure.DIRECTORY_NOT_ACCESSIBLE()
         }
 
         return failure
@@ -134,9 +134,14 @@ object InitialActivity {
         return preferences.getString("lastVersion", "") == pkgVersionName
     }
 
-    enum class StartupFailure {
-        SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
-        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
+    sealed class StartupFailure {
+        data class SD_CARD_NOT_MOUNTED(val exception: Exception? = null) : StartupFailure()
+        data class DIRECTORY_NOT_ACCESSIBLE(val exception: Exception? = null) : StartupFailure()
+        data class FUTURE_ANKIDROID_VERSION(val exception: Exception? = null) : StartupFailure()
+        data class DB_ERROR(val exception: Exception? = null) : StartupFailure()
+        data class DATABASE_LOCKED(val exception: Exception? = null) : StartupFailure()
+        data class WEBVIEW_FAILED(val exception: Exception? = null) : StartupFailure()
+        data class DISK_FULL(val exception: Exception? = null) : StartupFailure()
     }
 
     /**
