@@ -729,11 +729,11 @@ open class DeckPicker :
     @VisibleForTesting
     fun handleStartupFailure(failure: StartupFailure?) {
         when (failure) {
-            SD_CARD_NOT_MOUNTED -> {
+            is SD_CARD_NOT_MOUNTED -> {
                 Timber.i("SD card not mounted")
                 onSdCardNotMounted()
             }
-            DIRECTORY_NOT_ACCESSIBLE -> {
+            is DIRECTORY_NOT_ACCESSIBLE -> {
                 Timber.i("AnkiDroid directory inaccessible")
                 if (ScopedStorageService.collectionWasMadeInaccessibleAfterUninstall(this)) {
                     showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
@@ -741,15 +741,15 @@ open class DeckPicker :
                     showDirectoryNotAccessibleDialog()
                 }
             }
-            FUTURE_ANKIDROID_VERSION -> {
+            is FUTURE_ANKIDROID_VERSION -> {
                 Timber.i("Displaying database versioning")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION)
             }
-            DATABASE_LOCKED -> {
+            is DATABASE_LOCKED -> {
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
+            is WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
                 message(
                     text = getString(
@@ -762,8 +762,8 @@ open class DeckPicker :
                 }
                 cancelable(false)
             }
-            DISK_FULL -> displayNoStorageError()
-            DB_ERROR -> displayDatabaseFailure()
+            is DISK_FULL -> displayNoStorageError()
+            is DB_ERROR -> displayDatabaseFailure(failure.exception)
             else -> displayDatabaseFailure()
         }
     }
@@ -793,8 +793,9 @@ open class DeckPicker :
         }
     }
 
-    private fun displayDatabaseFailure() {
+    private fun displayDatabaseFailure(e: Exception? = null) {
         Timber.i("Displaying database failure")
+        exception = e
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
     }
     private fun displayNoStorageError() {
@@ -2453,6 +2454,8 @@ open class DeckPicker :
         const val RESULT_MEDIA_EJECTED = 202
         const val RESULT_DB_ERROR = 203
         const val UPGRADE_VERSION_KEY = "lastUpgradeVersion"
+
+        var exception: Exception? = null
 
         /**
          * If passed into the intent, the user should have been logged in and DeckPicker

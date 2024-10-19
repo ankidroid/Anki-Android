@@ -69,7 +69,7 @@ object InitialActivity {
         } catch (e: Exception) {
             Timber.w(e)
             CrashReportService.sendExceptionReport(e, "InitialActivity::getStartupFailureType")
-            StartupFailure.DB_ERROR
+            StartupFailure.DB_ERROR(e)
         }
 
         if (!AnkiDroidApp.isSdCardMounted) {
@@ -134,9 +134,14 @@ object InitialActivity {
         return preferences.getString("lastVersion", "") == pkgVersionName
     }
 
-    enum class StartupFailure {
-        SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
-        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
+    sealed class StartupFailure {
+        object SD_CARD_NOT_MOUNTED : StartupFailure()
+        object DIRECTORY_NOT_ACCESSIBLE : StartupFailure()
+        object FUTURE_ANKIDROID_VERSION : StartupFailure()
+        class DB_ERROR(val exception: Exception? = null) : StartupFailure()
+        object DATABASE_LOCKED : StartupFailure()
+        object WEBVIEW_FAILED : StartupFailure()
+        object DISK_FULL : StartupFailure()
     }
 
     /**
