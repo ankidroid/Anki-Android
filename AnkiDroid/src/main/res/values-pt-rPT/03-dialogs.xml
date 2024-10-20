@@ -163,7 +163,7 @@
     <string name="error_selecting_image">Erro ao seleccionar a imagem. Por favor, consulte o manual. %s</string>
     <string name="error_deleting_image">Erro ao apagar a imagem</string>
     <string name="failed_to_apply_background_image">Falha na aplicação da imagem de fundo %s</string>
-    <string name="background_image_too_large">A imagem escolhida para o fundo do ecrã de escolha do baralho é demasiado grande.</string>
+    <string name="background_image_too_large">A imagem escolhida para o fundo do ecrã de selecção do baralho é demasiado grande.</string>
     <string name="image_max_size_allowed">O tamanho máximo permitido para uma imagem é %d MB</string>
     <string name="image_dimensions_too_large">A imagem é demasiado grande (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
@@ -235,7 +235,7 @@
     <string name="dismiss_backup_warning_upgrade">        Devido a alterações de privacidade do Android, não poderá aceder aos seus dados e cópias de segurança automáticas se a aplicação for desinstalada
     </string>
     <string name="deck_already_exists">Este baralho já existe</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">O nome do baralho não pode estar vazio</string>
     <string name="create_deck_numeric_hint">Se tem problemas de ordenação com o seu baralho (e.g. o ‘10’ aparece antes do ‘2’), substitua o ‘2’ por ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Atribuir o mesmo valor ao intervalo</string>
@@ -265,7 +265,7 @@
     <string name="change_cloze_mode">Alterar modo de omissão</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">O sistema WebView está desatualizado. Alguns recursos não funcionarão corretamente. Atualize-o.\n\nVersão instalada: %1$d\nVersão mínima necessária: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">Comprimir</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Língua não suportada</string>
     <string name="tts_error_dialog_reason_text">O sistema de conversão de texto para fala <b>%1$s</b> não suporta a língua: <b>%2$s</b></string>

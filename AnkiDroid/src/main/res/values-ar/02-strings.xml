@@ -144,7 +144,7 @@
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
     <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
-    <string name="delete_deck">يجري حذف الرزمة...</string>
+    <string name="delete_deck">يجري حذف الرزمة&#8230;</string>
     <string name="info_rate">قيم أنكيدرويد</string>
     <string name="import_title">استيراد</string>
     <string name="import_preparing_file">تجهيز الملف للاستيراد&#8230;</string>
@@ -161,7 +161,7 @@
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
     <string name="export_preparation_in_progress">يجري تجهيز التصدير&#8230;</string>
     <string name="export_ready_title">جهز التصدير</string>
-    <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
+    <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ&#8230;</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
     <string name="export_share_title">إرسال حزمة أنكي باستخدام</string>

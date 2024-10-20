@@ -74,7 +74,7 @@
     <string name="card_browser_list_my_searches_remove_content">Eliminar \"%1$s\"?</string>
     <string name="card_browser_change_display_order" maxLength="29">Alterar a ordem de exibição</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Procurar</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Procurar</string>
     <string name="card_browser_change_display_order_title">Escolher a ordem de exibição</string>
     <string name="card_details_tags">Etiquetas</string>
     <string-array name="card_browser_order_labels">
@@ -112,6 +112,6 @@
         <item quantity="other">%d fichas eliminadas</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Abrir a janela para edição de etiquetas</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Abrir janela para definir a ordem</string>
 </resources>

@@ -353,5 +353,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">编辑浏览器外观</string>
     <string name="show_shortcuts_message">按 Alt+K 显示键盘快捷键</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">此笔记类型中未设置用户操作 %s。请配置它</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="directory_inaccessible_info">在此 %s 了解如何恢复访问的更多信息或转到设置更新牌组集文件夹</string>
 </resources>

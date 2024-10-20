@@ -52,7 +52,7 @@
     <string name="CardEditorModel">ᱯᱨᱚᱠᱟᱨᱺ </string>
     <string name="CardEditorTags">ᱴᱮᱜᱥᱺ%1$s </string>
     <string name="CardEditorCards">ᱠᱟᱰᱺ%1$s </string>
-    <string name="edit_occlusions">Edit Occlusions</string>
+    <string name="edit_occlusions">ᱚᱠᱥᱩᱞᱤᱥᱚᱱ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
     <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ </string>
     <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ </string>
     <string name="add_tag">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ </string>
@@ -62,8 +62,8 @@
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
-    <string name="enable_stylus">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="enable_stylus">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱮᱱᱮᱡ ᱢᱮ</string>
+    <string name="disable_stylus">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>
     <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ </string>
@@ -90,12 +90,12 @@
     <string name="custom_study_preview_new">ᱱᱟᱶᱟ ᱠᱟᱰ ᱧᱮᱞᱡᱚᱝ ᱢᱮ </string>
     <string name="custom_study_limit_tags">ᱱᱤᱥᱪᱤᱛ ᱴᱮᱜ ᱛᱮ ᱞᱤᱢᱤᱴ ᱢᱮ</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d ᱫᱷᱩᱲᱤ ᱟᱠᱟᱱᱟ</item>
+        <item quantity="other">+%d ᱫᱷᱩᱲᱤ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</string>
-    <string name="discard">Discard</string>
+    <string name="discard">ᱵᱟᱧᱪᱟᱣ ᱢᱮ</string>
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
@@ -106,7 +106,7 @@
     <string name="select">ᱵᱟᱪᱷᱟᱣ</string>
     <string name="field_remapping">%1$s (“%2$s” ᱠᱷᱚᱱ)</string>
     <string name="confirm_map_cards_to_nothing">ᱡᱟᱷᱟᱭ ᱠᱟᱰ ᱵᱟᱭ ᱢᱮᱯ ᱠᱚᱜᱼᱟ ᱚᱱᱟ ᱠᱟᱲ ᱫᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱜᱼᱟ ᱾ ᱡᱚᱫᱤ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱨᱮ ᱠᱟᱰ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱠᱷᱟᱱ ᱪᱮᱫ ᱢᱟᱱᱮ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱾ ᱢᱤᱫ ᱞᱮᱛᱟᱲ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ?</string>
-    <string name="missing_note_type">No note type found</string>
+    <string name="missing_note_type">ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱠᱚ ᱧᱟᱢ ᱟᱠᱟᱱᱟ</string>
     <!-- Timebox -->
     <string name="timebox_reached_title">ᱚᱠᱛᱚᱵᱚᱠᱥᱟ ᱥᱮᱴᱮᱨᱟ ᱠᱟᱱᱟ</string>
     <plurals name="timebox_reached">
@@ -124,10 +124,10 @@
     <string name="card_editor_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱠᱚ ᱧᱟᱢ ᱟᱠᱟᱱᱟ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar"> %2$d ᱨᱮᱱᱟᱜ %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">ᱪᱟᱠᱷᱟ</string>
     <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
@@ -135,24 +135,24 @@
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
-    <string name="import_preparing_file">Preparing file for import&#8230;</string>
+    <string name="import_preparing_file">ᱤᱱᱯᱷᱚᱨᱢᱮᱱᱴ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱞᱤᱯᱤ ᱛᱮᱭᱟᱨᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
     <string name="import_message_replace_confirm">ᱱᱚᱶᱟ ᱫᱚ ᱴᱩᱢᱟᱞ ᱜᱮᱫ ᱜᱤᱰᱤᱟᱭ ᱟᱨ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱛᱮ ᱚᱱᱟ ᱨᱮᱛ ᱨᱮ ᱥᱟᱹᱠᱷᱤᱭᱟᱹᱛ ᱚᱞᱟᱭ  %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">ᱥᱮᱞᱮᱫ ᱨᱮ  ⁇ %s ⁇  ᱥᱮᱞᱮᱫ ᱢᱮ? ᱱᱚᱶᱟ ᱟᱹᱰᱤ ᱫᱤᱱ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ</string>
     <string name="import_log_no_apkg">ᱱᱚᱶᱟ ᱫᱚ ᱵᱦᱮᱞᱤᱰ Anki ᱯᱮᱠ ᱵᱟᱝ ᱠᱟᱱᱟ</string>
     <string name="import_title_error" comment="Title of error dialog">ᱵᱷᱩᱞ</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
     <string name="import_error_content_provider">ᱵᱟᱪᱷᱟᱣᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
+    <string name="import_error_copy_to_cache">ᱯᱷᱤᱞ ᱠᱷᱟᱪ ᱨᱮ ᱵᱟᱭ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜ ᱠᱟᱱᱟ (ᱥᱟᱹᱠᱭᱟᱹᱛ ᱨᱮ ᱥᱯᱮᱥ ᱵᱟᱦᱨᱮ)</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">ᱮᱥᱯᱳᱨᱴ ᱨᱮᱭᱟᱜ ᱯᱨᱚᱫᱚᱭᱚᱜ&#8230;</string>
+    <string name="export_ready_title">ᱮᱠᱥᱯᱳᱨᱴ ᱞᱟᱹᱜᱤᱫ ᱥᱟᱹᱛ</string>
     <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ&#8230;</string>
     <string name="export_save_apkg_successful">Anki ᱯᱮᱠᱮᱡ ᱵᱮᱥ ᱪᱚᱨᱚᱠ ᱥᱟᱝᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Anki ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱯᱮᱠᱮᱡ ᱢᱮ</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
@@ -161,9 +161,9 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
-    <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
+    <string name="export_choice_share">ᱦᱟᱹᱴᱤᱧ</string>
+    <string name="export_choice_save_to">ᱞᱟᱹᱜᱤᱫ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
+    <string name="export_saving_exported_collection"> ᱮᱠᱥᱯᱳᱨᱴ ᱟᱠᱟᱱ ᱯᱷᱤᱞᱤ ᱥᱟᱦᱟᱣ ᱠᱟᱱᱟ&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__deck_options">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>
@@ -186,13 +186,13 @@
     <!-- Import and export v2 feedback -->
     <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
-    <string name="no_browser_msg">No browser found for opening the link: %s</string>
+    <string name="no_browser_msg">ᱞᱤᱸᱠ ᱮᱛᱦᱚᱵ ᱞᱟᱹᱜᱤᱫ ᱵᱽᱨᱟᱩᱡᱟᱨ ᱵᱟᱝ ᱧᱟᱢ ᱟᱠᱟᱱᱟ: %s</string>
     <string name="web_page_error">ᱥᱟᱦᱴᱟ ᱞᱟᱫᱮ ᱵᱷᱩᱞ:%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">ᱵᱮᱠᱜᱟᱨᱩᱸᱰ</string>
     <string name="choose_an_image">ᱪᱤᱛᱟᱨ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
-    <string name="remove_background_image">Remove background?</string>
+    <string name="remove_background_image">ᱚᱛ ᱦᱟᱥᱟ ᱪᱟᱵᱟ ᱢᱮ?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ᱢᱩᱞ ᱯᱷᱮᱰᱟᱛ ᱨᱮ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ᱮᱠᱷᱮᱵᱟᱜ</string>
@@ -210,7 +210,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ᱫᱮᱠᱷᱟᱣ</string>
     <string name="anki_js_error_code">(ᱵᱷᱩᱞ ᱠᱳᱰ: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">ᱠᱞᱤᱯᱵᱳᱨᱰ ᱨᱮ ᱠᱚᱯᱤ ᱟᱠᱟᱱᱟ</string>
     <string name="about_ankidroid_error_copy_debug_info">ᱠᱞᱤᱯᱵᱚᱰ ᱛᱮ ᱰᱮᱵᱩᱜ ᱵᱤᱵᱨᱚᱬ ᱱᱚᱠᱟᱞ ᱵᱷᱩᱞ</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
@@ -233,9 +233,9 @@
     <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="add_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱛᱮᱭᱟᱨ</string>
     <string name="edit_toolbar_item">ᱦᱟᱹᱛᱤᱭᱟᱹᱨ ᱡᱤᱱᱤᱥ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">ᱵᱟᱪᱷᱟᱣ ᱟᱠᱟᱱ ᱴᱮᱠᱥᱴ ᱨᱮᱱᱟᱜ ᱯᱩᱭᱞᱩ ᱟᱨ ᱛᱟᱭᱚᱢ ᱨᱮ ᱥᱮᱞᱮᱫᱚᱜ ᱞᱟᱹᱜᱤᱫ HTML ᱮᱢᱢᱢᱮ\n\nᱥᱟᱯᱲᱟᱣ ᱥᱮ ᱦᱮᱡ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱴᱩᱞᱵᱟᱨ ᱮᱢᱮᱰᱤᱴ ᱟᱹᱰᱤ ᱫᱷᱟᱣ ᱞᱤᱱ ᱢᱮ</string>
     <string name="remove_toolbar_item">ᱴᱩᱞᱵᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱪᱚᱜᱽ ᱟᱢ ᱥᱮ?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_image_too_large">ᱪᱤᱛᱟᱹᱨ ᱫᱚ ᱟᱹᱰᱤ ᱢᱟᱨᱟᱝ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮ ᱪᱤᱛᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
     <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">       ᱮᱱᱰᱨᱚᱭᱮᱰ ᱵᱮᱠᱟᱯ ᱪᱟᱞᱟᱜ ᱠᱟᱱᱟ, ᱫᱟᱭᱟ ᱠᱟᱛᱮᱡᱽ ᱟᱨᱦᱚᱸ ᱨᱤᱠᱟᱹᱭ ᱢᱮ</string>
@@ -290,19 +290,19 @@
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
     <string name="cd_manage_notetypes_add">Add a new note type</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_ankidroid_tagline_one">ᱠᱚᱢ ᱥᱮᱪᱮᱫ ᱢᱮ</string>
+    <string name="intro_ankidroid_tagline_two">ᱰᱷᱮᱨ ᱵᱟᱧᱪᱟᱣ ᱢᱮ</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">ᱮᱛᱚᱦᱚᱵ ᱢᱮ</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <!-- IntentHandler -->
     <string name="app_not_initialized_new">AnkiDroid is not initialized yet. Please open AnkiDroid and try again</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="already_logged_in">ᱱᱤᱛ ᱜᱮ ᱥᱮᱞᱮᱫ ᱟᱠᱟᱱᱟ</string>
     <!-- Deck Creation -->
-    <string name="deck_created">Deck created</string>
+    <string name="deck_created">ᱰᱮᱠ ᱵᱮᱱᱟᱣ ᱟᱠᱟᱱᱟ</string>
     <string name="deck_renamed">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱮᱱᱟ</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">ᱰᱮᱠ ᱵᱚᱫᱚᱞ ᱟᱠᱟᱱᱟ. ᱞᱟᱹᱠᱛᱤᱭᱟᱱ ᱥᱟᱦᱴᱟ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ᱠᱮᱰᱠᱚ</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ᱱᱳᱴᱠᱚ</string>
@@ -347,7 +347,7 @@
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ᱱᱳᱴᱥ ᱮᱰᱤᱴᱚᱨ</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>

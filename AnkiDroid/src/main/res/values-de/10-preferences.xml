@@ -171,7 +171,7 @@
     <string name="show_large_answer_buttons" maxLength="41">Große Antwortschaltflächen anzeigen</string>
     <string name="show_large_answer_buttons_summ">Antwortschaltfläche in 2 Zeilen anzeigen</string>
     <string name="show_top_bar" maxLength="41">Obere Leiste anzeigen</string>
-    <string name="show_top_bar_summary">Show card counts, answer timer, flag and mark in top bar</string>
+    <string name="show_top_bar_summary">Kartenzähler, Antwort-Timer, Flagge und Markierung in der oberen Leiste anzeigen</string>
     <string name="show_progress" maxLength="41">Fällige anzeigen</string>
     <string name="show_progress_summ">Verbleibende Anzahl der Karten anzeigen</string>
     <string name="show_eta" maxLength="41">Ankunftszeit anzeigen</string>
@@ -237,7 +237,7 @@
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41" comment="Label of a text field that contains a search query.">Suchen</string>
     <string name="deck_conf_cram_limit" maxLength="41">Beschränken auf</string>
-    <string name="deck_conf_cram_order" maxLength="41">Cards selected by</string>
+    <string name="deck_conf_cram_order" maxLength="41">Karten ausgewählt nach</string>
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Neu planen</string>
     <string name="deck_conf_cram_reschedule_summ">Karten basierend auf meinen Antworten in diesem Stapel umplanen</string>
     <string name="deck_conf_cram_filter_2_check">Zweiten Filter einschalten</string>
@@ -279,7 +279,7 @@
     <string name="user_action_7" maxLength="41">Benutzerdefinierte Aktion 7</string>
     <string name="user_action_8" maxLength="41">Benutzerdefinierte Aktion 8</string>
     <string name="user_action_9" maxLength="41">Benutzerdefinierte Aktion 9</string>
-    <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
+    <string name="toggle_auto_advance" maxLength="41">Automatisches Weiterblättern umschalten</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>
     <string name="card_side_question">Frage</string>
@@ -359,14 +359,14 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Rufe ab&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Berechnen&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Sammlung ist nicht vorhanden</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
-    <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
-    <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Systemleisten ausblenden</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Keine</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Statusleiste</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigationsleiste</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Alles</string>
+    <string name="ignore_display_cutout" maxLength="41">Bildschirmausschnitt ignorieren</string>
+    <string name="hide_answer_buttons" maxLength="41">Antwortschaltflächen ausblenden</string>
+    <string name="hide_hard_and_easy" maxLength="41">‘Schwer’- und ‘Leicht’-Tasten ausblenden</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Einstellungen Öffnen</string>
 </resources>

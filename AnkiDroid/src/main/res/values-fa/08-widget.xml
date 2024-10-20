@@ -72,6 +72,6 @@
         <item quantity="one">میتوانید تا %d دسته انتخاب کنید</item>
         <item quantity="other">میتوانید تا %d عدد دسته انتخاب کنید</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">دسته وجود ندارد. لطفا برای باز پیکربندی روی دکمه بفشارید.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">مجموعه خالی است، از برنامه برای اضافه کردن دسته ها استفاده کنید و بعد دوباره پیکربندی کنید</string>
 </resources>

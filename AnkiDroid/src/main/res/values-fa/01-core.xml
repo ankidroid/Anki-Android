@@ -118,11 +118,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">برای ادامه لطفاً به Ankidroid اجازه دسترسی به \"حافظه\" بدهید</string>
-    <string name="rebuild_filtered_deck">درحال بازسازی دسته‌ی کارت فیلتر شده...</string>
+    <string name="rebuild_filtered_deck">درحال بازسازی دسته‌ی کارت فیلتر شده&#8230;</string>
     <string name="rebuild_cram_label">بازسازی</string>
     <string name="empty_cram_label">تخلیه</string>
     <string name="create_subdeck">ایجاد زیردسته</string>
-    <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت فیلتر شده...</string>
+    <string name="empty_filtered_deck">درحال تخلیه دسته‌ی کارت فیلتر شده&#8230;</string>
     <string name="custom_study_deck_name">جلسه مطالعه سفارشی</string>
     <string name="custom_study_deck_exists">لطفا ابتدا دسته مطالعه سفارشی موجود را مجددا نام گذاری کنید.</string>
     <string name="search_deck" comment="Deck search for selecting it">جستجوی دسته‌ها </string>
@@ -137,7 +137,7 @@
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">آیا می‌خواهید همگام‌سازی را لغو کنید؟</string>
     <string name="continue_sync" tools:ignore="UnusedResources">ادامه همگام‌سازی</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">همگام‌سازی لغو شد</string>
-    <string name="sync_cancel_message" tools:ignore="UnusedResources">در حال لغو کردن...\nممکن است کمی زمان بر باشد.</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">در حال لغو کردن&#8230;\nممکن است کمی زمان بر باشد.</string>
     <string name="syncing_media">همگام‌سازی رسانه‌ها</string>
     <string name="export_deck">صدور دسته</string>
     <string name="export_collection">صدور مجموعه</string>

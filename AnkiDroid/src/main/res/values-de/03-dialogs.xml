@@ -49,10 +49,10 @@
     <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
     <string name="delete_deck_title">Stapel löschen?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">Alle karten in %1$s löschen? Es enthält %2$d karte</item>
+        <item quantity="other">Alle karten in %1$s löschen? Es enthält %2$d karten</item>
     </plurals>
-    <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
+    <string name="delete_cram_deck_message">Gefiltertes stapel %s löschen und alle karten zurück in ihre ursprünglichen stapel senden?</string>
     <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
     <string name="unused_strings">\n\nUnbenutzte Dateien:\n</string>
@@ -108,7 +108,7 @@
     <string name="dialog_positive_repair">Reparieren</string>
     <string name="dialog_positive_replace">Ersetzen</string>
     <string name="dialog_collection_path_not_dir">Der angegebene Pfad ist kein gültiges Verzeichnis</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
+    <string name="dialog_invalid_custom_certificate">Der angegebene text ergibt kein gültiges PEM-codiertes X509-zertifikat</string>
     <string name="dialog_invalid_custom_certificate_title">Fehler beim parsen des Zertifikats</string>
     <string name="dialog_updated_custom_certificate">Zertifikat aktualisiert</string>
     <!-- Media checking -->
@@ -233,7 +233,7 @@
     <string name="dismiss_backup_warning_new_user">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups gelöscht, sobald du die App deinstallierst.</string>
     <string name="dismiss_backup_warning_upgrade">Aufgrund von Änderungen in den Privatsphäreeinstellungen von Android, werden deine Daten und automatische Backups nicht mehr zugreifbar sein, falls du die App deinstallierst.</string>
     <string name="deck_already_exists">Stapel bereits vorhanden</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">Stapelname darf nicht leer sein</string>
     <string name="create_deck_numeric_hint">Wenn Sie Probleme mit der Reihenfolge des Decks haben (z.B. \'10\' erscheint vor \'2\'), ersetzen Sie \'2\' durch \'02\'</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Intervall auf denselben Wert setzen</string>
@@ -253,20 +253,20 @@
     <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Von</string>
     <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Bis</string>
     <!-- Instant Note Editor -->
-    <string name="cloze_note_required">Cloze-Notiztyp erforderlich</string>
-    <string name="cloze_not_found_message">Kein Cloze-Notiztyp gefunden. Öffnen Sie den Notiz-Editor oder versuchen Sie es erneut, nachdem Sie einen Cloze-Notiztyp hinzugefügt haben.</string>
+    <string name="cloze_note_required">Lückentext-Notiztyp Erforderlich</string>
+    <string name="cloze_not_found_message">Kein Lückentext-Notiztyp gefunden. Öffnen Sie den Notiz-Editor oder versuchen Sie es erneut, nachdem Sie einen Lückentext-Notiztyp hinzugefügt haben.</string>
     <string name="open">Offen</string>
-    <string name="change_cloze_number">Change cloze number</string>
-    <string name="cloze_number">Cloze number:</string>
-    <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
-    <string name="change_cloze_mode">Change cloze mode</string>
+    <string name="change_cloze_number">Lückentext nummer ändern</string>
+    <string name="cloze_number">Lückentext nummer:</string>
+    <string name="change_editor_mode">Editor-modus ändern</string>
+    <string name="open_note_editor">Notiz-editor öffnen</string>
+    <string name="change_cloze_mode">Lückentext-modus ändern</string>
     <!-- Outdated WebView dialog -->
     <string name="webview_update_message">Das System-WebView ist veraltet. Einige Funktionen werden nicht korrekt funktionieren. Bitte aktualisieren Sie es.\n\nInstallierte Version: %1$d\nMindestanforderung: %2$d</string>
-    <string name="compress">Compress</string>
+    <string name="compress">komprimieren</string>
     <!-- Tts playback error dialog -->
-    <string name="tts_error_dialog_title">Language not supported</string>
-    <string name="tts_error_dialog_reason_text">The text to speech engine <b>%1$s</b> does not support the following language: <b>%2$s</b></string>
-    <string name="tts_error_dialog_change_button_text">Change engine</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_title">Sprache nicht unterstützt</string>
+    <string name="tts_error_dialog_reason_text">Die Text-Zu-Sprache-Engine <b>%1$s</b> unterstützt die folgende sprache nicht: <b>%2$s</b></string>
+    <string name="tts_error_dialog_change_button_text">Engine ändern</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Sprachoptionen</string>
 </resources>

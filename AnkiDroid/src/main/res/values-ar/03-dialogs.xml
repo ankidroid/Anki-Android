@@ -111,7 +111,7 @@
     <string name="dialog_keep">إبقاء</string>
     <string name="dialog_remove">حذف</string>
     <string name="dialog_continue">استمرار</string>
-    <string name="dialog_processing">تجري المعالجة...</string>
+    <string name="dialog_processing">تجري المعالجة&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">إنشاء</string>
     <string name="dialog_positive_delete">حذف</string>
     <!-- Currently unsued, should be useful in the future -->
