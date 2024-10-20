@@ -87,8 +87,8 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     private var createMenuJob: Job? = null
 
     /** Current activity.*/
-    private val deckPicker: DeckPicker
-        get() = activity as DeckPicker
+    private val deckPicker: DeckPicker?
+        get() = activity as? DeckPicker
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
     private var loadWithDeckOptions = false
@@ -285,19 +285,25 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 return true
             }
             R.id.action_rename -> {
-                deckPicker.renameDeckDialog(col!!.decks.selected())
+                deckPicker?.renameDeckDialog(col!!.decks.selected()) ?: run {
+                    Timber.w("Failed to rename deck: deckPicker is null")
+                }
                 return true
             }
             R.id.action_delete -> {
-                deckPicker.confirmDeckDeletion(col!!.decks.selected())
+                deckPicker?.confirmDeckDeletion(col!!.decks.selected()) ?: run {
+                    Timber.w("StudyOptionsFragment:: Failed to delete deck: deckPicker is null")
+                }
                 return true
             }
             R.id.action_export_deck -> {
-                deckPicker.exportDeck(col!!.decks.selected())
+                deckPicker?.exportDeck(col!!.decks.selected()) ?: run {
+                    Timber.w("StudyOptionsFragment:: Failed to export deck: deckPicker is null")
+                }
                 return true
             }
             // If the menu item is not specific to study options, delegate it to the deck picker
-            else -> return deckPicker.onOptionsItemSelected(item)
+            else -> return deckPicker?.onOptionsItemSelected(item) ?: false
         }
     }
 
@@ -370,15 +376,20 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 }
                 menu.removeItem(R.id.action_export_collection)
 
-                deckPicker.setupMediaSyncMenuItem(menu)
-                deckPicker.updateMenuFromState(menu)
-                /**
-                 * Launch a task to possibly update the visible icons.
-                 * Save the job in a member variable to manage the lifecycle
-                 */
-                createMenuJob = launchCatchingTask {
-                    deckPicker.updateMenuState()
-                    deckPicker.updateMenuFromState(menu)
+                deckPicker?.let {
+                    it.setupMediaSyncMenuItem(menu)
+                    it.updateMenuFromState(menu)
+
+                    /**
+                     * Launch a task to possibly update the visible icons.
+                     * Save the job in a member variable to manage the lifecycle
+                     */
+                    createMenuJob = launchCatchingTask {
+                        it.updateMenuState()
+                        it.updateMenuFromState(menu)
+                    }
+                } ?: run {
+                    Timber.w("deckPicker is null, unable to set up menu items")
                 }
             } else {
                 menu.setGroupVisible(R.id.commonItems, false)
