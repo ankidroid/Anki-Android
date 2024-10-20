@@ -566,7 +566,7 @@
         </activity>
 
         <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
             </intent-filter>
