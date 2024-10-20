@@ -65,7 +65,7 @@ object WidgetStatus {
             try {
                 updateStatus(context)
             } catch (exc: java.lang.Exception) {
-                Timber.w("failure in widget update: %s", exc)
+                Timber.w(exc, "failure in widget update: %s")
             }
         }
     }
