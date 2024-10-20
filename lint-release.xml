@@ -173,9 +173,6 @@
     <!-- RtlSymmetry is disabled because we already have RtlHardcoded rule enabled -->
     <issue id="RtlSymmetry" severity="ignore" />
 
-    <!-- Allows Timber issues defined for AnkiDroid without an api dependency on Timber -->
-    <issue id="UnknownIssueId" severity="ignore" />
-
     <!-- Temporarily allows obsolete lint until https://issuetracker.google.com/issues/206855622 is resolved upstream -->
     <issue id="ObsoleteLintCustomCheck" severity="ignore" />
 
