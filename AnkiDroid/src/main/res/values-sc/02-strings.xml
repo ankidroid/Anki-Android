@@ -100,7 +100,7 @@
     <string name="note_editor_no_cards_created">Peruna carta creada. Compila prus campos</string>
     <string name="note_editor_no_cards_created_all_fields">Sa casta de cartas atuale no at produidu nemmancu una carta.\n
                        Issèbera un\'àtera casta de cartas, o incarca in ‘Cartas’ e annanghe una sostitutzione de campu</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Sos iscantzellamentos cloze ant a funtzionare petzi sas castas de notas cloze</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Sos iscantzellamentos partziales de paràulas ant a funtzionare petzi in sas castas de notas de omissione de paràulas</string>
     <string name="saving_facts">Sarvende sa nota</string>
     <string name="saving_model">Sarvende sa casta de nota</string>
     <string name="save">Sarva</string>

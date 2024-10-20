@@ -132,7 +132,7 @@
     <string name="check_media">بررسی رسانه ها</string>
     <string name="empty_cards">کارت های خالی</string>
     <string name="unknown_type_field_warning">پاسخ را تایپ کنید:فیلد نامشخص %s</string>
-    <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
+    <string name="delete_deck">حذف دسته کارت&#8230;\nلطفا صبر کنید.</string>
     <string name="info_rate">امتیازدهی به AnkiDroid</string>
     <string name="import_title">درحال وارد کردن</string>
     <string name="import_preparing_file">آماده‌سازی فایل برای وارد کردن&#8230;</string>
