@@ -51,13 +51,13 @@ open class JvmTest : TestClass {
 
     override val col: Collection
         get() {
-            if (col_ == null) {
-                col_ = CollectionManager.getColUnsafe()
+            if (_col == null) {
+                _col = CollectionManager.getColUnsafe()
             }
-            return col_!!
+            return _col!!
         }
 
-    private var col_: Collection? = null
+    private var _col: Collection? = null
 
     @Before
     @CallSuper
@@ -90,7 +90,7 @@ open class JvmTest : TestClass {
     open fun tearDown() {
         try {
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            col_?.close()
+            _col?.close()
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -100,7 +100,7 @@ open class JvmTest : TestClass {
         } finally {
             TimeManager.reset()
         }
-        col_ = null
+        _col = null
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
         Timber.uprootAll()

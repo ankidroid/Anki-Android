@@ -494,7 +494,7 @@ class TagsListTest {
             "Need solution to only mock the sort() method."
     )
     fun test_sort_will_not_call_collectionsSort() {
-        Mockito.mockStatic(Collections::class.java).use { MockCollection ->
+        Mockito.mockStatic(Collections::class.java).use { mockCollection ->
             assertEquals(TAGS, tagsList.copyOfAllTagList())
 
             tagsList.sort()
@@ -504,7 +504,7 @@ class TagsListTest {
                 tagsList.copyOfAllTagList()
             )
 
-            MockCollection.verify({ Collections.sort(ArgumentMatchers.any(), ArgumentMatchers.any<Comparator<in Any>>()) }, Mockito.never())
+            mockCollection.verify({ Collections.sort(ArgumentMatchers.any(), ArgumentMatchers.any<Comparator<in Any>>()) }, Mockito.never())
         }
     }
 

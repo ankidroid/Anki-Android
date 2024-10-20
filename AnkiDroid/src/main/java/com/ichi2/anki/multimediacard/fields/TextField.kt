@@ -58,6 +58,6 @@ class TextField : FieldBase(), IField {
     }
 
     companion object {
-        private const val serialVersionUID = -6508967905716947525L
+        private const val SERIAL_VERSION_UID = -6508967905716947525L
     }
 }

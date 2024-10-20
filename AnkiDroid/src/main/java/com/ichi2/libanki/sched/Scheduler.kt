@@ -293,7 +293,7 @@ open class Scheduler(val col: Collection) {
 
     /**
      * Bury all cards for note until next session.
-     * @param nid The id of the targeted note.
+     * @param nids The id of the targeted note.
      */
     open fun buryNotes(nids: List<NoteId>): OpChangesWithCount {
         return col.backend.buryOrSuspendCards(
@@ -684,7 +684,7 @@ open class Scheduler(val col: Collection) {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    open fun nextIvlStr(card: Card, @Consts.BUTTON_TYPE ease: Int): String {
+    open fun nextIvlStr(card: Card, @Consts.ButtonType ease: Int): String {
         val secs = nextIvl(card, ease)
         return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
     }

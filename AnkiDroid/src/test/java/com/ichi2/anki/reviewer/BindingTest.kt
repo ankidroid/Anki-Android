@@ -51,16 +51,16 @@ class BindingTest {
 
     @Test
     fun testUnicodeToString() {
-        assertEquals(unicodePrefix + "Ä", Binding.unicode('Ä').toString())
-        assertEquals(unicodePrefix + "Ctrl+Ä", Binding.unicode(Binding.ModifierKeys.ctrl(), 'Ä').toString())
-        assertEquals(unicodePrefix + "Shift+Ä", Binding.unicode(Binding.ModifierKeys.shift(), 'Ä').toString())
-        assertEquals(unicodePrefix + "Alt+Ä", Binding.unicode(Binding.ModifierKeys.alt(), 'Ä').toString())
-        assertEquals(unicodePrefix + "Ctrl+Alt+Shift+Ä", Binding.unicode(allModifierKeys(), 'Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Ä", Binding.unicode('Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Ä", Binding.unicode(Binding.ModifierKeys.ctrl(), 'Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Shift+Ä", Binding.unicode(Binding.ModifierKeys.shift(), 'Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Alt+Ä", Binding.unicode(Binding.ModifierKeys.alt(), 'Ä').toString())
+        assertEquals(UNICODE_PREFIX + "Ctrl+Alt+Shift+Ä", Binding.unicode(allModifierKeys(), 'Ä').toString())
     }
 
     @Test
     fun testGestureToString() {
-        assertEquals(gesturePrefix + "TAP_TOP", Binding.gesture(Gesture.TAP_TOP).toString())
+        assertEquals(GESTURE_PREFIX + "TAP_TOP", Binding.gesture(Gesture.TAP_TOP).toString())
     }
 
     @Test
@@ -88,10 +88,10 @@ class BindingTest {
     }
 
     companion object {
-        const val gesturePrefix = '\u235D'
-        const val keyPrefix = '\u2328'
-        const val unicodePrefix = '\u2705'
-        const val joystickPrefix = '◯'
+        const val GESTURE_PREFIX = '\u235D'
+        const val KEY_PREFIX = '\u2328'
+        const val UNICODE_PREFIX = '\u2705'
+        const val JOYSTICK_PREFIX = '◯'
 
         fun allModifierKeys() = Binding.ModifierKeys(shift = true, ctrl = true, alt = true)
         fun unicodeCharacter(c: Char): Binding.UnicodeCharacter {

@@ -57,7 +57,7 @@ import com.ichi2.anki.showThemedToast
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.DYN_PRIORITY
+import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.HashUtil.hashMapInit
@@ -493,7 +493,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val ar = dyn.getJSONArray("terms")
         ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0])
         ar.getJSONArray(0).put(1, terms[1])
-        @DYN_PRIORITY val priority = terms[2] as Int
+        @DynPriority val priority = terms[2] as Int
         ar.getJSONArray(0).put(2, priority)
         dyn.put("resched", resched)
         // Rebuild the filtered deck

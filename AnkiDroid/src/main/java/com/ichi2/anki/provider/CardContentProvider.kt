@@ -37,7 +37,7 @@ import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.Consts.ButtonType
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -1080,7 +1080,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun answerCard(col: Collection, cardToAnswer: Card?, @BUTTON_TYPE ease: Int, timeTaken: Long) {
+    private fun answerCard(col: Collection, cardToAnswer: Card?, @ButtonType ease: Int, timeTaken: Long) {
         try {
             if (cardToAnswer != null) {
                 if (timeTaken != -1L) {

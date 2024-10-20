@@ -34,7 +34,7 @@ object TagsUtil {
         return updated
     }
 
-    private const val blankSubstituent = "blank"
+    private const val BLANK_SUBSTITUENT = "blank"
 
     /**
      * Utility method that decomposes a hierarchy tag into several parts.
@@ -44,7 +44,7 @@ object TagsUtil {
         val parts = tag.split("::").asSequence()
         return parts.map {
             // same as the way Anki Desktop deals with an empty tag subpart
-            it.ifEmpty { blankSubstituent }
+            it.ifEmpty { BLANK_SUBSTITUENT }
         }.toList()
     }
 
@@ -54,7 +54,7 @@ object TagsUtil {
      */
     fun getUniformedTag(tag: String): String {
         val parts = getTagParts(tag)
-        return if (tag.endsWith("::") && parts.last() == blankSubstituent) {
+        return if (tag.endsWith("::") && parts.last() == BLANK_SUBSTITUENT) {
             parts.subList(0, parts.size - 1)
         } else {
             parts

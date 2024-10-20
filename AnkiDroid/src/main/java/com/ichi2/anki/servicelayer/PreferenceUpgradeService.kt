@@ -84,7 +84,7 @@ object PreferenceUpgradeService {
         companion object {
             /** A version code where the value doesn't matter as we're not using the result */
             private const val IGNORED_LEGACY_VERSION_CODE = 0L
-            const val upgradeVersionPrefKey = "preferenceUpgradeVersion"
+            const val UPGRADE_VERSION_PREF_KEY = "preferenceUpgradeVersion"
 
             /** Returns all instances of preference upgrade classes */
             private fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence {
@@ -121,11 +121,11 @@ object PreferenceUpgradeService {
             }
 
             internal fun getPreferenceVersion(preferences: SharedPreferences) =
-                preferences.getInt(upgradeVersionPrefKey, 0)
+                preferences.getInt(UPGRADE_VERSION_PREF_KEY, 0)
 
             internal fun setPreferenceVersion(preferences: SharedPreferences, versionIdentifier: VersionIdentifier) {
                 Timber.i("upgrading preference version to '$versionIdentifier'")
-                preferences.edit { putInt(upgradeVersionPrefKey, versionIdentifier) }
+                preferences.edit { putInt(UPGRADE_VERSION_PREF_KEY, versionIdentifier) }
             }
 
             /** Returns the collection of all preference version numbers */
