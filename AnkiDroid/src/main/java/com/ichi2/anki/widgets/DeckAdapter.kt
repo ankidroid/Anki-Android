@@ -295,7 +295,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     inner class DeckFilter(private val top: DeckNode) : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val out = top.filterAndFlatten(constraint)
-            Timber.i("deck filter: %d", out.size, constraint)
+            Timber.i("deck filter: %d (%s)", out.size, constraint)
             return FilterResults().also {
                 it.values = out
                 it.count = out.size
