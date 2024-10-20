@@ -399,7 +399,6 @@
     <issue id="SdCardPath" severity="ignore" />
     <issue id="SecureRandom" severity="ignore" />
     <issue id="TrulyRandom" severity="ignore" />
-    <issue id="ExportedContentProvider" severity="ignore" />
     <issue id="ExportedService" severity="ignore" />
     <issue id="SetWorldReadable" severity="ignore" />
     <issue id="SetWorldWritable" severity="ignore" />
