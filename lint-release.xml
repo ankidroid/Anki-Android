@@ -436,7 +436,6 @@
     <issue id="MissingTranslation" severity="ignore" />
     <issue id="Typos" severity="ignore" />
     <issue id="TypographyDashes" severity="ignore" />
-    <issue id="TypographyEllipsis" severity="ignore" />
     <issue id="TypographyFractions" severity="ignore" />
     <issue id="TypographyOther" severity="ignore" />
     <issue id="TypographyQuotes" severity="ignore" />
