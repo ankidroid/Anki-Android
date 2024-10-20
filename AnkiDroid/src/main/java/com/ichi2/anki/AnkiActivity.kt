@@ -34,7 +34,6 @@ import androidx.annotation.UiThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
@@ -622,7 +621,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
 
     /** @see Window.setNavigationBarColor */
     fun setNavigationBarColor(@AttrRes attr: Int) {
-        window.navigationBarColor = ThemeUtils.getThemeAttrColor(this, attr)
+        window.navigationBarColor = Themes.getColorFromAttr(this, attr)
     }
 
     fun closeCollectionAndFinish() {
