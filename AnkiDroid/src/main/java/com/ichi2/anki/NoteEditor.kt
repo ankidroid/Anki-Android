@@ -312,6 +312,10 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 Timber.d("onActivityResult() template edit return - current card exists")
                 // reload current card - the template ordinals are possibly different post-edit
                 currentEditedCard = getColUnsafe.getCard(currentEditedCard!!.id)
+                @NeedsTest("#17282 returning from template editor saves further made changes")
+                // make sure the card's note is available going forward
+                currentEditedCard!!.note(getColUnsafe)
+                editorNote = currentEditedCard!!.note // update the NoteEditor's working note reference
                 updateCards(editorNote!!.notetype)
             }
         }
