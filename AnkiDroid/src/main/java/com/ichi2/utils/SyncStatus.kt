@@ -55,7 +55,7 @@ enum class SyncStatus {
             } catch (_: BackendNetworkException) {
                 NO_CHANGES
             } catch (e: Exception) {
-                Timber.d("error obtaining sync status: collection likely closed", e)
+                Timber.d(e, "error obtaining sync status: collection likely closed")
                 ERROR
             }
         }

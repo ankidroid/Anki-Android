@@ -850,7 +850,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         val photoFile: File? = try {
             requireContext().createImageFile()
         } catch (e: Exception) {
-            Timber.w("Error creating the file", e)
+            Timber.w(e, "Error creating the file")
             return
         }
 
