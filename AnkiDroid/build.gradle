@@ -312,7 +312,7 @@ dependencies {
     configurations.configureEach {
         resolutionStrategy {
             // Timber has this as a dependency but they are not up to date. We want to force our version.
-            force 'org.jetbrains:annotations:24.1.0'
+            force libs.jetbrains.annotations
         }
     }
     api project(":api")
