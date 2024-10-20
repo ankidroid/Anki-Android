@@ -51,7 +51,6 @@ androidxViewpager2 = "1.1.0"
 androidxWebkit = "1.12.1"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.9.1"
-annotations = "26.0.1"
 ankiBackend = '0.1.43-anki24.06.3'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
@@ -73,6 +72,7 @@ mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
 imageCropper = "4.6.0"
 javaSemver = "0.10.2"
+jetbrainsAnnotations = "26.0.1"
 json = "20240303"
 jsoup = "1.18.1"
 androidTestJunit = "1.2.1"
@@ -132,7 +132,7 @@ androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", versi
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerview" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
-jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
 colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "colorpicker" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }
