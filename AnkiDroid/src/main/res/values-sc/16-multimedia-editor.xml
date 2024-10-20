@@ -44,7 +44,7 @@
     <string name="multimedia_editor_popup_audio_clip">Annanghe un\'estratu àudio</string>
     <string name="multimedia_editor_popup_video_clip">Annanghe un\'estratu vìdeu</string>
     <string name="multimedia_editor_popup_audio">Registra su sonu</string>
-    <string name="multimedia_editor_popup_cloze">Iscantzellamentu cloze</string>
+    <string name="multimedia_editor_popup_cloze">Omissione (iscantzellamentu cloze)</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_audio">Registratzione àudio</string>
@@ -70,9 +70,9 @@
     <!-- Crop function-->
     <string name="crop_image">Cheres segare cust\'immàgine?</string>
     <string name="crop_button">Sega s\'immàgine</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
+    <string name="save_dialog_content">Sa mannària atuale de s\'immàgine est de %sMB. Su lìmite predefinidu de mannària pro sas immàgines est de 1MB. La cheres cumprìmere?</string>
     <string name="select_image_failed">"Seletzione de s\'immàgine fallida. Torra a proare"</string>
     <string name="activity_result_unexpected">S\'aplicatzione at frunidu unu valore no isetadu. Dias pòdere dèpere impreare un\'aplicatzione diferente</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Cuntenutos de su campu</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect">Torra a seletzionare</string>
 </resources>
