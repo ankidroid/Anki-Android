@@ -32,9 +32,9 @@ import com.ichi2.anki.lint.utils.ext.isRightToLeftLanguage
 import org.w3c.dom.Element
 
 /**
- * Ensures that strings are cased correctly
+ * Checks for a variety of errors commonly made in CrowdIn
  *
- * `JavaScript`, not `Javascript`
+ * `JavaScript`, not `Javascript`, ellipses, empty strings, etc
  */
 class TranslationTypo : ResourceXmlDetector(), XmlScanner {
     companion object {
@@ -112,7 +112,7 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         // use the unicode character instead of three dots for ellipsis
         // ignore RTL to reduce maintenance: GitHub incorrectly displays ellipsis, so hard to review
         if (element.textContent.contains("...") && !context.isRightToLeftLanguage()) {
-            element.reportIssue("should use unicode '&#8230;' instead of three dots for ellipsis")
+            element.reportIssue("should use unicode '&#8230;' for ellipsis not three dots; RTL languages best viewed on crowdin")
         }
 
         // casing of 'JavaScript'
