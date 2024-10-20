@@ -48,7 +48,7 @@ import java.util.Locale
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */
-    private const val fileNameShorteningThreshold = 100
+    private const val FILE_NAME_SHORTENING_THRESHOLD = 100
 
     /**
      * This code is used in multiple places to handle package imports
@@ -236,13 +236,13 @@ object ImportUtils {
             // #6137 - filenames can be too long when URLEncoded
             return try {
                 val encoded = URLEncoder.encode(fileName, "UTF-8")
-                if (encoded.length <= fileNameShorteningThreshold) {
+                if (encoded.length <= FILE_NAME_SHORTENING_THRESHOLD) {
                     Timber.d("No filename truncation necessary")
                     fileName
                 } else {
-                    Timber.d("Filename was longer than %d, shortening", fileNameShorteningThreshold)
+                    Timber.d("Filename was longer than %d, shortening", FILE_NAME_SHORTENING_THRESHOLD)
                     // take 90 instead of 100 so we don't get the extension
-                    val substringLength = fileNameShorteningThreshold - 10
+                    val substringLength = FILE_NAME_SHORTENING_THRESHOLD - 10
                     val shortenedFileName = encoded.substring(0, substringLength) + "..." + getExtension(fileName)
                     Timber.d("Shortened filename '%s' to '%s'", fileName, shortenedFileName)
                     // if we don't decode, % is double-encoded

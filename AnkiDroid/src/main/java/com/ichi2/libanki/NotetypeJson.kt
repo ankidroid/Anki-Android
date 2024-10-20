@@ -131,7 +131,7 @@ class NotetypeJson : JSONObject {
         }
 
     // TODO: Not constrained
-    @Consts.MODEL_TYPE
+    @Consts.ModelType
     var type: Int
         get() = getInt("type")
         set(value) {

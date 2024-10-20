@@ -69,12 +69,12 @@ class FieldState private constructor(private val editor: NoteEditor) {
     private fun recreateFieldsFromState(): List<FieldEditLine> {
         val editLines: MutableList<FieldEditLine> = ArrayList(savedFieldData!!.size)
         for (state in savedFieldData!!) {
-            val edit_line_view = FieldEditLine(editor.requireContext())
-            if (edit_line_view.id == 0) {
-                edit_line_view.id = View.generateViewId()
+            val editLineView = FieldEditLine(editor.requireContext())
+            if (editLineView.id == 0) {
+                editLineView.id = View.generateViewId()
             }
-            edit_line_view.loadState(state)
-            editLines.add(edit_line_view)
+            editLineView.loadState(state)
+            editLines.add(editLineView)
         }
         return editLines
     }
@@ -83,11 +83,11 @@ class FieldState private constructor(private val editor: NoteEditor) {
         val fields = getFields(type)
         val editLines: MutableList<FieldEditLine> = ArrayList(fields.size)
         for (i in fields.indices) {
-            val edit_line_view = FieldEditLine(editor.requireContext())
-            editLines.add(edit_line_view)
-            edit_line_view.name = fields[i][0]
-            edit_line_view.setContent(fields[i][1], type.replaceNewlines)
-            edit_line_view.setOrd(i)
+            val editLineView = FieldEditLine(editor.requireContext())
+            editLines.add(editLineView)
+            editLineView.name = fields[i][0]
+            editLineView.setContent(fields[i][1], type.replaceNewlines)
+            editLineView.setOrd(i)
         }
         return editLines
     }

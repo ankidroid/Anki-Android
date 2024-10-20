@@ -93,7 +93,7 @@ class ReviewerTest : RobolectricTest() {
         val tags = listOf("tag1", "tag2")
 
         // Define an arbitrary filter
-        val ARBITRARY_FILTER = CardStateFilter.DUE
+        val arbitraryFilter = CardStateFilter.DUE
 
         // Assert that currentCard is not null before calling onSelectedTags
         assertNotNull("currentCard should not be null", viewer.currentCard)
@@ -102,7 +102,7 @@ class ReviewerTest : RobolectricTest() {
         Timber.d("Before first call to onSelectedTags")
 
         // Call onSelectedTags method
-        viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
+        viewer.onSelectedTags(tags, emptyList(), arbitraryFilter)
 
         Timber.d("After first call to onSelectedTags")
 
@@ -112,7 +112,7 @@ class ReviewerTest : RobolectricTest() {
         Timber.d("Before second call to onSelectedTags")
 
         // Call onSelectedTags method again
-        viewer.onSelectedTags(tags, emptyList(), ARBITRARY_FILTER)
+        viewer.onSelectedTags(tags, emptyList(), arbitraryFilter)
 
         Timber.d("After second call to onSelectedTags")
 

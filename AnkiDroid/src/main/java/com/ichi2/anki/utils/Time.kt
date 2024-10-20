@@ -51,39 +51,39 @@ private const val TIME_YEAR = 12.0 * TIME_MONTH
  * @return The time quantity string. Something like "3 minutes left" or "2 hours left".
  */
 fun remainingTime(context: Context, time_s: Long): String {
-    val time_x: Int // Time in unit x
-    val remaining_seconds: Int // Time not counted in the number in unit x
+    val timeX: Int // Time in unit x
+    val remainingSeconds: Int // Time not counted in the number in unit x
     val remaining: Int // Time in the unit smaller than x
     val res = context.resources
     return if (time_s < TIME_HOUR_LONG) {
         // get time remaining, but never less than 1
-        time_x = max(
+        timeX = max(
             (time_s / TIME_MINUTE).roundToInt(),
             1
         )
-        res.getQuantityString(R.plurals.reviewer_window_title, time_x, time_x)
+        res.getQuantityString(R.plurals.reviewer_window_title, timeX, timeX)
         // It used to be minutes only. So the word "minutes" is not
         // explicitly written in the ressource name.
     } else if (time_s < TIME_DAY_LONG) {
-        time_x = (time_s / TIME_HOUR_LONG).toInt()
-        remaining_seconds = (time_s % TIME_HOUR_LONG).toInt()
+        timeX = (time_s / TIME_HOUR_LONG).toInt()
+        remainingSeconds = (time_s % TIME_HOUR_LONG).toInt()
         remaining =
-            (remaining_seconds.toFloat() / TIME_MINUTE).roundToInt()
+            (remainingSeconds.toFloat() / TIME_MINUTE).roundToInt()
         res.getQuantityString(
             R.plurals.reviewer_window_title_hours_new,
-            time_x,
-            time_x,
+            timeX,
+            timeX,
             remaining
         )
     } else {
-        time_x = (time_s / TIME_DAY_LONG).toInt()
-        remaining_seconds = (time_s.toFloat() % TIME_DAY_LONG).toInt()
+        timeX = (time_s / TIME_DAY_LONG).toInt()
+        remainingSeconds = (time_s.toFloat() % TIME_DAY_LONG).toInt()
         remaining =
-            (remaining_seconds / TIME_HOUR).roundToInt()
+            (remainingSeconds / TIME_HOUR).roundToInt()
         res.getQuantityString(
             R.plurals.reviewer_window_title_days_new,
-            time_x,
-            time_x,
+            timeX,
+            timeX,
             remaining
         )
     }

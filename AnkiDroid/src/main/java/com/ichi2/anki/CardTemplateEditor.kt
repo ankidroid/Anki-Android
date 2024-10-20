@@ -187,7 +187,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     /**
-     *  Loads or reloads [tempModel] in [R.id.template_previewer_fragment] if the view is fragmented. Do nothing otherwise.
+     *  Loads or reloads [tempModel] in [R.id.fragment_container] if the view is fragmented. Do nothing otherwise.
      */
     private fun loadTemplatePreviewerFragmentIfFragmented() {
         if (!fragmented) {

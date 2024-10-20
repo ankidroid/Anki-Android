@@ -88,7 +88,7 @@ import java.util.zip.GZIPInputStream
 typealias AddonsPackageDir = File
 
 class TgzPackageExtract(private val context: Context) {
-    private val GZIP_SIGNATURE = byteArrayOf(0x1f, 0x8b.toByte())
+    private val _gzipSignature = byteArrayOf(0x1f, 0x8b.toByte())
     private var requiredMinSpace: Long = 0
     private var availableSpace: Long = 0
 
@@ -109,13 +109,13 @@ class TgzPackageExtract(private val context: Context) {
      */
     @Throws(IOException::class)
     fun isGzip(file: File?): Boolean {
-        val signature = ByteArray(GZIP_SIGNATURE.size)
+        val signature = ByteArray(_gzipSignature.size)
         FileInputStream(file).use { stream ->
             if (stream.read(signature) != signature.size) {
                 return false
             }
         }
-        return GZIP_SIGNATURE.contentEquals(signature)
+        return _gzipSignature.contentEquals(signature)
     }
 
     /**

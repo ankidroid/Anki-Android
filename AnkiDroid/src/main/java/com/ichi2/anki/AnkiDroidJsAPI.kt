@@ -25,14 +25,14 @@ import android.net.Uri
 import androidx.lifecycle.lifecycleScope
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryNote
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeError
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeFlagCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeMarkCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendCard
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendNote
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_BURT_NOTE
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_BURY_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_ERROR
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_FLAG_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_MARK_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SET_DUE
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_CARD
+import com.ichi2.anki.AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SUSPEND_NOTE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.flagCommands
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.CardsOrNotes
@@ -144,7 +144,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 return false
             }
-            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.currentJsApiVersion)
+            val versionCurrent = Version.parse(AnkiDroidJsAPIConstants.CURRENT_JS_API_VERSION)
             val versionSupplied = Version.parse(apiVer)
 
             /*
@@ -160,7 +160,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     activity.runOnUiThread {
                         activity.showSnackbar(context.getString(R.string.update_js_api_version, apiDevContact))
                     }
-                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.minimumJsApiVersion))
+                    versionSupplied.isHigherThanOrEquivalentTo(Version.parse(AnkiDroidJsAPIConstants.MINIMUM_JS_API_VERSION))
                 }
                 else -> {
                     activity.runOnUiThread {
@@ -207,21 +207,21 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             "nextTime4" -> convertToByteArray(apiContract, cardDataForJsAPI.nextTime4)
             "toggleFlag" -> {
                 if (apiParams !in flagCommands) {
-                    showDeveloperContact(ankiJsErrorCodeFlagCard, apiContract.cardSuppliedDeveloperContact)
+                    showDeveloperContact(ANKI_JS_ERROR_CODE_FLAG_CARD, apiContract.cardSuppliedDeveloperContact)
                     return@withContext convertToByteArray(apiContract, false)
                 }
                 convertToByteArray(apiContract, activity.executeCommand(flagCommands[apiParams]!!))
             }
-            "markCard" -> processAction({ activity.executeCommand(ViewerCommand.MARK) }, apiContract, ankiJsErrorCodeMarkCard, ::convertToByteArray)
-            "buryCard" -> processAction(activity::buryCard, apiContract, ankiJsErrorCodeBuryCard, ::convertToByteArray)
-            "buryNote" -> processAction(activity::buryNote, apiContract, ankiJsErrorCodeBuryNote, ::convertToByteArray)
-            "suspendCard" -> processAction(activity::suspendCard, apiContract, ankiJsErrorCodeSuspendCard, ::convertToByteArray)
-            "suspendNote" -> processAction(activity::suspendNote, apiContract, ankiJsErrorCodeSuspendNote, ::convertToByteArray)
+            "markCard" -> processAction({ activity.executeCommand(ViewerCommand.MARK) }, apiContract, ANKI_JS_ERROR_CODE_MARK_CARD, ::convertToByteArray)
+            "buryCard" -> processAction(activity::buryCard, apiContract, ANKI_JS_ERROR_CODE_BURY_CARD, ::convertToByteArray)
+            "buryNote" -> processAction(activity::buryNote, apiContract, ANKI_JS_ERROR_CODE_BURT_NOTE, ::convertToByteArray)
+            "suspendCard" -> processAction(activity::suspendCard, apiContract, ANKI_JS_ERROR_CODE_SUSPEND_CARD, ::convertToByteArray)
+            "suspendNote" -> processAction(activity::suspendNote, apiContract, ANKI_JS_ERROR_CODE_SUSPEND_NOTE, ::convertToByteArray)
             "setCardDue" -> {
                 try {
                     val days = apiParams.toInt()
                     if (days < 0 || days > 9999) {
-                        showDeveloperContact(ankiJsErrorCodeSetDue, apiContract.cardSuppliedDeveloperContact)
+                        showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
                         return@withContext convertToByteArray(apiContract, false)
                     }
                     activity.launchCatchingTask {
@@ -229,7 +229,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                     }
                     return@withContext convertToByteArray(apiContract, true)
                 } catch (e: NumberFormatException) {
-                    showDeveloperContact(ankiJsErrorCodeSetDue, apiContract.cardSuppliedDeveloperContact)
+                    showDeveloperContact(ANKI_JS_ERROR_CODE_SET_DUE, apiContract.cardSuppliedDeveloperContact)
                     return@withContext convertToByteArray(apiContract, false)
                 }
             }
@@ -367,7 +367,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             }
             "sttStop" -> convertToByteArray(apiContract, speechRecognizer.stop())
             else -> {
-                showDeveloperContact(ankiJsErrorCodeError, apiContract.cardSuppliedDeveloperContact)
+                showDeveloperContact(ANKI_JS_ERROR_CODE_ERROR, apiContract.cardSuppliedDeveloperContact)
                 throw Exception("unhandled request: $methodName")
             }
         }
@@ -394,7 +394,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 "console.log('${context.getString(R.string.search_card_js_api_no_results)}')",
                 null
             )
-            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeSearchCard, apiContract.cardSuppliedDeveloperContact)
+            showDeveloperContact(AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SEARCH_CARD, apiContract.cardSuppliedDeveloperContact)
             return@withContext convertToByteArray(apiContract, false)
         }
         val searchResult: MutableList<String> = ArrayList()

@@ -14,6 +14,6 @@ class AudioRecordingField : AudioField() {
     override var name: String? = null
 
     companion object {
-        private const val serialVersionUID = 5033819217738174719L
+        private const val SERIAL_VERSION_UID = 5033819217738174719L
     }
 }

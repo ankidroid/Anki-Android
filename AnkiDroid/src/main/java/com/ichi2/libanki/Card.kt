@@ -20,8 +20,8 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
 import com.ichi2.anki.utils.ext.ifZero
-import com.ichi2.libanki.Consts.CARD_QUEUE
-import com.ichi2.libanki.Consts.CARD_TYPE
+import com.ichi2.libanki.Consts.CardQueue
+import com.ichi2.libanki.Consts.CardType
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -75,12 +75,12 @@ open class Card : Cloneable {
     var mod: Long = 0
     private var usn = 0
 
-    @get:CARD_TYPE
-    @CARD_TYPE
+    @get:CardType
+    @CardType
     var type = 0
 
-    @get:CARD_QUEUE
-    @CARD_QUEUE
+    @get:CardQueue
+    @CardQueue
     var queue = 0
     var due: Int = 0
     var ivl = 0

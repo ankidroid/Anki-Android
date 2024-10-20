@@ -71,7 +71,7 @@ class ImageField : FieldBase(), IField {
     }
 
     companion object {
-        private const val serialVersionUID = 4431611060655809687L
+        private const val SERIAL_VERSION_UID = 4431611060655809687L
 
         @VisibleForTesting
         @NeedsTest("files with HTML illegal chars can be imported and rendered")

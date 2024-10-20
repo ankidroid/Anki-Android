@@ -60,14 +60,9 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var cardAnalysisWidgetPreferences: CardAnalysisWidgetPreferences
 
-    /**
-     * Maximum number of decks allowed in the widget.
-     */
-    private val MAX_DECKS_ALLOWED = 1
     private var hasUnsavedChanges = false
     private var isAdapterObserverRegistered = false
     private lateinit var onBackPressedCallback: OnBackPressedCallback
-    private val EXTRA_SELECTED_DECK_IDS = "card_analysis_widget_selected_deck_ids"
 
     /** Tracks coroutine running [initializeUIComponents]: must be run on a non-empty collection */
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -351,6 +346,14 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
             cardAnalysisWidgetPreferences.deleteDeckData(appWidgetId)
         }
+    }
+
+    companion object {
+        /**
+         * Maximum number of decks allowed in the widget.
+         */
+        private const val MAX_DECKS_ALLOWED = 1
+        private const val EXTRA_SELECTED_DECK_IDS = "card_analysis_widget_selected_deck_ids"
     }
 }
 

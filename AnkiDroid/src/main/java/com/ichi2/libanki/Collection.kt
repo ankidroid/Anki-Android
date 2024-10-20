@@ -210,8 +210,8 @@ class Collection(
     fun reopen(afterFullSync: Boolean = false): Boolean {
         Timber.i("(Re)opening Database: %s", path)
         return if (dbClosed) {
-            val (db_, created) = Storage.openDB(path, backend, afterFullSync)
-            dbInternal = db_
+            val (database, created) = Storage.openDB(path, backend, afterFullSync)
+            dbInternal = database
             load()
             if (afterFullSync) {
                 _loadScheduler()

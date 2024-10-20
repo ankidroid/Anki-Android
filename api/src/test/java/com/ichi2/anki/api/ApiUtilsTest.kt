@@ -23,7 +23,7 @@ internal class ApiUtilsTest {
     @Test
     fun joinFieldsShouldJoinWhenListIsValid() {
         val fieldList = arrayOf("A", "B", "C")
-        assertEquals("A" + delimiter + "B" + delimiter + "C", Utils.joinFields(fieldList))
+        assertEquals("A" + DELIMITER + "B" + DELIMITER + "C", Utils.joinFields(fieldList))
     }
 
     @Test
@@ -33,7 +33,7 @@ internal class ApiUtilsTest {
 
     @Test
     fun splitFieldsShouldSplitRightWhenStringIsValid() {
-        val fieldList = "A" + delimiter + "B" + delimiter + "C"
+        val fieldList = "A" + DELIMITER + "B" + DELIMITER + "C"
         val output = Utils.splitFields(fieldList)
         assertEquals("A", output[0])
         assertEquals("B", output[1])
@@ -72,6 +72,6 @@ internal class ApiUtilsTest {
 
     companion object {
         // We need to keep a copy because a change to Utils.FIELD_SEPARATOR should break the tests
-        private const val delimiter = "\u001F"
+        private const val DELIMITER = "\u001F"
     }
 }

@@ -87,12 +87,12 @@ class UniqueArrayListTest {
         val sorted: ArrayList<Int> = ArrayList(longs)
         sorted.sort()
 
-        mockStatic(Collections::class.java).use { MockCollection ->
+        mockStatic(Collections::class.java).use { mockCollection ->
             val uniqueList = UniqueArrayList.from(longs)
             uniqueList.sort()
             assertListEquals(sorted, uniqueList)
 
-            MockCollection.verify({ Collections.sort(any(), any<Comparator<in Any>>()) }, never())
+            mockCollection.verify({ Collections.sort(any(), any<Comparator<in Any>>()) }, never())
         }
     }
 

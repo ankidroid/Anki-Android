@@ -132,7 +132,7 @@ import com.ichi2.libanki.CardId
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.Consts.ButtonType
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Sound.getAvTag
@@ -856,7 +856,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun answerCard(@BUTTON_TYPE ease: Int) = preventSimultaneousExecutions(ANSWER_CARD) {
+    open fun answerCard(@ButtonType ease: Int) = preventSimultaneousExecutions(ANSWER_CARD) {
         launchCatchingTask {
             if (inAnswer) {
                 return@launchCatchingTask
@@ -876,7 +876,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open suspend fun answerCardInner(@BUTTON_TYPE ease: Int) {
+    open suspend fun answerCardInner(@ButtonType ease: Int) {
         // Legacy tests assume they can call answerCard() even outside of Reviewer
         withCol {
             sched.answerCard(currentCard!!, ease)

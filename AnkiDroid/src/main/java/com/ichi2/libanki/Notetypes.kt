@@ -363,9 +363,9 @@ class Notetypes(val col: Collection) {
     }
 
     @LibAnkiAlias("rename_field")
-    fun renameField(notetype: NotetypeJson, field: Field, new_name: String) {
+    fun renameField(notetype: NotetypeJson, field: Field, newName: String) {
         assert(notetype.flds.jsonObjectIterable().contains(field))
-        field["name"] = new_name
+        field["name"] = newName
     }
 
     /** Modifies schema. */
@@ -634,11 +634,11 @@ class Notetypes(val col: Collection) {
     companion object {
         const val NOT_FOUND_NOTE_TYPE = -1L
 
-        fun newTemplate(name: String): JSONObject = JSONObject(defaultTemplate).also {
+        fun newTemplate(name: String): JSONObject = JSONObject(DEFAULT_TEMPLATE).also {
             it.put("name", name)
         }
 
-        private const val defaultTemplate =
+        private const val DEFAULT_TEMPLATE =
             (
                 "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", " +
                     "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"\"," +

@@ -65,10 +65,6 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var deckPickerWidgetPreferences: DeckPickerWidgetPreferences
 
-    /**
-     * Maximum number of decks allowed in the widget.
-     */
-    private val MAX_DECKS_ALLOWED = 5
     private var hasUnsavedChanges = false
     private var isAdapterObserverRegistered = false
     private lateinit var onBackPressedCallback: OnBackPressedCallback
@@ -441,6 +437,12 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
             context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
         }
+    }
+    companion object {
+        /**
+         * Maximum number of decks allowed in the widget.
+         */
+        private const val MAX_DECKS_ALLOWED = 5
     }
 }
 
