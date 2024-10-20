@@ -74,7 +74,7 @@
     <string name="card_browser_list_my_searches_remove_content">%1$s حذف شود؟</string>
     <string name="card_browser_change_display_order" maxLength="29">تغییر تنظیم صفحه نمایش</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">جست و جو</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">جست و جو</string>
     <string name="card_browser_change_display_order_title">تغییر تنظیم صفحه نمایش</string>
     <string name="card_details_tags">برچسب ها</string>
     <string-array name="card_browser_order_labels">
@@ -112,6 +112,6 @@
         <item quantity="other">%d کارت حذف شده.</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">ویرایش برچسب گفتوگو ها</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">نمایش گفتوگو</string>
 </resources>

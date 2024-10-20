@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">پیش نمایش کارت های جدید</string>
     <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d دفن شده</item>
+        <item quantity="other">+%d دفن شده</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">ویرایش یادداشت</string>
@@ -124,7 +124,7 @@
     <string name="card_editor_reset_card">تنظیم مجدد پیشرفت</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">برنامه ریزی مجدد</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">پیش نمایش</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">کپی markdown</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">کپی به عنوان مارک‌داون</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d از %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">تغییر نام</string>
     <string name="checks_action">بررسی</string>
@@ -149,7 +149,7 @@
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد: AnkiDroid بسته بود</string>
     <string name="export_preparation_in_progress">در حال آماده‌سازی خروجی&#8230;</string>
     <string name="export_ready_title">خروجی آماده است</string>
-    <string name="export_send_no_handlers">هیچ برنامه ای برای بررسی apkg در دسترس نیست. در حال ذخیره...</string>
+    <string name="export_send_no_handlers">هیچ برنامه ای برای بررسی apkg در دسترس نیست. در حال ذخیره&#8230;</string>
     <string name="export_save_apkg_successful">بسته Anki با موفقیت ذخیره شد</string>
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
     <string name="export_share_title">ارسال بسته Anki با</string>
@@ -344,20 +344,20 @@
     <string name="orphan_note_message">حذف این نوع کارت باعث بی کارت شدن بعضی یادداشت ها می شود</string>
     <string name="voice_not_supported">صدای انتخاب شده همایت شده نیست. یکی دیگر را انتخاب کنید یا یک موتور صدا نصب کنید.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">نمایش کادر محاوره‌ای میانبرهای کیبرد</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">انتخاب کننده دسته</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">دسته را بدون تایید حذف کن</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">ویرایشگر یادداشت</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">انتخاب دسته</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">انتخاب نوع یادداشت</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">ویرایشگر یادداشت</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">ویرایشگر قالب کارت</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">ویرایش قالب جلو</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">ویرایش قالب عقب</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ویرایش طراحی</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">ویرایش قالب به عنوان مارک‌داون</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ویرایش ظاهر مرورگر</string>
+    <string name="show_shortcuts_message">برای نمایش میانبر های کیبرد دکمه های Alt+K را  فشار دهید</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">عمل کاربر %s در این نوع کارت تنظیم نشده است. لطفاً آن را پیکربندی کنید.</string>
+    <string name="directory_inaccessible_info">برای کسب اطلاعات بیشتر در مورد نحوه بازیابی دسترسی اینجا %s را ببینید یا به تنظیمات بروید تا پوشه مجموعه را به‌روزرسانی کنید.</string>
 </resources>

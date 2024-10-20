@@ -125,11 +125,11 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">אנא אפשר לAnkiDroid גישה לאחסון בכדי להמשיך</string>
-    <string name="rebuild_filtered_deck">בונה מחדש חפיסה מסוננת...</string>
+    <string name="rebuild_filtered_deck">בונה מחדש חפיסה מסוננת&#8230;</string>
     <string name="rebuild_cram_label">בניה מחדש</string>
     <string name="empty_cram_label">ריקון</string>
     <string name="create_subdeck">צור חפיסת משנה</string>
-    <string name="empty_filtered_deck">מרוקן חפיסה מסוננת...</string>
+    <string name="empty_filtered_deck">מרוקן חפיסה מסוננת&#8230;</string>
     <string name="custom_study_deck_name">שיעור למידה מותאם</string>
     <string name="custom_study_deck_exists">ראשית, ערוך שם חפיסה חדשה</string>
     <string name="search_deck" comment="Deck search for selecting it">חיפוש חפיסה</string>

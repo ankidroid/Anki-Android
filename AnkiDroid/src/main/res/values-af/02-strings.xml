@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">Voorskou nuwe kaarte</string>
     <string name="custom_study_limit_tags">Beperk tot spesifieke etikette</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d begrawe</item>
+        <item quantity="other">+%d begrawe</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Wysig nota</string>
@@ -149,7 +149,7 @@
     <string name="import_interrupted">Invoer onderbreek: AnkiDroid is gesluit</string>
     <string name="export_preparation_in_progress">Voorbereiding van uitvoer&#8230;</string>
     <string name="export_ready_title">Gereed vir uitvoer</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving&#8230;</string>
+    <string name="export_send_no_handlers">Geen toepassings beskikbaar om .apkg te hanteer nie. Stoor&#8230;</string>
     <string name="export_save_apkg_successful">Suksesvol Anki-pakket gestoor</string>
     <string name="export_save_apkg_unsuccessful">Stoor Anki-pakket het misluk</string>
     <string name="export_share_title">Stuur Anki-pakket met behulp van</string>
@@ -233,35 +233,35 @@
     <string name="after_text">HTML Na Seleksie</string>
     <string name="add_toolbar_item">Skep Nutsbalk-item</string>
     <string name="edit_toolbar_item">Wysig Nutsbalk-item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">Voer HTML in om voor en na die geselekteerde teks ingevoeg te word\n\nDruk lank op \'n nutsbalk-item om dit te wysig of te verwyder</string>
     <string name="remove_toolbar_item">Verwyder Nutsbalk-item?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_image_too_large">Die beeld is te groot, voeg asseblief die beeld handmatig in</string>
+    <string name="note_editor_video_too_large">Die videolêer is te groot, voeg asseblief die video handmatig in</string>
+    <string name="note_editor_audio_too_large">Die klanklêer is te groot, voeg asseblief die klank handmatig in</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="create_shortcut_error">Fout met byvoeging van kortpad: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Hoofletters sinne</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Rol nutsbalk</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="invalid_email">Voer \'n geldige e-posadres in</string>
+    <string name="password_empty">Wagwoord word vereis</string>
+    <string name="back_pressed_once">Druk weer terug om af te sluit</string>
+    <string name="back_pressed_once_reviewer">Druk weer terug om terug te keer</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
+    <string name="download_deck">Laai dek af</string>
+    <string name="try_again">Probeer weer</string>
+    <string name="cancel_download">Kanselleer aflaai</string>
+    <string name="cancel_download_question_title">Kanselleer aflaai?</string>
+    <string name="downloading_file">Laai %s Af</string>
+    <string name="import_deck">Voer Dek In</string>
     <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="download_failed">Aflaai het misluk</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>

@@ -236,8 +236,8 @@
     <string name="toolbar_item_explain_edit_or_remove">Entrez le code HTML à insérer avant et après le texte sélectionné\n\nAppuyez longuement sur un élément de la barre d\'outils pour le modifier ou le supprimer</string>
     <string name="remove_toolbar_item">Supprimer l\'élément de la barre d\'outils ?</string>
     <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
+    <string name="note_editor_video_too_large">Le fichier vidéo est trop volumineux, insérez la vidéo manuellement.</string>
+    <string name="note_editor_audio_too_large">Le fichier audio est trop volumineux, insérez l’audio manuellement.</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Sauvergarde Android en cours. Veuillez réessayer</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Veuillez utiliser iManager pour autoriser AnkiDroid à ajouter des raccourcis</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Votre écran d\'accueil ne permet pas à AnkiDroid d\'ajouter des raccourcis</string>
@@ -340,15 +340,15 @@
     <string name="play_recording">Lecture</string>
     <string name="next_recording">Suivant</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_title">Impossible de supprimer le type de carte</string>
     <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
     <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
     <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Supprimer le paquet sans confirmation</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Éditeur de notes</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Choisir le paquet</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>

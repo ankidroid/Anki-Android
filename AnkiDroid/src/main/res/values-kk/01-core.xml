@@ -54,8 +54,8 @@
     <string name="send_feedback">Пікір жіберу</string>
     <string name="studyoptions_start">Оқу</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">Толығырақ</string>
-    <string name="collapse">Жасыру</string>
+    <string name="expand">Жаю</string>
+    <string name="collapse">Жию</string>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d минут қалды</item>
         <item quantity="other">%d минут қалды</item>

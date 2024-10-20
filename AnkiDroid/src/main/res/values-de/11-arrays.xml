@@ -84,7 +84,7 @@
     <string name="answer_good">Antwort: gut</string>
     <string name="answer_easy">Antwort: einfach</string>
     <string name="gesture_play">Medien abspielen</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
+    <string name="gesture_abort_learning">Überprüfer schließen</string>
     <string name="gesture_flag_red">Rote Flagge umschalten</string>
     <string name="gesture_flag_orange">Orange Flagge umschalten</string>
     <string name="gesture_flag_green">Grüne Flagge umschalten</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Flagge entfernen</string>
     <string name="gesture_page_up">Seite nach oben</string>
     <string name="gesture_page_down">Seite nach unten</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync">Überprüfer und Sync schließen</string>
     <string name="gesture_toggle_whiteboard">Whiteboard ein-/ausschalten</string>
     <string name="gesture_show_hint">Hinweis anzeigen</string>
     <string name="gesture_show_all_hints">Alle Hinweise anzeigen</string>

@@ -48,7 +48,7 @@
     <string name="disabled">Disabilitadu</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="other">%d minutos</item>
     </plurals>
     <string name="pref_milliseconds">%s ms</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
@@ -268,17 +268,17 @@
     <string name="key_picker_default_press_key">Incarca una tecla</string>
     <string name="binding_add_axis">Add joystick/motion controller</string>
     <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="user_actions" maxLength="41">Atziones utente </string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
-    <string name="user_action_1" maxLength="41">User action 1</string>
-    <string name="user_action_2" maxLength="41">User action 2</string>
-    <string name="user_action_3" maxLength="41">User action 3</string>
-    <string name="user_action_4" maxLength="41">User action 4</string>
-    <string name="user_action_5" maxLength="41">User action 5</string>
-    <string name="user_action_6" maxLength="41">User action 6</string>
-    <string name="user_action_7" maxLength="41">User action 7</string>
-    <string name="user_action_8" maxLength="41">User action 8</string>
-    <string name="user_action_9" maxLength="41">User action 9</string>
+    <string name="user_action_1" maxLength="41">Atzione utente 1</string>
+    <string name="user_action_2" maxLength="41">Atzione utente 2</string>
+    <string name="user_action_3" maxLength="41">Atzione utente 3</string>
+    <string name="user_action_4" maxLength="41">Atzione utente 4</string>
+    <string name="user_action_5" maxLength="41">Atzione utente 5</string>
+    <string name="user_action_6" maxLength="41">Atzione utente 6</string>
+    <string name="user_action_7" maxLength="41">Atzione utente 7</string>
+    <string name="user_action_8" maxLength="41">Atzione utente 8</string>
+    <string name="user_action_9" maxLength="41">Atzione utente 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Seletziona su ladu de sa carta</string>
@@ -322,11 +322,11 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Amministra su logu</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Faddina</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Carcu-\nlende&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d documentu\n%2$s</item>
+        <item quantity="other">%1$d documentos\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
@@ -361,11 +361,11 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Recuperende&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Carculende&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Sa colletzione no esistit</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Cua istangas de sistema</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Peruna</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Istanga de istadu</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Istanga de navigatzione</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Totu cantas</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
     <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
     <string name="hide_hard_and_easy" maxLength="41">Hide ‘Hard’ and ‘Easy’ buttons</string>
