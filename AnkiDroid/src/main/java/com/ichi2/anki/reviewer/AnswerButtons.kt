@@ -101,7 +101,7 @@ enum class AnswerButtons {
         }
 
         fun getTextColors(ctx: Context): IntArray {
-            return Themes.getColorFromAttr(
+            return Themes.getColorsFromAttrs(
                 ctx,
                 intArrayOf(
                     R.attr.againButtonTextColor,

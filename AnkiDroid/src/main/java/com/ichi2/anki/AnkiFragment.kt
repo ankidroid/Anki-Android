@@ -24,13 +24,13 @@ import androidx.annotation.AttrRes
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.ichi2.async.CollectionLoader
 import com.ichi2.compat.CompatV24
 import com.ichi2.libanki.Collection
+import com.ichi2.themes.Themes
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import com.ichi2.utils.tintOverflowMenuIcons
 import timber.log.Timber
@@ -69,7 +69,7 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requireActivity().window.statusBarColor = ThemeUtils.getThemeAttrColor(requireContext(), R.attr.appBarColor)
+        requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -97,7 +97,8 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     protected suspend fun userAcceptsSchemaChange() = ankiActivity.userAcceptsSchemaChange()
 
     fun setNavigationBarColor(@AttrRes attr: Int) {
-        requireActivity().window.navigationBarColor = ThemeUtils.getThemeAttrColor(requireContext(), attr)
+        requireActivity().window.navigationBarColor =
+            Themes.getColorFromAttr(requireContext(), attr)
     }
 
     /**
