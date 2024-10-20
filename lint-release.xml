@@ -459,7 +459,6 @@
     <issue id="InvalidId" severity="ignore" />
     <issue id="NotSibling" severity="ignore" />
     <issue id="UnknownIdInLayout" severity="ignore" />
-    <issue id="SuspiciousImport" severity="ignore" />
     <issue id="WrongFolder" severity="ignore" />
     <issue id="WrongThreadInterprocedural" severity="ignore" />
 
