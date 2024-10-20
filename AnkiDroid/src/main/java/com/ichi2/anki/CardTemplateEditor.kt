@@ -494,7 +494,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 true
             }
             // set saved or default view
-            bottomNavigation.selectedItemId = requireArguments().getInt(EDITOR_VIEW_ID_KEY)
+            bottomNavigation.selectedItemId =
+                templateEditor.tabToViewId[cardIndex] ?: requireArguments().getInt(EDITOR_VIEW_ID_KEY)
 
             // Set text change listeners
             val templateEditorWatcher: TextWatcher = object : TextWatcher {
