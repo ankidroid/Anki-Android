@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.previewer
 
-import android.R
 import android.content.Context
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiDroidApp
@@ -50,20 +49,20 @@ fun stdHtml(
     val colors = if (!nightMode) {
         val canvasColor = MaterialColors.getColor(
             context,
-            R.attr.colorBackground,
-            R.color.white
+            android.R.attr.colorBackground,
+            android.R.color.white
         ).toRGBHex()
         val fgColor =
-            MaterialColors.getColor(context, R.attr.textColor, R.color.black).toRGBHex()
+            MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
         ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
     } else {
         val canvasColor = MaterialColors.getColor(
             context,
-            R.attr.colorBackground,
-            R.color.black
+            android.R.attr.colorBackground,
+            android.R.color.black
         ).toRGBHex()
         val fgColor =
-            MaterialColors.getColor(context, R.attr.textColor, R.color.white).toRGBHex()
+            MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
         ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
     }
 
