@@ -439,7 +439,6 @@
     <issue id="TypographyFractions" severity="ignore" />
     <issue id="TypographyOther" severity="ignore" />
     <issue id="TypographyQuotes" severity="ignore" />
-    <issue id="UnsafeProtectedBroadcastReceiver" severity="ignore" />
     <issue id="UnprotectedSMSBroadcastReceiver" severity="ignore" />
     <issue id="UnusedIds" severity="ignore" />
     <issue id="UseCompoundDrawables" severity="ignore" />
