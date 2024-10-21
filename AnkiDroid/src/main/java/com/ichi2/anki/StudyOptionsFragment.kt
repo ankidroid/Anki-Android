@@ -87,8 +87,9 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     private var createMenuJob: Job? = null
 
     /** Current activity.*/
+    // TODO: nullability is temporary while #17284 is being diagnosed
     private val deckPicker: DeckPicker?
-        get() = activity as? DeckPicker
+        get() = requireActivity() as? DeckPicker
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
     private var loadWithDeckOptions = false
@@ -142,6 +143,13 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
         // If we're being restored, don't launch deck options again.
         if (savedInstanceState == null && arguments != null) {
             loadWithDeckOptions = requireArguments().getBoolean("withDeckOptions")
+        }
+    }
+
+    /** Extension function on DeckPicker to execute an action and log if deckPicker is null **/
+    private inline fun DeckPicker?.executeDeckAction(actionName: String, action: DeckPicker.() -> Unit) {
+        this?.action() ?: run {
+            CrashReportService.sendExceptionReport("Failed to $actionName: deckPicker is null", "StudyOptionsFragment")
         }
     }
 
@@ -285,20 +293,20 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 return true
             }
             R.id.action_rename -> {
-                deckPicker?.renameDeckDialog(col!!.decks.selected()) ?: run {
-                    Timber.w("Failed to rename deck: deckPicker is null")
+                deckPicker.executeDeckAction("rename deck") {
+                    renameDeckDialog(col!!.decks.selected())
                 }
                 return true
             }
             R.id.action_delete -> {
-                deckPicker?.confirmDeckDeletion(col!!.decks.selected()) ?: run {
-                    Timber.w("StudyOptionsFragment:: Failed to delete deck: deckPicker is null")
+                deckPicker.executeDeckAction("delete deck") {
+                    confirmDeckDeletion(col!!.decks.selected())
                 }
                 return true
             }
             R.id.action_export_deck -> {
-                deckPicker?.exportDeck(col!!.decks.selected()) ?: run {
-                    Timber.w("StudyOptionsFragment:: Failed to export deck: deckPicker is null")
+                deckPicker.executeDeckAction("export deck") {
+                    exportDeck(col!!.decks.selected())
                 }
                 return true
             }
@@ -376,20 +384,18 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 }
                 menu.removeItem(R.id.action_export_collection)
 
-                deckPicker?.let {
-                    it.setupMediaSyncMenuItem(menu)
-                    it.updateMenuFromState(menu)
+                deckPicker.executeDeckAction("configureToolbarInternal:: unable to set up menu items") {
+                    setupMediaSyncMenuItem(menu)
+                    updateMenuFromState(menu)
 
                     /**
                      * Launch a task to possibly update the visible icons.
                      * Save the job in a member variable to manage the lifecycle
                      */
                     createMenuJob = launchCatchingTask {
-                        it.updateMenuState()
-                        it.updateMenuFromState(menu)
+                        updateMenuState()
+                        updateMenuFromState(menu)
                     }
-                } ?: run {
-                    Timber.w("deckPicker is null, unable to set up menu items")
                 }
             } else {
                 menu.setGroupVisible(R.id.commonItems, false)
@@ -441,6 +447,13 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
 
     private var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
+
+        if (!isAdded) {
+            Timber.d("Fragment not added to the activity")
+            CrashReportService.sendExceptionReport("Fragment is not added to activity", "StudyOptionsFragment")
+            return@registerForActivityResult
+        }
+
         Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
         if (toolbar != null) {
             configureToolbar() // FIXME we were crashing here because mToolbar is null #8913
@@ -461,6 +474,13 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
     }
     private var onDeckOptionsActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnDeckOptionsActivityResult")
+
+        if (!isAdded) {
+            Timber.d("Fragment not added to the activity")
+            CrashReportService.sendExceptionReport("Fragment is not added to activity", "StudyOptionsFragment")
+            return@registerForActivityResult
+        }
+
         Timber.d("Handling onActivityResult for StudyOptionsFragment (deckOptions/filteredDeckOptions, resultCode = %d)", result.resultCode)
         configureToolbar()
         if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
