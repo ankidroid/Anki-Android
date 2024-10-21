@@ -52,7 +52,7 @@ fun <K, V> HashMap<K, V>.items(): List<Pair<K, V>> {
 }
 
 fun <T> List<T>?.isNullOrEmpty(): Boolean {
-    return this == null || this.isEmpty()
+    return this.isNullOrEmpty()
 }
 
 fun <T> list(vararg elements: T) = mutableListOf(elements)
