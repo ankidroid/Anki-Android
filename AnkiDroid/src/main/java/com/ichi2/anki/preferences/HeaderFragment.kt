@@ -25,7 +25,9 @@ import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
@@ -108,6 +110,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
         private const val DEFAULT_SELECTED_HEADER = "generalScreen"
 
         fun configureSearchBar(activity: AppCompatActivity, searchConfiguration: SearchConfiguration) {
+            val setDuePreferenceTitle = TR.actionsSetDueDate().toSentenceCase(activity, R.string.sentence_set_due_date)
             with(searchConfiguration) {
                 setActivity(activity)
                 setBreadcrumbsEnabled(true)
@@ -127,6 +130,12 @@ class HeaderFragment : PreferenceFragmentCompat() {
                 index(R.xml.preferences_accessibility)
                 index(R.xml.preferences_backup_limits)
                 ignorePreference(activity.getString(R.string.pref_backups_help_key))
+                indexItem()
+                    .withKey(activity.getString(R.string.reschedule_command_key))
+                    .withTitle(setDuePreferenceTitle)
+                    .withResId(R.xml.preferences_controls)
+                    .addBreadcrumb(activity.getString(R.string.pref_cat_controls))
+                    .addBreadcrumb(setDuePreferenceTitle)
             }
 
             // Some preferences and categories are only shown conditionally,
