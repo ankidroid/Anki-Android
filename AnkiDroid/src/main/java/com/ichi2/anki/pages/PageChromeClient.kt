@@ -70,7 +70,7 @@ open class PageChromeClient : WebChromeClient() {
                 cancelable(false)
             }
         } catch (e: WindowManager.BadTokenException) {
-            Timber.w("onJsConfirm", e)
+            Timber.w(e, "onJsConfirm")
             return false // unhandled - shown in WebView
         }
         return true

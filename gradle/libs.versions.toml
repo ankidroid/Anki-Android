@@ -51,7 +51,7 @@ androidxViewpager2 = "1.1.0"
 androidxWebkit = "1.12.1"
 # https://developer.android.com/jetpack/androidx/releases/work
 androidxWork = "2.9.1"
-annotations = "26.0.1"
+jetbrainsAnnotations = "26.0.1"
 ankiBackend = '0.1.42-anki24.06.3'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
@@ -132,7 +132,7 @@ androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", versi
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerview" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
-jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
 colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "colorpicker" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }

@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.multimediacard.activity
 
-import android.R
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -44,7 +43,7 @@ class PickStringDialogFragment : DialogFragment() {
         builder.setTitle(title)
         val adapter = ArrayAdapter(
             requireActivity(),
-            R.layout.simple_list_item_1,
+            android.R.layout.simple_list_item_1,
             possibleChoices!!
         )
         builder.setAdapter(adapter, listener)
