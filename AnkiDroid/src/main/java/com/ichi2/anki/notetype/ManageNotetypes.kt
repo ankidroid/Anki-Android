@@ -21,11 +21,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import anki.notetypes.copy
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -53,11 +56,23 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 
-class ManageNotetypes : AnkiActivity() {
+class ManageNotetypes : AnkiActivity(), NoteTypeAdapterCallbacks {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
 
     private var currentNotetypes: List<ManageNoteTypeUiModel> = emptyList()
+
+    lateinit var toolbar: Toolbar
+    private var toDeleteList: List<Long> = emptyList()
+    private var isInMultiSelectMode = false
+    private fun getIsInMultiSelectMode(): Boolean {
+        return isInMultiSelectMode
+    }
+    private val multiSelectModeBackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            disableMultiSelectMode()
+        }
+    }
 
     // Store search query
     private var searchQuery: String = ""
@@ -75,6 +90,8 @@ class ManageNotetypes : AnkiActivity() {
             },
             onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("modelId" to it.id)) },
             onRename = ::renameNotetype,
+            callback = this,
+            getIsInMultiSelectMode = ::getIsInMultiSelectMode,
             onDelete = ::deleteNotetype
         )
     }
@@ -91,9 +108,11 @@ class ManageNotetypes : AnkiActivity() {
         }
 
         super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(multiSelectModeBackCallback)
         setTitle(R.string.model_browser_label)
         setContentView(R.layout.activity_manage_note_types)
         actionBar = enableToolbar()
+        toolbar = findViewById(R.id.toolbar)
         noteTypesList = findViewById<RecyclerView?>(R.id.note_types_list).apply {
             adapter = notetypesAdapter
         }
@@ -105,8 +124,7 @@ class ManageNotetypes : AnkiActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.search, menu)
-
+        menuInflater.inflate(R.menu.menu_manage_notes, menu)
         val searchItem = menu.findItem(R.id.search_item)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem?.actionView as? AccessibleSearchView
@@ -119,12 +137,15 @@ class ManageNotetypes : AnkiActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Update the search query
                 searchQuery = newText.orEmpty()
                 filterNoteTypes(searchQuery)
                 return true
             }
         })
+
+        launchCatchingTask {
+            menu.findItem(R.id.action_delete_notes).isVisible = toDeleteList.isNotEmpty() && isInMultiSelectMode
+        }
         return true
     }
 
@@ -141,6 +162,15 @@ class ManageNotetypes : AnkiActivity() {
             }
         }
         notetypesAdapter.submitList(filteredList)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_delete_notes -> {
+                deleteSelectedNotetype()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -179,6 +209,28 @@ class ManageNotetypes : AnkiActivity() {
             )
             // start with the button disabled as dialog shows the initial name
             dialog.positiveButton.isEnabled = false
+        }
+    }
+
+    private fun deleteSelectedNotetype() {
+        val selectedItems = toDeleteList
+        AlertDialog.Builder(this@ManageNotetypes).show {
+            title(R.string.model_browser_delete)
+            message(R.string.model_delete_warning)
+            positiveButton(R.string.dialog_positive_delete) {
+                disableMultiSelectMode()
+                launchCatchingTask {
+                    withProgress {
+                        withCol {
+                            selectedItems.forEach { item ->
+                                removeNotetype(item)
+                            }
+                        }
+                    }
+                    runAndRefreshAfter()
+                }
+            }
+            negativeButton(R.string.dialog_cancel)
         }
     }
 
@@ -250,5 +302,44 @@ class ManageNotetypes : AnkiActivity() {
             is Long -> putExtra(newExtra.key, newExtra.value as Long)
             else -> throw IllegalArgumentException("Unexpected value type: ${newExtra.value}")
         }
+    }
+
+    override fun enableMultiSelectMode() {
+        isInMultiSelectMode = true
+        multiSelectModeBackCallback.isEnabled = true
+        notetypesAdapter.notifyItemRangeChanged(0, notetypesAdapter.itemCount, "payload_enable_checkbox_visibility")
+    }
+
+    private fun disableMultiSelectMode() {
+        multiSelectModeBackCallback.isEnabled = false
+        toDeleteList = emptyList()
+        isInMultiSelectMode = false
+        notetypesAdapter.notifyItemRangeChanged(0, notetypesAdapter.itemCount, "payload_disable_checkbox_visibility")
+        invalidateMenu()
+    }
+
+    override fun isToDeleteListContains(id: Long): Boolean {
+        return toDeleteList.contains(id)
+    }
+
+    override fun setCheckBoxSelectionOnCLick(id: Long, position: Int) {
+        if (toDeleteList.contains(id)) {
+            toDeleteList = toDeleteList.minus(id)
+
+            /** deselecting all checkbox will turnoff the multiselect mode*/
+            if (toDeleteList.isEmpty()) {
+                disableMultiSelectMode()
+            } else {
+                notetypesAdapter.notifyItemChanged(position, "payload_deselect_checkbox")
+            }
+        } else {
+            toDeleteList = toDeleteList.plus(id)
+            notetypesAdapter.notifyItemChanged(position, "payload_select_checkbox")
+        }
+        invalidateMenu()
+    }
+
+    override fun setCheckBoxSelectionOnStart(id: Long): Boolean {
+        return toDeleteList.contains(id)
     }
 }
