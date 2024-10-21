@@ -1,0 +1,104 @@
+{
+    "version": "v1.0.0",
+    "entity": {
+        "type": "group",
+        "role": "other",
+        "name": "AnkiDroid Open Source Team",
+        "email": "ankidroid-maintainers@googlegroups.com",
+        "description": "The AnkiDroid Open Source Team is a global team of volunteers maintaining the AnkiDroid application for Android. AnkiDroid is used by millions of people worldwide, studying to be doctors, studying foreign languages, studying everything imaginable. It is an incredibly high impact open source application for Android phones..\n\nWe are seeking funding to pay for contributors and maintenance of the project, with a long-term goal of being able to support two part-time maintainers",
+        "webpageUrl": {
+            "url": "https://github.com/ankidroid"
+        }
+    },
+    "projects": [
+        {
+            "guid": "ankidroid",
+            "name": "AnkiDroid Flashcards",
+            "description": "AnkiDroid is used by ~3 million people worldwide, studying to be doctors, studying foreign languages, studying everything imaginable. It is an incredibly high impact open source application for Android phones.\n\nWe are seeking funding to pay for contributors and maintenance of the project, with a long-term goal of being able to support two part-time maintainers",
+            "webpageUrl": {
+                "url": "https://github.com/ankidroid/Anki-Android"
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/ankidroid/Anki-Android"
+            },
+            "licenses": ["spdx:GPL-3.0", "spdx:AGPL-3.0"],
+            "tags": ["education", "productivity", "knowledge", "health", "mobile", "android"]
+        }
+    ],
+    "funding": {
+        "channels": [
+            {
+                "guid": "opencollective",
+                "type": "other",
+                "address": "https://opencollective.com/ankidroid",
+                "description": "You can fund us via Open Collective with your debit card, credit card or PayPal account"
+            }
+        ],
+        "plans": [
+            {
+                "guid": "oc-sponsor",
+                "status": "active",
+                "name": "Larger donation for individuals",
+                "description": "https://opencollective.com/ankidroid/contribute/sponsor-21517/checkout",
+                "amount": 10,
+                "currency": "USD",
+                "frequency": "monthly",
+                "channels": ["opencollective"]
+            },
+            {
+                "guid": "oc-backer",
+                "status": "active",
+                "name": "Small donation for individuals",
+                "description": "https://opencollective.com/ankidroid/contribute/backer-21516/checkout",
+                "amount": 5,
+                "currency": "USD",
+                "frequency": "monthly",
+                "channels": ["opencollective"]
+            },
+            {
+                "guid": "oc-donation",
+                "status": "active",
+                "name": "Pay what you want: Recurring or one-time donation",
+                "amount": 10,
+                "currency": "USD",
+                "frequency": "other",
+                "channels": ["opencollective"]
+            }
+        ],
+        "history": [
+            {
+                "year": 2023,
+                "income": 22444.29,
+                "expenses": 22064.62,
+                "currency": "USD",
+                "description": "https://opencollective.com/dashboard/ankidroid?period%5Btype%5D=CUSTOM&period%5Bgte%5D=2023-01-01&period%5Blte%5D=2024-01-01&period%5Bcompare%5D=NO_COMPARISON&period%5BtimeUnit%5D=DAY"
+            },
+            {
+                "year": 2022,
+                "income": 16438.27,
+                "expenses": 17278.63,
+                "currency": "USD",
+                "description": "https://opencollective.com/dashboard/ankidroid?period%5Btype%5D=CUSTOM&period%5Bgte%5D=2022-01-01&period%5Blte%5D=2023-01-01&period%5Bcompare%5D=NO_COMPARISON&period%5BtimeUnit%5D=DAY"
+            },
+            {
+                "year": 2021,
+                "income": 25839.03,
+                "expenses": 21806.01,
+                "currency": "USD",
+                "description": "https://opencollective.com/dashboard/ankidroid?period%5Btype%5D=CUSTOM&period%5Bgte%5D=2021-01-01&period%5Blte%5D=2022-01-01&period%5Bcompare%5D=NO_COMPARISON&period%5BtimeUnit%5D=DAY"
+            },
+            {
+                "year": 2020,
+                "income": 11629.57,
+                "expenses": 605.24,
+                "currency": "USD",
+                "description": "https://opencollective.com/dashboard/ankidroid?period%5Btype%5D=CUSTOM&period%5Bgte%5D=2020-01-01&period%5Blte%5D=2021-01-01&period%5Bcompare%5D=NO_COMPARISON&period%5BtimeUnit%5D=DAY"
+            },
+            {
+                "year": 2019,
+                "currency": "USD",
+                "description": "AnkiDroid was not seeking funding in 2019"
+            }
+        ]
+    }
+}
