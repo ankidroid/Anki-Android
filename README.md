@@ -54,6 +54,11 @@ Install
 
 </div>
 
+Signing certificate fingerprint to [verify](https://developer.android.com/studio/command-line/apksigner#usage-verify) the APK:
+```
+SHA-256: 2071534f0f4b5e54ae952dd275d70da6e3459ee69909d2ab1b4843c4c5b21a45 
+```
+
 Wiki
 ----
 View [Wiki](https://github.com/ankidroid/Anki-Android/wiki)
