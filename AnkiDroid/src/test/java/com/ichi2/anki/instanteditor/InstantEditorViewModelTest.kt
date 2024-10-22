@@ -90,7 +90,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
     @Test
     fun testSavingNoteWithNoCloze() = runViewModelTest {
         editorNote.setField(0, "Hello")
-        val result = checkAndSaveNote(targetContext)
+        val result = checkAndSaveNote()
 
         assertEquals(CollectionManager.TR.addingYouHaveAClozeDeletionNote(), saveNoteResult(result))
     }
@@ -99,21 +99,21 @@ class InstantEditorViewModelTest : RobolectricTest() {
     fun testSavingNoteWithEmptyFields() = runViewModelTest {
         editorNote.setField(0, "{{c1::Hello}}")
 
-        val result = checkAndSaveNote(targetContext)
+        val result = checkAndSaveNote()
 
         assertEquals("Success", saveNoteResult(result))
     }
 
     @Test
     fun testSavingNoteWithClozeFields() = runViewModelTest {
-        val result = checkAndSaveNote(targetContext)
+        val result = checkAndSaveNote()
 
         assertEquals(CollectionManager.TR.addingTheFirstFieldIsEmpty(), saveNoteResult(result))
     }
 
     @Test
     fun testCheckAndSaveNote_NullEditorNote_ReturnsFailure() = runViewModelTest {
-        val result = checkAndSaveNote(targetContext)
+        val result = checkAndSaveNote()
 
         assertTrue(result is SaveNoteResult.Warning)
     }

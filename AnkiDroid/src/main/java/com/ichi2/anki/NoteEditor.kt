@@ -1160,7 +1160,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             lifecycleScope.launch {
                 val noteFieldsCheck = checkNoteFieldsResponse(editorNote!!)
                 if (noteFieldsCheck is NoteFieldsCheckResult.Failure) {
-                    addNoteErrorMessage = noteFieldsCheck.getLocalizedMessage(requireContext())
+                    addNoteErrorMessage = noteFieldsCheck.localizedMessage ?: getString(R.string.something_wrong)
                     displayErrorSavingNote()
                     return@launch
                 }

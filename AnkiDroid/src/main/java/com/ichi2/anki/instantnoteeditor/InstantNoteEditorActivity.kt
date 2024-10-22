@@ -373,7 +373,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         when (result) {
             is SaveNoteResult.Failure -> {
                 Timber.d("Failed to save note")
-                savingErrorDialog(result.getErrorMessage(this))
+                savingErrorDialog(result.message ?: getString(R.string.something_wrong))
             }
 
             SaveNoteResult.Success -> {
@@ -384,7 +384,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
             is SaveNoteResult.Warning -> {
                 Timber.d("Showing warning to the user")
-                viewModel.setWarningMessage(result.message)
+                viewModel.setWarningMessage(result.message ?: getString(R.string.something_wrong))
             }
         }
     }
@@ -497,7 +497,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     private fun saveNoteWithProgress(skipClozeCheck: Boolean) {
         lifecycleScope.launch {
             val result = withProgress(resources.getString(R.string.saving_facts)) {
-                viewModel.checkAndSaveNote(this@InstantNoteEditorActivity, skipClozeCheck = skipClozeCheck)
+                viewModel.checkAndSaveNote(skipClozeCheck = skipClozeCheck)
             }
             handleSaveNoteResult(result)
         }

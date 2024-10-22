@@ -17,7 +17,6 @@
 
 package com.ichi2.anki.instantnoteeditor
 
-import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,7 +25,6 @@ import androidx.lifecycle.viewModelScope
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.NoteFieldsCheckResult
 import com.ichi2.anki.OnErrorListener
-import com.ichi2.anki.R
 import com.ichi2.anki.checkNoteFieldsResponse
 import com.ichi2.anki.instantnoteeditor.InstantNoteEditorActivity.DialogType
 import com.ichi2.anki.utils.ext.getAllClozeTextFields
@@ -136,13 +134,10 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      * Checks the note fields and calls [saveNote] if all fields are valid.
      * If [skipClozeCheck] is set to true, the cloze field check is skipped.
      *
-     * @param context The context used to retrieve localized error messages.
      * @param skipClozeCheck Indicates whether to skip the cloze field check.
      * @return A [SaveNoteResult] indicating the outcome of the operation.
      */
-    // TODO: remove context from here
     suspend fun checkAndSaveNote(
-        context: Context,
         skipClozeCheck: Boolean = false
     ): SaveNoteResult {
         if (skipClozeCheck) {
@@ -152,8 +147,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         val note = editorNote
         val result = checkNoteFieldsResponse(note)
         if (result is NoteFieldsCheckResult.Failure) {
-            val errorMessage = result.getLocalizedMessage(context)
-            return SaveNoteResult.Warning(errorMessage)
+            return SaveNoteResult.Warning(result.localizedMessage)
         }
         Timber.d("Note fields check successful, saving note")
         instantEditorError.emit(null)
@@ -414,20 +408,7 @@ sealed class SaveNoteResult {
      *
      * @property message An optional message describing the reason for the failure.
      */
-    data class Failure(val message: String? = null) : SaveNoteResult() {
-
-        /**
-         * Retrieves the error message associated with this failure.
-         *
-         * If a message is provided, it returns that message. Otherwise, it returns a default
-         * error message from the context's resources.
-         *
-         * @param context The context used to retrieve the default error message string.
-         * @return The error message.
-         */
-        fun getErrorMessage(context: Context) =
-            message ?: context.getString(R.string.something_wrong)
-    }
+    data class Failure(val message: String? = null) : SaveNoteResult()
 
     /**
      * Indicates that the save note operation completed with a warning.
