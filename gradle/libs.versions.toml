@@ -76,7 +76,7 @@ jetbrainsAnnotations = "26.0.1"
 json = "20240303"
 jsoup = "1.18.1"
 androidTestJunit = "1.2.1"
-junitJupiter= "5.11.2"
+junitJupiter= "5.11.3"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.0.21'
 kotlinxSerializationJson = "1.7.3"
