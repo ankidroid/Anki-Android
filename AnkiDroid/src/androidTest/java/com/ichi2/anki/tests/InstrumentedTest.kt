@@ -98,7 +98,7 @@ abstract class InstrumentedTest {
     }
 
     @Before
-    fun runBeforeEachTest() {
+    open fun runBeforeEachTest() {
         closeAndroidNotRespondingDialog()
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionManager.setColForTests(null)
