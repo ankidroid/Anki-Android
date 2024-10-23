@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">سامنے والا</string>
-    <string name="back_field_name">پیچھے</string>
+    <string name="front_field_name" maxLength="28">سامنے والا</string>
+    <string name="back_field_name" maxLength="28">پیچھے</string>
 </resources>

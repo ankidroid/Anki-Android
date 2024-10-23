@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Отпред</string>
-    <string name="back_field_name">Отзад</string>
+    <string name="front_field_name" maxLength="28">Отпред</string>
+    <string name="back_field_name" maxLength="28">Отзад</string>
 </resources>

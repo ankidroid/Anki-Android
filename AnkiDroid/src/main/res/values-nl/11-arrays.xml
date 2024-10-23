@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-groot</string>
     <string name="html_size_code_xx_large">xx-groot</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Opnieuw antwoorden</string>
-    <string name="answer_hard">Moeilijk antwoord</string>
-    <string name="answer_good">Goed antwoord</string>
-    <string name="answer_easy">Gemakkelijk antwoord</string>
-    <string name="gesture_play">Media afspelen</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Rode vlag in-/uitschakelen</string>
-    <string name="gesture_flag_orange">Oranje vlag in-/uitschakelen</string>
-    <string name="gesture_flag_green">Groene vlag in-/uitschakelen</string>
-    <string name="gesture_flag_blue">Blauwe vlag in-/uitschakelen</string>
-    <string name="gesture_flag_pink">Roze vlag in-/uitschakelen</string>
-    <string name="gesture_flag_turquoise">Turquoise vlag in-/uitschakelen</string>
-    <string name="gesture_flag_purple">Paarse vlag in-/uitschakelen</string>
-    <string name="gesture_flag_remove">Vlag verwijderen</string>
-    <string name="gesture_page_up">Pagina omhoog</string>
-    <string name="gesture_page_down">Pagina omlaag</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Schrijfbord in-/uitschakelen</string>
-    <string name="gesture_show_hint">Tip weergeven</string>
-    <string name="gesture_show_all_hints">Alle tips weergeven</string>
-    <string name="record_voice">Spraak opnemen</string>
-    <string name="replay_voice">Opname afspelen</string>
-    <string name="save_voice">Opname opslaan</string>
+    <string name="answer_again" maxLength="41">Opnieuw antwoorden</string>
+    <string name="answer_hard" maxLength="41">Moeilijk antwoord</string>
+    <string name="answer_good" maxLength="41">Goed antwoord</string>
+    <string name="answer_easy" maxLength="41">Gemakkelijk antwoord</string>
+    <string name="gesture_play" maxLength="41">Media afspelen</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Rode vlag in-/uitschakelen</string>
+    <string name="gesture_flag_orange" maxLength="41">Oranje vlag in-/uitschakelen</string>
+    <string name="gesture_flag_green" maxLength="41">Groene vlag in-/uitschakelen</string>
+    <string name="gesture_flag_blue" maxLength="41">Blauwe vlag in-/uitschakelen</string>
+    <string name="gesture_flag_pink" maxLength="41">Roze vlag in-/uitschakelen</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Turquoise vlag in-/uitschakelen</string>
+    <string name="gesture_flag_purple" maxLength="41">Paarse vlag in-/uitschakelen</string>
+    <string name="gesture_flag_remove" maxLength="41">Vlag verwijderen</string>
+    <string name="gesture_page_up" maxLength="41">Pagina omhoog</string>
+    <string name="gesture_page_down" maxLength="41">Pagina omlaag</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Schrijfbord in-/uitschakelen</string>
+    <string name="gesture_show_hint" maxLength="41">Tip weergeven</string>
+    <string name="gesture_show_all_hints" maxLength="41">Alle tips weergeven</string>
+    <string name="record_voice" maxLength="41">Spraak opnemen</string>
+    <string name="replay_voice" maxLength="41">Opname afspelen</string>
+    <string name="save_voice" maxLength="41">Opname opslaan</string>
 </resources>

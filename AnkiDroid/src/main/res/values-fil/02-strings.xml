@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Ulitin ang mga Harang</string>
     <string name="tag_name">Pangalan ng tag</string>
     <string name="add_new_filter_tags">Magdagdag / mag-filter ng mga tag</string>
-    <string name="add_tag">Magdagdag ng tag</string>
-    <string name="check_all_tags">I-tsek / alisin ang tsek sa lahat ng mga tag</string>
-    <string name="filter_tags">I-filter ang mga tag</string>
+    <string name="add_tag" maxLength="28">Magdagdag ng tag</string>
+    <string name="check_all_tags" maxLength="28">I-tsek / alisin ang tsek sa lahat ng mga tag</string>
+    <string name="filter_tags" maxLength="28">I-filter ang mga tag</string>
     <string name="no_tags">Wala ka pang naidagdag na anumang mga tag</string>
     <string name="updated_version">Nai-update na sa bersyong %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">I-save ang puting pisara</string>
-    <string name="enable_stylus">Paganahin ang stylus mode</string>
+    <string name="save_whiteboard" maxLength="28">I-save ang puting pisara</string>
+    <string name="enable_stylus" maxLength="28">Paganahin ang stylus mode</string>
     <string name="disable_stylus">Hindi paganahin ang stylus mode</string>
-    <string name="enable_whiteboard">Paganahin ang puting pisara</string>
+    <string name="enable_whiteboard" maxLength="28">Paganahin ang puting pisara</string>
     <string name="disable_whiteboard">Hindi paganahin ang puting pisara</string>
     <string name="show_whiteboard">Ipakita ang puting pisara</string>
-    <string name="hide_whiteboard">Itago ang puting pisara</string>
-    <string name="clear_whiteboard">Burahin ang puting pisara</string>
-    <string name="replay_audio">Muling i-play ang audio</string>
+    <string name="hide_whiteboard" maxLength="28">Itago ang puting pisara</string>
+    <string name="clear_whiteboard" maxLength="28">Burahin ang puting pisara</string>
+    <string name="replay_audio" maxLength="28">Muling i-play ang audio</string>
     <string name="leech_suspend_notification">Ang card ay minarkahan bilang linta at sinuspinde</string>
     <string name="leech_notification">Ang card ay minarkahan bilang linta</string>
     <string name="webview_crash_unknown">Hindi matukoy na kamalian</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Malubhang Kamalian: Nawask ang renderer ng WebView. Dahilan: %s</string>
     <string name="webview_crash_loop_dialog_title">Bigo ang Pag-Render ng Pansistemang WebView</string>
     <string name="webview_crash_loop_dialog_content">Bigo ang Pansistemang Webview sa pag-render sa card na \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Mga Watawat</string>
+    <string name="filter_by_flags" maxLength="41">Mga Watawat</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Baguhin ang limitasyon sa bagong card ngayong araw</string>
     <string name="custom_study_increase_review_limit">Baguhin ang limiitasyon sa repaso na card ngayong araw</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">I-edit ang tala</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">I-edit ang tala</string>
     <string name="discard">Baliwalain</string>
     <string name="note_editor_no_cards_created">Walang nilikha na mga card. Mangyaring magpunan pa ng mga patlang.</string>
     <string name="note_editor_no_cards_created_all_fields">Hindi nakagawa ng mga card ang kasalukuyang uri ng tala.\nMangyaring pumili ng ibang uri ng tala, o i-click ang \'Mga Card\' at magdagdag ng kapalit na patlang</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Gagana lamang ang mga Cloze deletion sa mga Cloze na uri ng tala.</string>
     <string name="saving_facts">Pag-save ng tala</string>
     <string name="saving_model">I-save ang uri ng tala</string>
-    <string name="save">Save</string>
+    <string name="save" maxLength="28">Save</string>
     <string name="close">Isara</string>
     <string name="select">Piliin</string>
     <string name="field_remapping">%1$s (mula sa \"%2$s\")</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d minuto</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kard</string>
-    <string name="note_editor_copy_note">Kopyahin ang tala</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Muling iposisyon</string>
-    <string name="card_editor_reset_card">I-reset ang pag-unlad</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Muling iskedyul</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">I-preview</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopyahin bilang Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Kopyahin ang tala</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Muling iposisyon</string>
+    <string name="card_editor_reset_card" maxLength="28">I-reset ang pag-unlad</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Muling iskedyul</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">I-preview</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Kopyahin bilang Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sa %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Baguhin ang pangalan</string>
-    <string name="checks_action">Suriin</string>
-    <string name="check_db">Suriin ang database</string>
-    <string name="check_media">Suriin ang media</string>
-    <string name="empty_cards">Mga walang lamang card</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Baguhin ang pangalan</string>
+    <string name="checks_action" maxLength="28">Suriin</string>
+    <string name="check_db" maxLength="28">Suriin ang database</string>
+    <string name="check_media" maxLength="28">Suriin ang media</string>
+    <string name="empty_cards" maxLength="28">Mga walang lamang card</string>
     <string name="unknown_type_field_warning">I-type ang sagot: hindi kilalang patlang %s</string>
     <string name="delete_deck">Tinatanggal ang deck&#8230;</string>
     <string name="info_rate">I-rate ang AnkiDroid</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Ibahagi</string>
     <string name="export_choice_save_to">I-save sa</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Mga Opsiyon</string>
-    <string name="menu__deck_options">Mga Opsiyon ng Deck</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Mga Opsiyon</string>
+    <string name="menu__deck_options" maxLength="28">Mga Opsiyon ng Deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Mga Opsiyon sa Pag-aaral</string>
-    <string name="select_tts">Itakda ang wika ng TTS</string>
-    <string name="custom_study">I - custom ang pag - aaral</string>
+    <string name="select_tts" maxLength="28">Itakda ang wika ng TTS</string>
+    <string name="custom_study" maxLength="28">I - custom ang pag - aaral</string>
     <string name="more_options">Iba pa</string>
     <string name="dyn_deck_desc">Ito ay isang espesyal na deck para sa pag-aaral sa labas ng normal na iskedyul. Ang mga kard ay awtomatikong ibabalik sa kanilang orihinal na mga deck matapos mong suriin ang mga ito. Ang pagtanggal sa kubyerta mula sa listahan ng deck ay babalik ang lahat ng natitirang mga card sa kanilang orihinal na deck.</string>
     <string name="steps_error">Ang mga hakbang ay dapat na mga numerong mas higit sa 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Kamalian sa pag-lo-load ng pahina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Likuran</string>
-    <string name="choose_an_image">Pumili ng Litrato</string>
+    <string name="background_image_title" maxLength="41">Likuran</string>
+    <string name="choose_an_image" maxLength="41">Pumili ng Litrato</string>
     <string name="remove_background_image">Tanggalin ang background?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Ibalik sa Default</string>
+    <string name="restore_default" maxLength="28">Ibalik sa Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blanko</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Bigo sa pag-save ng litrato ng puting pisara. %s</string>
     <string name="white_board_image_saved">Isinave ang litrato ng puting pisara sa %s</string>
-    <string name="title_whiteboard_pen_color">Kulay ng pen sa puting pisara</string>
-    <string name="title_whiteboard_editor">Editor ng puting pisara</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Kulay ng pen sa puting pisara</string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor ng puting pisara</string>
     <string name="user_is_a_robot">Natumbukan ang isang awtomatikong pagte-test. Kung ikaw ay isang tao, mangyaring kontakin ang AnkiDroid support.</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Gumagamit ang card na ito ng mga feature na hindi suportado ng AnkiDroid. Mangyaring kontakin ang developer %1$s, o tingnan ang wiki. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kamalian sa Laman ng Card: Bigo sa pagload ng \'%s\'</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Maghanap ng mga deck</string>
+    <string name="search_decks" maxLength="28">Maghanap ng mga deck</string>
     <string name="ankidroid_init_failed_webview_title">Malubhang Kamalian</string>
     <string name="ankidroid_init_failed_webview">Umaasa ang AnkiDroid sa Pansistemang WebView kung saan ito ay hindi magamit. Nangyayari ito kung nag-iinstall ng update ang sistema. Mangyaring subukan muli makaraan ang ilang minuto.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Laki ng font</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Ipakita ang toolbar</string>
+    <string name="menu_font_size" maxLength="28">Laki ng font</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Ipakita ang toolbar</string>
     <string name="format_insert_bold">I-bold</string>
     <string name="format_insert_italic">I-italic</string>
     <string name="format_insert_underline">Salungguhitan</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Maaring kailangang gumamit ng iManager upang payagan ang AnkiDroid na magdagdag ng mga gitis.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Hindi pinpayagan ang AnkiDroid na maglagay ng gitis sa iyong home screen.</string>
     <string name="create_shortcut_error">Kamalian sa pagdagdag ng gitis: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">I-capitalize ang mga pangungusap</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Na-so-scroll ang toolbar</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">I-capitalize ang mga pangungusap</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Na-so-scroll ang toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Mangyaring suriin ang iyong koneksyon sa network.</string>
     <string name="search_using_deck_name">Hanapin gamit ang pangalan ng deck</string>
     <string name="external_storage_unavailable">Naudlot ang pag-download, wala nang natirang lugar sa external storage</string>
-    <string name="home">Home</string>
+    <string name="home" maxLength="28">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Naibaon ang card.</string>
@@ -333,7 +333,7 @@
         <item quantity="one">%d na card ang tinanggal sa pagkabaon</item>
         <item quantity="other">%d na mga card ang tinanggal sa pagkabaon</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Muling iposisyon</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Muling iposisyon</string>
     <string name="start_recording">I-rekord</string>
     <string name="stop_recording">Ihinto</string>
     <string name="play_recording">I-play</string>

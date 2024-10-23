@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Distant</string>
-    <string name="one_way_sync_title">Synchronisation à sens unique</string>
+    <string name="one_way_sync_title" maxLength="41">Synchronisation à sens unique</string>
     <string name="one_way_sync_confirmation">Synchronisation à sens unique initiée</string>
     <string name="full_sync_confirmation">Une telle modification suppose de ré-envoyer la totalité de la base de données lors de la prochaine synchronisation de la collection. S’il y de plus récentes modifications à partir d’un appareil tiers, qui n’ont pu être synchronisées, celles-ci seront perdues. Continuer ?</string>
     <string name="full_sync_confirmation_upgrade">En raison d’un bogue dans la version précédemment installée d’AnkiDroid, il est recommandé de forcer une synchronisation complète.</string>

@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ସ୍ଥାନୀୟ</string>
     <string name="sync_sanity_remote">ସୁଦୂର</string>
-    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">ଯେତେବେଳେ ଆପଣ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ପରବର୍ତ୍ତୀ ସମୟରେ ସୀଙ୍କ୍ କରନ୍ତି ତେବେ ଅନୁରୋଧିତ ପରିବର୍ତ୍ତନଟି ଡାଟାବେସ୍‌ର ସମ୍ପୂର୍ଣ୍ଣ ଅପଲୋଡ୍ ଲୋଡ଼ିବ। ଯଦି ଆପଣଙ୍କର ଅନ୍ୟ ଡିଵାଇସ୍‌ରେ ଏପର୍ଯ୍ୟନ୍ତ ସମୀକ୍ଷା କିମ୍ବା ଅନ୍ୟାନ୍ୟ ପରିବର୍ତ୍ତନସବୁ ଏଠାକୁ ସୀଙ୍କ୍ ଅପେକ୍ଷାରେ ରହିଥାଏ, ସେଗୁଡ଼ିକ ହଜିଯିବ। ଜାରି ରଖିବେ ତ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroidର ପୂର୍ବ ଅଧିସ୍ଥାପିତ ସଂସ୍କରଣରେ ଗୋଟେ ବଗ୍ ରହିଥିବାରୁ, ଏକ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ ବାଧ୍ୟ କରାଇନେବା ଲାଗି ପରାମର୍ଶ ଦିଆଯାଉଛି।</string>

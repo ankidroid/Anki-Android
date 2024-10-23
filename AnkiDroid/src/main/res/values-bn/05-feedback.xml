@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">ত্রুটি রিপোর্টিং মোড</string>
+    <string name="error_reporting_choice" maxLength="41">ত্রুটি রিপোর্টিং মোড</string>
     <string name="feedback_disclaimer">ডিসক্লেইমার: আমরা আপনার ইমেল ঠিকানা, ফোন নম্বর বা আপনার ফোনের IMEI এর মতো কোনো ব্যক্তিগত তথ্য সংগ্রহ করি না। তবে আমরা আপনার ডিভাইস সম্পর্কে কিছু তথ্য সংগ্রহ করি, যেমন প্রস্তুতকারক, মডেল এবং এন্ড্রয়েড সংস্করণ। তা ছাড়া রিপোর্টকৃত ত্রুটির ধরণ এবং সেগুলি ঘটার পেছনের কারণ সম্পর্কে তথ্য সংগ্রহ করা হয়ে থাকে।</string>
     <string name="feedback_title">AnkiDroid ফিডব্যাক</string>
     <string name="feedback_default_text">আপনি যে ত্রুটি সম্পর্কে রিপোর্ট পাঠাতে চাচ্ছেন তা

@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">molt gran</string>
     <string name="html_size_code_xx_large">immens</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Reprodueix multimèdia</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Canviar bandera vermella</string>
-    <string name="gesture_flag_orange">Canviar bandera taronja</string>
-    <string name="gesture_flag_green">Canviar bandera verda</string>
-    <string name="gesture_flag_blue">Canviar bandera blava</string>
-    <string name="gesture_flag_pink">Canviar bandera rosa</string>
-    <string name="gesture_flag_turquoise">Canviar bandera turquesa</string>
-    <string name="gesture_flag_purple">Canviar bandera porpra</string>
-    <string name="gesture_flag_remove">Suprimir bandera</string>
-    <string name="gesture_page_up">Pàgina amunt</string>
-    <string name="gesture_page_down">Pàgina avall</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Activar/desactivar pissarra</string>
-    <string name="gesture_show_hint">Mostra un suggeriment</string>
-    <string name="gesture_show_all_hints">Mostra tots els suggeriments</string>
-    <string name="record_voice">Enregistra veu</string>
-    <string name="replay_voice">Reproduir veu</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">Answer again</string>
+    <string name="answer_hard" maxLength="41">Answer hard</string>
+    <string name="answer_good" maxLength="41">Answer good</string>
+    <string name="answer_easy" maxLength="41">Answer easy</string>
+    <string name="gesture_play" maxLength="41">Reprodueix multimèdia</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Canviar bandera vermella</string>
+    <string name="gesture_flag_orange" maxLength="41">Canviar bandera taronja</string>
+    <string name="gesture_flag_green" maxLength="41">Canviar bandera verda</string>
+    <string name="gesture_flag_blue" maxLength="41">Canviar bandera blava</string>
+    <string name="gesture_flag_pink" maxLength="41">Canviar bandera rosa</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Canviar bandera turquesa</string>
+    <string name="gesture_flag_purple" maxLength="41">Canviar bandera porpra</string>
+    <string name="gesture_flag_remove" maxLength="41">Suprimir bandera</string>
+    <string name="gesture_page_up" maxLength="41">Pàgina amunt</string>
+    <string name="gesture_page_down" maxLength="41">Pàgina avall</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Activar/desactivar pissarra</string>
+    <string name="gesture_show_hint" maxLength="41">Mostra un suggeriment</string>
+    <string name="gesture_show_all_hints" maxLength="41">Mostra tots els suggeriments</string>
+    <string name="record_voice" maxLength="41">Enregistra veu</string>
+    <string name="replay_voice" maxLength="41">Reproduir veu</string>
+    <string name="save_voice" maxLength="41">Save Recording</string>
 </resources>

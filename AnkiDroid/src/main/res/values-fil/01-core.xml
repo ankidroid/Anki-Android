@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Mga deck</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
-    <string name="statistics">Estadistika</string>
-    <string name="settings">Mga Setting</string>
-    <string name="help">Tulong</string>
+    <string name="decks" maxLength="28">Mga deck</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
+    <string name="statistics" maxLength="28">Estadistika</string>
+    <string name="settings" maxLength="28">Mga Setting</string>
+    <string name="help" maxLength="28">Tulong</string>
     <string name="drawing">Guhit</string>
     <string name="send_feedback">Magpadala ng tugun</string>
     <string name="studyoptions_start">Pag-aaral</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">I-type ang sagot</string>
-    <string name="show_answer">Ipakita ang sagot</string>
+    <string name="show_answer" maxLength="41">Ipakita ang sagot</string>
     <string name="hide_answer">Itago ang sagot</string>
-    <string name="ease_button_again">Muli</string>
-    <string name="ease_button_hard">Mahirap</string>
-    <string name="ease_button_good">Mabuti</string>
+    <string name="ease_button_again" maxLength="41">Muli</string>
+    <string name="ease_button_hard" maxLength="41">Mahirap</string>
+    <string name="ease_button_good" maxLength="41">Mabuti</string>
     <string name="ease_button_easy">Madali</string>
-    <string name="menu_import">Mag-angkat</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Ibalik sa dati</string>
-    <string name="redo">Ulitin</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Magtanggal ng guhit</string>
+    <string name="menu_import" maxLength="28">Mag-angkat</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Ibalik sa dati</string>
+    <string name="redo" maxLength="28">Ulitin</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Magtanggal ng guhit</string>
     <string name="move_all_to_deck">Iusong lahat sa deck</string>
-    <string name="unbury">Hukayin</string>
-    <string name="rename_deck">Palitan ang pangalan ng deck</string>
+    <string name="unbury" maxLength="28">Hukayin</string>
+    <string name="rename_deck" maxLength="28">Palitan ang pangalan ng deck</string>
     <string name="create_shortcut">Lumikha ng gitis</string>
     <string name="browse_cards">Magbasa-basa ng mga card</string>
     <string name="edit_deck_description" comment="edit the deck description">Baguhin ang paglalarawan</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Magdagdag</string>
-    <string name="menu_add_note">Magdagdag ng tala</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Magdagdag</string>
+    <string name="menu_add_note" maxLength="28">Magdagdag ng tala</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">I-sync ang account</string>
-    <string name="menu_dismiss_note">Itago / burahin</string>
-    <string name="menu_bury_card">Ibaon ang card</string>
-    <string name="menu_bury_note">Ibaon ang tala</string>
-    <string name="menu_suspend_card">Suspendihin ang card</string>
-    <string name="menu_suspend_note">Suspendihin ang tala</string>
-    <string name="menu_bury">Ibaon</string>
-    <string name="menu_suspend">Suspindihin</string>
-    <string name="menu_delete_note">Burahin ang tala</string>
-    <string name="menu_flag">Watawat</string>
+    <string name="menu_dismiss_note" maxLength="41">Itago / burahin</string>
+    <string name="menu_bury_card" maxLength="28">Ibaon ang card</string>
+    <string name="menu_bury_note" maxLength="28">Ibaon ang tala</string>
+    <string name="menu_suspend_card" maxLength="28">Suspendihin ang card</string>
+    <string name="menu_suspend_note" maxLength="28">Suspendihin ang tala</string>
+    <string name="menu_bury" maxLength="28">Ibaon</string>
+    <string name="menu_suspend" maxLength="28">Suspindihin</string>
+    <string name="menu_delete_note" maxLength="28">Burahin ang tala</string>
+    <string name="menu_flag" maxLength="41">Watawat</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Lagyan ng watawat ang card</string>
-    <string name="menu_edit_tags">Baguhin ang mga tag</string>
+    <string name="menu_flag_card" maxLength="28">Lagyan ng watawat ang card</string>
+    <string name="menu_edit_tags" maxLength="28">Baguhin ang mga tag</string>
     <string name="delete_note_message">Talaga bang gusto mong burahin ang talang ito at pati na rin ang lahat ngmga kard?\n%s</string>
-    <string name="menu_search">Hanapin sa %1$s</string>
-    <string name="menu_mark_note">Markahan ang tala</string>
+    <string name="menu_search" maxLength="28">Hanapin sa %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Markahan ang tala</string>
     <string name="menu_unmark_note">Alisin ang marka sa tala</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Gumawa ng deck</string>
     <string name="new_dynamic_deck">Gumawa ng na-filter na deck</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Mangyaring bigyan muna ng pahintulot sa \'Storage\' ang AnkiDroid upang makapagpatuloy</string>
     <string name="rebuild_filtered_deck">Iniaayos muli ang nasala na deck&#8230;</string>
-    <string name="rebuild_cram_label">Muling iayos</string>
-    <string name="empty_cram_label">Walang laman</string>
+    <string name="rebuild_cram_label" maxLength="28">Muling iayos</string>
+    <string name="empty_cram_label" maxLength="28">Walang laman</string>
     <string name="create_subdeck">Gumawa ng subdeck</string>
     <string name="empty_filtered_deck">Inaalisan ng laman ang nasala na deck&#8230;</string>
     <string name="custom_study_deck_name">I-custom ang study session</string>
     <string name="custom_study_deck_exists">Baguhin muna ang pangalan ng umiiral na pasadyang deck sa pag-aaral</string>
     <string name="search_deck" comment="Deck search for selecting it">Maghanap ng Deck</string>
     <string name="empty_deck">Ang deck na ito ay walang laman</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Maghanap ng Deck</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Maghanap ng Deck</string>
     <string name="invalid_deck_name">Hindi wasto ang pangalan ng deck</string>
     <string name="studyoptions_congrats_finished">Binabati kita! Natapos mo na sa ngayon.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Wala pang card na nakatakda</string>
     <string name="sd_card_not_mounted">Ang device storage ay hindi naka-mount</string>
-    <string name="button_sync" comment="Text of the sync button">I-sync</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">I-sync</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Gusto mo bang kanselahin ang sync?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Ipagtuloy ang pagsync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Nakansela ang sync</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Kinakansela&#8230;\nIto ay maaaring matagalan.</string>
     <string name="syncing_media">Sini-sync ang media</string>
-    <string name="export_deck">I-export ang deck</string>
+    <string name="export_deck" maxLength="28">I-export ang deck</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Wala</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Uri ng mga kard</string>
     <string name="card_template_editor_front">Harapan ng template</string>
     <string name="card_template_editor_back">Likod ng template</string>
-    <string name="card_template_editor_styling">Pagstyle</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Hitsura ng Card Browser</string>
-    <string name="card_template_editor_deck_override">I-override ang deck</string>
-    <string name="card_template_editor_insert_field">Maglagay ng patlang</string>
+    <string name="card_template_editor_styling" maxLength="28">Pagstyle</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Hitsura ng Card Browser</string>
+    <string name="card_template_editor_deck_override" maxLength="28">I-override ang deck</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Maglagay ng patlang</string>
     <string name="card_template_editor_select_field">Pumili ng patlang</string>
     <string name="card_template_editor_cant_delete">Hindi bababa sa isang uri ng kard ang kinakailangan</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Hitsura ng Browser</string>
     <!-- card Info -->
-    <string name="card_info_title">Detalye ng card</string>
+    <string name="card_info_title" maxLength="28">Detalye ng card</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Basahin at isulat sa database ng AnkiDroid</string>
     <string name="read_write_permission_description">i-access ang mga umiiral na tala, kard, mga uri ng tala, at mga deck, pati na rin ang gumawa ng mga bago</string>

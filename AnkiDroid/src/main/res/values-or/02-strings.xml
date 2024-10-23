@@ -55,21 +55,21 @@
     <string name="edit_occlusions">ଅନ୍ତର୍ଦ୍ଧାନ ସମ୍ପାଦନା</string>
     <string name="tag_name">ଟ୍ୟାଗ୍ ନାମ</string>
     <string name="add_new_filter_tags">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ ଅବା ଶୋଧନ କରନ୍ତୁ</string>
-    <string name="add_tag">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="check_all_tags">ସମସ୍ତ ଟ୍ୟାଗ୍ ଚୟନ/ଅଚୟନ କରନ୍ତୁ</string>
-    <string name="filter_tags">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
+    <string name="add_tag" maxLength="28">ଟ୍ୟାଗ୍ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="check_all_tags" maxLength="28">ସମସ୍ତ ଟ୍ୟାଗ୍ ଚୟନ/ଅଚୟନ କରନ୍ତୁ</string>
+    <string name="filter_tags" maxLength="28">ଟ୍ୟାଗ୍ ଶୋଧନ</string>
     <string name="no_tags">ଆପଣ ଏ ଯାଏଁ କୌଣସି ଟ୍ୟାଗ ଯୋଡ଼ିନାହାନ୍ତି</string>
     <string name="updated_version">ସଂସ୍କରଣ %s କୁ ଅଦ୍ୟତନ କରାଗଲା</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
-    <string name="enable_stylus">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ସକ୍ଷମ କରିବା</string>
+    <string name="save_whiteboard" maxLength="28">ଧଳାପଟା ସଂରକ୍ଷିତ କରନ୍ତୁ</string>
+    <string name="enable_stylus" maxLength="28">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ସକ୍ଷମ କରିବା</string>
     <string name="disable_stylus">ଷ୍ଟାଇଲସ୍ ମୋଡ୍ ଅକ୍ଷମ କରିବା</string>
-    <string name="enable_whiteboard">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="enable_whiteboard" maxLength="28">ଧଳାପଟା ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="disable_whiteboard">ଧଳାପଟା ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="show_whiteboard">ଧଳାପଟା ଦେଖାଅ</string>
-    <string name="hide_whiteboard">ଧଳାପଟା ଲୁଚାଅ</string>
-    <string name="clear_whiteboard">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
-    <string name="replay_audio">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
+    <string name="hide_whiteboard" maxLength="28">ଧଳାପଟା ଲୁଚାଅ</string>
+    <string name="clear_whiteboard" maxLength="28">ଧଳାପଟା ସଫା କରନ୍ତୁ</string>
+    <string name="replay_audio" maxLength="28">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
     <string name="leech_suspend_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
     <string name="leech_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
     <string name="webview_crash_unknown">ଅଜଣା ତ୍ରୁଟି</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">ସାଂଘାତିକ ତ୍ରୁଟି: WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତା ଦୁର୍ଘଟଣାଗ୍ରସ୍ତ ହୋଇଛି। କାରଣ: %s</string>
     <string name="webview_crash_loop_dialog_title">ସିଷ୍ଟମର WebView ପ୍ରସ୍ତୁତକର୍ତ୍ତାରେ ବିଫଳତା</string>
     <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ୍ WebView \'%1$s\' ପତ୍ର କୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ।\n %2$s</string>
-    <string name="filter_by_flags">ପତାକା</string>
+    <string name="filter_by_flags" maxLength="41">ପତାକା</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
     <string name="custom_study_increase_review_limit">ଆଜିର ସମୀକ୍ଷା ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ନୋଟ୍ ସମ୍ପାଦନା</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">ନୋଟ୍ ସମ୍ପାଦନା</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">କୌଣସି ପତ୍ର ସୃଷ୍ଟି ହୋଇନାହିଁ। ଦୟାକରି ଅଧିକ କ୍ଷେତ୍ର ପୂରଣ କରନ୍ତୁ</string>
     <string name="note_editor_no_cards_created_all_fields">ଚଳିତ ନୋଟ୍ ପ୍ରକାର କୌଣସି ପତ୍ର ଉତ୍ପାଦନ କଲା ନାହିଁ।\nଦୟାକରି ଅନ୍ୟ କୌଣସି ନୋଟ୍ ପ୍ରକାର ବାଛନ୍ତୁ କିମ୍ବା ‘ପତ୍ର’ କ୍ଲିକ୍ କରି ଗୋଟେ କ୍ଷେତ୍ର ପ୍ରତିସ୍ଥାପନ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">କ୍ଲୋଜ ବିଲୋପ କେବଳ କ୍ଲୋଜ ନୋଟ ପ୍ରକାରରେ ହିଁ କାମ କରେ</string>
     <string name="saving_facts">ନୋଟ୍ ସଂରକ୍ଷିତ କରାଯାଉଛି </string>
     <string name="saving_model">ନୋଟ୍ ପ୍ରକାର ସଂରକ୍ଷିତ ହଉଛି</string>
-    <string name="save">ସଞ୍ଚୟ</string>
+    <string name="save" maxLength="28">ସଞ୍ଚୟ</string>
     <string name="close">ବନ୍ଦ</string>
     <string name="select">ବାଛନ୍ତୁ</string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d ମିନିଟ୍</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ପତ୍ର</string>
-    <string name="note_editor_copy_note">ନୋଟ୍ କପି କରନ୍ତୁ</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">ପୁନଃଅଵସ୍ଥିତ କର</string>
-    <string name="card_editor_reset_card">ପ୍ରଗତି ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">ପୂର୍ଵାଵଲୋକନ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">ନୋଟ୍ କପି କରନ୍ତୁ</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">ପୁନଃଅଵସ୍ଥିତ କର</string>
+    <string name="card_editor_reset_card" maxLength="28">ପ୍ରଗତି ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">ପୁନଃନିର୍ଦ୍ଧାରଣ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">ପୂର୍ଵାଵଲୋକନ</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ର %1$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="checks_action">ଯାଞ୍ଚ କରିବା</string>
-    <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
-    <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
-    <string name="empty_cards">ଖାଲି ପତ୍ର</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="checks_action" maxLength="28">ଯାଞ୍ଚ କରିବା</string>
+    <string name="check_db" maxLength="28">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
+    <string name="check_media" maxLength="28">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
+    <string name="empty_cards" maxLength="28">ଖାଲି ପତ୍ର</string>
     <string name="unknown_type_field_warning">ଉତ୍ତର ଟାଇପ୍ କରନ୍ତୁ: ଅଜ୍ଞାତ କ୍ଷେତ୍ର %s</string>
     <string name="delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <string name="info_rate">AnkiDroid କୁ ମୂଲ୍ୟାଙ୍କନ କରନ୍ତୁ</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">ଅଂଶୀଦାର କରିବା</string>
     <string name="export_choice_save_to">ଏଠାରେ ସଞ୍ଚୟ କରିବା</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">ଵିକଳ୍ପ</string>
-    <string name="menu__deck_options">ତାସଖଣ୍ଡ ଵିକଳ୍ପ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ଵିକଳ୍ପ</string>
+    <string name="menu__deck_options" maxLength="28">ତାସଖଣ୍ଡ ଵିକଳ୍ପ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ଵିକଳ୍ପ</string>
-    <string name="select_tts">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
-    <string name="custom_study">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ</string>
+    <string name="select_tts" maxLength="28">TTS ଭାଷା ସେଟ୍ କରନ୍ତୁ</string>
+    <string name="custom_study" maxLength="28">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ</string>
     <string name="more_options">ଅଧିକ</string>
     <string name="dyn_deck_desc">ସାଧାରଣ କାର୍ଯ୍ୟସୂଚୀ ବାହାରେ ଅଧ୍ୟୟନ ପାଇଁ ଏହା ଏକ ସ୍ୱତନ୍ତ୍ର ତାସଖଣ୍ଡ। ଆପଣ ସମୀକ୍ଷା କରିବା ପରେ ପତ୍ରଗୁଡ଼ିକ ଆପେ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରି ଆସିବେ। ତାସଖଣ୍ଡ  ତାଲିକାରୁ ଏହି ତାସଖଣ୍ଡ ବିଲୋପ କରିବା ସମସ୍ତ ଅବଶିଷ୍ଟ ପତ୍ରଗୁଡ଼ିକୁ ସେମାନଙ୍କର ମୂଳ ତାସଖଣ୍ଡକୁ ଫେରାଇବ।</string>
     <string name="steps_error">ପାହୁଣ୍ଡଟି ୦ ଠାରୁ ବଡ଼ ସଂଖ୍ୟା ହେବା ଜରୁରୀ</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">ପୃଷ୍ଠା ଲୋଡ୍ ହେବାରେ ତ୍ରୁଟି: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">ପୃଷ୍ଠପଟ</string>
-    <string name="choose_an_image">ଛବି ବାଛନ୍ତୁ</string>
+    <string name="background_image_title" maxLength="41">ପୃଷ୍ଠପଟ</string>
+    <string name="choose_an_image" maxLength="41">ଛବି ବାଛନ୍ତୁ</string>
     <string name="remove_background_image">ପୃଷ୍ଠପଟ ଅପସାରଣ କରିବେ ତ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
+    <string name="restore_default" maxLength="28">ଡିଫଲ୍ଟ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ଖାଲି</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ସଂରକ୍ଷଣ କରିବାରେ ବିଫଳ। %s</string>
     <string name="white_board_image_saved">ଧଳାପଟା ଛବି %sରେ ସଂରକ୍ଷିତ</string>
-    <string name="title_whiteboard_pen_color">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
-    <string name="title_whiteboard_editor">ଧଳାପଟା ସମ୍ପାଦକ</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">ଧଳାପଟା କଲମ ରଙ୍ଗ</string>
+    <string name="title_whiteboard_editor" maxLength="28">ଧଳାପଟା ସମ୍ପାଦକ</string>
     <string name="user_is_a_robot">ସ୍ୱଚାଳିତ ପରୀକ୍ଷା ଚିହ୍ନଟ ହୋଇଛି। ଯଦି ଆପଣ ଜଣେ ମଣିଷ, AnkiDroid ସମର୍ଥନ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ଏହି ପତ୍ର ଅସମର୍ଥିତ AnkiDroid ବୈଶିଷ୍ଠ୍ୟଗୁଡ଼ିକ ବ୍ୟବହାର କରେ। ବିକାଶକାରୀ ସହିତ ଯୋଗାଯୋଗ କରନ୍ତୁ %1$s, କିମ୍ବା ୱିକି ଦେଖନ୍ତୁ। %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ପତ୍ର ବିଷୟବସ୍ତୁ ତ୍ରୁଟି: ‘%s’ ଲୋଡ୍ କରିବାରେ ବିଫଳ ହେଲା</string>
     <!-- Deck Picker -->
-    <string name="search_decks">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
+    <string name="search_decks" maxLength="28">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
     <string name="ankidroid_init_failed_webview_title">ସାଂଘାତିକ ତ୍ରୁଟି</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid ସିଷ୍ଟମ୍ ୱେବ୍‌ଵ୍ୟୁ ଉପରେ ନିର୍ଭର କରେ ଯାହା ଅନୁପଲବ୍ଧ ଅଟେ। ଯଦି ସିଷ୍ଟମ୍ ଅପଡେଟ୍ ଅଧିସ୍ଥାପନ କରୁଥାଏ ତେବେ ଏହା ଘଟିପାରେ। ଦୟାକରି କିଛି ମିନିଟ୍‌ରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">ଫଣ୍ଟ ଆକାର</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ଉପକରଣ-ଦଣ୍ଡିକା ଦେଖାଇବା</string>
+    <string name="menu_font_size" maxLength="28">ଫଣ୍ଟ ଆକାର</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ଉପକରଣ-ଦଣ୍ଡିକା ଦେଖାଇବା</string>
     <string name="format_insert_bold">ଅକ୍ଷରକୁ ଗାଢ଼ କରନ୍ତୁ</string>
     <string name="format_insert_italic">ଇଟାଲିକ୍ ଭାବରେ ଫର୍ମାଟ୍ କରନ୍ତୁ</string>
     <string name="format_insert_underline">ଲେଖା ତଳେ ଗାର ଦିଅନ୍ତୁ</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ଵ୍ୟଵହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ଗୃହସ୍କ୍ରୀନ୍ AnkiDroidକୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବାର ଅନୁମତି ଦିଏ ନାହିଁ</string>
     <string name="create_shortcut_error">ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିକରେ ବଡ଼ ଅକ୍ଷର କରିବା</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ସ୍କ୍ରୋଲ୍ ହେଉଥିବା ଉପକରଣ-ଦଣ୍ଡିକା</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ବାକ୍ୟଗୁଡ଼ିକରେ ବଡ଼ ଅକ୍ଷର କରିବା</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ସ୍କ୍ରୋଲ୍ ହେଉଥିବା ଉପକରଣ-ଦଣ୍ଡିକା</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">ଦୟାକରି ଆପଣଙ୍କ ନେଟୱର୍କ ସଂଯୋଜନା ଯାଞ୍ଚ କରନ୍ତୁ</string>
     <string name="search_using_deck_name">ତାସଖଣ୍ଡ ନାମ ବ୍ୟବହାର କରି ସନ୍ଧାନ କରନ୍ତୁ</string>
     <string name="external_storage_unavailable">ଡାଉନଲୋଡ୍ ପରିତ୍ୟାଗ ହୋଇଛି, ବହିଃ-ଷ୍ଟୋରେଜ୍ ଉପଲବ୍ଧ ନାହିଁ</string>
-    <string name="home">ଗୃହ</string>
+    <string name="home" maxLength="28">ଗୃହ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">ପତ୍ର ସ୍ଥଗିତ କରାଗଲା।</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Play</string>

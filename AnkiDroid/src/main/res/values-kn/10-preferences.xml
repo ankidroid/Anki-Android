@@ -269,21 +269,21 @@
     <string name="axis_picker_move_joystick">ಜಾಯ್ಸ್ಟಿಕ್/ಚಲನೆಯ ನಿಯಂತ್ರಕವನ್ನು ಸರಿಸಿ</string>
     <string name="user_actions" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆಗಳು</string>
     <string name="user_actions_summary" maxLength="41">ವಿಮರ್ಶೆ ಪರದೆಯಿಂದ JavaScript ಅನ್ನು ಟ್ರಿಗರ್ ಮಾಡಿ</string>
-    <string name="user_action_1" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 1</string>
-    <string name="user_action_2" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 2</string>
-    <string name="user_action_3" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 3</string>
-    <string name="user_action_4" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 4</string>
-    <string name="user_action_5" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 5</string>
-    <string name="user_action_6" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 6</string>
-    <string name="user_action_7" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 7</string>
-    <string name="user_action_8" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 8</string>
-    <string name="user_action_9" maxLength="41">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 9</string>
+    <string name="user_action_1" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 1</string>
+    <string name="user_action_2" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 2</string>
+    <string name="user_action_3" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 3</string>
+    <string name="user_action_4" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 4</string>
+    <string name="user_action_5" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 5</string>
+    <string name="user_action_6" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 6</string>
+    <string name="user_action_7" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 7</string>
+    <string name="user_action_8" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 8</string>
+    <string name="user_action_9" maxLength="28">ಬಳಕೆದಾರರ ಕ್ರಿಯೆ 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ಕಾರ್ಡ್ ಬದಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="card_side_question">ಪ್ರಶ್ನೆ</string>
     <string name="card_side_answer">ಉತ್ತರ</string>
-    <string name="card_side_both">ಪ್ರಶ್ನೆ &amp; ಉತ್ತರ</string>
+    <string name="card_side_both" maxLength="28">ಪ್ರಶ್ನೆ &amp; ಉತ್ತರ</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">ಪ್ರಶ್ನೆ: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">ಉ: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

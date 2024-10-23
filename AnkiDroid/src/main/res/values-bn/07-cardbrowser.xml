@@ -58,23 +58,23 @@
         <item quantity="one">Delete note</item>
         <item quantity="other">নোট ডিলিট করুন</item>
     </plurals>
-    <string name="card_browser_change_deck">ডেক পরিবর্তন</string>
+    <string name="card_browser_change_deck" maxLength="28">ডেক পরিবর্তন</string>
     <string name="delete_card_title">নোট মুছব?</string>
-    <string name="card_browser_show_marked" maxLength="29">চিহ্নিতগুলো বাছো</string>
-    <string name="card_browser_show_suspended" maxLength="29">চিহ্নিতগুলো স্থগিত কর</string>
-    <string name="card_browser_search_by_tag" maxLength="29">ট্যাগ অনুযায়ী বাছো</string>
-    <string name="card_browser_search_by_flag" maxLength="29">নিশান অনুযায়ী বাছো</string>
-    <string name="card_browser_list_my_searches" maxLength="29">আমার অনুসন্ধানগুলি</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">অনুসন্ধান সংরক্ষণ কর</string>
+    <string name="card_browser_show_marked" maxLength="28">চিহ্নিতগুলো বাছো</string>
+    <string name="card_browser_show_suspended" maxLength="28">চিহ্নিতগুলো স্থগিত কর</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ট্যাগ অনুযায়ী বাছো</string>
+    <string name="card_browser_search_by_flag" maxLength="28">নিশান অনুযায়ী বাছো</string>
+    <string name="card_browser_list_my_searches" maxLength="28">আমার অনুসন্ধানগুলি</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">অনুসন্ধান সংরক্ষণ কর</string>
     <string name="card_browser_list_my_searches_title">সংরক্ষিত ১টি অনুসন্ধান বাছুন</string>
     <string name="card_browser_list_my_searches_new_name">এ অনুসন্ধানের নাম</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">নামহীন অনুসন্ধান সংরক্ষণ করা যাবেনা</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">নামটি আগের থেকেই আছে</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” মুছব?</string>
-    <string name="card_browser_change_display_order" maxLength="29">প্রদর্শন-ক্রম বদলাও</string>
+    <string name="card_browser_change_display_order" maxLength="28">প্রদর্শন-ক্রম বদলাও</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">প্রদর্শন-ক্রম বাছুন</string>
     <string name="card_details_tags">ট্যাগসমূহ</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>পরিদর্শনানুসারে</item>
         <item>অধ:পতন অনুসারে</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">সবগুলো বাছো</string>
-    <string name="card_browser_select_none">কোনোটিই বেছোনা</string>
+    <string name="card_browser_select_all" maxLength="28">সবগুলো বাছো</string>
+    <string name="card_browser_select_none" maxLength="28">কোনোটিই বেছোনা</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">নতুন</string>
     <string name="card_browser_due_filtered_card">শর্তাধীন বাছাইকৃত</string>
     <string name="card_browser_interval_learning_card">শিখছি</string>

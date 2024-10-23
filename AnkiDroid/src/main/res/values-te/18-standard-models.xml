@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">ముందు</string>
-    <string name="back_field_name">వెనుకకు</string>
+    <string name="front_field_name" maxLength="28">ముందు</string>
+    <string name="back_field_name" maxLength="28">వెనుకకు</string>
 </resources>

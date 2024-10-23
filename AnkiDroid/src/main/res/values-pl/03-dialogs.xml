@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Sprawdź bazę danych</string>
     <string name="check_db_warning">To może zająć dużo czasu.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Skasuj talię</string>
     <string name="delete_deck_title">Skasuj talię</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
@@ -107,7 +107,7 @@
     <string name="dialog_continue">Kontynuuj</string>
     <string name="dialog_processing">Przetwarzanie&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Utwórz</string>
-    <string name="dialog_positive_delete">Usuń</string>
+    <string name="dialog_positive_delete" maxLength="28">Usuń</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Wyłacz</string>
     <string name="dialog_positive_overwrite">Nadpisz</string>
@@ -194,7 +194,7 @@
     <string name="help_item_mailing_list">Lista mailingowa</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Zgłoś błąd</string>
-    <string name="help_title_support_ankidroid">Wesprzyj AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Wesprzyj AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Wesprzyj</string>
     <string name="help_item_support_develop_ankidroid">Rozbuduj</string>
     <string name="help_item_support_rate_ankidroid">Oceń</string>
@@ -235,7 +235,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Utwórz kopię zapasową swojej kolekcji</string>
     <string name="backup_collection_message">Nie wykonałeś kopii zapasowej swojej kolekcji przez jakiś czas. Powinieneś to zrobić teraz, aby zapobiec utracie danych</string>
-    <string name="button_backup">Kopia zapasowa</string>
+    <string name="button_backup" maxLength="41">Kopia zapasowa</string>
     <string name="button_disable_reminder">Wyłącz przypomnienie</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Później</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Nie pokazuj ponownie</string>

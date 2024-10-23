@@ -58,23 +58,23 @@
         <item quantity="one">Delete note</item>
         <item quantity="other">Delete notes</item>
     </plurals>
-    <string name="card_browser_change_deck">Canvia de paquet</string>
+    <string name="card_browser_change_deck" maxLength="28">Canvia de paquet</string>
     <string name="delete_card_title">Suprimeix la nota</string>
-    <string name="card_browser_show_marked" maxLength="29">Filtra les marcades</string>
-    <string name="card_browser_show_suspended" maxLength="29">Filtra les suspeses</string>
-    <string name="card_browser_search_by_tag" maxLength="29">Filtra per etiqueta</string>
-    <string name="card_browser_search_by_flag" maxLength="29">Filtrat per bandera</string>
-    <string name="card_browser_list_my_searches" maxLength="29">Les meves cerques</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">Guardeu la cerca</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtra les marcades</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filtra les suspeses</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtra per etiqueta</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtrat per bandera</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Les meves cerques</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Guardeu la cerca</string>
     <string name="card_browser_list_my_searches_title">Trieu un cerca desada</string>
     <string name="card_browser_list_my_searches_new_name">Nom per a la cerca actual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">No podeu desar una cerca sense un nom</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">El nom ja existeix</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">Voleu suprimir \"%1$s\"?</string>
-    <string name="card_browser_change_display_order" maxLength="29">Canvia l\'ordre de presentació</string>
+    <string name="card_browser_change_display_order" maxLength="28">Canvia l\'ordre de presentació</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">Trieu l\'ordre de visualització</string>
     <string name="card_details_tags">Etiquetes</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>Per revisions</item>
         <item>Per intervals</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">Selecciona-ho tot</string>
-    <string name="card_browser_select_none">No en seleccionis cap</string>
+    <string name="card_browser_select_all" maxLength="28">Selecciona-ho tot</string>
+    <string name="card_browser_select_none" maxLength="28">No en seleccionis cap</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nou)</string>
     <string name="card_browser_due_filtered_card">(filtrat)</string>
     <string name="card_browser_interval_learning_card">(aprenentatge)</string>

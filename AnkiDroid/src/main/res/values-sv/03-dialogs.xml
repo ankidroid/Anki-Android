@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kontrollera databas?</string>
     <string name="check_db_warning">Det här kan ta lång tid</string>
-    <string name="contextmenu_deckpicker_delete_deck">Radera kortlek</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Radera kortlek</string>
     <string name="delete_deck_title">Radera kortlek?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
@@ -101,7 +101,7 @@
     <string name="dialog_continue">Fortsätt</string>
     <string name="dialog_processing">Bearbetar&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Skapa</string>
-    <string name="dialog_positive_delete">Radera</string>
+    <string name="dialog_positive_delete" maxLength="28">Radera</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Inaktivera</string>
     <string name="dialog_positive_overwrite">Skriv över</string>
@@ -186,7 +186,7 @@
     <string name="help_item_mailing_list">E-postlista</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Rapportera en bugg</string>
-    <string name="help_title_support_ankidroid">Stöd AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Stöd AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donera</string>
     <string name="help_item_support_develop_ankidroid">Utveckla</string>
     <string name="help_item_support_rate_ankidroid">Betygsätt</string>
@@ -225,7 +225,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Säkerhetskopiera din samling</string>
     <string name="backup_collection_message">Du har inte säkerhetskopierat din samling på ett tag. Du bör göra detta nu för att förhindra dataförlust</string>
-    <string name="button_backup">Säkerhetskopiering</string>
+    <string name="button_backup" maxLength="41">Säkerhetskopiering</string>
     <string name="button_disable_reminder">Inaktivera påminnelse</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Senare</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Visa inte igen</string>

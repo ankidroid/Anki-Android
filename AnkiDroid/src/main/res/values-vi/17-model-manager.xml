@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Quản lý các loại ghi chú</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Quản lý các loại ghi chú</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Quản lý các trường</string>
     <!--Toasts-->
     <string name="toast_last_model">Bạn không thể xóa loại ghi chú cuối cùng của mình</string>
@@ -51,7 +51,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Đặt gợi ý ngôn ngữ thành %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Chỉnh sửa các trường</string>
-    <string name="model_field_editor_add">Thêm trường</string>
+    <string name="model_field_editor_add" maxLength="28">Thêm trường</string>
     <string name="model_field_editor_delete">Xóa trường</string>
     <string name="model_field_editor_rename">Đổi tên trường</string>
     <string name="model_field_editor_language_hint">Đặt gợi ý ngôn ngữ bàn phím</string>
@@ -79,5 +79,5 @@
     <string name="model_manager_deck_override_added_message">Đặt bộ bài mặc định ‘%1$s’ thành ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Đã xóa bộ thẻ mặc định cho ‘%s’</string>
     <string name="deck_override_explanation">Chọn bộ thẻ để đặt các thẻ ‘%s’ mới vào</string>
-    <string name="deck_picker_dialog_filter_decks">Bộ lọc thẻ</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Bộ lọc thẻ</string>
 </resources>

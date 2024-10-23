@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Notitietypes beheren</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Notitietypes beheren</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Velden beheren</string>
     <!--Toasts-->
     <string name="toast_last_model">U kunt uw laatste memotype niet verwijderen</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Taaltip op %s instellen</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Velden bewerken</string>
-    <string name="model_field_editor_add">Veld toevoegen</string>
+    <string name="model_field_editor_add" maxLength="28">Veld toevoegen</string>
     <string name="model_field_editor_delete">Veld verwijderen</string>
     <string name="model_field_editor_rename">Naam van veld wijzigen</string>
     <string name="model_field_editor_language_hint">Suggestie voor de toetsenbordtaal instellen</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">Standaarset van \'%1$s\' ingesteld op \'%2$s\'</string>
     <string name="model_manager_deck_override_removed_message">Standaardset verwijderd voor ‘%s’</string>
     <string name="deck_override_explanation">Selecteer set om nieuwe \'%s\' kaarten in te plaatsen</string>
-    <string name="deck_picker_dialog_filter_decks">Sets filteren</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Sets filteren</string>
 </resources>

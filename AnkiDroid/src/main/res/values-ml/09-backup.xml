@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">ബാക്കപ്പ് സംരക്ഷിച്ചിട്ടില്ല. നിങ്ങളുടെ സംഭരണത്തിന് മതിയായ ഇടമില്ല. ബാക്കപ്പ് ഡെപ്ത് കുറയ്ക്കുക അല്ലെങ്കിൽ മറ്റ് ചില ഫയലുകൾ നീക്കം ചെയ്യുക.</string>
     <string name="storage_warning">നിങ്ങളുടെ സ്‌റ്റോറേജിൽ %d MB-ൽ താഴെ ഇടം അവശേഷിക്കുന്നു.\nഡാറ്റ നഷ്‌ടപ്പെടാതിരിക്കാൻ കുറച്ച് ഇടം സൃഷ്‌ടിക്കുക.</string>
-    <string name="backup_restore">ബാക്കപ്പിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക</string>
+    <string name="backup_restore" maxLength="28">ബാക്കപ്പിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക</string>
     <string name="backup_new_collection">പുതിയ ശേഖരം</string>
     <string name="backup_del_collection">ശേഖരം ഇല്ലാതാക്കി പുതിയതൊന്ന് സൃഷ്‌ടിക്കുക</string>
     <string name="backup_del_collection_question">ശേഖരം ഇല്ലാതാക്കി പുതിയൊരെണ്ണം സൃഷ്ടിക്കണോ? ഇത് നിങ്ങളുടെ എല്ലാ പഠന പുരോഗതിയും ഇല്ലാതാക്കുകയും എല്ലാ കാർഡുകളും ഇല്ലാതാക്കുകയും ചെയ്യും.</string>

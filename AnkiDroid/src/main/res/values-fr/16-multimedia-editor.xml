@@ -69,10 +69,10 @@
     <string name="multimedia_editor_audio_view_create_failed">Impossible de créer la barre d\'outils de l\'enregistreur</string>
     <!-- Crop function-->
     <string name="crop_image">Voulez-vous rogner cette image ?</string>
-    <string name="crop_button">Rogner l\'image</string>
+    <string name="crop_button" maxLength="28">Rogner l\'image</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"La sélection de l\'image a échoué, veuillez réessayer"</string>
     <string name="activity_result_unexpected">L\'application a renvoyé une valeur inattendue. Vous devriez peut-être utiliser une autre application</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Contenus du champ</string>
-    <string name="reselect">Reselect</string>
+    <string name="reselect" maxLength="28">Reselect</string>
 </resources>

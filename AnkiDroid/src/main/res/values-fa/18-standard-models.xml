@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">جلو</string>
-    <string name="back_field_name">بازگشت</string>
+    <string name="front_field_name" maxLength="28">جلو</string>
+    <string name="back_field_name" maxLength="28">بازگشت</string>
 </resources>

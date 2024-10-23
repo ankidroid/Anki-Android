@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-كبير</string>
     <string name="html_size_code_xx_large">xx-كبير</string>
     <!-- gestures_labels -->
-    <string name="answer_again">إعادة الإجابة</string>
-    <string name="answer_hard">إجابة صعبة</string>
-    <string name="answer_good">إجابة جيدة</string>
-    <string name="answer_easy">إجابة سهلة</string>
-    <string name="gesture_play">تشغيل الوسائط</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">تفعيل المؤشر الأحمر</string>
-    <string name="gesture_flag_orange">تفعيل المؤشر البرتقالي</string>
-    <string name="gesture_flag_green">تفعيل المؤشر الأخضر</string>
-    <string name="gesture_flag_blue">تفعيل المؤشر الأزرق</string>
-    <string name="gesture_flag_pink">تفعيل أو إيقاف المؤشر الزهري</string>
-    <string name="gesture_flag_turquoise">تفعيل أو إيقاف المؤشر الفيرزوي</string>
-    <string name="gesture_flag_purple">تفعيل أو إيقاف المؤشر البنفسجي</string>
-    <string name="gesture_flag_remove">إزالة المؤشر</string>
-    <string name="gesture_page_up">تمرير صفحة إلى الأعلى</string>
-    <string name="gesture_page_down">تمرير صفحة إلى الأسفل</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">تمكين اللوحة البيضاء</string>
-    <string name="gesture_show_hint">إظهار التلميح</string>
-    <string name="gesture_show_all_hints">إظهار كل التلميحات</string>
-    <string name="record_voice">تسجيل الصوت</string>
-    <string name="replay_voice">إعادة تشغيل الصوت</string>
-    <string name="save_voice">حفظ التسجيل</string>
+    <string name="answer_again" maxLength="41">إعادة الإجابة</string>
+    <string name="answer_hard" maxLength="41">إجابة صعبة</string>
+    <string name="answer_good" maxLength="41">إجابة جيدة</string>
+    <string name="answer_easy" maxLength="41">إجابة سهلة</string>
+    <string name="gesture_play" maxLength="41">تشغيل الوسائط</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">تفعيل المؤشر الأحمر</string>
+    <string name="gesture_flag_orange" maxLength="41">تفعيل المؤشر البرتقالي</string>
+    <string name="gesture_flag_green" maxLength="41">تفعيل المؤشر الأخضر</string>
+    <string name="gesture_flag_blue" maxLength="41">تفعيل المؤشر الأزرق</string>
+    <string name="gesture_flag_pink" maxLength="41">تفعيل أو إيقاف المؤشر الزهري</string>
+    <string name="gesture_flag_turquoise" maxLength="41">تفعيل أو إيقاف المؤشر الفيرزوي</string>
+    <string name="gesture_flag_purple" maxLength="41">تفعيل أو إيقاف المؤشر البنفسجي</string>
+    <string name="gesture_flag_remove" maxLength="41">إزالة المؤشر</string>
+    <string name="gesture_page_up" maxLength="41">تمرير صفحة إلى الأعلى</string>
+    <string name="gesture_page_down" maxLength="41">تمرير صفحة إلى الأسفل</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">تمكين اللوحة البيضاء</string>
+    <string name="gesture_show_hint" maxLength="41">إظهار التلميح</string>
+    <string name="gesture_show_all_hints" maxLength="41">إظهار كل التلميحات</string>
+    <string name="record_voice" maxLength="41">تسجيل الصوت</string>
+    <string name="replay_voice" maxLength="41">إعادة تشغيل الصوت</string>
+    <string name="save_voice" maxLength="41">حفظ التسجيل</string>
 </resources>

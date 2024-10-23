@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Kaardipakid</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kaardibrauser</string>
-    <string name="statistics">Statistika</string>
-    <string name="settings">Seaded</string>
-    <string name="help">Abi</string>
+    <string name="decks" maxLength="28">Kaardipakid</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Kaardibrauser</string>
+    <string name="statistics" maxLength="28">Statistika</string>
+    <string name="settings" maxLength="28">Seaded</string>
+    <string name="help" maxLength="28">Abi</string>
     <string name="drawing">Joonistus</string>
     <string name="send_feedback">Saada tagasiside</string>
     <string name="studyoptions_start">Õpi</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Kirjuta vastus</string>
-    <string name="show_answer">Kuva vastus</string>
+    <string name="show_answer" maxLength="41">Kuva vastus</string>
     <string name="hide_answer">Peida vastus</string>
-    <string name="ease_button_again">Uuesti</string>
-    <string name="ease_button_hard">Raske</string>
-    <string name="ease_button_good">Hea</string>
+    <string name="ease_button_again" maxLength="41">Uuesti</string>
+    <string name="ease_button_hard" maxLength="41">Raske</string>
+    <string name="ease_button_good" maxLength="41">Hea</string>
     <string name="ease_button_easy">Lihtne</string>
-    <string name="menu_import">Impordi</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Võta tagasi</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="menu_import" maxLength="28">Impordi</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Võta tagasi</string>
+    <string name="redo" maxLength="28">Redo</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Undo stroke</string>
     <string name="move_all_to_deck">Liiguta kõik kaardipakki</string>
-    <string name="unbury">Taasta</string>
-    <string name="rename_deck">Nimeta ümber kaardipakk</string>
+    <string name="unbury" maxLength="28">Taasta</string>
+    <string name="rename_deck" maxLength="28">Nimeta ümber kaardipakk</string>
     <string name="create_shortcut">Loo otsetee</string>
     <string name="browse_cards">Sirvi kaarte</string>
     <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Lisa</string>
-    <string name="menu_add_note">Lisa märge</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Lisa</string>
+    <string name="menu_add_note" maxLength="28">Lisa märge</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sünkrooni konto</string>
-    <string name="menu_dismiss_note">Peida / kustuta</string>
-    <string name="menu_bury_card">Peida kaart</string>
-    <string name="menu_bury_note">Peida märge</string>
-    <string name="menu_suspend_card">Seiska kaart</string>
-    <string name="menu_suspend_note">Seiska märge</string>
-    <string name="menu_bury">Peida</string>
-    <string name="menu_suspend">Seiska</string>
-    <string name="menu_delete_note">Kustuta märge</string>
-    <string name="menu_flag">Lipp</string>
+    <string name="menu_dismiss_note" maxLength="41">Peida / kustuta</string>
+    <string name="menu_bury_card" maxLength="28">Peida kaart</string>
+    <string name="menu_bury_note" maxLength="28">Peida märge</string>
+    <string name="menu_suspend_card" maxLength="28">Seiska kaart</string>
+    <string name="menu_suspend_note" maxLength="28">Seiska märge</string>
+    <string name="menu_bury" maxLength="28">Peida</string>
+    <string name="menu_suspend" maxLength="28">Seiska</string>
+    <string name="menu_delete_note" maxLength="28">Kustuta märge</string>
+    <string name="menu_flag" maxLength="41">Lipp</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Pane kaardile lipp</string>
-    <string name="menu_edit_tags">Muuda silte</string>
+    <string name="menu_flag_card" maxLength="28">Pane kaardile lipp</string>
+    <string name="menu_edit_tags" maxLength="28">Muuda silte</string>
     <string name="delete_note_message">Kas tõesti kustutada see märge ja kõik selle kaardid?\n%s</string>
-    <string name="menu_search">Otsi %1$s</string>
-    <string name="menu_mark_note">Tähista märge</string>
+    <string name="menu_search" maxLength="28">Otsi %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Tähista märge</string>
     <string name="menu_unmark_note">Eemalda tähistus märkelt</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Loo kaardipakk</string>
     <string name="new_dynamic_deck">Loo filtritud kaardipakk</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Jätkamiseks palun anna AnkiDroidile \"Mälu\" luba</string>
     <string name="rebuild_filtered_deck">Taastan filtritud kaardipakki&#8230;</string>
-    <string name="rebuild_cram_label">Taasloo</string>
-    <string name="empty_cram_label">Tühi</string>
+    <string name="rebuild_cram_label" maxLength="28">Taasloo</string>
+    <string name="empty_cram_label" maxLength="28">Tühi</string>
     <string name="create_subdeck">Loo alakaardipakk</string>
     <string name="empty_filtered_deck">Tühjendan filtritud kaardipakki&#8230;</string>
     <string name="custom_study_deck_name">Kohandatud õppesessioon</string>
     <string name="custom_study_deck_exists">Esmalt nimeta ümber juba olemasolev täiendava õppe kaardipakk</string>
     <string name="search_deck" comment="Deck search for selecting it">Otsi kaardipakki</string>
     <string name="empty_deck">See kaardipakk on tühi</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Otsi kaardipakki</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Otsi kaardipakki</string>
     <string name="invalid_deck_name">Vigane kaardipaki nimi</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Veel pole kaart ootel</string>
     <string name="sd_card_not_mounted">Seadme mälu pole paigaldatud</string>
-    <string name="button_sync" comment="Text of the sync button">Sünkrooni</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sünkrooni</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Sünkroonimine tühistada?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Jätka sünkroonimist</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sünkroonimine tühistatud</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Tühistan&#8230;\nSee võib võtta mõnda aega.</string>
     <string name="syncing_media">Syncing media</string>
-    <string name="export_deck">Ekspordi kaardipakk</string>
+    <string name="export_deck" maxLength="28">Ekspordi kaardipakk</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Mitte midagi</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kaarditüübid</string>
     <string name="card_template_editor_front">Esikülje mall</string>
     <string name="card_template_editor_back">Tagakülje mall</string>
-    <string name="card_template_editor_styling">Stiil</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Kaardibrauseri välimus</string>
-    <string name="card_template_editor_deck_override">Kaardipaki pealejäämine</string>
-    <string name="card_template_editor_insert_field">Lisa väli</string>
+    <string name="card_template_editor_styling" maxLength="28">Stiil</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Kaardibrauseri välimus</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Kaardipaki pealejäämine</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Lisa väli</string>
     <string name="card_template_editor_select_field">Vali väli</string>
     <string name="card_template_editor_cant_delete">Vähemalt üks kaardi tüüp peab olema valitud</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Brauseri välimus</string>
     <!-- card Info -->
-    <string name="card_info_title">Kaardi info</string>
+    <string name="card_info_title" maxLength="28">Kaardi info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Loe ja kirjuta AnkiDroid andmebaasi</string>
     <string name="read_write_permission_description">ligi pääseda olemasolevatele ja luua uusi märkmeid, kaarte, märketüüpe ja kaardipakke.</string>

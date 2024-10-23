@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">Дуже великий</string>
     <string name="html_size_code_xx_large">Найбільший</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Відповідь: знову</string>
-    <string name="answer_hard">Відповідь: важко</string>
-    <string name="answer_good">Відповідь: добре</string>
-    <string name="answer_easy">Відповідь: легко</string>
-    <string name="gesture_play">Відтворити медіа</string>
-    <string name="gesture_abort_learning">Закрити повторення</string>
-    <string name="gesture_flag_red">Переключити червоний прапорець</string>
-    <string name="gesture_flag_orange">Переключити помаранчевий прапорець</string>
-    <string name="gesture_flag_green">Переключити зелений прапорець</string>
-    <string name="gesture_flag_blue">Переключити синій прапорець</string>
-    <string name="gesture_flag_pink">Перемкнути рожевий прапор</string>
-    <string name="gesture_flag_turquoise">Перемкнути бірюзовий прапорець</string>
-    <string name="gesture_flag_purple">Перемкнути фіолетовий прапорець</string>
-    <string name="gesture_flag_remove">Прибрати прапорець</string>
-    <string name="gesture_page_up">Попередня сторінка</string>
-    <string name="gesture_page_down">Наступна сторінка</string>
-    <string name="gesture_abort_sync">Закрити повторення і синхронізувати</string>
-    <string name="gesture_toggle_whiteboard">Дошка</string>
-    <string name="gesture_show_hint">Показати підказку</string>
-    <string name="gesture_show_all_hints">Показати всі підказки</string>
-    <string name="record_voice">Записати голос</string>
-    <string name="replay_voice">Відтворити запис голосу</string>
-    <string name="save_voice">Зберегти запис</string>
+    <string name="answer_again" maxLength="41">Відповідь: знову</string>
+    <string name="answer_hard" maxLength="41">Відповідь: важко</string>
+    <string name="answer_good" maxLength="41">Відповідь: добре</string>
+    <string name="answer_easy" maxLength="41">Відповідь: легко</string>
+    <string name="gesture_play" maxLength="41">Відтворити медіа</string>
+    <string name="gesture_abort_learning" maxLength="41">Закрити повторення</string>
+    <string name="gesture_flag_red" maxLength="41">Переключити червоний прапорець</string>
+    <string name="gesture_flag_orange" maxLength="41">Переключити помаранчевий прапорець</string>
+    <string name="gesture_flag_green" maxLength="41">Переключити зелений прапорець</string>
+    <string name="gesture_flag_blue" maxLength="41">Переключити синій прапорець</string>
+    <string name="gesture_flag_pink" maxLength="41">Перемкнути рожевий прапор</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Перемкнути бірюзовий прапорець</string>
+    <string name="gesture_flag_purple" maxLength="41">Перемкнути фіолетовий прапорець</string>
+    <string name="gesture_flag_remove" maxLength="41">Прибрати прапорець</string>
+    <string name="gesture_page_up" maxLength="41">Попередня сторінка</string>
+    <string name="gesture_page_down" maxLength="41">Наступна сторінка</string>
+    <string name="gesture_abort_sync" maxLength="41">Закрити повторення і синхронізувати</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Дошка</string>
+    <string name="gesture_show_hint" maxLength="41">Показати підказку</string>
+    <string name="gesture_show_all_hints" maxLength="41">Показати всі підказки</string>
+    <string name="record_voice" maxLength="41">Записати голос</string>
+    <string name="replay_voice" maxLength="41">Відтворити запис голосу</string>
+    <string name="save_voice" maxLength="41">Зберегти запис</string>
 </resources>

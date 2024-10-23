@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">La còpia de seguretat no s\'ha desat. No hi ha prou espai. Baixeu la profunditat de la còpia de seguretat o elimineu altres fitxers.</string>
     <string name="storage_warning">Hi ha menys de %d MB d\'espai lliure.\nAllibereu una mica d\'espai per no perdre dades.</string>
-    <string name="backup_restore">Restaura des d\'una còpia de reserva</string>
+    <string name="backup_restore" maxLength="28">Restaura des d\'una còpia de reserva</string>
     <string name="backup_new_collection">Nova col·lecció</string>
     <string name="backup_del_collection">Suprimeix la col·lecció i genera una nova</string>
     <string name="backup_del_collection_question">Segur que voleu suprimir la col·lecció i crear-ne una de nova? Això suprimirà totes les dades del vostre progrés d\'aprenentatge i eliminarà totes les fitxes!</string>

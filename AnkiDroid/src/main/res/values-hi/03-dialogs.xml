@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">डेटाबेस की जाँच करें?</string>
     <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
-    <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">डेक मिटाएँ</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s में सभी कार्ड हटाएं? इसमें %2$d कार्ड है</item>
@@ -101,7 +101,7 @@
     <string name="dialog_continue">जारी रखें</string>
     <string name="dialog_processing">प्रोसेसिंग&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">बनाएँ</string>
-    <string name="dialog_positive_delete">हटाएँ</string>
+    <string name="dialog_positive_delete" maxLength="28">हटाएँ</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">डिसेबल</string>
     <string name="dialog_positive_overwrite">उपरिलेखित करें</string>
@@ -186,7 +186,7 @@
     <string name="help_item_mailing_list">मेलिंग सूची</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">बग रिपोर्ट करें</string>
-    <string name="help_title_support_ankidroid">AnkiDroid का समर्थन करें</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid का समर्थन करें</string>
     <string name="help_item_support_opencollective_donate">दान करें</string>
     <string name="help_item_support_develop_ankidroid">विकास करें</string>
     <string name="help_item_support_rate_ankidroid">मूल्यांकन करें</string>
@@ -225,7 +225,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">अपने संग्रह का बैकअप लें</string>
     <string name="backup_collection_message">आपने कुछ समय से अपने संग्रह का बैकअप नहीं लिया है। डेटा हानि को रोकने के लिए आपको इसे अभी करना चाहिए</string>
-    <string name="button_backup">बैकअप</string>
+    <string name="button_backup" maxLength="41">बैकअप</string>
     <string name="button_disable_reminder">अनुस्मारक अक्षम करें</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">बाद में</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">दोबारा न दिखाएं</string>

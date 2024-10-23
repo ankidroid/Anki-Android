@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Místní</string>
     <string name="sync_sanity_remote">Vzdálený</string>
-    <string name="one_way_sync_title">Jednosměrná synchronizace</string>
+    <string name="one_way_sync_title" maxLength="41">Jednosměrná synchronizace</string>
     <string name="one_way_sync_confirmation">Požaduje se jednosměrná synchronizace</string>
     <string name="full_sync_confirmation">Požadovaná změna způsobí kompletní nahrání databáze na server při příští synchronizaci kolekce. Máte-li opakování nebo jiné změny na jiném zařízení, které ještě nebyly synchronizovány, budou ztraceny. Chcete pokračovat?</string>
     <string name="full_sync_confirmation_upgrade">Kvůli chybě v dříve nainstalované verzi AnkiDroid doporučujeme vynutit úplnou synchronizaci.</string>

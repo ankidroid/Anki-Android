@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
     <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Gjennopprett fra sikkerhetskopi</string>
+    <string name="backup_restore" maxLength="28">Gjennopprett fra sikkerhetskopi</string>
     <string name="backup_new_collection">Ny samling</string>
     <string name="backup_del_collection">Slett samling og lag ny</string>
     <string name="backup_del_collection_question">Vil du virkelig slette samlingen og lage en ny? Det kommer til å slette all framgangs-informasjonen din, og slette alle kort!</string>

@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">ಡೆಕ್ಸ್</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ಕಾರ್ಡ್ ಬ್ರೌಸರ್  </string>
-    <string name="statistics">ಅಂಕಿಅಂಶಗಳು </string>
-    <string name="settings">ಸೆಟ್ಟಿಂಗ್‍ಗಳು</string>
-    <string name="help">ಸಹಾಯ </string>
+    <string name="decks" maxLength="28">ಡೆಕ್ಸ್</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">ಕಾರ್ಡ್ ಬ್ರೌಸರ್  </string>
+    <string name="statistics" maxLength="28">ಅಂಕಿಅಂಶಗಳು </string>
+    <string name="settings" maxLength="28">ಸೆಟ್ಟಿಂಗ್‍ಗಳು</string>
+    <string name="help" maxLength="28">ಸಹಾಯ </string>
     <string name="drawing">ಚಿತ್ರ</string>
     <string name="send_feedback">ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ </string>
     <string name="studyoptions_start">ಅಧ್ಯಯನ </string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ</string>
-    <string name="show_answer">ಉತ್ತರ ತೋರಿಸು </string>
+    <string name="show_answer" maxLength="41">ಉತ್ತರ ತೋರಿಸು </string>
     <string name="hide_answer">ಉತ್ತರವನ್ನು ಮರೆಮಾಡಿ </string>
-    <string name="ease_button_again">ಮತ್ತೆ </string>
-    <string name="ease_button_hard">ಕಠಿಣ </string>
-    <string name="ease_button_good">ಒಳ್ಳೆಯದು </string>
+    <string name="ease_button_again" maxLength="41">ಮತ್ತೆ </string>
+    <string name="ease_button_hard" maxLength="41">ಕಠಿಣ </string>
+    <string name="ease_button_good" maxLength="41">ಒಳ್ಳೆಯದು </string>
     <string name="ease_button_easy">ಸುಲಭ </string>
-    <string name="menu_import">ಇಂಪೋರ್ಟ್</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">ರದ್ದು</string>
-    <string name="redo">ಮತ್ತೆ ಮಾಡು</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ಸ್ಟ್ರೋಕ್ ರದ್ದುಗೊಳಿಸಿ</string>
+    <string name="menu_import" maxLength="28">ಇಂಪೋರ್ಟ್</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">ರದ್ದು</string>
+    <string name="redo" maxLength="28">ಮತ್ತೆ ಮಾಡು</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">ಸ್ಟ್ರೋಕ್ ರದ್ದುಗೊಳಿಸಿ</string>
     <string name="move_all_to_deck">ಎಲ್ಲವನ್ನೂ ಡೆಕ್‌ಗೆ ಸರಿಸಿ</string>
-    <string name="unbury">ಅನ್ಬರಿ</string>
-    <string name="rename_deck">ಸಂಗ್ರಹಣೆಗೆ ಮರುಹೆಸರಿಸಿ</string>
+    <string name="unbury" maxLength="28">ಅನ್ಬರಿ</string>
+    <string name="rename_deck" maxLength="28">ಸಂಗ್ರಹಣೆಗೆ ಮರುಹೆಸರಿಸಿ</string>
     <string name="create_shortcut">ಕಿರುದಾರಿ ರಚಿಸಿ</string>
     <string name="browse_cards">ಕಾರ್ಡ್‌ಗಳನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ</string>
     <string name="edit_deck_description" comment="edit the deck description">ವಿವರಣೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">ಸೇರಿಸಿ </string>
-    <string name="menu_add_note">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ಸೇರಿಸಿ </string>
+    <string name="menu_add_note" maxLength="28">ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ಖಾತೆಯನ್ನು ಸಿಂಕ್ ಮಾಡಿ</string>
-    <string name="menu_dismiss_note">ಮರೆಮಾಡು / ಅಳಿಸಿ</string>
-    <string name="menu_bury_card">ಕಾರ್ಡ್ ಹೂತುಹಾಕಿ</string>
-    <string name="menu_bury_note">ಸೂಚನೆ ಹೂತುಹಾಕಿ</string>
-    <string name="menu_suspend_card">ಕಾರ್ಡ್ ಅಮಾನತುಗೊಳಿಸಿ</string>
-    <string name="menu_suspend_note">ಸೂಚನೆ ಅಮಾನತುಗೊಳಿಸಿ</string>
-    <string name="menu_bury">ಹೂತುಹಾಕಿ</string>
-    <string name="menu_suspend">ಅಮಾನತ್ತುಗೊಳಿಸು</string>
-    <string name="menu_delete_note">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
-    <string name="menu_flag">ಧ್ವಜ</string>
+    <string name="menu_dismiss_note" maxLength="41">ಮರೆಮಾಡು / ಅಳಿಸಿ</string>
+    <string name="menu_bury_card" maxLength="28">ಕಾರ್ಡ್ ಹೂತುಹಾಕಿ</string>
+    <string name="menu_bury_note" maxLength="28">ಸೂಚನೆ ಹೂತುಹಾಕಿ</string>
+    <string name="menu_suspend_card" maxLength="28">ಕಾರ್ಡ್ ಅಮಾನತುಗೊಳಿಸಿ</string>
+    <string name="menu_suspend_note" maxLength="28">ಸೂಚನೆ ಅಮಾನತುಗೊಳಿಸಿ</string>
+    <string name="menu_bury" maxLength="28">ಹೂತುಹಾಕಿ</string>
+    <string name="menu_suspend" maxLength="28">ಅಮಾನತ್ತುಗೊಳಿಸು</string>
+    <string name="menu_delete_note" maxLength="28">ಟಿಪ್ಪಣಿ ಅಳಿಸಿ</string>
+    <string name="menu_flag" maxLength="41">ಧ್ವಜ</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
-    <string name="menu_edit_tags">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
+    <string name="menu_flag_card" maxLength="28">ಫ್ಲ್ಯಾಗ್ ಕಾರ್ಡ್</string>
+    <string name="menu_edit_tags" maxLength="28">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="delete_note_message">ಈ ಟಿಪ್ಪಣಿ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ನಿಜವಾಗಿಯೂ ಅಳಿಸಿ? \n%s</string>
-    <string name="menu_search">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>
-    <string name="menu_mark_note">ಟಿಪ್ಪಣಿ ಗುರುತಿಸಿ</string>
+    <string name="menu_search" maxLength="28">%1$s ನಲ್ಲಿ ಹುಡುಕಿ</string>
+    <string name="menu_mark_note" maxLength="28">ಟಿಪ್ಪಣಿ ಗುರುತಿಸಿ</string>
     <string name="menu_unmark_note">ಟಿಪ್ಪಣಿ ಗುರುತು</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="new_dynamic_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಸಂಗ್ರಹ ರಚಿಸಿ</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ಮುಂದುವರೆಯಲು ದಯವಿಟ್ಟು ಆಂಕಿಡ್ರಾಯ್ಡ್‌ಗೆ ‘ಸಂಗ್ರಹ’ ಅನುಮತಿಯನ್ನು ನೀಡಿ</string>
     <string name="rebuild_filtered_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಸಂಗ್ರಹವನ್ನು ಪುನರ್ನಿರ್ಮಿಸಲಾಗುತ್ತಿದೆ &#8230;</string>
-    <string name="rebuild_cram_label">ಪುನರ್ನಿರ್ಮಾಣ</string>
-    <string name="empty_cram_label">ಖಾಲಿ</string>
+    <string name="rebuild_cram_label" maxLength="28">ಪುನರ್ನಿರ್ಮಾಣ</string>
+    <string name="empty_cram_label" maxLength="28">ಖಾಲಿ</string>
     <string name="create_subdeck">ಉಪ ಸಂಗ್ರಹವನ್ನು ರಚಿಸಿ</string>
     <string name="empty_filtered_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್ ಅನ್ನು ಖಾಲಿ ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="custom_study_deck_name">ಕಸ್ಟಮ್ ಅಧ್ಯಯನ ಅಧಿವೇಶನ</string>
     <string name="custom_study_deck_exists">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಕಸ್ಟಮ್ ಸ್ಟಡಿ ಡೆಕ್ ಅನ್ನು ಮೊದಲು ಮರುಹೆಸರಿಸಿ</string>
     <string name="search_deck" comment="Deck search for selecting it">ಡೆಕ್ ಹುಡುಕಾಟ</string>
     <string name="empty_deck">ಈ ಡೆಕ್ ಖಾಲಿಯಾಗಿದೆ</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ಡೆಕ್ ಹುಡುಕಾಟ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ಡೆಕ್ ಹುಡುಕಾಟ</string>
     <string name="invalid_deck_name">ಅಮಾನ್ಯ ಡೆಕ್ ಹೆಸರು</string>
     <string name="studyoptions_congrats_finished">ಅಭಿನಂದನೆಗಳು! ನೀವು ಸದ್ಯಕ್ಕೆ ಮುಗಿಸಿದ್ದೀರಿ.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಇನ್ನೂ ಬಾಕಿ ಉಳಿದಿಲ್ಲ</string>
     <string name="sd_card_not_mounted">ಸಾಧನ ಸಂಗ್ರಹಣೆಯನ್ನು ಆರೋಹಿಸಲಾಗಿಲ್ಲ</string>
-    <string name="button_sync" comment="Text of the sync button">ಸಿಂಕ್</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">ಸಿಂಕ್</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">ಸಿಂಕ್ ಅನ್ನು ರದ್ದುಗೊಳಿಸಲು ನೀವು ಬಯಸುವಿರಾ?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">ಸಿಂಕ್ ಮುಂದುವರಿಸಿ</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">ಸಿಂಕ್ ರದ್ದುಗೊಂಡಿದೆ</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">ರದ್ದುಮಾಡಲಾಗುತ್ತಿದೆ &#8230;\n ಇದಕ್ಕೆ ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು.</string>
     <string name="syncing_media">ಮಾಧ್ಯಮವನ್ನು ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
-    <string name="export_deck">ರಫ್ತು ಡೆಕ್</string>
+    <string name="export_deck" maxLength="28">ರಫ್ತು ಡೆಕ್</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">ಏನೂ ಇಲ್ಲ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">ಕಾರ್ಡ್ ಪ್ರಕಾರಗಳು</string>
     <string name="card_template_editor_front">ಮುಂಭಾಗದ ಟೆಂಪ್ಲೇಟ್</string>
     <string name="card_template_editor_back">ಹಿಂದಿನ ಟೆಂಪ್ಲೇಟ್</string>
-    <string name="card_template_editor_styling">ವಿನ್ಯಾಸ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಗೋಚರತೆ</string>
-    <string name="card_template_editor_deck_override">ಡೆಕ್ ಅತಿಕ್ರಮಿಸಿ</string>
-    <string name="card_template_editor_insert_field">ಕ್ಷೇತ್ರವನ್ನು ಸೇರಿಸಿ</string>
+    <string name="card_template_editor_styling" maxLength="28">ವಿನ್ಯಾಸ</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">ಕಾರ್ಡ್ ಬ್ರೌಸರ್ ಗೋಚರತೆ</string>
+    <string name="card_template_editor_deck_override" maxLength="28">ಡೆಕ್ ಅತಿಕ್ರಮಿಸಿ</string>
+    <string name="card_template_editor_insert_field" maxLength="28">ಕ್ಷೇತ್ರವನ್ನು ಸೇರಿಸಿ</string>
     <string name="card_template_editor_select_field">ಕ್ಷೇತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="card_template_editor_cant_delete">ಕನಿಷ್ಠ ಒಂದು ಕಾರ್ಡ್ ಪ್ರಕಾರದ ಅಗತ್ಯವಿದೆ</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ಬ್ರೌಸರ್ ನೋಟ</string>
     <!-- card Info -->
-    <string name="card_info_title">ಕಾರ್ಡ್ ಮಾಹಿತಿ</string>
+    <string name="card_info_title" maxLength="28">ಕಾರ್ಡ್ ಮಾಹಿತಿ</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಡೇಟಾಬೇಸ್‌ಗೆ ಓದಿ ಮತ್ತು ಬರೆಯಿರಿ</string>
     <string name="read_write_permission_description">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟಿಪ್ಪಣಿಗಳು, ಕಾರ್ಡ್‌ಗಳು, ಟಿಪ್ಪಣಿ ಪ್ರಕಾರಗಳು ಮತ್ತು ಡೆಕ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಿ, ಹಾಗೆಯೇ ಹೊಸದನ್ನು ರಚಿಸಿ</string>

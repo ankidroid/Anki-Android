@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Editar Oclusões</string>
     <string name="tag_name">Nome da etiqueta</string>
     <string name="add_new_filter_tags">Adicionar/filtrar etiquetas</string>
-    <string name="add_tag">Adicionar etiqueta</string>
-    <string name="check_all_tags">Marcar/desmarcar todas as etiquetas</string>
-    <string name="filter_tags">Filtrar etiquetas</string>
+    <string name="add_tag" maxLength="28">Adicionar etiqueta</string>
+    <string name="check_all_tags" maxLength="28">Marcar/desmarcar todas as etiquetas</string>
+    <string name="filter_tags" maxLength="28">Filtrar etiquetas</string>
     <string name="no_tags">Ainda não adicionou quaisquer etiquetas.</string>
     <string name="updated_version">Atualizada para a versão %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Guardar o quadro de escrita</string>
-    <string name="enable_stylus">Activar a escrita com caneta</string>
+    <string name="save_whiteboard" maxLength="28">Guardar o quadro de escrita</string>
+    <string name="enable_stylus" maxLength="28">Activar a escrita com caneta</string>
     <string name="disable_stylus">Desactivar a escrita com caneta</string>
-    <string name="enable_whiteboard">Activar quadro de escrita</string>
+    <string name="enable_whiteboard" maxLength="28">Activar quadro de escrita</string>
     <string name="disable_whiteboard">Desactivar quadro de escrita</string>
     <string name="show_whiteboard">Mostrar quadro</string>
-    <string name="hide_whiteboard">Esconder quadro</string>
-    <string name="clear_whiteboard">Limpar quadro</string>
-    <string name="replay_audio">Repetir áudio</string>
+    <string name="hide_whiteboard" maxLength="28">Esconder quadro</string>
+    <string name="clear_whiteboard" maxLength="28">Limpar quadro</string>
+    <string name="replay_audio" maxLength="28">Repetir áudio</string>
     <string name="leech_suspend_notification">Ficha marcada como sanguessuga e suspensa</string>
     <string name="leech_notification">Ficha marcada como sanguessuga</string>
     <string name="webview_crash_unknown">Erro desconhecido</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Erro fatal: o processador do \"WebView\" falhou. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Falha no processamento do \"WebView\"</string>
     <string name="webview_crash_loop_dialog_content">O \"WebView\" de sistema falhou no processamento da ficha \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Bandeiras</string>
+    <string name="filter_by_flags" maxLength="41">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o limite de novas fichas para hoje</string>
     <string name="custom_study_increase_review_limit">Modificar o limite de revisões para hoje</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d adiadas</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Editar nota</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Editar nota</string>
     <string name="discard">Descartar</string>
     <string name="note_editor_no_cards_created">Nenhuma ficha criada. Por favor, preencha mais campos</string>
     <string name="note_editor_no_cards_created_all_fields">O tipo de nota actual não produziu nenhuma ficha.\nPor favor, escolha outro tipo de nota, ou seleccione \"Fichas\" e adicione um campo de substituição</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Omissões só funcionam em notas do tipo Omissão</string>
     <string name="saving_facts">A guardar nota</string>
     <string name="saving_model">A guardar tipo de nota</string>
-    <string name="save">Guardar</string>
+    <string name="save" maxLength="28">Guardar</string>
     <string name="close">Fechar</string>
     <string name="select">Selecionar</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d minutos</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Ficha AnkiDroid</string>
-    <string name="note_editor_copy_note">Copiar a nota</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Reposicionar</string>
-    <string name="card_editor_reset_card">Reiniciar progresso</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reagendar</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Pré-visualizar</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copiar como Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Copiar a nota</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposicionar</string>
+    <string name="card_editor_reset_card" maxLength="28">Reiniciar progresso</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Reagendar</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Pré-visualizar</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copiar como Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Renomear</string>
-    <string name="checks_action">Verificar</string>
-    <string name="check_db">Verificar base de dados</string>
-    <string name="check_media">Verificar multimédia</string>
-    <string name="empty_cards">Fichas vazias</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Renomear</string>
+    <string name="checks_action" maxLength="28">Verificar</string>
+    <string name="check_db" maxLength="28">Verificar base de dados</string>
+    <string name="check_media" maxLength="28">Verificar multimédia</string>
+    <string name="empty_cards" maxLength="28">Fichas vazias</string>
     <string name="unknown_type_field_warning">Escrever resposta: campo desconhecido %s</string>
     <string name="delete_deck">A eliminar o baralho&#8230;</string>
     <string name="info_rate">Classificar AnkiDroid</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Partilhar</string>
     <string name="export_choice_save_to">Guardar em</string>
     <string name="export_saving_exported_collection">A guardar o ficheiro exportado&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Opções</string>
-    <string name="menu__deck_options">Opções de baralho</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opções</string>
+    <string name="menu__deck_options" maxLength="28">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
-    <string name="select_tts">Definir língua do sistema de Texto para Fala</string>
-    <string name="custom_study">Estudo personalizado</string>
+    <string name="select_tts" maxLength="28">Definir língua do sistema de Texto para Fala</string>
+    <string name="custom_study" maxLength="28">Estudo personalizado</string>
     <string name="more_options">Mais</string>
     <string name="dyn_deck_desc">Este é um baralho especial para estudar fora do horário normal. As fichas serão automaticamente devolvidas aos seus baralhos originais depois das rever. Ao eliminar este baralho da lista de baralhos irá devolver todas as fichas restantes ao seu baralho original.</string>
     <string name="steps_error">Número de passos deve ser maior que 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Erro ao carregar a página: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Fundo</string>
-    <string name="choose_an_image">Selecionar imagem</string>
+    <string name="background_image_title" maxLength="41">Fundo</string>
+    <string name="choose_an_image" maxLength="41">Selecionar imagem</string>
     <string name="remove_background_image">Remover imagem de fundo?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restaurar predefinições</string>
+    <string name="restore_default" maxLength="28">Restaurar predefinições</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Em branco</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Falha ao guardar a imagem do quadro de escrita. %s</string>
     <string name="white_board_image_saved">Imagem do quadro de escrita guardado em %s</string>
-    <string name="title_whiteboard_pen_color">Cor da caneta do quadro de escrita</string>
-    <string name="title_whiteboard_editor">Editor do quadro de escrita</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Cor da caneta do quadro de escrita</string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor do quadro de escrita</string>
     <string name="user_is_a_robot">Detectado teste automático. Se é um humano, por favor contacto o apoio do AnkiDroid.</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Esta ficha utiliza funcionalidades que não são suportadas pelo AnkiDroid. Contacte o programador %1$s, ou consulte a wiki. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro no conteúdo da ficha: Falhou ao carregar ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Procurar baralhos</string>
+    <string name="search_decks" maxLength="28">Procurar baralhos</string>
     <string name="ankidroid_init_failed_webview_title">Erro fatal</string>
     <string name="ankidroid_init_failed_webview">O AnkiDroid depende da \"WebView\" de sistema, e esta encontra-se indisponível. Isto pode ocorrer durante a instalação de actualizações. Por favor, volte a tentar dentro de alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Tamanho da letra</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostrar Barra de Ferramentas</string>
+    <string name="menu_font_size" maxLength="28">Tamanho da letra</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostrar Barra de Ferramentas</string>
     <string name="format_insert_bold">Colocar em Negrito</string>
     <string name="format_insert_italic">Colocar em Itálico</string>
     <string name="format_insert_underline">Colocar como Sublinhado</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Pode precisar de utilizar o iManager para permitir que o AnkiDroid adicione atalhos.</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">O seu ecrã de início não permite que o AnkiDroid adicione atalhos.</string>
     <string name="create_shortcut_error">Erro ao adicionar atalho: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Frases começam por maiúscula</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Barra Ferramentas deslizável</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Frases começam por maiúscula</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra Ferramentas deslizável</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Por favor, verifique a sua ligação à rede</string>
     <string name="search_using_deck_name">Pesquisar utilizando o nome do baralho</string>
     <string name="external_storage_unavailable">Transferência cancelada, o armazenamento externo não está disponível.</string>
-    <string name="home">Página Inicial</string>
+    <string name="home" maxLength="28">Página Inicial</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Ficha adiada</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d ficha com adiamento cancelado</item>
         <item quantity="other">%d fichas com adiamento cancelado</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposicionar</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposicionar</string>
     <string name="start_recording">Gravar</string>
     <string name="stop_recording">Interromper</string>
     <string name="play_recording">Reproduzir</string>

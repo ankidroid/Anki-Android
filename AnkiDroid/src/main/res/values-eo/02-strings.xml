@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Redakti bildtruojn</string>
     <string name="tag_name">Nomo de etikedo</string>
     <string name="add_new_filter_tags">Aldoni/filtri etikedojn</string>
-    <string name="add_tag">Aldoni etikedon</string>
-    <string name="check_all_tags">(Mal)marki ĉiujn etikedojn</string>
-    <string name="filter_tags">Filtri etikedojn</string>
+    <string name="add_tag" maxLength="28">Aldoni etikedon</string>
+    <string name="check_all_tags" maxLength="28">(Mal)marki ĉiujn etikedojn</string>
+    <string name="filter_tags" maxLength="28">Filtri etikedojn</string>
     <string name="no_tags">Vi ankoraŭ aldonis neniun etikedon</string>
     <string name="updated_version">Ĝisdatigis al la versio %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Konservi skribtabulon</string>
-    <string name="enable_stylus">Ebligi grifelan skribadon</string>
+    <string name="save_whiteboard" maxLength="28">Konservi skribtabulon</string>
+    <string name="enable_stylus" maxLength="28">Ebligi grifelan skribadon</string>
     <string name="disable_stylus">Malebligi grifelan skribadon</string>
-    <string name="enable_whiteboard">Aktivigi skribtabulon</string>
+    <string name="enable_whiteboard" maxLength="28">Aktivigi skribtabulon</string>
     <string name="disable_whiteboard">Malaktivigi skribtabulon</string>
     <string name="show_whiteboard">Montri skribtabulon</string>
-    <string name="hide_whiteboard">Kaŝi skribtabulon</string>
-    <string name="clear_whiteboard">Forviŝi skribtabulon</string>
-    <string name="replay_audio">Reludi sonaĵon</string>
+    <string name="hide_whiteboard" maxLength="28">Kaŝi skribtabulon</string>
+    <string name="clear_whiteboard" maxLength="28">Forviŝi skribtabulon</string>
+    <string name="replay_audio" maxLength="28">Reludi sonaĵon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
     <string name="webview_crash_unknown">Nekonata eraro</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Neriparebla eraro pri WebView. Kaŭzo: %s</string>
     <string name="webview_crash_loop_dialog_title">Eraro bildigi per operaciuma WebView</string>
     <string name="webview_crash_loop_dialog_content">La operciuma komponanto WebView malsukcesis bildigi la karton “%1$s”.\n%2$s</string>
-    <string name="filter_by_flags">Flagoj</string>
+    <string name="filter_by_flags" maxLength="41">Flagoj</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifi hodiaŭan limigon de novaj kartoj</string>
     <string name="custom_study_increase_review_limit">Modifi hodiaŭan limigon de kartoj por ripeti</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d kaŝitaj (por tago)</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Redakti noton</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Redakti noton</string>
     <string name="discard">Rezigni</string>
     <string name="note_editor_no_cards_created">Neniu karto kreita. Plenigu pliajn kampojn</string>
     <string name="note_editor_no_cards_created_all_fields">El la nuna nototipo neniu karto kreiĝis.\nElektu alian nototipon aŭ frapetu “Kartoj”-n por aldoni anstataŭan kampon</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Trutekstaj malplenoj nur funkcias kun la nototipo “truteksto”</string>
     <string name="saving_facts">Konservado de noto</string>
     <string name="saving_model">Konservado de nototipo</string>
-    <string name="save">Konservi</string>
+    <string name="save" maxLength="28">Konservi</string>
     <string name="close">Fermi</string>
     <string name="select">Elekti</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d minutoj</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-karto</string>
-    <string name="note_editor_copy_note">Kopii noton</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Repozicii</string>
-    <string name="card_editor_reset_card">Nuligi progreson</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replani</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Antaŭrigardi</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopii kiel Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Kopii noton</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Repozicii</string>
+    <string name="card_editor_reset_card" maxLength="28">Nuligi progreson</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Replani</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Antaŭrigardi</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Kopii kiel Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d el %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Alinomi</string>
-    <string name="checks_action">Kontroli</string>
-    <string name="check_db">Kontroli datumbazon</string>
-    <string name="check_media">Kontroli aŭdvidaĵojn</string>
-    <string name="empty_cards">Malplenaj kartoj</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Alinomi</string>
+    <string name="checks_action" maxLength="28">Kontroli</string>
+    <string name="check_db" maxLength="28">Kontroli datumbazon</string>
+    <string name="check_media" maxLength="28">Kontroli aŭdvidaĵojn</string>
+    <string name="empty_cards" maxLength="28">Malplenaj kartoj</string>
     <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
     <string name="info_rate">Taksi AnkiDroid</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Konigi</string>
     <string name="export_choice_save_to">Konservi en</string>
     <string name="export_saving_exported_collection">Konservado de elportita dosiero&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Agordoj</string>
-    <string name="menu__deck_options">Agordoj pri kartaro</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Agordoj</string>
+    <string name="menu__deck_options" maxLength="28">Agordoj pri kartaro</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Agordoj pri lernado</string>
-    <string name="select_tts">Agordi lingvon por parolsintezilo</string>
-    <string name="custom_study">Propra lernado</string>
+    <string name="select_tts" maxLength="28">Agordi lingvon por parolsintezilo</string>
+    <string name="custom_study" maxLength="28">Propra lernado</string>
     <string name="more_options">Pli</string>
     <string name="dyn_deck_desc">Tio ĉi estas speciala kartaro por lerni ekster la norma lern-plano. Kartoj aŭtomate revenos al originalaj kartaroj post ripeti ilin. Forigi tiun ĉi kartaron el la listo de kartaroj redonos ĉiujn restantajn kartojn al originalaj kartaroj.</string>
     <string name="steps_error">Nombro da paŝoj estu pli granda ol 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Eraro dum enlegi paĝon: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Fono</string>
-    <string name="choose_an_image">Elekti bildon</string>
+    <string name="background_image_title" maxLength="41">Fono</string>
+    <string name="choose_an_image" maxLength="41">Elekti bildon</string>
     <string name="remove_background_image">Ĉu forigi fonon?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restarigi implicitajn</string>
+    <string name="restore_default" maxLength="28">Restarigi implicitajn</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Malplena</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Malsukcesis konservi bildon de skribtabulo. %s</string>
     <string name="white_board_image_saved">Konservis bildon de skribtabulo al %s</string>
-    <string name="title_whiteboard_pen_color">Koloro por skribi sur skribtabulo</string>
-    <string name="title_whiteboard_editor">Redaktilo de skribtabulo</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Koloro por skribi sur skribtabulo</string>
+    <string name="title_whiteboard_editor" maxLength="28">Redaktilo de skribtabulo</string>
     <string name="user_is_a_robot">Eltrovita aŭtomata testo. Se vi estas homo, kontaktu la helpteamon AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Tiu ĉi karto uzas eblaĵojn nesubtenatajn de AnkiDroid. Kontaktu la programiston %1$s aŭ legu la vikion. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Eraro pri enhavo de karto, fiaskis enlegi “%s”</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Serĉi en kartaroj</string>
+    <string name="search_decks" maxLength="28">Serĉi en kartaroj</string>
     <string name="ankidroid_init_failed_webview_title">Neriparebla eraro</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid necesas la komponanton System WebView, kiu estas nedisponebla. Tio ĉi povas okazi, kiam la operaciumo instalas ĝisdatigojn. Reprovu post kelkaj minutoj.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Grando de tiparo</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Montri ilarstrion</string>
+    <string name="menu_font_size" maxLength="28">Grando de tiparo</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Montri ilarstrion</string>
     <string name="format_insert_bold">Aranĝi kiel grasan</string>
     <string name="format_insert_italic">Aranĝi kiel kursivan</string>
     <string name="format_insert_underline">Aranĝi kiel substrekitan</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Uzu iManager por permesi al AnkiDroid krei fenestraĵojn</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Via aplikaĵlanĉilo ne permesas al AnkiDroid krei fenestraĵojn</string>
     <string name="create_shortcut_error">Eraro dum krei fenestraĵon: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Majuskligi frazojn</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Rulumi en ilarstrio</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Majuskligi frazojn</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Rulumi en ilarstrio</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Kontrolu vian retkonekton</string>
     <string name="search_using_deck_name">Serĉi laŭ nomo de kartaro</string>
     <string name="external_storage_unavailable">Elŝutado ĉesigita, la ekstera konservejo estas neailrebla</string>
-    <string name="home">Hejmo</string>
+    <string name="home" maxLength="28">Hejmo</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karto kaŝita por tago.</string>
@@ -328,7 +328,7 @@
         <item quantity="one">%d karto malkaŝita.</item>
         <item quantity="other">%d kartoj malkaŝitaj.</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Repozicii</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Repozicii</string>
     <string name="start_recording">Registri</string>
     <string name="stop_recording">Haltigi</string>
     <string name="play_recording">Ludi</string>

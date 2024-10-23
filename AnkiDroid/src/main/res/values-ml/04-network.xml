@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">പ്രാദേശികമായ</string>
     <string name="sync_sanity_remote">റിമോട്ട്</string>
-    <string name="one_way_sync_title">വൺ-വേ സമന്വയം</string>
+    <string name="one_way_sync_title" maxLength="41">വൺ-വേ സമന്വയം</string>
     <string name="one_way_sync_confirmation">വൺ-വേ സിൻക്രൊണൈസേഷൻ</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid-ൻ്റെ മുമ്പ് ഇൻസ്റ്റാൾ ചെയ്ത പതിപ്പിലെ ഒരു ബഗ് കാരണം, പൂർണ്ണ സമന്വയം നിർബന്ധമാക്കാൻ ശുപാർശ ചെയ്യുന്നു.</string>

@@ -271,21 +271,21 @@
     <string name="axis_picker_move_joystick">ਇੱਕ ਜਾਇਸਟਿਕ/ਮੋਸ਼ਨ ਕੰਟਰੋਲਰ ਨੂੰ ਹਿਲਾਓ</string>
     <string name="user_actions" maxLength="41">ਉਪਭੋਗਤਾ ਦੀਆਂ ਕਾਰਵਾਈਆਂ</string>
     <string name="user_actions_summary" maxLength="41">ਸਮੀਖਿਆ ਸਕ੍ਰੀਨ ਤੋਂ JavaScript ਨੂੰ ਟਰਿੱਗਰ ਕਰੋ</string>
-    <string name="user_action_1" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 1</string>
-    <string name="user_action_2" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 2</string>
-    <string name="user_action_3" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 3</string>
-    <string name="user_action_4" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 4</string>
-    <string name="user_action_5" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 5</string>
-    <string name="user_action_6" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 6</string>
-    <string name="user_action_7" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 7</string>
-    <string name="user_action_8" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 8</string>
-    <string name="user_action_9" maxLength="41">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 9</string>
+    <string name="user_action_1" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 1</string>
+    <string name="user_action_2" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 2</string>
+    <string name="user_action_3" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 3</string>
+    <string name="user_action_4" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 4</string>
+    <string name="user_action_5" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 5</string>
+    <string name="user_action_6" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 6</string>
+    <string name="user_action_7" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 7</string>
+    <string name="user_action_8" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 8</string>
+    <string name="user_action_9" maxLength="28">ਉਪਭੋਗਤਾ ਕਾਰਵਾਈ 9</string>
     <string name="toggle_auto_advance" maxLength="41">ਆਟੋ ਐਡਵਾਂਸ ਟੌਗਲ ਕਰੋ</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">ਕਾਰਡ ਸਾਈਡ ਚੁਣੋ</string>
     <string name="card_side_question">ਸਵਾਲ</string>
     <string name="card_side_answer">ਜਵਾਬ</string>
-    <string name="card_side_both">ਸਵਾਲ &amp; ਜਵਾਬ</string>
+    <string name="card_side_both" maxLength="28">ਸਵਾਲ &amp; ਜਵਾਬ</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">ਸਵਾਲ: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

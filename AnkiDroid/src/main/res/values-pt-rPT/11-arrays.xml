@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">extra grande</string>
     <string name="html_size_code_xx_large">extra-extra grande</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Responder novamente</string>
-    <string name="answer_hard">Responder \"Difícil\"</string>
-    <string name="answer_good">Responder \"Bom\"</string>
-    <string name="answer_easy">Responder \"Fácil\"</string>
-    <string name="gesture_play">Reproduzir multimédia</string>
-    <string name="gesture_abort_learning">Fechar o ecrã de revisão</string>
-    <string name="gesture_flag_red">Activar/Desactivar Bandeira Vermelha</string>
-    <string name="gesture_flag_orange">Activar/Desactivar Bandeira Laranja</string>
-    <string name="gesture_flag_green">Activar/Desactivar Bandeira Verde</string>
-    <string name="gesture_flag_blue">Activar/Desactivar Bandeira Azul</string>
-    <string name="gesture_flag_pink">Activar/Desactivar Bandeira Rosa</string>
-    <string name="gesture_flag_turquoise">Activar/Desactivar Bandeira Turquesa</string>
-    <string name="gesture_flag_purple">Activar/Desactivar Bandeira Roxa</string>
-    <string name="gesture_flag_remove">Remover Bandeira</string>
-    <string name="gesture_page_up">Página Acima</string>
-    <string name="gesture_page_down">Página Abaixo</string>
-    <string name="gesture_abort_sync">Fechar o ecrã de revisão e sincronizar</string>
-    <string name="gesture_toggle_whiteboard">Activar/Desactivar quadro de escrita</string>
-    <string name="gesture_show_hint">Mostrar Dica</string>
-    <string name="gesture_show_all_hints">Mostrar todas as dicas</string>
-    <string name="record_voice">Gravar Voz</string>
-    <string name="replay_voice">Reproduzir Voz</string>
-    <string name="save_voice">Guardar gravação</string>
+    <string name="answer_again" maxLength="41">Responder novamente</string>
+    <string name="answer_hard" maxLength="41">Responder \"Difícil\"</string>
+    <string name="answer_good" maxLength="41">Responder \"Bom\"</string>
+    <string name="answer_easy" maxLength="41">Responder \"Fácil\"</string>
+    <string name="gesture_play" maxLength="41">Reproduzir multimédia</string>
+    <string name="gesture_abort_learning" maxLength="41">Fechar o ecrã de revisão</string>
+    <string name="gesture_flag_red" maxLength="41">Activar/Desactivar Bandeira Vermelha</string>
+    <string name="gesture_flag_orange" maxLength="41">Activar/Desactivar Bandeira Laranja</string>
+    <string name="gesture_flag_green" maxLength="41">Activar/Desactivar Bandeira Verde</string>
+    <string name="gesture_flag_blue" maxLength="41">Activar/Desactivar Bandeira Azul</string>
+    <string name="gesture_flag_pink" maxLength="41">Activar/Desactivar Bandeira Rosa</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Activar/Desactivar Bandeira Turquesa</string>
+    <string name="gesture_flag_purple" maxLength="41">Activar/Desactivar Bandeira Roxa</string>
+    <string name="gesture_flag_remove" maxLength="41">Remover Bandeira</string>
+    <string name="gesture_page_up" maxLength="41">Página Acima</string>
+    <string name="gesture_page_down" maxLength="41">Página Abaixo</string>
+    <string name="gesture_abort_sync" maxLength="41">Fechar o ecrã de revisão e sincronizar</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Activar/Desactivar quadro de escrita</string>
+    <string name="gesture_show_hint" maxLength="41">Mostrar Dica</string>
+    <string name="gesture_show_all_hints" maxLength="41">Mostrar todas as dicas</string>
+    <string name="record_voice" maxLength="41">Gravar Voz</string>
+    <string name="replay_voice" maxLength="41">Reproduzir Voz</string>
+    <string name="save_voice" maxLength="41">Guardar gravação</string>
 </resources>

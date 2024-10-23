@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Nom de l\'etiqueta</string>
     <string name="add_new_filter_tags">Afegir/filtrar etiquetes</string>
-    <string name="add_tag">Afegir etiqueta</string>
-    <string name="check_all_tags">Activar/desactivar totes les etiquetes</string>
-    <string name="filter_tags">Filtrar etiquetes</string>
+    <string name="add_tag" maxLength="28">Afegir etiqueta</string>
+    <string name="check_all_tags" maxLength="28">Activar/desactivar totes les etiquetes</string>
+    <string name="filter_tags" maxLength="28">Filtrar etiquetes</string>
     <string name="no_tags">Encara no s\'ha afegit cap etiqueta.</string>
     <string name="updated_version">Actualitzeu a la versió %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Desar pissarra</string>
-    <string name="enable_stylus">Activa el mode de llapis</string>
+    <string name="save_whiteboard" maxLength="28">Desar pissarra</string>
+    <string name="enable_stylus" maxLength="28">Activa el mode de llapis</string>
     <string name="disable_stylus">Desactiva el mode de llapis</string>
-    <string name="enable_whiteboard">Activar pissarra</string>
+    <string name="enable_whiteboard" maxLength="28">Activar pissarra</string>
     <string name="disable_whiteboard">Desactiva la pissarra</string>
     <string name="show_whiteboard">Mostra la pissarra</string>
-    <string name="hide_whiteboard">Amaga la pissarra</string>
-    <string name="clear_whiteboard">Esborra la pissarra</string>
-    <string name="replay_audio">Repetir àudio</string>
+    <string name="hide_whiteboard" maxLength="28">Amaga la pissarra</string>
+    <string name="clear_whiteboard" maxLength="28">Esborra la pissarra</string>
+    <string name="replay_audio" maxLength="28">Repetir àudio</string>
     <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
     <string name="leech_notification">Fitxa marcada com a lapa</string>
     <string name="webview_crash_unknown">Error desconegut</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Error Fatal: El renderitzador de WebView s\'ha penjat. Causa: %s</string>
     <string name="webview_crash_loop_dialog_title">Error al sistema de renderització de WebView</string>
     <string name="webview_crash_loop_dialog_content">El sistema WebView ha fallat al renderitzar la carta \'%1$s.\n%2$s</string>
-    <string name="filter_by_flags">Bandera</string>
+    <string name="filter_by_flags" maxLength="41">Bandera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Canviar el límit de cartes noves d\'avui</string>
     <string name="custom_study_increase_review_limit">Modificar el límit de revisions de carta d\'avui</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edita la nota</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Edita la nota</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No s\'ha creat cap carta. Omple més camps si us plau</string>
     <string name="note_editor_no_cards_created_all_fields">El tipus de nota actual no ha produït cap targeta.\nTrieu un altre tipus de nota o feu clic a \'Cartes\' i afegiu una substitució de camp si us plau</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Les supressions parcials només funcionen en una nota de tipus parcial</string>
     <string name="saving_facts">S\'està desant la nota</string>
     <string name="saving_model">Desant tipus de nota</string>
-    <string name="save">Desa</string>
+    <string name="save" maxLength="28">Desa</string>
     <string name="close">Tanca</string>
     <string name="select">Seleccioneu</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d minuts</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Fitxa AnkiDroid</string>
-    <string name="note_editor_copy_note">Copiar nota</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Reposició</string>
-    <string name="card_editor_reset_card">Reinicia</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Torna a planificar</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Previsualització</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Copiar nota</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposició</string>
+    <string name="card_editor_reset_card" maxLength="28">Reinicia</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Torna a planificar</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Previsualització</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">Targeta %1$d de %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Canvia el nom</string>
-    <string name="checks_action">Check</string>
-    <string name="check_db">Comprova la base de dades</string>
-    <string name="check_media">Comprovar la multimèdia</string>
-    <string name="empty_cards">Targetes buides</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Canvia el nom</string>
+    <string name="checks_action" maxLength="28">Check</string>
+    <string name="check_db" maxLength="28">Comprova la base de dades</string>
+    <string name="check_media" maxLength="28">Comprovar la multimèdia</string>
+    <string name="empty_cards" maxLength="28">Targetes buides</string>
     <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
     <string name="delete_deck">S\'està suprimint el paquet&#8230;\nUn moment si us plau.</string>
     <string name="info_rate">Valoreu l\'AnkiDroid</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Opcions d\'estudi</string>
-    <string name="menu__deck_options">Opcions de paquet</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opcions d\'estudi</string>
+    <string name="menu__deck_options" maxLength="28">Opcions de paquet</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcions d\'estudi</string>
-    <string name="select_tts">Selecciona idioma per TTS</string>
-    <string name="custom_study">Estudi a mida</string>
+    <string name="select_tts" maxLength="28">Selecciona idioma per TTS</string>
+    <string name="custom_study" maxLength="28">Estudi a mida</string>
     <string name="more_options"> Més</string>
     <string name="dyn_deck_desc">Es tracta d\'un paquet especial per a l\'estudi fora de la planificació normal. Després de revisar-les, les fitxes es tornaran automàticament al seus paquets originals. Si suprimiu aquest paquet de la llista de paquets, totes les fitxes tornaran al seu paquet inicial.</string>
     <string name="steps_error">Els passos han de ser números majors que 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Error carregant la pàgina: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Fons</string>
-    <string name="choose_an_image">Selecciona una imatge</string>
+    <string name="background_image_title" maxLength="41">Fons</string>
+    <string name="choose_an_image" maxLength="41">Selecciona una imatge</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restaura els valors per defecte</string>
+    <string name="restore_default" maxLength="28">Restaura els valors per defecte</string>
     <string name="reviewer_tts_cloze_spoken_replacement">En blanc</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Error al desar l\'imatge de la pissarra. %s</string>
     <string name="white_board_image_saved">Imatge de la pissara desada a %s</string>
-    <string name="title_whiteboard_pen_color">Color del llapis de la pissara</string>
-    <string name="title_whiteboard_editor">Editor de la pissarra </string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Color del llapis de la pissara</string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor de la pissarra </string>
     <string name="user_is_a_robot">Test automàtic detectat. Si ets un humà contacta amb el suport AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Aquesta carta usa funcions AnkiDroid no compatibles. Contacta amb el desenvolupador %1$s, o mira la wiki %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Cerca de paquets</string>
+    <string name="search_decks" maxLength="28">Cerca de paquets</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confia en el sistema WebView que no està disponible. Això pot passar si el sistema instal·la actualitzacions. Torneu-ho a provar d\'aquí a uns quants minuts.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Mida de la lletra</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Mostra la barra d\'eines</string>
+    <string name="menu_font_size" maxLength="28">Mida de la lletra</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Mostra la barra d\'eines</string>
     <string name="format_insert_bold">Formata com negreta</string>
     <string name="format_insert_italic">Formata com itàlica</string>
     <string name="format_insert_underline">Formata com subratllat</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Potser haureu de fer servir iManager per permetre a AnkiDroid afegir dreceres</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">La pantalla d\'inici no permet que AnkiDroid afegeixi dreceres</string>
     <string name="create_shortcut_error">Error afegint drecera: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Posar els frases en majúscules</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Barra d\'eines de desplaçament</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Posar els frases en majúscules</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Barra d\'eines de desplaçament</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Comproveu la vostra connexió de xarxa si us plau</string>
     <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Inici</string>
+    <string name="home" maxLength="28">Inici</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">S\'ha enterrat la targeta.</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Play</string>

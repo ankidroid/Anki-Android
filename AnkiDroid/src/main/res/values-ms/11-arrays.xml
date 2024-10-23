@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-besar</string>
     <string name="html_size_code_xx_large">xx-besar</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Jawab ulang</string>
-    <string name="answer_hard">Jawab susah</string>
-    <string name="answer_good">Jawab baik</string>
-    <string name="answer_easy">Jawab Senang</string>
-    <string name="gesture_play">Main media</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Togel Tanda Merah</string>
-    <string name="gesture_flag_orange">Togel Tanda Jingga</string>
-    <string name="gesture_flag_green">Togel Tanda Hijau</string>
-    <string name="gesture_flag_blue">Togel Tanda Biru</string>
-    <string name="gesture_flag_pink">Togel Tanda Merah Jambu</string>
-    <string name="gesture_flag_turquoise">Togel Tanda Firus</string>
-    <string name="gesture_flag_purple">Togel Tanda Ungu</string>
-    <string name="gesture_flag_remove">Buang Tanda</string>
-    <string name="gesture_page_up">Laman Atas</string>
-    <string name="gesture_page_down">Laman Bawah</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Togel Papan Putih</string>
-    <string name="gesture_show_hint">Beri Petunjuk</string>
-    <string name="gesture_show_all_hints">Beri Semua Petunjuk</string>
-    <string name="record_voice">Rakam Suara</string>
-    <string name="replay_voice">Main Semula Suara</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">Jawab ulang</string>
+    <string name="answer_hard" maxLength="41">Jawab susah</string>
+    <string name="answer_good" maxLength="41">Jawab baik</string>
+    <string name="answer_easy" maxLength="41">Jawab Senang</string>
+    <string name="gesture_play" maxLength="41">Main media</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Togel Tanda Merah</string>
+    <string name="gesture_flag_orange" maxLength="41">Togel Tanda Jingga</string>
+    <string name="gesture_flag_green" maxLength="41">Togel Tanda Hijau</string>
+    <string name="gesture_flag_blue" maxLength="41">Togel Tanda Biru</string>
+    <string name="gesture_flag_pink" maxLength="41">Togel Tanda Merah Jambu</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Togel Tanda Firus</string>
+    <string name="gesture_flag_purple" maxLength="41">Togel Tanda Ungu</string>
+    <string name="gesture_flag_remove" maxLength="41">Buang Tanda</string>
+    <string name="gesture_page_up" maxLength="41">Laman Atas</string>
+    <string name="gesture_page_down" maxLength="41">Laman Bawah</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Togel Papan Putih</string>
+    <string name="gesture_show_hint" maxLength="41">Beri Petunjuk</string>
+    <string name="gesture_show_all_hints" maxLength="41">Beri Semua Petunjuk</string>
+    <string name="record_voice" maxLength="41">Rakam Suara</string>
+    <string name="replay_voice" maxLength="41">Main Semula Suara</string>
+    <string name="save_voice" maxLength="41">Save Recording</string>
 </resources>

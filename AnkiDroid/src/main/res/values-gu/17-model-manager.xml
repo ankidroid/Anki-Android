@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">નોંધ પ્રકારો મેનેજ કરો</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">નોંધ પ્રકારો મેનેજ કરો</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ક્ષેત્રોનું સંચાલન કરો</string>
     <!--Toasts-->
     <string name="toast_last_model">તમે તમારી છેલ્લી નોંધનો પ્રકાર કાઢી શકતા નથી</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">ભાષા સંકેતને %s પર સેટ કરો</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ક્ષેત્રો સંપાદિત કરો</string>
-    <string name="model_field_editor_add">ક્ષેત્ર ઉમેરો</string>
+    <string name="model_field_editor_add" maxLength="28">ક્ષેત્ર ઉમેરો</string>
     <string name="model_field_editor_delete">ક્ષેત્ર કાઢી નાખો</string>
     <string name="model_field_editor_rename">ક્ષેત્રનું નામ બદલો</string>
     <string name="model_field_editor_language_hint">કીબોર્ડ ભાષા સંકેત સેટ કરો</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">\'%1$s\' ડિફોલ્ટ ડેકને \'%2$s\' પર સેટ કરો</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' માટે ડિફોલ્ટ ડેક દૂર કર્યો</string>
     <string name="deck_override_explanation">નવા \'%s\' કાર્ડ્સ મૂકવા માટે ડેક પસંદ કરો</string>
-    <string name="deck_picker_dialog_filter_decks">ફિલ્ટર ડેક્સ</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">ફિલ્ટર ડેક્સ</string>
 </resources>

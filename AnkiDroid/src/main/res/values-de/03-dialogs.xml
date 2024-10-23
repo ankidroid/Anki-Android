@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Datenbank überprüfen?</string>
     <string name="check_db_warning">Dies kann lange dauern</string>
-    <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Stapel löschen</string>
     <string name="delete_deck_title">Stapel löschen?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Alle karten in %1$s löschen? Es enthält %2$d karte</item>
@@ -101,7 +101,7 @@
     <string name="dialog_continue">Weiter</string>
     <string name="dialog_processing">Wird verarbeitet &#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Erstellen</string>
-    <string name="dialog_positive_delete">Löschen</string>
+    <string name="dialog_positive_delete" maxLength="28">Löschen</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Deaktivieren</string>
     <string name="dialog_positive_overwrite">Überschreiben</string>
@@ -186,7 +186,7 @@
     <string name="help_item_mailing_list">Mailingliste</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Einen Fehler melden</string>
-    <string name="help_title_support_ankidroid">Unterstütze AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Unterstütze AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Spenden</string>
     <string name="help_item_support_develop_ankidroid">Entwickeln</string>
     <string name="help_item_support_rate_ankidroid">Bewerten</string>
@@ -225,7 +225,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Erstelle ein Backup deiner Sammlung</string>
     <string name="backup_collection_message">Du hast von deiner Sammlung in letzter Zeit kein Backup mehr erstellt. Du solltest dies tun, um den Verlust von Daten zu vermeiden</string>
-    <string name="button_backup">Backup</string>
+    <string name="button_backup" maxLength="41">Backup</string>
     <string name="button_disable_reminder">Erinnerung deaktivieren</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Später</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Nicht erneut anzeigen</string>

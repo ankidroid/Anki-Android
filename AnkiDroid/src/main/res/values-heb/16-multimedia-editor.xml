@@ -69,10 +69,10 @@
     <string name="multimedia_editor_audio_view_create_failed">לא ניתן ליצור סרגל כלים של הקלטה</string>
     <!-- Crop function-->
     <string name="crop_image">לחתוך את התמונה הזאת?</string>
-    <string name="crop_button">חיתוך תמונה</string>
+    <string name="crop_button" maxLength="28">חיתוך תמונה</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to compress it?</string>
     <string name="select_image_failed">"בחירת התמונה נכשלה, אנא נסה שוב"</string>
     <string name="activity_result_unexpected">האפליקציה החזירה ערך לא צפוי. ייתכן שתצטרך להשתמש באפליקציה אחרת</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">תוכן השדה</string>
-    <string name="reselect">בחר מחדש</string>
+    <string name="reselect" maxLength="28">בחר מחדש</string>
 </resources>

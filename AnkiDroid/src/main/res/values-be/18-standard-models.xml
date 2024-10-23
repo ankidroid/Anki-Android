@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Пярэдні бок</string>
-    <string name="back_field_name">Задні бок</string>
+    <string name="front_field_name" maxLength="28">Пярэдні бок</string>
+    <string name="back_field_name" maxLength="28">Задні бок</string>
 </resources>

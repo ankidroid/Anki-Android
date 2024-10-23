@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Μπροστά</string>
-    <string name="back_field_name">Πίσω</string>
+    <string name="front_field_name" maxLength="28">Μπροστά</string>
+    <string name="back_field_name" maxLength="28">Πίσω</string>
 </resources>

@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">شَدّة أوراق</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">متصفح البطاقات</string>
-    <string name="statistics">الإحصائيات</string>
-    <string name="settings">الإعدادات</string>
-    <string name="help">المساعدة</string>
+    <string name="decks" maxLength="28">شَدّة أوراق</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">متصفح البطاقات</string>
+    <string name="statistics" maxLength="28">الإحصائيات</string>
+    <string name="settings" maxLength="28">الإعدادات</string>
+    <string name="help" maxLength="28">المساعدة</string>
     <string name="drawing">رسم</string>
     <string name="send_feedback">ارسل انطباعك</string>
     <string name="studyoptions_start">دراسة</string>
@@ -85,42 +85,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">أدخل الإجابة</string>
-    <string name="show_answer">أظهر الإجابة</string>
+    <string name="show_answer" maxLength="41">أظهر الإجابة</string>
     <string name="hide_answer">إخفاء الجواب</string>
-    <string name="ease_button_again">مجددًا</string>
-    <string name="ease_button_hard">صعب</string>
-    <string name="ease_button_good">جيد</string>
+    <string name="ease_button_again" maxLength="41">مجددًا</string>
+    <string name="ease_button_hard" maxLength="41">صعب</string>
+    <string name="ease_button_good" maxLength="41">جيد</string>
     <string name="ease_button_easy">سهل</string>
-    <string name="menu_import">استيراد</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">تراجع</string>
-    <string name="redo">إعادة تطبيق</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">أمحي الخط</string>
+    <string name="menu_import" maxLength="28">استيراد</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">تراجع</string>
+    <string name="redo" maxLength="28">إعادة تطبيق</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">أمحي الخط</string>
     <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
-    <string name="unbury">نكش</string>
-    <string name="rename_deck">تغيير اسم الرزمة</string>
+    <string name="unbury" maxLength="28">نكش</string>
+    <string name="rename_deck" maxLength="28">تغيير اسم الرزمة</string>
     <string name="create_shortcut">إنشاء اختصار</string>
     <string name="browse_cards">تصفح البطاقات</string>
     <string name="edit_deck_description" comment="edit the deck description">تحرير الوصف</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">إضافة</string>
-    <string name="menu_add_note">إضافة ملحوظة</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">إضافة</string>
+    <string name="menu_add_note" maxLength="28">إضافة ملحوظة</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">مزامنة الحساب</string>
-    <string name="menu_dismiss_note">إخفاء / حذف</string>
-    <string name="menu_bury_card">دفن البطاقة</string>
-    <string name="menu_bury_note">دفن الملحوظة</string>
-    <string name="menu_suspend_card">تعليق البطاقة</string>
-    <string name="menu_suspend_note">تعليق الملحوظة</string>
-    <string name="menu_bury">دفن</string>
-    <string name="menu_suspend">تعليق</string>
-    <string name="menu_delete_note">حذف الملحوظة</string>
-    <string name="menu_flag">أضف علما</string>
+    <string name="menu_dismiss_note" maxLength="41">إخفاء / حذف</string>
+    <string name="menu_bury_card" maxLength="28">دفن البطاقة</string>
+    <string name="menu_bury_note" maxLength="28">دفن الملحوظة</string>
+    <string name="menu_suspend_card" maxLength="28">تعليق البطاقة</string>
+    <string name="menu_suspend_note" maxLength="28">تعليق الملحوظة</string>
+    <string name="menu_bury" maxLength="28">دفن</string>
+    <string name="menu_suspend" maxLength="28">تعليق</string>
+    <string name="menu_delete_note" maxLength="28">حذف الملحوظة</string>
+    <string name="menu_flag" maxLength="41">أضف علما</string>
     <string name="rename_flag">إعادة تسمية العلم</string>
-    <string name="menu_flag_card">أضف علما للبطاقة</string>
-    <string name="menu_edit_tags">تعديل الوسوم</string>
+    <string name="menu_flag_card" maxLength="28">أضف علما للبطاقة</string>
+    <string name="menu_edit_tags" maxLength="28">تعديل الوسوم</string>
     <string name="delete_note_message">هل تريد حقًا حذف هذه الملحوظة وكل بطاقاتها؟\n%s</string>
-    <string name="menu_search">البحث في %1$s</string>
-    <string name="menu_mark_note">تأشير الملحوظة</string>
+    <string name="menu_search" maxLength="28">البحث في %1$s</string>
+    <string name="menu_mark_note" maxLength="28">تأشير الملحوظة</string>
     <string name="menu_unmark_note">إلغاء تأشير الملحوظة</string>
-    <string name="menu_enable_voice_playback">تمكين تشغيل الصوت</string>
+    <string name="menu_enable_voice_playback" maxLength="28">تمكين تشغيل الصوت</string>
     <string name="menu_disable_voice_playback">تعطيل تشغيل الصوت</string>
     <string name="new_deck">إنشاء رزمة</string>
     <string name="new_dynamic_deck">إنشاء رزمة مفلترة</string>
@@ -131,37 +131,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">الرجاء منح آنكيدرويد إذن «التخزين» للاستمرار</string>
     <string name="rebuild_filtered_deck">إعادة إنشاء الرزمة المفلترة&#8230;</string>
-    <string name="rebuild_cram_label">إعادة إنشاء</string>
-    <string name="empty_cram_label">إفراغ</string>
+    <string name="rebuild_cram_label" maxLength="28">إعادة إنشاء</string>
+    <string name="empty_cram_label" maxLength="28">إفراغ</string>
     <string name="create_subdeck">إنشاء رزمة فرعية</string>
     <string name="empty_filtered_deck">جار إفراغ الرزمة المفلترة&#8230;</string>
     <string name="custom_study_deck_name">جلسة دراسة مخصصة</string>
     <string name="custom_study_deck_exists">أولا أعد تسمية \"رزمة الدراسة المخصصة\" الحالية</string>
     <string name="search_deck" comment="Deck search for selecting it">البحث عن رزمة</string>
     <string name="empty_deck">هذه الرزمة فارغة</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">بحث عن رزمة</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">بحث عن رزمة</string>
     <string name="invalid_deck_name">اسم رزمة غير صالح</string>
     <string name="studyoptions_congrats_finished">مبارك! أكملت مهامك الحالية.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">انتهت حصتك المحددة من الرزمة  %s</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
-    <string name="button_sync" comment="Text of the sync button">مزامنة</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">مزامنة</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">هل تود إلغاء المزامنة؟</string>
     <string name="continue_sync" tools:ignore="UnusedResources">واصِل المزامنة</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">أُلغِيت المزامنة</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
     <string name="syncing_media">تجري مزامنة الوسائط</string>
-    <string name="export_deck">تصدير الرزمة</string>
+    <string name="export_deck" maxLength="28">تصدير الرزمة</string>
     <string name="export_collection">صدِّر المجموعة</string>
     <string name="nothing">فارغ</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">أنواع البطاقات</string>
     <string name="card_template_editor_front">القالب الأمامي</string>
     <string name="card_template_editor_back">القالب الخلفي</string>
-    <string name="card_template_editor_styling">التنسيق</string>
-    <string name="card_template_editor_menu_card_browser_appearance">مظهر متصفح البطاقات</string>
-    <string name="card_template_editor_deck_override">الرزمة المهيمنة</string>
-    <string name="card_template_editor_insert_field">إدراج حقل</string>
+    <string name="card_template_editor_styling" maxLength="28">التنسيق</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">مظهر متصفح البطاقات</string>
+    <string name="card_template_editor_deck_override" maxLength="28">الرزمة المهيمنة</string>
+    <string name="card_template_editor_insert_field" maxLength="28">إدراج حقل</string>
     <string name="card_template_editor_select_field">تحديد حقل</string>
     <string name="card_template_editor_cant_delete">مطلوب نوع بطاقة واحد على الأقل</string>
     <plurals name="card_template_editor_confirm_add">
@@ -185,7 +185,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">مظهر المتصفح</string>
     <!-- card Info -->
-    <string name="card_info_title">معلومات البطاقة</string>
+    <string name="card_info_title" maxLength="28">معلومات البطاقة</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">القراءة والكتابة إلى قاعدة بيانات آنكيدرويد</string>
     <string name="read_write_permission_description">الوصول إلى الملحوظات الموجودة، والبطاقات، وأنواع الملحوظات، والرزم، بالإضافة إلى إنشاء أخرى</string>

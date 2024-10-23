@@ -58,23 +58,23 @@
         <item quantity="one">Apagar nota</item>
         <item quantity="other">Apagar notas</item>
     </plurals>
-    <string name="card_browser_change_deck">Mudar de baralho</string>
+    <string name="card_browser_change_deck" maxLength="28">Mudar de baralho</string>
     <string name="delete_card_title">Apagar nota?</string>
-    <string name="card_browser_show_marked" maxLength="29">Filtro marcado</string>
-    <string name="card_browser_show_suspended" maxLength="29">Filtro suspenso</string>
-    <string name="card_browser_search_by_tag" maxLength="29">Filtrar por etiqueta</string>
-    <string name="card_browser_search_by_flag" maxLength="29">Filtrar por bandeira</string>
-    <string name="card_browser_list_my_searches" maxLength="29">Minhas procuras</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">Guardar procura</string>
+    <string name="card_browser_show_marked" maxLength="28">Filtro marcado</string>
+    <string name="card_browser_show_suspended" maxLength="28">Filtro suspenso</string>
+    <string name="card_browser_search_by_tag" maxLength="28">Filtrar por etiqueta</string>
+    <string name="card_browser_search_by_flag" maxLength="28">Filtrar por bandeira</string>
+    <string name="card_browser_list_my_searches" maxLength="28">Minhas procuras</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">Guardar procura</string>
     <string name="card_browser_list_my_searches_title">Escolher uma procura guardada</string>
     <string name="card_browser_list_my_searches_new_name">Nome para a procura atual</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Não pode guardar uma procura sem um nome</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nome já existe</string>
     <string name="no_note_to_edit">Não há notas a editar</string>
     <string name="card_browser_list_my_searches_remove_content">Eliminar \"%1$s\"?</string>
-    <string name="card_browser_change_display_order" maxLength="29">Alterar a ordem de exibição</string>
+    <string name="card_browser_change_display_order" maxLength="28">Alterar a ordem de exibição</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Procurar</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Procurar</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Procurar</string>
     <string name="card_browser_change_display_order_title">Escolher a ordem de exibição</string>
     <string name="card_details_tags">Etiquetas</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>Por revisões</item>
         <item>Por falhas</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">Selecionar todas</string>
-    <string name="card_browser_select_none">Desselecionar</string>
+    <string name="card_browser_select_all" maxLength="28">Selecionar todas</string>
+    <string name="card_browser_select_none" maxLength="28">Desselecionar</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(nova)</string>
     <string name="card_browser_due_filtered_card">(filtrado)</string>
     <string name="card_browser_interval_learning_card">(em aprendizagem)</string>

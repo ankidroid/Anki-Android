@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Tên đuôi</string>
     <string name="add_new_filter_tags">Thêm/lọc các đuôi</string>
-    <string name="add_tag">Thêm đuôi</string>
-    <string name="check_all_tags">Chọn/bỏ chọn toàn bộ đuôi</string>
-    <string name="filter_tags">Lọc các đuôi</string>
+    <string name="add_tag" maxLength="28">Thêm đuôi</string>
+    <string name="check_all_tags" maxLength="28">Chọn/bỏ chọn toàn bộ đuôi</string>
+    <string name="filter_tags" maxLength="28">Lọc các đuôi</string>
     <string name="no_tags">Bạn chưa thêm bất kỳ đuôi nào</string>
     <string name="updated_version">Đã cập nhật lên phiên bản %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Lưu bảng viết</string>
-    <string name="enable_stylus">Bật tính năng viết bằng bút cảm ứng</string>
+    <string name="save_whiteboard" maxLength="28">Lưu bảng viết</string>
+    <string name="enable_stylus" maxLength="28">Bật tính năng viết bằng bút cảm ứng</string>
     <string name="disable_stylus">Tắt tính năng viết bằng bút cảm ứng</string>
-    <string name="enable_whiteboard">Bật bảng viết</string>
+    <string name="enable_whiteboard" maxLength="28">Bật bảng viết</string>
     <string name="disable_whiteboard">Tắt bảng viết</string>
     <string name="show_whiteboard">Hiện bảng viết</string>
-    <string name="hide_whiteboard">Ẩn bảng viết</string>
-    <string name="clear_whiteboard">Xoá bảng viết</string>
-    <string name="replay_audio">Phát lại âm thanh</string>
+    <string name="hide_whiteboard" maxLength="28">Ẩn bảng viết</string>
+    <string name="clear_whiteboard" maxLength="28">Xoá bảng viết</string>
+    <string name="replay_audio" maxLength="28">Phát lại âm thanh</string>
     <string name="leech_suspend_notification">Thẻ được đánh dấu là thẻ khó và đã tạm dừng</string>
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
     <string name="webview_crash_unknown">Lỗi không xác định</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Lỗi nghiêm trọng: Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_loop_dialog_title">Hệ thống hiển thị WebView không thành công</string>
     <string name="webview_crash_loop_dialog_content">Hệ thống WebView không thể hiển thị thẻ \'%1$s\'.\ n%2$s</string>
-    <string name="filter_by_flags">Cờ</string>
+    <string name="filter_by_flags" maxLength="41">Cờ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Sửa đổi giới hạn thẻ mới của ngày hôm nay</string>
     <string name="custom_study_increase_review_limit">Sửa đổi giới hạn thẻ ôn tập của ngày hôm nay</string>
@@ -93,14 +93,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Sửa ghi chú</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Sửa ghi chú</string>
     <string name="discard">Loại bỏ</string>
     <string name="note_editor_no_cards_created">Không có thẻ nào được tạo. Vui lòng điền vào các trường khác</string>
     <string name="note_editor_no_cards_created_all_fields">Loại ghi chú hiện tại không tạo ra bất kỳ thẻ nào. \nVui lòng chọn một loại ghi chú khác, hoặc nhấp vào \"Thẻ\" và thêm một trường thay thế</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Đánh dấu Cloze sẽ chỉ hoạt động trên loại ghi chú Cloze</string>
     <string name="saving_facts">Đang lưu ghi chú</string>
     <string name="saving_model">Lưu loại ghi chú</string>
-    <string name="save">Lưu</string>
+    <string name="save" maxLength="28">Lưu</string>
     <string name="close">Đóng</string>
     <string name="select">Chọn</string>
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
@@ -116,18 +116,18 @@
         <item quantity="other">%1$d phút</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Thẻ AnkiDroid</string>
-    <string name="note_editor_copy_note">Sao chép ghi chú</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Đặt lại vị trí</string>
-    <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Lên lịch lại</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Xem trước</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Sao chép dưới dạng Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Sao chép ghi chú</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Đặt lại vị trí</string>
+    <string name="card_editor_reset_card" maxLength="28">Thiết lập lại quá trình học</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Lên lịch lại</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Xem trước</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Sao chép dưới dạng Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d của %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Đổi tên</string>
-    <string name="checks_action">Kiểm tra</string>
-    <string name="check_db">Kiểm tra CSDL</string>
-    <string name="check_media">Kiểm tra các tệp đa phương tiện</string>
-    <string name="empty_cards">Các thẻ rỗng</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Đổi tên</string>
+    <string name="checks_action" maxLength="28">Kiểm tra</string>
+    <string name="check_db" maxLength="28">Kiểm tra CSDL</string>
+    <string name="check_media" maxLength="28">Kiểm tra các tệp đa phương tiện</string>
+    <string name="empty_cards" maxLength="28">Các thẻ rỗng</string>
     <string name="unknown_type_field_warning">Gõ đáp án: trường lạ %s</string>
     <string name="delete_deck">Đang xoá bộ thẻ&#8230;</string>
     <string name="info_rate">Đánh giá AnkiDroid</string>
@@ -161,11 +161,11 @@
     <string name="export_choice_share">Chia sẻ</string>
     <string name="export_choice_save_to">Lưu tới</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Tuỳ chọn</string>
-    <string name="menu__deck_options">Tùy chọn bộ thẻ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Tuỳ chọn</string>
+    <string name="menu__deck_options" maxLength="28">Tùy chọn bộ thẻ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>
-    <string name="select_tts">Thiết lập ngôn ngữ TTS</string>
-    <string name="custom_study">Học theo tuỳ chọn</string>
+    <string name="select_tts" maxLength="28">Thiết lập ngôn ngữ TTS</string>
+    <string name="custom_study" maxLength="28">Học theo tuỳ chọn</string>
     <string name="more_options">Xem thêm</string>
     <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
     <string name="steps_error">Các bước phải là số lớn hơn 0</string>
@@ -186,17 +186,17 @@
     <string name="web_page_error">Lỗi khi tải trang: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Hình nền</string>
-    <string name="choose_an_image">Chọn một hình ảnh</string>
+    <string name="background_image_title" maxLength="41">Hình nền</string>
+    <string name="choose_an_image" maxLength="41">Chọn một hình ảnh</string>
     <string name="remove_background_image">Gỡ bỏ nền?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Khôi phục mặc định</string>
+    <string name="restore_default" maxLength="28">Khôi phục mặc định</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Chỗ trống</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Không thể lưu hình ảnh bảng trắng. %s</string>
     <string name="white_board_image_saved">Hình ảnh bảng trắng được lưu vào %s</string>
-    <string name="title_whiteboard_pen_color">Bảng màu bút</string>
-    <string name="title_whiteboard_editor">Trình chỉnh sửa bảng trắng</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Bảng màu bút</string>
+    <string name="title_whiteboard_editor" maxLength="28">Trình chỉnh sửa bảng trắng</string>
     <string name="user_is_a_robot">Đã phát hiện kiểm tra tự động. Nếu bạn là con người, hãy liên hệ với bộ phận hỗ trợ AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Thẻ này sử dụng các tính năng AnkiDroid không được hỗ trợ. Liên hệ với nhà phát triển %1$s%1$s hoặc xem wiki. %2$s</string>
@@ -211,12 +211,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Lỗi hiện thị nội dung thẻ: Không thể mở ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Tìm kiếm bộ thẻ</string>
+    <string name="search_decks" maxLength="28">Tìm kiếm bộ thẻ</string>
     <string name="ankidroid_init_failed_webview_title">Lỗi nghiêm trọng</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid dựa trên WebView hệ thống không khả dụng. Điều này có thể xảy ra nếu hệ thống đang cài đặt các bản cập nhật. Vui lòng thử lại sau vài phút.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Cỡ chữ</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Hiển thị thanh công cụ</string>
+    <string name="menu_font_size" maxLength="28">Cỡ chữ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Hiển thị thanh công cụ</string>
     <string name="format_insert_bold">In đậm</string>
     <string name="format_insert_italic">In nghiêng</string>
     <string name="format_insert_underline">Gạch chân</string>
@@ -238,8 +238,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Bạn có thể cần sử dụng iManager để cho phép AnkiDroid thêm phím tắt</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Màn hình chính của bạn không cho phép AnkiDroid thêm phím tắt</string>
     <string name="create_shortcut_error">Không thể thêm shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Viết hoa các câu</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Viết hoa các câu</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -262,7 +262,7 @@
     <string name="check_network">Vui lòng kiểm tra kết nối mạng của bạn</string>
     <string name="search_using_deck_name">Tìm kiếm theo tên bộ thẻ</string>
     <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>
-    <string name="home">Trang chủ</string>
+    <string name="home" maxLength="28">Trang chủ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Các thẻ bị chôn</string>
@@ -328,7 +328,7 @@
     <plurals name="unbury_cards_feedback">
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Đặt lại vị trí</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Đặt lại vị trí</string>
     <string name="start_recording">Ghi âm</string>
     <string name="stop_recording">Dừng</string>
     <string name="play_recording">Phát</string>

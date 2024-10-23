@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Проверить базу данных?</string>
     <string name="check_db_warning">Это может занять много времени</string>
-    <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Удалить колоду</string>
     <string name="delete_deck_title">Удалить колоду?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
@@ -107,7 +107,7 @@
     <string name="dialog_continue">Продолжить</string>
     <string name="dialog_processing">Обработка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Создать</string>
-    <string name="dialog_positive_delete">Удалить</string>
+    <string name="dialog_positive_delete" maxLength="28">Удалить</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Отключить</string>
     <string name="dialog_positive_overwrite">Перезаписать</string>
@@ -195,7 +195,7 @@
     <string name="help_item_mailing_list">Список рассылки</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Сообщить об ошибке</string>
-    <string name="help_title_support_ankidroid">Помочь AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Помочь AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Пожертвовать</string>
     <string name="help_item_support_develop_ankidroid">Программировать</string>
     <string name="help_item_support_rate_ankidroid">Оценить</string>
@@ -236,7 +236,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Резервное копирование коллекции</string>
     <string name="backup_collection_message">Вы давно не сохраняли резервную копию своей коллекции. Сделайте это сейчас, чтобы предотвратить потерю данных</string>
-    <string name="button_backup">Сохранить</string>
+    <string name="button_backup" maxLength="41">Сохранить</string>
     <string name="button_disable_reminder">Отключить напоминание</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Позже</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Больше не показывать</string>

@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">No se pudo hacer la última copia de seguridad debido al insuficiente espacio en tu almacenamiento. Libera algo de espacio o disminuye la cantidad de copias de seguridad.</string>
     <string name="storage_warning">Quedan menos de %d MB de espacio en tu almacenamiento.\nLibera algo de espacio para evitar la pérdida de datos.</string>
-    <string name="backup_restore">Restaurar desde copia de seguridad</string>
+    <string name="backup_restore" maxLength="28">Restaurar desde copia de seguridad</string>
     <string name="backup_new_collection">Nueva colección</string>
     <string name="backup_del_collection">Eliminar colección y crear una nueva</string>
     <string name="backup_del_collection_question">¿Eliminar la colección y crear una nueva? Esto borrará todo tu progreso de aprendizaje y eliminará todas las tarjetas.</string>

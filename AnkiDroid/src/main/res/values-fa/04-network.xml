@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">دستگاه</string>
     <string name="sync_sanity_remote">از راه دور</string>
-    <string name="one_way_sync_title">همگام‌سازی یک‌طرفه</string>
+    <string name="one_way_sync_title" maxLength="41">همگام‌سازی یک‌طرفه</string>
     <string name="one_way_sync_confirmation">درخواست همگام‌سازی یک‌طرفه شده است</string>
     <string name="full_sync_confirmation">تغییر درخواستی شما در هنگام همگام سازی بعدی مجموعه منجر به ارسال کامل پایگاه داده به سرور خواهد شد. اگر شما کارتهایی برای مرور دارید یا تغییرات دیگری که در دستگاه های دیگر دارید که با مجموعه اینجا همگام سازی نشده اند ،همه آنها با همگام سازی بعدی از دست خواهند رفت. ادامه می دهید؟</string>
     <string name="full_sync_confirmation_upgrade">به خاطر یک اشکال در نسخه نصب شده قبلی AnkiDroid، توصیه می شود که برنامه را به اجبار همگام سازی کامل کنید.</string>

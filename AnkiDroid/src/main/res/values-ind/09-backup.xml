@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Cadangan tidak tersimpan. Tidak ada ruang yang cukup di penyimpanan Anda. Turunkan kedalaman cadangan atau hapus berkas lain.</string>
     <string name="storage_warning">Kurang dari %d MB yang tersisa dalam penyimpanan Anda.\nBebaskan beberapa ruang untuk menghindari kehilangan data.</string>
-    <string name="backup_restore">Pulihkan dari cadangan</string>
+    <string name="backup_restore" maxLength="28">Pulihkan dari cadangan</string>
     <string name="backup_new_collection">Koleksi baru</string>
     <string name="backup_del_collection">Hapus koleksi dan buat baru</string>
     <string name="backup_del_collection_question">Yakin menghapus koleksi dan membuat baru? Ini akan menghapus semua kemajuan belajar dan semua kartu Anda.</string>

@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ഡാറ്റാബേസ് പരിശോധിക്കുക?</string>
     <string name="check_db_warning">ഇതിന് വളരെയധികം സമയമെടുത്തേക്കാം</string>
-    <string name="contextmenu_deckpicker_delete_deck">ഡെക്ക് ഇല്ലാതാക്കുക</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ഡെക്ക് ഇല്ലാതാക്കുക</string>
     <string name="delete_deck_title">ഡെക്ക് ഇല്ലാതാക്കുക?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s-ലെ എല്ലാ കാർഡുകളും ഇല്ലാതാക്കണോ? ഇതിൽ %2$d കാർഡ് അടങ്ങിയിരിക്കുന്നു</item>
@@ -101,7 +101,7 @@
     <string name="dialog_continue">തുടരുക</string>
     <string name="dialog_processing">പ്രോസസ്സ് ചെയ്യുന്നു&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">സൃഷ്ടിച്ചു</string>
-    <string name="dialog_positive_delete">ഇല്ലാതാക്കുക</string>
+    <string name="dialog_positive_delete" maxLength="28">ഇല്ലാതാക്കുക</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">പ്രവര്‍ത്തന രഹിതമാക്കുക</string>
     <string name="dialog_positive_overwrite">തിരുത്തിയെഴുതുക</string>
@@ -186,7 +186,7 @@
     <string name="help_item_mailing_list">അയക്കേണ്ട പട്ടിക</string>
     <string name="help_item_reddit">റെഡ്ഡിറ്റ്</string>
     <string name="help_item_report_bug">ഒരു ബഗ് റിപ്പോർട്ടുചെയ്യുക</string>
-    <string name="help_title_support_ankidroid">AnkiDroid- നെ പിന്തുണയ്ക്കുക</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid- നെ പിന്തുണയ്ക്കുക</string>
     <string name="help_item_support_opencollective_donate">സംഭാവനചെയ്യുക</string>
     <string name="help_item_support_develop_ankidroid">വികസിപ്പിക്കുക</string>
     <string name="help_item_support_rate_ankidroid">നിരക്ക്</string>
@@ -225,7 +225,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്യുക</string>
     <string name="backup_collection_message">കുറച്ച് കാലമായി നിങ്ങളുടെ ശേഖരം ബാക്കപ്പ് ചെയ്തിട്ടില്ല. ഡാറ്റ നഷ്‌ടപ്പെടുന്നത് തടയാൻ നിങ്ങൾ ഇപ്പോൾ ഇത് ചെയ്യണം</string>
-    <string name="button_backup">ബാക്കപ്പ്</string>
+    <string name="button_backup" maxLength="41">ബാക്കപ്പ്</string>
     <string name="button_disable_reminder">ഓർമ്മപ്പെടുത്തൽ പ്രവർത്തനരഹിതമാക്കുക</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">പിന്നീട്</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">വീണ്ടും കാണിക്കരുത്</string>

@@ -58,23 +58,23 @@
         <item quantity="one">ਨੋਟ ਮਿਟਾਓ</item>
         <item quantity="other">ਨੋਟਸ ਮਿਟਾਓ</item>
     </plurals>
-    <string name="card_browser_change_deck">ਡੇਕ ਬਦਲੋ</string>
+    <string name="card_browser_change_deck" maxLength="28">ਡੇਕ ਬਦਲੋ</string>
     <string name="delete_card_title">ਕੀ ਨੋਟ ਮਿਟਾਉਣਾ ਹੈ?</string>
-    <string name="card_browser_show_marked" maxLength="29">ਫਿਲਟਰ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ</string>
-    <string name="card_browser_show_suspended" maxLength="29">ਫਿਲਟਰ ਮੁਅੱਤਲ ਕੀਤਾ ਗਿਆ</string>
-    <string name="card_browser_search_by_tag" maxLength="29">ਟੈਗ ਦੁਆਰਾ ਫਿਲਟਰ ਕਰੋ</string>
-    <string name="card_browser_search_by_flag" maxLength="29">ਫਲੈਗ ਦੁਆਰਾ ਫਿਲਟਰ ਕਰੋ</string>
-    <string name="card_browser_list_my_searches" maxLength="29">ਮੇਰੀ ਖੋਜ</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">ਖੋਜ ਨੂੰ ਸੰਭਾਲੋ</string>
+    <string name="card_browser_show_marked" maxLength="28">ਫਿਲਟਰ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਗਿਆ</string>
+    <string name="card_browser_show_suspended" maxLength="28">ਫਿਲਟਰ ਮੁਅੱਤਲ ਕੀਤਾ ਗਿਆ</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ਟੈਗ ਦੁਆਰਾ ਫਿਲਟਰ ਕਰੋ</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ਫਲੈਗ ਦੁਆਰਾ ਫਿਲਟਰ ਕਰੋ</string>
+    <string name="card_browser_list_my_searches" maxLength="28">ਮੇਰੀ ਖੋਜ</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">ਖੋਜ ਨੂੰ ਸੰਭਾਲੋ</string>
     <string name="card_browser_list_my_searches_title">ਇੱਕ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਖੋਜ ਚੁਣੋ</string>
     <string name="card_browser_list_my_searches_new_name">ਮੌਜੂਦਾ ਖੋਜ ਲਈ ਨਾਮ</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ਤੁਸੀਂ ਨਾਮ ਤੋਂ ਬਿਨਾਂ ਖੋਜ ਨੂੰ ਸੁਰੱਖਿਅਤ ਨਹੀਂ ਕਰ ਸਕਦੇ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ਨਾਮ ਮੌਜੂਦ ਹੈ</string>
     <string name="no_note_to_edit">ਸੰਪਾਦਨ ਕਰਨ ਲਈ ਕੋਈ ਨੋਟ ਨਹੀਂ ਹਨ</string>
     <string name="card_browser_list_my_searches_remove_content">ਕੀ “%1$s” ਨੂੰ ਮਿਟਾਉਣਾ ਹੈ?</string>
-    <string name="card_browser_change_display_order" maxLength="29">ਡਿਸਪਲੇ ਆਰਡਰ ਬਦਲੋ</string>
+    <string name="card_browser_change_display_order" maxLength="28">ਡਿਸਪਲੇ ਆਰਡਰ ਬਦਲੋ</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">ਖੋਜ</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ਡਿਸਪਲੇ ਆਰਡਰ ਚੁਣੋ</string>
     <string name="card_details_tags">ਟੈਗਸ</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>ਸਮੀਖਿਆਵਾਂ ਦੁਆਰਾ</item>
         <item>ਲਪੇਟਿਆ</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">ਸਭ ਨੂੰ ਚੁਣੋ</string>
-    <string name="card_browser_select_none">ਕੋਈ ਨਹੀਂ ਚੁਣੋ</string>
+    <string name="card_browser_select_all" maxLength="28">ਸਭ ਨੂੰ ਚੁਣੋ</string>
+    <string name="card_browser_select_none" maxLength="28">ਕੋਈ ਨਹੀਂ ਚੁਣੋ</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ਨਵਾਂ)</string>
     <string name="card_browser_due_filtered_card">(ਫਿਲਟਰ ਕੀਤਾ)</string>
     <string name="card_browser_interval_learning_card">(ਸਿੱਖਣਾ)</string>

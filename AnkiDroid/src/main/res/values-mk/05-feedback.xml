@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Режим за известување при грешка</string>
+    <string name="error_reporting_choice" maxLength="41">Режим за известување при грешка</string>
     <string name="feedback_disclaimer">Одрекување: Ние не собираме никакви лични информации, како што се вашата имејл адреса, телефонски број или IMEI на телефонот. Ние собираме некои информации за вашиот уред, како што се производителот, моделот и верзијата на Андроид, како и природата на пријавените грешки и чекорите што доведоа до нив.</string>
     <string name="feedback_title">AnkiDroid Feedback</string>
     <string name="feedback_default_text">Внесете ги вашите повратни информации или информациите за природата на сите грешки кои ги пријавувате.</string>

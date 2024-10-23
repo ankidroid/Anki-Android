@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Pamahalaan ang mga uri ng tala</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Pamahalaan ang mga uri ng tala</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Pamahalaan ang mga patlang</string>
     <!--Toasts-->
     <string name="toast_last_model">Hindi mo maaaring tanggalin o burahin ang iyong huling uri ng tala.</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">I-set ang hint sa wika sa %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">I-edit ang mga patlang</string>
-    <string name="model_field_editor_add">Magdagdag ng field</string>
+    <string name="model_field_editor_add" maxLength="28">Magdagdag ng field</string>
     <string name="model_field_editor_delete">Tanggalin ang patlang</string>
     <string name="model_field_editor_rename">Palitan ang pangalan ng patlang</string>
     <string name="model_field_editor_language_hint">I-set ang hint ng wika ng keyboard</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">I-set ang default deck na \'%1$s\' ng \'%2$s\'</string>
     <string name="model_manager_deck_override_removed_message">Tinanggal ang default deck para sa \'%s\'</string>
     <string name="deck_override_explanation">Pumili ng deck na paglalagyan ng mga bagong card ng \'%s\'</string>
-    <string name="deck_picker_dialog_filter_decks">Salain ang mga deck</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Salain ang mga deck</string>
 </resources>

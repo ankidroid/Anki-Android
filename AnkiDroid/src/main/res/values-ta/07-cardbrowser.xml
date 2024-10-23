@@ -58,23 +58,23 @@
         <item quantity="one">குறிப்பை நீக்கு</item>
         <item quantity="other">குறிப்புகளை நீக்கு</item>
     </plurals>
-    <string name="card_browser_change_deck">தளத்தை மாற்றவும்</string>
+    <string name="card_browser_change_deck" maxLength="28">தளத்தை மாற்றவும்</string>
     <string name="delete_card_title">குறிப்பை நீக்கவா?</string>
-    <string name="card_browser_show_marked" maxLength="29">வடிகட்டி குறிக்கப்பட்டுள்ளது</string>
-    <string name="card_browser_show_suspended" maxLength="29">வடிகட்டி இடைநிறுத்தப்பட்டுள்ளது</string>
-    <string name="card_browser_search_by_tag" maxLength="29">குறிச்சொல் மூலம் வடிகட்டவும்</string>
-    <string name="card_browser_search_by_flag" maxLength="29">கொடி மூலம் வடிகட்டவும்</string>
-    <string name="card_browser_list_my_searches" maxLength="29">எனது தேடல்கள்</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">தேடலைச் சேமிக்கவும்</string>
+    <string name="card_browser_show_marked" maxLength="28">வடிகட்டி குறிக்கப்பட்டுள்ளது</string>
+    <string name="card_browser_show_suspended" maxLength="28">வடிகட்டி இடைநிறுத்தப்பட்டுள்ளது</string>
+    <string name="card_browser_search_by_tag" maxLength="28">குறிச்சொல் மூலம் வடிகட்டவும்</string>
+    <string name="card_browser_search_by_flag" maxLength="28">கொடி மூலம் வடிகட்டவும்</string>
+    <string name="card_browser_list_my_searches" maxLength="28">எனது தேடல்கள்</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">தேடலைச் சேமிக்கவும்</string>
     <string name="card_browser_list_my_searches_title">சேமித்த தேடலைத் தேர்ந்தெடுக்கவும்</string>
     <string name="card_browser_list_my_searches_new_name">தற்போதைய தேடலுக்கான பெயர்</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">பெயர் இல்லாமல் தேடலைச் சேமிக்க முடியாது</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ஒரு பெயர் இருக்கிறது</string>
     <string name="no_note_to_edit">திருத்தக் குறிப்பு இல்லை</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ஐ நீக்கவா?</string>
-    <string name="card_browser_change_display_order" maxLength="29">காட்சி வரிசையை மாற்றவும்</string>
+    <string name="card_browser_change_display_order" maxLength="28">காட்சி வரிசையை மாற்றவும்</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">தேடு</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">தேடு</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">தேடு</string>
     <string name="card_browser_change_display_order_title">காட்சி வரிசையைத் தேர்ந்தெடுக்கவும்</string>
     <string name="card_details_tags">குறிச்சொற்கள்</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>விமர்சனங்கள் மூலம்</item>
         <item>குறைபாடுகளால்</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">அனைத்தையும் தேர்ந்தெடுக்கவும்</string>
-    <string name="card_browser_select_none">எதையும் தேர்ந்தெடுக்கவும்</string>
+    <string name="card_browser_select_all" maxLength="28">அனைத்தையும் தேர்ந்தெடுக்கவும்</string>
+    <string name="card_browser_select_none" maxLength="28">எதையும் தேர்ந்தெடுக்கவும்</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(புதியது)</string>
     <string name="card_browser_due_filtered_card">(வடிகட்டப்பட்டது)</string>
     <string name="card_browser_interval_learning_card">(கற்றல்)</string>

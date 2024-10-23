@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">ടാഗ് നാമം</string>
     <string name="add_new_filter_tags">ടാഗുകൾ ചേർക്കുക / ഫിൽട്ടർ ചെയ്യുക</string>
-    <string name="add_tag">ടാഗ് ചേർക്കുക</string>
-    <string name="check_all_tags">എല്ലാ ടാഗുകളും പരിശോധിക്കുക / അൺചെക്ക് ചെയ്യുക</string>
-    <string name="filter_tags">ടാഗുകൾ ഫിൽട്ടർ ചെയ്യുക</string>
+    <string name="add_tag" maxLength="28">ടാഗ് ചേർക്കുക</string>
+    <string name="check_all_tags" maxLength="28">എല്ലാ ടാഗുകളും പരിശോധിക്കുക / അൺചെക്ക് ചെയ്യുക</string>
+    <string name="filter_tags" maxLength="28">ടാഗുകൾ ഫിൽട്ടർ ചെയ്യുക</string>
     <string name="no_tags">നിങ്ങൾ ഇതുവരെ ടാഗുകളൊന്നും ചേർത്തിട്ടില്ല</string>
     <string name="updated_version">%S പതിപ്പിലേക്ക് അപ്‌ഡേറ്റുചെയ്‌തു</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">വൈറ്റ്ബോർഡ് സംരക്ഷിക്കുക</string>
-    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="save_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് സംരക്ഷിക്കുക</string>
+    <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="enable_whiteboard">വൈറ്റ്ബോർഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="enable_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_whiteboard">വൈറ്റ്ബോർഡ് അപ്രാപ്തമാക്കുക</string>
     <string name="show_whiteboard">വൈറ്റ്ബോർഡ് കാണിക്കുക</string>
-    <string name="hide_whiteboard">വൈറ്റ്ബോർഡ് മറയ്‌ക്കുക</string>
-    <string name="clear_whiteboard">വൈറ്റ്ബോർഡ് മായ്‌ക്കുക</string>
-    <string name="replay_audio">ഓഡിയോ വീണ്ടും പ്ലേ ചെയ്യുക</string>
+    <string name="hide_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് മറയ്‌ക്കുക</string>
+    <string name="clear_whiteboard" maxLength="28">വൈറ്റ്ബോർഡ് മായ്‌ക്കുക</string>
+    <string name="replay_audio" maxLength="28">ഓഡിയോ വീണ്ടും പ്ലേ ചെയ്യുക</string>
     <string name="leech_suspend_notification">കാർഡ് അട്ടയാണെന്ന് അടയാളപ്പെടുത്തി താൽക്കാലികമായി നിർത്തിവച്ചിരിക്കുന്നു</string>
     <string name="leech_notification">കാർഡ് അട്ടയാണെന്ന് അടയാളപ്പെടുത്തി</string>
     <string name="webview_crash_unknown">അജ്ഞാത പിശക്</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">മാരകമായ പിശക്: വെബ്‌വ്യൂ റെൻഡറർ തകർന്നു. കാരണം:%s</string>
     <string name="webview_crash_loop_dialog_title">സിസ്റ്റം വെബ്‌വ്യൂ റെൻഡറിംഗ് പരാജയം</string>
     <string name="webview_crash_loop_dialog_content">\'%1$s\' കാർഡ് റെൻഡർ ചെയ്യുന്നതിൽ സിസ്റ്റം വെബ്‌വ്യൂ പരാജയപ്പെട്ടു. \n%2$s</string>
-    <string name="filter_by_flags">പതാകകൾ</string>
+    <string name="filter_by_flags" maxLength="41">പതാകകൾ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ഇന്നത്തെ പുതിയ കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>
     <string name="custom_study_increase_review_limit">ഇന്നത്തെ അവലോകന കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d അടക്കം ചെയ്തു</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">കുറിപ്പ് എഡിറ്റുചെയ്യുക</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">കുറിപ്പ് എഡിറ്റുചെയ്യുക</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">കാർഡുകളൊന്നും സൃഷ്‌ടിച്ചിട്ടില്ല. കൂടുതൽ ഫീൽഡുകൾ പൂരിപ്പിക്കുക</string>
     <string name="note_editor_no_cards_created_all_fields">നിലവിലെ കുറിപ്പ് തരം കാർഡുകളൊന്നും നൽകിയില്ല. Note \n ദയവായി മറ്റൊരു കുറിപ്പ് തരം തിരഞ്ഞെടുക്കുക, അല്ലെങ്കിൽ ‘കാർഡുകൾ’ ക്ലിക്കുചെയ്‌ത് ഒരു ഫീൽഡ് പകരക്കാരനെ ചേർക്കുക</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ക്ലോസ് ഇല്ലാതാക്കലുകൾ ഒരു ക്ലോസ് കുറിപ്പ് തരത്തിൽ മാത്രമേ പ്രവർത്തിക്കൂ</string>
     <string name="saving_facts">കുറിപ്പ് സംരക്ഷിക്കുന്നു</string>
     <string name="saving_model">കുറിപ്പ് തരം സംരക്ഷിക്കുന്നു</string>
-    <string name="save">രക്ഷിക്കും</string>
+    <string name="save" maxLength="28">രക്ഷിക്കും</string>
     <string name="close">അടയ്‌ക്കുക</string>
     <string name="select">തിരഞ്ഞെടുക്കുക</string>
     <string name="field_remapping">%1$s (“%2$s” ൽ നിന്ന്)</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d മിനിറ്റുകൾ</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid കാർഡ്</string>
-    <string name="note_editor_copy_note">കുറിപ്പ് പകർത്തുക</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">സ്ഥാനം മാറ്റുക</string>
-    <string name="card_editor_reset_card">പുരോഗതി പുന et സജ്ജമാക്കുക</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">പ്രിവ്യൂ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">മാർക്ക്ഡൗൺ ആയി പകർത്തുക</string>
+    <string name="note_editor_copy_note" maxLength="28">കുറിപ്പ് പകർത്തുക</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">സ്ഥാനം മാറ്റുക</string>
+    <string name="card_editor_reset_card" maxLength="28">പുരോഗതി പുന et സജ്ജമാക്കുക</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">പ്രിവ്യൂ</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">മാർക്ക്ഡൗൺ ആയി പകർത്തുക</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">പേരുമാറ്റുക</string>
-    <string name="checks_action">പരിശോധിക്കുക</string>
-    <string name="check_db">ഡാറ്റാബേസ് പരിശോധിക്കുക</string>
-    <string name="check_media">മീഡിയ പരിശോധിക്കുക</string>
-    <string name="empty_cards">ശൂന്യമായ കാർഡുകൾ</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">പേരുമാറ്റുക</string>
+    <string name="checks_action" maxLength="28">പരിശോധിക്കുക</string>
+    <string name="check_db" maxLength="28">ഡാറ്റാബേസ് പരിശോധിക്കുക</string>
+    <string name="check_media" maxLength="28">മീഡിയ പരിശോധിക്കുക</string>
+    <string name="empty_cards" maxLength="28">ശൂന്യമായ കാർഡുകൾ</string>
     <string name="unknown_type_field_warning">ഉത്തരം ടൈപ്പ് ചെയ്യുക: അജ്ഞാത ഫീൽഡ് %s</string>
     <string name="delete_deck">ഡെക്ക് ഇല്ലാതാക്കുന്നു&#8230;</string>
     <string name="info_rate">അങ്കിഡ്രോയിഡ് റേറ്റുചെയ്യുക</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">പങ്കിടുക</string>
     <string name="export_choice_save_to">ഇതിലേക്ക് സംരക്ഷിക്കുക</string>
     <string name="export_saving_exported_collection">കയറ്റുമതി ചെയ്ത ഫയൽ സംരക്ഷിക്കുന്നു&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">ഓപ്ഷനുകൾ</string>
-    <string name="menu__deck_options">ഡെക്ക് ഓപ്ഷനുകൾ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ഓപ്ഷനുകൾ</string>
+    <string name="menu__deck_options" maxLength="28">ഡെക്ക് ഓപ്ഷനുകൾ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">പഠന ഓപ്ഷനുകൾ</string>
-    <string name="select_tts">TTS ഭാഷ സജ്ജമാക്കുക</string>
-    <string name="custom_study">ഇഷ്‌ടാനുസൃത പഠനം</string>
+    <string name="select_tts" maxLength="28">TTS ഭാഷ സജ്ജമാക്കുക</string>
+    <string name="custom_study" maxLength="28">ഇഷ്‌ടാനുസൃത പഠനം</string>
     <string name="more_options">കൂടുതൽ</string>
     <string name="dyn_deck_desc">സാധാരണ ഷെഡ്യൂളിന് പുറത്ത് പഠിക്കുന്നതിനുള്ള ഒരു പ്രത്യേക ഡെക്കാണിത്. കാർഡുകൾ നിങ്ങൾ അവലോകനം ചെയ്ത ശേഷം അവയുടെ യഥാർത്ഥ ഡെക്കുകളിലേക്ക് സ്വപ്രേരിതമായി മടങ്ങും. ഡെക്ക് ലിസ്റ്റിൽ നിന്ന് ഈ ഡെക്ക് ഇല്ലാതാക്കുന്നത് ശേഷിക്കുന്ന എല്ലാ കാർഡുകളും അവയുടെ യഥാർത്ഥ ഡെക്കിലേക്ക് തിരികെ നൽകും.</string>
     <string name="steps_error">ഘട്ടങ്ങൾ 0 ൽ കൂടുതലുള്ള അക്കങ്ങളായിരിക്കണം</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">പേജ് ലോഡുചെയ്യുന്നതിൽ പിശക്:%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">ഒരു ചിത്രം തിരഞ്ഞെടുക്കുക</string>
+    <string name="background_image_title" maxLength="41">Background</string>
+    <string name="choose_an_image" maxLength="41">ഒരു ചിത്രം തിരഞ്ഞെടുക്കുക</string>
     <string name="remove_background_image">പശ്ചാത്തലം നീക്കം ചെയ്യണോ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">നേരത്തെയുള്ളത് പുനസ്ഥാപിക്കുക</string>
+    <string name="restore_default" maxLength="28">നേരത്തെയുള്ളത് പുനസ്ഥാപിക്കുക</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ശൂന്യയം</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">വൈറ്റ്ബോർഡ് ചിത്രം സംരക്ഷിക്കുന്നതിൽ പരാജയപ്പെട്ടു. %s</string>
     <string name="white_board_image_saved">വൈറ്റ്ബോർഡ് ചിത്രം %s ലേക്ക് സംരക്ഷിച്ചു</string>
-    <string name="title_whiteboard_pen_color">വൈറ്റ്ബോർഡ് പേന നിറം</string>
-    <string name="title_whiteboard_editor">വൈറ്റ്ബോർഡ് എഡിറ്റർ</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">വൈറ്റ്ബോർഡ് പേന നിറം</string>
+    <string name="title_whiteboard_editor" maxLength="28">വൈറ്റ്ബോർഡ് എഡിറ്റർ</string>
     <string name="user_is_a_robot">യാന്ത്രിക പരിശോധന കണ്ടെത്തി. നിങ്ങൾ ഒരു മനുഷ്യനാണെങ്കിൽ, അങ്കിഡ്രോയിഡ് പിന്തുണയുമായി ബന്ധപ്പെടുക</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ഈ കാർഡ് പിന്തുണയ്‌ക്കാത്ത അങ്കിഡ്രോയിഡ് സവിശേഷതകൾ ഉപയോഗിക്കുന്നു. %1$s ഡവലപ്പറുമായി ബന്ധപ്പെടുക, അല്ലെങ്കിൽ വിക്കി കാണുക. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">കാർഡ് ഉള്ളടക്ക പിശക്: ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <!-- Deck Picker -->
-    <string name="search_decks">തിരയൽ ഡെക്കുകൾ</string>
+    <string name="search_decks" maxLength="28">തിരയൽ ഡെക്കുകൾ</string>
     <string name="ankidroid_init_failed_webview_title">മാരകമായ തെറ്റ്</string>
     <string name="ankidroid_init_failed_webview">ലഭ്യമല്ലാത്ത സിസ്റ്റം വെബ്‌വ്യൂവിനെ AnkiDroid ആശ്രയിക്കുന്നു. സിസ്റ്റം അപ്‌ഡേറ്റുകൾ‌ ഇൻ‌സ്റ്റാൾ‌ ചെയ്യുകയാണെങ്കിൽ‌ ഇത് സംഭവിക്കാം. കുറച്ച് മിനിറ്റിനുള്ളിൽ വീണ്ടും ശ്രമിക്കുക. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">അക്ഷര വലിപ്പം</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ടൂൾബാർ കാണിക്കുക</string>
+    <string name="menu_font_size" maxLength="28">അക്ഷര വലിപ്പം</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ടൂൾബാർ കാണിക്കുക</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">കുറുക്കുവഴികൾ ചേർക്കാൻ AnkiDroid-നെ അനുവദിക്കുന്നതിന് നിങ്ങൾ iManager ഉപയോഗിക്കേണ്ടി വന്നേക്കാം</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">കുറുക്കുവഴികൾ ചേർക്കാൻ നിങ്ങളുടെ ഹോം സ്‌ക്രീൻ AnkiDroid-നെ അനുവദിക്കുന്നില്ല</string>
     <string name="create_shortcut_error">കുറുക്കുവഴി ചേർക്കുന്നതിൽ പിശക്: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">വാക്യങ്ങൾ വലിയക്ഷരമാക്കുക</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ടൂൾബാർ സ്ക്രോൾ ചെയ്യുക</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">വാക്യങ്ങൾ വലിയക്ഷരമാക്കുക</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">ടൂൾബാർ സ്ക്രോൾ ചെയ്യുക</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="home" maxLength="28">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
@@ -328,7 +328,7 @@
         <item quantity="one">%d കാർഡ് കുഴിച്ചിട്ടിട്ടില്ല</item>
         <item quantity="other">%d കാർഡ് കുഴിച്ചിട്ടിട്ടില്ല</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">അത് രേഖപ്പെടുത്തുക</string>
     <string name="stop_recording">നിർത്തുക</string>
     <string name="play_recording">കളിക്കുക</string>

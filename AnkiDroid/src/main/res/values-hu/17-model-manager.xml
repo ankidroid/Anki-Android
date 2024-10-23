@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Jegyzettípusok kezelése</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Jegyzettípusok kezelése</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Mezők kezelése</string>
     <!--Toasts-->
     <string name="toast_last_model">Nem tudod törölni az előző jegyzettípust</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Nyelvi javaslat beállítás %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Mező szerkesztése</string>
-    <string name="model_field_editor_add">Mező hozzáadása</string>
+    <string name="model_field_editor_add" maxLength="28">Mező hozzáadása</string>
     <string name="model_field_editor_delete">Mező törlése</string>
     <string name="model_field_editor_rename">Mező átnevezése</string>
     <string name="model_field_editor_language_hint">Billentyűzet nyelvi javaslat beállítás</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">Állítsa az alapértelmezett  ‘%1$s’  pakli értékét,  ‘%2$s’ értékre</string>
     <string name="model_manager_deck_override_removed_message">Az alapértelmezett  ‘%s’ pakli eltávolításra került</string>
     <string name="deck_override_explanation">Válasszon egy paklit az új ‘%s’ kártyáknak</string>
-    <string name="deck_picker_dialog_filter_decks">Pakli szűrés</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Pakli szűrés</string>
 </resources>

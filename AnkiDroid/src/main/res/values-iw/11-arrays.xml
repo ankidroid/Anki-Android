@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">אקסטרא-גדול</string>
     <string name="html_size_code_xx_large">אקסטרא-אקסטרא-גדול</string>
     <!-- gestures_labels -->
-    <string name="answer_again">תשובת שוב</string>
-    <string name="answer_hard">תשובת קשה</string>
-    <string name="answer_good">תשובת טוב</string>
-    <string name="answer_easy">תשובת קל</string>
-    <string name="gesture_play">נגן מדיה</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">החלף את הדגל האדום</string>
-    <string name="gesture_flag_orange">החלף את הדגל הכתום</string>
-    <string name="gesture_flag_green">החלף את הדגל הירוק</string>
-    <string name="gesture_flag_blue">החלף את הדגל הכחול</string>
-    <string name="gesture_flag_pink">החלף את הדגל הורוד</string>
-    <string name="gesture_flag_turquoise">החלף את דגל הטורקיז</string>
-    <string name="gesture_flag_purple">החלף את הדגל הסגול</string>
-    <string name="gesture_flag_remove">הסר דגל</string>
-    <string name="gesture_page_up">דף למעלה</string>
-    <string name="gesture_page_down">דף למטה</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">החלף לוח ציור</string>
-    <string name="gesture_show_hint">הצג רמז</string>
-    <string name="gesture_show_all_hints">הצג את כל הרמזים</string>
-    <string name="record_voice">הקלטת קול</string>
-    <string name="replay_voice">ניגון קול שוב</string>
-    <string name="save_voice">שמירת הקלטה</string>
+    <string name="answer_again" maxLength="41">תשובת שוב</string>
+    <string name="answer_hard" maxLength="41">תשובת קשה</string>
+    <string name="answer_good" maxLength="41">תשובת טוב</string>
+    <string name="answer_easy" maxLength="41">תשובת קל</string>
+    <string name="gesture_play" maxLength="41">נגן מדיה</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">החלף את הדגל האדום</string>
+    <string name="gesture_flag_orange" maxLength="41">החלף את הדגל הכתום</string>
+    <string name="gesture_flag_green" maxLength="41">החלף את הדגל הירוק</string>
+    <string name="gesture_flag_blue" maxLength="41">החלף את הדגל הכחול</string>
+    <string name="gesture_flag_pink" maxLength="41">החלף את הדגל הורוד</string>
+    <string name="gesture_flag_turquoise" maxLength="41">החלף את דגל הטורקיז</string>
+    <string name="gesture_flag_purple" maxLength="41">החלף את הדגל הסגול</string>
+    <string name="gesture_flag_remove" maxLength="41">הסר דגל</string>
+    <string name="gesture_page_up" maxLength="41">דף למעלה</string>
+    <string name="gesture_page_down" maxLength="41">דף למטה</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">החלף לוח ציור</string>
+    <string name="gesture_show_hint" maxLength="41">הצג רמז</string>
+    <string name="gesture_show_all_hints" maxLength="41">הצג את כל הרמזים</string>
+    <string name="record_voice" maxLength="41">הקלטת קול</string>
+    <string name="replay_voice" maxLength="41">ניגון קול שוב</string>
+    <string name="save_voice" maxLength="41">שמירת הקלטה</string>
 </resources>

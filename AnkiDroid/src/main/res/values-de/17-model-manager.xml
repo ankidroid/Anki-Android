@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Notiztypen verwalten</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Notiztypen verwalten</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Felder verwalten</string>
     <!--Toasts-->
     <string name="toast_last_model">Sie können Ihren letzten Notiztyp nicht löschen</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Sprachhinweis auf %s festlegen</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Felder bearbeiten</string>
-    <string name="model_field_editor_add">Feld hinzufügen</string>
+    <string name="model_field_editor_add" maxLength="28">Feld hinzufügen</string>
     <string name="model_field_editor_delete">Feld löschen</string>
     <string name="model_field_editor_rename">Feld umbenennen</string>
     <string name="model_field_editor_language_hint">Hinweis zu Tastatursprache festlegen</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">»%1$s«-Standardstapel auf »%2$s« festlegen</string>
     <string name="model_manager_deck_override_removed_message">Standardstapel für »%s« entfernt</string>
     <string name="deck_override_explanation">Wählen Sie den Stapel aus, dem neue »%s«-Karten hinzugefügt werden sollen</string>
-    <string name="deck_picker_dialog_filter_decks">Stapel filtern</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Stapel filtern</string>
 </resources>

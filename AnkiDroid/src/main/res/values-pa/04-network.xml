@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ਸਥਾਨਕ</string>
     <string name="sync_sanity_remote">ਰਿਮੋਟ</string>
-    <string name="one_way_sync_title">ਵਨ-ਵੇ ਸਿੰਕ</string>
+    <string name="one_way_sync_title" maxLength="41">ਵਨ-ਵੇ ਸਿੰਕ</string>
     <string name="one_way_sync_confirmation">ਵਨ-ਵੇ ਸਿੰਕ ਦੀ ਬੇਨਤੀ ਕੀਤੀ ਗਈ</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ਦੇ ਪਹਿਲਾਂ ਤੋਂ ਸਥਾਪਿਤ ਸੰਸਕਰਣ ਵਿੱਚ ਇੱਕ ਬੱਗ ਦੇ ਕਾਰਨ, ਇੱਕ ਪੂਰੀ ਸਿੰਕ ਨੂੰ ਮਜਬੂਰ ਕਰਨ ਦੀ ਸਿਫਾਰਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।</string>

@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">La sauvegarde n\'a pas été effectuée. Il n\'y a pas assez d\'espace libre. Faites une sauvegarde moins profonde ou supprimez des fichiers.</string>
     <string name="storage_warning">Moins de %d MB d\'espace libre dans la mémoire.\nLibérez de l\'espace pour éviter la perte de données.</string>
-    <string name="backup_restore">Restaurer à partir d’une sauvegarde</string>
+    <string name="backup_restore" maxLength="28">Restaurer à partir d’une sauvegarde</string>
     <string name="backup_new_collection">Nouvelle collection</string>
     <string name="backup_del_collection">Supprimer la collection, en créer une autre</string>
     <string name="backup_del_collection_question">Êtes-vous bien certain de supprimer la collection et d’en créer une autre ? C’est-à-dire effacer toute mémoire de vos progrès et toutes les cartes !</string>

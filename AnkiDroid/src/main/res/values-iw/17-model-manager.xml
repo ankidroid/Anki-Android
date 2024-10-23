@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ניהול סוגי הרשומות</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">ניהול סוגי הרשומות</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ניהול שדות</string>
     <!--Toasts-->
     <string name="toast_last_model">אין לך אפשרות למחוק את סוג ההערה האחרון שלך</string>
@@ -57,7 +57,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">הגדר רמז שפה ל-%s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">עריכת שדות</string>
-    <string name="model_field_editor_add">הוספת שדה</string>
+    <string name="model_field_editor_add" maxLength="28">הוספת שדה</string>
     <string name="model_field_editor_delete">מחיקת שדה</string>
     <string name="model_field_editor_rename">שינוי שם שדה</string>
     <string name="model_field_editor_language_hint">הגדר שפת המקלדת לרמז</string>
@@ -85,5 +85,5 @@
     <string name="model_manager_deck_override_added_message">חפיסת ברירת המחדל עבור \'%1$s\' נקבעה ל-\'%2$s\'</string>
     <string name="model_manager_deck_override_removed_message">חפיסת ברירת המחדל הוסרה עבור \'%s\'</string>
     <string name="deck_override_explanation">בחר חפיסה למקם כרטיסי %s חדשים</string>
-    <string name="deck_picker_dialog_filter_decks">סינון חפיסות</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">סינון חפיסות</string>
 </resources>

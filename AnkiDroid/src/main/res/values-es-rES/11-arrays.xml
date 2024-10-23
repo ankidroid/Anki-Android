@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-grande</string>
     <string name="html_size_code_xx_large">xx-grande</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Responder de nuevo</string>
-    <string name="answer_hard">Respuesta difícil</string>
-    <string name="answer_good">Respuesta buena</string>
-    <string name="answer_easy">Respuesta fácil</string>
-    <string name="gesture_play">Reproducir multimedia</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Cambiar Bandera Roja</string>
-    <string name="gesture_flag_orange">Cambiar Bandera Naranja</string>
-    <string name="gesture_flag_green">Cambiar Bandera verde</string>
-    <string name="gesture_flag_blue">Cambiar Bandera Azul</string>
-    <string name="gesture_flag_pink">Cambiar Bandera Rosa</string>
-    <string name="gesture_flag_turquoise">Cambiar Bandera Turquesa</string>
-    <string name="gesture_flag_purple">Cambiar Bandera Morada</string>
-    <string name="gesture_flag_remove">Eliminar Bandera</string>
-    <string name="gesture_page_up">Página Arriba</string>
-    <string name="gesture_page_down">Página Abajo</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Alternar Pizarra</string>
-    <string name="gesture_show_hint">Mostrar Pista</string>
-    <string name="gesture_show_all_hints">Mostrar Todas Las Pistas</string>
-    <string name="record_voice">Grabar Voz</string>
-    <string name="replay_voice">Reproducir Voz</string>
-    <string name="save_voice">Guardar Grabación</string>
+    <string name="answer_again" maxLength="41">Responder de nuevo</string>
+    <string name="answer_hard" maxLength="41">Respuesta difícil</string>
+    <string name="answer_good" maxLength="41">Respuesta buena</string>
+    <string name="answer_easy" maxLength="41">Respuesta fácil</string>
+    <string name="gesture_play" maxLength="41">Reproducir multimedia</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Cambiar Bandera Roja</string>
+    <string name="gesture_flag_orange" maxLength="41">Cambiar Bandera Naranja</string>
+    <string name="gesture_flag_green" maxLength="41">Cambiar Bandera verde</string>
+    <string name="gesture_flag_blue" maxLength="41">Cambiar Bandera Azul</string>
+    <string name="gesture_flag_pink" maxLength="41">Cambiar Bandera Rosa</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Cambiar Bandera Turquesa</string>
+    <string name="gesture_flag_purple" maxLength="41">Cambiar Bandera Morada</string>
+    <string name="gesture_flag_remove" maxLength="41">Eliminar Bandera</string>
+    <string name="gesture_page_up" maxLength="41">Página Arriba</string>
+    <string name="gesture_page_down" maxLength="41">Página Abajo</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Alternar Pizarra</string>
+    <string name="gesture_show_hint" maxLength="41">Mostrar Pista</string>
+    <string name="gesture_show_all_hints" maxLength="41">Mostrar Todas Las Pistas</string>
+    <string name="record_voice" maxLength="41">Grabar Voz</string>
+    <string name="replay_voice" maxLength="41">Reproducir Voz</string>
+    <string name="save_voice" maxLength="41">Guardar Grabación</string>
 </resources>
