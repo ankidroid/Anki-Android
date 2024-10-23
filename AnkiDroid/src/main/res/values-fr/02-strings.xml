@@ -90,8 +90,8 @@
     <string name="custom_study_preview_new">Prévisualiser les nouvelles cartes</string>
     <string name="custom_study_limit_tags">Limiter à certaines étiquettes</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d enterrée</item>
+        <item quantity="other">+%d enterrées</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Modifier la note</string>
@@ -235,7 +235,7 @@
     <string name="edit_toolbar_item">Modifier la barre d’outils</string>
     <string name="toolbar_item_explain_edit_or_remove">Entrez le code HTML à insérer avant et après le texte sélectionné\n\nAppuyez longuement sur un élément de la barre d\'outils pour le modifier ou le supprimer</string>
     <string name="remove_toolbar_item">Supprimer l\'élément de la barre d\'outils ?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
+    <string name="note_editor_image_too_large">L’image est trop grande, veuillez insérer l’image manuellement</string>
     <string name="note_editor_video_too_large">Le fichier vidéo est trop volumineux, insérez la vidéo manuellement.</string>
     <string name="note_editor_audio_too_large">Le fichier audio est trop volumineux, insérez l’audio manuellement.</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Sauvergarde Android en cours. Veuillez réessayer</string>
@@ -341,23 +341,23 @@
     <string name="next_recording">Suivant</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
     <string name="orphan_note_title">Impossible de supprimer le type de carte</string>
-    <string name="orphan_note_message">Deleting this card type will leave some notes without any cards.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="orphan_note_message">Supprimer ce type de carte laissera certaines notes sans cartes.</string>
+    <string name="voice_not_supported">Voix non prise en charge. Essayez une autre ou installez un moteur vocal.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Afficher la boîte de dialogue des raccourcis clavier</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Sélecteur de paquet</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Supprimer le paquet sans confirmation</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Éditeur de notes</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Choisir le paquet</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Sélectionner le type de note</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Éditeur d\'étiquette</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Éditeur de modèle de carte</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Modifier le modèle du recto</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Modifier le modèle verso</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Modifier le style</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copier le modèle en markdown</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Modifier l’apparence du navigateur</string>
+    <string name="show_shortcuts_message">Appuyez sur Alt+K pour afficher les raccourcis clavier</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">L’action utilisateur %s n’est pas définie dans ce type de note. Veuillez la configurer.</string>
+    <string name="directory_inaccessible_info">En savoir plus sur la restauration de l’accès ici %s ou allez dans les paramètres pour mettre à jour le dossier de collection.</string>
 </resources>

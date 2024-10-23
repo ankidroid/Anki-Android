@@ -357,7 +357,7 @@
     <string name="voice_not_supported">Hlas není podporován. Zkuste jiný nebo nainstalujte hlasový modul.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Výběr balíčků</string>
     <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
     <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>

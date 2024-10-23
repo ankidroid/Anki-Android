@@ -238,9 +238,9 @@
     <string name="note_editor_image_too_large">Die beeld is te groot, voeg asseblief die beeld handmatig in</string>
     <string name="note_editor_video_too_large">Die videolêer is te groot, voeg asseblief die video handmatig in</string>
     <string name="note_editor_audio_too_large">Die klanklêer is te groot, voeg asseblief die klank handmatig in</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android-rugsteun aan die gang. Probeer asseblief weer</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Jy sal dalk iManager moet gebruik om AnkiDroid toe te laat om kortpaaie by te voeg</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Jou tuisskerm laat nie toe dat AnkiDroid kortpaaie byvoeg nie</string>
     <string name="create_shortcut_error">Fout met byvoeging van kortpad: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Hoofletters sinne</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Rol nutsbalk</string>
@@ -262,33 +262,33 @@
     <string name="import_deck">Voer Dek In</string>
     <string name="something_wrong">Something went wrong, please try again</string>
     <string name="download_failed">Aflaai het misluk</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="deck_download_progress_message">Jy kan ander toepassings gebruik terwyl die aflaai loop</string>
+    <string name="check_network">Kontroleer asseblief jou netwerkverbinding</string>
+    <string name="search_using_deck_name">Soek met deknaam</string>
+    <string name="external_storage_unavailable">Aflaai gestaak, die eksterne berging is nie beskikbaar nie</string>
+    <string name="home">Tuis</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Kaart begrawe.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d kaart opgeskort.</item>
+        <item quantity="other">%d kaarte opgeskort.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
+    <string name="note_editor_toggle_sticky">Maak veld %s taai</string>
+    <string name="scoped_storage_learn_more">Leer Meer</string>
+    <string name="search_card_js_api_no_results">Soektog het geen resultate opgelewer nie</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon_package">%s is not a valid JavaScript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon_package">%s is nie \'n geldige JavaScript-byvoegingspakket nie</string>
+    <string name="could_not_create_dir">Kon nie gids %s skep nie</string>
+    <string name="malicious_archive_entry_outside">Kwaadwillige argief. Bevat inskrywing buite die teikengids: %s</string>
+    <string name="malicious_archive_exceeds_limit">Kwaadwillige argief. Grootte oorskry %1$s of bevat meer as %2$d lêers</string>
+    <string name="file_extract_exceeds_storage_space">Lêeronttrekking oorskry stoorplek</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Brei etiket ‘%s’ uit</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
-    <string name="cd_manage_notetypes_add">Add a new note type</string>
+    <string name="field_editor_model_not_available">Kon nie toegang tot versameling kry nie. Probeer asseblief weer!</string>
+    <string name="cd_manage_notetypes_add">Voeg \'n nuwe noottipe by</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Study less</string>
     <string name="intro_ankidroid_tagline_two">Remember more</string>
@@ -308,7 +308,7 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
     <string name="toggle_browser_mode_help">Wissel Vertoon van Kaartjies of Aantekeninge in die Blaaier</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
+    <string name="truncate_content_help">Verkort die hoogte van elke ry van die Blaaier om slegs die eerste 3 reëls van inhoud te wys</string>
     <string name="browser_options_dialog_heading">Browser Options</string>
     <string name="audio_saved">Recording saved</string>
     <string name="deleting_selected_notes">Deleting selected notes</string>

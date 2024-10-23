@@ -132,7 +132,7 @@
     <string name="check_media">بررسی رسانه ها</string>
     <string name="empty_cards">کارت های خالی</string>
     <string name="unknown_type_field_warning">پاسخ را تایپ کنید:فیلد نامشخص %s</string>
-    <string name="delete_deck">حذف دسته کارت&#8230;\nلطفا صبر کنید.</string>
+    <string name="delete_deck">در حال حذف دسته کارت&#8230;</string>
     <string name="info_rate">امتیازدهی به AnkiDroid</string>
     <string name="import_title">درحال وارد کردن</string>
     <string name="import_preparing_file">آماده‌سازی فایل برای وارد کردن&#8230;</string>
@@ -173,7 +173,7 @@
     <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان‌بندی عادی می باشد.بعد از مرور کارتها آنها به‌طور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
     <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
     <string name="steps_min_error">حداقل یک مرحله لازم است</string>
-    <string name="tag_editor_add_feedback">برای تایید اضافه شدن %1$s لطفا %2$s رالمس کنید</string>
+    <string name="tag_editor_add_feedback">برای تایید افزودن \"%1$s\" روی \"%2$s\" ضربه بزنید</string>
     <string name="tag_editor_add_feedback_existing">برچسب موجود \"%1$s\" انتخاب شده است</string>
     <!-- Time spans -->
     <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
@@ -187,7 +187,7 @@
     <string name="activity_start_failed">دستگاه شما نرم افزار قادر به انجام این عمل را ندارد.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[تصاویر دوربین ممکن است بزرگ باشند. در صورت لزوم تغییر اندازۀ تصویر یا کاهش حجم آن از مسیر رسانه استفاده کنید]]></string>
     <string name="no_browser_msg">مرورگری برای باز کردن لینک یافت نشد: %s</string>
-    <string name="web_page_error">خطای بارگذاری صفحه: %s</string>
+    <string name="web_page_error">بارگذاری صفحه با خطا مواجه شد: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">پس زمینه</string>
@@ -269,7 +269,7 @@
     <string name="home">خانه</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">کارت دفن شد</string>
+    <string name="card_buried">کارت دفن شد.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d کارت معلق شد</item>
         <item quantity="other">%d کارت معلق شدند</item>

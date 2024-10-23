@@ -67,7 +67,7 @@
     </plurals>
     <string name="answering_error_title">Мәгълүмат базасы хатасы</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
+    <string name="answering_error_report">Хата турында хәбәр итү</string>
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">Category “default” is empty</string>
@@ -90,20 +90,20 @@
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Баш тарту</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Раслау</string>
     <string name="dialog_no">Юк</string>
     <string name="dialog_yes">Әйе</string>
-    <string name="dialog_keep">Keep</string>
-    <string name="dialog_remove">Remove</string>
+    <string name="dialog_keep">Калдыру</string>
+    <string name="dialog_remove">Бетерү</string>
     <string name="dialog_continue">Дәвам итү</string>
     <string name="dialog_processing">Processing&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Ясарга</string>
     <string name="dialog_positive_delete">Бетерү</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Cүндерү</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
+    <string name="dialog_positive_overwrite">Яңадан язу</string>
+    <string name="dialog_positive_repair">Төзәтү</string>
+    <string name="dialog_positive_replace">Алмаштыру</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
     <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
@@ -178,24 +178,24 @@
     <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
     <string name="help_item_anki_manual">Anki Manual</string>
     <string name="help_item_ankidroid_faq">AnkiDroid Сорау-Җавап</string>
-    <string name="help_title_get_help">Get Help</string>
+    <string name="help_title_get_help">Ярдәм алу</string>
     <string name="help_item_mailing_list">Mailing List</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Report a Bug</string>
     <string name="help_title_support_ankidroid">AnkiDroid ярдәме</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
+    <string name="help_item_support_opencollective_donate">Иганә итү</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
     <string name="help_item_support_other_ankidroid">Башка</string>
     <string name="multimedia_editor_trans_translate">Тәрҗемә итү</string>
-    <string name="help_title_community">Community</string>
+    <string name="help_title_community">Берләшмә</string>
     <string name="help_item_anki_forums">Anki Форумлары</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
+    <string name="help_title_privacy">Хосусыйлык</string>
     <string name="help_item_ankidroid_privacy_policy">AnkiDroid Хосусыйлык Сәясәте</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Хосусыйлык Сәясәте</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
     <string name="help_dialog_exception_report_debounce">Report already submitted</string>
@@ -241,15 +241,15 @@
         <item quantity="other">Show cards in range</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="other">days</item>
+        <item quantity="other">көн</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">–</string>
-    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">From</string>
-    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">To</string>
+    <string name="set_due_date_range_start" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'minimum\' value of this range (inclusive)">Кемнән</string>
+    <string name="set_due_date_range_end" comment="\'Set Due Date\' may change the due date of a card to a random number of days in the future. This labels the \'maximum\' value of this range (inclusive)">Кемгә</string>
     <!-- Instant Note Editor -->
     <string name="cloze_note_required">Cloze Type Note Required</string>
     <string name="cloze_not_found_message">No Cloze type note found, open the Note Editor or try again after adding a Cloze type note.</string>
-    <string name="open">Open</string>
+    <string name="open">Ачу</string>
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
     <string name="change_editor_mode">Change editor mode</string>
