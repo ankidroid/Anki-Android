@@ -270,21 +270,21 @@
     <string name="axis_picker_move_joystick">Joystick/Motion Controller bewegen</string>
     <string name="user_actions" maxLength="41">Benutzerdefinierte Aktionen</string>
     <string name="user_actions_summary" maxLength="41">JavaScript vom Bewertungsbildschirm auslösen</string>
-    <string name="user_action_1" maxLength="41">Benutzerdefinierte Aktion 1</string>
-    <string name="user_action_2" maxLength="41">Benutzerdefinierte Aktion 2</string>
-    <string name="user_action_3" maxLength="41">Benutzerdefinierte Aktion 3</string>
-    <string name="user_action_4" maxLength="41">Benutzerdefinierte Aktion 4</string>
-    <string name="user_action_5" maxLength="41">Benutzerdefinierte Aktion 5</string>
-    <string name="user_action_6" maxLength="41">Benutzerdefinierte Aktion 6</string>
-    <string name="user_action_7" maxLength="41">Benutzerdefinierte Aktion 7</string>
-    <string name="user_action_8" maxLength="41">Benutzerdefinierte Aktion 8</string>
-    <string name="user_action_9" maxLength="41">Benutzerdefinierte Aktion 9</string>
+    <string name="user_action_1" maxLength="28">Benutzerdefinierte Aktion 1</string>
+    <string name="user_action_2" maxLength="28">Benutzerdefinierte Aktion 2</string>
+    <string name="user_action_3" maxLength="28">Benutzerdefinierte Aktion 3</string>
+    <string name="user_action_4" maxLength="28">Benutzerdefinierte Aktion 4</string>
+    <string name="user_action_5" maxLength="28">Benutzerdefinierte Aktion 5</string>
+    <string name="user_action_6" maxLength="28">Benutzerdefinierte Aktion 6</string>
+    <string name="user_action_7" maxLength="28">Benutzerdefinierte Aktion 7</string>
+    <string name="user_action_8" maxLength="28">Benutzerdefinierte Aktion 8</string>
+    <string name="user_action_9" maxLength="28">Benutzerdefinierte Aktion 9</string>
     <string name="toggle_auto_advance" maxLength="41">Automatisches Weiterblättern umschalten</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Kartenseite auswählen</string>
     <string name="card_side_question">Frage</string>
     <string name="card_side_answer">Antwort</string>
-    <string name="card_side_both">Frage &amp; Antwort</string>
+    <string name="card_side_both" maxLength="28">Frage &amp; Antwort</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">F: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

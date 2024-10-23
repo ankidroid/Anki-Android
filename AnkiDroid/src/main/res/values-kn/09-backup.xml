@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">ಬ್ಯಾಕಪ್ ಉಳಿಸಲಾಗಿಲ್ಲ. ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ ಸ್ಥಳಾವಕಾಶವಿಲ್ಲ. ಬ್ಯಾಕಪ್ ಆಳವನ್ನು ಕಡಿಮೆ ಮಾಡಿ ಅಥವಾ ಕೆಲವು ಇತರ ಫೈಲ್‌ಗಳನ್ನು ತೆಗೆದುಹಾಕಿ.</string>
     <string name="storage_warning">ನಿಮ್ಮ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ %d MB ಗಿಂತ ಕಡಿಮೆ ಸ್ಥಳಾವಕಾಶ ಉಳಿದಿದೆ.\nಡೇಟಾ ನಷ್ಟವನ್ನು ತಪ್ಪಿಸಲು ಸ್ವಲ್ಪ ಜಾಗವನ್ನು ಮುಕ್ತಗೊಳಿಸಿ.</string>
-    <string name="backup_restore">ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="backup_restore" maxLength="28">ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="backup_new_collection">ಹೊಸ ಸಂಗ್ರಹ</string>
     <string name="backup_del_collection">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ ಮತ್ತು ಹೊಸದನ್ನು ರಚಿಸಿ</string>
     <string name="backup_del_collection_question">ಸಂಗ್ರಹವನ್ನು ಅಳಿಸಿ ಮತ್ತು ಹೊಸದನ್ನು ರಚಿಸುವುದೇ? ಇದು ನಿಮ್ಮ ಎಲ್ಲಾ ಕಲಿಕೆಯ ಪ್ರಗತಿಯನ್ನು ಕೈಬಿಡುತ್ತದೆ ಮತ್ತು ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸುತ್ತದೆ.</string>

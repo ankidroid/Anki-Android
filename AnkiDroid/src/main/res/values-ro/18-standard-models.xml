@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Față</string>
-    <string name="back_field_name">Spate</string>
+    <string name="front_field_name" maxLength="28">Față</string>
+    <string name="back_field_name" maxLength="28">Spate</string>
 </resources>

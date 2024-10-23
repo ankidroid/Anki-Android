@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Varmuuskopiota ei tallennettu. Tallennustilaa ei ole riittävästi. Pienennä varmuuskopioinnin laajuutta tai vapauta tilaa poistamalla muita tiedostoja.</string>
     <string name="storage_warning">Tallennustilaa on jäljellä alle %d Mt.\nVapauta tilaa, jotta vältät tietojen menettämisen.</string>
-    <string name="backup_restore">Palauta varmuuskopiosta</string>
+    <string name="backup_restore" maxLength="28">Palauta varmuuskopiosta</string>
     <string name="backup_new_collection">Uusi kokoelma</string>
     <string name="backup_del_collection">Poista kokoelma ja luo uusi</string>
     <string name="backup_del_collection_question">Haluatko varmasti poistaa kokoelman ja luoda uuden?

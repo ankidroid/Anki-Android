@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">ದೋಷ ವರದಿ ಮೋಡ್</string>
+    <string name="error_reporting_choice" maxLength="41">ದೋಷ ವರದಿ ಮೋಡ್</string>
     <string name="feedback_disclaimer">ಹಕ್ಕುತ್ಯಾಗ: ನಿಮ್ಮ ಇಮೇಲ್ ವಿಳಾಸ, ಫೋನ್ ಸಂಖ್ಯೆ ಅಥವಾ ನಿಮ್ಮ ಫೋನ್ IMEI ನಂತಹ ಯಾವುದೇ ವೈಯಕ್ತಿಕ ಮಾಹಿತಿಯನ್ನು ನಾವು ಸಂಗ್ರಹಿಸುವುದಿಲ್ಲ. ನಿಮ್ಮ ಸಾಧನದ ಕುರಿತು ತಯಾರಕರು, ಮಾದರಿ ಮತ್ತು Android ಆವೃತ್ತಿ, ಹಾಗೆಯೇ ವರದಿ ಮಾಡಿದ ದೋಷಗಳ ಸ್ವರೂಪ ಮತ್ತು ಅವು ಸಂಭವಿಸಲು ಕಾರಣವಾದ ಹಂತಗಳಂತಹ ಕೆಲವು ಮಾಹಿತಿಯನ್ನು ನಾವು ಸಂಗ್ರಹಿಸುತ್ತೇವೆ.</string>
     <string name="feedback_title">AnkiDroid ಪ್ರತಿಕ್ರಿಯೆ</string>
     <string name="feedback_default_text">ನೀವು ವರದಿ ಮಾಡುತ್ತಿರುವ ಯಾವುದೇ ದೋಷಗಳ ಸ್ವರೂಪದ ಬಗ್ಗೆ ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ಅಥವಾ ಮಾಹಿತಿಯನ್ನು ನಮೂದಿಸಿ.</string>

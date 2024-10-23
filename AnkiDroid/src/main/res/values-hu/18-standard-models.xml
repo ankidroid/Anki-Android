@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Elülső</string>
-    <string name="back_field_name">Hátsó</string>
+    <string name="front_field_name" maxLength="28">Elülső</string>
+    <string name="back_field_name" maxLength="28">Hátsó</string>
 </resources>

@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Upraviť typy poznámok</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">Upraviť typy poznámok</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Upraviť polia</string>
     <!--Toasts-->
     <string name="toast_last_model">Nemôžete vymazať váš posledný typ poznámok</string>
@@ -57,7 +57,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">Nastaviť jazykový tip na %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Upraviť polia</string>
-    <string name="model_field_editor_add">Pridať pole</string>
+    <string name="model_field_editor_add" maxLength="28">Pridať pole</string>
     <string name="model_field_editor_delete">Vymazať pole</string>
     <string name="model_field_editor_rename">Premenovať pole</string>
     <string name="model_field_editor_language_hint">Nastaviť jazykový tip klávesnice</string>
@@ -85,5 +85,5 @@
     <string name="model_manager_deck_override_added_message">Nastaviť predvolený balíček ‘%1$s’ na ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Odstránený predvolený balíček pre ‘%s’</string>
     <string name="deck_override_explanation">Zvoľte balíček na umiestnenie nových ‘%s’ kartičiek</string>
-    <string name="deck_picker_dialog_filter_decks">Filtrovať balíčky</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">Filtrovať balíčky</string>
 </resources>

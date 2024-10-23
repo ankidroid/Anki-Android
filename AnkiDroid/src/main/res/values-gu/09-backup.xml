@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">காப்புப்பிரதி சேமிக்கப்படவில்லை. உங்கள் சேமிப்பகத்தில் போதுமான இடம் இல்லை. காப்புப் பிரதி ஆழத்தைக் குறைக்கவும் அல்லது வேறு சில கோப்புகளை அகற்றவும்.</string>
     <string name="storage_warning">உங்கள் சேமிப்பிடம் %d MB ஐ விடக் குறைவாக உள்ளது.\nதரவு இழப்பைத் தவிர்க்க, சிறிது இடத்தை விடுவிக்கவும்.</string>
-    <string name="backup_restore">બેકઅપમાંથી પુનઃસ્થાપિત કરો</string>
+    <string name="backup_restore" maxLength="28">બેકઅપમાંથી પુનઃસ્થાપિત કરો</string>
     <string name="backup_new_collection">નવો સંગ્રહ</string>
     <string name="backup_del_collection">સંગ્રહ કાઢી નાખો અને એક નવું બનાવો</string>
     <string name="backup_del_collection_question">தொகுப்பை நீக்கிவிட்டு புதியதை உருவாக்கவா? இது உங்கள் கற்றல் முன்னேற்றம் அனைத்தையும் கைவிடும் மற்றும் அனைத்து கார்டுகளையும் நீக்கும்.</string>

@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">x-பெரிய</string>
     <string name="html_size_code_xx_large">xx-பெரியது</string>
     <!-- gestures_labels -->
-    <string name="answer_again">மீண்டும் பதில்</string>
-    <string name="answer_hard">கடுமையாக பதில் சொல்லுங்கள்</string>
-    <string name="answer_good">நல்ல பதில்</string>
-    <string name="answer_easy">எளிதாக பதில் சொல்லுங்கள்</string>
-    <string name="gesture_play">மீடியாவை விளையாடு</string>
-    <string name="gesture_abort_learning">நெருக்கமான விமர்சகர்</string>
-    <string name="gesture_flag_red">சிவப்பு கொடியை மாற்றவும்</string>
-    <string name="gesture_flag_orange">ஆரஞ்சு கொடியை நிலைமாற்றவும்</string>
-    <string name="gesture_flag_green">பச்சைக் கொடியை மாற்றவும்</string>
-    <string name="gesture_flag_blue">நீலக் கொடியை மாற்று</string>
-    <string name="gesture_flag_pink">இளஞ்சிவப்பு கொடியை மாற்றவும்</string>
-    <string name="gesture_flag_turquoise">டர்க்கைஸ் கொடியை மாற்று</string>
-    <string name="gesture_flag_purple">ஊதா கொடியை மாற்று</string>
-    <string name="gesture_flag_remove">கொடியை அகற்று</string>
-    <string name="gesture_page_up">பக்கம் மேலே</string>
-    <string name="gesture_page_down">பக்கம் கீழே</string>
-    <string name="gesture_abort_sync">மதிப்பாய்வாளர் மற்றும் ஒத்திசைவை மூடு</string>
-    <string name="gesture_toggle_whiteboard">ஒயிட்போர்டை நிலைமாற்று</string>
-    <string name="gesture_show_hint">குறிப்பைக் காட்டு</string>
-    <string name="gesture_show_all_hints">அனைத்து குறிப்புகளையும் காட்டு</string>
-    <string name="record_voice">குரல் பதிவு</string>
-    <string name="replay_voice">மீண்டும் ஒலி</string>
-    <string name="save_voice">பதிவை சேமிக்கவும்</string>
+    <string name="answer_again" maxLength="41">மீண்டும் பதில்</string>
+    <string name="answer_hard" maxLength="41">கடுமையாக பதில் சொல்லுங்கள்</string>
+    <string name="answer_good" maxLength="41">நல்ல பதில்</string>
+    <string name="answer_easy" maxLength="41">எளிதாக பதில் சொல்லுங்கள்</string>
+    <string name="gesture_play" maxLength="41">மீடியாவை விளையாடு</string>
+    <string name="gesture_abort_learning" maxLength="41">நெருக்கமான விமர்சகர்</string>
+    <string name="gesture_flag_red" maxLength="41">சிவப்பு கொடியை மாற்றவும்</string>
+    <string name="gesture_flag_orange" maxLength="41">ஆரஞ்சு கொடியை நிலைமாற்றவும்</string>
+    <string name="gesture_flag_green" maxLength="41">பச்சைக் கொடியை மாற்றவும்</string>
+    <string name="gesture_flag_blue" maxLength="41">நீலக் கொடியை மாற்று</string>
+    <string name="gesture_flag_pink" maxLength="41">இளஞ்சிவப்பு கொடியை மாற்றவும்</string>
+    <string name="gesture_flag_turquoise" maxLength="41">டர்க்கைஸ் கொடியை மாற்று</string>
+    <string name="gesture_flag_purple" maxLength="41">ஊதா கொடியை மாற்று</string>
+    <string name="gesture_flag_remove" maxLength="41">கொடியை அகற்று</string>
+    <string name="gesture_page_up" maxLength="41">பக்கம் மேலே</string>
+    <string name="gesture_page_down" maxLength="41">பக்கம் கீழே</string>
+    <string name="gesture_abort_sync" maxLength="41">மதிப்பாய்வாளர் மற்றும் ஒத்திசைவை மூடு</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">ஒயிட்போர்டை நிலைமாற்று</string>
+    <string name="gesture_show_hint" maxLength="41">குறிப்பைக் காட்டு</string>
+    <string name="gesture_show_all_hints" maxLength="41">அனைத்து குறிப்புகளையும் காட்டு</string>
+    <string name="record_voice" maxLength="41">குரல் பதிவு</string>
+    <string name="replay_voice" maxLength="41">மீண்டும் ஒலி</string>
+    <string name="save_voice" maxLength="41">பதிவை சேமிக்கவும்</string>
 </resources>

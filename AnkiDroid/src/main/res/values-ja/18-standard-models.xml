@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">表面</string>
-    <string name="back_field_name">裏面</string>
+    <string name="front_field_name" maxLength="28">表面</string>
+    <string name="back_field_name" maxLength="28">裏面</string>
 </resources>

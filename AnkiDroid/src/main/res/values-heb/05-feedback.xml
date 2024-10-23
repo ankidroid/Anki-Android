@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">מצב דיווח על שגיאות</string>
+    <string name="error_reporting_choice" maxLength="41">מצב דיווח על שגיאות</string>
     <string name="feedback_disclaimer">הודעה: אנחנו לא אוספים מידע אישי כגון כתובות דואר אלקטרוני, מספרי טלפון או מספרי IMEI (מזהים בינלאומיים של מכשירים ניידים). לעומת זאת, אנחנו כן אוספים פרטי מידע על המכשיר שלך, כגון היצרן, הדגם וגרסת האנדרואיד שמותקנת, וכן מידע על טיב התקלות המדווחות ועל הגורמים להן.</string>
     <string name="feedback_title">חוות דעת על AnkiDroid</string>
     <string name="feedback_default_text">יש להזין משוב ומידע על טיב התקלות המדווחות.</string>

@@ -58,23 +58,23 @@
         <item quantity="one">ᱥᱟᱦᱴᱟ ᱵᱚᱫᱚᱞ ᱢᱮ</item>
         <item quantity="other">ᱱᱳᱴᱥ ᱵᱚᱫᱚᱞ ᱢᱮ</item>
     </plurals>
-    <string name="card_browser_change_deck">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
+    <string name="card_browser_change_deck" maxLength="28">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="delete_card_title">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟᱢ?</string>
-    <string name="card_browser_show_marked" maxLength="29">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
-    <string name="card_browser_show_suspended" maxLength="29">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
-    <string name="card_browser_search_by_tag" maxLength="29">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
-    <string name="card_browser_search_by_flag" maxLength="29">ᱯᱚᱛᱠᱟ ᱛᱮ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
-    <string name="card_browser_list_my_searches" maxLength="29">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>
+    <string name="card_browser_show_marked" maxLength="28">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱢᱮᱨᱠᱼᱠᱟᱱᱟ</string>
+    <string name="card_browser_show_suspended" maxLength="28">ᱪᱷᱟᱱᱤᱭᱟᱜ ᱵᱚᱸᱫ ᱜᱤᱰᱤ ᱠᱟᱱᱟ</string>
+    <string name="card_browser_search_by_tag" maxLength="28">ᱴᱮᱜ ᱛᱮ ᱪᱷᱟᱱᱠᱟᱱᱟ</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ᱯᱚᱛᱠᱟ ᱛᱮ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ</string>
+    <string name="card_browser_list_my_searches" maxLength="28">ᱤᱧᱟᱜ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">ᱥᱮᱸᱫᱽᱨᱟ ᱥᱟᱧᱪᱟᱣ</string>
     <string name="card_browser_list_my_searches_title">ᱥᱟᱧᱪᱟᱣᱠᱟᱱ ᱠᱟᱱ ᱠᱟᱰ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="card_browser_list_my_searches_new_name">ᱱᱤᱛᱚᱜᱼᱟ ᱥᱮᱸᱫᱽᱨᱟ ᱧᱩᱛᱩᱢᱟᱼᱜ ᱢᱮ</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">ᱧᱩᱛᱩᱢ ᱵᱮᱜᱚᱨ ᱥᱮᱸᱫᱽᱨᱟ ᱵᱟᱝ ᱥᱟᱧᱪᱟᱣ ᱫᱟᱲᱮᱟᱼᱜᱟ</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">ᱧᱩᱛᱩᱢ ᱞᱟᱦᱟ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="no_note_to_edit">ᱥᱟᱯᱲᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱪᱮᱫ ᱦᱚᱸ ᱵᱟᱝ</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟ?</string>
-    <string name="card_browser_change_display_order" maxLength="29">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
+    <string name="card_browser_change_display_order" maxLength="28">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
     <string name="card_details_tags">ᱴᱮᱜᱥ</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱮ</item>
         <item>ᱪᱩᱠ ᱛᱮ</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">ᱡᱷᱚᱛᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
-    <string name="card_browser_select_none">ᱟᱞᱚ ᱵᱟᱪᱷᱟᱣ ᱟ</string>
+    <string name="card_browser_select_all" maxLength="28">ᱡᱷᱚᱛᱚ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
+    <string name="card_browser_select_none" maxLength="28">ᱟᱞᱚ ᱵᱟᱪᱷᱟᱣ ᱟ</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(ᱱᱟᱶᱟ)</string>
     <string name="card_browser_due_filtered_card">(ᱪᱷᱟᱹᱱᱤᱭᱟᱜ)</string>
     <string name="card_browser_interval_learning_card">(ᱪᱮᱫᱚᱜ)</string>

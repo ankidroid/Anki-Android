@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">നോട്ട് തരങ്ങൾ നിയന്ത്രിക്കുക</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">നോട്ട് തരങ്ങൾ നിയന്ത്രിക്കുക</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ഫീൽഡുകൾ കൈകാര്യം ചെയ്യുക</string>
     <!--Toasts-->
     <string name="toast_last_model">നിങ്ങളുടെ അവസാന കുറിപ്പ് തരം ഇല്ലാതാക്കാൻ നിങ്ങൾക്ക് കഴിയില്ല</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">ഭാഷാ സൂചന %s ആയി സജ്ജമാക്കുക</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ഫീൽഡുകൾ എഡിറ്റ് ചെയ്യുക</string>
-    <string name="model_field_editor_add">ഫീൽഡ് ചേർക്കുക</string>
+    <string name="model_field_editor_add" maxLength="28">ഫീൽഡ് ചേർക്കുക</string>
     <string name="model_field_editor_delete">ഫീൽഡ് ഇല്ലാതാക്കുക</string>
     <string name="model_field_editor_rename">ഫീൽഡിൻ്റെ പേര് മാറ്റുക</string>
     <string name="model_field_editor_language_hint">കീബോർഡ് ഭാഷാ സൂചന സജ്ജമാക്കുക</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">‘%1$s’ ഡിഫോൾട്ട് ഡെക്ക് ‘%2$s’ ആയി സജ്ജീകരിക്കുക</string>
     <string name="model_manager_deck_override_removed_message">\'%s\' എന്നതിനായുള്ള ഡിഫോൾട്ട് ഡെക്ക് നീക്കംചെയ്തു</string>
     <string name="deck_override_explanation">പുതിയ \'%s\' കാർഡുകൾ സ്ഥാപിക്കാൻ ഡെക്ക് തിരഞ്ഞെടുക്കുക</string>
-    <string name="deck_picker_dialog_filter_decks">ഫിൽട്ടർ ഡെക്കുകൾ</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">ഫിൽട്ടർ ഡെക്കുകൾ</string>
 </resources>

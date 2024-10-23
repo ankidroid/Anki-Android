@@ -55,21 +55,21 @@
     <string name="edit_occlusions">শূন্য স্থান পূরণ সমস্যা সম্পাদনা</string>
     <string name="tag_name">ট্যাগের নাম</string>
     <string name="add_new_filter_tags">ট্যাগ যুক্ত/ফিল্টার করুন</string>
-    <string name="add_tag">ট্যাগ যোগ করুন</string>
-    <string name="check_all_tags">সবগুলো বাছাই/অবাছাই করুন </string>
-    <string name="filter_tags">ট্যাগ ফিল্টার করুন</string>
+    <string name="add_tag" maxLength="28">ট্যাগ যোগ করুন</string>
+    <string name="check_all_tags" maxLength="28">সবগুলো বাছাই/অবাছাই করুন </string>
+    <string name="filter_tags" maxLength="28">ট্যাগ ফিল্টার করুন</string>
     <string name="no_tags">আপনি এখনো কোন ট্যাগ যুক্ত করেননি</string>
     <string name="updated_version">%s সংস্করণে আপডেট করা হয়েছে</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">হোয়াইটবোর্ড সংরক্ষণ করুন</string>
-    <string name="enable_stylus">স্টাইলাস মোড অন করুন</string>
+    <string name="save_whiteboard" maxLength="28">হোয়াইটবোর্ড সংরক্ষণ করুন</string>
+    <string name="enable_stylus" maxLength="28">স্টাইলাস মোড অন করুন</string>
     <string name="disable_stylus">স্টাইলাস মোড অফ করুন</string>
-    <string name="enable_whiteboard">হোয়াইটবোর্ড সক্রিয় করুন</string>
+    <string name="enable_whiteboard" maxLength="28">হোয়াইটবোর্ড সক্রিয় করুন</string>
     <string name="disable_whiteboard">হোয়াইটবোর্ড নিষ্ক্রিয় করুন</string>
     <string name="show_whiteboard">হোয়াইটবোর্ড প্রদর্শন করুন</string>
-    <string name="hide_whiteboard">হোয়াইটবোর্ড আড়াল করুন</string>
-    <string name="clear_whiteboard">হোয়াইটবোর্ড পরিষ্কার করুন</string>
-    <string name="replay_audio">অডিও আবার চালান</string>
+    <string name="hide_whiteboard" maxLength="28">হোয়াইটবোর্ড আড়াল করুন</string>
+    <string name="clear_whiteboard" maxLength="28">হোয়াইটবোর্ড পরিষ্কার করুন</string>
+    <string name="replay_audio" maxLength="28">অডিও আবার চালান</string>
     <string name="leech_suspend_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে এবং স্থগিত  হয়েছে</string>
     <string name="leech_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে</string>
     <string name="webview_crash_unknown">অজানা সমস্যা</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">মারাত্মক ত্রুটি: ওয়েবভিউ রেনডারার ক্র্যাশ করেছে। কারণ: %s</string>
     <string name="webview_crash_loop_dialog_title">সিস্টেম ওয়েবভিউ রেন্ডারিং ব্যর্থ</string>
     <string name="webview_crash_loop_dialog_content">সিস্টেম ওয়েব-ভিউ \'%1$s\'.\n %2$s কার্ড রেন্ডার করতে ব্যর্থ হয়েছে</string>
-    <string name="filter_by_flags">নিশান</string>
+    <string name="filter_by_flags" maxLength="41">নিশান</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">আজকের নতুন কার্ড সীমা বদল</string>
     <string name="custom_study_increase_review_limit">আজকের রিভিউ কার্ড সীমা পরিবর্তন</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">নোট সম্পাদন</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">নোট সম্পাদন</string>
     <string name="discard">বাতিল করুন</string>
     <string name="note_editor_no_cards_created">কোনও কার্ড বানানো যায়নি। আরো ক\'টি ফিল্ডে লিখুন।</string>
     <string name="note_editor_no_cards_created_all_fields">এই নোট টাইপ অনুসারে কোনও কার্ড তৈরি করা যায়নি। \nঅন্য নোটটাইপ দিয়ে করুন অথবা  ‘কার্ডসমূহ’ তে ক্লিক করে প্রতিস্থাপন ফিল্ড যোগ করুন</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ক্লোজ ডিলিশন শুধু ক্লোজ নোটটাইপ এ-ই কাজ করে</string>
     <string name="saving_facts">নোট সংরক্ষিত হচ্ছে</string>
     <string name="saving_model">নোটটাইপ সংরক্ষিত হচ্ছে</string>
-    <string name="save">সংরক্ষন কর</string>
+    <string name="save" maxLength="28">সংরক্ষন কর</string>
     <string name="close">বন্ধ কর</string>
     <string name="select">বেছে নাও</string>
     <string name="field_remapping">%1$s (“%2$s” থেকে)</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d মিনিট</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">আনকি-ড্রয়েড</string>
-    <string name="note_editor_copy_note">নোট কপি কর</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">পুনঃস্থাপন</string>
-    <string name="card_editor_reset_card">অগ্রগতি পুনঃস্থাপন কর</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">সময় পুনঃনির্ধারণ</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">একটু দেখাও</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">নোট কপি কর</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">পুনঃস্থাপন</string>
+    <string name="card_editor_reset_card" maxLength="28">অগ্রগতি পুনঃস্থাপন কর</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">সময় পুনঃনির্ধারণ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">একটু দেখাও</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d -র মধ্যে %1$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">পুনঃনামকরণ</string>
-    <string name="checks_action">চেক করুন</string>
-    <string name="check_db">ডেটাবেজ চেক</string>
-    <string name="check_media">মিডিয়া চেক</string>
-    <string name="empty_cards">খালি কার্ডসমূহ</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">পুনঃনামকরণ</string>
+    <string name="checks_action" maxLength="28">চেক করুন</string>
+    <string name="check_db" maxLength="28">ডেটাবেজ চেক</string>
+    <string name="check_media" maxLength="28">মিডিয়া চেক</string>
+    <string name="empty_cards" maxLength="28">খালি কার্ডসমূহ</string>
     <string name="unknown_type_field_warning">উত্তর টাইপ করুন: অজানা ফিল্ড %s</string>
     <string name="delete_deck">ডেক মুছছি&#8230;</string>
     <string name="info_rate">আনকি-ড্রয়েডকে রেটিং দিন</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Options</string>
-    <string name="menu__deck_options">Deck options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
+    <string name="menu__deck_options" maxLength="28">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Set TTS language</string>
-    <string name="custom_study">কাস্টম অধ্যয়ন </string>
+    <string name="select_tts" maxLength="28">Set TTS language</string>
+    <string name="custom_study" maxLength="28">কাস্টম অধ্যয়ন </string>
     <string name="more_options">More</string>
     <string name="dyn_deck_desc">স্বাভাবিক সময়সূচীর বাইরে অধ্যয়ন করার জন্য এটি একটি বিশেষ ডেক। রিভিউয়ের পর কার্ডসমূহকে স্বয়ংক্রিয়ভাবে তাদের আসল ডেকসমূহে ফিরিয়ে দেয়া হবে। এই ডেকটি মুছে ফেলা হলে বাকি থাকা কার্ডগুলিকে তাদের আসল ডেকে ফিরিয়ে দেয়া হবে।</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Error loading page: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Select image</string>
+    <string name="background_image_title" maxLength="41">Background</string>
+    <string name="choose_an_image" maxLength="41">Select image</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default" maxLength="28">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor" maxLength="28">Whiteboard editor</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks" maxLength="28">Search decks</string>
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
+    <string name="menu_font_size" maxLength="28">Font size</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Show toolbar</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="home" maxLength="28">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Play</string>

@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">デッキリスト</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
-    <string name="statistics">統計</string>
-    <string name="settings">設定</string>
-    <string name="help">ヘルプ</string>
+    <string name="decks" maxLength="28">デッキリスト</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
+    <string name="statistics" maxLength="28">統計</string>
+    <string name="settings" maxLength="28">設定</string>
+    <string name="help" maxLength="28">ヘルプ</string>
     <string name="drawing">手書き</string>
     <string name="send_feedback">フィードバックを送信</string>
     <string name="studyoptions_start">学習開始</string>
@@ -70,42 +70,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">答えを入力してください</string>
-    <string name="show_answer">解答を表示</string>
+    <string name="show_answer" maxLength="41">解答を表示</string>
     <string name="hide_answer">解答を非表示</string>
-    <string name="ease_button_again">もう一度</string>
-    <string name="ease_button_hard">難しい</string>
-    <string name="ease_button_good">正解</string>
+    <string name="ease_button_again" maxLength="41">もう一度</string>
+    <string name="ease_button_hard" maxLength="41">難しい</string>
+    <string name="ease_button_good" maxLength="41">正解</string>
     <string name="ease_button_easy">簡単</string>
-    <string name="menu_import">インポート</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">元に戻す</string>
-    <string name="redo">やり直す</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">描線を一つ取り消す</string>
+    <string name="menu_import" maxLength="28">インポート</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">元に戻す</string>
+    <string name="redo" maxLength="28">やり直す</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">描線を一つ取り消す</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
-    <string name="unbury">非表示を解除</string>
-    <string name="rename_deck">デッキの名前を変更</string>
+    <string name="unbury" maxLength="28">非表示を解除</string>
+    <string name="rename_deck" maxLength="28">デッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
     <string name="edit_deck_description" comment="edit the deck description">デッキ説明文を編集</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">追加</string>
-    <string name="menu_add_note">ノートを追加</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">追加</string>
+    <string name="menu_add_note" maxLength="28">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
-    <string name="menu_dismiss_note">非表示 / 削除</string>
-    <string name="menu_bury_card">カードを今日は非表示</string>
-    <string name="menu_bury_note">ノートを今日は非表示</string>
-    <string name="menu_suspend_card">カードを休止</string>
-    <string name="menu_suspend_note">ノートを休止</string>
-    <string name="menu_bury">明日に延期</string>
-    <string name="menu_suspend">休止</string>
-    <string name="menu_delete_note">ノートを削除</string>
-    <string name="menu_flag">フラグ</string>
+    <string name="menu_dismiss_note" maxLength="41">非表示 / 削除</string>
+    <string name="menu_bury_card" maxLength="28">カードを今日は非表示</string>
+    <string name="menu_bury_note" maxLength="28">ノートを今日は非表示</string>
+    <string name="menu_suspend_card" maxLength="28">カードを休止</string>
+    <string name="menu_suspend_note" maxLength="28">ノートを休止</string>
+    <string name="menu_bury" maxLength="28">明日に延期</string>
+    <string name="menu_suspend" maxLength="28">休止</string>
+    <string name="menu_delete_note" maxLength="28">ノートを削除</string>
+    <string name="menu_flag" maxLength="41">フラグ</string>
     <string name="rename_flag">フラグの名前を変更</string>
-    <string name="menu_flag_card">カードにフラグを付ける</string>
-    <string name="menu_edit_tags">タグを編集</string>
+    <string name="menu_flag_card" maxLength="28">カードにフラグを付ける</string>
+    <string name="menu_edit_tags" maxLength="28">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらもすべて削除されます。\n%s</string>
-    <string name="menu_search">%1$s で検索</string>
-    <string name="menu_mark_note">ノートにマークを付ける</string>
+    <string name="menu_search" maxLength="28">%1$s で検索</string>
+    <string name="menu_mark_note" maxLength="28">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
-    <string name="menu_enable_voice_playback">発音チェック機能をオン</string>
+    <string name="menu_enable_voice_playback" maxLength="28">発音チェック機能をオン</string>
     <string name="menu_disable_voice_playback">発音チェック機能をオフ</string>
     <string name="new_deck">デッキを新規作成</string>
     <string name="new_dynamic_deck">フィルターデッキを作成</string>
@@ -116,37 +116,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">続行するにはAnkiDroidにストレージの権限を許可してください</string>
     <string name="rebuild_filtered_deck">フィルターデッキを再構築しています&#8230;</string>
-    <string name="rebuild_cram_label">再構築</string>
-    <string name="empty_cram_label">空にする</string>
+    <string name="rebuild_cram_label" maxLength="28">再構築</string>
+    <string name="empty_cram_label" maxLength="28">空にする</string>
     <string name="create_subdeck">サブデッキを作成</string>
     <string name="empty_filtered_deck">フィルターデッキを空にしています&#8230;</string>
     <string name="custom_study_deck_name">カスタム学習セッション</string>
     <string name="custom_study_deck_exists">最初に、既存のカスタム学習デッキの名前を変更してください</string>
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="empty_deck">このデッキにはカードがありません</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">デッキを検索</string>
     <string name="invalid_deck_name">無効なデッキ名です</string>
     <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">このデッキの現在の課題をすべて達成しました。\nなお、%s</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
-    <string name="button_sync" comment="Text of the sync button">同期</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">同期</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">同期をキャンセルしますか？</string>
     <string name="continue_sync" tools:ignore="UnusedResources">同期を続行</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">同期がキャンセルされました</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
     <string name="syncing_media">メディアを同期中</string>
-    <string name="export_deck">デッキをエクスポート</string>
+    <string name="export_deck" maxLength="28">デッキをエクスポート</string>
     <string name="export_collection">コレクションをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">カードタイプ</string>
     <string name="card_template_editor_front">表面のテンプレート</string>
     <string name="card_template_editor_back">裏面のテンプレート</string>
-    <string name="card_template_editor_styling">スタイル</string>
-    <string name="card_template_editor_menu_card_browser_appearance">カードブラウザ用の表示設定</string>
-    <string name="card_template_editor_deck_override">デッキ選択を上書き</string>
-    <string name="card_template_editor_insert_field">フィールドを挿入</string>
+    <string name="card_template_editor_styling" maxLength="28">スタイル</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">カードブラウザ用の表示設定</string>
+    <string name="card_template_editor_deck_override" maxLength="28">デッキ選択を上書き</string>
+    <string name="card_template_editor_insert_field" maxLength="28">フィールドを挿入</string>
     <string name="card_template_editor_select_field">挿入するフィールドを選択してください</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_add">
@@ -160,7 +160,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ブラウザ表示設定</string>
     <!-- card Info -->
-    <string name="card_info_title">カード情報</string>
+    <string name="card_info_title" maxLength="28">カード情報</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroidデータベースの読み取りと書き込み</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>

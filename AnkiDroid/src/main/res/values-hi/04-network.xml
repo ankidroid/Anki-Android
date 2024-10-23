@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">स्थानीय</string>
     <string name="sync_sanity_remote">दूरस्थ</string>
-    <string name="one_way_sync_title">एक तरफ़ा सिंक</string>
+    <string name="one_way_sync_title" maxLength="41">एक तरफ़ा सिंक</string>
     <string name="one_way_sync_confirmation">एकतरफ़ा सिंक का अनुरोध किया गया</string>
     <string name="full_sync_confirmation">जब आप अगले अपने संग्रह सिंक्रनाइज़ अनुरोध परिवर्तन डेटाबेस का एक पूर्ण अपलोड की आवश्यकता होगी । यदि आपके पास अभी तक सिंक्रनाइज़ नहीं किए गए किसी अन्य डिवाइस पर प्रतीक्षारत समीक्षाएँ या अन्य परिवर्तन हैं, तो वे खो जाएँगे. जारी?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid के पहले से स्थापित संस्करण में एक बग के कारण, यह एक पूर्ण सिंक मजबूर करने के लिए सिफारिश की है.</string>

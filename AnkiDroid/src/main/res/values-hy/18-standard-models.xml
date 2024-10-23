@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Առջև</string>
-    <string name="back_field_name">Հետև</string>
+    <string name="front_field_name" maxLength="28">Առջև</string>
+    <string name="back_field_name" maxLength="28">Հետև</string>
 </resources>

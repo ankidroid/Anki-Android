@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Aghaidh</string>
-    <string name="back_field_name">Cúl</string>
+    <string name="front_field_name" maxLength="28">Aghaidh</string>
+    <string name="back_field_name" maxLength="28">Cúl</string>
 </resources>

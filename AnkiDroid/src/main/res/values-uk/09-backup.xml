@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Резервна копія не збережена. У вашому сховищі недостатньо місця. Зменште кількість резервних копій або видаліть інші файли.</string>
     <string name="storage_warning">У пам’яті залишилося менше ніж %d МБ місця.\nЗвільніть місце, щоб уникнути втрати даних.</string>
-    <string name="backup_restore">Відновити з резервної копії</string>
+    <string name="backup_restore" maxLength="28">Відновити з резервної копії</string>
     <string name="backup_new_collection">Нова колекція</string>
     <string name="backup_del_collection">Видалити колекцію та створити нову</string>
     <string name="backup_del_collection_question">Ви дійсно бажаєте видалити колекцію та створити нову? Це скине ваш навчальний поступ та видалить всі картки!</string>

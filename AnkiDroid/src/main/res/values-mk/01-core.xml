@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Палуби</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Прелистувач на карти</string>
-    <string name="statistics">Статистики</string>
-    <string name="settings">Поставки</string>
-    <string name="help">Помош</string>
+    <string name="decks" maxLength="28">Палуби</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Прелистувач на карти</string>
+    <string name="statistics" maxLength="28">Статистики</string>
+    <string name="settings" maxLength="28">Поставки</string>
+    <string name="help" maxLength="28">Помош</string>
     <string name="drawing">Drawing</string>
     <string name="send_feedback">Прати повратна информација</string>
     <string name="studyoptions_start">Учи</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Внеси одговор</string>
-    <string name="show_answer">Покажи одговор</string>
+    <string name="show_answer" maxLength="41">Покажи одговор</string>
     <string name="hide_answer">сокри одговор</string>
-    <string name="ease_button_again">Пак</string>
-    <string name="ease_button_hard">Тешко</string>
-    <string name="ease_button_good">Добро</string>
+    <string name="ease_button_again" maxLength="41">Пак</string>
+    <string name="ease_button_hard" maxLength="41">Тешко</string>
+    <string name="ease_button_good" maxLength="41">Добро</string>
     <string name="ease_button_easy">Лесно</string>
-    <string name="menu_import">Увези</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Врати</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="menu_import" maxLength="28">Увези</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Врати</string>
+    <string name="redo" maxLength="28">Redo</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Undo stroke</string>
     <string name="move_all_to_deck">Премести сите во шпил</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Преименувај палубата</string>
+    <string name="unbury" maxLength="28">Unbury</string>
+    <string name="rename_deck" maxLength="28">Преименувај палубата</string>
     <string name="create_shortcut">Create shortcut</string>
     <string name="browse_cards">Browse cards</string>
     <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Додави</string>
-    <string name="menu_add_note">Додави забелешка</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Додави</string>
+    <string name="menu_add_note" maxLength="28">Додави забелешка</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Синхронизирајте сметка</string>
-    <string name="menu_dismiss_note">Скриј / избриши</string>
-    <string name="menu_bury_card">Погребете картичката</string>
-    <string name="menu_bury_note">Погребете белешка</string>
-    <string name="menu_suspend_card">Суспендирај ја картичката</string>
-    <string name="menu_suspend_note">Суспендирај белешка</string>
-    <string name="menu_bury">Погребете</string>
-    <string name="menu_suspend">Суспендирај</string>
-    <string name="menu_delete_note">Бриши белешка</string>
-    <string name="menu_flag">Знаме</string>
+    <string name="menu_dismiss_note" maxLength="41">Скриј / избриши</string>
+    <string name="menu_bury_card" maxLength="28">Погребете картичката</string>
+    <string name="menu_bury_note" maxLength="28">Погребете белешка</string>
+    <string name="menu_suspend_card" maxLength="28">Суспендирај ја картичката</string>
+    <string name="menu_suspend_note" maxLength="28">Суспендирај белешка</string>
+    <string name="menu_bury" maxLength="28">Погребете</string>
+    <string name="menu_suspend" maxLength="28">Суспендирај</string>
+    <string name="menu_delete_note" maxLength="28">Бриши белешка</string>
+    <string name="menu_flag" maxLength="41">Знаме</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Постави знаме на карта</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag_card" maxLength="28">Постави знаме на карта</string>
+    <string name="menu_edit_tags" maxLength="28">Edit tags</string>
     <string name="delete_note_message">Навистина избришете ја оваа белешка и сите нејзини картички?\n%s</string>
-    <string name="menu_search">Пребарување во %1$s</string>
-    <string name="menu_mark_note">Означите белешка</string>
+    <string name="menu_search" maxLength="28">Пребарување во %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Означите белешка</string>
     <string name="menu_unmark_note">Отштиклирај ја белешката</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Креирајте deck</string>
     <string name="new_dynamic_deck">Креирајте филтер на deck</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Бе замолуваме да доделите на AnkiDroid ‘Storage’ дозвола</string>
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Обнова</string>
-    <string name="empty_cram_label">Празно</string>
+    <string name="rebuild_cram_label" maxLength="28">Обнова</string>
+    <string name="empty_cram_label" maxLength="28">Празно</string>
     <string name="create_subdeck">Направи подшпил</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Прилагодена студиска сесија</string>
     <string name="custom_study_deck_exists">Прво преименувајте ја постоечката прилагодена студија на deck</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
     <string name="empty_deck">Овој deck е празен</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Deck Search</string>
     <string name="invalid_deck_name">Невалидно име за шпил</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Ниедна картичка не е доспеана</string>
     <string name="sd_card_not_mounted">Уредот за складирање не е монтиран</string>
-    <string name="button_sync" comment="Text of the sync button">Синхронизирај</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Синхронизирај</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Дали сакате да ја откажете синхронизацијата?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Продолжете со синхронизација</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизацијата е откажана</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Откажување&#8230;\nОва може да потрае некое време.</string>
     <string name="syncing_media">Syncing media</string>
-    <string name="export_deck">Извозна deck</string>
+    <string name="export_deck" maxLength="28">Извозна deck</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Ништо</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Типови на картички</string>
     <string name="card_template_editor_front">Преден образец</string>
     <string name="card_template_editor_back">Заден образец</string>
-    <string name="card_template_editor_styling">Стајлинг</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Изглед на пребарувач на карти</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_styling" maxLength="28">Стајлинг</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Изглед на пребарувач на карти</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Deck override</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Барем еден тип на картичка е потребен</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Изглед на пребарувач</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title" maxLength="28">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Читајте и пишувајте на базата на податоци на AnkiDroid</string>
     <string name="read_write_permission_description">да пристапите до постоечките белешки, картички, типови белешки и decks, како и креирање нови</string>

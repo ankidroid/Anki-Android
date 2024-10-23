@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">உள்ளூர்</string>
     <string name="sync_sanity_remote">ரிமோட்</string>
-    <string name="one_way_sync_title">ஒரு வழி ஒத்திசைவு</string>
+    <string name="one_way_sync_title" maxLength="41">ஒரு வழி ஒத்திசைவு</string>
     <string name="one_way_sync_confirmation">ஒரு வழி ஒத்திசைவு கோரப்பட்டது</string>
     <string name="full_sync_confirmation">உங்கள் சேகரிப்பை அடுத்ததாக ஒத்திசைக்கும்போது கோரப்பட்ட மாற்றத்திற்கு தரவுத்தளத்தின் முழுப் பதிவேற்றம் தேவைப்படும். இன்னும் இங்கே ஒத்திசைக்கப்படாத மற்றொரு சாதனத்தில் மதிப்புரைகள் அல்லது பிற மாற்றங்கள் காத்திருந்தால், அவை இழக்கப்படும். தொடரவா?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid இன் முன்பு நிறுவப்பட்ட பதிப்பில் உள்ள பிழை காரணமாக, முழு ஒத்திசைவை கட்டாயப்படுத்த பரிந்துரைக்கப்படுகிறது.</string>

@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">正面</string>
-    <string name="back_field_name">背面</string>
+    <string name="front_field_name" maxLength="28">正面</string>
+    <string name="back_field_name" maxLength="28">背面</string>
 </resources>

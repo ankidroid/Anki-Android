@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">Режим повідомлення про помилку</string>
+    <string name="error_reporting_choice" maxLength="41">Режим повідомлення про помилку</string>
     <string name="feedback_disclaimer">Застереження: Ми не збираємо особисту інформацію, таку як e-mail адреса, номер телефону чи IMEI телефону. Ми збираємо деяку інформацію про ваш пристрій, зокрема, назву виробника, модель, версію Android, а також опис помилок і кроки, що призвели до їх появи.</string>
     <string name="feedback_title">Зворотній зв\'язок з AnkiDroid</string>
     <string name="feedback_default_text">Будь ласка, введіть ваш відгук, або інформацію про природу помилки.</string>

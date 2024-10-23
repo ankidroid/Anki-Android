@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">પત્તાઓ</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">પત્તા ખોલો</string>
-    <string name="statistics">આંકડાઓ</string>
-    <string name="settings">સેટિંગ્સ</string>
-    <string name="help">મદદ</string>
+    <string name="decks" maxLength="28">પત્તાઓ</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">પત્તા ખોલો</string>
+    <string name="statistics" maxLength="28">આંકડાઓ</string>
+    <string name="settings" maxLength="28">સેટિંગ્સ</string>
+    <string name="help" maxLength="28">મદદ</string>
     <string name="drawing">આકૃતિ</string>
     <string name="send_feedback">અનુભવ કહો</string>
     <string name="studyoptions_start">શરૂ કરો</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ઉત્તર દાખલ કરો</string>
-    <string name="show_answer">ઉત્તર બતાવો</string>
+    <string name="show_answer" maxLength="41">ઉત્તર બતાવો</string>
     <string name="hide_answer">ઉત્તર છુપાવો</string>
-    <string name="ease_button_again">ફરીથી</string>
-    <string name="ease_button_hard">અઘરૂ</string>
-    <string name="ease_button_good">સારુ</string>
+    <string name="ease_button_again" maxLength="41">ફરીથી</string>
+    <string name="ease_button_hard" maxLength="41">અઘરૂ</string>
+    <string name="ease_button_good" maxLength="41">સારુ</string>
     <string name="ease_button_easy">સરળ</string>
-    <string name="menu_import">આયાત</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">પૂર્વવત્ કરો</string>
-    <string name="redo">એ ફરી કરો</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">સ્ટ્રોક પૂર્વવત્ કરો</string>
+    <string name="menu_import" maxLength="28">આયાત</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">પૂર્વવત્ કરો</string>
+    <string name="redo" maxLength="28">એ ફરી કરો</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">સ્ટ્રોક પૂર્વવત્ કરો</string>
     <string name="move_all_to_deck">બધી થપ્પી ખસેડી</string>
-    <string name="unbury">પાછું લાવો</string>
-    <string name="rename_deck">થપ્પીનું નામ બદલો </string>
+    <string name="unbury" maxLength="28">પાછું લાવો</string>
+    <string name="rename_deck" maxLength="28">થપ્પીનું નામ બદલો </string>
     <string name="create_shortcut">ટૂંકો રસ્તો બનાવો</string>
     <string name="browse_cards">કાર્ડસ જોવો</string>
     <string name="edit_deck_description" comment="edit the deck description">વર્ણન સંપાદિત કરો</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">ઉમેરો</string>
-    <string name="menu_add_note">નોંધ ઉમેરો</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">ઉમેરો</string>
+    <string name="menu_add_note" maxLength="28">નોંધ ઉમેરો</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">ખાતું સિંક્રનાઇઝ કરો </string>
-    <string name="menu_dismiss_note">છુપાવો / કાઢો</string>
-    <string name="menu_bury_card">કાર્ડ કાઢો</string>
-    <string name="menu_bury_note">નોંધ કાઢો</string>
-    <string name="menu_suspend_card">કાર્ડ સસ્પેન્ડ કરો</string>
-    <string name="menu_suspend_note">નોંધ સસ્પેન્ડ કરો </string>
-    <string name="menu_bury">કાઢો</string>
-    <string name="menu_suspend">સસ્પેન્ડ</string>
-    <string name="menu_delete_note">નોંધ કાયમ માટે કાઢી નાખો</string>
-    <string name="menu_flag">ધ્વજ</string>
+    <string name="menu_dismiss_note" maxLength="41">છુપાવો / કાઢો</string>
+    <string name="menu_bury_card" maxLength="28">કાર્ડ કાઢો</string>
+    <string name="menu_bury_note" maxLength="28">નોંધ કાઢો</string>
+    <string name="menu_suspend_card" maxLength="28">કાર્ડ સસ્પેન્ડ કરો</string>
+    <string name="menu_suspend_note" maxLength="28">નોંધ સસ્પેન્ડ કરો </string>
+    <string name="menu_bury" maxLength="28">કાઢો</string>
+    <string name="menu_suspend" maxLength="28">સસ્પેન્ડ</string>
+    <string name="menu_delete_note" maxLength="28">નોંધ કાયમ માટે કાઢી નાખો</string>
+    <string name="menu_flag" maxLength="41">ધ્વજ</string>
     <string name="rename_flag">ફ્લેગોનું નામ બદલો</string>
-    <string name="menu_flag_card">કાર્ડને ચિહ્નિત કરો</string>
-    <string name="menu_edit_tags">ચિહ્નો બદલો </string>
+    <string name="menu_flag_card" maxLength="28">કાર્ડને ચિહ્નિત કરો</string>
+    <string name="menu_edit_tags" maxLength="28">ચિહ્નો બદલો </string>
     <string name="delete_note_message">આ નોંધ અને તેના તમામ કાડઁ ખરેખર કાઢી નાખીએ ?\n%s</string>
-    <string name="menu_search">%1$s માં જુઓ </string>
-    <string name="menu_mark_note">નોંધ ચિહ્નિત કરો</string>
+    <string name="menu_search" maxLength="28">%1$s માં જુઓ </string>
+    <string name="menu_mark_note" maxLength="28">નોંધ ચિહ્નિત કરો</string>
     <string name="menu_unmark_note">ચિહ્નિત નોંધોમાથી કાઢો</string>
-    <string name="menu_enable_voice_playback">વૉઇસ પ્લેબેક સક્ષમ કરો</string>
+    <string name="menu_enable_voice_playback" maxLength="28">વૉઇસ પ્લેબેક સક્ષમ કરો</string>
     <string name="menu_disable_voice_playback">વૉઇસ પ્લેબેક અક્ષમ કરો</string>
     <string name="new_deck">થપ્પી ઉમેરો </string>
     <string name="new_dynamic_deck">ફિલ્ટર કરેલ ડેક બનાવો</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ચાલુ રાખવા માટે AnkiDroid ને ‘Storage’નો હક આપો</string>
     <string name="rebuild_filtered_deck">ફિલ્ટર કરેલ ડેકનું પુનઃનિર્માણ&#8230;</string>
-    <string name="rebuild_cram_label">પુનઃબીલ્ડ</string>
-    <string name="empty_cram_label">ખાલી</string>
+    <string name="rebuild_cram_label" maxLength="28">પુનઃબીલ્ડ</string>
+    <string name="empty_cram_label" maxLength="28">ખાલી</string>
     <string name="create_subdeck">સબડેક બનાવો</string>
     <string name="empty_filtered_deck">ફિલ્ટર કરેલ ડેક ખાલી કરી રહ્યું છે&#8230;</string>
     <string name="custom_study_deck_name">કસ્ટમ અભ્યાસ સત્ર</string>
     <string name="custom_study_deck_exists">પહેલા હાલના કસ્ટમ સ્ટડી ડેકનું નામ બદલો</string>
     <string name="search_deck" comment="Deck search for selecting it">ડેક શોધ</string>
     <string name="empty_deck">આ ડેક ખાલી છે</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ડેક શોધ</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">ડેક શોધ</string>
     <string name="invalid_deck_name">અમાન્ય ડેક નામ</string>
     <string name="studyoptions_congrats_finished">અભિનંદન! તમે હમણાં માટે સમાપ્ત કર્યું છે.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">ડેક હમણાં માટે સમાપ્ત! %s</string>
     <string name="studyoptions_no_cards_due">હજુ સુધી કોઈ કાર્ડ બાકી નથી</string>
     <string name="sd_card_not_mounted">ઉપકરણ સંગ્રહ માઉન્ટ થયેલ નથી</string>
-    <string name="button_sync" comment="Text of the sync button">સમન્વયન</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">સમન્વયન</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">શું તમે સમન્વયન રદ કરવા માંગો છો?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">સિંક કરવાનું ચાલુ રાખો</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">સમન્વયન રદ કર્યું</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">રદ કરી રહ્યું છે&#8230;\nઆમાં થોડો સમય લાગી શકે છે.</string>
     <string name="syncing_media">મીડિયા સમન્વયિત કરી રહ્યું છે</string>
-    <string name="export_deck">નિકાસ ડેક</string>
+    <string name="export_deck" maxLength="28">નિકાસ ડેક</string>
     <string name="export_collection">નિકાસ સંગ્રહ</string>
     <string name="nothing">કંઈ નહીં</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">કાર્ડ પ્રકારો</string>
     <string name="card_template_editor_front">ફ્રન્ટ ટેમ્પલેટ</string>
     <string name="card_template_editor_back">પાછળનો નમૂનો</string>
-    <string name="card_template_editor_styling">સ્ટાઇલીંગ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">કાર્ડ બ્રાઉઝર દેખાવ</string>
-    <string name="card_template_editor_deck_override">ડેક ઓવરરાઇડ</string>
-    <string name="card_template_editor_insert_field">ફીલ્ડ દાખલ કરો</string>
+    <string name="card_template_editor_styling" maxLength="28">સ્ટાઇલીંગ</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">કાર્ડ બ્રાઉઝર દેખાવ</string>
+    <string name="card_template_editor_deck_override" maxLength="28">ડેક ઓવરરાઇડ</string>
+    <string name="card_template_editor_insert_field" maxLength="28">ફીલ્ડ દાખલ કરો</string>
     <string name="card_template_editor_select_field">એક ક્ષેત્ર પસંદ કરો</string>
     <string name="card_template_editor_cant_delete">ઓછામાં ઓછો એક કાર્ડ પ્રકાર જરૂરી છે</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">બ્રાઉઝર દેખાવ</string>
     <!-- card Info -->
-    <string name="card_info_title">કાર્ડ માહિતી</string>
+    <string name="card_info_title" maxLength="28">કાર્ડ માહિતી</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">AnkiDroid ડેટાબેઝ વાંચો અને લખો</string>
     <string name="read_write_permission_description">હાલની નોંધો, કાર્ડ્સ, નોંધના પ્રકારો અને ડેકને ઍક્સેસ કરો તેમજ નવી બનાવો</string>

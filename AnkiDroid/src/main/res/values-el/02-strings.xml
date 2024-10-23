@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Επεξεργασία αποκρύψεων</string>
     <string name="tag_name">Όνομα ετικέτας</string>
     <string name="add_new_filter_tags">Προσθήκη/φιλτράρισμα ετικετών</string>
-    <string name="add_tag">Προσθήκη ετικέτας</string>
-    <string name="check_all_tags">Επιλογή/αποεπιλογή όλων των ετικετών</string>
-    <string name="filter_tags">Φιλτράρισμα ετικετών</string>
+    <string name="add_tag" maxLength="28">Προσθήκη ετικέτας</string>
+    <string name="check_all_tags" maxLength="28">Επιλογή/αποεπιλογή όλων των ετικετών</string>
+    <string name="filter_tags" maxLength="28">Φιλτράρισμα ετικετών</string>
     <string name="no_tags">Δεν έχετε προσθέσει καμία ετικέτα ακόμα</string>
     <string name="updated_version">Αναβαθμίστηκε στην εκδοχή %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Αποθήκευση πίνακα</string>
-    <string name="enable_stylus">Ενεργοποίηση γραψίματος με γραφίδα</string>
+    <string name="save_whiteboard" maxLength="28">Αποθήκευση πίνακα</string>
+    <string name="enable_stylus" maxLength="28">Ενεργοποίηση γραψίματος με γραφίδα</string>
     <string name="disable_stylus">Απενεργοποίηση γραψίματος με γραφίδα</string>
-    <string name="enable_whiteboard">Ενεργοποίηση πίνακα</string>
+    <string name="enable_whiteboard" maxLength="28">Ενεργοποίηση πίνακα</string>
     <string name="disable_whiteboard">Απενεργοποίηση πίνακα</string>
     <string name="show_whiteboard">Εμφάνιση πίνακα</string>
-    <string name="hide_whiteboard">Απόκρυψη πίνακα</string>
-    <string name="clear_whiteboard">Καθαρίσμός πίνακα</string>
-    <string name="replay_audio">Επανάληψη ήχου</string>
+    <string name="hide_whiteboard" maxLength="28">Απόκρυψη πίνακα</string>
+    <string name="clear_whiteboard" maxLength="28">Καθαρίσμός πίνακα</string>
+    <string name="replay_audio" maxLength="28">Επανάληψη ήχου</string>
     <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
     <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
     <string name="webview_crash_unknown">Άγνωστο σφάλμα</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Μοιραίο σφάλμα: Η συσκευή αναπαραγωγής WebView κατέρρευσε. Αιτία: %s</string>
     <string name="webview_crash_loop_dialog_title">Αποτυχία Απόδοσης WebView Συστήματος</string>
     <string name="webview_crash_loop_dialog_content">Το σύστημα WebView απέτυχε να αποδώσει την κάρτα \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Σημαίες</string>
+    <string name="filter_by_flags" maxLength="41">Σημαίες</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Τροποποίηση σημερινού ορίου νέων καρτών</string>
     <string name="custom_study_increase_review_limit">Τροποποίηση σημερινού ορίου επαναλήψεων</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Σύνταξη Σημείωσης</string>
     <string name="discard">Απόρριψη</string>
     <string name="note_editor_no_cards_created">Δεν δημιουργήθηκαν κάρτες. Συμπληρώστε περισσότερα πεδία</string>
     <string name="note_editor_no_cards_created_all_fields">Ο τρέχων τύπος σημείωσης δεν παρήγαγε καμία κάρτα.\nΠαρακαλώ επιλέξτε έναν άλλο τύπο σημείωσης ή κάντε κλικ στο \'Κάρτες\' και προσθέστε μία αντικατάσταση πεδίου</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Αποθήκευση σημείωσης</string>
     <string name="saving_model">Αποθήκευση τύπου σημείωσης</string>
-    <string name="save">Αποθήκευση</string>
+    <string name="save" maxLength="28">Αποθήκευση</string>
     <string name="close">Κλείσιμο</string>
     <string name="select">Επιλέξτε</string>
     <string name="field_remapping">%1$s (από “%2$s”)</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d λεπτά</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Κάρτα Ανκί-Ντρόιντ</string>
-    <string name="note_editor_copy_note">Αντιγραφή σημείωσης</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Επανατοποθέτηση</string>
-    <string name="card_editor_reset_card">Διαγραφή προόδου</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Επαναπρογραμματισμός</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Προεπισκόπιση</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Αντιγραφή ως Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Αντιγραφή σημείωσης</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Επανατοποθέτηση</string>
+    <string name="card_editor_reset_card" maxLength="28">Διαγραφή προόδου</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Επαναπρογραμματισμός</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Προεπισκόπιση</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Αντιγραφή ως Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d από %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Μετονομασία</string>
-    <string name="checks_action">Έλεγχος</string>
-    <string name="check_db">Έλεγχος βάσης δεδομένων</string>
-    <string name="check_media">Έλεγχος πολυμέσων </string>
-    <string name="empty_cards">Κενές κάρτες</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Μετονομασία</string>
+    <string name="checks_action" maxLength="28">Έλεγχος</string>
+    <string name="check_db" maxLength="28">Έλεγχος βάσης δεδομένων</string>
+    <string name="check_media" maxLength="28">Έλεγχος πολυμέσων </string>
+    <string name="empty_cards" maxLength="28">Κενές κάρτες</string>
     <string name="unknown_type_field_warning">Τύπος απάντησης: άγνωστο πεδίο %s</string>
     <string name="delete_deck">Διαγραφή τράπουλας&#8230;\nΠαρακαλούμε περιμένετε.</string>
     <string name="info_rate">Αξιολογείστε το Ανκί-Ντρόιντ</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Κοινοποίηση</string>
     <string name="export_choice_save_to">Αποθήκευση σε</string>
     <string name="export_saving_exported_collection">Το εξαγόμενο αρχείο αποθηκεύεται&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Επιλογές</string>
-    <string name="menu__deck_options">Επιλογές τράπουλας</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Επιλογές</string>
+    <string name="menu__deck_options" maxLength="28">Επιλογές τράπουλας</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Επιλογές μελέτης</string>
-    <string name="select_tts">Ορισμός γλώσσας TTS</string>
-    <string name="custom_study">Προσαρμοσμένη μελέτη</string>
+    <string name="select_tts" maxLength="28">Ορισμός γλώσσας TTS</string>
+    <string name="custom_study" maxLength="28">Προσαρμοσμένη μελέτη</string>
     <string name="more_options">Περισσότερα</string>
     <string name="dyn_deck_desc">Αυτή είναι μια ειδική τράπουλα για μάθηση εκτός του κανονικού προγράμματος. Οι κάρτες θα επιστραφούν αυτόματα στην αρχική τους τράπουλα μετά την επανάληψή τους. Η διαγραφή αυτής της τράπουλας από τη λίστα τραπουλών θα επιστρέψει όλες τις κάρτες στην αρχική τους τράπουλα.</string>
     <string name="steps_error">Τα βήματα πρέπει να είναι αριθμοί μεγαλύτεροι από 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Σφάλμα φόρτωσης σελίδας: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Φόντο</string>
-    <string name="choose_an_image">Επιλέξτε εικόνα</string>
+    <string name="background_image_title" maxLength="41">Φόντο</string>
+    <string name="choose_an_image" maxLength="41">Επιλέξτε εικόνα</string>
     <string name="remove_background_image">Αφαίρεση ταπετσαρίας;</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Επαναφορά προεπιλογής</string>
+    <string name="restore_default" maxLength="28">Επαναφορά προεπιλογής</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Κενό</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Αποτυχία αποθήκευσης της εικόνας του πίνακα. %s</string>
     <string name="white_board_image_saved">Η εικόνα του πίνακα αποθηκεύτηκε στο %s</string>
-    <string name="title_whiteboard_pen_color">Χρώμα στυλό πίνακα</string>
-    <string name="title_whiteboard_editor">Επεξεργαστής πίνακα</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Χρώμα στυλό πίνακα</string>
+    <string name="title_whiteboard_editor" maxLength="28">Επεξεργαστής πίνακα</string>
     <string name="user_is_a_robot">Εντοπίστηκε αυτοματοποιημένο τεστ. Εάν είστε άνθρωπος, επικοινωνήστε με την υποστήριξη του AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Αυτή η κάρτα χρησιμοποιεί μη υποστηριζόμενες δυνατότητες του  AnkiDroid. Επικοινωνήστε με τον προγραμματιστή %1$s, ή δείτε το wiki. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Σφάλμα περιεχομένου κάρτας: Αποτυχία φόρτωσης του ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Αναζήτηση τραπουλών</string>
+    <string name="search_decks" maxLength="28">Αναζήτηση τραπουλών</string>
     <string name="ankidroid_init_failed_webview_title">Κρίσιμο σφάλμα</string>
     <string name="ankidroid_init_failed_webview">Το AnkiDroid βασίζεται στο System WebView το οποίο δεν είναι διαθέσιμο. Αυτό μπορεί να συμβεί αν το σύστημα εγκαθιστά ενημερώσεις. Παρακαλώ δοκιμάστε ξανά σε λίγα λεπτά.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Μέγεθος γραμματοσειράς</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Εμφάνιση γραμμής εργαλείων</string>
+    <string name="menu_font_size" maxLength="28">Μέγεθος γραμματοσειράς</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Εμφάνιση γραμμής εργαλείων</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Ίσως χρειαστεί να χρησιμοποιήσετε το iManager για να επιτρέψετε στο AnkiDroid να προσθέσει συντομεύσεις</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Η αρχική σας οθόνη δεν επιτρέπει στο AnkiDroid να προσθέσει συντομεύσεις</string>
     <string name="create_shortcut_error">Σφάλμα κατά την προσθήκη συντόμευσης: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Κεφαλαιοποίηση προτάσεων</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Κεφαλαιοποίηση προτάσεων</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Παρακαλώ ελέγξτε τη σύνδεσή σας στο δίκτυο</string>
     <string name="search_using_deck_name">Αναζήτηση με το όνομα τράπουλας</string>
     <string name="external_storage_unavailable">Η λήψη ματαιώθηκε, ο εξωτερικός χώρος αποθήκευσης δεν είναι διαθέσιμος</string>
-    <string name="home">Αρχική</string>
+    <string name="home" maxLength="28">Αρχική</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Η κάρτα θάφτηκε.</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Επανατοποθέτηση</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Επανατοποθέτηση</string>
     <string name="start_recording">Ηχογράφηση</string>
     <string name="stop_recording">Διακοπή</string>
     <string name="play_recording">Αναπαραγωγή</string>

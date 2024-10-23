@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">ด้านหน้า</string>
-    <string name="back_field_name">ด้านหลัง</string>
+    <string name="front_field_name" maxLength="28">ด้านหน้า</string>
+    <string name="back_field_name" maxLength="28">ด้านหลัง</string>
 </resources>

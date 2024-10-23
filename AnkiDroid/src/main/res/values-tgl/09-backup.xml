@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
     <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Ibalik mula sa backup</string>
+    <string name="backup_restore" maxLength="28">Ibalik mula sa backup</string>
     <string name="backup_new_collection">Bagong koleksyon</string>
     <string name="backup_del_collection">Tanggalin ang koleksyon at lumikha ng bago</string>
     <string name="backup_del_collection_question">Tanggalin ang koleksyon at lumikha ng bago? Ibababa nito ang lahat ng iyong progreso sa pag-aaral at tanggalin ang lahat ng baraha.</string>

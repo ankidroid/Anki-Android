@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Dəstələr</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart səyyahı</string>
-    <string name="statistics">Statistikalar</string>
-    <string name="settings">Tənzimləmələr</string>
-    <string name="help">Kömək</string>
+    <string name="decks" maxLength="28">Dəstələr</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Kart səyyahı</string>
+    <string name="statistics" maxLength="28">Statistikalar</string>
+    <string name="settings" maxLength="28">Tənzimləmələr</string>
+    <string name="help" maxLength="28">Kömək</string>
     <string name="drawing">Rəsm</string>
     <string name="send_feedback">Çətinliyi bildir</string>
     <string name="studyoptions_start">Öyrənməyə başla</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Cavabı yazın</string>
-    <string name="show_answer">Cavabı göstər</string>
+    <string name="show_answer" maxLength="41">Cavabı göstər</string>
     <string name="hide_answer">Cavabı gizlədin</string>
-    <string name="ease_button_again">Təkrar</string>
-    <string name="ease_button_hard">Çətin</string>
-    <string name="ease_button_good">Yaxşı</string>
+    <string name="ease_button_again" maxLength="41">Təkrar</string>
+    <string name="ease_button_hard" maxLength="41">Çətin</string>
+    <string name="ease_button_good" maxLength="41">Yaxşı</string>
     <string name="ease_button_easy">Asan</string>
-    <string name="menu_import">İdxal et</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Geri qaytar</string>
-    <string name="redo">Redo</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="menu_import" maxLength="28">İdxal et</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Geri qaytar</string>
+    <string name="redo" maxLength="28">Redo</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Undo stroke</string>
     <string name="move_all_to_deck">Hamısın dəstəyə köçürün</string>
-    <string name="unbury">Görünən et</string>
-    <string name="rename_deck">Dəstəni yenidən adlandır</string>
+    <string name="unbury" maxLength="28">Görünən et</string>
+    <string name="rename_deck" maxLength="28">Dəstəni yenidən adlandır</string>
     <string name="create_shortcut">Qısayol yarat</string>
     <string name="browse_cards">Kartları gözdən keçirin</string>
     <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Əlavə et</string>
-    <string name="menu_add_note">Qeyd əlavə et</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Əlavə et</string>
+    <string name="menu_add_note" maxLength="28">Qeyd əlavə et</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hesabı sinxron et</string>
-    <string name="menu_dismiss_note">Gizlə / sil</string>
-    <string name="menu_bury_card">Kartı gizlət</string>
-    <string name="menu_bury_note">Qeydi gizlə</string>
-    <string name="menu_suspend_card">Kartı təxirə sal</string>
-    <string name="menu_suspend_note">Qeydi təxirə sal</string>
-    <string name="menu_bury">Gizlət</string>
-    <string name="menu_suspend">Dayandır</string>
-    <string name="menu_delete_note">Qeydi sil</string>
-    <string name="menu_flag">İşarələ</string>
+    <string name="menu_dismiss_note" maxLength="41">Gizlə / sil</string>
+    <string name="menu_bury_card" maxLength="28">Kartı gizlət</string>
+    <string name="menu_bury_note" maxLength="28">Qeydi gizlə</string>
+    <string name="menu_suspend_card" maxLength="28">Kartı təxirə sal</string>
+    <string name="menu_suspend_note" maxLength="28">Qeydi təxirə sal</string>
+    <string name="menu_bury" maxLength="28">Gizlət</string>
+    <string name="menu_suspend" maxLength="28">Dayandır</string>
+    <string name="menu_delete_note" maxLength="28">Qeydi sil</string>
+    <string name="menu_flag" maxLength="41">İşarələ</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">İşarələnmiş kart</string>
-    <string name="menu_edit_tags">Etiketlərə düzəliş et</string>
+    <string name="menu_flag_card" maxLength="28">İşarələnmiş kart</string>
+    <string name="menu_edit_tags" maxLength="28">Etiketlərə düzəliş et</string>
     <string name="delete_note_message">Bu qeyd və bütün kartlar həqiqətən də silinsin?\n%s</string>
-    <string name="menu_search">%1$s içində axtar</string>
-    <string name="menu_mark_note">Qeydi işarələ</string>
+    <string name="menu_search" maxLength="28">%1$s içində axtar</string>
+    <string name="menu_mark_note" maxLength="28">Qeydi işarələ</string>
     <string name="menu_unmark_note">İşarəni götür</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Dəstə yarat</string>
     <string name="new_dynamic_deck">Filtrli dəstə yarat</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">İrəliləmək üçün AnkiDroid-ə \"Yaddaş\" icazəsi verin</string>
     <string name="rebuild_filtered_deck">filtrlənmiş dəstənin yenidən qurulması</string>
-    <string name="rebuild_cram_label">Yenidən düzəlt</string>
-    <string name="empty_cram_label">Boş</string>
+    <string name="rebuild_cram_label" maxLength="28">Yenidən düzəlt</string>
+    <string name="empty_cram_label" maxLength="28">Boş</string>
     <string name="create_subdeck">Alt dəstə yarat</string>
     <string name="empty_filtered_deck">filtrlənmiş dəstənin boşaldılması</string>
     <string name="custom_study_deck_name">Şəxsi öyrənmə sessiyası</string>
     <string name="custom_study_deck_exists">Əvvəlcə mövcud fərdi tədqiqat dəstəsinin adını dəyişin</string>
     <string name="search_deck" comment="Deck search for selecting it">Dəstə axtar</string>
     <string name="empty_deck">Bu dəstə boşdur</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Dəstə axtar</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Dəstə axtar</string>
     <string name="invalid_deck_name">Etibarsız kart adı</string>
     <string name="studyoptions_congrats_finished">Congratulations! You have finished for now.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Cihaz yaddaşı bağlı deyil</string>
-    <string name="button_sync" comment="Text of the sync button">Sinxronlaşdır</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sinxronlaşdır</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Do you want to cancel the sync?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
     <string name="syncing_media">Syncing media</string>
-    <string name="export_deck">Export deck</string>
+    <string name="export_deck" maxLength="28">Export deck</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Heçnə</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kart növləri</string>
     <string name="card_template_editor_front">Şablon üzü</string>
     <string name="card_template_editor_back">Şablon arxası</string>
-    <string name="card_template_editor_styling">Stil</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_styling" maxLength="28">Stil</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Card Browser Appearance</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Deck override</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>
     <string name="card_template_editor_cant_delete">Ən az bir kart növü lazımdır.</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title" maxLength="28">Card info</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>

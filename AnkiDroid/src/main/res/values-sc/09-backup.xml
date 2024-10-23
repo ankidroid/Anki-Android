@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Isfundu non sarvadu. Non b\'at logu bastante in sa memòria tua. Abbassa sa profundidade de sa còpia de seguresa o boga·nde carchi àteru documentu.</string>
     <string name="storage_warning">In sa memòria tua no abarrant nemmancu %d MB lìberos.\nLìbera unu pagu de ispàtziu pro evitare pèrdidas de datos.</string>
-    <string name="backup_restore">Riprìstina dae una còpia de seguresa</string>
+    <string name="backup_restore" maxLength="28">Riprìstina dae una còpia de seguresa</string>
     <string name="backup_new_collection">Colletzione noa</string>
     <string name="backup_del_collection">Iscantzella sa colletzione e crea·nde una noa</string>
     <string name="backup_del_collection_question">Cheres iscantzellare sa colletzione e creare una colletzione noa? Custu t\'at a fàghere pèrdere totu su progressu de imparòngiu tuo e at a iscantzellare totu sas cartas.</string>

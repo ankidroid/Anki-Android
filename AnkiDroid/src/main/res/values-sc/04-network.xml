@@ -77,7 +77,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Locales</string>
     <string name="sync_sanity_remote">Remotos</string>
-    <string name="one_way_sync_title">Sincronizatzione a sensu ùnicu</string>
+    <string name="one_way_sync_title" maxLength="41">Sincronizatzione a sensu ùnicu</string>
     <string name="one_way_sync_confirmation">Sincronizatzione a sensu ùnicu pedida</string>
     <string name="full_sync_confirmation">Sa modìfica pedida at a bisongiare de unu carrigamentu intreu de sa base de datos cando as a sincronizare sa colletzione tua. Si tenes revisiones o àteras modìficas isetende in un\'àteru dispositivu chi non sunt istadas galu sincronizadas inoghe s\'ant a pèrdere. Cheres sighire?</string>
     <string name="full_sync_confirmation_upgrade">Pro neghe de una faddina in su còdighe de sa versione installada anteposta de AnkiDroid est mègius a fortzare una sincronizatzione totale.</string>

@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Redigera täckskärmar</string>
     <string name="tag_name">Etikettnamn</string>
     <string name="add_new_filter_tags">Lägg till/Filtrera etiketter</string>
-    <string name="add_tag">Lägg till etikett</string>
-    <string name="check_all_tags">Markera/avmarkera alla etiketter</string>
-    <string name="filter_tags">Filtrera etiketter</string>
+    <string name="add_tag" maxLength="28">Lägg till etikett</string>
+    <string name="check_all_tags" maxLength="28">Markera/avmarkera alla etiketter</string>
+    <string name="filter_tags" maxLength="28">Filtrera etiketter</string>
     <string name="no_tags">Du har inte lagt till några etiketter än.</string>
     <string name="updated_version">Uppdaterad till version %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Spara whiteboarden</string>
-    <string name="enable_stylus">Aktivera pekpenna</string>
+    <string name="save_whiteboard" maxLength="28">Spara whiteboarden</string>
+    <string name="enable_stylus" maxLength="28">Aktivera pekpenna</string>
     <string name="disable_stylus">Inaktivera pekpenna</string>
-    <string name="enable_whiteboard">Aktivera whiteboard</string>
+    <string name="enable_whiteboard" maxLength="28">Aktivera whiteboard</string>
     <string name="disable_whiteboard">Avaktivera whiteboard</string>
     <string name="show_whiteboard">Aktivera whiteboard</string>
-    <string name="hide_whiteboard">Stäng av whiteboard</string>
-    <string name="clear_whiteboard">Rensa whiteboard</string>
-    <string name="replay_audio">Spela om ljud</string>
+    <string name="hide_whiteboard" maxLength="28">Stäng av whiteboard</string>
+    <string name="clear_whiteboard" maxLength="28">Rensa whiteboard</string>
+    <string name="replay_audio" maxLength="28">Spela om ljud</string>
     <string name="leech_suspend_notification">Kort markerat som utsugarkort och låst</string>
     <string name="leech_notification">Kort markerat som igel</string>
     <string name="webview_crash_unknown">Okänt fel</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Kritiskt fel: WebViewern kraschade. Orsak: %s</string>
     <string name="webview_crash_loop_dialog_title">Systemfel hos WebViewern</string>
     <string name="webview_crash_loop_dialog_content">WebViewern kunde inte hämta kortet \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Flaggor</string>
+    <string name="filter_by_flags" maxLength="41">Flaggor</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>
     <string name="custom_study_increase_review_limit">Ändra dagens gräns för kortgranskning</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Redigera not</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Redigera not</string>
     <string name="discard">Kasta</string>
     <string name="note_editor_no_cards_created">Inga kort skapade. Vänligen fyll i fler fält</string>
     <string name="note_editor_no_cards_created_all_fields">Den aktuella nottypen gav inga kort.\nVälj en annan nottyp, eller klicka på ‘Kort’ och lägg till ett fältbyte</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Textluckor fungerar bara för nottypen Lucktext</string>
     <string name="saving_facts">Sparar not</string>
     <string name="saving_model">Sparar anteckningstyp</string>
-    <string name="save">Spara</string>
+    <string name="save" maxLength="28">Spara</string>
     <string name="close">Stäng</string>
     <string name="select">Välj</string>
     <string name="field_remapping">%1$s (från \"%2$s\")</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d minuter</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kort</string>
-    <string name="note_editor_copy_note">Kopiera not</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Ompositionera</string>
-    <string name="card_editor_reset_card">Återställ framsteg</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Omplanera</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Förhandsgranska</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Kopiera som Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Kopiera not</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Ompositionera</string>
+    <string name="card_editor_reset_card" maxLength="28">Återställ framsteg</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Omplanera</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Förhandsgranska</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Kopiera som Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d av %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Byt namn</string>
-    <string name="checks_action">Kontrollera</string>
-    <string name="check_db">Kontrollera databas</string>
-    <string name="check_media">Kontrollera media</string>
-    <string name="empty_cards">Tomma kort</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Byt namn</string>
+    <string name="checks_action" maxLength="28">Kontrollera</string>
+    <string name="check_db" maxLength="28">Kontrollera databas</string>
+    <string name="check_media" maxLength="28">Kontrollera media</string>
+    <string name="empty_cards" maxLength="28">Tomma kort</string>
     <string name="unknown_type_field_warning">Skriv svar: okänt fält %s</string>
     <string name="delete_deck">Raderar kortlek&#8230;</string>
     <string name="info_rate">Betygsätt AnkiDroid</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Dela</string>
     <string name="export_choice_save_to">Spara till</string>
     <string name="export_saving_exported_collection">Spara exporterad fil&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Alternativ</string>
-    <string name="menu__deck_options">Kortleksalternativ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Alternativ</string>
+    <string name="menu__deck_options" maxLength="28">Kortleksalternativ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeringsalternativ</string>
-    <string name="select_tts">Ställ in TTS-språk</string>
-    <string name="custom_study">Anpassade studier</string>
+    <string name="select_tts" maxLength="28">Ställ in TTS-språk</string>
+    <string name="custom_study" maxLength="28">Anpassade studier</string>
     <string name="more_options">Mer</string>
     <string name="dyn_deck_desc">Det här är en specialkortlek för studier utanför det normala schemat. Korten återförs automatiskt till sina ursprungliga kortlekar efter att du repeterat dem. Om du tar bort denna kortlek återförs alla återstående kort till sina ursprungliga kortlekar.</string>
     <string name="steps_error">Steg måste definieras som siffror högre än 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Fel vid inläsning av sidan: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Bakgrund</string>
-    <string name="choose_an_image">Välj en bild</string>
+    <string name="background_image_title" maxLength="41">Bakgrund</string>
+    <string name="choose_an_image" maxLength="41">Välj en bild</string>
     <string name="remove_background_image">Ta bort bakgrund?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Återställ standardvärde</string>
+    <string name="restore_default" maxLength="28">Återställ standardvärde</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Det gick inte att spara whiteboardbilden. %s</string>
     <string name="white_board_image_saved">Whiteboard-bild sparad till %s</string>
-    <string name="title_whiteboard_pen_color">Färg på whiteboardpenna</string>
-    <string name="title_whiteboard_editor">Redigerare för whiteboard</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Färg på whiteboardpenna</string>
+    <string name="title_whiteboard_editor" maxLength="28">Redigerare för whiteboard</string>
     <string name="user_is_a_robot">Upptäckte automatiskt test. Om du är en människa, kontakta AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Detta kort använder AnkiDroid-funktioner som inte stöds. Kontakta utvecklaren %1$s, eller visa wiki. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Sök kortlekar</string>
+    <string name="search_decks" maxLength="28">Sök kortlekar</string>
     <string name="ankidroid_init_failed_webview_title">Kritiskt fel</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid använder sig av System WebView vilket inte är tillgängligt. Detta kan hända om systemet håller på att installera uppdateringar. Försök igen om några minuter.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Teckenstorlek</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Visa verktygsfält</string>
+    <string name="menu_font_size" maxLength="28">Teckenstorlek</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Visa verktygsfält</string>
     <string name="format_insert_bold">Formatera som fetstil</string>
     <string name="format_insert_italic">Formatera som kursiv</string>
     <string name="format_insert_underline">Formatera som understruken</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Du kan behöva använda iManager för att tillåta AnkiDroid att lägga till genvägar</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Din startskärm tillåter inte AnkiDroid att lägga till genvägar</string>
     <string name="create_shortcut_error">Kunde inte lägga till genväg: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Versalisera meningar</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Rulla verktygsfält</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Versalisera meningar</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Rulla verktygsfält</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Kontrollera din nätverksanslutning</string>
     <string name="search_using_deck_name">Sök efter kortlekens namn</string>
     <string name="external_storage_unavailable">Nedladdningen avbruten, det externa lagringsutrymmet är inte tillgängligt</string>
-    <string name="home">Hem</string>
+    <string name="home" maxLength="28">Hem</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kort gömt i högen</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d kort slutade gömmas</item>
         <item quantity="other">%d kort slutade gömmas</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Flytta på</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Flytta på</string>
     <string name="start_recording">Spela in</string>
     <string name="stop_recording">Stoppa</string>
     <string name="play_recording">Spela upp</string>

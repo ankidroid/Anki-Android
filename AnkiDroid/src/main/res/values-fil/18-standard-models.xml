@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Harapan</string>
-    <string name="back_field_name">Likuran</string>
+    <string name="front_field_name" maxLength="28">Harapan</string>
+    <string name="back_field_name" maxLength="28">Likuran</string>
 </resources>

@@ -270,21 +270,21 @@
     <string name="axis_picker_move_joystick">Manövrera en joystick/rörelsekänslig handkontroll</string>
     <string name="user_actions" maxLength="41">Användaråtgärder</string>
     <string name="user_actions_summary" maxLength="41">Utlös JavaScript från repetitionsskärmen</string>
-    <string name="user_action_1" maxLength="41">Användaråtgärd 1</string>
-    <string name="user_action_2" maxLength="41">Användaråtgärd 2</string>
-    <string name="user_action_3" maxLength="41">Användaråtgärd 3</string>
-    <string name="user_action_4" maxLength="41">Användaråtgärd 4</string>
-    <string name="user_action_5" maxLength="41">Användaråtgärd 5</string>
-    <string name="user_action_6" maxLength="41">Användaråtgärd 6</string>
-    <string name="user_action_7" maxLength="41">Användaråtgärd 7</string>
-    <string name="user_action_8" maxLength="41">Användaråtgärd 8</string>
-    <string name="user_action_9" maxLength="41">Användaråtgärd 9</string>
+    <string name="user_action_1" maxLength="28">Användaråtgärd 1</string>
+    <string name="user_action_2" maxLength="28">Användaråtgärd 2</string>
+    <string name="user_action_3" maxLength="28">Användaråtgärd 3</string>
+    <string name="user_action_4" maxLength="28">Användaråtgärd 4</string>
+    <string name="user_action_5" maxLength="28">Användaråtgärd 5</string>
+    <string name="user_action_6" maxLength="28">Användaråtgärd 6</string>
+    <string name="user_action_7" maxLength="28">Användaråtgärd 7</string>
+    <string name="user_action_8" maxLength="28">Användaråtgärd 8</string>
+    <string name="user_action_9" maxLength="28">Användaråtgärd 9</string>
     <string name="toggle_auto_advance" maxLength="41">Toggle auto advance</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Välj kortsida</string>
     <string name="card_side_question">Fråga</string>
     <string name="card_side_answer">Svar</string>
-    <string name="card_side_both">Frågor &amp; Svar</string>
+    <string name="card_side_both" maxLength="28">Frågor &amp; Svar</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">F: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">S: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

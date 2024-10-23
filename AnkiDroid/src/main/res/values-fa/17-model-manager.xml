@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">مدیریت نوع یادداشت‌ها</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly." maxLength="28">مدیریت نوع یادداشت‌ها</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">مدیریت فیلدها</string>
     <!--Toasts-->
     <string name="toast_last_model">شما نمی‌توانید آخرین نوع یادداشت خود را حذف کنید</string>
@@ -53,7 +53,7 @@
     <string name="model_field_editor_language_hint_dialog_success_result">تنظیم زبان راهنمایی به %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">ویرایش فیلدها</string>
-    <string name="model_field_editor_add">افزودن فیلد</string>
+    <string name="model_field_editor_add" maxLength="28">افزودن فیلد</string>
     <string name="model_field_editor_delete">حذف فیلد</string>
     <string name="model_field_editor_rename">تغییر نام فیلد</string>
     <string name="model_field_editor_language_hint">راهنمایی زبان کیبورد را تنظیم کن</string>
@@ -81,5 +81,5 @@
     <string name="model_manager_deck_override_added_message">تنظيم ‘%1$s’ دسته ی پیش فرض به ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">دسته ی پیش فرض برای ‘%s’ حذف شد</string>
     <string name="deck_override_explanation">دسته ای را برای گزاشتن کارت های جدید ‘%s’ انتخاب کنید</string>
-    <string name="deck_picker_dialog_filter_decks">فیلتر دسته</string>
+    <string name="deck_picker_dialog_filter_decks" maxLength="28">فیلتر دسته</string>
 </resources>

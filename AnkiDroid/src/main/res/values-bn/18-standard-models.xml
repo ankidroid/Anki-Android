@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">সামনে</string>
-    <string name="back_field_name">পিছনে</string>
+    <string name="front_field_name" maxLength="28">সামনে</string>
+    <string name="back_field_name" maxLength="28">পিছনে</string>
 </resources>

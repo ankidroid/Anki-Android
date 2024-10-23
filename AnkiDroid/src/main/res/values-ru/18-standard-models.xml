@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Лицо</string>
-    <string name="back_field_name">Оборот</string>
+    <string name="front_field_name" maxLength="28">Лицо</string>
+    <string name="back_field_name" maxLength="28">Оборот</string>
 </resources>

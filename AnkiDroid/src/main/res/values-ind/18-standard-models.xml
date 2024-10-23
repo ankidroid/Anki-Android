@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Depan</string>
-    <string name="back_field_name">Belakang</string>
+    <string name="front_field_name" maxLength="28">Depan</string>
+    <string name="back_field_name" maxLength="28">Belakang</string>
 </resources>

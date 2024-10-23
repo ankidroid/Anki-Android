@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Ön</string>
-    <string name="back_field_name">Arka</string>
+    <string name="front_field_name" maxLength="28">Ön</string>
+    <string name="back_field_name" maxLength="28">Arka</string>
 </resources>

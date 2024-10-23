@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Edit Occlusions</string>
     <string name="tag_name">Namo sokeiniwaurdis</string>
     <string name="add_new_filter_tags">Anaaiauk sokeiniwaurda</string>
-    <string name="add_tag">Biaik sokeiniwaurd</string>
-    <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
+    <string name="add_tag" maxLength="28">Biaik sokeiniwaurd</string>
+    <string name="check_all_tags" maxLength="28">Check/uncheck all tags</string>
+    <string name="filter_tags" maxLength="28">Filter tags</string>
     <string name="no_tags">Nauh ni biaiaukt sokeiniwaurd</string>
     <string name="updated_version">Ananiujiþ du usmereinai %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Gafastai ƕeitabaurd</string>
-    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="save_whiteboard" maxLength="28">Gafastai ƕeitabaurd</string>
+    <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
     <string name="disable_stylus">Disable stylus writing</string>
-    <string name="enable_whiteboard">Brukei ƕeitabaurd</string>
+    <string name="enable_whiteboard" maxLength="28">Brukei ƕeitabaurd</string>
     <string name="disable_whiteboard">Unsatei ƕeitabaurd</string>
     <string name="show_whiteboard">Ataugei ƕeitabaurd</string>
-    <string name="hide_whiteboard">Affilh ƕeitabaurd</string>
-    <string name="clear_whiteboard">Swairb ƕeitabaurd</string>
-    <string name="replay_audio">Replay audio</string>
+    <string name="hide_whiteboard" maxLength="28">Affilh ƕeitabaurd</string>
+    <string name="clear_whiteboard" maxLength="28">Swairb ƕeitabaurd</string>
+    <string name="replay_audio" maxLength="28">Replay audio</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="webview_crash_unknown">Unknown error</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags" maxLength="41">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
     <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Inmaidei melein</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Inmaidei melein</string>
     <string name="discard">Discard</string>
     <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Saving note</string>
     <string name="saving_model">Saving note type</string>
-    <string name="save">Gafast</string>
+    <string name="save" maxLength="28">Gafast</string>
     <string name="close">Luk</string>
     <string name="select">Walei</string>
     <string name="field_remapping">%1$s (fram \'%2$s\')</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid karta</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Reposition</string>
-    <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Faurasaihv</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Copy as Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Copy note</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Reposition</string>
+    <string name="card_editor_reset_card" maxLength="28">Reset progress</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Reschedule</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Faurasaihv</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Gif niujata namo</string>
-    <string name="checks_action">Check</string>
-    <string name="check_db">Check database</string>
-    <string name="check_media">Check media</string>
-    <string name="empty_cards">Lausos kartos</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Gif niujata namo</string>
+    <string name="checks_action" maxLength="28">Check</string>
+    <string name="check_db" maxLength="28">Check database</string>
+    <string name="check_media" maxLength="28">Check media</string>
+    <string name="empty_cards" maxLength="28">Lausos kartos</string>
     <string name="unknown_type_field_warning">Melei andahaft: unkunþs staþs %s</string>
     <string name="delete_deck">Wiko usnimand&#8230;</string>
     <string name="info_rate">Rate AnkiDroid</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">Share</string>
     <string name="export_choice_save_to">Save to</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Options</string>
-    <string name="menu__deck_options">Deck options</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Options</string>
+    <string name="menu__deck_options" maxLength="28">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Satei bokos-du-stibnai razda</string>
-    <string name="custom_study">Anþara laiseins</string>
+    <string name="select_tts" maxLength="28">Satei bokos-du-stibnai razda</string>
+    <string name="custom_study" maxLength="28">Anþara laiseins</string>
     <string name="more_options">Mais</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">Error loading page: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Select image</string>
+    <string name="background_image_title" maxLength="41">Background</string>
+    <string name="choose_an_image" maxLength="41">Select image</string>
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default" maxLength="28">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Whiteboard pen color</string>
+    <string name="title_whiteboard_editor" maxLength="28">Whiteboard editor</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Search decks</string>
+    <string name="search_decks" maxLength="28">Search decks</string>
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
+    <string name="menu_font_size" maxLength="28">Font size</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Show toolbar</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">Home</string>
+    <string name="home" maxLength="28">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Play</string>

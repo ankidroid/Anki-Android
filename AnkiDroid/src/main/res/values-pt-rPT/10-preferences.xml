@@ -271,21 +271,21 @@
     <string name="axis_picker_move_joystick">Mover um \"joystick\"/comando de movimento</string>
     <string name="user_actions" maxLength="41">Acções do Utilizador</string>
     <string name="user_actions_summary" maxLength="41">Executar JavaScript a partir do ecrã de revisão</string>
-    <string name="user_action_1" maxLength="41">Acção de Utilizador 1</string>
-    <string name="user_action_2" maxLength="41">Acção de Utilizador 2</string>
-    <string name="user_action_3" maxLength="41">Acção de Utilizador 3</string>
-    <string name="user_action_4" maxLength="41">Acção de Utilizador 4</string>
-    <string name="user_action_5" maxLength="41">Acção de Utilizador 5</string>
-    <string name="user_action_6" maxLength="41">Acção de Utilizador 6</string>
-    <string name="user_action_7" maxLength="41">Acção de Utilizador 7</string>
-    <string name="user_action_8" maxLength="41">Acção de Utilizador 8</string>
-    <string name="user_action_9" maxLength="41">Acção de Utilizador 9</string>
+    <string name="user_action_1" maxLength="28">Acção de Utilizador 1</string>
+    <string name="user_action_2" maxLength="28">Acção de Utilizador 2</string>
+    <string name="user_action_3" maxLength="28">Acção de Utilizador 3</string>
+    <string name="user_action_4" maxLength="28">Acção de Utilizador 4</string>
+    <string name="user_action_5" maxLength="28">Acção de Utilizador 5</string>
+    <string name="user_action_6" maxLength="28">Acção de Utilizador 6</string>
+    <string name="user_action_7" maxLength="28">Acção de Utilizador 7</string>
+    <string name="user_action_8" maxLength="28">Acção de Utilizador 8</string>
+    <string name="user_action_9" maxLength="28">Acção de Utilizador 9</string>
     <string name="toggle_auto_advance" maxLength="41">Ativar/desativar o avanço automático</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Selecione o lado da ficha</string>
     <string name="card_side_question">Questão</string>
     <string name="card_side_answer">Resposta</string>
-    <string name="card_side_both">Questão &amp; Resposta</string>
+    <string name="card_side_both" maxLength="28">Questão &amp; Resposta</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">R: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>

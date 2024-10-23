@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">આગળ</string>
-    <string name="back_field_name">પાછળ</string>
+    <string name="front_field_name" maxLength="28">આગળ</string>
+    <string name="back_field_name" maxLength="28">પાછળ</string>
 </resources>

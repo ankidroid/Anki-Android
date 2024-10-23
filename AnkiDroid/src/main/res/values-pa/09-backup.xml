@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">ਬੈਕਅੱਪ ਸੁਰੱਖਿਅਤ ਨਹੀਂ ਕੀਤਾ ਗਿਆ। ਤੁਹਾਡੇ ਕੋਲ ਤੁਹਾਡੀ ਸਟੋਰੇਜ \'ਤੇ ਲੋੜੀਂਦੀ ਜਗ੍ਹਾ ਨਹੀਂ ਬਚੀ ਹੈ। ਬੈਕਅੱਪ ਡੂੰਘਾਈ ਨੂੰ ਘਟਾਓ ਜਾਂ ਕੁਝ ਹੋਰ ਫਾਈਲਾਂ ਨੂੰ ਹਟਾਓ।</string>
     <string name="storage_warning">ਤੁਹਾਡੇ ਕੋਲ ਤੁਹਾਡੀ ਸਟੋਰੇਜ \'ਤੇ %d MB ਤੋਂ ਘੱਟ ਜਗ੍ਹਾ ਬਚੀ ਹੈ।\nਡੇਟਾ ਦੇ ਨੁਕਸਾਨ ਤੋਂ ਬਚਣ ਲਈ ਕੁਝ ਜਗ੍ਹਾ ਖਾਲੀ ਕਰੋ।</string>
-    <string name="backup_restore">ਬੈਕਅੱਪ ਤੋਂ ਰੀਸਟੋਰ ਕਰੋ</string>
+    <string name="backup_restore" maxLength="28">ਬੈਕਅੱਪ ਤੋਂ ਰੀਸਟੋਰ ਕਰੋ</string>
     <string name="backup_new_collection">ਨਵਾਂ ਸੰਗ੍ਰਹਿ</string>
     <string name="backup_del_collection">ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾਓ ਅਤੇ ਇੱਕ ਨਵਾਂ ਬਣਾਓ</string>
     <string name="backup_del_collection_question">ਕੀ ਮੈਨੂੰ ਸੰਗ੍ਰਹਿ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੀਦਾ ਹੈ ਅਤੇ ਇੱਕ ਨਵਾਂ ਬਣਾਉਣਾ ਚਾਹੀਦਾ ਹੈ? ਇਹ ਤੁਹਾਡੀ ਸਾਰੀ ਸਿੱਖਣ ਦੀ ਪ੍ਰਗਤੀ ਨੂੰ ਰੱਦ ਕਰ ਦੇਵੇਗਾ ਅਤੇ ਸਾਰੇ ਕਾਰਡ ਮਿਟਾ ਦੇਵੇਗਾ।</string>

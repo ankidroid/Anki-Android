@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Редагувати оклюзії</string>
     <string name="tag_name">Назва позначки</string>
     <string name="add_new_filter_tags">Додати/фільтрувати позначки</string>
-    <string name="add_tag">Додати позначку</string>
-    <string name="check_all_tags">Обрати/прибрати усі позначки</string>
-    <string name="filter_tags">Фільтр позначок</string>
+    <string name="add_tag" maxLength="28">Додати позначку</string>
+    <string name="check_all_tags" maxLength="28">Обрати/прибрати усі позначки</string>
+    <string name="filter_tags" maxLength="28">Фільтр позначок</string>
     <string name="no_tags">Ви ще не додали жодної позначки</string>
     <string name="updated_version">Оновлено до версії %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Зберегти написане</string>
-    <string name="enable_stylus">Увімкнути режим стилусу</string>
+    <string name="save_whiteboard" maxLength="28">Зберегти написане</string>
+    <string name="enable_stylus" maxLength="28">Увімкнути режим стилусу</string>
     <string name="disable_stylus">Вимкнути режим стилусу</string>
-    <string name="enable_whiteboard">Увімкнути дошку</string>
+    <string name="enable_whiteboard" maxLength="28">Увімкнути дошку</string>
     <string name="disable_whiteboard">Вимкнути дошку</string>
     <string name="show_whiteboard">Показати дошку</string>
-    <string name="hide_whiteboard">Заховати дошку</string>
-    <string name="clear_whiteboard">Очистити дошку</string>
-    <string name="replay_audio">Повторити аудіо</string>
+    <string name="hide_whiteboard" maxLength="28">Заховати дошку</string>
+    <string name="clear_whiteboard" maxLength="28">Очистити дошку</string>
+    <string name="replay_audio" maxLength="28">Повторити аудіо</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
     <string name="webview_crash_unknown">Невідома помилка</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Критична помилка WebView. Причина: %s</string>
     <string name="webview_crash_loop_dialog_title">Збій системного WebView</string>
     <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося відобразити картку \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Прапорці</string>
+    <string name="filter_by_flags" maxLength="41">Прапорці</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
     <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
@@ -96,14 +96,14 @@
         <item quantity="other">+%d відкладено</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Редагувати запис</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Редагувати запис</string>
     <string name="discard">Відкинути</string>
     <string name="note_editor_no_cards_created">Картки не створено. Будь ласка, заповніть більше полів</string>
     <string name="note_editor_no_cards_created_all_fields">Від поточного типу запису нема жодної картки. \nБудь ласка, оберіть інший тип запису чи натисніть «картки», додати поле підміни</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Завдання з пропусками працюватиме лише у типі запису з завданнями з пропуском</string>
     <string name="saving_facts">Зберегти запис</string>
     <string name="saving_model">Збереження типу записів</string>
-    <string name="save">Зберегти</string>
+    <string name="save" maxLength="28">Зберегти</string>
     <string name="close">Закрити</string>
     <string name="select">Вибрати</string>
     <string name="field_remapping">%1$s (з\"%2$s\")</string>
@@ -125,18 +125,18 @@
         <item quantity="other">%1$d хвилин</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Картка AnkiDroid</string>
-    <string name="note_editor_copy_note">Копіювати запис</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Перемістити</string>
-    <string name="card_editor_reset_card">Скинути перебіг</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланувати</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Попередній перегляд</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Копіювати як Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Копіювати запис</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Перемістити</string>
+    <string name="card_editor_reset_card" maxLength="28">Скинути перебіг</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Перепланувати</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Попередній перегляд</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Копіювати як Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Перейменувати</string>
-    <string name="checks_action">Перевірити</string>
-    <string name="check_db">Перевірити базу даних</string>
-    <string name="check_media">Перевірити медіафайли</string>
-    <string name="empty_cards">Порожні картки</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Перейменувати</string>
+    <string name="checks_action" maxLength="28">Перевірити</string>
+    <string name="check_db" maxLength="28">Перевірити базу даних</string>
+    <string name="check_media" maxLength="28">Перевірити медіафайли</string>
+    <string name="empty_cards" maxLength="28">Порожні картки</string>
     <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
     <string name="delete_deck">Видалення колоди&#8230;\n Будь ласка, зачекайте.</string>
     <string name="info_rate">Оцініть AnkiDroid</string>
@@ -170,11 +170,11 @@
     <string name="export_choice_share">Поділитись</string>
     <string name="export_choice_save_to">Зберегти до</string>
     <string name="export_saving_exported_collection">Збереження експортованого файлу&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Налаштування</string>
-    <string name="menu__deck_options">Параметри колоди</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Налаштування</string>
+    <string name="menu__deck_options" maxLength="28">Параметри колоди</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>
-    <string name="select_tts">Обрати TTS мову</string>
-    <string name="custom_study">Додаткове навчання</string>
+    <string name="select_tts" maxLength="28">Обрати TTS мову</string>
+    <string name="custom_study" maxLength="28">Додаткове навчання</string>
     <string name="more_options">Ще</string>
     <string name="dyn_deck_desc">Це спеціальна колода для навчання поза межами нормального графіку. Картки будуть автоматично повернуті до своїх колод після повторення. Видалення цієї колоди поверне всі карточки до своїх колод.</string>
     <string name="steps_error">Кроки повинні бути числами, більшими ніж 0</string>
@@ -198,17 +198,17 @@
     <string name="web_page_error">Помилка при завантаженні сторінки: \"%s\"</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Фон</string>
-    <string name="choose_an_image">Оберіть зображення</string>
+    <string name="background_image_title" maxLength="41">Фон</string>
+    <string name="choose_an_image" maxLength="41">Оберіть зображення</string>
     <string name="remove_background_image">Видалити задній фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Відновити «Типове»</string>
+    <string name="restore_default" maxLength="28">Відновити «Типове»</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Порожня</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не вдалося зберегти зображення дошки. %s</string>
     <string name="white_board_image_saved">Зображення дошки збережено до %s</string>
-    <string name="title_whiteboard_pen_color">Колір пензля</string>
-    <string name="title_whiteboard_editor">Редактор дошки</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Колір пензля</string>
+    <string name="title_whiteboard_editor" maxLength="28">Редактор дошки</string>
     <string name="user_is_a_robot">Виявлено автоматичний тест. Якщо Ви — людина, зверніться до підтримки AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Ця картка використовує непідтримувані функції AnkiDroid. Зверніться до розробника %1$s, або перегляньте вікі. %2$s</string>
@@ -223,12 +223,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Шукати колоди</string>
+    <string name="search_decks" maxLength="28">Шукати колоди</string>
     <string name="ankidroid_init_failed_webview_title">Критична помилка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Розмір шрифту</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Показувати панель інструментів</string>
+    <string name="menu_font_size" maxLength="28">Розмір шрифту</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Показувати панель інструментів</string>
     <string name="format_insert_bold">Форматувати як жирний</string>
     <string name="format_insert_italic">Форматувати як курсив</string>
     <string name="format_insert_underline">Форматувати як підкреслений</string>
@@ -250,8 +250,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Використовуйте iManager, щоб дозволити AnkiDroid додавати ярлики</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш головний екран не дозволяє AnkiDroid додати ярлики</string>
     <string name="create_shortcut_error">Помилка при створенні ярлика: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Підняти регістр речень</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Панель прокручування</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Підняти регістр речень</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Панель прокручування</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -274,7 +274,7 @@
     <string name="check_network">Будь ласка, перевірте підключення до мережі</string>
     <string name="search_using_deck_name">Пошук за назвою колоди</string>
     <string name="external_storage_unavailable">Завантаження перервано, зовнішнє сховище недоступне</string>
-    <string name="home">Головна</string>
+    <string name="home" maxLength="28">Головна</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Картку відкладено.</string>
@@ -345,7 +345,7 @@
         <item quantity="many">%d карток повернуто</item>
         <item quantity="other">%d карток повернуто</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Репозиціонувати</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Репозиціонувати</string>
     <string name="start_recording">Запис</string>
     <string name="stop_recording">Зупинити</string>
     <string name="play_recording">Відтворити</string>

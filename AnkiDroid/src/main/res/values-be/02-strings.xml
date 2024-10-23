@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Рэдагаваць аклюзіі </string>
     <string name="tag_name">Назва меткі</string>
     <string name="add_new_filter_tags">Дадаць/фільтраваць меткі</string>
-    <string name="add_tag">Дадаць метку</string>
-    <string name="check_all_tags">Выбраць/зняць пазнаку з усіх метак</string>
-    <string name="filter_tags">Фільтраваць меткі</string>
+    <string name="add_tag" maxLength="28">Дадаць метку</string>
+    <string name="check_all_tags" maxLength="28">Выбраць/зняць пазнаку з усіх метак</string>
+    <string name="filter_tags" maxLength="28">Фільтраваць меткі</string>
     <string name="no_tags">Вы пакуль не дадалі ніводнай меткі</string>
     <string name="updated_version">Абноўлена да версіі %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Захаваць дошку</string>
-    <string name="enable_stylus">Уключыць рэжым стылуса</string>
+    <string name="save_whiteboard" maxLength="28">Захаваць дошку</string>
+    <string name="enable_stylus" maxLength="28">Уключыць рэжым стылуса</string>
     <string name="disable_stylus">Адключыць рэжым стылуса</string>
-    <string name="enable_whiteboard">Уключыць дошку</string>
+    <string name="enable_whiteboard" maxLength="28">Уключыць дошку</string>
     <string name="disable_whiteboard">Адключыць дошку</string>
     <string name="show_whiteboard">Паказаць дошку</string>
-    <string name="hide_whiteboard">Схаваць дошку</string>
-    <string name="clear_whiteboard">Ачысціць дошку</string>
-    <string name="replay_audio">Паўтарыць аўдыя</string>
+    <string name="hide_whiteboard" maxLength="28">Схаваць дошку</string>
+    <string name="clear_whiteboard" maxLength="28">Ачысціць дошку</string>
+    <string name="replay_audio" maxLength="28">Паўтарыць аўдыя</string>
     <string name="leech_suspend_notification">Картка пазначана як надакучлівая і была прыпынена</string>
     <string name="leech_notification">Картка пазначаная як надакучлівая</string>
     <string name="webview_crash_unknown">Невядомая памылка</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Крытычная памылка: збой апрацоўшчыка WebView. Прычына: %s</string>
     <string name="webview_crash_loop_dialog_title">Памылка апрацоўшчыка сістэмнага WebView</string>
     <string name="webview_crash_loop_dialog_content">Сістэмнаму WebView не атрымалася апрацаваць картку \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Сцягі</string>
+    <string name="filter_by_flags" maxLength="41">Сцягі</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змяніць абмежаванні новых картак на сёння</string>
     <string name="custom_study_increase_review_limit">Змяніць абмежаванні паўтарэння картак на сёння</string>
@@ -96,14 +96,14 @@
         <item quantity="other">+%d адкладзеных</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Рэдагаваць нататку</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Рэдагаваць нататку</string>
     <string name="discard">Адхіліць</string>
     <string name="note_editor_no_cards_created">Карткі не створаныя. Калі ласка, запоўніце больш палёў.</string>
     <string name="note_editor_no_cards_created_all_fields">Бягучы тып нататкі не мае ніводнай карткі.\nВыберыце іншы тып нататкі або націсніце \"Карткі\" і дадайце поле падстаноўкі.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Заданні з пропускамі будуць працаваць толькі ў тыпе нататкі з пропускамі</string>
     <string name="saving_facts">Захаванне нататкі</string>
     <string name="saving_model">Захоўваецца тып нататкі</string>
-    <string name="save">Захаваць</string>
+    <string name="save" maxLength="28">Захаваць</string>
     <string name="close">Закрыць</string>
     <string name="select">Выбраць</string>
     <string name="field_remapping">%1$s (з “%2$s”)</string>
@@ -125,18 +125,18 @@
         <item quantity="other">%1$d хвілін</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Картка AnkiDroid</string>
-    <string name="note_editor_copy_note">Скапіяваць нататку</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Перамясціць</string>
-    <string name="card_editor_reset_card">Скінуць дасягненні</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перапланаваць</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Папярэдні прагляд</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Капіяваць як Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Скапіяваць нататку</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Перамясціць</string>
+    <string name="card_editor_reset_card" maxLength="28">Скінуць дасягненні</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Перапланаваць</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Папярэдні прагляд</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Капіяваць як Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Перайменаваць</string>
-    <string name="checks_action">Праверыць</string>
-    <string name="check_db">Праверыць базу даных</string>
-    <string name="check_media">Праверыць медыяфайлы</string>
-    <string name="empty_cards">Пустыя карткі</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Перайменаваць</string>
+    <string name="checks_action" maxLength="28">Праверыць</string>
+    <string name="check_db" maxLength="28">Праверыць базу даных</string>
+    <string name="check_media" maxLength="28">Праверыць медыяфайлы</string>
+    <string name="empty_cards" maxLength="28">Пустыя карткі</string>
     <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
     <string name="delete_deck">Выдаленне калоды&#8230;</string>
     <string name="info_rate">Ацаніць AnkiDroid</string>
@@ -170,11 +170,11 @@
     <string name="export_choice_share">Абагуліць</string>
     <string name="export_choice_save_to">Захаваць у</string>
     <string name="export_saving_exported_collection">Захаванне экспартаванага файла&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Параметры</string>
-    <string name="menu__deck_options">Параметры калоды</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Параметры</string>
+    <string name="menu__deck_options" maxLength="28">Параметры калоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>
-    <string name="select_tts">Прызначыць сінтэз маўлення</string>
-    <string name="custom_study">Індывідуальнае навучанне</string>
+    <string name="select_tts" maxLength="28">Прызначыць сінтэз маўлення</string>
+    <string name="custom_study" maxLength="28">Індывідуальнае навучанне</string>
     <string name="more_options">Яшчэ</string>
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="steps_error">Крокі павінны быць лікамі, якія больш за 0</string>
@@ -198,17 +198,17 @@
     <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Фон</string>
-    <string name="choose_an_image">Выберыце відарыс</string>
+    <string name="background_image_title" maxLength="41">Фон</string>
+    <string name="choose_an_image" maxLength="41">Выберыце відарыс</string>
     <string name="remove_background_image">Выдаліць фон?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Вярнуцца да прадвызначаных</string>
+    <string name="restore_default" maxLength="28">Вярнуцца да прадвызначаных</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Пуста</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Не атрымалася захаваць відарыс дошкі. %s</string>
     <string name="white_board_image_saved">Відарыс дошкі захаваны ў %s</string>
-    <string name="title_whiteboard_pen_color">Колер крэйды дошкі</string>
-    <string name="title_whiteboard_editor">Рэдактар дошкі</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Колер крэйды дошкі</string>
+    <string name="title_whiteboard_editor" maxLength="28">Рэдактар дошкі</string>
     <string name="user_is_a_robot">Выяўлены аўтаматычны тэст. У выпадку, калі вы чалавек, калі ласка, напішыце ў падтрымку AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">У гэтай карткі ёсць магчымасці, якія не падтрымлівае AnkiDroid. Звярніцеся да распрацоўшчыка %1$s або паспрабуйце знайсці неабходную інфармацыю ў Wikipedia. %2$s</string>
@@ -223,12 +223,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Пошук калод</string>
+    <string name="search_decks" maxLength="28">Пошук калод</string>
     <string name="ankidroid_init_failed_webview_title">Крытычная памылка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid выкарыстоўвае сістэмныя WebView, якія зараз недаступныя. Гэта можа здарыцца таму, што ў дадзены момант адбываюцца ўсталяванне абнаўленняў. Паспрабуйце, калі ласка, пачакаць і паўтарыць спробу праз некалькі хвілін.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Памер шрыфту</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Паказаць панэль інструментаў</string>
+    <string name="menu_font_size" maxLength="28">Памер шрыфту</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Паказаць панэль інструментаў</string>
     <string name="format_insert_bold">Фарматаваць як тоўсты</string>
     <string name="format_insert_italic">Фарматаваць як курсіў</string>
     <string name="format_insert_underline">Фарматаваць як падкрэслены</string>
@@ -250,8 +250,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Паспрабуйце скарыстацца праграмай iManager для таго, каб дазволіць AnkiDroid дадаваць ярлыкі</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ваш галоўны экран не дазваляе праграме дадаваць ярлыкі</string>
     <string name="create_shortcut_error">\"Памылка дабаўлення ярлыка: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Пачынаць сказ з вялікай літары</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Панэль прагорткі</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Пачынаць сказ з вялікай літары</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Панэль прагорткі</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -274,7 +274,7 @@
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
     <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="external_storage_unavailable">Спампоўванне абарвана, бо знешняе сховішча недаступна.</string>
-    <string name="home">Галоўная</string>
+    <string name="home" maxLength="28">Галоўная</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Адкладзеная картка.</string>
@@ -342,7 +342,7 @@
         <item quantity="many">%d картак вернуты</item>
         <item quantity="other">%d картак вернуты</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Перамясціць</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Перамясціць</string>
     <string name="start_recording">Запіс</string>
     <string name="stop_recording">Стоп</string>
     <string name="play_recording">Прайграць</string>

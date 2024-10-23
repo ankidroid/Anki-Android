@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">უფრო დიდი</string>
     <string name="html_size_code_xx_large">ყველაზე დიდი</string>
     <!-- gestures_labels -->
-    <string name="answer_again">პასუხი: თავიდან</string>
-    <string name="answer_hard">პასუხი: რთული</string>
-    <string name="answer_good">პასუხი: კარგი</string>
-    <string name="answer_easy">პასუხი: მარტივი</string>
-    <string name="gesture_play">მედიაფაილების დაკვრა</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">წითელი დროშის მიმაგრება/მოძრობა</string>
-    <string name="gesture_flag_orange">სტაფილოსფერი დროშის მიმაგრება/მოძრობა</string>
-    <string name="gesture_flag_green">მწვანე დროშის მიმაგრება/მოძრობა</string>
-    <string name="gesture_flag_blue">ლურჯი დროშის მიმაგრება/მოძრობა</string>
-    <string name="gesture_flag_pink">ვარდისფერი დროშის მიმაგრება/მოძრობა</string>
-    <string name="gesture_flag_turquoise">ფირუზისფერი დროშის მიმაგრება/მოძრობა</string>
-    <string name="gesture_flag_purple">იისფერი დროშის მიმაგრება/მოძრობა</string>
-    <string name="gesture_flag_remove">დროშის მოძრობა</string>
-    <string name="gesture_page_up">გვერდით მაღლა</string>
-    <string name="gesture_page_down">გვერდით დაბლა</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">დაფის ჩართვა/გამორთვა</string>
-    <string name="gesture_show_hint">მინიშნების ჩვენება</string>
-    <string name="gesture_show_all_hints">ყველა მინიშნების ჩვენება</string>
-    <string name="record_voice">ხმის ჩაწერა</string>
-    <string name="replay_voice">ხმის გამეორება</string>
-    <string name="save_voice">ჩანაწერის შენახვა</string>
+    <string name="answer_again" maxLength="41">პასუხი: თავიდან</string>
+    <string name="answer_hard" maxLength="41">პასუხი: რთული</string>
+    <string name="answer_good" maxLength="41">პასუხი: კარგი</string>
+    <string name="answer_easy" maxLength="41">პასუხი: მარტივი</string>
+    <string name="gesture_play" maxLength="41">მედიაფაილების დაკვრა</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">წითელი დროშის მიმაგრება/მოძრობა</string>
+    <string name="gesture_flag_orange" maxLength="41">სტაფილოსფერი დროშის მიმაგრება/მოძრობა</string>
+    <string name="gesture_flag_green" maxLength="41">მწვანე დროშის მიმაგრება/მოძრობა</string>
+    <string name="gesture_flag_blue" maxLength="41">ლურჯი დროშის მიმაგრება/მოძრობა</string>
+    <string name="gesture_flag_pink" maxLength="41">ვარდისფერი დროშის მიმაგრება/მოძრობა</string>
+    <string name="gesture_flag_turquoise" maxLength="41">ფირუზისფერი დროშის მიმაგრება/მოძრობა</string>
+    <string name="gesture_flag_purple" maxLength="41">იისფერი დროშის მიმაგრება/მოძრობა</string>
+    <string name="gesture_flag_remove" maxLength="41">დროშის მოძრობა</string>
+    <string name="gesture_page_up" maxLength="41">გვერდით მაღლა</string>
+    <string name="gesture_page_down" maxLength="41">გვერდით დაბლა</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">დაფის ჩართვა/გამორთვა</string>
+    <string name="gesture_show_hint" maxLength="41">მინიშნების ჩვენება</string>
+    <string name="gesture_show_all_hints" maxLength="41">ყველა მინიშნების ჩვენება</string>
+    <string name="record_voice" maxLength="41">ხმის ჩაწერა</string>
+    <string name="replay_voice" maxLength="41">ხმის გამეორება</string>
+    <string name="save_voice" maxLength="41">ჩანაწერის შენახვა</string>
 </resources>

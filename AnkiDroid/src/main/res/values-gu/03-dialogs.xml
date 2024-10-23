@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ડેટાબેઝ તપાસો?</string>
     <string name="check_db_warning">આમાં ઘણો સમય લાગી શકે છે</string>
-    <string name="contextmenu_deckpicker_delete_deck">ડેક કાઢી નાખો</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">ડેક કાઢી નાખો</string>
     <string name="delete_deck_title">ડેક કાઢી નાખીએ?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">%1$s இல் உள்ள அனைத்து கார்டுகளையும் நீக்கவா? இதில் %2$d கார்டுகள் உள்ளன</item>
@@ -101,7 +101,7 @@
     <string name="dialog_continue">ચાલુ રાખો</string>
     <string name="dialog_processing">પ્રક્રિયા&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">બનાવો</string>
-    <string name="dialog_positive_delete">કાઢી નાખો</string>
+    <string name="dialog_positive_delete" maxLength="28">કાઢી નાખો</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">અક્ષમ કરો</string>
     <string name="dialog_positive_overwrite">ઓવરરાઇટ કરો</string>
@@ -186,7 +186,7 @@
     <string name="help_item_mailing_list">ટપાલ યાદી</string>
     <string name="help_item_reddit">રેડિટ</string>
     <string name="help_item_report_bug">બગની જાણ કરો</string>
-    <string name="help_title_support_ankidroid">AnkiDroid ને સપોર્ટ કરો</string>
+    <string name="help_title_support_ankidroid" maxLength="28">AnkiDroid ને સપોર્ટ કરો</string>
     <string name="help_item_support_opencollective_donate">દાન કરો</string>
     <string name="help_item_support_develop_ankidroid">વિકાસ</string>
     <string name="help_item_support_rate_ankidroid">દર</string>
@@ -225,7 +225,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">તમારા સંગ્રહનો બેકઅપ લો</string>
     <string name="backup_collection_message">તમે થોડા સમયથી તમારા સંગ્રહનું બેકઅપ લીધું નથી. ડેટા નુકશાન અટકાવવા માટે તમારે આ હવે કરવું જોઈએ</string>
-    <string name="button_backup">બેકઅપ</string>
+    <string name="button_backup" maxLength="41">બેકઅપ</string>
     <string name="button_disable_reminder">રીમાઇન્ડર્સ અક્ષમ કરો</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">પાછળથી</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ફરી બતાવશો નહીં</string>

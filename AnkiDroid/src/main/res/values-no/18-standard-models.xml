@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Forsiden</string>
-    <string name="back_field_name">Baksiden</string>
+    <string name="front_field_name" maxLength="28">Forsiden</string>
+    <string name="back_field_name" maxLength="28">Baksiden</string>
 </resources>

@@ -55,21 +55,21 @@
     <string name="edit_occlusions">ᱚᱠᱥᱩᱞᱤᱥᱚᱱ ᱥᱟᱯᱲᱟᱣ ᱢᱮ</string>
     <string name="tag_name">ᱴᱮᱜ ᱧᱩᱛᱩᱢ </string>
     <string name="add_new_filter_tags">ᱥᱮᱞᱮᱫ/ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ </string>
-    <string name="add_tag">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ </string>
-    <string name="check_all_tags">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ </string>
-    <string name="filter_tags">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ </string>
+    <string name="add_tag" maxLength="28">ᱴᱮᱜ ᱥᱮᱞᱮᱫ ᱢᱮ </string>
+    <string name="check_all_tags" maxLength="28">ᱪᱮᱠ ᱢᱮ/ᱡᱷᱚᱛᱟ ᱴᱮᱜ uncheck ᱢᱮ </string>
+    <string name="filter_tags" maxLength="28">ᱴᱮᱜ ᱯᱷᱤᱞᱴᱚᱨ ᱢᱮ </string>
     <string name="no_tags">ᱟᱢ ᱴᱮᱜ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱠᱟᱜᱼᱟᱢ </string>
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
-    <string name="enable_stylus">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱮᱱᱮᱡ ᱢᱮ</string>
+    <string name="save_whiteboard" maxLength="28">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
+    <string name="enable_stylus" maxLength="28">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱮᱱᱮᱡ ᱢᱮ</string>
     <string name="disable_stylus">ᱥᱴᱟᱭᱞᱩᱥ ᱚᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
+    <string name="enable_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>
     <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ </string>
-    <string name="hide_whiteboard">ᱥᱤᱠᱮᱴ ᱩᱠᱩᱭ ᱢᱮ </string>
-    <string name="clear_whiteboard">ᱥᱤᱠᱮᱴ ᱤᱬᱤᱡ ᱢᱮ </string>
-    <string name="replay_audio">Audio replay ᱢᱮ </string>
+    <string name="hide_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱩᱠᱩᱭ ᱢᱮ </string>
+    <string name="clear_whiteboard" maxLength="28">ᱥᱤᱠᱮᱴ ᱤᱬᱤᱡ ᱢᱮ </string>
+    <string name="replay_audio" maxLength="28">Audio replay ᱢᱮ </string>
     <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
     <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
     <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ </string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Fatal ᱵᱷᱩᱞ: WebView ᱨᱮᱱᱰᱚᱨᱚᱨ ᱠᱨᱟᱥ ᱮᱱᱟ ᱾ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="webview_crash_loop_dialog_title">ᱥᱤᱥᱴᱚᱢ WebView ᱨᱮᱱᱰᱚᱨᱤᱝ ᱯᱷᱮᱞ ᱮᱱᱟ</string>
     <string name="webview_crash_loop_dialog_content">ᱥᱤᱥᱴᱚᱢ WebView ᱠᱟᱨᱰ ᱨᱮᱱᱰᱚᱨᱤᱝ ᱡᱚᱠᱷᱟᱜ ᱯᱷᱮᱞ ᱮᱱᱟ \'%1$s\'.\n%2$s</string>
-    <string name="filter_by_flags">ᱯᱚᱛᱠᱟ ᱠᱚ</string>
+    <string name="filter_by_flags" maxLength="41">ᱯᱚᱛᱠᱟ ᱠᱚ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="custom_study_increase_review_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱧᱮᱧᱮᱞ  ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
@@ -94,14 +94,14 @@
         <item quantity="other">+%d ᱫᱷᱩᱲᱤ ᱟᱠᱟᱱᱟ</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="discard">ᱵᱟᱧᱪᱟᱣ ᱢᱮ</string>
     <string name="note_editor_no_cards_created">ᱚᱠᱟ ᱠᱟᱰ ᱦᱚᱸ ᱵᱟᱭ ᱛᱮᱟᱛ ᱟᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱡᱟᱜᱮ ᱟᱨᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱯᱩᱨᱚᱬ ᱢᱮ</string>
     <string name="note_editor_no_cards_created_all_fields">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱟᱰ ᱵᱟᱭ ᱛᱮᱭᱟᱨᱮᱟᱭ ᱾ \n ᱫᱚᱭᱠᱟᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱢᱮ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ \'ᱠᱟᱨᱰᱥ\' ᱨᱮ ᱚᱛᱟ ᱡᱟ ᱟᱨ field substitute ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">ᱠᱞᱚᱡ ᱢᱮᱴᱟᱹᱣ ᱫᱚ ᱠᱞᱚᱡ ᱱᱚᱴ ᱯᱨᱚᱠᱟᱨ ᱴᱷᱮᱱ ᱮ ᱠᱟᱹᱢᱤ ᱟ</string>
     <string name="saving_facts">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱚᱱᱪᱟᱣ ᱢᱮ </string>
     <string name="saving_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱟᱱᱪᱟᱣ ᱢᱮ</string>
-    <string name="save">ᱥᱟᱝᱪᱚᱣ</string>
+    <string name="save" maxLength="28">ᱥᱟᱝᱪᱚᱣ</string>
     <string name="close">ᱵᱚᱫᱽ</string>
     <string name="select">ᱵᱟᱪᱷᱟᱣ</string>
     <string name="field_remapping">%1$s (“%2$s” ᱠᱷᱚᱱ)</string>
@@ -119,18 +119,18 @@
         <item quantity="other">%1$d ᱴᱤᱯᱤᱡ</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid ᱠᱟᱰ</string>
-    <string name="note_editor_copy_note">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱠᱚᱯᱤ ᱢᱮ</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
-    <string name="card_editor_reset_card">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱠᱚ ᱧᱟᱢ ᱟᱠᱟᱱᱟ</string>
+    <string name="note_editor_copy_note" maxLength="28">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱠᱚᱯᱤ ᱢᱮ</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">ᱥᱛᱷᱟᱱᱚᱱᱛᱚᱨ ᱢᱮ</string>
+    <string name="card_editor_reset_card" maxLength="28">ᱯᱨᱚᱜᱨᱮᱥ ᱨᱤᱥᱮᱴ ᱢᱮ</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱱᱳᱴ ᱠᱚ ᱧᱟᱢ ᱟᱠᱟᱱᱟ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar"> %2$d ᱨᱮᱱᱟᱜ %1$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
-    <string name="checks_action">ᱪᱟᱠᱷᱟ</string>
-    <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
-    <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
-    <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
+    <string name="checks_action" maxLength="28">ᱪᱟᱠᱷᱟ</string>
+    <string name="check_db" maxLength="28">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
+    <string name="check_media" maxLength="28">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
+    <string name="empty_cards" maxLength="28">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
     <string name="unknown_type_field_warning">ᱨᱚᱲ ᱴᱟᱭᱤᱯ ᱢᱮᱺ ᱵᱚᱭ ᱵᱟᱰᱟᱭᱠᱟᱱ ᱡᱟᱭᱜᱟ %s</string>
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="info_rate">AnkiDroid ᱜᱚᱬᱚᱰ ᱢᱮ</string>
@@ -164,11 +164,11 @@
     <string name="export_choice_share">ᱦᱟᱹᱴᱤᱧ</string>
     <string name="export_choice_save_to">ᱞᱟᱹᱜᱤᱫ ᱫᱚᱦᱚᱭ ᱢᱮ</string>
     <string name="export_saving_exported_collection"> ᱮᱠᱥᱯᱳᱨᱴ ᱟᱠᱟᱱ ᱯᱷᱤᱞᱤ ᱥᱟᱦᱟᱣ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">ᱚᱯᱥᱚᱱᱠᱚ</string>
-    <string name="menu__deck_options">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">ᱚᱯᱥᱚᱱᱠᱚ</string>
+    <string name="menu__deck_options" maxLength="28">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>
-    <string name="select_tts">TTS ᱯᱟᱹᱨᱥᱤ ᱥᱮᱴ ᱢᱮ</string>
-    <string name="custom_study">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ</string>
+    <string name="select_tts" maxLength="28">TTS ᱯᱟᱹᱨᱥᱤ ᱥᱮᱴ ᱢᱮ</string>
+    <string name="custom_study" maxLength="28">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱦᱟᱣ</string>
     <string name="more_options">ᱰᱷᱮᱨ</string>
     <string name="dyn_deck_desc">ᱱᱚᱶᱟ ᱫᱚ ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱣᱱ ᱮᱴᱟᱜ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱥᱯᱮᱥᱟᱞ ᱰᱮᱠ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱤᱣ ᱯᱚᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱰᱮᱢᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ ᱾ ᱰᱮᱠ ᱞᱤᱥᱴ ᱠᱷᱚᱱ ᱰᱮᱠᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱱᱟ ᱫᱚ ᱡᱷᱚᱛᱚ ᱠᱟᱲ ᱢᱩᱞ ᱰᱮᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ  </string>
     <string name="steps_error">ᱥᱴᱮᱯᱥ ᱫᱚ ᱥᱩᱱᱭᱚ ᱱᱩᱚᱢᱵᱚᱨ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱜᱮ ᱛᱟᱦᱮᱱ ᱢᱟ</string>
@@ -190,17 +190,17 @@
     <string name="web_page_error">ᱥᱟᱦᱴᱟ ᱞᱟᱫᱮ ᱵᱷᱩᱞ:%s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">ᱵᱮᱠᱜᱟᱨᱩᱸᱰ</string>
-    <string name="choose_an_image">ᱪᱤᱛᱟᱨ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
+    <string name="background_image_title" maxLength="41">ᱵᱮᱠᱜᱟᱨᱩᱸᱰ</string>
+    <string name="choose_an_image" maxLength="41">ᱪᱤᱛᱟᱨ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="remove_background_image">ᱚᱛ ᱦᱟᱥᱟ ᱪᱟᱵᱟ ᱢᱮ?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">ᱢᱩᱞ ᱯᱷᱮᱰᱟᱛ ᱨᱮ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
+    <string name="restore_default" maxLength="28">ᱢᱩᱞ ᱯᱷᱮᱰᱟᱛ ᱨᱮ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ᱮᱠᱷᱮᱵᱟᱜ</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱥᱟᱱᱪᱟᱣ ᱵᱷᱩᱞ ᱾. %s </string>
     <string name="white_board_image_saved">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ %s ᱛᱮ ᱥᱟᱱᱪᱟᱣ</string>
-    <string name="title_whiteboard_pen_color">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
-    <string name="title_whiteboard_editor">ᱯᱩᱸᱰᱵᱚᱰ ᱮᱰᱤᱴᱚᱨ</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">ᱯᱩᱸᱰ ᱵᱚᱰ ᱪᱤᱛᱟᱹᱨ ᱠᱚᱞᱚᱢ ᱨᱚᱰ</string>
+    <string name="title_whiteboard_editor" maxLength="28">ᱯᱩᱸᱰᱵᱚᱰ ᱮᱰᱤᱴᱚᱨ</string>
     <string name="user_is_a_robot">ᱟᱹᱴᱚᱢᱮᱴᱮᱰ ᱴᱮᱥᱴ ᱯᱟᱱᱛᱮ ᱚᱲᱚᱠ ᱾ ᱡᱩᱫᱤ ᱟᱢ ᱦᱚᱲ ᱠᱟᱱᱟᱢ AnkiDroid ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱵᱟᱝ ᱥᱟᱯᱯᱚᱨᱴ AnkiDroid ᱯᱷᱤᱪᱚᱨ ᱠᱚ ᱵᱮᱵᱷᱟᱨ ᱮᱫ ᱟᱭ ᱾ %1$s ᱰᱮᱵᱷᱞᱚᱯᱟᱹᱨ ᱥᱚᱢᱯᱚᱨᱠ ᱠᱚᱢ, ᱟᱨ ᱵᱟᱝ ᱣᱤᱠᱤ ᱧᱮᱞ ᱢᱮ ᱾ %2$s</string>
@@ -215,12 +215,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ᱠᱟᱰ ᱡᱤᱱᱤᱥ ᱵᱷᱩᱞ:  ‘%s’ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ</string>
     <!-- Deck Picker -->
-    <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="search_decks" maxLength="28">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
     <string name="ankidroid_init_failed_webview_title">ᱯᱩᱨᱟᱹ ᱵᱷᱩᱞ</string>
     <string name="ankidroid_init_failed_webview">Ankidroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ᱴᱩᱞᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
+    <string name="menu_font_size" maxLength="28">ᱪᱤᱠᱤ ᱢᱟᱯ</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">ᱴᱩᱞᱵᱟᱨ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
     <string name="format_insert_bold">ᱵᱚᱞ-ᱰ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
     <string name="format_insert_italic">ᱤᱴᱟᱞᱤᱠ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
     <string name="format_insert_underline">ᱜᱟᱨᱞᱟᱭᱤᱱ ᱛᱮ ᱥᱮᱴ ᱢᱮ</string>
@@ -242,8 +242,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid ᱥᱚᱴᱠᱚᱴ ᱥᱮᱞᱮᱫ ᱪᱷᱚ ᱞᱟᱹᱜᱤᱫ ᱟᱢ iManager ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ᱟᱢᱟᱜ ᱚᱲᱟᱜ ᱥᱠᱨᱤᱱ AnkiDroid ᱥᱚᱴᱠᱚᱴ ᱵᱟᱝ ᱥᱮᱞᱮᱫ ᱪᱷᱚᱭᱟᱭ</string>
     <string name="create_shortcut_error">ᱥᱚᱴᱠᱚᱴ ᱥᱮᱞᱮᱫ ᱵᱷᱩᱞ: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ᱟᱹᱭᱟᱹᱛ ᱢᱟᱨᱟᱝ ᱪᱷᱚᱭ ᱢᱮ</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">ᱟᱹᱭᱟᱹᱛ ᱢᱟᱨᱟᱝ ᱪᱷᱚᱭ ᱢᱮ</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Scroll toolbar</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -266,7 +266,7 @@
     <string name="check_network">ᱫᱟᱭᱟᱠᱟᱛᱮ ᱟᱢᱟᱜ ᱱᱮᱴᱣᱟᱨᱠ ᱠᱳᱱᱮᱠᱥᱚᱱ ᱡᱟᱸᱪ ᱢᱮ</string>
     <string name="search_using_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
     <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home">ᱚᱲᱟᱜ</string>
+    <string name="home" maxLength="28">ᱚᱲᱟᱜ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
@@ -334,7 +334,7 @@
         <item quantity="one">%d card unburied</item>
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Reposition</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Reposition</string>
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Play</string>

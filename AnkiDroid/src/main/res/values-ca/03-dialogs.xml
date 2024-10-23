@@ -46,7 +46,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Base de dades de verificació</string>
     <string name="check_db_warning">Això pot trigar molt de temps</string>
-    <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
+    <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Suprimeix el paquet</string>
     <string name="delete_deck_title">Suprimeix el paquet</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
@@ -101,7 +101,7 @@
     <string name="dialog_continue">Continuar</string>
     <string name="dialog_processing">En procés &#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Crear</string>
-    <string name="dialog_positive_delete">Eliminar</string>
+    <string name="dialog_positive_delete" maxLength="28">Eliminar</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Desactiva</string>
     <string name="dialog_positive_overwrite">Sobreescriure</string>
@@ -186,7 +186,7 @@
     <string name="help_item_mailing_list">Llista de correu</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">Informa d\'un error</string>
-    <string name="help_title_support_ankidroid">Suporteu AnkiDroid</string>
+    <string name="help_title_support_ankidroid" maxLength="28">Suporteu AnkiDroid</string>
     <string name="help_item_support_opencollective_donate">Donar</string>
     <string name="help_item_support_develop_ankidroid">Desenvolupar</string>
     <string name="help_item_support_rate_ankidroid">Valorar</string>
@@ -225,7 +225,7 @@
     <!-- scoped storage -->
     <string name="backup_your_collection">Còpia de seguretat de la vostra col·lecció</string>
     <string name="backup_collection_message">Fa temps que no feu una còpia de seguretat de la col·lecció. Hauríeu de fer-ho ara per evitar la pèrdua de dades</string>
-    <string name="button_backup">Còpia de seguretat</string>
+    <string name="button_backup" maxLength="41">Còpia de seguretat</string>
     <string name="button_disable_reminder">Desactiva el recordatori</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Més endavant</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">No ho mostris més</string>

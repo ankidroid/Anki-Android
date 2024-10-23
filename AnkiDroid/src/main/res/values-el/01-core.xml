@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Τράπουλες</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Περιηγητής καρτών</string>
-    <string name="statistics">Στατιστικά</string>
-    <string name="settings">Ρυθμίσεις</string>
-    <string name="help">Βοήθεια</string>
+    <string name="decks" maxLength="28">Τράπουλες</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Περιηγητής καρτών</string>
+    <string name="statistics" maxLength="28">Στατιστικά</string>
+    <string name="settings" maxLength="28">Ρυθμίσεις</string>
+    <string name="help" maxLength="28">Βοήθεια</string>
     <string name="drawing">Σχέδιο</string>
     <string name="send_feedback">Αποστολή αξιολόγησης</string>
     <string name="studyoptions_start">Μελέτη</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Πληκτρολογήστε την απάντηση</string>
-    <string name="show_answer">Εμφάνιση Απάντησης</string>
+    <string name="show_answer" maxLength="41">Εμφάνιση Απάντησης</string>
     <string name="hide_answer">Απόκρυψη απάντησης</string>
-    <string name="ease_button_again">Ξανά</string>
-    <string name="ease_button_hard">Δύσκολη</string>
-    <string name="ease_button_good">Καλή</string>
+    <string name="ease_button_again" maxLength="41">Ξανά</string>
+    <string name="ease_button_hard" maxLength="41">Δύσκολη</string>
+    <string name="ease_button_good" maxLength="41">Καλή</string>
     <string name="ease_button_easy">Εύκολη</string>
-    <string name="menu_import">Εισαγωγή</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Αναίρεση</string>
-    <string name="redo">Επανεκτέλεση</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Αναίρεση γραμμής</string>
+    <string name="menu_import" maxLength="28">Εισαγωγή</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Αναίρεση</string>
+    <string name="redo" maxLength="28">Επανεκτέλεση</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Αναίρεση γραμμής</string>
     <string name="move_all_to_deck">Μετακίνηση όλων στην τράπουλα</string>
-    <string name="unbury">Ξεθάψιμο</string>
-    <string name="rename_deck">Μετονομασία τράπουλας</string>
+    <string name="unbury" maxLength="28">Ξεθάψιμο</string>
+    <string name="rename_deck" maxLength="28">Μετονομασία τράπουλας</string>
     <string name="create_shortcut">Δημιουργία συντόμευσης</string>
     <string name="browse_cards">Περιήγηση καρτών</string>
     <string name="edit_deck_description" comment="edit the deck description">Επεξεργασία περιγραφής</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Προσθήκη</string>
-    <string name="menu_add_note">Προσθήκη σημείωσης</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Προσθήκη</string>
+    <string name="menu_add_note" maxLength="28">Προσθήκη σημείωσης</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Συγχρονισμός λογαριασμού</string>
-    <string name="menu_dismiss_note">Απόκρυψη / διαγραφή</string>
-    <string name="menu_bury_card">Θάψιμο κάρτας</string>
-    <string name="menu_bury_note">Θάψιμο σημείωσης</string>
-    <string name="menu_suspend_card">Αναστολή κάρτας</string>
-    <string name="menu_suspend_note">Αναστολή Σημείωσης</string>
-    <string name="menu_bury">Θάψιμο</string>
-    <string name="menu_suspend">Αναστολή</string>
-    <string name="menu_delete_note">Διαγραφή Σημείωσης</string>
-    <string name="menu_flag">Σήμανση</string>
+    <string name="menu_dismiss_note" maxLength="41">Απόκρυψη / διαγραφή</string>
+    <string name="menu_bury_card" maxLength="28">Θάψιμο κάρτας</string>
+    <string name="menu_bury_note" maxLength="28">Θάψιμο σημείωσης</string>
+    <string name="menu_suspend_card" maxLength="28">Αναστολή κάρτας</string>
+    <string name="menu_suspend_note" maxLength="28">Αναστολή Σημείωσης</string>
+    <string name="menu_bury" maxLength="28">Θάψιμο</string>
+    <string name="menu_suspend" maxLength="28">Αναστολή</string>
+    <string name="menu_delete_note" maxLength="28">Διαγραφή Σημείωσης</string>
+    <string name="menu_flag" maxLength="41">Σήμανση</string>
     <string name="rename_flag">Μετονομασία σημαιών</string>
-    <string name="menu_flag_card">Σήμανση κάρτας</string>
-    <string name="menu_edit_tags">Επεξεργασία ετικετών</string>
+    <string name="menu_flag_card" maxLength="28">Σήμανση κάρτας</string>
+    <string name="menu_edit_tags" maxLength="28">Επεξεργασία ετικετών</string>
     <string name="delete_note_message">Πραγματικά να διαγραφεί αυτή η σημείωση και όλες οι κάρτες της;\n%s</string>
-    <string name="menu_search">Αναζήτηση στο %1$s</string>
-    <string name="menu_mark_note">Μαρκάρισμα σημείωσης</string>
+    <string name="menu_search" maxLength="28">Αναζήτηση στο %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Μαρκάρισμα σημείωσης</string>
     <string name="menu_unmark_note">Ξεμαρκάρισμα σημείωσης</string>
-    <string name="menu_enable_voice_playback">Ενεργοποίηση αναπαραγωγής φωνής</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Ενεργοποίηση αναπαραγωγής φωνής</string>
     <string name="menu_disable_voice_playback">Απενεργοποίηση αναπαραγωγής φωνής</string>
     <string name="new_deck">Δημιουργία τράπουλας</string>
     <string name="new_dynamic_deck">Δημιουργία φιλτραρισμένης τράπουλας</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Παρακαλούμε παραχωρήστε στο Anki-Droid την άδεια \'Αποθήκευσης\' για να συνεχίσετε</string>
     <string name="rebuild_filtered_deck">Αναδόμηση φιλτραρισμένης τράπουλας&#8230;</string>
-    <string name="rebuild_cram_label">Αναδόμηση</string>
-    <string name="empty_cram_label">Άδειασμα</string>
+    <string name="rebuild_cram_label" maxLength="28">Αναδόμηση</string>
+    <string name="empty_cram_label" maxLength="28">Άδειασμα</string>
     <string name="create_subdeck">Δημιουργία υποτράπουλας</string>
     <string name="empty_filtered_deck">Άδειασμα φιλτραρισμένης τράπουλας&#8230;</string>
     <string name="custom_study_deck_name">Προσαρμοσμένη μελέτη λειτουργίας</string>
     <string name="custom_study_deck_exists">Παρακαλούμε μετονομάστε την υπάρχουσα τράπουλα Προσαρμοσμένης Μελέτης πρώτα.</string>
     <string name="search_deck" comment="Deck search for selecting it">Αναζήτηση</string>
     <string name="empty_deck">Αυτή η τράπουλα είναι κενή</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Αναζήτηση</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Αναζήτηση</string>
     <string name="invalid_deck_name">Μη έγκυρο όνομα</string>
     <string name="studyoptions_congrats_finished">Συγχαρητήρια! Έχετε τελειώσει για τώρα.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Η τράπουλα τελείωσε για τώρα! %s</string>
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
-    <string name="button_sync" comment="Text of the sync button">Συγχρονισμός</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Συγχρονισμός</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Θέλετε να ακυρώσετε τον συγχρονισμό;</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Συνέχεια συγχρονισμού</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Ο συγχρονισμός ακυρώθηκε</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Ακύρωση&#8230;\nΑυτό μπορεί να διαρκέσει κάποιο χρόνο.</string>
     <string name="syncing_media">Συγχρονισμός πολυμέσων</string>
-    <string name="export_deck">Εξαγωγή τράπουλας</string>
+    <string name="export_deck" maxLength="28">Εξαγωγή τράπουλας</string>
     <string name="export_collection">Εξαγωγή συλλογής</string>
     <string name="nothing">Τίποτε</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Τύποι κάρτας</string>
     <string name="card_template_editor_front">Μπροστινό πρότυπο</string>
     <string name="card_template_editor_back">Πίσω πρότυπο</string>
-    <string name="card_template_editor_styling">Στυλ</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Εμφάνιση Περιηγητή Κάρτας</string>
-    <string name="card_template_editor_deck_override">Παράκαμψη τράπουλας</string>
-    <string name="card_template_editor_insert_field">Εισάγετε πεδίο</string>
+    <string name="card_template_editor_styling" maxLength="28">Στυλ</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Εμφάνιση Περιηγητή Κάρτας</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Παράκαμψη τράπουλας</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Εισάγετε πεδίο</string>
     <string name="card_template_editor_select_field">Επιλέξτε πεδίο</string>
     <string name="card_template_editor_cant_delete">Απαιτείται τουλάχιστον ένας τύπος κάρτας</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Εμφάνιση περιηγητή</string>
     <!-- card Info -->
-    <string name="card_info_title">Πληροφορίες κάρτας</string>
+    <string name="card_info_title" maxLength="28">Πληροφορίες κάρτας</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Ανάγνωση και γραφή στη βάση δεδομένων του AnkiDroid</string>
     <string name="read_write_permission_description">πρόσβαση σε υπάρχουσες σημειώσεις, κάρτες, τύπους σημειώσεων και τράπουλες, καθώς και δημιουργία νέων</string>

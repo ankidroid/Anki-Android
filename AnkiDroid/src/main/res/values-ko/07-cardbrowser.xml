@@ -55,23 +55,23 @@
     <plurals name="card_browser_delete_notes">
         <item quantity="other">Delete notes</item>
     </plurals>
-    <string name="card_browser_change_deck">카드 덱</string>
+    <string name="card_browser_change_deck" maxLength="28">카드 덱</string>
     <string name="delete_card_title">노트를 삭제할까요?</string>
-    <string name="card_browser_show_marked" maxLength="29">표시된 카드 필터링</string>
-    <string name="card_browser_show_suspended" maxLength="29">비활성화된 카드 필터링</string>
-    <string name="card_browser_search_by_tag" maxLength="29">태그별 필터링</string>
-    <string name="card_browser_search_by_flag" maxLength="29">태그별로 보기</string>
-    <string name="card_browser_list_my_searches" maxLength="29">내가 검색한 항목</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">검색 항목 저장</string>
+    <string name="card_browser_show_marked" maxLength="28">표시된 카드 필터링</string>
+    <string name="card_browser_show_suspended" maxLength="28">비활성화된 카드 필터링</string>
+    <string name="card_browser_search_by_tag" maxLength="28">태그별 필터링</string>
+    <string name="card_browser_search_by_flag" maxLength="28">태그별로 보기</string>
+    <string name="card_browser_list_my_searches" maxLength="28">내가 검색한 항목</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">검색 항목 저장</string>
     <string name="card_browser_list_my_searches_title">저장된 검색 항목 선택</string>
     <string name="card_browser_list_my_searches_new_name">현재 검색 항목의 이름</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">이름 없이 검색 항목을 저장할 수 없습니다.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">이름이 이미 존재합니다!</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\"을 삭제할까요?</string>
-    <string name="card_browser_change_display_order" maxLength="29">표시 순서 변경</string>
+    <string name="card_browser_change_display_order" maxLength="28">표시 순서 변경</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
     <string name="card_details_tags">태그</string>
     <string-array name="card_browser_order_labels">
@@ -86,8 +86,8 @@
         <item>복습에 따라</item>
         <item>오답 횟수에 따라</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">모두 선택</string>
-    <string name="card_browser_select_none">모두 선택 안함</string>
+    <string name="card_browser_select_all" maxLength="28">모두 선택</string>
+    <string name="card_browser_select_none" maxLength="28">모두 선택 안함</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
     <string name="card_browser_due_filtered_card">(filtered)</string>
     <string name="card_browser_interval_learning_card">(learning)</string>

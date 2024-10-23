@@ -55,21 +55,21 @@
     <string name="edit_occlusions">Sunting Oklusi</string>
     <string name="tag_name">Nama tag</string>
     <string name="add_new_filter_tags">Tambah/Filter tag</string>
-    <string name="add_tag">Tambah tag</string>
-    <string name="check_all_tags">Centang / hapus centang semua tag</string>
-    <string name="filter_tags">Filter tag</string>
+    <string name="add_tag" maxLength="28">Tambah tag</string>
+    <string name="check_all_tags" maxLength="28">Centang / hapus centang semua tag</string>
+    <string name="filter_tags" maxLength="28">Filter tag</string>
     <string name="no_tags">Anda belum menambahkan tag apa pun</string>
     <string name="updated_version">Diperbarui ke versi %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Simpan whiteboard</string>
-    <string name="enable_stylus">Aktifkan mode stylus</string>
+    <string name="save_whiteboard" maxLength="28">Simpan whiteboard</string>
+    <string name="enable_stylus" maxLength="28">Aktifkan mode stylus</string>
     <string name="disable_stylus">Nonaktifkan mode stylus</string>
-    <string name="enable_whiteboard">Nyalakan whiteboard</string>
+    <string name="enable_whiteboard" maxLength="28">Nyalakan whiteboard</string>
     <string name="disable_whiteboard">Nonaktifkan whiteboard</string>
     <string name="show_whiteboard">Tampilkan whiteboard</string>
-    <string name="hide_whiteboard">Sembunyikan whiteboard</string>
-    <string name="clear_whiteboard">Bersihkan whiteboard</string>
-    <string name="replay_audio">Putar ulang audio</string>
+    <string name="hide_whiteboard" maxLength="28">Sembunyikan whiteboard</string>
+    <string name="clear_whiteboard" maxLength="28">Bersihkan whiteboard</string>
+    <string name="replay_audio" maxLength="28">Putar ulang audio</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai lintah dan ditunda</string>
     <string name="leech_notification">Kartu ditandai sebagai lintah</string>
     <string name="webview_crash_unknown">Galat Tidak Diketahui</string>
@@ -80,7 +80,7 @@
     <string name="webview_crash_fatal">Galat Fatal: Perender WebView mogok. Sebab: %s</string>
     <string name="webview_crash_loop_dialog_title">Sistem WebView Gagal Merender</string>
     <string name="webview_crash_loop_dialog_content">Sistem WebView gagal merender kartu \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags">Bendera</string>
+    <string name="filter_by_flags" maxLength="41">Bendera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>
     <string name="custom_study_increase_review_limit">Ubah batas ulasan kartu hari ini</string>
@@ -93,14 +93,14 @@
         <item quantity="other">+%d buried</item>
     </plurals>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit catatan</string>
+    <string name="cardeditor_title_edit_card" maxLength="28">Edit catatan</string>
     <string name="discard">Buang</string>
     <string name="note_editor_no_cards_created">Tidak ada kartu yang dibuat. Harap isi semua bidang teks</string>
     <string name="note_editor_no_cards_created_all_fields">Tipe catatan sekarang tidak menghasilkan kartu apapun.\nHarap memilih jenis catatan lain, atau pilih \'Kartu\' dan tambahkan bidang teks pengganti</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Kosongan Kloza hanya bekerja pada tipe catatan Kloza</string>
     <string name="saving_facts">Menyimpan catatan</string>
     <string name="saving_model">Menyimpan tipe catatan</string>
-    <string name="save">Simpan</string>
+    <string name="save" maxLength="28">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
@@ -116,18 +116,18 @@
         <item quantity="other">%1$d menit</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kartu AnkiDroid</string>
-    <string name="note_editor_copy_note">Salin Catatan</string>
-    <string name="card_editor_reposition_card" comment="reposition a card in the new queue">Pindah posisi</string>
-    <string name="card_editor_reset_card">Reset kemajuan</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadwalkan ulang</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="29">Pratinjau</string>
-    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown">Salin sebagai Markdown</string>
+    <string name="note_editor_copy_note" maxLength="28">Salin Catatan</string>
+    <string name="card_editor_reposition_card" comment="reposition a card in the new queue" maxLength="28">Pindah posisi</string>
+    <string name="card_editor_reset_card" maxLength="28">Reset kemajuan</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card" maxLength="28">Jadwalkan ulang</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)" maxLength="28">Pratinjau</string>
+    <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Salin sebagai Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d dari %2$d</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Ubah nama</string>
-    <string name="checks_action">Periksa</string>
-    <string name="check_db">Periksa basisdata</string>
-    <string name="check_media">Periksa media</string>
-    <string name="empty_cards">Kartu kosong</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Ubah nama</string>
+    <string name="checks_action" maxLength="28">Periksa</string>
+    <string name="check_db" maxLength="28">Periksa basisdata</string>
+    <string name="check_media" maxLength="28">Periksa media</string>
+    <string name="empty_cards" maxLength="28">Kartu kosong</string>
     <string name="unknown_type_field_warning">Ketik jawaban: bidang %s tidak diketahui</string>
     <string name="delete_deck">Menghapus dek&#8230;</string>
     <string name="info_rate">Beri AnkiDroid rating</string>
@@ -161,11 +161,11 @@
     <string name="export_choice_share">Bagikan</string>
     <string name="export_choice_save_to">Simpan ke</string>
     <string name="export_saving_exported_collection">Saving exported file&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="29">Opsi</string>
-    <string name="menu__deck_options">Opsi dek</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Opsi</string>
+    <string name="menu__deck_options" maxLength="28">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
-    <string name="select_tts">Tetapkan bahasa TTS</string>
-    <string name="custom_study">Belajar kustom</string>
+    <string name="select_tts" maxLength="28">Tetapkan bahasa TTS</string>
+    <string name="custom_study" maxLength="28">Belajar kustom</string>
     <string name="more_options">Lainnya</string>
     <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke dek aslinya setelah Anda mengulasnya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek aslinya.</string>
     <string name="steps_error">Langkah-langkah harus lebih besar dari 0</string>
@@ -186,17 +186,17 @@
     <string name="web_page_error">Gagal memuat halaman: %s</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Latar belakang</string>
-    <string name="choose_an_image">Pilih gambar</string>
+    <string name="background_image_title" maxLength="41">Latar belakang</string>
+    <string name="choose_an_image" maxLength="41">Pilih gambar</string>
     <string name="remove_background_image">Hapus latar belakang?</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Kembalikan ke baku</string>
+    <string name="restore_default" maxLength="28">Kembalikan ke baku</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Gagal menyimpan gambar di whiteboard. %s</string>
     <string name="white_board_image_saved">Gambar whiteboard disimpan ke %s</string>
-    <string name="title_whiteboard_pen_color">Warna pena whiteboard</string>
-    <string name="title_whiteboard_editor">Editor papan tulis</string>
+    <string name="title_whiteboard_pen_color" maxLength="41">Warna pena whiteboard</string>
+    <string name="title_whiteboard_editor" maxLength="28">Editor papan tulis</string>
     <string name="user_is_a_robot">Tes otomatis terdeteksi. Jika kamu manusia, kontak dukungan AnkiDroid</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Kartu ini menggunakan fitur yang tidak didukung AnkiDroid. Kontak pengembang %1$s, atau kunjungi wiki. %2$s</string>
@@ -211,12 +211,12 @@
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
     <!-- Deck Picker -->
-    <string name="search_decks">Cari dek</string>
+    <string name="search_decks" maxLength="28">Cari dek</string>
     <string name="ankidroid_init_failed_webview_title">Kegagalan fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid membutuhkan System Webview yang sekarang sedang tidak ada. Hal ini dapat terjadi karena sistem sedang meng-install pembaruan. Mohon mencoba lagi dalam beberapa menit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Ukuran font</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Tampilkan toolbar</string>
+    <string name="menu_font_size" maxLength="28">Ukuran font</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Tampilkan toolbar</string>
     <string name="format_insert_bold">Atur sebagai bold</string>
     <string name="format_insert_italic">Atur sebagai italic</string>
     <string name="format_insert_underline">Atur sebagai garis bawah</string>
@@ -238,8 +238,8 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Anda mungkin perlu menggunakan iManager untuk memperbolehkan AnkiDroid menambah pintasan</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Layar utama Anda tidak memperbolehkan AnkiDroid untuk menambah pintasan</string>
     <string name="create_shortcut_error">Gagal menambah shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Mengkapitalkan kalimat-kalimat</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Gulir bilah alat</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Mengkapitalkan kalimat-kalimat</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll" maxLength="28">Gulir bilah alat</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
@@ -262,7 +262,7 @@
     <string name="check_network">Harap periksa koneksi jaringan Anda</string>
     <string name="search_using_deck_name">Cari berdasarkan nama dek</string>
     <string name="external_storage_unavailable">Unduhan dibatalkan, penyimpanan eksternal tidak tersedia</string>
-    <string name="home">Beranda</string>
+    <string name="home" maxLength="28">Beranda</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Kartu disimpan.</string>
@@ -328,7 +328,7 @@
     <plurals name="unbury_cards_feedback">
         <item quantity="other">%d cards unburied</item>
     </plurals>
-    <string name="card_template_reposition_template" comment="move a card template to a new position">Pindah posisi</string>
+    <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Pindah posisi</string>
     <string name="start_recording">Mulai rekam</string>
     <string name="stop_recording">Selesai rekam</string>
     <string name="play_recording">Mainkan</string>

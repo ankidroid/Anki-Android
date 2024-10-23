@@ -70,23 +70,23 @@
         <item quantity="many">حذف الملحوظات</item>
         <item quantity="other">حذف الملحوظات</item>
     </plurals>
-    <string name="card_browser_change_deck">تغيير الرزمة</string>
+    <string name="card_browser_change_deck" maxLength="28">تغيير الرزمة</string>
     <string name="delete_card_title">هل تريد حذف الملحوظة؟</string>
-    <string name="card_browser_show_marked" maxLength="29">فلترة البطاقات المعلمة</string>
-    <string name="card_browser_show_suspended" maxLength="29">فلترة البطاقات المعلقة</string>
-    <string name="card_browser_search_by_tag" maxLength="29">فلترة حسب الوسم</string>
-    <string name="card_browser_search_by_flag" maxLength="29">فلترة حسب المؤشر</string>
-    <string name="card_browser_list_my_searches" maxLength="29">عبارات البحث الخاصة بي</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">احفظ عبارة البحث</string>
+    <string name="card_browser_show_marked" maxLength="28">فلترة البطاقات المعلمة</string>
+    <string name="card_browser_show_suspended" maxLength="28">فلترة البطاقات المعلقة</string>
+    <string name="card_browser_search_by_tag" maxLength="28">فلترة حسب الوسم</string>
+    <string name="card_browser_search_by_flag" maxLength="28">فلترة حسب المؤشر</string>
+    <string name="card_browser_list_my_searches" maxLength="28">عبارات البحث الخاصة بي</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">احفظ عبارة البحث</string>
     <string name="card_browser_list_my_searches_title">اختر عبارة بحث محفوظة</string>
     <string name="card_browser_list_my_searches_new_name">اسم عبارة البحث الحالية</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">لا يمكنك حفظ عبارة بحث بدون اسم</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">الاسم موجود</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">هل تريد حذف “%1$s”؟</string>
-    <string name="card_browser_change_display_order" maxLength="29">تغيير ترتيب العرض</string>
+    <string name="card_browser_change_display_order" maxLength="28">تغيير ترتيب العرض</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
     <string name="card_details_tags">وسوم</string>
     <string-array name="card_browser_order_labels">
@@ -101,8 +101,8 @@
         <item>حسب المراجعات</item>
         <item>حسب السقطات</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">تحديد الكل</string>
-    <string name="card_browser_select_none">إلغاء التحديد</string>
+    <string name="card_browser_select_all" maxLength="28">تحديد الكل</string>
+    <string name="card_browser_select_none" maxLength="28">إلغاء التحديد</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(جديدة)</string>
     <string name="card_browser_due_filtered_card">(مفلترة)</string>
     <string name="card_browser_interval_learning_card">(في طور التعلم)</string>

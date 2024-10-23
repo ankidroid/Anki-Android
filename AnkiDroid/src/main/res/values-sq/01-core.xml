@@ -45,11 +45,11 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
-    <string name="decks">Kuvertë</string>
-    <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Shfletuesi i kartës</string>
-    <string name="statistics">Statistikat</string>
-    <string name="settings">Cilësimet</string>
-    <string name="help">Ndihmë</string>
+    <string name="decks" maxLength="28">Kuvertë</string>
+    <string name="card_browser" maxLength="28" comment="The usage of card browser inside the app (note the casing)">Shfletuesi i kartës</string>
+    <string name="statistics" maxLength="28">Statistikat</string>
+    <string name="settings" maxLength="28">Cilësimet</string>
+    <string name="help" maxLength="28">Ndihmë</string>
     <string name="drawing">Vizatime</string>
     <string name="send_feedback">Dërgo përshtypje</string>
     <string name="studyoptions_start">Mësim</string>
@@ -73,42 +73,42 @@
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Shkruani përgjigjen</string>
-    <string name="show_answer">Trego përgjigjen</string>
+    <string name="show_answer" maxLength="41">Trego përgjigjen</string>
     <string name="hide_answer">Fshih përgjigjen</string>
-    <string name="ease_button_again">Përsëri</string>
-    <string name="ease_button_hard">Vështirë</string>
-    <string name="ease_button_good">Mirë</string>
+    <string name="ease_button_again" maxLength="41">Përsëri</string>
+    <string name="ease_button_hard" maxLength="41">Vështirë</string>
+    <string name="ease_button_good" maxLength="41">Mirë</string>
     <string name="ease_button_easy">Lehtë</string>
-    <string name="menu_import">Importi</string>
-    <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Zhbëj</string>
-    <string name="redo">Ribëj</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Zhbër goditjen</string>
+    <string name="menu_import" maxLength="28">Importi</string>
+    <string name="undo" maxLength="28" comment="When tapping on this text, the last action is undone.">Zhbëj</string>
+    <string name="redo" maxLength="28">Ribëj</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)" maxLength="28">Zhbër goditjen</string>
     <string name="move_all_to_deck">Zhvendosni të gjithë në kuvertë</string>
-    <string name="unbury">Zhvarros</string>
-    <string name="rename_deck">Riemërto kuvertën</string>
+    <string name="unbury" maxLength="28">Zhvarros</string>
+    <string name="rename_deck" maxLength="28">Riemërto kuvertën</string>
     <string name="create_shortcut">Krijo nje rrugë të shkurter</string>
     <string name="browse_cards">Shfletoni kartat</string>
     <string name="edit_deck_description" comment="edit the deck description">Redakto përshkrimin</string>
-    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="29">Shto</string>
-    <string name="menu_add_note">Shto shënim</string>
+    <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Shto</string>
+    <string name="menu_add_note" maxLength="28">Shto shënim</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinkronizoni llogarinë</string>
-    <string name="menu_dismiss_note">Fshih / fshi</string>
-    <string name="menu_bury_card">Varros kartën</string>
-    <string name="menu_bury_note">Varros shënimin</string>
-    <string name="menu_suspend_card">Pezulloni kartën</string>
-    <string name="menu_suspend_note">Pezulloni shënim</string>
-    <string name="menu_bury">Varros</string>
-    <string name="menu_suspend">Pezulloni</string>
-    <string name="menu_delete_note">Fshij shënimin</string>
-    <string name="menu_flag">Flamurin</string>
+    <string name="menu_dismiss_note" maxLength="41">Fshih / fshi</string>
+    <string name="menu_bury_card" maxLength="28">Varros kartën</string>
+    <string name="menu_bury_note" maxLength="28">Varros shënimin</string>
+    <string name="menu_suspend_card" maxLength="28">Pezulloni kartën</string>
+    <string name="menu_suspend_note" maxLength="28">Pezulloni shënim</string>
+    <string name="menu_bury" maxLength="28">Varros</string>
+    <string name="menu_suspend" maxLength="28">Pezulloni</string>
+    <string name="menu_delete_note" maxLength="28">Fshij shënimin</string>
+    <string name="menu_flag" maxLength="41">Flamurin</string>
     <string name="rename_flag">Rename flags</string>
-    <string name="menu_flag_card">Flamurin kartën</string>
-    <string name="menu_edit_tags">Redakto etiketat</string>
+    <string name="menu_flag_card" maxLength="28">Flamurin kartën</string>
+    <string name="menu_edit_tags" maxLength="28">Redakto etiketat</string>
     <string name="delete_note_message">Të fshihet vërtet ky shënim dhe të gjitha kartat e tij?\n%s</string>
-    <string name="menu_search">Kërkoni në %1$s</string>
-    <string name="menu_mark_note">Shënoni shënimin</string>
+    <string name="menu_search" maxLength="28">Kërkoni në %1$s</string>
+    <string name="menu_mark_note" maxLength="28">Shënoni shënimin</string>
     <string name="menu_unmark_note">Zhshënjoni shënimin</string>
-    <string name="menu_enable_voice_playback">Enable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
     <string name="menu_disable_voice_playback">Disable voice playback</string>
     <string name="new_deck">Krijo kuvertë</string>
     <string name="new_dynamic_deck">Krijo kuvertë të filtruar</string>
@@ -119,37 +119,37 @@
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Ju lutemi jepni AnkiDroid lejen \"Storage\" për të vazhduar</string>
     <string name="rebuild_filtered_deck">Po rindërton kuvertën e filtruar&#8230;</string>
-    <string name="rebuild_cram_label">Rindërtoni</string>
-    <string name="empty_cram_label">Bosh</string>
+    <string name="rebuild_cram_label" maxLength="28">Rindërtoni</string>
+    <string name="empty_cram_label" maxLength="28">Bosh</string>
     <string name="create_subdeck">Krijoni nëndeck</string>
     <string name="empty_filtered_deck">Po zbrazni kuvertën e filtruar&#8230;</string>
     <string name="custom_study_deck_name">Sesion studimi me porosi</string>
     <string name="custom_study_deck_exists">Riemërtoni fillimisht kuvertën ekzistuese të studimit të personalizuar</string>
     <string name="search_deck" comment="Deck search for selecting it">Kërkimi i kuvertës</string>
     <string name="empty_deck">Kjo kuvertë është bosh</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kërkimi i kuvertës</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Kërkimi i kuvertës</string>
     <string name="invalid_deck_name">Emër i pavlefshëm kuvertë</string>
     <string name="studyoptions_congrats_finished">urime! Ju keni mbaruar tani për tani.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
     <string name="studyoptions_no_cards_due">Nuk ka ende afat</string>
     <string name="sd_card_not_mounted">Hapësira ruajtëse e pajisjes nuk është montuar</string>
-    <string name="button_sync" comment="Text of the sync button">Sinkronizo</string>
+    <string name="button_sync" comment="Text of the sync button" maxLength="28">Sinkronizo</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Dëshiron ta anulosh sinkronizimin?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Vazhdo sinkronizimin</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronizimi u anulua</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Po anulohet&#8230;\nKjo mund të marrë pak kohë.</string>
     <string name="syncing_media">Media po sinkronizohet</string>
-    <string name="export_deck">Kuvertë eksporti</string>
+    <string name="export_deck" maxLength="28">Kuvertë eksporti</string>
     <string name="export_collection">Export collection</string>
     <string name="nothing">Asgjë</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Llojet e kartave</string>
     <string name="card_template_editor_front">Modeli i përparmë</string>
     <string name="card_template_editor_back">Shablloni i pasëm</string>
-    <string name="card_template_editor_styling">Stilimi</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Pamja e shfletuesit të kartës</string>
-    <string name="card_template_editor_deck_override">Mbështetja e kuvertës</string>
-    <string name="card_template_editor_insert_field">Fut fushën</string>
+    <string name="card_template_editor_styling" maxLength="28">Stilimi</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">Pamja e shfletuesit të kartës</string>
+    <string name="card_template_editor_deck_override" maxLength="28">Mbështetja e kuvertës</string>
+    <string name="card_template_editor_insert_field" maxLength="28">Fut fushën</string>
     <string name="card_template_editor_select_field">Zgjidhni fushën</string>
     <string name="card_template_editor_cant_delete">Kërkohet të paktën një lloj karte</string>
     <plurals name="card_template_editor_confirm_add">
@@ -165,7 +165,7 @@
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Pamja e shfletuesit</string>
     <!-- card Info -->
-    <string name="card_info_title">Informacioni i kartës</string>
+    <string name="card_info_title" maxLength="28">Informacioni i kartës</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Lexoni dhe shkruani në bazën e të dhënave AnkiDroid</string>
     <string name="read_write_permission_description">aksesoni shënimet, kartat, llojet e shënimeve dhe kuvertat ekzistuese, si dhe krijoni të reja</string>

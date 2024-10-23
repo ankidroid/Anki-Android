@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Локално</string>
     <string name="sync_sanity_remote">Удаљени приступ</string>
-    <string name="one_way_sync_title">One-way sync</string>
+    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
     <string name="one_way_sync_confirmation">One way sync requested</string>
     <string name="full_sync_confirmation">Измена, коју сте затражили, захтеваће учитавање целе базе података приликом следеће синхронизације ваше колекције. Ако на другом уређају имате измене које још нису синхронизоване, изгубићете их. Да ли желите да наставите?</string>
     <string name="full_sync_confirmation_upgrade">Због грешке у ранијој верзији AnkiDroid, потребно је урадити потпуну синхронизацију.</string>

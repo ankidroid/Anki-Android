@@ -75,7 +75,7 @@
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">ᱱᱚᱰᱮᱱᱟᱜ</string>
     <string name="sync_sanity_remote">ᱥᱟᱝᱜᱤᱧ ᱨᱮᱭᱟᱜ</string>
-    <string name="one_way_sync_title">ᱢᱤᱫ ᱰᱟᱦᱟᱨ ᱥᱤᱸᱠᱨᱚᱱ</string>
+    <string name="one_way_sync_title" maxLength="41">ᱢᱤᱫ ᱰᱟᱦᱟᱨ ᱥᱤᱸᱠᱨᱚᱱ</string>
     <string name="one_way_sync_confirmation">ᱢᱤᱫ ᱫᱷᱟᱨᱟ ᱥᱤᱸᱠᱨᱚᱱ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ</string>
     <string name="full_sync_confirmation">ᱵᱚᱫᱚᱞᱠᱟᱱ ᱫᱚᱨᱠᱷᱥᱛᱚ ᱟᱢᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱩᱨᱟ ᱞᱟᱫᱮ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ ᱾  ᱚᱞᱜᱟ ᱰᱤᱵᱷᱟᱤᱥ ᱵᱟᱭ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱚᱜ ᱠᱷᱟᱱ ᱰᱟᱴᱟ ᱟᱫᱚᱜ ᱛᱟᱢᱮ, ᱞᱮᱛᱟᱲ ᱟᱢ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱟᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱹᱣ ᱧᱟᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>

@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">تعذر حفظ النسخة الاحتياطية. لا يوجد مساحة كافية. اخفض حدد عدد النسخ الاحتياطية أو احذف بعض الملفات.</string>
     <string name="storage_warning">يوجد أقل من %d ميغابايت متوفرة في ذاكرة التخزين.\nفرغ بعض المساحة لتجنب فقدان البيانات.</string>
-    <string name="backup_restore">استعادة من نسخة احتياطية</string>
+    <string name="backup_restore" maxLength="28">استعادة من نسخة احتياطية</string>
     <string name="backup_new_collection">مجموعة جديدة</string>
     <string name="backup_del_collection">حذف المجموعة وإنشاء واحدة جديدة</string>
     <string name="backup_del_collection_question">هل أنت متأكد من حذف المجموعة وإنشاء واحدة جديدة؟ سيحذف هذا كل تقدمك والبطاقات.</string>

@@ -46,7 +46,7 @@
 <resources>
     <!-- Feedback.java -->
     <string name="empty_string"></string>
-    <string name="error_reporting_choice">ᱵᱷᱩᱞ ᱨᱤᱯᱚᱴ ᱢᱚᱰ</string>
+    <string name="error_reporting_choice" maxLength="41">ᱵᱷᱩᱞ ᱨᱤᱯᱚᱴ ᱢᱚᱰ</string>
     <string name="feedback_disclaimer">ᱦᱚᱠ ᱟᱲᱟᱜᱽᱤᱡ: ᱟᱞᱮ ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ, ᱯᱷᱚᱱ ᱞᱮᱠᱷᱟ, ᱯᱦᱚᱱ IMEI ᱠᱚ ᱮᱢᱟᱱ ᱵᱟᱞᱮ ᱥᱚᱝᱜᱷᱨᱚ ᱭᱟ ᱞᱮ ᱾ ᱟᱞᱮ ᱟᱯᱮᱭᱟᱜ ᱰᱮᱵᱷᱟᱤᱥ ᱵᱮᱱᱟᱣᱤᱡ, ᱢᱚᱰᱮᱞ ᱟᱨ Android ᱵᱷᱚᱨᱥᱚᱱ ᱠᱚ ᱮᱢᱟᱱ ᱫᱚᱦᱚᱭᱟᱞᱮ ᱾ ᱱᱚᱶᱟ ᱠᱚ ᱤᱫᱤ ᱠᱟᱛᱮ ᱟᱞᱮᱟᱜ ᱮᱯᱯ ᱠᱚ ᱨᱮᱭᱟᱜ ᱦᱩᱰᱟᱜ ᱨᱮ ᱴᱷᱤᱠ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾</string>
     <string name="feedback_title">AnkiDroid ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ</string>
     <string name="feedback_default_text">ᱟᱢᱟᱜ ᱦᱩᱰᱟᱜ ᱨᱮᱭᱟᱜ ᱨᱤᱯᱚᱴ ᱵᱚᱤᱥᱚᱭᱨᱮ ᱞᱟᱹᱭ ᱯᱩᱥᱴᱟᱹᱣ ᱢᱮ ᱾</string>

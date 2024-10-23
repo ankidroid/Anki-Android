@@ -46,7 +46,7 @@
 <resources>
     <string name="backup_deck_no_storage_left">Backup non salvato. Non è rimasto abbastanza spazio nella memoria di archiviazione. Diminuisci la profondità di backup o rimuovi alcuni altri file.</string>
     <string name="storage_warning">Meno di %d MB di spazio rimanente nella tua memoria di archiviazione.\nLibera dello spazio per evitare perdita di dati.</string>
-    <string name="backup_restore">Ripristina dal backup</string>
+    <string name="backup_restore" maxLength="28">Ripristina dal backup</string>
     <string name="backup_new_collection">Nuova collezione</string>
     <string name="backup_del_collection">Elimina collezione e creane una nuova</string>
     <string name="backup_del_collection_question">Vuoi veramente eliminare la collezione e crearne una nuova? Tutti i tuoi progressi di apprendimento e tutte le tue carte andranno persi!</string>

@@ -58,23 +58,23 @@
         <item quantity="one">टीप हटवा</item>
         <item quantity="other">नोट्स हटवा</item>
     </plurals>
-    <string name="card_browser_change_deck">डेक बदला</string>
+    <string name="card_browser_change_deck" maxLength="28">डेक बदला</string>
     <string name="delete_card_title">टीप हटवायची?</string>
-    <string name="card_browser_show_marked" maxLength="29">फिल्टर चिन्हांकित</string>
-    <string name="card_browser_show_suspended" maxLength="29">फिल्टर निलंबित</string>
-    <string name="card_browser_search_by_tag" maxLength="29">टॅगद्वारे फिल्टर करा</string>
-    <string name="card_browser_search_by_flag" maxLength="29">ध्वजांकनानुसार फिल्टर करा</string>
-    <string name="card_browser_list_my_searches" maxLength="29">माझे शोध</string>
-    <string name="card_browser_list_my_searches_save" maxLength="29">शोध जतन करा</string>
+    <string name="card_browser_show_marked" maxLength="28">फिल्टर चिन्हांकित</string>
+    <string name="card_browser_show_suspended" maxLength="28">फिल्टर निलंबित</string>
+    <string name="card_browser_search_by_tag" maxLength="28">टॅगद्वारे फिल्टर करा</string>
+    <string name="card_browser_search_by_flag" maxLength="28">ध्वजांकनानुसार फिल्टर करा</string>
+    <string name="card_browser_list_my_searches" maxLength="28">माझे शोध</string>
+    <string name="card_browser_list_my_searches_save" maxLength="28">शोध जतन करा</string>
     <string name="card_browser_list_my_searches_title">जतन केलेला शोध निवडा</string>
     <string name="card_browser_list_my_searches_new_name">सध्याच्या शोधासाठी नाव</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">आपण नावाशिवाय शोध जतन करू शकत नाही</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">नाव अस्तित्त्वात आहे</string>
     <string name="no_note_to_edit">No note to edit</string>
     <string name="card_browser_list_my_searches_remove_content">“%1$s” हटवायचे?</string>
-    <string name="card_browser_change_display_order" maxLength="29">प्रदर्शन क्रम बदला</string>
+    <string name="card_browser_change_display_order" maxLength="28">प्रदर्शन क्रम बदला</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="29" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
     <string name="card_browser_change_display_order_title">प्रदर्शन क्रम निवडा</string>
     <string name="card_details_tags">टॅग्ज</string>
     <string-array name="card_browser_order_labels">
@@ -89,8 +89,8 @@
         <item>पुनरावलोकनांद्वारे</item>
         <item>चुकून</item>
     </string-array>
-    <string name="card_browser_select_all" maxLength="29">Select all</string>
-    <string name="card_browser_select_none">काहीही निवडा</string>
+    <string name="card_browser_select_all" maxLength="28">Select all</string>
+    <string name="card_browser_select_none" maxLength="28">काहीही निवडा</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(नवीन)</string>
     <string name="card_browser_due_filtered_card">(फिल्टर केलेले)</string>
     <string name="card_browser_interval_learning_card">(शिकत आहे)</string>

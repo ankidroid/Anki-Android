@@ -79,27 +79,27 @@
     <string name="html_size_code_x_large">lớn hon</string>
     <string name="html_size_code_xx_large">cực kỳ lớn</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Trả lời lại</string>
-    <string name="answer_hard">Trả lời khó</string>
-    <string name="answer_good">Trả lời tốt</string>
-    <string name="answer_easy">Trả lời dễ</string>
-    <string name="gesture_play">Phát file đa phương tiện</string>
-    <string name="gesture_abort_learning">Close reviewer</string>
-    <string name="gesture_flag_red">Chuyển đổi cờ đỏ</string>
-    <string name="gesture_flag_orange">Chuyển đổi cờ màu cam</string>
-    <string name="gesture_flag_green">Chuyển đổi cờ xanh</string>
-    <string name="gesture_flag_blue">Chuyển đổi cờ xanh dương</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Xoá cờ</string>
-    <string name="gesture_page_up">Trang lên</string>
-    <string name="gesture_page_down">Trang dưới</string>
-    <string name="gesture_abort_sync">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard">Chuyển đổi Bảng trắng</string>
-    <string name="gesture_show_hint">Hiển thị gợi ý</string>
-    <string name="gesture_show_all_hints">Hiện tất cả gợi ý</string>
-    <string name="record_voice">Ghi âm giọng nói</string>
-    <string name="replay_voice">Phát lại giọng nói</string>
-    <string name="save_voice">Save Recording</string>
+    <string name="answer_again" maxLength="41">Trả lời lại</string>
+    <string name="answer_hard" maxLength="41">Trả lời khó</string>
+    <string name="answer_good" maxLength="41">Trả lời tốt</string>
+    <string name="answer_easy" maxLength="41">Trả lời dễ</string>
+    <string name="gesture_play" maxLength="41">Phát file đa phương tiện</string>
+    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_flag_red" maxLength="41">Chuyển đổi cờ đỏ</string>
+    <string name="gesture_flag_orange" maxLength="41">Chuyển đổi cờ màu cam</string>
+    <string name="gesture_flag_green" maxLength="41">Chuyển đổi cờ xanh</string>
+    <string name="gesture_flag_blue" maxLength="41">Chuyển đổi cờ xanh dương</string>
+    <string name="gesture_flag_pink" maxLength="41">Toggle Pink Flag</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Toggle Turquoise Flag</string>
+    <string name="gesture_flag_purple" maxLength="41">Toggle Purple Flag</string>
+    <string name="gesture_flag_remove" maxLength="41">Xoá cờ</string>
+    <string name="gesture_page_up" maxLength="41">Trang lên</string>
+    <string name="gesture_page_down" maxLength="41">Trang dưới</string>
+    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">Chuyển đổi Bảng trắng</string>
+    <string name="gesture_show_hint" maxLength="41">Hiển thị gợi ý</string>
+    <string name="gesture_show_all_hints" maxLength="41">Hiện tất cả gợi ý</string>
+    <string name="record_voice" maxLength="41">Ghi âm giọng nói</string>
+    <string name="replay_voice" maxLength="41">Phát lại giọng nói</string>
+    <string name="save_voice" maxLength="41">Save Recording</string>
 </resources>

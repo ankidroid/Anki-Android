@@ -26,6 +26,6 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Przód</string>
-    <string name="back_field_name">Tył</string>
+    <string name="front_field_name" maxLength="28">Przód</string>
+    <string name="back_field_name" maxLength="28">Tył</string>
 </resources>
