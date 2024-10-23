@@ -57,13 +57,13 @@
     <string name="expand">Тулысынча күрсәтү</string>
     <string name="collapse">Борып ябу</string>
     <plurals name="reviewer_window_title">
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d минут калды</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d сәгатъ %2$d калды</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="other">%1$d көн %2$d сәгатъ калды</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция буш</string>
     <string name="no_cards_placeholder_description">Кәртләрне\n+ төймәсена басып беркетә башлагыз.</string>
@@ -78,7 +78,7 @@
     <string name="ease_button_easy">Җиңел</string>
     <string name="menu_import">Импортлау</string>
     <string name="undo" maxLength="29" comment="When tapping on this text, the last action is undone.">Кире алу</string>
-    <string name="redo">Redo</string>
+    <string name="redo">Кабатлау</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Штрихны кире алу</string>
     <string name="move_all_to_deck">Бөтенесен колодага кую</string>
     <string name="unbury">Кайтару</string>

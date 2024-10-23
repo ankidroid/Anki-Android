@@ -47,14 +47,14 @@
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d мин</item>
+        <item quantity="one">%d минута</item>
         <item quantity="few">%d мин</item>
         <item quantity="many">%d мин</item>
         <item quantity="other">%d мин</item>
     </plurals>
     <string name="pref_milliseconds">%s мс</string>
     <!-- TODO: move to 20-search-preference so we can contribute upstream (searchpreference_no_results)-->
-    <string name="pref_search_no_results">Не найдено</string>
+    <string name="pref_search_no_results">Ничего не найденo</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общие</string>
     <string name="pref_cat_studying" maxLength="41">Поведение</string>
@@ -100,7 +100,7 @@
     <string name="gestures_corner_touch" maxLength="41">9 зон касания</string>
     <string name="gestures_corner_touch_summary">Разрешить сенсорные жесты в углах экрана</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Панель навигации при полном экране</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Показывать панель навигации при смахивании в любом месте экрана</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Открывать панель навигации при смахивании вправо с любого места на экране</string>
     <string name="gestures_none" maxLength="41" comment="No gestures">Нет</string>
     <string name="gestures_swipe_up" maxLength="41">Смахивание вверх</string>
     <string name="gestures_swipe_down" maxLength="41">Смахивание вниз</string>
@@ -374,5 +374,5 @@
     <string name="hide_answer_buttons" maxLength="41">Скрывать кнопки ответа</string>
     <string name="hide_hard_and_easy" maxLength="41">Скрывать кнопки «Трудно» и «Легко»</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Открыть настройки</string>
 </resources>

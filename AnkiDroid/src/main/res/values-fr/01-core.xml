@@ -65,8 +65,8 @@
         <item quantity="other">%1$d heures %2$d restantes</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d jour %2$dh restant</item>
+        <item quantity="other">%1$d jours %2$dh restants</item>
     </plurals>
     <string name="no_cards_placeholder_title">La collection est vide</string>
     <string name="no_cards_placeholder_description">Ajoutez de nouvelles cartes\nen utilisant l\'icône +</string>
@@ -130,7 +130,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Chercher un deck</string>
     <string name="invalid_deck_name">Nom de paquet invalide</string>
     <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé&#8230; pour l’instant !</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Paquet terminé pour l’instant! %s</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>

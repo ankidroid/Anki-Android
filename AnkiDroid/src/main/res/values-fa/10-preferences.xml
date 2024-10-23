@@ -198,7 +198,7 @@
     <string name="reset_settings_to_default">بازگشت تنظیمات به پیشفرض</string>
     <string name="reset">تنظیم مجدد</string>
     <string name="thirdparty_apps_title" maxLength="41">ای پی آی سایر نرم‌افزارها</string>
-    <string name="thirdparty_apps_summary">نمایش لیست کامل از همۀ نرم‌افزارهایی که از ای پی آی آنکی‌دروید استفاده می‌کنند. (برای مثال نرم‌افزارهای فرهنگ لغت و &#8230;)</string>
+    <string name="thirdparty_apps_summary">لیستی از برنامه‌هایی که از API انکی‌دروید استفاده می‌کنند، مانند دیکشنری‌ها و ابزارها را ببینید.</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">مرور کننده</string>
     <string name="show_deck_title" maxLength="41">نمایش عنوان دسته کارت</string>
@@ -359,7 +359,7 @@
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">بدون مجموعه</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">خطا</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">دریافت کردن&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">محاسبه کردن&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">در حال محاسبه کردن&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">مجموعه وجود ندارد</string>
     <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">مخفی کردن نوارهای سیستم</string>
     <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">هیچ کدام</string>
