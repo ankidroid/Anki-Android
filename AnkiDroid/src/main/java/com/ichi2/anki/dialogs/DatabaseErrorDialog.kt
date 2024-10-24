@@ -23,7 +23,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.os.Parcelable
-import android.util.Log
 import android.view.KeyEvent
 import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
@@ -112,7 +111,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, requireException())
                     }
                     negativeButton(R.string.close) {
                         closeCollectionAndFinish()
@@ -129,7 +128,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, requireException())
                     }
                     negativeButton(R.string.answering_error_report) {
                         (activity as DeckPicker).sendErrorReport()
@@ -193,28 +192,31 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 return@listItems
                             }
                             1 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_CONFIRM_DATABASE_CHECK)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_CONFIRM_DATABASE_CHECK, requireException())
                                 return@listItems
                             }
                             2 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION, requireException())
                                 return@listItems
                             }
                             3 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, requireException())
                                 return@listItems
                             }
                             4 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER, requireException())
                                 return@listItems
                             }
                             5 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION, requireException())
                                 return@listItems
                             }
 
                             6 -> {
-                                copyStackTraceAndDebugInfo()
+                                lifecycleScope.launch {
+                                    copyStackTraceAndDebugInfo()
+                                }
+                                return@listItems
                             }
                             else -> throw RuntimeException("Unknown dialog selection: " + repairValues[index])
                         }
@@ -243,7 +245,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         .title(text = message)
                         .positiveButton(R.string.dialog_ok) {
                             (activity as DeckPicker?)
-                                ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                                ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, requireException())
                         }
                 } else {
                     // Show backups sorted with latest on top
@@ -301,7 +303,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             ActivityCompat.recreate(activity as DeckPicker)
                         } else {
-                            (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
+                            (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED, requireException())
                         }
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -326,7 +328,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     positiveButton(R.string.dialog_continue) {
                         (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
+                            ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, requireException())
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -373,10 +375,12 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listItemsAndMessage(message = message, items = options) { _, index: Int ->
                         when (values[index]) {
                             0 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_RESTORE_BACKUP
+                                DIALOG_RESTORE_BACKUP,
+                                requireException()
                             )
                             1 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_ONE_WAY_SYNC_FROM_SERVER
+                                DIALOG_ONE_WAY_SYNC_FROM_SERVER,
+                                requireException()
                             )
                         }
                     }
@@ -408,22 +412,21 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         }
     }
 
-    private fun copyStackTraceAndDebugInfo() {
-        lifecycleScope.launch {
-            var combinedInfo = ""
-            DeckPicker.exception?.let {
-                val stackTrace = Log.getStackTraceString(it)
-                combinedInfo += stackTrace + "\n"
-            }
-            val debugInfo = withContext(NonCancellable) {
-                DebugInfoService.getDebugInfo(requireActivity().applicationContext)
-            }
-            combinedInfo += debugInfo
-            requireContext().copyToClipboard(
-                combinedInfo,
-                failureMessageId = R.string.about_ankidroid_error_copy_debug_info
-            )
+    private suspend fun copyStackTraceAndDebugInfo() {
+        var combinedInfo = ""
+        if (requireException() != null) {
+            val stackTrace = requireException()?.stackTrace
+            combinedInfo += stackTrace + "\n"
         }
+
+        val debugInfo = withContext(NonCancellable) {
+            DebugInfoService.getDebugInfo(requireActivity().applicationContext)
+        }
+        combinedInfo += debugInfo
+        requireContext().copyToClipboard(
+            combinedInfo,
+            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+        )
     }
 
     /** List items for [DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL] */
@@ -593,6 +596,12 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
     private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), "dialog", DatabaseErrorDialogType::class.java)!!
 
+    private fun requireException() = BundleCompat.getParcelable(
+        requireArguments(),
+        "exception",
+        CustomException::class.java
+    )
+
     fun dismissAllDialogFragments() {
         (activity as DeckPicker).dismissAllDialogFragments()
     }
@@ -633,10 +642,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
          * @param dialogType the sub-dialog to show
          */
         @CheckResult
-        fun newInstance(dialogType: DatabaseErrorDialogType): DatabaseErrorDialog {
+        fun newInstance(dialogType: DatabaseErrorDialogType, exception: CustomException? = null): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()
             args.putParcelable("dialog", dialogType)
+            if (exception != null) {
+                args.putParcelable("exception", exception)
+            }
             f.arguments = args
             return f
         }
@@ -655,6 +667,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             what = this@ShowDatabaseErrorDialog.what
             data = bundleOf(
                 "dialog" to dialogType
+
             )
         }
 
@@ -665,4 +678,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
         }
     }
+
+    @Parcelize
+    class CustomException(
+        val message: String,
+        val stackTrace: String
+    ) : Parcelable
 }

@@ -14,6 +14,7 @@ import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
@@ -746,7 +747,7 @@ class DeckPickerTest : RobolectricTest() {
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
 
-        override fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
+        override fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType, exception: DatabaseErrorDialog.CustomException?) {
             databaseErrorDialog = errorDialogType
         }
 

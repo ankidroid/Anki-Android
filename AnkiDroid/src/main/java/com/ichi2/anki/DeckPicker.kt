@@ -37,6 +37,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import android.text.util.Linkify
+import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.Menu
@@ -106,6 +107,7 @@ import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomException
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog
@@ -763,7 +765,7 @@ open class DeckPicker :
                 cancelable(false)
             }
             is DISK_FULL -> displayNoStorageError()
-            is DB_ERROR -> displayDatabaseFailure(failure.exception)
+            is DB_ERROR -> displayDatabaseFailure(CustomException(failure.exception!!.message!!, Log.getStackTraceString(failure.exception)))
             else -> displayDatabaseFailure()
         }
     }
@@ -793,10 +795,9 @@ open class DeckPicker :
         }
     }
 
-    private fun displayDatabaseFailure(e: Exception? = null) {
+    private fun displayDatabaseFailure(exception: CustomException? = null) {
         Timber.i("Displaying database failure")
-        exception = e
-        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED, exception)
     }
     private fun displayNoStorageError() {
         Timber.i("Displaying no storage error")
@@ -1693,8 +1694,8 @@ open class DeckPicker :
     }
 
     // Show dialogs to deal with database loading issues etc
-    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
-        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType)
+    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType, exception: CustomException? = null) {
+        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType, exception)
         showAsyncDialogFragment(newFragment)
     }
 
@@ -2454,8 +2455,6 @@ open class DeckPicker :
         const val RESULT_MEDIA_EJECTED = 202
         const val RESULT_DB_ERROR = 203
         const val UPGRADE_VERSION_KEY = "lastUpgradeVersion"
-
-        var exception: Exception? = null
 
         /**
          * If passed into the intent, the user should have been logged in and DeckPicker
