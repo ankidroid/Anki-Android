@@ -1,5 +1,5 @@
 //noinspection MissingCopyrightHeader #8659
-@file:Suppress("LeakingThis") // fine - used as WeakReference
+@file:Suppress("LeakingThis", "SameReturnValue") // fine - used as WeakReference
 
 package com.ichi2.anki
 
