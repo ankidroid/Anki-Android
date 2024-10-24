@@ -49,7 +49,7 @@ class FailOnUnhandledExceptionRule : TestRule {
                 Timber.v("test: applying exception handler override")
                 exceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
                 Thread.setDefaultUncaughtExceptionHandler { _: Thread?, throwable: Throwable ->
-                    Timber.e("test: unhandled exception", throwable)
+                    Timber.e(throwable, "test: unhandled exception")
                     uncaughtException = throwable
                 }
 

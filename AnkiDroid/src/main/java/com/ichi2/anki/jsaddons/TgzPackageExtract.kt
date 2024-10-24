@@ -379,7 +379,7 @@ class TgzPackageExtract(private val context: Context) {
         companion object {
             fun throwIfInsufficientSpace(context: Context, requiredMinSpace: Long, availableSpace: Long) {
                 if (requiredMinSpace > availableSpace) {
-                    Timber.w("Not enough space, need %d, available %d", Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace))
+                    Timber.w("Not enough space, need %s, available %s", Formatter.formatFileSize(context, requiredMinSpace), Formatter.formatFileSize(context, availableSpace))
                     throw InsufficientSpaceException(requiredMinSpace, availableSpace, context)
                 }
             }
