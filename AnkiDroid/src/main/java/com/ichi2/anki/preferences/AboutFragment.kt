@@ -62,6 +62,9 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         view.findViewById<TextView>(R.id.about_backend).text =
             "(anki " + BackendBuildConfig.ANKI_DESKTOP_VERSION + " / " + BackendBuildConfig.ANKI_COMMIT_HASH.subSequence(0, 8) + ")"
 
+        // FSRS version text
+        view.findViewById<TextView>(R.id.about_fsrs).text = "(FSRS ${BackendBuildConfig.FSRS_VERSION})"
+
         // Logo secret
         view.findViewById<ImageView>(R.id.about_app_logo)
             .setOnClickListener(DevOptionsSecretClickListener(requireActivity() as Preferences))
