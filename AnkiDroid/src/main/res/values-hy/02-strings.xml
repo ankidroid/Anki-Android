@@ -62,8 +62,8 @@
     <string name="updated_version">Արդիացվեց մինչև %s տարբերակ</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard" maxLength="28">Պահպանել գրատախտակը</string>
-    <string name="enable_stylus" maxLength="28">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="enable_stylus" maxLength="28">Միացնել ստիլուսով գրելը</string>
+    <string name="disable_stylus">Անջատել ստիլուսով գրելը</string>
     <string name="enable_whiteboard" maxLength="28">Միացնել գրատախտակը</string>
     <string name="disable_whiteboard">Անջատել գրատախտակը</string>
     <string name="show_whiteboard">Ցուցադրել գրատախտակը</string>
@@ -73,31 +73,31 @@
     <string name="leech_suspend_notification">Քարտը նշվեց որպես «կպչուն» և հեռացվեց</string>
     <string name="leech_notification">Քարտը նշվեց որպես «կպչուն»</string>
     <string name="webview_crash_unknown">Անհայտ սխալ</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
+    <string name="webview_crash_unknwon_detailed">Սա պատահել է WebView-ի ներքին խնդրի պատճառով</string>
     <string name="webview_crash_oom">Հիշողության պակաս</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
-    <string name="filter_by_flags" maxLength="41">Flags</string>
+    <string name="webview_crash_oom_details">WebView-ը կանգնեցվել է համակարգի կողմից։ Սովորաբար սա պատահում է, երբ հավելվածի հիշողությունը սպառվում է, ինչի պատճառը հաճախ մեծ տառատեսակները կամ նյութերն են։</string>
+    <string name="webview_crash_nonfatal">WebView-ի խափանում. պատճառ` %s</string>
+    <string name="webview_crash_fatal">WebView-ի կրիտիկական խափանում. պատճառ` %s</string>
+    <string name="webview_crash_loop_dialog_title">Համակարգի WebView-ի ցուցադրման խնդիր</string>
+    <string name="webview_crash_loop_dialog_content">Համակարգի WebView-ը չկարողացավ ցուցադրել «%1$s» քարտը։\n %2$s</string>
+    <string name="filter_by_flags" maxLength="41">Դրոշներ</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Փոփոխել նոր քարտերի սահմանափակման այսօրվա շեմը</string>
+    <string name="custom_study_increase_review_limit">Փոփոխել կրկնելիք քարտերի սահմանափակման այսօրվա շեմը</string>
     <string name="custom_study_review_forgotten">Կրկնել մոռացված քարտերը</string>
     <string name="custom_study_review_ahead">Առաջ կրկնել (օրական սահմանափակումից դուրս)</string>
     <string name="custom_study_random_selection">Սովորել քարտերի պատահական ընտրվածքը</string>
     <string name="custom_study_preview_new">Նոր քարտերի նախատեսք</string>
     <string name="custom_study_limit_tags">Սահմանափակել որոշակի պիտակներին</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
-        <item quantity="other">+%d buried</item>
+        <item quantity="one">+%d թաղված</item>
+        <item quantity="other">+%d թաղված</item>
     </plurals>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Խմբագրել գրառումը</string>
-    <string name="discard">Discard</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="discard">Հրաժարվել</string>
+    <string name="note_editor_no_cards_created">Ոչ մի քարտ չի ստեղծվել։ Խնդրում ենք լրացնել ավելի շատ դաշտ</string>
+    <string name="note_editor_no_cards_created_all_fields">Նշման ներկայիս տեսակը քարտ չի սարքել։\nԸնտրեք այլ տեսակ կամ սեղմեք «Քարտեր» և ավելացրեք դաշտի փոխարինում</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Գրառման պահում</string>
     <string name="saving_model">Saving note type</string>
@@ -127,13 +127,13 @@
     <string name="copy_as_markdown" comment="Copies text to the clipboard as Markdown" maxLength="28">Copy as Markdown</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed." maxLength="28">Վերանվանել</string>
-    <string name="checks_action" maxLength="28">Check</string>
+    <string name="checks_action" maxLength="28">Ստուգել</string>
     <string name="check_db" maxLength="28">Ստուգել շտեմարանը</string>
     <string name="check_media" maxLength="28">Ստուգել մեդիան</string>
     <string name="empty_cards" maxLength="28">Դատարկ քարտեր</string>
     <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
     <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="info_rate">Rate AnkiDroid</string>
+    <string name="info_rate">Գնահատեք AnkiDroid-ը</string>
     <string name="import_title">Importing</string>
     <string name="import_preparing_file">Preparing file for import&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ավելացնել</string>
@@ -195,7 +195,7 @@
     <string name="remove_background_image">Remove background?</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default" maxLength="28">Restore Default</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Դատարկ</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
