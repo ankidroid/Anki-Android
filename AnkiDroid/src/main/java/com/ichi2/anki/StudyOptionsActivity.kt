@@ -25,7 +25,7 @@ import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 
-class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, CustomStudyListener {
+class StudyOptionsActivity : AnkiActivity(), StudyOptionsListener, CustomStudyListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -34,8 +34,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.studyoptions)
-        // create inherited navigation drawer layout here so that it can be used by parent class
-        initNavigationDrawer(findViewById(android.R.id.content))
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
         }
@@ -56,9 +54,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         get() = supportFragmentManager.findFragmentById(R.id.studyoptions_frame) as StudyOptionsFragment?
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true
-        }
         if (item.itemId == android.R.id.home) {
             closeStudyOptions()
             return true
@@ -74,13 +69,10 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (isDrawerOpen) {
-            @Suppress("DEPRECATION")
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            closeStudyOptions()
-        }
+        Timber.i("Back key pressed")
+        closeStudyOptions()
+        @Suppress("DEPRECATION")
+        super.onBackPressed()
     }
 
     public override fun onStop() {
@@ -88,11 +80,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         if (colIsOpenUnsafe()) {
             WidgetStatus.updateInBackground(this)
         }
-    }
-
-    public override fun onResume() {
-        super.onResume()
-        selectNavigationItem(-1)
     }
 
     override fun onRequireDeckListUpdate() {
