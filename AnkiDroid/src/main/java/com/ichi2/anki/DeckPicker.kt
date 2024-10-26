@@ -493,6 +493,7 @@ open class DeckPicker :
         }
 
         setContentView(R.layout.homescreen)
+        enableToolbar()
         handleStartup()
         val mainView = findViewById<View>(android.R.id.content)
 
@@ -852,15 +853,11 @@ open class DeckPicker :
         }
         toolbarSearchView?.maxWidth = Integer.MAX_VALUE
 
-        if (fragmented && studyoptionsFrame!!.visibility == View.VISIBLE) {
-            menu.setGroupVisible(R.id.commonItems, false)
-        } else {
-            menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
-            setupMediaSyncMenuItem(menu)
-            // redraw menu synchronously to avoid flicker
-            updateMenuFromState(menu)
-            updateSearchVisibilityFromState(menu)
-        }
+        menu.findItem(R.id.action_export_collection)?.title = TR.actionsExport()
+        setupMediaSyncMenuItem(menu)
+        // redraw menu synchronously to avoid flicker
+        updateMenuFromState(menu)
+        updateSearchVisibilityFromState(menu)
         // ...then launch a task to possibly update the visible icons.
         // Store the job so that tests can easily await it. In the future
         // this may be better done by injecting a custom test scheduler
@@ -873,6 +870,13 @@ open class DeckPicker :
             }
         }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.findItem(R.id.action_custom_study)?.setShowAsAction(
+            if (fragmented) MenuItem.SHOW_AS_ACTION_ALWAYS else MenuItem.SHOW_AS_ACTION_NEVER
+        )
+        return super.onPrepareOptionsMenu(menu)
     }
 
     fun setupMediaSyncMenuItem(menu: Menu) {
@@ -1078,6 +1082,20 @@ open class DeckPicker :
             R.id.action_restore_backup -> {
                 Timber.i("DeckPicker:: Restore from backup button pressed")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
+                return true
+            }
+            R.id.action_deck_rename -> {
+                launchCatchingTask {
+                    val targetDeckId = withCol { decks.selected() }
+                    renameDeckDialog(targetDeckId)
+                }
+                return true
+            }
+            R.id.action_deck_delete -> {
+                launchCatchingTask {
+                    val targetDeckId = withCol { decks.selected() }
+                    confirmDeckDeletion(targetDeckId)
+                }
                 return true
             }
             R.id.action_export_collection -> {
