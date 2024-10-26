@@ -138,11 +138,11 @@ class CardContentProvider : ContentProvider() {
         }
 
         // Follows the format in the manifest
-        private val sAuthority = "${BuildConfig.APPLICATION_ID}.flashcards"
-        private val sPermission = "${BuildConfig.APPLICATION_ID}.permission.READ_WRITE_DATABASE"
+        private const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.flashcards"
+        private const val PERMISSION = "${BuildConfig.APPLICATION_ID}.permission.READ_WRITE_DATABASE"
 
         init {
-            fun addUri(path: String, code: Int) = sUriMatcher.addURI(sAuthority, path, code)
+            fun addUri(path: String, code: Int) = sUriMatcher.addURI(AUTHORITY, path, code)
             // Here you can see all the URIs at a glance
             addUri("notes", NOTES)
             addUri("notes_v2", NOTES_V2)
@@ -1234,16 +1234,16 @@ class CardContentProvider : ContentProvider() {
 
     private fun hasReadWritePermission(): Boolean {
         return if (BuildConfig.DEBUG) { // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
-            context!!.checkCallingOrSelfPermission(sPermission) == PackageManager.PERMISSION_GRANTED
+            context!!.checkCallingOrSelfPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED
         } else {
-            context!!.checkCallingPermission(sPermission) == PackageManager.PERMISSION_GRANTED
+            context!!.checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED
         }
     }
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest */
     private fun knownRogueClient(): Boolean =
-        !context!!.arePermissionsDefinedInManifest(callingPackage!!, sPermission)
+        !context!!.arePermissionsDefinedInManifest(callingPackage!!, PERMISSION)
 }
 
 /** replaces [anki:play...] with [sound:] */
