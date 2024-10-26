@@ -566,7 +566,7 @@
         </activity>
 
         <receiver android:name="com.ichi2.widget.WidgetPermissionReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.ichi2.widget.UPDATE_WIDGET" />
             </intent-filter>
@@ -661,6 +661,7 @@
             android:authorities="${applicationId}.flashcards"
             android:enabled="true"
             android:exported="true"
+            tools:ignore="ExportedContentProvider"
             >
             <meta-data android:name="com.ichi2.anki.provider.spec" android:value="2" />
         </provider>

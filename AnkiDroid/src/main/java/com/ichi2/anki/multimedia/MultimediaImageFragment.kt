@@ -336,7 +336,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         val photoFile: File? = try {
             requireContext().createImageFile()
         } catch (e: Exception) {
-            Timber.w("Error creating the file", e)
+            Timber.w(e, "Error creating the file")
             return
         }
 
@@ -497,7 +497,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         Timber.w(error, "cropImage threw an error")
         // condition can be removed if #12768 get fixed by Canhub
         if (error is CropException.Cancellation) {
-            Timber.i("CropException caught, seemingly nothing to do ", error)
+            Timber.i(error, "CropException caught, seemingly nothing to do ")
         } else {
             showErrorDialog(resources.getString(R.string.activity_result_unexpected))
             CrashReportService.sendExceptionReport(
