@@ -161,9 +161,9 @@ object CollectionManager {
             return getBackend().tr
         }
 
-    fun compareAnswer(expected: String, given: String): String {
+    fun compareAnswer(expected: String, given: String, combining: Boolean = true): String {
         // bypass the lock, as the type answer code is heavily nested in non-suspend functions
-        return getBackend().compareAnswer(expected, given)
+        return getBackend().compareAnswer(expected, given, combining)
     }
 
     /**
