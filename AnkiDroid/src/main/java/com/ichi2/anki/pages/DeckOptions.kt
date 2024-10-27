@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.utils.openUrl
@@ -136,7 +135,7 @@ class DeckOptions : PageFragment() {
                 }
             }
         }.apply {
-            onPageFinishedCallback = OnPageFinishedCallback { view ->
+            onPageFinishedCallbacks.add { view ->
                 Timber.v("canGoBack: %b", view.canGoBack())
                 onBackCallback.isEnabled = view.canGoBack()
                 // reset the modal state on page load
