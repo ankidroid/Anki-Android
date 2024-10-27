@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
@@ -99,8 +98,6 @@ class CongratsPage :
             }
             .launchIn(lifecycleScope)
 
-        webView.addJavascriptInterface(BridgeCommand(), "ankidroid")
-
         with(view.findViewById<MaterialToolbar>(R.id.toolbar)) {
             inflateMenu(R.menu.congrats)
             setOnMenuItemClickListener { item ->
@@ -112,15 +109,10 @@ class CongratsPage :
         }
     }
 
-    inner class BridgeCommand {
-        @JavascriptInterface
-        fun bridgeCommand(request: String) {
-            when (request) {
-                "unbury" -> viewModel.onUnbury()
-                "customStudy" -> onStudyMore()
-            }
-        }
-    }
+    override val bridgeCommands = mapOf(
+        "unbury" to { viewModel.onUnbury() },
+        "customStudy" to { onStudyMore() }
+    )
 
     private fun openStudyOptionsAndFinish() {
         val intent = Intent(requireContext(), StudyOptionsActivity::class.java).apply {
