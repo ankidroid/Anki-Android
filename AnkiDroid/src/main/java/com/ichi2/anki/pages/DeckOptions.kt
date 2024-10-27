@@ -182,9 +182,9 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
     val output = withContext(Dispatchers.Main) {
         withProgress(
             extractProgress = {
-                text = if (progress.hasComputeWeights()) {
+                text = if (progress.hasComputeParams()) {
                     val tr = CollectionManager.TR
-                    val value = progress.computeWeights
+                    val value = progress.computeParams
                     val label = tr.deckConfigOptimizingPreset(
                         currentCount = value.currentPreset,
                         totalCount = value.totalPresets

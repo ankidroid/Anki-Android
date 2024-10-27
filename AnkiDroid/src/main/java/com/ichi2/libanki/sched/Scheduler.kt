@@ -736,14 +736,14 @@ private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
     }
 }
 
-fun Collection.computeFsrsWeightsRaw(input: ByteArray): ByteArray {
-    return backend.computeFsrsWeightsRaw(input = input)
+fun Collection.computeFsrsParamsRaw(input: ByteArray): ByteArray {
+    return backend.computeFsrsParamsRaw(input = input)
 }
 fun Collection.computeOptimalRetentionRaw(input: ByteArray): ByteArray {
     return backend.computeOptimalRetentionRaw(input = input)
 }
-fun Collection.evaluateWeightsRaw(input: ByteArray): ByteArray {
-    return backend.evaluateWeightsRaw(input = input)
+fun Collection.evaluateParamsRaw(input: ByteArray): ByteArray {
+    return backend.evaluateParamsRaw(input = input)
 }
 fun Collection.simulateFsrsReviewRaw(input: ByteArray): ByteArray {
     return backend.simulateFsrsReviewRaw(input = input)
