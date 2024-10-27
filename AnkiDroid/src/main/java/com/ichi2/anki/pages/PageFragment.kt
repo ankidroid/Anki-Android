@@ -20,6 +20,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.CallSuper
@@ -56,6 +57,37 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
 
     protected open fun onWebViewCreated(webView: WebView) { }
 
+    /**
+     * When the webview calls `BridgeCommand("foo")`, the PageFragment execute `bridgeCommands["foo"]`.
+     * By default, only bridge command is allowed, subclasses must redefine it if they expect bridge commands.
+     */
+    open val bridgeCommands: Map<String, () -> Unit> = mapOf()
+
+    /**
+     * Ensures that [pageWebViewClient] can receive `bridgeCommand` requests and execute the command from [bridgeCommands].
+     */
+    private fun setupBridgeCommand(pageWebViewClient: PageWebViewClient) {
+        if (bridgeCommands.isEmpty()) {
+            return
+        }
+        pageWebViewClient.onPageFinishedCallbacks.add { webView ->
+            webView.evaluateJavascript(
+                "bridgeCommand = function(request){ bridgeCommandInterface.bridgeCommandImpl(request); };"
+            ) {}
+        }
+        webView.addJavascriptInterface(
+            object : Object() {
+                @JavascriptInterface
+                fun bridgeCommandImpl(request: String) {
+                    bridgeCommands.orEmpty().getOrDefault(request) {
+                        Timber.d("Unknown request received %s", request)
+                    }()
+                }
+            },
+            "bridgeCommandInterface"
+        )
+    }
+
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         webView = view.findViewById<WebView>(R.id.webview).apply {
@@ -65,10 +97,15 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
                 builtInZoomControls = true
                 setSupportZoom(true)
             }
-            webViewClient = onCreateWebViewClient(savedInstanceState)
+            // Workaround to access `webView.webViewClient` which is only accessible after API 26.
+            webViewClient = onCreateWebViewClient(savedInstanceState).also {
+                setupBridgeCommand(it)
+            }
             webChromeClient = PageChromeClient()
         }
+
         onWebViewCreated(webView)
+
         requireActivity().setTransparentStatusBar()
         val arguments = requireArguments()
         val path = requireNotNull(arguments.getString(PATH_ARG_KEY)) { "'$PATH_ARG_KEY' missing" }

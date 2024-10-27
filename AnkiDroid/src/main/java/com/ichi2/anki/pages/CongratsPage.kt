@@ -35,7 +35,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.FilteredDeckOptions
 import com.ichi2.anki.OnErrorListener
-import com.ichi2.anki.OnPageFinishedCallback
 import com.ichi2.anki.R
 import com.ichi2.anki.StudyOptionsActivity
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
@@ -72,16 +71,6 @@ class CongratsPage :
         if (changes.studyQueues) {
             Timber.i("refreshing: study queues updated")
             webView.reload()
-        }
-    }
-
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        return super.onCreateWebViewClient(savedInstanceState).also { client ->
-            client.onPageFinishedCallback = OnPageFinishedCallback { webView ->
-                webView.evaluateJavascript(
-                    "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };"
-                ) {}
-            }
         }
     }
 
