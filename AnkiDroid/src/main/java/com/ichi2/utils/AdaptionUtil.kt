@@ -28,6 +28,7 @@ import android.provider.Settings
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.compat.MATCH_DEFAULT_ONLY
 import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
@@ -74,7 +75,7 @@ object AdaptionUtil {
         }
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
         val pm = context.packageManager
-        val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
+        val list = pm.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(MATCH_DEFAULT_ONLY.toLong()))
         for (ri in list) {
             if (!isValidBrowser(ri)) {
                 continue

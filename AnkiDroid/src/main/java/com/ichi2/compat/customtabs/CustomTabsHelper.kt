@@ -22,6 +22,7 @@ import androidx.browser.customtabs.CustomTabsService
 import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
+import com.ichi2.compat.GET_RESOLVED_FILTER
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
 
@@ -110,7 +111,7 @@ object CustomTabsHelper {
             val pm = context.packageManager
             val handlers = pm.queryIntentActivitiesCompat(
                 intent,
-                ResolveInfoFlagsCompat.of(PackageManager.GET_RESOLVED_FILTER.toLong())
+                ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER.toLong())
             )
             if (handlers.isEmpty()) {
                 return false
