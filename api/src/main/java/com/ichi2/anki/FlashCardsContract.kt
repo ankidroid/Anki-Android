@@ -92,7 +92,7 @@ public object FlashCardsContract {
 
     public fun getPermission(ankiPackageName: String = BuildConfig.ANKI_PACKAGE_NAME): String = "$ankiPackageName.permission.READ_WRITE_DATABASE"
 
-    public fun getAuthorityUri(ankiPackageName: String = BuildConfig.ANKI_PACKAGE_NAME): Uri = Uri.parse("content://${getAuthority(ankiPackageName)}")
+    public fun getAuthorityUri(authority: String = getAuthority()): Uri = Uri.parse("content://$authority")
 
     /**
      *  This assumes the default release/debug build package name. Use [getAuthority] and [getPermission] when working with parallel builds
@@ -229,7 +229,7 @@ public object FlashCardsContract {
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
 
-        public fun getContentUri(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_URI_SEGMENT)
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         public const val CONTENT_URI_V2_SEGMENT: String = "notes_v2"
 
@@ -240,7 +240,7 @@ public object FlashCardsContract {
         @JvmField // required for Java API
         public val CONTENT_URI_V2: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_V2_SEGMENT)
 
-        public fun getContentUriV2(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_URI_V2_SEGMENT)
+        public fun getContentUriV2(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_V2_SEGMENT)
 
         /**
          * This is the ID of the note. It is the same as the note ID in Anki. This ID can be
@@ -378,7 +378,7 @@ public object FlashCardsContract {
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
 
-        public fun getContentUri(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_URI_SEGMENT)
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         public const val CURRENT_MODEL_ID: String = "current"
 
@@ -775,7 +775,7 @@ public object FlashCardsContract {
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
 
-        public fun getContentUri(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_URI_SEGMENT)
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         /**
          * This is the ID of the note that this card belongs to (i.e. [Note._ID]).
@@ -937,14 +937,14 @@ public object FlashCardsContract {
         @JvmField // required for Java API
         public val CONTENT_ALL_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_ALL_URI_SEGMENT)
 
-        public fun getContentAllUri(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_ALL_URI_SEGMENT)
+        public fun getContentAllUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_ALL_URI_SEGMENT)
 
         public const val CONTENT_SELECTED_URI_SEGMENT: String = "selected_deck"
 
         @JvmField // required for Java API
         public val CONTENT_SELECTED_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_SELECTED_URI_SEGMENT)
 
-        public fun getContentSelectedUri(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_SELECTED_URI_SEGMENT)
+        public fun getContentSelectedUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_SELECTED_URI_SEGMENT)
 
         /**
          * The name of the Deck
@@ -1017,7 +1017,7 @@ public object FlashCardsContract {
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_URI_SEGMENT)
 
-        public fun getContentUri(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_URI_SEGMENT)
+        public fun getContentUri(authority: Uri): Uri = Uri.withAppendedPath(authority, CONTENT_URI_SEGMENT)
 
         /**
          * Uri.toString() which points to the media file that is to be inserted.
