@@ -777,7 +777,6 @@ public object FlashCardsContract {
 
         public fun getContentUri(ankiPackageName: String): Uri = Uri.withAppendedPath(getAuthorityUri(ankiPackageName), CONTENT_URI_SEGMENT)
 
-
         /**
          * This is the ID of the note that this card belongs to (i.e. [Note._ID]).
          */
