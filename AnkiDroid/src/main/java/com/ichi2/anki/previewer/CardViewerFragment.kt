@@ -19,6 +19,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewTreeObserver
 import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
@@ -51,6 +52,7 @@ import timber.log.Timber
 abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
     abstract val viewModel: CardViewerViewModel
     protected abstract val webView: WebView
+    private var scrollPosition: Pair<Int, Int> = Pair(0, 0)
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -224,6 +226,8 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                     hide(WindowInsetsCompat.Type.systemBars())
                 }
+                // Save the scroll position before going to fullscreen video
+                scrollPosition = Pair(webView.scrollX, webView.scrollY)
             }
 
             override fun onHideCustomView() {
@@ -234,6 +238,13 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
                     show(WindowInsetsCompat.Type.systemBars())
                 }
+                // Ensure WebView is rendered before restoring scroll position
+                webView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        webView.scrollTo(scrollPosition.first, scrollPosition.second)
+                        webView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
+                })
             }
         }
     }
