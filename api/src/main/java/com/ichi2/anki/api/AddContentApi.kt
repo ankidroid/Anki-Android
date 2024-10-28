@@ -750,7 +750,7 @@ public class AddContentApi(context: Context) {
     }
 
     public companion object {
-        public const val READ_WRITE_PERMISSION: String = FlashCardsContract.READ_WRITE_PERMISSION
+        public val READ_WRITE_PERMISSION: String = FlashCardsContract.READ_WRITE_PERMISSION
         public const val DEFAULT_DECK_ID: Long = 1L
         private const val TEST_TAG = "PREVIEW_NOTE"
         private const val PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec"
