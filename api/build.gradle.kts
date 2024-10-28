@@ -21,21 +21,11 @@ configure<LibraryExtension> {
             libs.versions.apiMinSdk
                 .get()
                 .toInt()
-        buildConfigField(
-            "String",
-            "READ_WRITE_PERMISSION",
-            "\"com.ichi2.anki.permission.READ_WRITE_DATABASE\"",
-        )
-        buildConfigField("String", "AUTHORITY", "\"com.ichi2.anki.flashcards\"")
+        buildConfigField("String", "ANKI_PACKAGE_NAME", "\"com.ichi2.anki\"")
     }
     buildTypes {
         debug {
-            buildConfigField(
-                "String",
-                "READ_WRITE_PERMISSION",
-                "\"com.ichi2.anki.debug.permission.READ_WRITE_DATABASE\"",
-            )
-            buildConfigField("String", "AUTHORITY", "\"com.ichi2.anki.debug.flashcards\"")
+            buildConfigField("String", "ANKI_PACKAGE_NAME", "\"com.ichi2.anki.debug\"")
         }
         release {
             isMinifyEnabled = false
