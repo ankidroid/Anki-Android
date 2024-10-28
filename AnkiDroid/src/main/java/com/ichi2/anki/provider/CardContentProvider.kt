@@ -137,9 +137,8 @@ class CardContentProvider : ContentProvider() {
             return sanitized.toTypedArray()
         }
 
-        // Follows the format in the manifest
-        private const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.flashcards"
-        private const val PERMISSION = "${BuildConfig.APPLICATION_ID}.permission.READ_WRITE_DATABASE"
+        private val AUTHORITY = FlashCardsContract.getAuthority(BuildConfig.APPLICATION_ID)
+        private val PERMISSION = FlashCardsContract.getPermission(BuildConfig.APPLICATION_ID)
 
         init {
             fun addUri(path: String, code: Int) = sUriMatcher.addURI(AUTHORITY, path, code)
