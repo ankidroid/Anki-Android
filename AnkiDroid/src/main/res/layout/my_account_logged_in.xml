@@ -23,17 +23,28 @@
             android:id="@+id/login_logo"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:srcCompat="@drawable/logged_in_logo" />
 
         <com.ichi2.ui.FixedTextView
+            android:id="@+id/logged_in_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="48dp"
+            android:text="@string/logged_as"
+            android:textSize="@dimen/title_textsize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_logo" />
+
+        <com.ichi2.ui.FixedTextView
             android:id="@+id/username_logged_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/content_vertical_padding"
+            android:layout_margin="12dp"
             android:textSize="@dimen/title_textsize"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,23 +52,12 @@
             app:layout_constraintTop_toBottomOf="@id/logged_in_text"
             tools:text="user@example.com" />
 
-        <com.ichi2.ui.FixedTextView
-            android:id="@+id/logged_in_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/content_vertical_padding"
-            android:text="@string/logged_as"
-            android:textSize="@dimen/title_textsize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_logo" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/logout_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/content_vertical_padding"
+            android:layout_marginTop="16dp"
             android:minWidth="200dp"
             android:text="@string/log_out"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/content_vertical_padding"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:minWidth="200dp"
             android:text="@string/remove_account"
             app:backgroundTint="@color/material_red_500"
@@ -89,6 +90,7 @@
             android:textSize="@dimen/abc_text_size_button_material"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="48dp"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toBottomOf="parent"
