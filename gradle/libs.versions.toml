@@ -1,5 +1,5 @@
 [versions]
-compileSdk = "34"
+compileSdk = "35"
 minSdk = "23"  # also in testlib/build.gradle.kts
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
 acra = '5.11.4'

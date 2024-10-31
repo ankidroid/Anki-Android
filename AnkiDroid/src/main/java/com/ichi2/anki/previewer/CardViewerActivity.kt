@@ -32,6 +32,7 @@ import kotlin.reflect.jvm.jvmName
  * @see TemplatePreviewerFragment
  */
 class CardViewerActivity : SingleFragmentActivity() {
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge() // TODO assess moving this to SingleFragmentActivity
         super.onCreate(savedInstanceState)
