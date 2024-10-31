@@ -68,6 +68,7 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
         hideProgressBar()
     }
 
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
@@ -96,6 +97,7 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
      */
     protected suspend fun userAcceptsSchemaChange() = ankiActivity.userAcceptsSchemaChange()
 
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(@AttrRes attr: Int) {
         requireActivity().window.navigationBarColor =
             Themes.getColorFromAttr(requireContext(), attr)

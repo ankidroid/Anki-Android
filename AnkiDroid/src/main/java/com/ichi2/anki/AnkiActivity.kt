@@ -620,6 +620,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
         )
 
     /** @see Window.setNavigationBarColor */
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(@AttrRes attr: Int) {
         window.navigationBarColor = Themes.getColorFromAttr(this, attr)
     }
