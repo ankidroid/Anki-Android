@@ -69,10 +69,10 @@
         <item quantity="other">נותרו %1$d שעות %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="two">%1$d days %2$dh left</item>
-        <item quantity="many">%1$d days %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">נותרו %1$d ימים ו-%2$d שעות</item>
+        <item quantity="two">נותרו %1$d ימים ו-%2$d שעות</item>
+        <item quantity="many">נותרו %1$d ימים ו-%2$d שעות</item>
+        <item quantity="other">נותרו %1$d ימים ו-%2$d שעות</item>
     </plurals>
     <string name="no_cards_placeholder_title">האוסף ריק</string>
     <string name="no_cards_placeholder_description">אפשר להוסיף כרטיסים\n
@@ -210,5 +210,5 @@
     <string name="image_occlusion">חסימת תמונה</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">הסר חשבון</string>
     <!-- Instant Note Editor -->
-    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
+    <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">כרטיס מיידי</string>
 </resources>

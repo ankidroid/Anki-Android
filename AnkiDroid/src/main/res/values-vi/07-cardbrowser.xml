@@ -67,11 +67,11 @@
     <string name="card_browser_list_my_searches_new_name">Đặt tên cho tìm kiếm hiện tại</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Bạn không thể lưu tìm kiếm mà không có tên</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Tên tồn tại</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Không có ghi chú để chỉnh sửa</string>
     <string name="card_browser_list_my_searches_remove_content">Xóa “%1$s”?</string>
     <string name="card_browser_change_display_order" maxLength="28">Thay đổi thứ tự hiển thị</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Tìm kiếm</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Tìm kiếm</string>
     <string name="card_browser_change_display_order_title">Chọn thứ tự hiển thị</string>
     <string name="card_details_tags">Thẻ</string>
     <string-array name="card_browser_order_labels">
