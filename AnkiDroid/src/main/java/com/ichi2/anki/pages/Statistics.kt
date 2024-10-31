@@ -47,6 +47,7 @@ class Statistics :
     private lateinit var deckSpinnerSelection: DeckSpinnerSelection
     private lateinit var spinner: Spinner
 
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         webView.isNestedScrollingEnabled = true

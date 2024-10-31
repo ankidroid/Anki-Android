@@ -144,7 +144,11 @@ object InitialActivity {
      */
     fun checkWebviewVersion(packageManager: PackageManager, activity: AnkiActivity) {
         val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
-        val versionCode = webviewPackageInfo.versionName.split(".")[0].toInt()
+        val webviewVersion = webviewPackageInfo.versionName ?: run {
+            Timber.w("Failed to obtain WebView version")
+            return
+        }
+        val versionCode = webviewVersion.split(".")[0].toInt()
         if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION) {
             Timber.d("WebView is up to date. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
             return

@@ -103,8 +103,8 @@ object AdaptionUtil {
         return if (packageName != null) {
             try {
                 val info = pm.getPackageInfoCompat(packageName, PackageInfoFlagsCompat.EMPTY) ?: return false
-                info.applicationInfo != null &&
-                    info.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+                val appInfo = info.applicationInfo ?: return false
+                appInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 Timber.w(e)
                 false
