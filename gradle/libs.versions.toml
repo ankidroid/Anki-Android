@@ -20,7 +20,7 @@ androidxAppCompat = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidxBrowser = "1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
-androidxConstraintlayout = "2.1.4"
+androidxConstraintlayout = "2.2.0"
 # https://developer.android.com/jetpack/androidx/releases/core
 androidxCoreKtx = "1.13.1"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
