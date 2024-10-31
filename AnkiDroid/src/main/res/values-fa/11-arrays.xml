@@ -50,7 +50,7 @@
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">اول قديمي ها ديده شود</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">اول قدیمی ترین مشاهده شده ها</string>
     <string name="cram_deck_conf_order_random">تصادفي</string>
     <string name="cram_deck_conf_order_increasing_intervals">افزايش فواصل</string>
     <string name="cram_deck_conf_order_decreasing_intervals">كاهش فواصل</string>
