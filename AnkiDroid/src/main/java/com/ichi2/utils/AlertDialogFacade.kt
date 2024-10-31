@@ -331,10 +331,13 @@ val AlertDialog.positiveButton: Button
  * @param onClick A lambda function that is invoked when an item is clicked.
  */
 fun AlertDialog.Builder.listItems(items: List<CharSequence>, onClick: (dialog: DialogInterface, index: Int) -> Unit): AlertDialog.Builder {
-    return this.setItems(items.toTypedArray()) { dialog, which ->
-        onClick(dialog, which)
-    }
+    return this.setItems(items.toTypedArray(), onClick)
 }
+
+data class ListItem(
+    val title: CharSequence,
+    val onClick: (DialogInterface) -> Unit
+)
 
 /**
  * Extension workaround for Displaying ListView & Message Together
@@ -344,16 +347,16 @@ fun AlertDialog.Builder.listItems(items: List<CharSequence>, onClick: (dialog: D
  * @param items The items to display in the list.
  * @param onClick A lambda function that is invoked when an item is clicked.
  */
-fun AlertDialog.Builder.listItemsAndMessage(message: String?, items: List<CharSequence>, onClick: (dialog: DialogInterface, index: Int) -> Unit): AlertDialog.Builder {
+fun AlertDialog.Builder.listItemsAndMessage(message: String?, items: List<ListItem>): AlertDialog.Builder {
     val dialogView = View.inflate(this.context, R.layout.dialog_listview_message, null)
     dialogView.findViewById<FixedTextView>(R.id.dialog_message).text = message
 
     val listView = dialogView.findViewById<ListView>(R.id.dialog_list_view)
-    listView.adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, items)
+    listView.adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, items.map { it.title })
 
     val dialog = this.create()
     listView.setOnItemClickListener { _, _, index, _ ->
-        onClick(dialog, index)
+        items[index].onClick(dialog)
     }
     return this.setView(dialogView)
 }

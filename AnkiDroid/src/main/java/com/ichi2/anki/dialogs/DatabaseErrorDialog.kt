@@ -58,6 +58,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.showImportDialog
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.utils.ListItem
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.create
@@ -339,13 +340,24 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             INCOMPATIBLE_DB_VERSION -> {
-                val values: MutableList<Int> = ArrayList(2)
-                val options = mutableListOf<CharSequence>()
-                options.add(makeBold(res.getString(R.string.backup_restore)))
-                values.add(0)
+                val items: MutableList<ListItem> = ArrayList(2)
+                items.add(
+                    ListItem(
+                        makeBold(res.getString(R.string.backup_restore))
+                    ) {
+                        (activity as DeckPicker).showDatabaseErrorDialog(
+                            DIALOG_RESTORE_BACKUP
+                        )
+                    }
+                )
                 if (isLoggedIn) {
-                    options.add(makeBold(res.getString(R.string.backup_one_way_sync_from_server)))
-                    values.add(1)
+                    items.add(
+                        ListItem(makeBold(res.getString(R.string.backup_one_way_sync_from_server))) {
+                            (activity as DeckPicker).showDatabaseErrorDialog(
+                                DIALOG_ONE_WAY_SYNC_FROM_SERVER
+                            )
+                        }
+                    )
                 }
                 alertDialog.show {
                     cancelable(false)
@@ -354,16 +366,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
                     }
-                    listItemsAndMessage(message = message, items = options) { _, index: Int ->
-                        when (values[index]) {
-                            0 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_RESTORE_BACKUP
-                            )
-                            1 -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_ONE_WAY_SYNC_FROM_SERVER
-                            )
-                        }
-                    }
+                    listItemsAndMessage(message = message, items = items)
                 }
             }
             DIALOG_DISK_FULL -> {
@@ -376,16 +379,17 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> {
-                val listItems = UninstallListItem.createList()
-                alertDialog.show {
-                    title(R.string.directory_inaccessible_after_uninstall)
-                    listItemsAndMessage(message = message, items = listItems.map { getString(it.stringRes) }) { _, index: Int ->
-                        val listItem = listItems[index]
-                        listItem.onClick(activity as DeckPicker)
-                        if (listItem.dismissesDialog) {
+                val items = UninstallListItem.createList().map { item ->
+                    ListItem(getString(item.stringRes)) { dialog ->
+                        item.onClick(activity as DeckPicker)
+                        if (item.dismissesDialog) {
                             dismiss()
                         }
                     }
+                }
+                alertDialog.show {
+                    title(R.string.directory_inaccessible_after_uninstall)
+                    listItemsAndMessage(message = message, items = items)
                     cancelable(false)
                 }
             }

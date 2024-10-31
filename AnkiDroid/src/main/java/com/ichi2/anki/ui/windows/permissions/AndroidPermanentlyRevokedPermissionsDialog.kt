@@ -18,7 +18,6 @@ package com.ichi2.anki.ui.windows.permissions
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.DialogInterface
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.AnkiActivity
@@ -26,6 +25,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem
+import com.ichi2.utils.ListItem
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.show
@@ -54,13 +54,18 @@ object AndroidPermanentlyRevokedPermissionsDialog {
             getCurrentAnkiDroidDirectory(context)
         )
         AlertDialog.Builder(context).show {
-            listItemsAndMessage(message = message, listItemData.map { context.getString(it.stringRes) }) { dialog: DialogInterface, index: Int ->
-                val listItem = listItemData[index]
-                listItem.onClick(context)
-                if (listItem.dismissesDialog) {
-                    dialog.dismiss()
+            listItemsAndMessage(
+                message = message,
+                listItemData.map { data ->
+                    ListItem(context.getString(data.stringRes)) {
+                            dialog ->
+                        data.onClick(context)
+                        if (data.dismissesDialog) {
+                            dialog.dismiss()
+                        }
+                    }
                 }
-            }
+            )
             cancelable(false)
         }
     }
