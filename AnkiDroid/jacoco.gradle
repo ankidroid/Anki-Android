@@ -108,7 +108,7 @@ def testReport = tasks.register('jacocoTestReport', JacocoReport) {
 
     reports {
         xml.required = true
-        html.destination htmlOutDir
+        html.outputLocation = htmlOutDir
     }
 
     def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
@@ -136,7 +136,7 @@ def unitTestReport = tasks.register('jacocoUnitTestReport', JacocoReport) {
 
     reports {
         xml.required = true
-        html.destination htmlOutDir
+        html.outputLocation = htmlOutDir
     }
 
     def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
@@ -161,7 +161,7 @@ def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) 
 
     reports {
         xml.required = true
-        html.destination htmlOutDir
+        html.outputLocation = htmlOutDir
     }
 
     def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir(classDir), excludes: fileFilter)
