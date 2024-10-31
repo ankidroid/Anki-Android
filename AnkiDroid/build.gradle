@@ -267,7 +267,11 @@ play {
 tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
-    fileMode 0755
+    filePermissions {
+        user {
+            read = write = execute = true
+        }
+    }
 }
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
