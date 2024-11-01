@@ -24,7 +24,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createNoStorageList
-import com.ichi2.utils.ListItem
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.toListItems
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.show
@@ -45,8 +45,6 @@ import timber.log.Timber
 object AndroidPermanentlyRevokedPermissionsDialog {
     @SuppressLint("CheckResult")
     fun show(context: AnkiActivity) {
-        val listItemData = createNoStorageList()
-
         val message = context.getString(
             R.string.directory_revoked_after_inactivity,
             "WRITE_EXTERNAL_STORAGE",
@@ -55,15 +53,7 @@ object AndroidPermanentlyRevokedPermissionsDialog {
         AlertDialog.Builder(context).show {
             listItemsAndMessage(
                 message = message,
-                listItemData.map { data ->
-                    ListItem(context.getString(data.stringRes)) {
-                            dialog ->
-                        data.onClick(context)
-                        if (data.dismissesDialog) {
-                            dialog.dismiss()
-                        }
-                    }
-                }
+                createNoStorageList().toListItems(context)
             )
             cancelable(false)
         }

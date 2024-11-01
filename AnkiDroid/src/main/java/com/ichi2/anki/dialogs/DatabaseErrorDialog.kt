@@ -52,9 +52,11 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_RESTORE_BACKUP
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.toListItems
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.showImportDialog
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
@@ -379,14 +381,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> {
-                val items = UninstallListItem.createList().map { item ->
-                    ListItem(getString(item.stringRes)) { dialog ->
-                        item.onClick(activity as DeckPicker)
-                        if (item.dismissesDialog) {
-                            dismiss()
-                        }
-                    }
-                }
+                val items = UninstallListItem.createList().toListItems(requireAnkiActivity())
                 alertDialog.show {
                     title(R.string.directory_inaccessible_after_uninstall)
                     listItemsAndMessage(message = message, items = items)
@@ -493,9 +488,20 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
 
             /**
-             * List of options to present to the users when the storage is not usable.
+             * The list of options to offer to the user when the collection can't be opened and the storage is not available.
+             * It's the same as [createList], without [RESTORE_FROM_ANKIWEB], because we're unable to access the Deck Picker to sync
+             *      * and would also have no folder to restore to
              */
             fun createNoStorageList() = createList().filter { it != RESTORE_FROM_ANKIWEB }
+
+            fun List<UninstallListItem>.toListItems(context: AnkiActivity) = map { it.toListItem(context) }
+        }
+
+        fun toListItem(activity: AnkiActivity): ListItem = ListItem(activity.getString(stringRes)) { dialog ->
+            onClick(activity)
+            if (dismissesDialog) {
+                dialog.dismiss()
+            }
         }
     }
 
