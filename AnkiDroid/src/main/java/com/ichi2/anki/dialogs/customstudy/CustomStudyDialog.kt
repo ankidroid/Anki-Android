@@ -352,25 +352,16 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     /**
      * Retrieve the list of ids to put in the context menu list
-     * @param dialogId option to specify which tasks are shown in the list
      * @return the ids of which values to show
      */
     private fun getListIds(): List<ContextMenuOption> {
         // Standard context menu
-        val dialogOptions = mutableListOf<ContextMenuOption>().apply {
-            add(STUDY_NEW)
-            add(STUDY_REV)
-            add(STUDY_FORGOT)
-            add(STUDY_AHEAD)
-            add(STUDY_RANDOM)
-            add(STUDY_PREVIEW)
-            add(STUDY_TAGS)
+        return mutableListOf(STUDY_REV, STUDY_FORGOT, STUDY_AHEAD, STUDY_RANDOM, STUDY_PREVIEW, STUDY_TAGS).apply {
+            if (collection.sched.totalNewForCurrentDeck() != 0) {
+                // If no new cards we won't show STUDY_NEW
+                this.add(0, STUDY_NEW)
+            }
         }
-        if (collection.sched.totalNewForCurrentDeck() == 0) {
-            // If no new cards we wont show CUSTOM_STUDY_NEW
-            dialogOptions.remove(STUDY_NEW)
-        }
-        return dialogOptions.toList()
     }
 
     private val text1: String
