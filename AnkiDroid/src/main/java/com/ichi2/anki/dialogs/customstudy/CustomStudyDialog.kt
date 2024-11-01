@@ -547,7 +547,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * @see ContextMenuAttribute
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    enum class ContextMenuOption(override val value: Int, override val stringResource: Int?) : ContextMenuAttribute<ContextMenuOption> {
+    enum class ContextMenuOption(override val value: Int, override val stringResource: Int) : ContextMenuAttribute<ContextMenuOption> {
         STUDY_NEW(100, R.string.custom_study_increase_new_limit),
         STUDY_REV(101, R.string.custom_study_increase_review_limit),
         STUDY_FORGOT(102, R.string.custom_study_review_forgotten),
@@ -560,7 +560,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
         companion object {
             fun fromInt(value: Int): ContextMenuOption = entries.first { it.value == value }
-            fun fromString(resources: Resources, stringValue: String): ContextMenuOption = entries.first { resources.getString(it.stringResource as Int) == stringValue }
+            fun fromString(resources: Resources, stringValue: String): ContextMenuOption = entries.first { resources.getString(it.stringResource) == stringValue }
         }
     }
 }
