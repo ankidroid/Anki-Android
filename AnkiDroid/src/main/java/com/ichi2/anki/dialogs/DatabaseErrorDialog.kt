@@ -478,13 +478,22 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     cancelable(false)
                 }
             }
-            fun createList(): List<UninstallListItem> {
-                return if (isLoggedIn()) {
-                    listOf(RESTORE_FROM_ANKIWEB, INSTALL_NON_PLAY_APP_NORMAL, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
-                } else {
-                    listOf(INSTALL_NON_PLAY_APP_RECOMMENDED, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
-                }
+
+            /**
+             * List of options to present to the user when the collection is broken.
+             */
+            fun createList() = if (isLoggedIn()) {
+                listOf(RESTORE_FROM_ANKIWEB, INSTALL_NON_PLAY_APP_NORMAL, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
+            } else {
+                listOf(INSTALL_NON_PLAY_APP_RECOMMENDED, RESTORE_FROM_BACKUP, GET_HELP, RECREATE_COLLECTION)
             }
+
+            /**
+             * List of options to present to the users when the storage is not usable.
+             * Copied from [createList], without [RESTORE_FROM_ANKIWEB]. Indeed, if we're unable to
+             * access the Deck Picker to sync, we have no folder to restore to.
+             */
+            fun createNoStorageList() = createList().filter { it != RESTORE_FROM_ANKIWEB }
         }
     }
 
