@@ -19,7 +19,6 @@ package com.ichi2.anki.dialogs.customstudy
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -58,7 +57,6 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
-import com.ichi2.utils.HashUtil.hashMapInit
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
@@ -110,15 +108,15 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     private fun buildContextMenu(): AlertDialog {
-        val listIds = getListIds().map { it.value }.toIntArray()
+        val listIds = getListIds()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
-        val items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }
+        val titles = listIds.map { resources.getString(it.stringResource) }
 
         return AlertDialog.Builder(requireActivity())
             .title(R.string.custom_study)
             .cancelable(true)
-            .listItems(items = items) { _, index ->
-                when (ContextMenuOption.fromString(resources, items[index].toString())) {
+            .listItems(items = titles) { _, index ->
+                when (listIds[index]) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
                         val deckId = requireArguments().getLong("did")
@@ -155,7 +153,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
-                                ContextMenuOption.fromString(resources, items[index].toString()),
+                                listIds[index],
                                 requireArguments().getLong("did"),
                                 jumpToReviewer
                             )
@@ -307,23 +305,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return dialog
     }
-
-    private val keyValueMap: HashMap<Int, String>
-        get() {
-            val res = resources
-            val keyValueMap = hashMapInit<Int, String>(10)
-            keyValueMap[STANDARD.value] = res.getString(R.string.custom_study)
-            keyValueMap[STUDY_NEW.value] = res.getString(R.string.custom_study_increase_new_limit)
-            keyValueMap[STUDY_REV.value] = res.getString(R.string.custom_study_increase_review_limit)
-            keyValueMap[STUDY_FORGOT.value] = res.getString(R.string.custom_study_review_forgotten)
-            keyValueMap[STUDY_AHEAD.value] = res.getString(R.string.custom_study_review_ahead)
-            keyValueMap[STUDY_RANDOM.value] = res.getString(R.string.custom_study_random_selection)
-            keyValueMap[STUDY_PREVIEW.value] = res.getString(R.string.custom_study_preview_new)
-            keyValueMap[STUDY_TAGS.value] = res.getString(R.string.custom_study_limit_tags)
-            keyValueMap[DECK_OPTIONS.value] = res.getString(R.string.menu__deck_options)
-            keyValueMap[MORE_OPTIONS.value] = res.getString(R.string.more_options)
-            return keyValueMap
-        }
 
     /**
      * Gathers the final selection of tags and type of cards,
@@ -516,7 +497,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
         companion object {
             fun fromInt(value: Int): ContextMenuOption = entries.first { it.value == value }
-            fun fromString(resources: Resources, stringValue: String): ContextMenuOption = entries.first { resources.getString(it.stringResource) == stringValue }
         }
     }
 }
