@@ -176,7 +176,7 @@
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
-    <string name="reminder_title">Do not forget to study today!</string>
+    <string name="reminder_title">আজ অধ্যয়ন করতে ভুলবেন না!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
         <item quantity="other">%2$d cards to review in %1$s</item>
@@ -197,7 +197,7 @@
     <string name="restore_default" maxLength="28">Restore Default</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
+    <string name="white_board_image_save_failed">হোয়াইটবোর্ড ছবি সংরক্ষণ করতে ব্যর্থ হয়েছে. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color" maxLength="41">Whiteboard pen color</string>
     <string name="title_whiteboard_editor" maxLength="28">Whiteboard editor</string>
@@ -219,27 +219,27 @@
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size" maxLength="28">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Show toolbar</string>
+    <string name="menu_font_size" maxLength="28">ফন্টের আকার</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">টুলবার দেখান</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
     <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
+    <string name="insert_horizontal_line">অনুভূমিক লাইন ঢোকান</string>
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="note_editor_toolbar_icon">বোতাম পাঠ্য</string>
+    <string name="before_text">নির্বাচনের আগে HTML</string>
+    <string name="after_text">নির্বাচনের পর এইচটিএমএল</string>
+    <string name="add_toolbar_item">টুলবার আইটেম তৈরি করুন</string>
+    <string name="edit_toolbar_item">টুলবার আইটেম সম্পাদনা করুন</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_image_too_large">The image is too large, please insert the image manually</string>
-    <string name="note_editor_video_too_large">The video file is too large, please insert the video manually</string>
-    <string name="note_editor_audio_too_large">The audio file is too large, please insert the audio manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
+    <string name="remove_toolbar_item">টুলবার আইটেম সরান?</string>
+    <string name="note_editor_image_too_large">ছবি খুবই বড়, অনুগ্রহ করে ম্যানুয়ালি ছবি ঢোকান</string>
+    <string name="note_editor_video_too_large">ভিডিও ফাইলটি খুব বড়, দয়া করে ভিডিওটি ম্যানুয়ালি ঢোকান৷</string>
+    <string name="note_editor_audio_too_large">অডিও ফাইলটি খুব বড়, অনুগ্রহ করে ম্যানুয়ালি অডিও ঢোকান৷</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">অ্যান্ড্রয়েড ব্যাকআপ চলছে। আবার চেষ্টা করুন</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid-কে শর্টকাট যোগ করার অনুমতি দিতে আপনাকে iManager ব্যবহার করতে হতে পারে</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
     <string name="create_shortcut_error">Error adding shortcut: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled" maxLength="28">Capitalize sentences</string>
@@ -248,25 +248,25 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="invalid_email">Enter a valid email</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="invalid_email">একটি বৈধ ইমেল লিখুন</string>
+    <string name="password_empty">পাসওয়ার্ড প্রয়োজন</string>
+    <string name="back_pressed_once">প্রস্থান করতে আবার ফিরে টিপুন</string>
+    <string name="back_pressed_once_reviewer">ফিরে আসতে আবার টিপুন</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
+    <string name="try_again">আবার চেষ্টা করুন</string>
+    <string name="cancel_download">ডাউনলোড বাতিল করুন</string>
+    <string name="cancel_download_question_title">ডাউনলোড বাতিল করবেন?</string>
+    <string name="downloading_file">%s ডাউনলোড হচ্ছে</string>
+    <string name="import_deck">আমদানি ডেক</string>
+    <string name="something_wrong">কিছু ভুল হয়েছে, আবার চেষ্টা করুন</string>
     <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
-    <string name="home" maxLength="28">Home</string>
+    <string name="deck_download_progress_message">ডাউনলোড করার সময় আপনি অন্যান্য অ্যাপ ব্যবহার করতে পারেন</string>
+    <string name="check_network">আপনার নেটওয়ার্ক সংযোগ পরীক্ষা করুন</string>
+    <string name="search_using_deck_name">ডেকের নাম ব্যবহার করে অনুসন্ধান করুন</string>
+    <string name="external_storage_unavailable">ডাউনলোড বাতিল করা হয়েছে, কোনো বাহ্যিক সঞ্চয়স্থান উপলব্ধ নেই</string>
+    <string name="home" maxLength="28">বাড়ি</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>

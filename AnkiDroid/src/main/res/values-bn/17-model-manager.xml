@@ -32,41 +32,41 @@
     <string name="toast_last_model">আপনি সর্বশেষ নোট-টাইপটিকে ডিলিট করতে পারেন না</string>
     <string name="toast_last_field">নোট-যেকোনো টাইপের অন্তত একটি ফিল্ড থাকা জরুরি</string>
     <string name="toast_empty_name">আপনাকে একটি নাম লিখতে হবে</string>
-    <string name="toast_duplicate_field">Field name already used</string>
-    <string name="toast_out_of_range">You must enter a valid value</string>
+    <string name="toast_duplicate_field">ক্ষেত্রের নাম ইতিমধ্যে ব্যবহার করা হয়েছে</string>
+    <string name="toast_out_of_range">আপনাকে অবশ্যই একটি বৈধ মান লিখতে হবে</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
-        <item quantity="one">%d note type available</item>
-        <item quantity="other">%d note types available</item>
+        <item quantity="one">%d নোটের ধরন উপলব্ধ</item>
+        <item quantity="other">%d নোটের ধরন উপলব্ধ</item>
     </plurals>
     <plurals name="model_browser_of_type">
-        <item quantity="one">%d note</item>
-        <item quantity="other">%d notes</item>
+        <item quantity="one">%dটি নোট</item>
+        <item quantity="other">%dটি নোট</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">Delete note type</string>
+    <string name="model_browser_delete">নোটের ধরন মুছুন</string>
     <string name="model_browser_rename" comment="Rename a note type">Rename</string>
-    <string name="model_browser_template">Edit cards</string>
+    <string name="model_browser_template">কার্ডটি সম্পাদনা করুন</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">ভাষার ইঙ্গিতটি %s এ সেট করুন</string>
     <!--Field Editing-->
-    <string name="model_field_editor_title">Edit fields</string>
-    <string name="model_field_editor_add" maxLength="28">Add field</string>
-    <string name="model_field_editor_delete">Delete field</string>
+    <string name="model_field_editor_title">ক্ষেত্র সম্পাদনা করুন</string>
+    <string name="model_field_editor_add" maxLength="28">ক্ষেত্র যোগ করুন</string>
+    <string name="model_field_editor_delete">ক্ষেত্রটি মুছুন</string>
     <string name="model_field_editor_rename">Rename field</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">কীবোর্ড ভাষার ইঙ্গিত সেট করুন</string>
     <string name="model_field_editor_reposition_menu">Reposition field</string>
     <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
-    <string name="model_field_editor_changing">Updating fields</string>
-    <string name="model_field_editor_sort_field">Sort by this field</string>
+    <string name="model_field_editor_toggle_sticky">যোগ করার সময় শেষ ইনপুট মনে রাখবেন</string>
+    <string name="model_field_editor_changing">ক্ষেত্র আপডেট করা হচ্ছে</string>
+    <string name="model_field_editor_sort_field">এই ক্ষেত্র অনুসারে সাজান</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">আপনি এই নোট টাইপ মুছে ফেলার বিষয়ে নিশ্চিত?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s </string>
+    <string name="model_browser_add_add">যোগ করুন: %1$s</string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Clone: %1$s </string>
     <!--Browser Appearance-->

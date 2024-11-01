@@ -90,7 +90,7 @@
     <string name="custom_study_preview_new">מעבר מקדים על כרטסיות חדשות</string>
     <string name="custom_study_limit_tags">הגבל לתיוג ספציפי</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d buried</item>
+        <item quantity="one">+%d קבור</item>
         <item quantity="two">+%d buried</item>
         <item quantity="many">+%d buried</item>
         <item quantity="other">+%d buried</item>
@@ -346,24 +346,24 @@
     <string name="play_recording">השמע</string>
     <string name="next_recording">הבא</string>
     <!--  AlertDialog in the deleteCardTemplate  -->
-    <string name="orphan_note_title">Cannot Delete Card Type</string>
+    <string name="orphan_note_title">לא ניתן למחוק את סוג הכרטיס</string>
     <string name="orphan_note_message">מחיקת סוג כרטיס זה תשאיר כמה הערות ללא כרטיס.</string>
-    <string name="voice_not_supported">Voice not supported. Try another or install a voice engine.</string>
+    <string name="voice_not_supported">קול אינו נתמך. נסה אחר או התקן מנוע קול.</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Show keyboard shortcuts dialog</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Deck Picker</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Delete deck without confirmation</string>
-    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Note Editor</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Select deck</string>
-    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Select note type</string>
-    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag editor</string>
-    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Card Template Editor</string>
-    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">Edit front template</string>
-    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">Edit back template</string>
-    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">Edit styling</string>
-    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">Copy template as markdown</string>
-    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Edit browser appearance</string>
-    <string name="show_shortcuts_message">Press Alt+K to show keyboard shortcuts</string>
-    <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">הצג חלון קיצורי מקלדת</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">בוחר החפיסה</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">מחק את החפיסה ללא אישור</string>
+    <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">עורך הערות</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">בחר חפיסה</string>
+    <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">מחיקת סוג רשומה</string>
+    <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">עורך תג</string>
+    <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">עורך תבניות כרטיסים</string>
+    <string name="edit_front_template" comment="Description of the shortcut that shows the question side of the card template">ערוך תבנית קדמית</string>
+    <string name="edit_back_template" comment="Description of the shortcut that shows the answer side of the card template">ערוך תבנית אחורית</string>
+    <string name="edit_styling" comment="Description of the shortcut that shows the styling side of the card template">ערוך סגנון</string>
+    <string name="copy_the_template" comment="Description of the shortcut that copy the template as markdown">העתק תבנית כסימון</string>
+    <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">ערוך את מראה הדפדפן</string>
+    <string name="show_shortcuts_message">הקש Alt+K כדי להציג קיצורי מקשים</string>
+    <string name="missing_user_action_dialog_message" comment="%s is the user action number">פעולת המשתמש %s לא מוגדרת בסוג הערה זה. אנא הגדר אותו</string>
+    <string name="directory_inaccessible_info">למד עוד על איך לשחזר גישה כאן %s או עבור להגדרות כדי לעדכן את תיקיית האוסף.</string>
 </resources>

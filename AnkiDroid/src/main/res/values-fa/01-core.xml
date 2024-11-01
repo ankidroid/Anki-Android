@@ -87,7 +87,7 @@
     <string name="unbury" maxLength="28">خروج از حالت مخفی</string>
     <string name="rename_deck" maxLength="28">تغییر نام دسته</string>
     <string name="create_shortcut">ایجاد میانبر</string>
-    <string name="browse_cards">جستجوی کارت‌ها</string>
+    <string name="browse_cards">مرور کارت‌ها</string>
     <string name="edit_deck_description" comment="edit the deck description">ویرایش توضیحات</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">افزودن</string>
     <string name="menu_add_note" maxLength="28">افزودن یادداشت</string>
@@ -131,8 +131,8 @@
     <string name="invalid_deck_name">نام دسته نامعتبر است</string>
     <string name="studyoptions_congrats_finished">تبریک ! فعلا کارتان تمام شد.</string>
     <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">دسته کارت فعلاً به پایان رسید! %s</string>
-    <string name="studyoptions_no_cards_due">هیچ کارتی هنوز موعد نیست</string>
-    <string name="sd_card_not_mounted">حافظۀ دستگاه یافت نشد</string>
+    <string name="studyoptions_no_cards_due">هنوز هیچ کارتی موعدش نرسیده است</string>
+    <string name="sd_card_not_mounted">حافظه دستگاه نصب نشده است</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">همگام سازی</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">آیا می‌خواهید همگام‌سازی را لغو کنید؟</string>
     <string name="continue_sync" tools:ignore="UnusedResources">ادامه همگام‌سازی</string>
@@ -147,14 +147,14 @@
     <string name="card_template_editor_front">قالب جلو</string>
     <string name="card_template_editor_back">قالب پشت</string>
     <string name="card_template_editor_styling" maxLength="28">طراحی</string>
-    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">ظاهر مروگر کارت</string>
-    <string name="card_template_editor_deck_override" maxLength="28">بازنویسی دسته</string>
+    <string name="card_template_editor_menu_card_browser_appearance" maxLength="28">ظاهر مرورگر کارت</string>
+    <string name="card_template_editor_deck_override" maxLength="28">لغو دسته</string>
     <string name="card_template_editor_insert_field" maxLength="28">اضافه کردن فیلد</string>
     <string name="card_template_editor_select_field">انتخاب فیلد</string>
     <string name="card_template_editor_cant_delete">وجود حداقل یک نوع کارت ضروری است</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">تعداد %1$d کارت ایجاد خواهد شد. ادامه می‌دهید؟</item>
-        <item quantity="other">تعداد %1$d کارت ایجاد خواهد شد. ادامه می‌دهید؟</item>
+        <item quantity="one">این %1$d کارت ایجاد خواهد کرد. ادامه می‌دهید؟</item>
+        <item quantity="other">این %1$d کارت ایجاد خواهد کرد. ادامه می‌دهید؟</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">حذف نوع کارت \"%2$s\"، و %1$d کارت آن؟</item>
@@ -168,12 +168,12 @@
     <string name="card_info_title" maxLength="28">مشخصات کارت</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">بخوان و به پایگاه داده AnkiDroid پیام بده</string>
-    <string name="read_write_permission_description">قابلیت دسترسی و ویرایش یادداشت‌ها، کارت‌ها، نوع یادداشت‌ها، و دسته‌ها</string>
+    <string name="read_write_permission_description">دسترسی به یادداشت‌ها، کارت‌ها، انواع یادداشت‌ها و دسته‌های موجود، و همچنین ایجاد موارد جدید</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">مرورگر کارت</string>
     <string name="context_menu_anki_card_label">کارت Anki</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">مجموعه نمی‌تواند ترکیب شود\nکدام مجموعه را می‌خواهید نگه دارید؟</string>
+    <string name="sync_conflict_message_new">مجموعه‌ها نمی‌توانند ترکیب شوند.\nکدام مجموعه را می‌خواهید نگه دارید؟</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">آیا می‌خواهید مجموعه موجود در AnkiWeb را به جای مجموعه موجود در AnkiDroid قراردهید؟</string>
@@ -184,7 +184,7 @@
     <string name="error__etc__cannot_write_to_or_create_file">نمیتوان فایلی نوشت یا ساخت %s</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">مجموعه خارج از دسترس</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">ما به دلیل تغییرات قوانین Play Store، پس از پاک کردن اپلیکیشن AnkiDroid، امکان دسترسی به مجموعه‌های شما را نداریم\n\nداده‌های شما امن است و امکان بازیابی آن وجود دارد. این داده‌ها در آدرس %s\n\nهستند یکی از گزینه‌های زیر را برای بازیابی انتخاب کنید:</string>
-    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">اندروید مجوز %1$s انکی‌دروید را به دلیل عدم فعالیت برنامه حذف کرده است. \n\nداده‌های شما امن است و قابل بازیابی است. این داده‌ها در آدرس\n%2$s\n\nقرار دارد. یک گزینه برای بازیابی انتخاب کنید:</string>
+    <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">اندروید مجوز %1$s برنامه AnkiDroid را به دلیل عدم فعالیت برنامه حذف کرده است.\n\nداده‌های شما امن هستند و می‌توانند بازیابی شوند. آنها در\n%2$s\nقرار دارند.\n\nگزینه‌ای را در زیر انتخاب کنید تا بازیابی شود:</string>
     <string name="restore_data_from_ankiweb">بازیابی از AnkiWeb (توصیه شده)</string>
     <string name="install_non_play_store_ankidroid_recommended">بازیابی دسترسی به پوشه (توصیه شده)</string>
     <string name="install_non_play_store_ankidroid">بازیابی دسترسی به پوشه (پیشرفته)</string>
@@ -196,7 +196,7 @@
     <string name="storage_access_title">دسترسی به حافظه</string>
     <string name="storage_access_summary">مجموعه‌ی شما را جای امن ذخیره کرده که حذف نشود وقتی برنامه حذف میشود</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">دسترسی به همه فایل ها</string>
-    <string name="image_occlusion">حذف تصویر</string>
+    <string name="image_occlusion">پوشاندن تصویر</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">حذف حساب کاربری</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">کارت فوری</string>

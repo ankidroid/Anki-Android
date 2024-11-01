@@ -84,7 +84,7 @@
     <string name="answer_good" maxLength="41">תשובת טוב</string>
     <string name="answer_easy" maxLength="41">תשובת קל</string>
     <string name="gesture_play" maxLength="41">נגן מדיה</string>
-    <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
+    <string name="gesture_abort_learning" maxLength="41">סגור סוקר</string>
     <string name="gesture_flag_red" maxLength="41">החלף את הדגל האדום</string>
     <string name="gesture_flag_orange" maxLength="41">החלף את הדגל הכתום</string>
     <string name="gesture_flag_green" maxLength="41">החלף את הדגל הירוק</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove" maxLength="41">הסר דגל</string>
     <string name="gesture_page_up" maxLength="41">דף למעלה</string>
     <string name="gesture_page_down" maxLength="41">דף למטה</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
+    <string name="gesture_abort_sync" maxLength="41">סגור את הסוקר וסנכרן</string>
     <string name="gesture_toggle_whiteboard" maxLength="41">החלף לוח ציור</string>
     <string name="gesture_show_hint" maxLength="41">הצג רמז</string>
     <string name="gesture_show_all_hints" maxLength="41">הצג את כל הרמזים</string>
