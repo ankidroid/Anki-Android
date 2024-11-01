@@ -26,7 +26,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.createNoStorageList
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.UninstallListItem.Companion.toListItems
 import com.ichi2.utils.cancelable
-import com.ichi2.utils.listItemsAndMessage
+import com.ichi2.utils.setListItemsAndMessage
 import com.ichi2.utils.show
 import timber.log.Timber
 
@@ -51,7 +51,7 @@ object AndroidPermanentlyRevokedPermissionsDialog {
             getCurrentAnkiDroidDirectory(context)
         )
         AlertDialog.Builder(context).show {
-            listItemsAndMessage(
+            setListItemsAndMessage(
                 message = message,
                 createNoStorageList().toListItems(context)
             )

@@ -347,7 +347,7 @@ data class ListItem(
  * @param items The items to display in the list.
  * @param onClick A lambda function that is invoked when an item is clicked.
  */
-fun AlertDialog.Builder.listItemsAndMessage(message: String?, items: List<ListItem>): AlertDialog.Builder {
+fun AlertDialog.Builder.setListItemsAndMessage(message: String?, items: List<ListItem>): AlertDialog.Builder {
     val dialogView = View.inflate(this.context, R.layout.dialog_listview_message, null)
     dialogView.findViewById<FixedTextView>(R.id.dialog_message).text = message
 

@@ -65,11 +65,11 @@ import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.create
 import com.ichi2.utils.listItems
-import com.ichi2.utils.listItemsAndMessage
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.setListItemsAndMessage
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import kotlinx.parcelize.Parcelize
@@ -368,7 +368,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.close) {
                         closeCollectionAndFinish()
                     }
-                    listItemsAndMessage(message = message, items = items)
+                    setListItemsAndMessage(message = message, items = items)
                 }
             }
             DIALOG_DISK_FULL -> {
@@ -384,7 +384,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 val items = UninstallListItem.createList().toListItems(requireAnkiActivity())
                 alertDialog.show {
                     title(R.string.directory_inaccessible_after_uninstall)
-                    listItemsAndMessage(message = message, items = items)
+                    setListItemsAndMessage(message = message, items = items)
                     cancelable(false)
                 }
             }
