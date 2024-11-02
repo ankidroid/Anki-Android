@@ -70,6 +70,21 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.util.Locale
 
+/**
+ * Key for the kind of custom study dialog to display
+ */
+private const val ID = "id"
+
+/**
+ * Key for the id of the deck this dialog deals with
+ */
+private const val DID = "did"
+
+/**
+ * Key for whether or not to jump to the reviewer.
+ */
+private const val JUMP_TO_REVIEWER = "jumpToReviewer"
+
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
@@ -82,9 +97,9 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
         val args = this.arguments ?: Bundle()
         args.apply {
-            putInt("id", contextMenuAttribute.value)
-            putLong("did", did)
-            putBoolean("jumpToReviewer", jumpToReviewer)
+            putInt(ID, contextMenuAttribute.value)
+            putLong(DID, did)
+            putBoolean(JUMP_TO_REVIEWER, jumpToReviewer)
         }
         this.arguments = args
         return this
@@ -97,10 +112,10 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialogId = requireArguments().getInt("id")
+        val dialogId = requireArguments().getInt(ID)
         return if (dialogId < 100) {
             // Select the specified deck
-            collection.decks.select(requireArguments().getLong("did"))
+            collection.decks.select(requireArguments().getLong(DID))
             buildContextMenu()
         } else {
             buildInputDialog(ContextMenuOption.fromInt(dialogId))
@@ -109,7 +124,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private fun buildContextMenu(): AlertDialog {
         val listIds = getListIds()
-        val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
+        val jumpToReviewer = requireArguments().getBoolean(JUMP_TO_REVIEWER)
         val titles = listIds.map { resources.getString(it.stringResource) }
 
         return AlertDialog.Builder(requireActivity())
@@ -119,7 +134,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 when (listIds[index]) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
-                        val deckId = requireArguments().getLong("did")
+                        val deckId = requireArguments().getLong(DID)
                         val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
                         requireActivity().startActivity(i)
                     }
@@ -128,7 +143,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
                                 STANDARD,
-                                requireArguments().getLong("did"),
+                                requireArguments().getLong(DID),
                                 jumpToReviewer
                             )
                         customStudyListener?.showDialogFragment(d)
@@ -139,7 +154,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                          * number, it is necessary to collect a list of tags. This case handles the creation
                          * of that Dialog.
                          */
-                        val currentDeck = requireArguments().getLong("did")
+                        val currentDeck = requireArguments().getLong(DID)
 
                         val dialogFragment = TagsDialog().withArguments(
                             context = requireContext(),
@@ -154,7 +169,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
                                 listIds[index],
-                                requireArguments().getLong("did"),
+                                requireArguments().getLong(DID),
                                 jumpToReviewer
                             )
                         customStudyListener?.showDialogFragment(d)
@@ -199,9 +214,9 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             editText.inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
         }
         // deck id
-        val did = requireArguments().getLong("did")
+        val did = requireArguments().getLong(DID)
         // Whether or not to jump straight to the reviewer
-        val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
+        val jumpToReviewer = requireArguments().getBoolean(JUMP_TO_REVIEWER)
         // Set material dialog parameters
         val dialog = AlertDialog.Builder(requireActivity())
             .customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
@@ -348,7 +363,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val text1: String
         get() {
             val res = resources
-            return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
+            return when (ContextMenuOption.fromInt(requireArguments().getInt(ID))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
                 else -> ""
@@ -357,7 +372,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val text2: String
         get() {
             val res = resources
-            return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
+            return when (ContextMenuOption.fromInt(requireArguments().getInt(ID))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
@@ -370,7 +385,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val defaultValue: String
         get() {
             val prefs = requireActivity().sharedPrefs()
-            return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
+            return when (ContextMenuOption.fromInt(requireArguments().getInt(ID))) {
                 STUDY_NEW -> prefs.getInt("extendNew", 10).toString()
                 STUDY_REV -> prefs.getInt("extendRev", 50).toString()
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
@@ -389,7 +404,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      */
     private fun createCustomStudySession(delays: JSONArray, terms: Array<Any>, resched: Boolean) {
         val dyn: Deck
-        val did = requireArguments().getLong("did")
+        val did = requireArguments().getLong(DID)
 
         val decks = collection.decks
         val deckToStudyName = decks.name(did)
