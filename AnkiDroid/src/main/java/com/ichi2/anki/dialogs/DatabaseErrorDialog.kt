@@ -75,7 +75,6 @@ import java.io.File
 import java.io.IOException
 
 class DatabaseErrorDialog : AsyncDialogFragment() {
-    private lateinit var repairValues: IntArray
     private lateinit var backups: Array<File>
 
     @SuppressLint("CheckResult")
@@ -140,67 +139,54 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
                 val options = ArrayList<String>(6)
-                val values = ArrayList<Int>(6)
+                val values = ArrayList<ErrorHandlingEntries>(6)
                 if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
-                    values.add(0)
+                    values.add(ErrorHandlingEntries.RETRY)
                 }
                 // repair db with sqlite
                 if (sqliteInstalled) {
                     options.add(res.getString(R.string.backup_error_menu_repair))
-                    values.add(2)
+                    values.add(ErrorHandlingEntries.REPAIR)
                 }
                 // // restore from backup
                 options.add(res.getString(R.string.backup_restore))
-                values.add(3)
+                values.add(ErrorHandlingEntries.RESTORE)
                 // one-way sync from server
                 if (isLoggedIn) {
                     options.add(res.getString(R.string.backup_one_way_sync_from_server))
-                    values.add(4)
+                    values.add(ErrorHandlingEntries.ONE_WAY)
                 }
                 // delete old collection and build new one
                 options.add(res.getString(R.string.backup_del_collection))
-                values.add(5)
-                val titles = arrayOfNulls<String>(options.size).toMutableList()
-                repairValues = IntArray(options.size)
-                var i = 0
-                while (i < options.size) {
-                    titles[i] = options[i]
-                    repairValues[i] = values[i]
-                    i++
-                }
+                values.add(ErrorHandlingEntries.NEW)
                 alertDialog.show {
                     title(R.string.error_handling_title)
                     setIcon(R.drawable.ic_warning)
                     negativeButton(R.string.dialog_cancel)
-                    listItems(items = titles.toList().map { it as CharSequence }) { _, index ->
-                        when (repairValues[index]) {
-                            0 -> {
+                    listItems(items = options) { _, index ->
+                        when (values[index]) {
+                            ErrorHandlingEntries.RETRY -> {
                                 ActivityCompat.recreate(activity as DeckPicker)
                                 return@listItems
                             }
-                            1 -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_CONFIRM_DATABASE_CHECK)
-                                return@listItems
-                            }
-                            2 -> {
+                            ErrorHandlingEntries.REPAIR -> {
                                 (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION)
                                 return@listItems
                             }
-                            3 -> {
+                            ErrorHandlingEntries.RESTORE -> {
                                 (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
                                 return@listItems
                             }
-                            4 -> {
+                            ErrorHandlingEntries.ONE_WAY -> {
                                 (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
                                 return@listItems
                             }
-                            5 -> {
+                            ErrorHandlingEntries.NEW -> {
                                 (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
                                 return@listItems
                             }
-                            else -> throw RuntimeException("Unknown dialog selection: " + repairValues[index])
                         }
                     }
                 }
@@ -339,13 +325,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
             INCOMPATIBLE_DB_VERSION -> {
-                val values: MutableList<Int> = ArrayList(2)
+                val values: MutableList<IncompatibleDbVersionEntries> = ArrayList(2)
                 val options = mutableListOf<CharSequence>()
                 options.add(makeBold(res.getString(R.string.backup_restore)))
-                values.add(0)
+                values.add(IncompatibleDbVersionEntries.RESTORE)
                 if (isLoggedIn) {
                     options.add(makeBold(res.getString(R.string.backup_one_way_sync_from_server)))
-                    values.add(1)
+                    values.add(IncompatibleDbVersionEntries.ONE_WAY)
                 }
                 alertDialog.show {
                     cancelable(false)
@@ -356,10 +342,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     listItemsAndMessage(message = message, items = options) { _, index: Int ->
                         when (values[index]) {
-                            0 -> (activity as DeckPicker).showDatabaseErrorDialog(
+                            IncompatibleDbVersionEntries.RESTORE -> (activity as DeckPicker).showDatabaseErrorDialog(
                                 DIALOG_RESTORE_BACKUP
                             )
-                            1 -> (activity as DeckPicker).showDatabaseErrorDialog(
+                            IncompatibleDbVersionEntries.ONE_WAY -> (activity as DeckPicker).showDatabaseErrorDialog(
                                 DIALOG_ONE_WAY_SYNC_FROM_SERVER
                             )
                         }
@@ -640,4 +626,12 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             }
         }
     }
+}
+
+private enum class ErrorHandlingEntries {
+    RETRY, REPAIR, RESTORE, ONE_WAY, NEW,
+}
+
+private enum class IncompatibleDbVersionEntries {
+    RESTORE, ONE_WAY
 }
