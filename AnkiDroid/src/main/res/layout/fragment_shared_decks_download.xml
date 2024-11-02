@@ -76,6 +76,22 @@
         app:layout_constraintTop_toBottomOf="@id/download_progress"
         android:visibility="gone" />
 
+    <com.ichi2.ui.FixedTextView
+        android:id="@+id/download_from_ankiWeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/download_deck_from_AnkiWeb"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/try_again_deck_download"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/download_progress"
+        app:layout_constraintVertical_bias="0.958" />
+
     <android.widget.Button
         android:id="@+id/cancel_shared_decks_download"
         android:layout_width="match_parent"
