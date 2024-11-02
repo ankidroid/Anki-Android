@@ -65,7 +65,10 @@ class CustomStudyDialogTest : RobolectricTest() {
     fun learnAheadCardsRegressionTest() {
         // #6289 - Regression Test
         val args = CustomStudyDialog(mock(), ParametersUtils.whatever())
-            .withArguments(CustomStudyDialog.ContextMenuOption.STUDY_AHEAD, 1)
+            .withArguments(
+                1,
+                contextMenuAttribute = CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
+            )
             .arguments
         val factory = CustomStudyDialogFactory({ this.col }, mockListener)
         FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory).use { scenario ->
@@ -107,7 +110,7 @@ class CustomStudyDialogTest : RobolectricTest() {
     fun increaseNewCardLimitRegressionTest() {
         // #8338 - Regression Test
         val args = CustomStudyDialog(mock(), ParametersUtils.whatever())
-            .withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, 1)
+            .withArguments(1)
             .arguments
 
         // we are using mock collection for the CustomStudyDialog but still other parts of the code

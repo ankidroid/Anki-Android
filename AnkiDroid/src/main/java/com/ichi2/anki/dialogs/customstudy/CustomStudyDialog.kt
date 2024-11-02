@@ -26,7 +26,6 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -35,7 +34,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.STANDARD
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.DECK_OPTIONS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.MORE_OPTIONS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
@@ -57,7 +56,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
 import com.ichi2.utils.listItems
@@ -71,7 +70,7 @@ import timber.log.Timber
 import java.util.Locale
 
 /**
- * Key for the kind of custom study dialog to display
+ * Key for the ordinal of the [ContextMenuOption] to display. May be not set.
  */
 private const val ID = "id"
 
@@ -84,7 +83,6 @@ private const val DID = "did"
  * Key for whether or not to jump to the reviewer.
  */
 private const val JUMP_TO_REVIEWER = "jumpToReviewer"
-
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
@@ -94,10 +92,16 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         fun startActivity(intent: Intent)
     }
 
-    fun withArguments(contextMenuAttribute: ContextMenuAttribute<*>, did: DeckId, jumpToReviewer: Boolean = false): CustomStudyDialog {
+    fun withArguments(
+        did: DeckId,
+        jumpToReviewer: Boolean = false,
+        contextMenuAttribute: ContextMenuOption? = null
+    ): CustomStudyDialog {
         val args = this.arguments ?: Bundle()
         args.apply {
-            putInt(ID, contextMenuAttribute.value)
+            if (contextMenuAttribute != null) {
+                putInt(ID, contextMenuAttribute.ordinal)
+            }
             putLong(DID, did)
             putBoolean(JUMP_TO_REVIEWER, jumpToReviewer)
         }
@@ -112,13 +116,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialogId = requireArguments().getInt(ID)
-        return if (dialogId < 100) {
+        val option = getOption()
+        return if (option == null) {
             // Select the specified deck
             collection.decks.select(requireArguments().getLong(DID))
             buildContextMenu()
         } else {
-            buildInputDialog(ContextMenuOption.fromInt(dialogId))
+            buildInputDialog(option)
         }
     }
 
@@ -142,7 +146,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         // User asked to see all custom study options
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
-                                STANDARD,
                                 requireArguments().getLong(DID),
                                 jumpToReviewer
                             )
@@ -168,23 +171,14 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
-                                listIds[index],
                                 requireArguments().getLong(DID),
-                                jumpToReviewer
+                                jumpToReviewer,
+                                listIds[index]
                             )
                         customStudyListener?.showDialogFragment(d)
                     }
                 }
             }.create()
-    }
-
-    @KotlinCleanup("make this use enum instead of Int")
-    fun getValuesFromKeys(map: HashMap<Int, String>, keys: IntArray): Array<String?> {
-        val values = arrayOfNulls<String>(keys.size)
-        for (i in keys.indices) {
-            values[i] = map[keys[i]]
-        }
-        return values
     }
 
     /**
@@ -360,10 +354,15 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     }
 
+    /**
+     * The ContextMenuOption saved in [ID]. It may be unset for the standard study dialog.
+     */
+    private fun getOption() = requireArguments().getNullableInt(ID)?. let { ContextMenuOption.entries[it] }
+
     private val text1: String
         get() {
             val res = resources
-            return when (ContextMenuOption.fromInt(requireArguments().getInt(ID))) {
+            return when (getOption()) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
                 else -> ""
@@ -372,7 +371,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val text2: String
         get() {
             val res = resources
-            return when (ContextMenuOption.fromInt(requireArguments().getInt(ID))) {
+            return when (getOption()) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
@@ -385,7 +384,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val defaultValue: String
         get() {
             val prefs = requireActivity().sharedPrefs()
-            return when (ContextMenuOption.fromInt(requireArguments().getInt(ID))) {
+            return when (getOption()) {
                 STUDY_NEW -> prefs.getInt("extendNew", 10).toString()
                 STUDY_REV -> prefs.getInt("extendRev", 50).toString()
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
@@ -473,45 +472,18 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     /**
-     * Interface that enables mixed usage of ContextMenuOptions and ContextMenuConfigurations.
-     *
-     * @see ContextMenuConfiguration
-     * @see ContextMenuOption
-     */
-    interface ContextMenuAttribute<T> where T : Enum<*> {
-        val value: Int
-
-        @get:StringRes val stringResource: Int?
-    }
-
-    /**
-     * Different context menu configurations for the custom study dialog.
-     *
-     * @see ContextMenuAttribute
-     */
-    enum class ContextMenuConfiguration(override val value: Int, override val stringResource: Int? = null) : ContextMenuAttribute<ContextMenuConfiguration> {
-        STANDARD(1)
-    }
-
-    /**
      * Possible context menu options that could be shown in the custom study dialog.
-     *
-     * @see ContextMenuAttribute
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    enum class ContextMenuOption(override val value: Int, override val stringResource: Int) : ContextMenuAttribute<ContextMenuOption> {
-        STUDY_NEW(100, R.string.custom_study_increase_new_limit),
-        STUDY_REV(101, R.string.custom_study_increase_review_limit),
-        STUDY_FORGOT(102, R.string.custom_study_review_forgotten),
-        STUDY_AHEAD(103, R.string.custom_study_review_ahead),
-        STUDY_RANDOM(104, R.string.custom_study_random_selection),
-        STUDY_PREVIEW(105, R.string.custom_study_preview_new),
-        STUDY_TAGS(106, R.string.custom_study_limit_tags),
-        DECK_OPTIONS(107, R.string.menu__deck_options),
-        MORE_OPTIONS(108, R.string.more_options);
-
-        companion object {
-            fun fromInt(value: Int): ContextMenuOption = entries.first { it.value == value }
-        }
+    enum class ContextMenuOption(val stringResource: Int) {
+        STUDY_NEW(R.string.custom_study_increase_new_limit),
+        STUDY_REV(R.string.custom_study_increase_review_limit),
+        STUDY_FORGOT(R.string.custom_study_review_forgotten),
+        STUDY_AHEAD(R.string.custom_study_review_ahead),
+        STUDY_RANDOM(R.string.custom_study_random_selection),
+        STUDY_PREVIEW(R.string.custom_study_preview_new),
+        STUDY_TAGS(R.string.custom_study_limit_tags),
+        DECK_OPTIONS(R.string.menu__deck_options),
+        MORE_OPTIONS(R.string.more_options);
     }
 }

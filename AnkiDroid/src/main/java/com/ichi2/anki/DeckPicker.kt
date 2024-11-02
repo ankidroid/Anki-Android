@@ -640,7 +640,7 @@ open class DeckPicker :
             DeckPickerContextMenuOption.CUSTOM_STUDY -> {
                 Timber.i("ContextMenu: Custom study option selected")
                 val d = FragmentFactoryUtils.instantiate(this, CustomStudyDialog::class.java)
-                d.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, deckId)
+                d.withArguments(deckId)
                 showDialogFragment(d)
             }
             DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
