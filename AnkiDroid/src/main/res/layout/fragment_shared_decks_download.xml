@@ -77,6 +77,22 @@
         android:visibility="gone" />
 
     <android.widget.Button
+        android:id="@+id/download_shared_deck_from_browser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/open_in_browser"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:textColor="@color/material_blue_500"
+        android:padding="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/try_again_deck_download"
+        android:visibility="gone" />
+
+    <android.widget.Button
         android:id="@+id/cancel_shared_decks_download"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
