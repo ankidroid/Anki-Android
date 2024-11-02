@@ -35,8 +35,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.DECK_OPTIONS
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.MORE_OPTIONS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_FORGOT
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_NEW
@@ -136,21 +134,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             .cancelable(true)
             .listItems(items = titles) { _, index ->
                 when (listIds[index]) {
-                    DECK_OPTIONS -> {
-                        // User asked to permanently change the deck options
-                        val deckId = requireArguments().getLong(DID)
-                        val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
-                        requireActivity().startActivity(i)
-                    }
-                    MORE_OPTIONS -> {
-                        // User asked to see all custom study options
-                        val d = CustomStudyDialog(collection, customStudyListener)
-                            .withArguments(
-                                requireArguments().getLong(DID),
-                                jumpToReviewer
-                            )
-                        customStudyListener?.showDialogFragment(d)
-                    }
                     STUDY_TAGS -> {
                         /*
                          * This is a special Dialog for CUSTOM STUDY, where instead of only collecting a
@@ -287,9 +270,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             false
                         )
                     }
-                    STUDY_TAGS,
-                    DECK_OPTIONS,
-                    MORE_OPTIONS -> TODO("This branch has not been covered before")
+                    STUDY_TAGS -> TODO("This branch has not been covered before")
                 }
             }
             .negativeButton(R.string.dialog_cancel) {
@@ -482,8 +463,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         STUDY_AHEAD(R.string.custom_study_review_ahead),
         STUDY_RANDOM(R.string.custom_study_random_selection),
         STUDY_PREVIEW(R.string.custom_study_preview_new),
-        STUDY_TAGS(R.string.custom_study_limit_tags),
-        DECK_OPTIONS(R.string.menu__deck_options),
-        MORE_OPTIONS(R.string.more_options);
+        STUDY_TAGS(R.string.custom_study_limit_tags)
     }
 }
