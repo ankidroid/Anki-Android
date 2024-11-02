@@ -36,8 +36,6 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.LIMITS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.STANDARD
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.DECK_OPTIONS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.MORE_OPTIONS
@@ -105,18 +103,14 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         return if (dialogId < 100) {
             // Select the specified deck
             collection.decks.select(requireArguments().getLong("did"))
-            buildContextMenu(dialogId)
+            buildContextMenu()
         } else {
             buildInputDialog(ContextMenuOption.fromInt(dialogId))
         }
     }
 
-    /**
-     * Build a context menu for custom study
-     * @param id the id type of the dialog
-     */
-    private fun buildContextMenu(id: Int): AlertDialog {
-        val listIds = getListIds(ContextMenuConfiguration.fromInt(id)).map { it.value }.toIntArray()
+    private fun buildContextMenu(): AlertDialog {
+        val listIds = getListIds(STANDARD).map { it.value }.toIntArray()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
         val items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }
 
@@ -380,25 +374,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
                 return dialogOptions.toList()
             }
-            LIMITS -> // Special custom study options to show when the daily study limit has been reached
-                return if (!collection.sched.newDue() && !collection.sched.revDue()) {
-                    listOf(STUDY_NEW, STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
-                } else {
-                    if (collection.sched.newDue()) {
-                        listOf(STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS)
-                    } else {
-                        listOf(STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
-                    }
-                }
-            EMPTY_SCHEDULE -> // Special custom study options to show when extending the daily study limits is not applicable
-                return listOf(
-                    STUDY_FORGOT,
-                    STUDY_AHEAD,
-                    STUDY_RANDOM,
-                    STUDY_PREVIEW,
-                    STUDY_TAGS,
-                    DECK_OPTIONS
-                )
         }
     }
 
@@ -532,13 +507,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * @see ContextMenuAttribute
      */
     enum class ContextMenuConfiguration(override val value: Int, override val stringResource: Int? = null) : ContextMenuAttribute<ContextMenuConfiguration> {
-        STANDARD(1),
-        LIMITS(2),
-        EMPTY_SCHEDULE(3);
-
-        companion object {
-            fun fromInt(value: Int): ContextMenuConfiguration = entries.first { it.value == value }
-        }
+        STANDARD(1)
     }
 
     /**
