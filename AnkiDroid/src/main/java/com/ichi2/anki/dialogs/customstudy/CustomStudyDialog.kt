@@ -110,7 +110,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     }
 
     private fun buildContextMenu(): AlertDialog {
-        val listIds = getListIds(STANDARD).map { it.value }.toIntArray()
+        val listIds = getListIds().map { it.value }.toIntArray()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
         val items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }
 
@@ -355,26 +355,22 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * @param dialogId option to specify which tasks are shown in the list
      * @return the ids of which values to show
      */
-    private fun getListIds(dialogId: ContextMenuConfiguration): List<ContextMenuOption> {
-        when (dialogId) {
-            STANDARD -> {
-                // Standard context menu
-                val dialogOptions = mutableListOf<ContextMenuOption>().apply {
-                    add(STUDY_NEW)
-                    add(STUDY_REV)
-                    add(STUDY_FORGOT)
-                    add(STUDY_AHEAD)
-                    add(STUDY_RANDOM)
-                    add(STUDY_PREVIEW)
-                    add(STUDY_TAGS)
-                }
-                if (collection.sched.totalNewForCurrentDeck() == 0) {
-                    // If no new cards we wont show CUSTOM_STUDY_NEW
-                    dialogOptions.remove(STUDY_NEW)
-                }
-                return dialogOptions.toList()
-            }
+    private fun getListIds(): List<ContextMenuOption> {
+        // Standard context menu
+        val dialogOptions = mutableListOf<ContextMenuOption>().apply {
+            add(STUDY_NEW)
+            add(STUDY_REV)
+            add(STUDY_FORGOT)
+            add(STUDY_AHEAD)
+            add(STUDY_RANDOM)
+            add(STUDY_PREVIEW)
+            add(STUDY_TAGS)
         }
+        if (collection.sched.totalNewForCurrentDeck() == 0) {
+            // If no new cards we wont show CUSTOM_STUDY_NEW
+            dialogOptions.remove(STUDY_NEW)
+        }
+        return dialogOptions.toList()
     }
 
     private val text1: String
