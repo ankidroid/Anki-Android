@@ -112,9 +112,9 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         downloadProgressBar = view.findViewById(R.id.download_progress)
         cancelButton = view.findViewById(R.id.cancel_shared_decks_download)
         importDeckButton = view.findViewById(R.id.import_shared_deck_button)
-        // Added the try again button
         tryAgainButton = view.findViewById(R.id.try_again_deck_download)
         checkNetworkInfoText = view.findViewById(R.id.check_network_info_text)
+        // Added the downloadFromAnkiWeb button (Text)
         downloadFromAnkiWeb = view.findViewById(R.id.download_from_ankiWeb)
 
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
@@ -132,7 +132,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             openDownloadedDeck(context)
         }
 
-        // Added the click listener download from AnkiWeb button
+        // Added the click listener for downloadfromAnkiWeb button
         downloadFromAnkiWeb.setOnClickListener {
             Timber.i("Download from AnkiWeb clicked which would lead to AnkiWeb site to download deck manually")
             downloadManager.remove(downloadId)
@@ -492,7 +492,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 context?.let { showThemedToast(it, R.string.something_wrong, false) }
                 // Update UI if download could not be successful
                 tryAgainButton.visibility = View.VISIBLE
-                // Show download from AnkiWeb button
+                // Making downloadFromAnkiWeb button visible
                 downloadFromAnkiWeb.visibility = View.VISIBLE
                 cancelButton.visibility = View.GONE
                 downloadPercentageText.text = getString(R.string.download_failed)
