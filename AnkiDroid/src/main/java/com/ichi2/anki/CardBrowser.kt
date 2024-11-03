@@ -2195,6 +2195,7 @@ open class CardBrowser :
                     updateSearchItemQA()
                     qa!!.first
                 }
+                CardBrowserColumn.ORIGINAL_POSITION -> card.originalPosition?.toString().orEmpty()
                 CardBrowserColumn.ANSWER -> {
                     updateSearchItemQA()
                     qa!!.second
