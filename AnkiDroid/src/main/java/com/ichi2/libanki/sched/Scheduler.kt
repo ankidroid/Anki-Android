@@ -44,11 +44,8 @@ import com.ichi2.anki.Ease
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts.CARD_TYPE_LRN
-import com.ichi2.libanki.Consts.CARD_TYPE_NEW
-import com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING
-import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.DeckConfig
@@ -566,12 +563,12 @@ open class Scheduler(
                 .db
                 .query(
                     """select
-                          avg(case when type = $CARD_TYPE_NEW then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate,
-                          avg(case when type = $CARD_TYPE_NEW then time else null end) as newTime,
-                          avg(case when type in ($CARD_TYPE_LRN, $CARD_TYPE_RELEARNING) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate,
-                          avg(case when type in ($CARD_TYPE_LRN, $CARD_TYPE_RELEARNING) then time else null end) as revTime,
-                          avg(case when type = $CARD_TYPE_REV then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate,
-                          avg(case when type = $CARD_TYPE_REV then time else null end) as relrnTime
+                          avg(case when type = ${CardType.NEW.code} then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate,
+                          avg(case when type = ${CardType.NEW.code} then time else null end) as newTime,
+                          avg(case when type in (${CardType.LRN.code}, ${CardType.RELEARNING.code}) then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate,
+                          avg(case when type in (${CardType.LRN.code}, ${CardType.RELEARNING.code}) then time else null end) as revTime,
+                          avg(case when type = ${CardType.REV.code} then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate,
+                          avg(case when type = ${CardType.REV.code} then time else null end) as relrnTime
                         from revlog where id > ?""",
                     (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000,
                 ).use { cur ->

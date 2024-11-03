@@ -150,7 +150,7 @@ abstract class InstrumentedTest {
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     protected fun Card.moveToReviewQueue() {
         this.queue = Consts.QUEUE_TYPE_REV
-        this.type = Consts.CARD_TYPE_REV
+        this.type = CardType.REV
         this.due = 0
         col.updateCard(this, true)
     }
