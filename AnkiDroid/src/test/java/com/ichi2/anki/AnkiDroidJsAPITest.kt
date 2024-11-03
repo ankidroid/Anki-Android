@@ -141,7 +141,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Card Queue
         assertThat(
             getDataFromRequest("cardQueue", jsapi),
-            equalTo(formatApiResult(currentCard.queue))
+            equalTo(formatApiResult(currentCard.queue.toInt()))
         )
         // Card Reps
         assertThat(

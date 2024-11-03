@@ -43,9 +43,10 @@ import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
-import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
-import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
-import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
+import com.ichi2.libanki.Consts.QueueType
+import com.ichi2.libanki.Consts.QueueType.MANUALLY_BURIED
+import com.ichi2.libanki.Consts.QueueType.NEW
+import com.ichi2.libanki.Consts.QueueType.SUSPENDED
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Note
 import com.ichi2.testutils.IntentAssert
@@ -211,15 +212,15 @@ class CardBrowserViewModelTest : JvmTest() {
         selectRowAtPosition(0)
         suspend fun getQueue() = col.getCard(queryAllSelectedCardIds().single()).queue
 
-        assertThat("initial queue = NEW", getQueue(), equalTo(QUEUE_TYPE_NEW))
+        assertThat("initial queue = NEW", getQueue(), equalTo(QueueType.NEW))
 
         toggleBury()
 
-        assertThat("bury: queue -> MANUALLY_BURIED", getQueue(), equalTo(QUEUE_TYPE_MANUALLY_BURIED))
+        assertThat("bury: queue -> MANUALLY_BURIED", getQueue(), equalTo(QueueType.MANUALLY_BURIED))
 
         toggleBury()
 
-        assertThat("unbury: queue -> NEW", getQueue(), equalTo(QUEUE_TYPE_NEW))
+        assertThat("unbury: queue -> NEW", getQueue(), equalTo(QueueType.NEW))
     }
 
     @Test
@@ -831,7 +832,7 @@ private fun TestClass.assertAllSuspended(context: String) {
         assertThat(
             "$context: all cards are unsuspended",
             card.queue,
-            equalTo(QUEUE_TYPE_SUSPENDED)
+            equalTo(QueueType.SUSPENDED)
         )
     }
 }
@@ -844,7 +845,7 @@ private fun TestClass.assertAllUnsuspended(context: String) {
         assertThat(
             "$context: all cards unsuspended",
             card.queue,
-            not(equalTo(QUEUE_TYPE_SUSPENDED))
+            not(equalTo(QueueType.SUSPENDED))
         )
     }
 }

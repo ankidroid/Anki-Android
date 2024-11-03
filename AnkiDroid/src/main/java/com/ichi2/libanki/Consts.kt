@@ -20,18 +20,32 @@ import kotlin.annotation.Retention
 
 object Consts {
     // Queue types
-    const val QUEUE_TYPE_MANUALLY_BURIED = -3
-    const val QUEUE_TYPE_SIBLING_BURIED = -2
-    const val QUEUE_TYPE_SUSPENDED = -1
-    const val QUEUE_TYPE_NEW = 0
-    const val QUEUE_TYPE_LRN = 1
-    const val QUEUE_TYPE_REV = 2
-    const val QUEUE_TYPE_DAY_LEARN_RELEARN = 3
-    const val QUEUE_TYPE_PREVIEW = 4
+    enum class QueueType {
+        MANUALLY_BURIED,
+        SIBLING_BURIED,
+        SUSPENDED,
+        NEW,
+        LRN,
+        REV,
+        DAY_LEARN_RELEARN,
+        PREVIEW;
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(QUEUE_TYPE_MANUALLY_BURIED, QUEUE_TYPE_SIBLING_BURIED, QUEUE_TYPE_SUSPENDED, QUEUE_TYPE_NEW, QUEUE_TYPE_LRN, QUEUE_TYPE_REV, QUEUE_TYPE_DAY_LEARN_RELEARN, QUEUE_TYPE_PREVIEW)
-    annotation class CardQueue
+        /**
+         * Whether this card can be reviewed.
+         */
+        fun reviewable() =
+            when (this) {
+                MANUALLY_BURIED, SIBLING_BURIED, SUSPENDED -> false
+                NEW, LRN, REV, DAY_LEARN_RELEARN, PREVIEW -> true
+            }
+
+        fun toInt() = ordinal - 3
+
+        companion object {
+            fun Int.toQueueType() =
+                QueueType.entries[this + 3]
+        }
+    }
 
     // Card types
     enum class CardType {

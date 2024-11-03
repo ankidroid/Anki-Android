@@ -21,9 +21,9 @@ import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
 import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
-import com.ichi2.libanki.Consts.CardQueue
 import com.ichi2.libanki.Consts.CardType
 import com.ichi2.libanki.Consts.CardType.Companion.toCardType
+import com.ichi2.libanki.Consts.QueueType.Companion.toQueueType
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -79,9 +79,7 @@ open class Card : Cloneable {
 
     var type: CardType = CardType.NEW
 
-    @get:CardQueue
-    @CardQueue
-    var queue = 0
+    var queue = Consts.QueueType.NEW
     var due: Int = 0
     var ivl = 0
     var factor = 0
@@ -131,7 +129,7 @@ open class Card : Cloneable {
         mod = card.mtimeSecs
         usn = card.usn
         type = card.ctype.toCardType()
-        queue = card.queue
+        queue = card.queue.toQueueType()
         due = card.due
         ivl = card.interval
         factor = card.easeFactor
@@ -155,7 +153,7 @@ open class Card : Cloneable {
             .setDeckId(did)
             .setTemplateIdx(ord)
             .setCtype(type.ordinal)
-            .setQueue(queue)
+            .setQueue(queue.toInt())
             .setDue(due)
             .setInterval(ivl)
             .setEaseFactor(factor)

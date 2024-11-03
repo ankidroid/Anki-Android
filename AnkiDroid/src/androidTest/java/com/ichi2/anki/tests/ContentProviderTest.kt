@@ -1061,7 +1061,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cardId = card!!.id
 
         // the card starts out being new
-        assertEquals("card is initial new", 0, card.queue)
+        assertEquals("card is initial new", Consts.QueueType.NEW, card.queue)
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.nid
@@ -1089,7 +1089,7 @@ class ContentProviderTest : InstrumentedTest() {
 
         // lookup the card after update, ensure it's not new anymore
         val cardAfterReview = col.getCard(cardId)
-        assertEquals("card is now type rev", Consts.QUEUE_TYPE_REV, cardAfterReview.queue)
+        assertEquals("card is now type rev", Consts.QueueType.REV, cardAfterReview.queue)
     }
 
     /**
@@ -1104,7 +1104,7 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that the card is not already user-buried
         assertNotEquals(
             "Card is not user-buried before test",
-            Consts.QUEUE_TYPE_SIBLING_BURIED,
+            Consts.QueueType.SIBLING_BURIED,
             card!!.queue
         )
 
@@ -1129,10 +1129,10 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that it did get buried
         // -----------------------------
         val cardAfterUpdate = col.getCard(cardId)
-        // QUEUE_TYPE_MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
+        // QueueType.MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
         assertEquals(
             "Card is user-buried",
-            Consts.QUEUE_TYPE_MANUALLY_BURIED,
+            Consts.QueueType.MANUALLY_BURIED,
             cardAfterUpdate.queue
         )
 
@@ -1153,7 +1153,7 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that the card is not already suspended
         assertNotEquals(
             "Card is not suspended before test",
-            Consts.QUEUE_TYPE_SUSPENDED,
+            Consts.QueueType.SUSPENDED,
             card!!.queue
         )
 
@@ -1178,7 +1178,7 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that it did get suspended
         // --------------------------------
         val cardAfterUpdate = col.getCard(cardId)
-        assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.queue)
+        assertEquals("Card is suspended", Consts.QueueType.SUSPENDED, cardAfterUpdate.queue)
 
         // cleanup, unsuspend card and reschedule
         // --------------------------------------

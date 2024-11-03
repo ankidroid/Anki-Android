@@ -1334,7 +1334,7 @@ open class CardBrowser :
         launchCatchingTask {
             val selectedCardIds = viewModel.queryAllSelectedCardIds()
             // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-            if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+            if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QueueType.NEW }) {
                 showDialogFragment(
                     SimpleMessageDialog.newInstance(
                         title = getString(R.string.vague_error),
@@ -2168,7 +2168,7 @@ open class CardBrowser :
             }
             val colorAttr = if (isMarked(col, card.note(col))) {
                 R.attr.markedColor
-            } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+            } else if (card.queue == Consts.QueueType.SUSPENDED) {
                 R.attr.suspendedColor
             } else {
                 android.R.attr.colorBackground
@@ -2472,7 +2472,7 @@ open class CardBrowser :
 
         fun dueString(col: Collection, card: Card): String {
             var t = nextDue(col, card)
-            if (card.queue < 0) {
+            if (!card.queue.reviewable()) {
                 t = "($t)"
             }
             return t
@@ -2484,11 +2484,11 @@ open class CardBrowser :
             val due = card.due
             date = if (card.isInDynamicDeck) {
                 return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
-            } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
+            } else if (card.queue == Consts.QueueType.LRN) {
                 due.toLong()
-            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CardType.NEW) {
+            } else if (card.queue == Consts.QueueType.NEW || card.type == Consts.CardType.NEW) {
                 return due.toString()
-            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CardType.REV && card.queue < 0) {
+            } else if (card.queue == Consts.QueueType.REV || card.queue == Consts.QueueType.DAY_LEARN_RELEARN || card.type == Consts.CardType.REV && !card.queue.reviewable()) {
                 val time = TimeManager.time.intTime()
                 val nbDaySinceCreation = due - col.sched.today
                 time + nbDaySinceCreation * SECONDS_PER_DAY

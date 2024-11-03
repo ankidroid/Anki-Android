@@ -475,7 +475,7 @@ class ReviewerTest : RobolectricTest() {
     @KotlinCleanup("use extension function")
     private fun moveToReviewQueue(reviewCard: Card) {
         reviewCard.update {
-            queue = Consts.QUEUE_TYPE_REV
+            queue = Consts.QueueType.REV
             type = Consts.CardType.REV
             due = 0
         }

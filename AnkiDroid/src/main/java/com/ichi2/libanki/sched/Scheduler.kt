@@ -499,7 +499,7 @@ open class Scheduler(val col: Collection) {
      */
     fun totalNewForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QueueType.NEW.toInt() + " LIMIT ?)",
             REPORT_LIMIT
         )
     }
@@ -508,7 +508,7 @@ open class Scheduler(val col: Collection) {
      */
     fun totalRevForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QueueType.REV.toInt() + " AND due <= ? LIMIT ?)",
             today,
             REPORT_LIMIT
         )
@@ -538,7 +538,7 @@ open class Scheduler(val col: Collection) {
     open fun revDue(): Boolean {
         return col.db
             .queryScalar(
-                "SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
+                "SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QueueType.REV.toInt() + " AND due <= ?" +
                     " LIMIT 1",
                 today
             ) != 0
@@ -546,7 +546,7 @@ open class Scheduler(val col: Collection) {
 
     /** true if there are any new cards due.  */
     open fun newDue(): Boolean {
-        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
+        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QueueType.NEW.toInt() + " LIMIT 1") != 0
     }
 
     private val etaCache: DoubleArray = doubleArrayOf(-1.0, -1.0, -1.0, -1.0, -1.0, -1.0)

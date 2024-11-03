@@ -253,7 +253,7 @@ fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(
 suspend fun isBuryNoteAvailable(card: Card): Boolean {
     return withCol {
         db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QueueType.NEW.toInt() + " limit 1",
             card.nid,
             card.id
         ) == 1
@@ -263,7 +263,7 @@ suspend fun isBuryNoteAvailable(card: Card): Boolean {
 suspend fun isSuspendNoteAvailable(card: Card): Boolean {
     return withCol {
         db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QueueType.SUSPENDED.toInt() + " limit 1",
             card.nid,
             card.id
         ) == 1

@@ -54,7 +54,7 @@ interface TestClass {
     fun addRevNoteUsingBasicModelDueToday(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
-        card.queue = Consts.QUEUE_TYPE_REV
+        card.queue = Consts.QueueType.REV
         card.type = Consts.CardType.REV
         card.due = col.sched.today
         return note
