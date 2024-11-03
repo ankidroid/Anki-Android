@@ -22,8 +22,7 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:focusable="true"
     android:clickable="true"
-    android:layoutDirection="locale"
-    tools:ignore="UnusedResources">
+    android:layoutDirection="locale">
 
     <ImageView
         android:id="@+id/icon"
