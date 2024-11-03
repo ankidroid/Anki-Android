@@ -28,6 +28,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.set
 import kotlinx.coroutines.Dispatchers
@@ -59,8 +60,8 @@ interface TestClass {
     ): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
-        card.queue = Consts.QUEUE_TYPE_REV
-        card.type = CardType.REV
+        card.queue = QueueType.Rev
+        card.type = CardType.Rev
         card.due = col.sched.today
         return note
     }
