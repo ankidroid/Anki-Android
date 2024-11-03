@@ -245,9 +245,9 @@ class ReviewerFragment :
             }
         }
 
-        viewModel.flagCodeFlow.flowWithLifecycle(lifecycle)
+        viewModel.flagFlow.flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { flagCode ->
-                menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
+                menu.findItem(R.id.action_flag).setIcon(flagCode.drawableRes)
             }
     }
 

@@ -159,7 +159,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             getDataFromRequest("cardFlag", jsapi),
             equalTo(formatApiResult(0))
         )
-        reviewer.currentCard!!.setFlag(1)
+        reviewer.currentCard!!.setFlag(Flag.RED.ordinal)
         assertThat(
             getDataFromRequest("cardFlag", jsapi),
             equalTo(formatApiResult(1))

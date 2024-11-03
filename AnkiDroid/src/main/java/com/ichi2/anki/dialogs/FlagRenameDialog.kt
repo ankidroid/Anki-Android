@@ -80,7 +80,7 @@ class FlagRenameDialog : DialogFragment() {
             .filter { it.key != Flag.NONE }
             .map { (flag, displayName) ->
                 FlagItem(
-                    ordinal = flag.code,
+                    flag = flag,
                     title = displayName,
                     icon = flag.drawableRes
                 )

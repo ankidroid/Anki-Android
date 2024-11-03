@@ -104,7 +104,7 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
 
     class FlagItemDiffCallback : DiffUtil.ItemCallback<FlagItem>() {
         override fun areItemsTheSame(oldItem: FlagItem, newItem: FlagItem): Boolean {
-            return oldItem.ordinal == newItem.ordinal
+            return oldItem.flag == newItem.flag
         }
 
         override fun areContentsTheSame(oldItem: FlagItem, newItem: FlagItem): Boolean {
@@ -116,13 +116,13 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
 /**
  * Data class representing a flag item.
  *
- * @property ordinal The ordinal value of the flag.
+ * @property flag The ordinal value of the flag.
  * @property title The title or name of the flag.
  * @property icon The icon resource ID of the flag.
  * @property isInEditMode Whether the flag is being edited.
  */
 data class FlagItem(
-    val ordinal: Int,
+    val flag: Flag,
     val title: String,
     val icon: Int,
     var isInEditMode: Boolean = false
@@ -132,5 +132,5 @@ data class FlagItem(
      *
      * @param newName The new name for the flag.
      */
-    suspend fun renameTo(newName: String) = Flag.fromCode(ordinal).rename(newName)
+    suspend fun renameTo(newName: String) = flag.rename(newName)
 }

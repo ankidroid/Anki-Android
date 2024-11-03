@@ -69,7 +69,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
     val isMarkedFlow = MutableStateFlow(false)
-    val flagCodeFlow = MutableStateFlow(Flag.NONE.code)
+    val flagFlow = MutableStateFlow(Flag.NONE)
     val actionFeedbackFlow = MutableSharedFlow<String>()
     val canBuryNoteFlow = MutableStateFlow(true)
     val canSuspendNoteFlow = MutableStateFlow(true)
@@ -170,9 +170,9 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         launchCatchingIO {
             val card = currentCard.await()
             undoableOp {
-                setUserFlagForCards(listOf(card.id), flag.code)
+                setUserFlagForCards(listOf(card.id), flag)
             }
-            flagCodeFlow.emit(flag.code)
+            flagFlow.emit(flag)
         }
     }
 
@@ -392,7 +392,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         showQuestion()
         loadAndPlaySounds(CardSide.QUESTION)
         updateMarkedStatus()
-        flagCodeFlow.emit(card.userFlag())
+        flagFlow.emit(card.userFlag())
         canBuryNoteFlow.emit(isBuryNoteAvailable(card))
         canSuspendNoteFlow.emit(isSuspendNoteAvailable(card))
         countsFlow.emit(state.counts to state.countsIndex)

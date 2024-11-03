@@ -123,10 +123,10 @@ class PreviewerFragment :
 
         // handle selection of a new flag
         lifecycleScope.launch {
-            viewModel.flagCode
+            viewModel.flag
                 .flowWithLifecycle(lifecycle)
-                .collectLatest { flagCode ->
-                    menu.findItem(R.id.action_flag).setIcon(Flag.fromCode(flagCode).drawableRes)
+                .collectLatest { flag ->
+                    menu.findItem(R.id.action_flag).setIcon(flag.drawableRes)
                 }
         }
 

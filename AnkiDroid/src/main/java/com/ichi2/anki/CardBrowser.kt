@@ -1029,7 +1029,7 @@ open class CardBrowser :
             }
 
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                subMenu.add(groupId, flag.ordinal, Menu.NONE, displayName)
+                subMenu.add(groupId, flag.code, Menu.NONE, displayName)
                     .setIcon(flag.drawableRes)
             }
         }
@@ -2161,7 +2161,7 @@ open class CardBrowser :
          */
         @ColorInt
         fun getBackgroundColor(context: Context): Int {
-            val flagColor = Flag.fromCode(card.userFlag()).browserColorRes
+            val flagColor = card.userFlag().browserColorRes
             if (flagColor != null) {
                 return context.getColor(flagColor)
             }

@@ -19,6 +19,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
+import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CardQueue
 import com.ichi2.libanki.Consts.CardType
@@ -339,20 +340,30 @@ open class Card : Cloneable {
         return (this.id xor (this.id ushr 32)).toInt()
     }
 
+    // upstream's function returns an int between 0 and 7 (included).
+    // We return an enum entry for the sake of improving the typing.
     @LibAnkiAlias("user_flag")
-    fun userFlag(): Int {
-        return flags and 0b111
-    }
+    fun userFlag() = Flag.fromCode(flags and 0b111)
 
+    /**
+     * Set [flags] to [flag].
+     * Should only be used for testing.
+     * Use [setUserFlag] instead.
+     */
     @VisibleForTesting
     fun setFlag(flag: Int) {
         flags = flag
     }
 
+    /**
+     * Set the first three bits of [flags] to [flag]. Don't change the other ones.
+     */
+    // Upstream's function take an int and raise if it's not between 0 and 7 included.
+    // We take a flag for the sake of typing clarity.
     @RustCleanup("deprecated in Anki: use col.set_user_flag_for_cards() instead")
     @LibAnkiAlias("set_user_flag")
-    fun setUserFlag(flag: Int) {
-        flags = setFlagInInt(flags, flag)
+    fun setUserFlag(flag: Flag) {
+        flags = setFlagInInt(flags, flag.code)
     }
 
     @NotInLibAnki
@@ -453,6 +464,9 @@ open class Card : Cloneable {
             )
         )
 
+        /**
+         * Returns [flags] with the 3 first bits set as in [flag]
+         */
         fun setFlagInInt(flags: Int, flag: Int): Int {
             Assert.that(0 <= flag, "flag to set is negative")
             Assert.that(flag <= 7, "flag to set is greater than 7.")
