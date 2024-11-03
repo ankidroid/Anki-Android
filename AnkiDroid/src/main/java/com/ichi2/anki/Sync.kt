@@ -286,7 +286,7 @@ private suspend fun handleNormalSync(
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
             deckPicker.mediaUsnOnConflict = mediaUsn
-            deckPicker.showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION)
+            deckPicker.showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_SYNC_CONFLICT_RESOLUTION)
         }
 
         SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,

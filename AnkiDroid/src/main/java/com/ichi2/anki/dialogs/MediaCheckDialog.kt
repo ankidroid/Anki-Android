@@ -15,14 +15,11 @@ import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.dialogs.MediaCheckDialog.Type.DIALOG_CONFIRM_MEDIA_CHECK
+import com.ichi2.anki.dialogs.MediaCheckDialog.Type.DIALOG_MEDIA_CHECK_RESULTS
 import com.ichi2.anki.showError
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.MediaCheckResult
-
-/**
- * Key for an array of strings of name of invalid media
- */
-const val INVALID = "invalid"
 
 class MediaCheckDialog : AsyncDialogFragment() {
     interface MediaCheckDialogListener {
@@ -38,14 +35,26 @@ class MediaCheckDialog : AsyncDialogFragment() {
         fun deleteUnused(unused: List<String>)
     }
 
+    private val dialogType: Type
+        get() = Type.fromCode(requireArguments().getInt(MEDIA_CHECK_DIALOG_TYPE_KEY))
+
+    private val noHave: List<String>?
+        get() = requireArguments().getStringArrayList(NO_HAVE)
+
+    private val unused: List<String>?
+        get() = requireArguments().getStringArrayList(UNUSED)
+
+    private val invalid: List<String>?
+        get() = requireArguments().getStringArrayList(INVALID)
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val dialog =
             AlertDialog
                 .Builder(requireContext())
                 .setTitle(notificationTitle)
-        return when (typeFromArguments()) {
-            Type.DIALOG_CONFIRM_MEDIA_CHECK -> {
+        return when (dialogType) {
+            DIALOG_CONFIRM_MEDIA_CHECK -> {
                 dialog
                     .setMessage(notificationMessage)
                     .setPositiveButton(R.string.dialog_ok) { _, _ ->
@@ -55,22 +64,22 @@ class MediaCheckDialog : AsyncDialogFragment() {
                         activity?.dismissAllDialogFragments()
                     }.create()
             }
-            Type.DIALOG_MEDIA_CHECK_RESULTS -> {
-                val noHave = requireArguments().getStringArrayList(NO_HAVE)
-                val unused = requireArguments().getStringArrayList(UNUSED)
-                val invalid = requireArguments().getStringArrayList(INVALID)
+            DIALOG_MEDIA_CHECK_RESULTS -> {
+                val noHave = noHave!!
+                val unused = unused!!
+                val invalid = invalid!!
                 // Generate report
                 val report = StringBuilder()
-                if (invalid!!.isNotEmpty()) {
+                if (invalid.isNotEmpty()) {
                     report.append(String.format(res().getString(R.string.check_media_invalid), invalid.size))
                 }
-                if (unused!!.isNotEmpty()) {
+                if (unused.isNotEmpty()) {
                     if (report.isNotEmpty()) {
                         report.append("\n")
                     }
                     report.append(String.format(res().getString(R.string.check_media_unused), unused.size))
                 }
-                if (noHave!!.isNotEmpty()) {
+                if (noHave.isNotEmpty()) {
                     if (report.isNotEmpty()) {
                         report.append("\n")
                     }
@@ -121,32 +130,20 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() =
-            when (typeFromArguments()) {
-                Type.DIALOG_CONFIRM_MEDIA_CHECK -> res().getString(R.string.check_media_warning)
-                Type.DIALOG_MEDIA_CHECK_RESULTS -> res().getString(R.string.check_media_acknowledge)
+            when (dialogType) {
+                DIALOG_CONFIRM_MEDIA_CHECK -> res().getString(R.string.check_media_warning)
+                DIALOG_MEDIA_CHECK_RESULTS -> res().getString(R.string.check_media_acknowledge)
             }
 
     override val notificationTitle: String
         get() =
-            when (typeFromArguments()) {
-                Type.DIALOG_CONFIRM_MEDIA_CHECK -> {
-                    res().getString(R.string.check_media_title)
-                }
-
-                Type.DIALOG_MEDIA_CHECK_RESULTS -> {
-                    res().getString(R.string.app_name)
-                }
+            when (dialogType) {
+                DIALOG_CONFIRM_MEDIA_CHECK -> res().getString(R.string.check_media_title)
+                DIALOG_MEDIA_CHECK_RESULTS -> res().getString(R.string.app_name)
             }
-
-    private fun typeFromArguments() = Type.fromCode(requireArguments().getInt(MEDIA_CHECK_DIALOG_TYPE_KEY))
 
     override val dialogHandlerMessage: MediaCheckCompleteDialog
         get() {
-            val dialogType = typeFromArguments()
-            val noHave = requireArguments().getStringArrayList(NO_HAVE)
-            val unused = requireArguments().getStringArrayList(UNUSED)
-            val invalid = requireArguments().getStringArrayList(INVALID)
-
             return MediaCheckCompleteDialog(dialogType, noHave, unused, invalid)
         }
 
@@ -178,43 +175,41 @@ class MediaCheckDialog : AsyncDialogFragment() {
          */
         const val UNUSED = "unused"
 
+        /**
+         * Key for an array of strings of name of invalid media
+         */
+        const val INVALID = "invalid"
+
         @CheckResult
-        fun newInstance(dialogType: Type): MediaCheckDialog {
-            val f = MediaCheckDialog()
-            val args = Bundle()
-            args.putInt(MEDIA_CHECK_DIALOG_TYPE_KEY, dialogType.code)
-            f.arguments = args
-            return f
-        }
+        fun newInstance(dialogType: Type) =
+            MediaCheckDialog().apply { arguments = bundleOf(MEDIA_CHECK_DIALOG_TYPE_KEY to dialogType.code) }
 
         // TODO Instead of putting string arrays into the bundle,
-        //   make MediaCheckResult parcelable with @Parcelize and put it instead.
-        // TODO Extract keys to constants
+        //   make MediaCheckResult parcelable with @Parcelize and put it instead
         fun newInstance(
             dialogType: Type,
             checkList: MediaCheckResult,
-        ): MediaCheckDialog {
-            val f = MediaCheckDialog()
-            val args = Bundle()
-            args.putStringArrayList(NO_HAVE, ArrayList(checkList.missingFileNames))
-            args.putStringArrayList(UNUSED, ArrayList(checkList.unusedFileNames))
-            args.putStringArrayList(INVALID, ArrayList(checkList.invalidFileNames))
-            args.putInt(MEDIA_CHECK_DIALOG_TYPE_KEY, dialogType.code)
-            f.arguments = args
-            return f
+        ) = MediaCheckDialog().apply {
+            arguments =
+                bundleOf(
+                    NO_HAVE to ArrayList(checkList.missingFileNames),
+                    UNUSED to ArrayList(checkList.unusedFileNames),
+                    INVALID to ArrayList(checkList.invalidFileNames),
+                    MEDIA_CHECK_DIALOG_TYPE_KEY to dialogType.code,
+                )
         }
     }
 
     class MediaCheckCompleteDialog(
         private val dialogType: Type,
-        private val noHave: ArrayList<String>?,
-        private val unused: ArrayList<String>?,
-        private val invalid: ArrayList<String>?,
+        private val noHave: List<String>?,
+        private val unused: List<String>?,
+        private val invalid: List<String>?,
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG, "MediaCheckCompleteDialog") {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Media check results
             when (dialogType) {
-                Type.DIALOG_MEDIA_CHECK_RESULTS -> {
+                DIALOG_MEDIA_CHECK_RESULTS -> {
                     // we may be called via any AnkiActivity but media check is a DeckPicker thing
                     if (activity !is DeckPicker) {
                         showError(
@@ -228,7 +223,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     val checkList = MediaCheckResult(noHave ?: arrayListOf(), unused ?: arrayListOf(), invalid ?: arrayListOf())
                     activity.showMediaCheckDialog(dialogType, checkList)
                 }
-                Type.DIALOG_CONFIRM_MEDIA_CHECK -> { }
+                DIALOG_CONFIRM_MEDIA_CHECK -> { }
             }
         }
 
