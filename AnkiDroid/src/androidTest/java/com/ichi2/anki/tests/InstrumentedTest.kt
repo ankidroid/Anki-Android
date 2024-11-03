@@ -28,9 +28,10 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import com.ichi2.annotations.DuplicatedCode
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import kotlinx.coroutines.runBlocking
@@ -149,8 +150,8 @@ abstract class InstrumentedTest {
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     protected fun Card.moveToReviewQueue() {
-        this.queue = Consts.QUEUE_TYPE_REV
-        this.type = CardType.REV
+        this.queue = QueueType.Rev
+        this.type = CardType.Rev
         this.due = 0
         col.updateCard(this, true)
     }

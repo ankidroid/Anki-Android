@@ -18,52 +18,83 @@ package com.ichi2.libanki
 import androidx.annotation.IntDef
 import kotlin.annotation.Retention
 
-
-
 // Card types
-sealed class CardType(val code: Int) {
-    object NEW: CardType(0)
-    object LRN: CardType(1)
-    object REV: CardType(2)
-    object RELEARNING: CardType(3)
-    class UNKNOWN(code: Int): CardType(code)
+sealed class CardType(
+    val code: Int,
+) {
+    object New : CardType(0)
+
+    object Lrn : CardType(1)
+
+    object Rev : CardType(2)
+
+    object Relearning : CardType(3)
+
+    class Unknown(
+        code: Int,
+    ) : CardType(code)
 
     companion object {
         fun fromCode(code: Int) =
-            when(code) {
-                0 -> NEW
-                1 -> LRN
-                2 -> REV
-                3 -> RELEARNING
-                else -> UNKNOWN(code)
+            when (code) {
+                0 -> New
+                1 -> Lrn
+                2 -> Rev
+                3 -> Relearning
+                else -> Unknown(code)
+            }
+    }
+}
+
+sealed class QueueType(
+    val code: Int,
+) {
+    object ManuallyBuried : QueueType(-3)
+
+    object SiblingBuried : QueueType(-2)
+
+    object Suspended : QueueType(-1)
+
+    object New : QueueType(0)
+
+    object Lrn : QueueType(1)
+
+    object Rev : QueueType(2)
+
+    object DayLearnRelearn : QueueType(3)
+
+    object Preview : QueueType(4)
+
+    class Unknown(
+        code: Int,
+    ) : QueueType(code)
+
+    /**
+     * Whether this card can be reviewed.
+     */
+    fun buriedOrSuspended() =
+        when (this) {
+            ManuallyBuried, SiblingBuried, Suspended -> true
+            New, Lrn, Rev, DayLearnRelearn, Preview -> false
+            is Unknown -> this.code < 0
+        }
+
+    companion object {
+        fun fromCode(code: Int): QueueType =
+            when (code) {
+                -3 -> ManuallyBuried
+                -2 -> SiblingBuried
+                -1 -> Suspended
+                0 -> New
+                1 -> Lrn
+                2 -> Rev
+                3 -> DayLearnRelearn
+                else -> Unknown(code)
             }
     }
 }
 
 object Consts {
-    // Queue types
-    const val QUEUE_TYPE_MANUALLY_BURIED = -3
-    const val QUEUE_TYPE_SIBLING_BURIED = -2
-    const val QUEUE_TYPE_SUSPENDED = -1
-    const val QUEUE_TYPE_NEW = 0
-    const val QUEUE_TYPE_LRN = 1
-    const val QUEUE_TYPE_REV = 2
-    const val QUEUE_TYPE_DAY_LEARN_RELEARN = 3
-    const val QUEUE_TYPE_PREVIEW = 4
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(
-        QUEUE_TYPE_MANUALLY_BURIED,
-        QUEUE_TYPE_SIBLING_BURIED,
-        QUEUE_TYPE_SUSPENDED,
-        QUEUE_TYPE_NEW,
-        QUEUE_TYPE_LRN,
-        QUEUE_TYPE_REV,
-        QUEUE_TYPE_DAY_LEARN_RELEARN,
-        QUEUE_TYPE_PREVIEW,
-    )
-    annotation class CardQueue
-
     // dynamic deck order
     const val DYN_OLDEST = 0
     const val DYN_RANDOM = 1

@@ -119,13 +119,13 @@ import com.ichi2.async.renderBrowserQA
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType
-import com.ichi2.libanki.CardType.UNKNOWN
+import com.ichi2.libanki.CardType.Unknown
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
 import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.SortOrder
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.TemplateManager
@@ -1383,7 +1383,7 @@ open class CardBrowser :
         launchCatchingTask {
             val selectedCardIds = viewModel.queryAllSelectedCardIds()
             // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-            if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+            if (selectedCardIds.any { getColUnsafe.getCard(it).queue != QueueType.New }) {
                 showDialogFragment(
                     SimpleMessageDialog.newInstance(
                         title = getString(R.string.vague_error),
@@ -2271,7 +2271,7 @@ open class CardBrowser :
             val colorAttr =
                 if (isMarked(col, card.note(col))) {
                     R.attr.markedColor
-                } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+                } else if (card.queue == QueueType.Suspended) {
                     R.attr.suspendedColor
                 } else {
                     android.R.attr.colorBackground
@@ -2319,9 +2319,9 @@ open class CardBrowser :
             }
 
         private fun getEaseForCards(): String =
-            when(card.type) {
-                CardType.NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-                CardType.LRN, CardType.REV, CardType.RELEARNING, is UNKNOWN -> "${card.factor / 10}%"
+            when (card.type) {
+                CardType.New -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
+                CardType.Lrn, CardType.Rev, CardType.Relearning, is Unknown -> "${card.factor / 10}%"
             }
 
         private fun getAvgEaseForNotes(): String {
@@ -2336,10 +2336,11 @@ open class CardBrowser :
 
         private fun queryIntervalForCards(): String =
             when (card.type) {
-                CardType.NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-                CardType.LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
-                CardType.REV,
-                CardType.RELEARNING, is UNKNOWN -> roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * SECONDS_PER_DAY)
+                CardType.New -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
+                CardType.Lrn -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
+                CardType.Rev,
+                CardType.Relearning, is Unknown,
+                -> roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * SECONDS_PER_DAY)
             }
 
         private fun queryAvgIntervalForNotes(): String {
@@ -2597,7 +2598,7 @@ open class CardBrowser :
             card: Card,
         ): String {
             var t = nextDue(col, card)
-            if (card.queue < 0) {
+            if (card.queue.buriedOrSuspended()) {
                 t = "($t)"
             }
             return t
@@ -2610,19 +2611,24 @@ open class CardBrowser :
         ): String {
             val date: Long
             val due = card.due
-            date = if (card.isInDynamicDeck) {
-                return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
-            } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
-                due.toLong()
-            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == CardType.NEW) {
-                return due.toString()
-            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == CardType.REV && card.queue < 0) {
-                val time = TimeManager.time.intTime()
-                val nbDaySinceCreation = due - col.sched.today
-                time + nbDaySinceCreation * SECONDS_PER_DAY
-            } else {
-                return ""
-            }
+            date =
+                if (card.isInDynamicDeck) {
+                    return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
+                } else if (card.queue == QueueType.Lrn) {
+                    due.toLong()
+                } else if (card.queue == QueueType.New || card.type == CardType.New) {
+                    return due.toString()
+                } else if (card.queue == QueueType.Rev ||
+                    card.queue == QueueType.DayLearnRelearn ||
+                    card.type == CardType.Rev &&
+                    card.queue.buriedOrSuspended()
+                ) {
+                    val time = TimeManager.time.intTime()
+                    val nbDaySinceCreation = due - col.sched.today
+                    time + nbDaySinceCreation * SECONDS_PER_DAY
+                } else {
+                    return ""
+                }
             return LanguageUtil.getShortDateFormatFromS(date)
         } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
     }

@@ -144,7 +144,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // Card Queue
             assertThat(
                 getDataFromRequest("cardQueue", jsapi),
-                equalTo(formatApiResult(currentCard.queue)),
+                equalTo(formatApiResult(currentCard.queue.code)),
             )
             // Card Reps
             assertThat(
@@ -389,7 +389,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val c = n.firstCard()
 
             // Make card review with 28L due and 280% ease
-            c.type = CardType.REV
+            c.type = CardType.Rev
             c.due = 28
             c.factor = 2800
             c.ivl = 8
@@ -398,7 +398,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             assertEquals(28, c.due, "Card due before reset")
             assertEquals(8, c.ivl, "Card interval before reset")
             assertEquals(2800, c.factor, "Card ease before reset")
-            assertEquals(CardType.REV, c.type, "Card type before reset")
+            assertEquals(CardType.Rev, c.type, "Card type before reset")
 
             val reviewer: Reviewer = startReviewer()
             waitForAsyncTasksToComplete()
@@ -414,7 +414,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             val cardAfterReset = col.getCard(reviewer.currentCard!!.id)
             assertEquals(2, cardAfterReset.due, "Card due after reset")
             assertEquals(0, cardAfterReset.ivl, "Card interval after reset")
-            assertEquals(CardType.NEW, cardAfterReset.type, "Card type after reset")
+            assertEquals(CardType.New, cardAfterReset.type, "Card type after reset")
         }
 
     companion object {

@@ -32,13 +32,13 @@ import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.addNotetypeLegacy
 import com.ichi2.libanki.backend.BackendUtils
@@ -1102,7 +1102,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cardId = card!!.id
 
         // the card starts out being new
-        assertEquals("card is initial new", 0, card.queue)
+        assertEquals("card is initial new", QueueType.New, card.queue)
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.nid
@@ -1132,7 +1132,7 @@ class ContentProviderTest : InstrumentedTest() {
 
         // lookup the card after update, ensure it's not new anymore
         val cardAfterReview = col.getCard(cardId)
-        assertEquals("card is now type rev", Consts.QUEUE_TYPE_REV, cardAfterReview.queue)
+        assertEquals("card is now type rev", QueueType.Rev, cardAfterReview.queue)
     }
 
     /**
@@ -1147,7 +1147,7 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that the card is not already user-buried
         assertNotEquals(
             "Card is not user-buried before test",
-            Consts.QUEUE_TYPE_SIBLING_BURIED,
+            QueueType.SiblingBuried,
             card!!.queue,
         )
 
@@ -1173,10 +1173,10 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that it did get buried
         // -----------------------------
         val cardAfterUpdate = col.getCard(cardId)
-        // QUEUE_TYPE_MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
+        // QueueType.MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
         assertEquals(
             "Card is user-buried",
-            Consts.QUEUE_TYPE_MANUALLY_BURIED,
+            QueueType.ManuallyBuried,
             cardAfterUpdate.queue,
         )
 
@@ -1197,7 +1197,7 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that the card is not already suspended
         assertNotEquals(
             "Card is not suspended before test",
-            Consts.QUEUE_TYPE_SUSPENDED,
+            QueueType.Suspended,
             card!!.queue,
         )
 
@@ -1223,7 +1223,7 @@ class ContentProviderTest : InstrumentedTest() {
         // verify that it did get suspended
         // --------------------------------
         val cardAfterUpdate = col.getCard(cardId)
-        assertEquals("Card is suspended", Consts.QUEUE_TYPE_SUSPENDED, cardAfterUpdate.queue)
+        assertEquals("Card is suspended", QueueType.Suspended, cardAfterUpdate.queue)
 
         // cleanup, unsuspend card and reschedule
         // --------------------------------------
