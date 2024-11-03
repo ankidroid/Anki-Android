@@ -32,12 +32,12 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.utils.ext.description
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.ButtonType
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -346,7 +346,7 @@ class CardContentProvider : ContentProvider() {
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {
-                        buttonTexts.put(col.sched.nextIvlStr(currentCard, i + 1))
+                        buttonTexts.put(col.sched.nextIvlStr(currentCard, Ease.fromValue(i + 1)))
                         i++
                     }
                     addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns)
@@ -590,7 +590,7 @@ class CardContentProvider : ContentProvider() {
                 val valueSet = values!!.valueSet()
                 var cardOrd = -1
                 var noteID: Long = -1
-                var ease = -1
+                var ease: Ease? = null
                 var timeTaken: Long = -1
                 var bury = -1
                 var suspend = -1
@@ -598,7 +598,9 @@ class CardContentProvider : ContentProvider() {
                     when (key) {
                         FlashCardsContract.ReviewInfo.NOTE_ID -> noteID = values.getAsLong(key)
                         FlashCardsContract.ReviewInfo.CARD_ORD -> cardOrd = values.getAsInteger(key)
-                        FlashCardsContract.ReviewInfo.EASE -> ease = values.getAsInteger(key)
+                        FlashCardsContract.ReviewInfo.EASE ->
+                            ease = Ease.fromValue(values.getAsInteger(key))
+
                         FlashCardsContract.ReviewInfo.TIME_TAKEN ->
                             timeTaken =
                                 values.getAsLong(key)
@@ -619,7 +621,7 @@ class CardContentProvider : ContentProvider() {
                             // suspend card
                             buryOrSuspendCard(col, cardToAnswer, false)
                         } else {
-                            answerCard(col, cardToAnswer, ease, timeTaken)
+                            answerCard(col, cardToAnswer, ease!!, timeTaken)
                         }
                         updated++
                     } else {
@@ -1080,7 +1082,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun answerCard(col: Collection, cardToAnswer: Card?, @ButtonType ease: Int, timeTaken: Long) {
+    private fun answerCard(col: Collection, cardToAnswer: Card?, ease: Ease, timeTaken: Long) {
         try {
             if (cardToAnswer != null) {
                 if (timeTaken != -1L) {

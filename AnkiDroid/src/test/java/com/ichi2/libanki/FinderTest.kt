@@ -16,6 +16,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Ease
 import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
@@ -83,7 +84,7 @@ class FinderTest : JvmTest() {
     }
 
     private fun burySiblings(sched: Scheduler, toManuallyBury: Card): Card {
-        sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
+        sched.answerCard(toManuallyBury, Ease.AGAIN)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
         assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
@@ -327,11 +328,11 @@ class FinderTest : JvmTest() {
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(0, col.findCards("rated:1:2").size)
             c = col.sched.card!!
-            col.sched.answerCard(c, Consts.BUTTON_TWO)
+            col.sched.answerCard(c, Ease.HARD)
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             c = col.sched.card!!
-            col.sched.answerCard(c, Consts.BUTTON_ONE)
+            col.sched.answerCard(c, Ease.AGAIN)
             assertEquals(1, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             assertEquals(2, col.findCards("rated:1").size)

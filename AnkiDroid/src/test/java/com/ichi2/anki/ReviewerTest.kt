@@ -25,7 +25,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
@@ -240,23 +239,23 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[0], reviewer.currentCard!!)
-        reviewer.answerCard(Consts.BUTTON_ONE)
+        reviewer.answerCard(Ease.AGAIN)
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[1], reviewer.currentCard!!)
-        reviewer.answerCard(Consts.BUTTON_ONE)
+        reviewer.answerCard(Ease.AGAIN)
         waitForAsyncTasksToComplete()
 
         undo(reviewer)
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[1], reviewer.currentCard!!)
-        reviewer.answerCard(Consts.BUTTON_THREE)
+        reviewer.answerCard(Ease.GOOD)
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[2], reviewer.currentCard!!)
         time.addM(2)
-        reviewer.answerCard(Consts.BUTTON_THREE)
+        reviewer.answerCard(Ease.GOOD)
         advanceRobolectricLooperWithSleep()
         equalFirstField(
             cards[0],
@@ -302,7 +301,7 @@ class ReviewerTest : RobolectricTest() {
         val cardBeforeUndo = sched.card
         val countsBeforeUndo = sched.counts()
 
-        sched.answerCard(cardBeforeUndo!!, Consts.BUTTON_THREE)
+        sched.answerCard(cardBeforeUndo!!, Ease.GOOD)
 
         reviewer.undoAndShowSnackbar()
 
@@ -341,15 +340,15 @@ class ReviewerTest : RobolectricTest() {
     fun `changing deck refreshes card`() = runReviewer(cards = listOf("One", "Two")) {
         val nonDefaultDeck = addDeck("Hello")
         assertThat("first card is shown", this.cardContent, containsString("One"))
-        flipOrAnswerCard(EASE_3)
-        // answer good, 'EASE_3' should now be < 10m
+        flipOrAnswerCard(Ease.GOOD)
+        // answer good, 'Ease.GOOD' should now be < 10m
         assertThat("initial time is 10m", this.getCardDataForJsApi().nextTime3, equalTo("<\u206810\u2069m"))
-        flipOrAnswerCard(EASE_3)
+        flipOrAnswerCard(Ease.GOOD)
         assertThat("next card is shown", this.cardContent, containsString("Two"))
 
         undoableOp { col.setDeck(listOf(currentCard!!.id), nonDefaultDeck) }
 
-        flipOrAnswerCard(EASE_3)
+        flipOrAnswerCard(Ease.GOOD)
         assertThat("buttons should be updated", this.getCardDataForJsApi().nextTime3, equalTo("\u20681\u2069d"))
         assertThat("content should be updated", this.cardContent, containsString("One"))
     }
@@ -407,7 +406,7 @@ class ReviewerTest : RobolectricTest() {
     private fun answerCardOrdinalAsGood(r: Reviewer, i: Int) {
         assertCurrentOrdIs(r, i)
 
-        r.answerCard(Consts.BUTTON_THREE)
+        r.answerCard(Ease.GOOD)
 
         waitForAsyncTasksToComplete()
     }

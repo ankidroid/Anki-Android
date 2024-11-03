@@ -318,19 +318,19 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 convertToByteArray(apiContract, true)
             }
             "answerEase1" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_1)
+                activity.flipOrAnswerCard(Ease.AGAIN)
                 convertToByteArray(apiContract, true)
             }
             "answerEase2" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_2)
+                activity.flipOrAnswerCard(Ease.HARD)
                 convertToByteArray(apiContract, true)
             }
             "answerEase3" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_3)
+                activity.flipOrAnswerCard(Ease.GOOD)
                 convertToByteArray(apiContract, true)
             }
             "answerEase4" -> {
-                activity.flipOrAnswerCard(AbstractFlashcardViewer.EASE_4)
+                activity.flipOrAnswerCard(Ease.EASY)
                 convertToByteArray(apiContract, true)
             }
 

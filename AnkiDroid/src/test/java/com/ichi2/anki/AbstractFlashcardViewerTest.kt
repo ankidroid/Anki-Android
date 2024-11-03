@@ -61,7 +61,7 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
-        var answered: Int? = null
+        var answered: Ease? = null
         private var lastTime = 0
         override fun performReload() {
             // intentionally blank
@@ -69,7 +69,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         val typedInput get() = typedInputText
 
-        override fun answerCard(ease: Int) {
+        override fun answerCard(ease: Ease) {
             super.answerCard(ease)
             answered = ease
         }

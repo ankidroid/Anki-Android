@@ -357,7 +357,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     private fun answerCard(ease: Ease) {
         launchCatchingIO {
             queueState.await()?.let {
-                undoableOp { sched.answerCard(it, ease.value) }
+                undoableOp<OpChanges> { sched.answerCard(it, ease) }
                 updateCurrentCard()
             }
         }

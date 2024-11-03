@@ -40,6 +40,7 @@ import anki.scheduler.SchedulingStates
 import anki.scheduler.UnburyDeckRequest
 import anki.scheduler.cardAnswer
 import anki.scheduler.scheduleCardsAsNewRequest
+import com.ichi2.anki.Ease
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
@@ -132,14 +133,14 @@ open class Scheduler(val col: Collection) {
     private val queuedCards: QueuedCards
         get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
 
-    open fun answerCard(info: CurrentQueueState, ease: Int): OpChanges {
+    open fun answerCard(info: CurrentQueueState, ease: Ease): OpChanges {
         return col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
             reps += 1
         }
     }
 
     /** Legacy path, used by tests. */
-    open fun answerCard(card: Card, ease: Int) {
+    open fun answerCard(card: Card, ease: Ease) {
         val top = queuedCards.cardsList.first()
         val answer = buildAnswer(card, top.states, ease)
         col.backend.answerCard(answer)
@@ -154,7 +155,7 @@ open class Scheduler(val col: Collection) {
         return col.backend.stateIsLeech(state)
     }
 
-    fun buildAnswer(card: Card, states: SchedulingStates, ease: Int): CardAnswer {
+    fun buildAnswer(card: Card, states: SchedulingStates, ease: Ease): CardAnswer {
         return cardAnswer {
             cardId = card.id
             currentState = states.current
@@ -165,13 +166,12 @@ open class Scheduler(val col: Collection) {
         }
     }
 
-    private fun ratingFromEase(ease: Int): CardAnswer.Rating {
+    private fun ratingFromEase(ease: Ease): CardAnswer.Rating {
         return when (ease) {
-            1 -> CardAnswer.Rating.AGAIN
-            2 -> CardAnswer.Rating.HARD
-            3 -> CardAnswer.Rating.GOOD
-            4 -> CardAnswer.Rating.EASY
-            else -> TODO("invalid ease: $ease")
+            Ease.AGAIN -> CardAnswer.Rating.AGAIN
+            Ease.HARD -> CardAnswer.Rating.HARD
+            Ease.GOOD -> CardAnswer.Rating.GOOD
+            Ease.EASY -> CardAnswer.Rating.EASY
         }
     }
 
@@ -214,7 +214,7 @@ open class Scheduler(val col: Collection) {
     var reps: Int = 0
 
     /** Only provided for legacy unit tests. */
-    fun nextIvl(card: Card, ease: Int): Long {
+    fun nextIvl(card: Card, ease: Ease): Long {
         val states = col.backend.getSchedulingStates(card.id)
         val state = stateFromEase(states, ease)
         return intervalForState(state)
@@ -684,7 +684,7 @@ open class Scheduler(val col: Collection) {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    open fun nextIvlStr(card: Card, @Consts.ButtonType ease: Int): String {
+    open fun nextIvlStr(card: Card, ease: Ease): String {
         val secs = nextIvl(card, ease)
         return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
     }
@@ -700,13 +700,12 @@ open class Scheduler(val col: Collection) {
 
 const val REPORT_LIMIT = 99999
 
-private fun stateFromEase(states: SchedulingStates, ease: Int): SchedulingState {
+private fun stateFromEase(states: SchedulingStates, ease: Ease): SchedulingState {
     return when (ease) {
-        1 -> states.again
-        2 -> states.hard
-        3 -> states.good
-        4 -> states.easy
-        else -> TODO("invalid ease: $ease")
+        Ease.AGAIN -> states.again
+        Ease.HARD -> states.hard
+        Ease.GOOD -> states.good
+        Ease.EASY -> states.easy
     }
 }
 
