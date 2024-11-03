@@ -94,6 +94,28 @@ sealed class QueueType(
     }
 }
 
+// model types
+sealed class NoteTypeKind(
+    val code: Int,
+) {
+    object Std : NoteTypeKind(0)
+
+    object Cloze : NoteTypeKind(1)
+
+    class Unknown(
+        code: Int,
+    ) : NoteTypeKind(code)
+
+    companion object {
+        fun fromCode(code: Int) =
+            when (code) {
+                0 -> Std
+                1 -> Cloze
+                else -> Unknown(code)
+            }
+    }
+}
+
 object Consts {
     // dynamic deck order
     const val DYN_OLDEST = 0
@@ -110,14 +132,6 @@ object Consts {
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(DYN_OLDEST, DYN_RANDOM, DYN_SMALLINT, DYN_BIGINT, DYN_LAPSES, DYN_ADDED, DYN_DUE, DYN_REVADDED, DYN_DUEPRIORITY)
     annotation class DynPriority
-
-    // model types
-    const val MODEL_STD = 0
-    const val MODEL_CLOZE = 1
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(MODEL_STD, MODEL_CLOZE)
-    annotation class ModelType
 
     const val STARTING_FACTOR = 2500
 
