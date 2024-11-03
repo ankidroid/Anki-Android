@@ -1102,7 +1102,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cardId = card!!.id
 
         // the card starts out being new
-        assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.queue)
+        assertEquals("card is initial new", 0, card.queue)
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.nid
@@ -1132,7 +1132,7 @@ class ContentProviderTest : InstrumentedTest() {
 
         // lookup the card after update, ensure it's not new anymore
         val cardAfterReview = col.getCard(cardId)
-        assertEquals("card is now type rev", Card.TYPE_REV, cardAfterReview.queue)
+        assertEquals("card is now type rev", Consts.QUEUE_TYPE_REV, cardAfterReview.queue)
     }
 
     /**

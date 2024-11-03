@@ -19,10 +19,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.UnburyDeckRequest
 import com.ichi2.anki.Ease
 import com.ichi2.anki.utils.SECONDS_PER_DAY
-import com.ichi2.libanki.Consts.CARD_TYPE_LRN
-import com.ichi2.libanki.Consts.CARD_TYPE_NEW
-import com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING
-import com.ichi2.libanki.Consts.CARD_TYPE_REV
+import com.ichi2.libanki.CardType.LRN
+import com.ichi2.libanki.CardType.NEW
+import com.ichi2.libanki.CardType.RELEARNING
+import com.ichi2.libanki.CardType.REV
 import com.ichi2.libanki.Consts.LEECH_SUSPEND
 import com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
 import com.ichi2.libanki.Consts.QUEUE_TYPE_LRN
@@ -92,12 +92,12 @@ open class SchedulerTest : JvmTest() {
         val c = col.sched.card!!
         assertNotNull(c)
         Assert.assertEquals(QUEUE_TYPE_NEW, c.queue)
-        Assert.assertEquals(CARD_TYPE_NEW, c.type)
+        Assert.assertEquals(NEW, c.type)
         // if we answer it, it should become a learn card
         val t = time.intTime().toInt()
         col.sched.answerCard(c, Ease.AGAIN)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
-        Assert.assertEquals(CARD_TYPE_LRN, c.type)
+        Assert.assertEquals(LRN, c.type)
         MatcherAssert.assertThat(c.due, Matchers.greaterThanOrEqualTo(t))
 
         // disabled for now, as the learn fudging makes this randomly fail
@@ -238,20 +238,20 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(1, (c.left % 1000).toLong())
         // the next pass should graduate the card
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
-        Assert.assertEquals(CARD_TYPE_LRN, c.type)
+        Assert.assertEquals(LRN, c.type)
         col.sched.answerCard(c, Ease.GOOD)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
-        Assert.assertEquals(CARD_TYPE_REV, c.type)
+        Assert.assertEquals(REV, c.type)
         // should be due tomorrow, with an interval of 1
         Assert.assertEquals((col.sched.today + 1), c.due)
         Assert.assertEquals(1, c.ivl)
         // or normal removal
         c.update {
-            type = CARD_TYPE_NEW
+            type = NEW
             queue = QUEUE_TYPE_LRN
         }
         col.sched.answerCard(c, Ease.EASY)
-        Assert.assertEquals(CARD_TYPE_REV, c.type)
+        Assert.assertEquals(REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         Assert.assertTrue(AnkiAssert.checkRevIvl(c, 4))
         // revlog should have been updated each time
@@ -273,7 +273,7 @@ open class SchedulerTest : JvmTest() {
                 ivl = 100
                 due = col.sched.today
                 queue = QUEUE_TYPE_REV
-                type = CARD_TYPE_REV
+                type = REV
             }
         col.updateCard(c, skipUndoEntry = true)
 
@@ -281,12 +281,12 @@ open class SchedulerTest : JvmTest() {
         c = col.sched.card!!
         col.sched.answerCard(c, Ease.AGAIN)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
-        Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
+        Assert.assertEquals(RELEARNING, c.type)
         Assert.assertEquals(1, c.ivl)
 
         // immediately graduate it
         col.sched.answerCard(c, Ease.EASY)
-        Assert.assertEquals(CARD_TYPE_REV, c.type)
+        Assert.assertEquals(REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         Assert.assertEquals(2, c.ivl)
         Assert.assertEquals((col.sched.today + c.ivl), c.due)
@@ -303,7 +303,7 @@ open class SchedulerTest : JvmTest() {
                 ivl = 100
                 due = col.sched.today
                 queue = QUEUE_TYPE_REV
-                type = CARD_TYPE_REV
+                type = REV
             }
         col.updateCard(c, skipUndoEntry = true)
         val conf = col.decks.configDictForDeckId(1)
@@ -313,7 +313,7 @@ open class SchedulerTest : JvmTest() {
         // fail the card
         c = col.sched.card!!
         col.sched.answerCard(c, Ease.AGAIN)
-        Assert.assertEquals(CARD_TYPE_REV, c.type)
+        Assert.assertEquals(REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
     }
 
@@ -385,7 +385,7 @@ open class SchedulerTest : JvmTest() {
         // the last pass should graduate it into a review card
         Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, Ease.GOOD))
         col.sched.answerCard(c, Ease.GOOD)
-        Assert.assertEquals(CARD_TYPE_REV, c.type)
+        Assert.assertEquals(REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         // if the lapse step is tomorrow, failing it should handle the counts
         // correctly
@@ -412,7 +412,7 @@ open class SchedulerTest : JvmTest() {
         // set the card up as a review card, due 8 days ago
         var c =
             note.cards()[0].apply {
-                type = CARD_TYPE_REV
+                type = REV
                 queue = QUEUE_TYPE_REV
                 due = (col.sched.today - 8)
                 factor = STARTING_FACTOR
@@ -489,7 +489,7 @@ open class SchedulerTest : JvmTest() {
         // 1 day ivl review card due now
         val c =
             note.cards()[0].update {
-                type = CARD_TYPE_REV
+                type = REV
                 queue = QUEUE_TYPE_REV
                 due = col.sched.today
                 reps = 1
@@ -606,7 +606,7 @@ open class SchedulerTest : JvmTest() {
         // lapsed cards
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c.update {
-            type = CARD_TYPE_RELEARNING
+            type = RELEARNING
             ivl = 100
             factor = STARTING_FACTOR
         }
@@ -616,7 +616,7 @@ open class SchedulerTest : JvmTest() {
         // review cards
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c.update {
-            type = CARD_TYPE_REV
+            type = REV
             queue = QUEUE_TYPE_REV
             ivl = 100
             factor = STARTING_FACTOR
@@ -695,7 +695,7 @@ open class SchedulerTest : JvmTest() {
         c.update {
             due = 0
             ivl = 100
-            type = CARD_TYPE_REV
+            type = REV
             queue = QUEUE_TYPE_REV
         }
         c = col.sched.card!!
@@ -706,12 +706,12 @@ open class SchedulerTest : JvmTest() {
         )
         val due = c.due
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
-        Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
+        Assert.assertEquals(RELEARNING, c.type)
         col.sched.suspendCards(listOf(c.id))
         col.sched.unsuspendCards(listOf(c.id))
         c.load()
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
-        Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
+        Assert.assertEquals(RELEARNING, c.type)
         Assert.assertEquals(due, c.due)
         // should cope with cards in cram decks
         c.update { this.due = 1 }
@@ -738,7 +738,7 @@ open class SchedulerTest : JvmTest() {
             note.cards()[0].update {
                 ivl = 100
                 queue = QUEUE_TYPE_REV
-                type = CARD_TYPE_REV
+                type = REV
                 // due in 25 days, so it's been waiting 75 days
                 due = (col.sched.today + 25)
                 mod = 1
@@ -813,12 +813,12 @@ open class SchedulerTest : JvmTest() {
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 61.0)))
         col.decks.save(conf)
         col.sched.answerCard(c, Ease.AGAIN)
-        Assert.assertEquals(CARD_TYPE_LRN, c.queue)
-        Assert.assertEquals(QUEUE_TYPE_LRN, c.type)
+        Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
+        Assert.assertEquals(LRN, c.type)
         Assert.assertEquals(3, c.left % 1000)
         col.sched.answerCard(c, Ease.GOOD)
-        Assert.assertEquals(CARD_TYPE_LRN, c.queue)
-        Assert.assertEquals(QUEUE_TYPE_LRN, c.type)
+        Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
+        Assert.assertEquals(LRN, c.type)
 
         // create a dynamic deck and refresh it
         val did = addDynamicDeck("Cram")
@@ -826,8 +826,8 @@ open class SchedulerTest : JvmTest() {
 
         // card should still be in learning state
         c.load()
-        Assert.assertEquals(CARD_TYPE_LRN, c.queue)
-        Assert.assertEquals(QUEUE_TYPE_LRN, c.type)
+        Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
+        Assert.assertEquals(LRN, c.type)
         Assert.assertEquals(2, c.left % 1000)
 
         // should be able to advance learning steps
@@ -841,8 +841,8 @@ open class SchedulerTest : JvmTest() {
         // emptying the deck preserves learning state
         col.sched.emptyDyn(did)
         c.load()
-        Assert.assertEquals(CARD_TYPE_LRN, c.queue)
-        Assert.assertEquals(QUEUE_TYPE_LRN, c.type)
+        Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
+        Assert.assertEquals(LRN, c.type)
         Assert.assertEquals(1, c.left % 1000)
         MatcherAssert.assertThat(
             c.due - time.intTime(),
@@ -883,14 +883,14 @@ open class SchedulerTest : JvmTest() {
         col.sched.answerCard(c2, Ease.EASY)
         Assert.assertEquals(QUEUE_TYPE_NEW, c2.queue)
         Assert.assertEquals(0, c2.reps)
-        Assert.assertEquals(CARD_TYPE_NEW, c2.type)
+        Assert.assertEquals(NEW, c2.type)
 
         // emptying the filtered deck should restore card
         col.sched.emptyDyn(did)
         c.load()
         Assert.assertEquals(QUEUE_TYPE_NEW, c.queue)
         Assert.assertEquals(0, c.reps)
-        Assert.assertEquals(CARD_TYPE_NEW, c.type)
+        Assert.assertEquals(NEW, c.type)
     }
 
     @Test
@@ -1005,7 +1005,7 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "three")
         col.addNote(note)
         note.cards()[0].update {
-            type = CARD_TYPE_REV
+            type = REV
             queue = QUEUE_TYPE_REV
             due = col.sched.today
         }
@@ -1023,7 +1023,7 @@ open class SchedulerTest : JvmTest() {
             note.setItem("Front", "num$i")
             col.addNote(note)
             note.cards()[0].update {
-                type = CARD_TYPE_REV
+                type = REV
                 queue = QUEUE_TYPE_REV
                 due = 0
             }
@@ -1202,7 +1202,7 @@ open class SchedulerTest : JvmTest() {
         val c =
             note.cards()[0].update {
                 queue = QUEUE_TYPE_REV
-                type = CARD_TYPE_REV
+                type = REV
                 ivl = 100
                 due = 0
             }
@@ -1224,8 +1224,8 @@ open class SchedulerTest : JvmTest() {
         c.load()
         Assert.assertEquals(col.sched.today, c.due)
         Assert.assertEquals(1, c.ivl)
-        Assert.assertEquals(QUEUE_TYPE_REV, c.type)
-        Assert.assertEquals(CARD_TYPE_REV, c.queue)
+        Assert.assertEquals(REV, c.type)
+        Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         col.sched.reschedCards(listOf(c.id), 1, 1)
         c.load()
         Assert.assertEquals((col.sched.today + 1), c.due)
@@ -1241,7 +1241,7 @@ open class SchedulerTest : JvmTest() {
         col.addNote(note)
         val c =
             note.cards()[0].update {
-                type = CARD_TYPE_REV
+                type = REV
                 queue = QUEUE_TYPE_REV
                 due = 0
                 factor = STARTING_FACTOR
@@ -1267,7 +1267,7 @@ open class SchedulerTest : JvmTest() {
         col.addNote(note)
         var c =
             note.cards()[0].update {
-                type = CARD_TYPE_REV
+                type = REV
                 queue = QUEUE_TYPE_REV
                 ivl = 100
                 due = (col.sched.today - ivl)

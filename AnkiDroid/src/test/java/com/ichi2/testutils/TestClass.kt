@@ -20,6 +20,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.ioDispatcher
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
@@ -59,7 +60,7 @@ interface TestClass {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
-        card.type = Consts.CARD_TYPE_REV
+        card.type = CardType.REV
         card.due = col.sched.today
         return note
     }

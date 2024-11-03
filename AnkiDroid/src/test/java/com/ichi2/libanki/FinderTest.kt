@@ -17,7 +17,7 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Ease
-import com.ichi2.libanki.Consts.CARD_TYPE_REV
+import com.ichi2.libanki.CardType.REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
 import com.ichi2.libanki.exception.ConfirmModSchemaException
@@ -185,7 +185,7 @@ class FinderTest : JvmTest() {
             note.cards()[0].apply {
                 due = 999999
                 queue = QUEUE_TYPE_REV
-                type = CARD_TYPE_REV
+                type = REV
             }
         assertEquals(0, col.findCards("is:review").size)
         col.updateCard(c, skipUndoEntry = true)

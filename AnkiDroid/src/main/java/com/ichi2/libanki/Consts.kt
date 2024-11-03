@@ -18,6 +18,28 @@ package com.ichi2.libanki
 import androidx.annotation.IntDef
 import kotlin.annotation.Retention
 
+
+
+// Card types
+sealed class CardType(val code: Int) {
+    object NEW: CardType(0)
+    object LRN: CardType(1)
+    object REV: CardType(2)
+    object RELEARNING: CardType(3)
+    class UNKNOWN(code: Int): CardType(code)
+
+    companion object {
+        fun fromCode(code: Int) =
+            when(code) {
+                0 -> NEW
+                1 -> LRN
+                2 -> REV
+                3 -> RELEARNING
+                else -> UNKNOWN(code)
+            }
+    }
+}
+
 object Consts {
     // Queue types
     const val QUEUE_TYPE_MANUALLY_BURIED = -3
@@ -41,16 +63,6 @@ object Consts {
         QUEUE_TYPE_PREVIEW,
     )
     annotation class CardQueue
-
-    // Card types
-    const val CARD_TYPE_NEW = 0
-    const val CARD_TYPE_LRN = 1
-    const val CARD_TYPE_REV = 2
-    const val CARD_TYPE_RELEARNING = 3
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING)
-    annotation class CardType
 
     // dynamic deck order
     const val DYN_OLDEST = 0

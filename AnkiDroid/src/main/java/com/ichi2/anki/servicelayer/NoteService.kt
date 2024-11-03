@@ -34,6 +34,7 @@ import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
@@ -227,12 +228,8 @@ object NoteService {
      * returns the average ease of all the non-new cards in the note,
      * or if all the cards in the note are new, returns null
      */
-    fun avgEase(
-        col: Collection,
-        note: Note,
-    ): Int? {
-        val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
-
+    fun avgEase(col: Collection, note: Note): Int? {
+        val nonNewCards = note.cards(col).filter { it.type != CardType.NEW }
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
@@ -251,12 +248,8 @@ object NoteService {
      * Returns the average interval of all the non-new and non-learning cards in the note,
      * or if all the cards in the note are new or learning, returns null
      */
-    fun avgInterval(
-        col: Collection,
-        note: Note,
-    ): Int? {
-        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
-
+    fun avgInterval(col: Collection, note: Note): Int? {
+        val nonNewOrLearningCards = note.cards(col).filter { it.type != CardType.NEW && it.type != CardType.LRN }
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
     }
 
