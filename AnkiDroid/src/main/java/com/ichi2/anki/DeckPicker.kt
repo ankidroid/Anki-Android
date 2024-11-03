@@ -1808,7 +1808,7 @@ open class DeckPicker :
      * Show a specific sync error dialog
      * @param dialogType id of dialog to show
      */
-    override fun showSyncErrorDialog(dialogType: Int) {
+    override fun showSyncErrorDialog(dialogType: SyncErrorDialog.Type) {
         showSyncErrorDialog(dialogType, "")
     }
 
@@ -1818,7 +1818,7 @@ open class DeckPicker :
      * @param message text to show
      */
     override fun showSyncErrorDialog(
-        dialogType: Int,
+        dialogType: SyncErrorDialog.Type,
         message: String?,
     ) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
@@ -1943,7 +1943,7 @@ open class DeckPicker :
         if (hkey!!.isEmpty()) {
             Timber.w("User not logged in")
             pullToSyncWrapper.isRefreshing = false
-            showSyncErrorDialog(SyncErrorDialog.DIALOG_USER_NOT_LOGGED_IN_SYNC)
+            showSyncErrorDialog(SyncErrorDialog.Type.DIALOG_USER_NOT_LOGGED_IN_SYNC)
             return
         }
 
