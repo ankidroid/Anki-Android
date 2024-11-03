@@ -251,7 +251,7 @@ open class Reviewer :
         server.stop()
     }
 
-    protected val flagToDisplay: Int
+    protected val flagToDisplay: Flag
         get() {
             return FlagToDisplay(
                 currentCard!!.userFlag(),
@@ -302,9 +302,9 @@ open class Reviewer :
             return
         }
         launchCatchingTask {
-            card.setUserFlag(flag.code)
+            card.setUserFlag(flag)
             undoableOp(this@Reviewer) {
-                setUserFlagForCards(listOf(card.id), flag.code)
+                setUserFlagForCards(listOf(card.id), flag)
             }
             refreshActionBar()
             onFlagChanged()
@@ -315,7 +315,7 @@ open class Reviewer :
         if (currentCard == null) {
             return
         }
-        cardMarker!!.displayFlag(Flag.fromCode(flagToDisplay))
+        cardMarker!!.displayFlag(flagToDisplay)
     }
 
     private fun selectDeckFromExtra() {
@@ -726,16 +726,7 @@ open class Reviewer :
         val flagIcon = menu.findItem(R.id.action_flag)
         if (flagIcon != null) {
             if (currentCard != null) {
-                when (currentCard!!.userFlag()) {
-                    1 -> flagIcon.setIcon(R.drawable.ic_flag_red)
-                    2 -> flagIcon.setIcon(R.drawable.ic_flag_orange)
-                    3 -> flagIcon.setIcon(R.drawable.ic_flag_green)
-                    4 -> flagIcon.setIcon(R.drawable.ic_flag_blue)
-                    5 -> flagIcon.setIcon(R.drawable.ic_flag_pink)
-                    6 -> flagIcon.setIcon(R.drawable.ic_flag_turquoise)
-                    7 -> flagIcon.setIcon(R.drawable.ic_flag_purple)
-                    else -> flagIcon.setIcon(R.drawable.ic_flag_transparent)
-                }
+                flagIcon.setIcon(currentCard!!.userFlag().drawableReviewerRes())
             }
             flagIcon.iconAlpha = alpha
         }
@@ -873,7 +864,7 @@ open class Reviewer :
     private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                val menuItem = subMenu.add(Menu.NONE, flag.ordinal, Menu.NONE, displayName)
+                val menuItem = subMenu.add(Menu.NONE, flag.code, Menu.NONE, displayName)
                     .setIcon(flag.drawableRes)
                 flagItemIds.add(menuItem.itemId)
             }
@@ -1312,7 +1303,7 @@ open class Reviewer :
     }
 
     private fun toggleFlag(flag: Flag) {
-        if (currentCard!!.userFlag() == flag.code) {
+        if (currentCard!!.userFlag() == flag) {
             Timber.i("Toggle flag: unsetting flag")
             onFlag(currentCard, Flag.NONE)
         } else {

@@ -40,6 +40,7 @@ import anki.search.BrowserRow
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
+import com.ichi2.anki.Flag
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -632,14 +633,13 @@ class Collection(
     /**
      * Card Flags *****************************************************************************************************
      */
-    fun setUserFlag(flag: Int, cids: List<Long>) {
-        assert(flag in (0..7))
+    fun setUserFlag(flag: Flag, cids: List<Long>) {
         db.execute(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + ids2str(
                 cids
             ),
             7,
-            flag,
+            flag.code,
             usn(),
             TimeManager.time.intTime()
         )
@@ -683,8 +683,8 @@ class Collection(
 
     /** Change the flag color of the specified cards. flag=0 removes flag. */
     @CheckResult
-    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int): OpChangesWithCount {
-        return backend.setFlag(cardIds = cids, flag = flag)
+    fun setUserFlagForCards(cids: Iterable<Long>, flag: Flag): OpChangesWithCount {
+        return backend.setFlag(cardIds = cids, flag = flag.code)
     }
 
     fun getEmptyCards(): EmptyCardsReport {

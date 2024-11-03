@@ -52,7 +52,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     val currentIndex = MutableStateFlow(firstIndex)
     val backSideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
-    val flagCode: MutableStateFlow<Int> = MutableStateFlow(Flag.NONE.code)
+    val flag: MutableStateFlow<Flag> = MutableStateFlow(Flag.NONE)
     private val selectedCardIds: List<Long> = previewerIdsFile.getCardIds()
     val isBackButtonEnabled =
         combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->
@@ -124,14 +124,14 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
         launchCatchingIO {
             val card = currentCard.await()
             undoableOp {
-                setUserFlagForCards(listOf(card.id), flag.code)
+                setUserFlagForCards(listOf(card.id), flag)
             }
-            flagCode.emit(flag.code)
+            this.flag.emit(flag)
         }
     }
 
     fun toggleFlag(flag: Flag) {
-        if (flagCode.value == flag.code) {
+        if (this@PreviewerViewModel.flag.value == flag) {
             setFlag(Flag.NONE)
         } else {
             setFlag(flag)
@@ -210,7 +210,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     }
 
     private suspend fun updateFlagIcon() {
-        flagCode.emit(currentCard.await().userFlag())
+        flag.emit(currentCard.await().userFlag())
     }
 
     private suspend fun updateMarkIcon() {

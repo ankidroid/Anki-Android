@@ -360,7 +360,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(
             "Card should be flagged",
             getCheckedCard(cardBrowser).card.userFlag(),
-            equalTo(Flag.RED.code)
+            equalTo(Flag.RED)
         )
 
         // unflag the selected card
@@ -369,7 +369,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(
             "Card flag should be removed",
             getCheckedCard(cardBrowser).card.userFlag(),
-            equalTo(Flag.NONE.code)
+            equalTo(Flag.NONE)
         )
 
         // deselect and select all cards
@@ -382,7 +382,7 @@ class CardBrowserTest : RobolectricTest() {
             "All cards should be flagged",
             cardBrowser.viewModel.queryAllCardIds()
                 .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
-                .all { flag1 -> flag1 == Flag.GREEN.code }
+                .all { flag1 -> flag1 == Flag.GREEN }
         )
     }
 
@@ -397,10 +397,10 @@ class CardBrowserTest : RobolectricTest() {
 
         val actualFlag = getCardFlagAfterFlagChangeDone(b, cardId)
 
-        assertThat("The card flag value should be reflected in the UI", actualFlag, equalTo(1))
+        assertThat("The card flag value should be reflected in the UI", actualFlag, equalTo(Flag.RED))
     }
 
-    private fun getCardFlagAfterFlagChangeDone(cardBrowser: CardBrowser, cardId: CardId): Int {
+    private fun getCardFlagAfterFlagChangeDone(cardBrowser: CardBrowser, cardId: CardId): Flag {
         return cardBrowser.getPropertiesForCardId(cardId).card.userFlag()
     }
 
