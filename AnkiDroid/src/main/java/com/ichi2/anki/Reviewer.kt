@@ -99,8 +99,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
-import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undoableOp
@@ -1090,10 +1089,10 @@ open class Reviewer :
             if (ease == Ease.AGAIN && wasLeech) {
                 state.topCard.load(getColUnsafe)
                 val leechMessage: String =
-                    if (state.topCard.queue < 0) {
-                        resources.getString(R.string.leech_suspend_notification)
-                    } else {
+                    if (state.topCard.queue.reviewable()) {
                         resources.getString(R.string.leech_notification)
+                    } else {
+                        resources.getString(R.string.leech_suspend_notification)
                     }
                 showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             }
@@ -1618,7 +1617,7 @@ open class Reviewer :
             false
         } else {
             getColUnsafe.db.queryScalar(
-                "select 1 from cards where nid = ? and id != ? and queue != $QUEUE_TYPE_SUSPENDED limit 1",
+                "select 1 from cards where nid = ? and id != ? and queue != ${QueueType.SUSPENDED.code} limit 1",
                 currentCard!!.nid,
                 currentCard!!.id,
             ) == 1
@@ -1632,7 +1631,7 @@ open class Reviewer :
             false
         } else {
             getColUnsafe.db.queryScalar(
-                "select 1 from cards where nid = ? and id != ? and queue >=  $QUEUE_TYPE_NEW limit 1",
+                "select 1 from cards where nid = ? and id != ? and queue >=  ${QueueType.NEW.code} limit 1",
                 currentCard!!.nid,
                 currentCard!!.id,
             ) == 1

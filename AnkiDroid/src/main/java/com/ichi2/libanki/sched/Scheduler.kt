@@ -46,12 +46,11 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
-import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.EpochSeconds
 import com.ichi2.libanki.NoteId
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -492,7 +491,7 @@ open class Scheduler(
     @Suppress("ktlint:standard:max-line-length")
     fun totalNewForCurrentDeck(): Int =
         col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_NEW LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = ${QueueType.NEW.code} LIMIT ?)",
             REPORT_LIMIT,
         )
 
@@ -501,7 +500,7 @@ open class Scheduler(
     @Suppress("ktlint:standard:max-line-length")
     fun totalRevForCurrentDeck(): Int =
         col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_REV AND due <= ? LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN ${deckLimit()} AND queue = ${QueueType.REV.code} AND due <= ? LIMIT ?)",
             today,
             REPORT_LIMIT,
         )
@@ -527,14 +526,14 @@ open class Scheduler(
     open fun revDue() =
         col.db
             .queryScalar(
-                """SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_REV AND due <= ? LIMIT 1""",
+                """SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = ${QueueType.REV.code} AND due <= ? LIMIT 1""",
                 today,
             ) != 0
 
     /** true if there are any new cards due.  */
     @Suppress("ktlint:standard:max-line-length")
     open fun newDue(): Boolean =
-        col.db.queryScalar("SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = $QUEUE_TYPE_NEW LIMIT 1") !=
+        col.db.queryScalar("SELECT 1 FROM cards WHERE did IN ${deckLimit()} AND queue = ${QueueType.NEW.code} LIMIT 1") !=
             0
 
     private val etaCache: DoubleArray = doubleArrayOf(-1.0, -1.0, -1.0, -1.0, -1.0, -1.0)

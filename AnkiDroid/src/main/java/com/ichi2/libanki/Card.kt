@@ -23,7 +23,6 @@ import anki.decks.deckId
 import anki.notes.noteId
 import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
-import com.ichi2.libanki.Consts.CardQueue
 import com.ichi2.libanki.CardType
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
@@ -78,9 +77,7 @@ open class Card : Cloneable {
 
     var type: CardType = CardType.NEW
 
-    @get:CardQueue
-    @CardQueue
-    var queue = 0
+    var queue = QueueType.NEW
     var due: Int = 0
     var ivl = 0
     var factor = 0
@@ -130,7 +127,7 @@ open class Card : Cloneable {
         mod = card.mtimeSecs
         usn = card.usn
         type = CardType.fromCode(card.ctype)
-        queue = card.queue
+        queue = QueueType.fromCode(card.queue)
         due = card.due
         ivl = card.interval
         factor = card.easeFactor
@@ -154,7 +151,7 @@ open class Card : Cloneable {
             deckId = did
             templateIdx = ord
             ctype = type.code
-            queue = this@Card.queue
+            queue = this@Card.queue.code
             due = this@Card.due
             interval = ivl
             easeFactor = factor

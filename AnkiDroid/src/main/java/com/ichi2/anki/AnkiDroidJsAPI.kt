@@ -276,7 +276,7 @@ open class AnkiDroidJsAPI(
             "cardLeft" -> convertToByteArray(apiContract, currentCard.left)
             "cardODid" -> convertToByteArray(apiContract, currentCard.oDid)
             "cardODue" -> convertToByteArray(apiContract, currentCard.oDue)
-            "cardQueue" -> convertToByteArray(apiContract, currentCard.queue)
+            "cardQueue" -> convertToByteArray(apiContract, currentCard.queue.code)
             "cardLapses" -> convertToByteArray(apiContract, currentCard.lapses)
             "cardDue" -> convertToByteArray(apiContract, currentCard.due)
             "deckName" -> convertToByteArray(apiContract, Decks.basename(activity.getColUnsafe.decks.name(currentCard.did)))
