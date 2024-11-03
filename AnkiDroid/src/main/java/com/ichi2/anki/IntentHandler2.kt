@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.os.Bundle
+import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import timber.log.Timber
 
@@ -33,7 +34,7 @@ class IntentHandler2 : AbstractIntentHandler() {
         Timber.v(intent.toString())
         if (NoteEditor.intentLaunchedWithImage(intent)) {
             Timber.i("Intent contained an image")
-            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_ADD_IMAGE)
+            intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditorCaller.ADD_IMAGE.value)
         }
         if (intent.extras == null) {
             Timber.w("Intent unexpectedly has no extras. Notifying user, defaulting to add note.")
