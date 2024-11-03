@@ -78,6 +78,7 @@ import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.AbstractFlashcardViewer.Signal.Companion.toSignal
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.cardviewer.AndroidCardRenderContext
@@ -2240,42 +2241,43 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Signals from a WebView represent actions with no parameters  */
-    @VisibleForTesting
-    internal object WebViewSignalParserUtils {
+    enum class Signal {
         /** A signal which we did not know how to handle  */
-        const val SIGNAL_UNHANDLED = 0
+        SIGNAL_UNHANDLED,
 
         /** A known signal which should perform a noop  */
-        const val SIGNAL_NOOP = 1
-        const val TYPE_FOCUS = 2
+        SIGNAL_NOOP,
+        TYPE_FOCUS,
 
         /** Tell the app that we no longer want to focus the WebView and should instead return keyboard focus to a
          * native answer input method.  */
-        const val RELINQUISH_FOCUS = 3
-        const val SHOW_ANSWER = 4
-        const val ANSWER_ORDINAL_1 = 5
-        const val ANSWER_ORDINAL_2 = 6
-        const val ANSWER_ORDINAL_3 = 7
-        const val ANSWER_ORDINAL_4 = 8
-        fun getSignalFromUrl(url: String): Int {
-            when (url) {
-                "signal:typefocus" -> return TYPE_FOCUS
-                "signal:relinquishFocus" -> return RELINQUISH_FOCUS
-                "signal:show_answer" -> return SHOW_ANSWER
-                "signal:answer_ease1" -> return ANSWER_ORDINAL_1
-                "signal:answer_ease2" -> return ANSWER_ORDINAL_2
-                "signal:answer_ease3" -> return ANSWER_ORDINAL_3
-                "signal:answer_ease4" -> return ANSWER_ORDINAL_4
-                else -> {}
+        RELINQUISH_FOCUS,
+        SHOW_ANSWER,
+        ANSWER_ORDINAL_1,
+        ANSWER_ORDINAL_2,
+        ANSWER_ORDINAL_3,
+        ANSWER_ORDINAL_4;
+
+        companion object {
+            fun String.toSignal(): Signal {
+                when (this) {
+                    "signal:typefocus" -> return TYPE_FOCUS
+                    "signal:relinquishFocus" -> return RELINQUISH_FOCUS
+                    "signal:show_answer" -> return SHOW_ANSWER
+                    "signal:answer_ease1" -> return ANSWER_ORDINAL_1
+                    "signal:answer_ease2" -> return ANSWER_ORDINAL_2
+                    "signal:answer_ease3" -> return ANSWER_ORDINAL_3
+                    "signal:answer_ease4" -> return ANSWER_ORDINAL_4
+                    else -> {}
+                }
+                if (this.startsWith("signal:answer_ease")) {
+                    Timber.w("Unhandled signal: ease value: %s", this)
+                    return SIGNAL_NOOP
+                }
+                return SIGNAL_UNHANDLED // unknown, or not a signal.
             }
-            if (url.startsWith("signal:answer_ease")) {
-                Timber.w("Unhandled signal: ease value: %s", url)
-                return SIGNAL_NOOP
-            }
-            return SIGNAL_UNHANDLED // unknown, or not a signal.
         }
     }
-
     inner class CardViewerWebClient internal constructor(
         private val resourceHandler: ViewerResourceHandler,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
@@ -2397,49 +2399,42 @@ abstract class AbstractFlashcardViewer :
                 return true
             }
 
-            when (val signalOrdinal = WebViewSignalParserUtils.getSignalFromUrl(url)) {
-                WebViewSignalParserUtils.SIGNAL_UNHANDLED -> {}
-                WebViewSignalParserUtils.SIGNAL_NOOP -> return true
-                WebViewSignalParserUtils.TYPE_FOCUS -> return true
+            when (val signalOrdinal = url.toSignal()) {
+                Signal.SIGNAL_UNHANDLED -> {}
+                Signal.SIGNAL_NOOP -> return true
+                Signal.TYPE_FOCUS -> return true
 
-                WebViewSignalParserUtils.RELINQUISH_FOCUS -> {
+                Signal.RELINQUISH_FOCUS -> {
                     // #5811 - The WebView could be focused via mouse. Allow components to return focus to Android.
                     focusAnswerCompletionField()
                     return true
                 }
 
-                WebViewSignalParserUtils.SHOW_ANSWER -> {
+                Signal.SHOW_ANSWER -> {
                     // display answer when showAnswer() called from card.js
-                    if (!Companion.displayAnswer) {
+                    if (!displayAnswer) {
                         displayCardAnswer()
                     }
                     return true
                 }
 
-                WebViewSignalParserUtils.ANSWER_ORDINAL_1 -> {
+                Signal.ANSWER_ORDINAL_1 -> {
                     flipOrAnswerCard(Ease.AGAIN)
                     return true
                 }
 
-                WebViewSignalParserUtils.ANSWER_ORDINAL_2 -> {
+                Signal.ANSWER_ORDINAL_2 -> {
                     flipOrAnswerCard(Ease.HARD)
                     return true
                 }
 
-                WebViewSignalParserUtils.ANSWER_ORDINAL_3 -> {
+                Signal.ANSWER_ORDINAL_3 -> {
                     flipOrAnswerCard(Ease.GOOD)
                     return true
                 }
 
-                WebViewSignalParserUtils.ANSWER_ORDINAL_4 -> {
+                Signal.ANSWER_ORDINAL_4 -> {
                     flipOrAnswerCard(Ease.EASY)
-                    return true
-                }
-
-                else -> {
-                    // We know it was a signal, but forgot a case in the case statement.
-                    // This is not the same as SIGNAL_UNHANDLED, where it isn't a known signal.
-                    Timber.w("Unhandled signal case: %d", signalOrdinal)
                     return true
                 }
             }
