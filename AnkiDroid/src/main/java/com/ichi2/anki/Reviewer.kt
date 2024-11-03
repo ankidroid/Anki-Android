@@ -1064,7 +1064,7 @@ open class Reviewer :
         queueState = state
     }
 
-    override suspend fun answerCardInner(ease: Int) {
+    override suspend fun answerCardInner(ease: Ease) {
         val state = queueState!!
         Timber.d("answerCardInner: ${currentCard!!.id} $ease")
         var wasLeech = false
@@ -1073,7 +1073,7 @@ open class Reviewer :
                 wasLeech = sched.stateIsLeech(state.states.again)
             }
         }.also {
-            if (ease == Consts.BUTTON_ONE && wasLeech) {
+            if (ease == Ease.AGAIN && wasLeech) {
                 state.topCard.load(getColUnsafe)
                 val leechMessage: String = if (state.topCard.queue < 0) {
                     resources.getString(R.string.leech_suspend_notification)

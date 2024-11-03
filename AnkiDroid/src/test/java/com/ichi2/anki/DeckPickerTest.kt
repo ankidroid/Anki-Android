@@ -13,7 +13,6 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
-import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
@@ -670,7 +669,7 @@ class DeckPickerTest : RobolectricTest() {
         // Answer 'Easy' for one of the cards, burying the other
         col.decks.select(deckWithCards)
         col.sched.deckDueTree() // ? if not called, decks.select(toSelect) un-buries a card
-        col.sched.answerCard(col.sched.card!!, EASE_4)
+        col.sched.answerCard(col.sched.card!!, Ease.EASY)
         assertThat("the other card is buried", col.sched.card, nullValue())
 
         // select a deck with no cards

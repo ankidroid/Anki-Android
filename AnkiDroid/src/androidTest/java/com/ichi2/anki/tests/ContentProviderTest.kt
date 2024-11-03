@@ -24,8 +24,8 @@ import android.content.ContentValues
 import android.database.CursorWindow
 import android.net.Uri
 import anki.notetypes.StockNotetype
-import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.Ease
 import com.ichi2.anki.FlashCardsContract
 import com.ichi2.anki.provider.pureAnswer
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
@@ -1066,12 +1066,12 @@ class ContentProviderTest : InstrumentedTest() {
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.nid
         val cardOrd = card.ord
-        val earlyGraduatingEase = AbstractFlashcardViewer.EASE_4
+        val earlyGraduatingEase = Ease.EASY
         val values = ContentValues().apply {
             val timeTaken: Long = 5000 // 5 seconds
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
             put(FlashCardsContract.ReviewInfo.CARD_ORD, cardOrd)
-            put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase)
+            put(FlashCardsContract.ReviewInfo.EASE, earlyGraduatingEase.value)
             put(FlashCardsContract.ReviewInfo.TIME_TAKEN, timeTaken)
         }
         val updateCount = cr.update(reviewInfoUri, values, null, null)
