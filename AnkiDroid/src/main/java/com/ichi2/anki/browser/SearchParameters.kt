@@ -15,6 +15,7 @@
 package com.ichi2.anki.browser
 
 import android.os.Parcelable
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Flag
 import com.ichi2.libanki.DeckId
 import kotlinx.parcelize.Parcelize
@@ -34,11 +35,16 @@ data class SearchParameters(
     }
 }
 
-fun SearchParameters.toQuery() =
-    listOf(
+suspend fun SearchParameters.toQuery(): String {
+    val targetDecksNames =
+        withCol {
+            deckIds.map { deckId -> decks.name(deckId) }
+        }
+    return listOf(
         userInput,
-        deckIds.joinToString(" OR ") { "did:$it" },
+        targetDecksNames.joinToString(" OR ") { "deck:\"$it\"" },
         tags.joinToString(" OR ") { """"tag:$it"""" },
         flags.joinToString(" OR ") { "flag:${it.code}" },
     ).filter { it.isNotEmpty() }
         .joinToString(" ") { "($it)" }
+}

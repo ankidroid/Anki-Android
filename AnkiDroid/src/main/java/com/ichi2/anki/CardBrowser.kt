@@ -1321,14 +1321,16 @@ open class CardBrowser :
 
     private fun openSaveSearchView() {
         val searchTerms = viewModel.searchTerms.copy(userInput = searchView!!.query.toString())
-        showDialogFragment(
-            newInstance(
-                null,
-                mySearchesDialogListener,
-                searchTerms.toQuery(),
-                CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
-            ),
-        )
+        launchCatchingTask {
+            showDialogFragment(
+                newInstance(
+                    null,
+                    mySearchesDialogListener,
+                    searchTerms.toQuery(),
+                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
+                ),
+            )
+        }
     }
 
     private fun repositionSelectedCards(): Boolean {
