@@ -77,12 +77,17 @@ object Consts {
     annotation class DynPriority
 
     // model types
-    const val MODEL_STD = 0
-    const val MODEL_CLOZE = 1
+    enum class NoteTypeKind(
+        val code: Int,
+    ) {
+        STD(0),
+        CLOZE(1),
+        ;
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(MODEL_STD, MODEL_CLOZE)
-    annotation class ModelType
+        companion object {
+            fun fromCode(code: Int) = NoteTypeKind.entries.first { it.code == code }
+        }
+    }
 
     const val STARTING_FACTOR = 2500
 

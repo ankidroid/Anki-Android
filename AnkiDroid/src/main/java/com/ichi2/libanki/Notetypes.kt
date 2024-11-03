@@ -40,7 +40,6 @@ import anki.notetypes.StockNotetype
 import com.google.protobuf.ByteString
 import com.ichi2.anki.CrashReportService
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.BackendUtils.toJsonBytes
@@ -607,7 +606,7 @@ class Notetypes(
     ): OpChanges {
         val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
         val templateMap =
-            if (cmap.isEmpty() || noteType.type == MODEL_CLOZE || newModel.type == MODEL_CLOZE) {
+            if (cmap.isEmpty() || noteType.isCloze || newModel.isCloze) {
                 listOf()
             } else {
                 convertLegacyMap(cmap, newModel.templatesNames.size)
