@@ -15,9 +15,6 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
-import androidx.annotation.IntDef
-import kotlin.annotation.Retention
-
 object Consts {
     // Queue types
     enum class QueueType {
@@ -78,12 +75,13 @@ object Consts {
     }
 
     // model types
-    const val MODEL_STD = 0
-    const val MODEL_CLOZE = 1
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(MODEL_STD, MODEL_CLOZE)
-    annotation class ModelType
+    enum class ModelType {
+        STD,
+        CLOZE;
+        companion object {
+            fun Int.toModelType() = ModelType.entries[this]
+        }
+    }
 
     const val STARTING_FACTOR = 2500
 

@@ -17,6 +17,8 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
+import com.ichi2.libanki.Consts.ModelType
+import com.ichi2.libanki.Consts.ModelType.Companion.toModelType
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClonedInto
 import com.ichi2.utils.toStringList
@@ -74,9 +76,9 @@ class NotetypeJson : JSONObject {
     val templatesNames: List<String>
         get() = getJSONArray("tmpls").toStringList("name")
     val isStd: Boolean
-        get() = getInt("type") == Consts.MODEL_STD
+        get() = getInt("type").toModelType() == ModelType.STD
     val isCloze: Boolean
-        get() = getInt("type") == Consts.MODEL_CLOZE
+        get() = getInt("type").toModelType() == ModelType.CLOZE
 
     /**
      * @param sfld Fields of a note of this note type
@@ -131,10 +133,9 @@ class NotetypeJson : JSONObject {
         }
 
     // TODO: Not constrained
-    @Consts.ModelType
-    var type: Int
-        get() = getInt("type")
+    var type: ModelType
+        get() = getInt("type").toModelType()
         set(value) {
-            put("type", value)
+            put("type", value.ordinal)
         }
 }
