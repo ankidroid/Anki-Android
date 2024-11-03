@@ -36,7 +36,6 @@ import org.jetbrains.annotations.VisibleForTesting
 import java.io.File
 import java.net.URI
 import java.nio.file.Paths
-import java.util.regex.Pattern
 
 /**
  * Records information about a text to speech tag.
@@ -85,12 +84,7 @@ data class SoundOrVideoTag(val filename: String) : AvTag() {
 }
 
 /** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
-open class AvTag
-
-/**
- * [Regex] used to identify the markers for sound files
- */
-val SOUND_RE = Pattern.compile("\\[sound:([^\\[\\]]*)]").toRegex()
+sealed class AvTag
 
 fun stripAvRefs(text: String, replacement: String = "") = AvRef.REGEX.replace(text, replacement)
 

@@ -118,7 +118,7 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
                 val formatString = when (side) {
                     CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
                     CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
-                    else -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
+                    CardSide.BOTH -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
                 }
                 return String.format(formatString, binding.toDisplayString(context))
             }

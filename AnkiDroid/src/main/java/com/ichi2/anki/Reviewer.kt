@@ -340,7 +340,7 @@ open class Reviewer :
         return when (fullscreenMode) {
             FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
             FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
-            else -> R.layout.reviewer
+            FullScreenMode.BUTTONS_AND_MENU -> R.layout.reviewer
         }
     }
 

@@ -192,7 +192,28 @@ enum class ViewerCommand(val resourceId: Int) {
                 SHOW_HINT -> listOf(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
                 SHOW_ALL_HINTS -> listOf(keyCode(KeyEvent.KEYCODE_G, CardSide.BOTH))
                 ADD_NOTE -> listOf(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH))
-                else -> emptyList()
+                SHOW_ANSWER,
+                DELETE,
+                EXIT,
+                UNSET_FLAG,
+                PAGE_UP,
+                PAGE_DOWN,
+                TAG,
+                CARD_INFO,
+                ABORT_AND_SYNC,
+                TOGGLE_WHITEBOARD,
+                CLEAR_WHITEBOARD,
+                CHANGE_WHITEBOARD_PEN_COLOR,
+                RESCHEDULE_NOTE,
+                USER_ACTION_1,
+                USER_ACTION_2,
+                USER_ACTION_3,
+                USER_ACTION_4,
+                USER_ACTION_5,
+                USER_ACTION_6,
+                USER_ACTION_7,
+                USER_ACTION_8,
+                USER_ACTION_9 -> emptyList()
             }
         }
 

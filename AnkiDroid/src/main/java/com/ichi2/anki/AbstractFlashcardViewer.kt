@@ -1731,8 +1731,29 @@ abstract class AbstractFlashcardViewer :
                 loadUrlInViewer("javascript: showAllHints();")
                 true
             }
-
-            else -> {
+            ViewerCommand.REDO,
+            ViewerCommand.MARK,
+            ViewerCommand.TOGGLE_FLAG_RED,
+            ViewerCommand.TOGGLE_FLAG_ORANGE,
+            ViewerCommand.TOGGLE_FLAG_GREEN,
+            ViewerCommand.TOGGLE_FLAG_BLUE,
+            ViewerCommand.TOGGLE_FLAG_PINK,
+            ViewerCommand.TOGGLE_FLAG_TURQUOISE,
+            ViewerCommand.TOGGLE_FLAG_PURPLE,
+            ViewerCommand.UNSET_FLAG,
+            ViewerCommand.CARD_INFO,
+            ViewerCommand.ADD_NOTE,
+            ViewerCommand.RESCHEDULE_NOTE,
+            ViewerCommand.TOGGLE_AUTO_ADVANCE,
+            ViewerCommand.USER_ACTION_1,
+            ViewerCommand.USER_ACTION_2,
+            ViewerCommand.USER_ACTION_3,
+            ViewerCommand.USER_ACTION_4,
+            ViewerCommand.USER_ACTION_5,
+            ViewerCommand.USER_ACTION_6,
+            ViewerCommand.USER_ACTION_7,
+            ViewerCommand.USER_ACTION_8,
+            ViewerCommand.USER_ACTION_9 -> {
                 Timber.w("Unknown command requested: %s", which)
                 false
             }
@@ -2515,7 +2536,7 @@ abstract class AbstractFlashcardViewer :
                 is SoundOrVideoTag -> tag
                 is TTSTag -> tag
                 // not currently supported
-                else -> return
+                null -> return
             }
             cardMediaPlayer.playOneSound(avTag)
         }

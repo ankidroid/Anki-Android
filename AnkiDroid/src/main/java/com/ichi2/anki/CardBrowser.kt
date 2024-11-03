@@ -2175,7 +2175,7 @@ open class CardBrowser :
             return Themes.getColorFromAttr(context, colorAttr)
         }
 
-        fun getColumnHeaderText(key: CardBrowserColumn?): String? {
+        fun getColumnHeaderText(key: CardBrowserColumn): String? {
             return when (key) {
                 CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
@@ -2199,7 +2199,9 @@ open class CardBrowser :
                     updateSearchItemQA()
                     qa!!.second
                 }
-                else -> null
+                CardBrowserColumn.FSRS_DIFFICULTY,
+                CardBrowserColumn.FSRS_RETRIEVABILITY,
+                CardBrowserColumn.FSRS_STABILITY -> null
             }
         }
 

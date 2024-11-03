@@ -5,7 +5,6 @@ package com.ichi2.anki
 
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -26,7 +25,6 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.ProgressBar
-import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.AttrRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -281,22 +279,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
         enableIntentAnimation(intent)
         super.startActivity(intent)
         enableActivityAnimation(animation)
-    }
-
-    private fun launchActivityForResult(
-        intent: Intent?,
-        launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?
-    ) {
-        try {
-            launcher.launch(
-                intent,
-                ActivityTransitionAnimation.getAnimationOptions(this, animation)
-            )
-        } catch (e: ActivityNotFoundException) {
-            Timber.w(e)
-            this.showSnackbar(R.string.activity_start_failed)
-        }
     }
 
     override fun finish() {

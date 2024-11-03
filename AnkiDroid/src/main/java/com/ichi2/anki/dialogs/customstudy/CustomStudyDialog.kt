@@ -52,6 +52,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.pages.DeckOptions
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.annotations.NeedsTest
@@ -128,7 +129,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
                         val deckId = requireArguments().getLong("did")
-                        val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
+                        val i = DeckOptions.getIntent(requireContext(), deckId)
                         requireActivity().startActivity(i)
                     }
                     MORE_OPTIONS -> {
@@ -157,7 +158,12 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         )
                         customStudyListener?.showDialogFragment(dialogFragment)
                     }
-                    else -> {
+                    STUDY_NEW,
+                    STUDY_REV,
+                    STUDY_FORGOT,
+                    STUDY_AHEAD,
+                    STUDY_RANDOM,
+                    STUDY_PREVIEW -> {
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
@@ -408,7 +414,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
-                else -> ""
+                STUDY_FORGOT,
+                STUDY_AHEAD,
+                STUDY_RANDOM,
+                STUDY_PREVIEW,
+                STUDY_TAGS,
+                DECK_OPTIONS,
+                MORE_OPTIONS -> ""
             }
         }
     private val text2: String
@@ -421,7 +433,9 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
                 STUDY_RANDOM -> res.getString(R.string.custom_study_random)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
-                else -> ""
+                STUDY_TAGS,
+                DECK_OPTIONS,
+                MORE_OPTIONS -> ""
             }
         }
     private val defaultValue: String
@@ -434,7 +448,9 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 STUDY_AHEAD -> prefs.getInt("aheadDays", 1).toString()
                 STUDY_RANDOM -> prefs.getInt("randomCards", 100).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
-                else -> ""
+                STUDY_TAGS,
+                DECK_OPTIONS,
+                MORE_OPTIONS -> ""
             }
         }
 

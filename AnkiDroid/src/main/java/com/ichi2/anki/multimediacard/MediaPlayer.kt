@@ -126,7 +126,8 @@ class MediaPlayer :
         when (state) {
             IDLE, INITIALIZED, PREPARED, STARTED, PAUSED, STOPPED, PLAYBACK_COMPLETE, ERROR ->
                 state = IDLE
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            PREPARING,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -139,7 +140,14 @@ class MediaPlayer :
         super.prepareAsync()
         when (state) {
             INITIALIZED, STOPPED -> state = PREPARING
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            ERROR,
+            IDLE,
+            PREPARING,
+            PREPARED,
+            STARTED,
+            PAUSED,
+            PLAYBACK_COMPLETE,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -147,7 +155,14 @@ class MediaPlayer :
         super.prepare()
         when (state) {
             INITIALIZED, STOPPED -> state = PREPARED
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            ERROR,
+            IDLE,
+            PREPARING,
+            PREPARED,
+            STARTED,
+            PAUSED,
+            PLAYBACK_COMPLETE,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -155,7 +170,12 @@ class MediaPlayer :
         super.seekTo(msec)
         when (state) {
             PREPARED, STARTED, PAUSED, PLAYBACK_COMPLETE -> {}
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            ERROR,
+            IDLE,
+            INITIALIZED,
+            PREPARING,
+            STOPPED,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -163,7 +183,12 @@ class MediaPlayer :
         super.seekTo(msec, mode)
         when (state) {
             PREPARED, STARTED, PAUSED, PLAYBACK_COMPLETE -> {}
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            ERROR,
+            IDLE,
+            INITIALIZED,
+            PREPARING,
+            STOPPED,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -171,7 +196,11 @@ class MediaPlayer :
         super.stop()
         when (state) {
             PREPARED, STARTED, STOPPED, PAUSED, PLAYBACK_COMPLETE -> state = STOPPED
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            ERROR,
+            IDLE,
+            INITIALIZED,
+            PREPARING,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -179,7 +208,12 @@ class MediaPlayer :
         super.start()
         when (state) {
             PREPARED, STARTED, PAUSED, PLAYBACK_COMPLETE -> state = STARTED
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            ERROR,
+            IDLE,
+            INITIALIZED,
+            PREPARING,
+            STOPPED,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -187,7 +221,13 @@ class MediaPlayer :
         super.pause()
         when (state) {
             STARTED, PAUSED, PLAYBACK_COMPLETE -> state = PAUSED
-            else -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            ERROR,
+            IDLE,
+            INITIALIZED,
+            PREPARING,
+            PREPARED,
+            STOPPED,
+            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -243,6 +283,7 @@ class MediaPlayer :
         IDLE,
         INITIALIZED,
         PREPARING,
+
         PREPARED,
         STARTED,
         PAUSED,

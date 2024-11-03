@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.Gesture
@@ -155,6 +156,7 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
     }
 
     /** Maps from a tap gesture to its view Id, or null if the gesture isn't a tap */
+    @IdRes
     private fun tapGestureToViewId(gesture: Gesture?): Int? {
         return when (gesture) {
             TAP_TOP_LEFT -> R.id.top_left

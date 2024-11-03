@@ -331,7 +331,7 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
             ANSWER_AGAIN -> AGAIN.toViewerCommand()
             ANSWER_HARD -> HARD.toViewerCommand()
             ANSWER_GOOD -> GOOD.toViewerCommand()
-            else -> null
+            SHOW_REMINDER -> null
         }
     }
 
