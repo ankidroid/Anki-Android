@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/clear_filter_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:minHeight="?attr/listPreferredItemHeightSmall"
+            android:background="?attr/selectableItemBackground"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/clear_icon"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="12dp"
+                app:srcCompat="@drawable/ic_clear_white" />
+
+            <com.ichi2.ui.FixedTextView
+                android:id="@+id/clear_selection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/clear_filter"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                tools:text="Clear filter"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/flags_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>

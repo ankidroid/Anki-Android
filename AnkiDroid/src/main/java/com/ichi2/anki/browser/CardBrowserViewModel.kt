@@ -695,19 +695,6 @@ class CardBrowserViewModel(
         launchSearchForCards(searchTerms.copy(userInput = "is:suspended"))
     }
 
-    suspend fun setFlagFilter(flag: Flag) {
-        Timber.i("filtering to flag: %s", flag)
-        val flagSearchTerm = "flag:${flag.code}"
-        val userInput = searchTerms.userInput
-        val updatedInput =
-            when {
-                userInput.contains("flag:") -> userInput.replaceFirst("flag:.".toRegex(), flagSearchTerm)
-                userInput.isNotEmpty() -> "$flagSearchTerm $userInput"
-                else -> flagSearchTerm
-            }
-        launchSearchForCards(searchTerms.copy(userInput = updatedInput))
-    }
-
     suspend fun filterByTags(
         selectedTags: List<String>,
         cardState: CardStateFilter,

@@ -19,11 +19,23 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
+import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.search.BrowserRow
 import anki.search.BrowserRow.Color
@@ -38,7 +50,6 @@ import com.ichi2.anki.browser.CardBrowserColumn.EASE
 import com.ichi2.anki.browser.CardBrowserColumn.QUESTION
 import com.ichi2.anki.browser.CardBrowserColumn.SFLD
 import com.ichi2.anki.browser.CardBrowserColumn.TAGS
-import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.browser.CardBrowserViewModelTest
 import com.ichi2.anki.browser.CardOrNoteId
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
@@ -74,6 +85,8 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkObject
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.runBlocking
+import org.hamcrest.Description
+import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
@@ -81,6 +94,7 @@ import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
 import org.hamcrest.Matchers.nullValue
 import org.hamcrest.Matchers.startsWith
+import org.hamcrest.TypeSafeMatcher
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -733,9 +747,9 @@ class CardBrowserTest : RobolectricTest() {
         runTest {
             // #8467 - selecting cards outside the view pane (20) caused a crash as we were using view-based positions
             val browser = getBrowserWithNotes(25)
-            selectOneOfManyCards(browser, 7) // HACK: Fix a bug in tests by choosing a value < 8
+            selectOneOfManyCards(browser, 6) // HACK: Fix a bug in tests by choosing a value < 8
             selectOneOfManyCards(browser, 24)
-            assertThat(browser.viewModel.selectedRowCount(), equalTo(18))
+            assertThat(browser.viewModel.selectedRowCount(), equalTo(19))
         }
 
     @Test
@@ -1169,6 +1183,127 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `Filtering by single flag shows expected results`() =
+        runTest {
+            ensureCollectionLoadIsSynchronous()
+            setupNotesWithFlags()
+            val browser =
+                startRegularActivity<CardBrowser>(Intent()).also {
+                    advanceRobolectricUiLooper() // may be a fix for flaky tests
+                }
+            val redFlagActualName =
+                Flag.queryDisplayNames()[Flag.RED] ?: fail("Null flag name found in collection")
+
+            // open the flags sheet and click on one of the flag names which should close the sheet and
+            // trigger a search for that flag
+            onView(withId(R.id.chip_flag)).perform(click())
+            onView(withText(redFlagActualName)).inRoot(isDialog()).perform(click())
+            // there are two cards with a red flag
+            assertEquals(2, browser.viewModel.rowCount, "Unexpected number of cards after flag filter")
+            onView(withId(R.id.chip_flag)).check(matches(withText(redFlagActualName)))
+        }
+
+    @Test
+    fun `Filtering by multiple flags shows expected results`() =
+        runTest {
+            ensureCollectionLoadIsSynchronous()
+            setupNotesWithFlags()
+            val browser =
+                startRegularActivity<CardBrowser>(Intent()).also {
+                    advanceRobolectricUiLooper() // may be a fix for flaky tests
+                }
+            val redFlagActualName =
+                Flag.queryDisplayNames()[Flag.RED] ?: fail("Null flag name found in collection")
+            val orangeFlagActualName =
+                Flag.queryDisplayNames()[Flag.ORANGE] ?: fail("Null flag name found in collection")
+            val greenFlagActualName =
+                Flag.queryDisplayNames()[Flag.GREEN] ?: fail("Null flag name found in collection")
+
+            // open the flags sheet and click on the checkboxes of multiple flags
+            onView(withId(R.id.chip_flag)).perform(click())
+            onView(withCheckboxForTextSibling(redFlagActualName)).inRoot(isDialog()).perform(click())
+            onView(withCheckboxForTextSibling(orangeFlagActualName)).inRoot(isDialog()).perform(click())
+            onView(withCheckboxForTextSibling(greenFlagActualName)).inRoot(isDialog()).perform(click())
+            // 2 red + 1 orange + 1 green
+            assertEquals(4, browser.viewModel.rowCount, "Unexpected number of cards after flag filter")
+            pressBack() // Espresso doesn't see the layout below if we don't close the sheet
+            // check that the flags chip has the proper text, Red + 2(red was clicked first)
+            onView(withId(R.id.chip_flag)).check(
+                matches(
+                    withText(
+                        targetContext.getString(
+                            R.string.chip_filter_multiple_selections,
+                            redFlagActualName,
+                            2,
+                        ),
+                    ),
+                ),
+            )
+        }
+
+    @Test
+    fun `Filtering by flags handles Clear Selection option`() =
+        runTest {
+            ensureCollectionLoadIsSynchronous()
+            setupNotesWithFlags()
+            val browser =
+                startRegularActivity<CardBrowser>(Intent()).also {
+                    advanceRobolectricUiLooper() // may be a fix for flaky tests
+                }
+            val orangeFlagActualName = getCollectionFlagName(Flag.ORANGE)
+
+            // open the flags sheet and select a flag
+            onView(withId(R.id.chip_flag)).perform(click())
+            onView(withCheckboxForTextSibling(orangeFlagActualName)).inRoot(isDialog()).perform(click())
+
+            assertEquals(1, browser.viewModel.rowCount, "Unexpected number of cards after flag filter")
+            // check that clear selection is displayed
+            onView(withId(R.id.clear_filter_container)).inRoot(isDialog()).check(matches(isDisplayed()))
+            // click clear filter which should clear and close the flags filter sheet
+            onView(withId(R.id.clear_selection)).perform(click())
+
+            onView(withId(R.id.chip_flag)).check(matches(withText(col.tr.browsingSidebarFlags())))
+        }
+
+    /**
+     * Sets [CardBrowser] with several notes with no flags as well as all possible [Flag] values.
+     */
+    private fun setupNotesWithFlags() {
+        addBasicNote("Card with no flag", "N/A")
+        addBasicNote("Card with red flag", "N/A").apply {
+            flagCardForNote(this, Flag.RED)
+        }
+        addBasicNote("Card with turquoise flag", "N/A").apply {
+            flagCardForNote(this, Flag.TURQUOISE)
+        }
+        addBasicNote("Card with green flag", "N/A").apply {
+            flagCardForNote(this, Flag.GREEN)
+        }
+        addBasicNote("Second card with red flag", "N/A").apply {
+            flagCardForNote(this, Flag.RED)
+        }
+        addBasicNote("Card with purple flag", "N/A").apply {
+            flagCardForNote(this, Flag.PURPLE)
+        }
+        addBasicNote("Second card with no flag", "N/A")
+        addBasicNote("Card with blue flag", "N/A").apply {
+            flagCardForNote(this, Flag.BLUE)
+        }
+        addBasicNote("Third card with no flag", "N/A")
+        addBasicNote("Card with orange flag", "N/A").apply {
+            flagCardForNote(this, Flag.ORANGE)
+        }
+        addBasicNote("Card with pink flag", "N/A").apply {
+            flagCardForNote(this, Flag.PINK)
+        }
+        addBasicNote(
+            "Second card with pink flag",
+            "N/A",
+        ).apply { flagCardForNote(this, Flag.PINK) }
+        addBasicNote("Fourth card with no flag", "N/A")
+    }
+
     fun NotetypeJson.addNote(
         field: String,
         vararg fields: String,
@@ -1197,6 +1332,29 @@ class CardBrowserTest : RobolectricTest() {
 private fun CardBrowser.rerenderAllCards() {
     cardsAdapter.notifyDataSetChanged()
     waitForAsyncTasksToComplete()
+}
+
+private suspend fun getCollectionFlagName(flag: Flag): String =
+    Flag.queryDisplayNames()[flag] ?: fail("Null flag name found in collection for $flag")
+
+/**
+ * View [Matcher] that looks for the checkbox in filter rows in CardBrowser's filtering sheets
+ * based on the row's text. For example, for flags the text will be the [Flag] name.
+ * The standard row will be in the form of LinearLayout(ImageView, TextView, CheckBox)
+ */
+private fun withCheckboxForTextSibling(text: String): Matcher<View> {
+    return object : TypeSafeMatcher<View>() {
+        override fun describeTo(description: Description) {
+            description.appendText("checkbox of row with text = $text")
+        }
+
+        override fun matchesSafely(item: View): Boolean {
+            if (item !is CheckBox) return false
+            val parent = item.parent as? LinearLayout
+            val flagNameTextView = parent?.findViewById<TextView>(R.id.text)
+            return flagNameTextView?.text == text
+        }
+    }
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean = viewModel.selectedRows.contains(viewModel.getRowAtPosition(i))
@@ -1251,11 +1409,6 @@ suspend fun CardBrowser.searchCardsSync(query: String) {
 suspend fun CardBrowser.filterByTagSync(vararg tags: String) {
     filterByTag(*tags)
     viewModel.searchJob?.join()
-}
-
-suspend fun CardBrowserViewModel.setFlagFilterSync(flag: Flag) {
-    setFlagFilter(flag)
-    searchJob?.join()
 }
 
 fun TestClass.flagCardForNote(

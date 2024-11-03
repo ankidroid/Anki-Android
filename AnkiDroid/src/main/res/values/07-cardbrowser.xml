@@ -39,7 +39,6 @@
     <string name="card_browser_show_marked" maxLength="28">Filter marked</string>
     <string name="card_browser_show_suspended" maxLength="28">Filter suspended</string>
     <string name="card_browser_search_by_tag" maxLength="28">Filter by tag</string>
-    <string name="card_browser_search_by_flag" maxLength="28">Filter by flag</string>
     <string name="card_browser_list_my_searches" maxLength="28">My searches</string>
     <string name="card_browser_list_my_searches_save" maxLength="28">Save search</string>
     <string name="card_browser_list_my_searches_title">Choose a saved search</string>
@@ -95,4 +94,5 @@
     Example shown to use: 'Red +2'
     When displaying a chip control for a filter, if one element is selected, we display it
     If more than one element is selected, we also show the count of extra filters">%1$s +%2$d</string>
+    <string name="clear_filter">Clear filter</string>
 </resources>

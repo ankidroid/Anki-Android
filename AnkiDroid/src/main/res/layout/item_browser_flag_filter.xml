@@ -22,8 +22,7 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:focusable="true"
     android:clickable="true"
-    android:layoutDirection="locale"
-    tools:ignore="UnusedResources">
+    android:layoutDirection="locale">
 
     <ImageView
         android:id="@+id/icon"
@@ -31,7 +30,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
         tools:src="@drawable/ic_flag_green" />
 
     <com.ichi2.ui.FixedTextView
@@ -40,7 +39,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="start|center_vertical"
-        android:textAppearance="?android:textAppearanceMedium"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
         android:textDirection="locale"
         android:textAlignment="gravity"
         android:layout_marginEnd="16dp"

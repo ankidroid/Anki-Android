@@ -31,7 +31,13 @@
                 android:layout_height="wrap_content"
                 android:elevation="0dp"
                 app:singleLine="true">
-
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_flag"
+                    style="@style/Chip.WithIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipIcon="@drawable/ic_flag_transparent"
+                    app:chipIconTint="@null" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 

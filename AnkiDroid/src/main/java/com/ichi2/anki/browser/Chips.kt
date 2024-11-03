@@ -17,27 +17,46 @@ package com.ichi2.anki.browser
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 
-@Suppress("UnusedReceiverParameter")
-fun CardBrowser.setupChips(
-    @Suppress("UNUSED_PARAMETER") chips: ChipGroup,
-) {
-    // TODO add here code to initialize each of the filtering chips
+// move to context parameters when available
+fun CardBrowser.setupChips(chips: ChipGroup) {
+    chips.findViewById<Chip>(R.id.chip_flag).apply {
+        text = TR.browsingSidebarFlags()
+        setOnClickListener { chip ->
+            (chip as Chip).isChecked = !chip.isChecked
+            BrowserFlagsFilteringFragment().show(
+                supportFragmentManager,
+                BrowserFlagsFilteringFragment.TAG,
+            )
+        }
+    }
 }
 
-@Suppress("RedundantSuspendModifier", "UnusedReceiverParameter")
+@Suppress("UnusedReceiverParameter")
+// move to context parameters when available
 suspend fun CardBrowser.updateChips(
-    @Suppress("UNUSED_PARAMETER") chips: ChipGroup,
+    chips: ChipGroup,
     oldSearchParameters: SearchParameters,
     newSearchParameters: SearchParameters,
 ) {
     if (oldSearchParameters.flags != newSearchParameters.flags) {
-        // TODO add code for each chip to update its status
+        val flagNames = Flag.queryDisplayNames()
+        chips.findViewById<Chip>(R.id.chip_flag).let { chip ->
+            chip.update(
+                activeItems = newSearchParameters.flags,
+                inactiveText = TR.browsingSidebarFlags(),
+                activeTextGetter = { flag -> flagNames[flag]!! },
+            )
+            // text shows "Red + 1" if there are multiple flags, so show the first flag icon
+            val firstFlagOrDefault = newSearchParameters.flags.firstOrNull() ?: Flag.NONE
+            chip.setChipIconResource(firstFlagOrDefault.drawableRes)
+        }
     }
 }
 
-@Suppress("unused")
 private fun <T> Chip.update(
     activeItems: Collection<T>,
     inactiveText: String,
