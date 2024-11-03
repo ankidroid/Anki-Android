@@ -1080,7 +1080,7 @@ open class DeckPicker :
             }
             R.id.action_check_media -> {
                 Timber.i("DeckPicker:: Check media button pressed")
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+                showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_CONFIRM_MEDIA_CHECK)
                 return true
             }
             R.id.action_empty_cards -> {
@@ -1418,7 +1418,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_M -> {
                 Timber.i("Check media from keypress")
-                showMediaCheckDialog(MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK)
+                showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_CONFIRM_MEDIA_CHECK)
                 return true
             }
             KeyEvent.KEYCODE_E -> {
@@ -1723,11 +1723,11 @@ open class DeckPicker :
         }
     }
 
-    override fun showMediaCheckDialog(dialogType: Int) {
+    override fun showMediaCheckDialog(dialogType: MediaCheckDialog.Type) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
     }
 
-    override fun showMediaCheckDialog(dialogType: Int, checkList: MediaCheckResult) {
+    override fun showMediaCheckDialog(dialogType: MediaCheckDialog.Type, checkList: MediaCheckResult) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
     }
 
@@ -1809,7 +1809,7 @@ open class DeckPicker :
     override fun mediaCheck() {
         launchCatchingTask {
             val mediaCheckResult = checkMedia()
-            showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
+            showMediaCheckDialog(MediaCheckDialog.Type.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
         }
     }
 
