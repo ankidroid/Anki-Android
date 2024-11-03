@@ -580,9 +580,9 @@ open class Scheduler(val col: Collection) {
                 .db
                 .query(
                     "select " +
-                        "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, " +
-                        "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, " +
-                        "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime " +
+                        "avg(case when type = " + Consts.CardType.NEW.ordinal + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CardType.NEW.ordinal + " then time else null end) as newTime, " +
+                        "avg(case when type in (" + Consts.CardType.LRN.ordinal + ", " + Consts.CardType.RELEARNING.ordinal + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CardType.LRN.ordinal + ", " + Consts.CardType.RELEARNING.ordinal + ") then time else null end) as revTime, " +
+                        "avg(case when type = " + Consts.CardType.REV.ordinal + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CardType.REV.ordinal + " then time else null end) as relrnTime " +
                         "from revlog where id > " +
                         "?",
                     (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000

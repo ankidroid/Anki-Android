@@ -55,7 +55,7 @@ interface TestClass {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
         card.queue = Consts.QUEUE_TYPE_REV
-        card.type = Consts.CARD_TYPE_REV
+        card.type = Consts.CardType.REV
         card.due = col.sched.today
         return note
     }

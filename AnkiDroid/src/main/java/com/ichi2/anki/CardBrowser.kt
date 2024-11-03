@@ -2205,7 +2205,7 @@ open class CardBrowser :
         }
 
         private fun getEaseForCards(): String {
-            return if (card.type == Consts.CARD_TYPE_NEW) {
+            return if (card.type == Consts.CardType.NEW) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
             } else {
                 "${card.factor / 10}%"
@@ -2224,9 +2224,10 @@ open class CardBrowser :
 
         private fun queryIntervalForCards(): String {
             return when (card.type) {
-                Consts.CARD_TYPE_NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
-                Consts.CARD_TYPE_LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
-                else -> roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * SECONDS_PER_DAY)
+                Consts.CardType.NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
+                Consts.CardType.LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
+                Consts.CardType.REV,
+                Consts.CardType.RELEARNING -> roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * SECONDS_PER_DAY)
             }
         }
 
@@ -2485,9 +2486,9 @@ open class CardBrowser :
                 return AnkiDroidApp.appResources.getString(R.string.card_browser_due_filtered_card)
             } else if (card.queue == Consts.QUEUE_TYPE_LRN) {
                 due.toLong()
-            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CARD_TYPE_NEW) {
+            } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CardType.NEW) {
                 return due.toString()
-            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CARD_TYPE_REV && card.queue < 0) {
+            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CardType.REV && card.queue < 0) {
                 val time = TimeManager.time.intTime()
                 val nbDaySinceCreation = due - col.sched.today
                 time + nbDaySinceCreation * SECONDS_PER_DAY

@@ -34,14 +34,12 @@ object Consts {
     annotation class CardQueue
 
     // Card types
-    const val CARD_TYPE_NEW = 0
-    const val CARD_TYPE_LRN = 1
-    const val CARD_TYPE_REV = 2
-    const val CARD_TYPE_RELEARNING = 3
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING)
-    annotation class CardType
+    enum class CardType {
+        NEW, LRN, REV, RELEARNING;
+        companion object {
+            fun Int.toCardType() = CardType.entries[this]
+        }
+    }
 
     // dynamic deck order
     const val DYN_OLDEST = 0
