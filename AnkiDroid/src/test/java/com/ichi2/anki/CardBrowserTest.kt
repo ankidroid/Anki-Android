@@ -51,6 +51,7 @@ import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.BrowserConfig
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
@@ -560,7 +561,7 @@ class CardBrowserTest : RobolectricTest() {
             addNoteUsingBasicModel("Hello", "World").firstCard().update {
                 due = 5
                 queue = Consts.QUEUE_TYPE_REV
-                type = Consts.CARD_TYPE_REV
+                type = CardType.REV
             }
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, 5)
@@ -1147,7 +1148,7 @@ class CardBrowserTest : RobolectricTest() {
         cal.add(Calendar.DATE, 27)
 
         // Not filtered
-        c.type = Consts.CARD_TYPE_NEW
+        c.type = CardType.NEW
         c.due = 27
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         Assert.assertEquals("27", nextDue(col, c))
@@ -1165,7 +1166,7 @@ class CardBrowserTest : RobolectricTest() {
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("27", dueString(col, c))
-        c.type = Consts.CARD_TYPE_LRN
+        c.type = CardType.LRN
         c.due = id
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         Assert.assertEquals("", nextDue(col, c))
@@ -1182,7 +1183,7 @@ class CardBrowserTest : RobolectricTest() {
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))
-        c.type = Consts.CARD_TYPE_REV
+        c.type = CardType.REV
 
         val cal2 = Calendar.getInstance()
         cal2.add(Calendar.DATE, 20)
@@ -1203,7 +1204,7 @@ class CardBrowserTest : RobolectricTest() {
         c.queue = Consts.QUEUE_TYPE_PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))
-        c.type = Consts.CARD_TYPE_RELEARNING
+        c.type = CardType.RELEARNING
         c.due = id
         c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
         Assert.assertEquals("", nextDue(col, c))

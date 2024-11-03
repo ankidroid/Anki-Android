@@ -271,7 +271,7 @@ open class AnkiDroidJsAPI(
             "cardMod" -> convertToByteArray(apiContract, currentCard.mod)
             "cardId" -> convertToByteArray(apiContract, currentCard.id)
             "cardNid" -> convertToByteArray(apiContract, currentCard.nid)
-            "cardType" -> convertToByteArray(apiContract, currentCard.type)
+            "cardType" -> convertToByteArray(apiContract, currentCard.type.code)
             "cardDid" -> convertToByteArray(apiContract, currentCard.did)
             "cardLeft" -> convertToByteArray(apiContract, currentCard.left)
             "cardODid" -> convertToByteArray(apiContract, currentCard.oDid)

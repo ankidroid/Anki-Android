@@ -36,6 +36,7 @@ import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
@@ -508,7 +509,7 @@ class ReviewerTest : RobolectricTest() {
     private fun moveToReviewQueue(reviewCard: Card) {
         reviewCard.update {
             queue = Consts.QUEUE_TYPE_REV
-            type = Consts.CARD_TYPE_REV
+            type = CardType.REV
             due = 0
         }
     }
