@@ -41,7 +41,6 @@ import com.ichi2.anki.model.SortType.EASE
 import com.ichi2.anki.model.SortType.NO_SORTING
 import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
-import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
@@ -150,7 +149,7 @@ class CardBrowserViewModelTest : JvmTest() {
         val anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse")
         flagCardForNote(anotherCardWithRedFlag, Flag.RED)
 
-        setFlagFilterSync(Flag.RED)
+        launchSearchForCards(searchTerms.copy(flags = setOf(Flag.RED)))?.join()
 
         assertThat("Flagged cards should be returned", rowCount, equalTo(2))
     }

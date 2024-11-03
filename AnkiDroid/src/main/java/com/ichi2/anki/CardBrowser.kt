@@ -70,6 +70,7 @@ import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.browser.SearchParameters
 import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.getLabel
+import com.ichi2.anki.browser.setupChips
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toQuery
 import com.ichi2.anki.browser.updateChips
@@ -426,7 +427,7 @@ open class CardBrowser :
                 dialogFragment.dismiss()
             }
         }
-
+        setupChips(findViewById(R.id.filtering_chips_group))
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
     }
@@ -950,10 +951,6 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
-            menu.findItem(R.id.action_search_by_flag).subMenu?.let {
-                    subMenu ->
-                setupFlags(subMenu, Mode.SINGLE_SELECT)
-            }
             menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
             saveSearchItem = menu.findItem(R.id.action_save_search)
             saveSearchItem?.isVisible = false // the searchview's query always starts empty.
@@ -1008,9 +1005,8 @@ open class CardBrowser :
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
-            menu.findItem(R.id.action_flag).subMenu?.let {
-                    subMenu ->
-                setupFlags(subMenu, Mode.MULTI_SELECT)
+            menu.findItem(R.id.action_flag).subMenu?.let { subMenu ->
+                setupFlags(subMenu)
             }
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -1029,23 +1025,10 @@ open class CardBrowser :
         return super.onCreateOptionsMenu(menu)
     }
 
-    /**
-     * Representing different selection modes.
-     */
-    enum class Mode(val value: Int) {
-        SINGLE_SELECT(1000),
-        MULTI_SELECT(1001)
-    }
-
-    private fun setupFlags(subMenu: SubMenu, mode: Mode) {
+    private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
-            val groupId = when (mode) {
-                Mode.SINGLE_SELECT -> mode.value
-                Mode.MULTI_SELECT -> mode.value
-            }
-
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                subMenu.add(groupId, flag.code, Menu.NONE, displayName)
+                subMenu.add(MULTI_SELECT_FLAG, flag.code, Menu.NONE, displayName)
                     .setIcon(flag.drawableRes)
             }
         }
@@ -1160,8 +1143,7 @@ open class CardBrowser :
 
         Flag.entries.find { it.ordinal == item.itemId }?.let { flag ->
             when (item.groupId) {
-                Mode.SINGLE_SELECT.value -> filterByFlag(flag)
-                Mode.MULTI_SELECT.value -> updateFlagForSelectedRows(flag)
+                MULTI_SELECT_FLAG -> updateFlagForSelectedRows(flag)
                 else -> return@let
             }
             return true
@@ -1743,10 +1725,6 @@ open class CardBrowser :
         launchCatchingTask {
             viewModel.filterByTags(selectedTags, cardState)
         }
-
-    /** Updates search terms to only show cards with selected flag.  */
-    @VisibleForTesting
-    fun filterByFlag(flag: Flag) = launchCatchingTask { viewModel.setFlagFilter(flag) }
 
     /**
      * Loads/Reloads (Updates the Q, A & etc) of cards in the [cardIds] list
@@ -2434,6 +2412,8 @@ open class CardBrowser :
          */
         private const val CHANGE_DECK_KEY = "CHANGE_DECK"
         private const val DEFAULT_FONT_SIZE_RATIO = 100
+
+        private const val MULTI_SELECT_FLAG = 1001
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val LINES_VISIBLE_WHEN_COLLAPSED = 3
