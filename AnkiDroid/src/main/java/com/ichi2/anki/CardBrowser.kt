@@ -72,6 +72,7 @@ import com.ichi2.anki.browser.SharedPreferencesLastDeckIdRepository
 import com.ichi2.anki.browser.getLabel
 import com.ichi2.anki.browser.toCardBrowserLaunchOptions
 import com.ichi2.anki.browser.toQuery
+import com.ichi2.anki.browser.updateChips
 import com.ichi2.anki.common.utils.android.isRobolectric
 import com.ichi2.anki.dialogs.BrowserOptionsDialog
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog
@@ -147,6 +148,8 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -455,10 +458,16 @@ open class CardBrowser :
                 .setSelection(COLUMN2_KEYS.indexOf(column))
         }
 
-        fun onFilterQueryChanged(filterQuery: SearchParameters) {
-            // setQuery before expand does not set the view's value
-            searchItem!!.expandActionView()
-            searchView!!.setQuery(filterQuery.userInput, submit = false)
+        suspend fun onFilterQueryChanged(params: Pair<SearchParameters, SearchParameters>) {
+            val (oldParameters, newParameters) = params
+            // TODO; Confirm this logic
+            // don't open the actionView if a chip was pressed
+            if (newParameters.userInput.isNotEmpty()) {
+                // setQuery before expand does not set the view's value
+                searchItem?.expandActionView()
+                searchView?.setQuery(newParameters.userInput, submit = false)
+            }
+            updateChips(findViewById(R.id.filtering_chips_group), oldParameters, newParameters)
         }
         suspend fun onDeckIdChanged(deckId: DeckId?) {
             if (deckId == null) return
@@ -567,7 +576,12 @@ open class CardBrowser :
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
         viewModel.flowOfColumn1.launchCollectionInLifecycleScope(::onColumn1Changed)
         viewModel.flowOfColumn2.launchCollectionInLifecycleScope(::onColumn2Changed)
-        viewModel.flowOfFilterQuery.launchCollectionInLifecycleScope(::onFilterQueryChanged)
+        viewModel.flowOfFilterQuery.runningFold(
+            initial = Pair(SearchParameters.EMPTY, SearchParameters.EMPTY),
+            operation = { accumulator, new -> Pair(accumulator.second, new) }
+        )
+            .filterNotNull()
+            .launchCollectionInLifecycleScope(::onFilterQueryChanged)
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
