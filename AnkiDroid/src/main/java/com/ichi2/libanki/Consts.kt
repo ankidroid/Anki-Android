@@ -56,20 +56,26 @@ object Consts {
     }
 
     // dynamic deck order
-    const val DYN_OLDEST = 0
-    const val DYN_RANDOM = 1
-    const val DYN_SMALLINT = 2
-    const val DYN_BIGINT = 3
-    const val DYN_LAPSES = 4
-    const val DYN_ADDED = 5
-    const val DYN_DUE = 6
-    const val DYN_REVADDED = 7
-    const val DYN_DUEPRIORITY = 8
-    const val DYN_MAX_SIZE = 99999
+    /**
+     * The priority order for filtered deck.
+     * @param code The integer encoding this value in json.
+     */
+    enum class Dyn(val code: Int) {
+        OLDEST(0),
+        RANDOM(1),
+        SMALLINT(2),
+        BIGINT(3),
+        LAPSES(4),
+        ADDED(5),
+        DUE(6),
+        REVADDED(7),
+        DUEPRIORITY(8),
+        MAX_SIZE(99999);
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(DYN_OLDEST, DYN_RANDOM, DYN_SMALLINT, DYN_BIGINT, DYN_LAPSES, DYN_ADDED, DYN_DUE, DYN_REVADDED, DYN_DUEPRIORITY)
-    annotation class DynPriority
+        companion object {
+            fun Int.toDyn() = Dyn.entries.first { it.code == this }
+        }
+    }
 
     // model types
     const val MODEL_STD = 0
