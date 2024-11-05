@@ -34,13 +34,13 @@ import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
 import com.ichi2.utils.ImportUtils
@@ -114,14 +114,12 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         importDeckButton = view.findViewById(R.id.import_shared_deck_button)
         tryAgainButton = view.findViewById(R.id.try_again_deck_download)
         checkNetworkInfoText = view.findViewById(R.id.check_network_info_text)
-        // Added the downloadFromAnkiWeb button (Text)
         downloadFromAnkiWeb = view.findViewById(R.id.download_from_ankiWeb)
 
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
 
         downloadFile(fileToBeDownloaded)
-
         cancelButton.setOnClickListener {
             Timber.i("Cancel download button clicked which would lead to showing of confirmation dialog")
             showCancelConfirmationDialog()
@@ -132,18 +130,11 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             openDownloadedDeck(context)
         }
 
-        // Added the click listener for downloadfromAnkiWeb button
         downloadFromAnkiWeb.setOnClickListener {
-            Timber.i("Download from AnkiWeb clicked which would lead to AnkiWeb site to download deck manually")
+            Timber.i("'Download from AnkiWeb' clicked")
             downloadManager.remove(downloadId)
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(fileToBeDownloaded.url))
-            try {
-                startActivity(browserIntent)
-                parentFragmentManager.popBackStack()
-            } catch (e: ActivityNotFoundException) {
-                Timber.i(e, "No Browser is selected")
-                Toast.makeText(requireContext(), "Can't Open file", Toast.LENGTH_SHORT).show()
-            }
+            openUrl(getDeckPageUri(fileToBeDownloaded.url))
+            parentFragmentManager.popBackStack()
         }
 
         tryAgainButton.setOnClickListener {
@@ -152,6 +143,20 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             downloadFile(fileToBeDownloaded)
             cancelButton.visibility = View.VISIBLE
             tryAgainButton.visibility = View.GONE
+            downloadFromAnkiWeb.visibility = View.GONE
+        }
+    }
+
+    private fun getDeckPageUri(orgUrl: String): Uri {
+        val deckIdRegex = "download-deck/(\\d+)".toRegex()
+        val matchResult = deckIdRegex.find(orgUrl)
+
+        val deckId = matchResult?.groups?.get(1)?.value
+
+        return if (deckId != null) {
+            Uri.parse("https://ankiweb.net/shared/info/$deckId")
+        } else {
+            Uri.parse(resources.getString(R.string.shared_decks_url))
         }
     }
 
@@ -492,7 +497,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 context?.let { showThemedToast(it, R.string.something_wrong, false) }
                 // Update UI if download could not be successful
                 tryAgainButton.visibility = View.VISIBLE
-                // Making downloadFromAnkiWeb button visible
                 downloadFromAnkiWeb.visibility = View.VISIBLE
                 cancelButton.visibility = View.GONE
                 downloadPercentageText.text = getString(R.string.download_failed)
