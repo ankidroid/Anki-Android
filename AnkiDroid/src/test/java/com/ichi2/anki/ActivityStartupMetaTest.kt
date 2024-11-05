@@ -33,7 +33,7 @@ class ActivityStartupMetaTest : RobolectricTest() {
 
         // we can't access this in a static context
         val packageInfo = targetContext.getPackageInfoCompat(targetContext.packageName, PackageInfoFlagsCompat.of(PackageManager.GET_ACTIVITIES.toLong())) ?: throw IllegalStateException("getPackageInfo failed")
-        val manifestActivities = packageInfo.activities
+        val manifestActivities = packageInfo.activities ?: throw IllegalStateException("activity list")
         val testedActivityClassNames = ActivityList.allActivitiesAndIntents().map { it.className }.toSet()
         val manifestActivityNames = manifestActivities
             .map { it.name }

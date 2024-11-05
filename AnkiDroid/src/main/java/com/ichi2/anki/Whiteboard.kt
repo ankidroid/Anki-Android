@@ -459,6 +459,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
             invalidate()
         }
 
+        @Suppress("deprecation", "API35 computeBounds - maybe compat, but...new API is Flagged?")
         fun erase(x: Int, y: Int): Boolean {
             var didErase = false
             val clip = Region(0, 0, displayDimensions.x, displayDimensions.y)
