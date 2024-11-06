@@ -127,7 +127,7 @@ class FieldEditLine : FrameLayout {
     }
 
     fun setHintLocale(hintLocale: Locale?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && hintLocale != null) {
+        if (hintLocale != null) {
             editText.setHintLocale(hintLocale)
         }
     }

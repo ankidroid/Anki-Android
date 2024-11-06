@@ -112,7 +112,6 @@ import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.renderBrowserQA
-import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatV24
 import com.ichi2.compat.shortcut
 import com.ichi2.libanki.Card
@@ -678,7 +677,7 @@ open class CardBrowser :
                     return true
                 } else if (event.isAltPressed) {
                     Timber.i("Alt+K: Show keyboard shortcuts dialog")
-                    CompatHelper.compat.showKeyboardShortcutsDialog(this)
+                    showKeyboardShortcutsDialog()
                     return true
                 }
             }

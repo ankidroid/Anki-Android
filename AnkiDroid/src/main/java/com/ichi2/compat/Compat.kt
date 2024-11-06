@@ -17,7 +17,6 @@
 
 package com.ichi2.compat
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -30,19 +29,13 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.view.KeyboardShortcutGroup
 import android.view.View
-import androidx.annotation.CheckResult
-import androidx.core.view.OnReceiveContentListener
-import androidx.draganddrop.DropHelper
-import com.ichi2.anki.AnkiActivity
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.Serializable
-import java.util.Locale
 import kotlin.time.Duration
 
 /**
@@ -207,45 +200,6 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
-
-    /**
-     * If possible, configures a [View] for drag and drop operations, including highlighting that
-     * indicates the view is a drop target. Sets a listener that enables the view to handle dropped data.
-     *
-     * @see DropHelper.configureView
-     */
-    fun configureView(
-        activity: Activity,
-        view: View,
-        mimeTypes: Array<String>,
-        options: DropHelper.Options,
-        onReceiveContentListener: OnReceiveContentListener
-    )
-
-    /**
-     * Shows keyboard shortcuts dialog
-     */
-    fun showKeyboardShortcutsDialog(
-        activity: AnkiActivity
-    )
-
-    /**
-     * Get current activity keyboard shortcuts
-     */
-    fun getShortcuts(activity: AnkiActivity): List<KeyboardShortcutGroup>
-
-    /**
-     * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)
-     * Locale("spa", "MEX", "001") => Locale("es", "MX", "001")
-     */
-    @CheckResult
-    fun normalize(locale: Locale): Locale
-
-    @Suppress("PropertyName")
-    val AXIS_RELATIVE_X: Int
-
-    @Suppress("PropertyName")
-    val AXIS_RELATIVE_Y: Int
 
     @Suppress("PropertyName")
     val AXIS_GESTURE_X_OFFSET: Int

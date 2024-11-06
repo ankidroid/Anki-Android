@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2023 David Allison <davidallisongithub@gmail.com>
+ *  Copyright (c) 2024 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -16,80 +16,19 @@
 
 package com.ichi2.compat
 
-import android.annotation.TargetApi
-import android.app.Activity
-import android.icu.util.ULocale
 import android.view.KeyEvent
 import android.view.KeyboardShortcutGroup
 import android.view.KeyboardShortcutInfo
-import android.view.MotionEvent
-import android.view.View
 import androidx.annotation.StringRes
-import androidx.core.view.OnReceiveContentListener
-import androidx.draganddrop.DropHelper
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.R
-import com.ichi2.anki.common.utils.android.isRobolectric
 import net.ankiweb.rsdroid.Translations
-import timber.log.Timber
-import java.util.Locale
 
-/** Implementation of [Compat] for SDK level 24 and higher. Check [Compat]'s for more detail.  */
-@TargetApi(24)
-open class CompatV24 : CompatV23() {
-    override fun normalize(locale: Locale): Locale {
-        // ULocale isn't currently handled by Robolectric
-        if (isRobolectric) {
-            return super.normalize(locale)
-        }
-        return try {
-            val uLocale = ULocale(locale.language, locale.country, locale.variant)
-            Locale(uLocale.language, uLocale.country, uLocale.variant)
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to normalize locale %s", locale)
-            locale
-        }
-    }
-
-    override fun configureView(
-        activity: Activity,
-        view: View,
-        mimeTypes: Array<String>,
-        options: DropHelper.Options,
-        onReceiveContentListener: OnReceiveContentListener
-    ) {
-        DropHelper.configureView(
-            activity,
-            view,
-            mimeTypes,
-            options,
-            onReceiveContentListener
-        )
-    }
-
-    override fun showKeyboardShortcutsDialog(activity: AnkiActivity) {
-        val shortcutsGroup = getShortcuts(activity)
-        // Don't show keyboard shortcuts dialog if there is no available shortcuts and also
-        // if there's 1 item because shortcutsGroup always includes generalShortcutGroup.
-        if (shortcutsGroup.size <= 1) return
-        Timber.i("displaying keyboard shortcut screen")
-        activity.requestShowKeyboardShortcuts()
-    }
-
-    override fun getShortcuts(activity: AnkiActivity): List<KeyboardShortcutGroup> {
-        val generalShortcutGroup = ShortcutGroup(
-            listOf(
-                activity.shortcut("Alt+K", R.string.show_keyboard_shortcuts_dialog),
-                activity.shortcut("Ctrl+Z", R.string.undo)
-            ),
-            R.string.pref_cat_general
-        ).toShortcutGroup(activity)
-
-        return listOfNotNull(activity.shortcuts?.toShortcutGroup(activity), generalShortcutGroup)
-    }
-
+/**
+ * This is kept around to reduce code churn in the bump to minSdk 24
+ */
+open class CompatV24 : BaseCompat() {
     /**
      * Data class representing a keyboard shortcut.
      *
@@ -101,7 +40,6 @@ open class CompatV24 : CompatV23() {
         /**
          * Converts the shortcut string into a KeyboardShortcutInfo object.
          *
-         * @param context The context used to retrieve the string label resource.
          * @return A KeyboardShortcutInfo object representing the keyboard shortcut.
          */
         fun toShortcutInfo(): KeyboardShortcutInfo {
@@ -152,9 +90,6 @@ open class CompatV24 : CompatV23() {
             return KeyboardShortcutGroup(groupLabel, shortcuts)
         }
     }
-
-    override val AXIS_RELATIVE_X: Int = MotionEvent.AXIS_RELATIVE_X
-    override val AXIS_RELATIVE_Y: Int = MotionEvent.AXIS_RELATIVE_Y
 }
 
 interface ShortcutGroupProvider {

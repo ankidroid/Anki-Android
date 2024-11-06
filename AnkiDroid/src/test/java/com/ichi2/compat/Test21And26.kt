@@ -37,7 +37,7 @@ import java.io.IOException
 import kotlin.test.assertFailsWith
 
 /**
- * Allows to test with CompatV23 and V26.
+ * Allows to test with CompatV24 (originally 21, thus the class name) and V26.
  * In particular it allows to test version of the code that uses [Files] and [Path] classes.
  * And versions that must restrict themselves to [File].
  */
@@ -75,8 +75,6 @@ abstract class Test21And26 {
     /** Used in the "Test Results" Window */
     lateinit var unitTestDescription: String
 
-    val isBaseCompat: Boolean
-        get() = compat is BaseCompat
     val isV26: Boolean
         get() = compat is CompatV26
 

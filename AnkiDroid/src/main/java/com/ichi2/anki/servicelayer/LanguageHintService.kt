@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.servicelayer
 
-import android.os.Build
 import android.os.LocaleList
 import android.widget.EditText
 import androidx.annotation.CheckResult
@@ -53,7 +52,6 @@ object LanguageHintService {
     }
 
     fun EditText.applyLanguageHint(languageHint: LanguageHint?) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
         this.imeHintLocales = if (languageHint != null) LocaleList(languageHint) else null
     }
 }

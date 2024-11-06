@@ -18,7 +18,6 @@
 package com.ichi2.anki.multimedia
 
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.format.Formatter
 import android.view.MenuItem
@@ -122,13 +121,11 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     fun getUriForFile(file: File): Uri {
         Timber.d("getUriForFile() %s", file)
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return FileProvider.getUriForFile(
-                    requireActivity(),
-                    requireActivity().applicationContext.packageName + ".apkgfileprovider",
-                    file
-                )
-            }
+            return FileProvider.getUriForFile(
+                requireActivity(),
+                requireActivity().applicationContext.packageName + ".apkgfileprovider",
+                file
+            )
         } catch (e: Exception) {
             // #6628 - What would cause this? Is the fallback is effective? Telemetry to diagnose more:
             Timber.w(e, "getUriForFile failed on %s - attempting fallback", file)
