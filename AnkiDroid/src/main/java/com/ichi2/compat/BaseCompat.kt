@@ -258,5 +258,4 @@ open class BaseCompat : Compat {
     override val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int = 52
 }
 
-// typically we want a typealias here. Unusually we keep CompatV24 around for a refactor
-// so this does not yet exist
+typealias CompatV24 = BaseCompat

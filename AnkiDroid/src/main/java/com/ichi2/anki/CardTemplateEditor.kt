@@ -54,6 +54,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -71,8 +73,6 @@ import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatV24
-import com.ichi2.compat.shortcut
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
@@ -431,7 +431,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     override val shortcuts
-        get() = CompatV24.ShortcutGroup(
+        get() = ShortcutGroup(
             listOf(
                 shortcut("Ctrl+P", R.string.card_editor_preview_card),
                 shortcut("Ctrl+1", R.string.edit_front_template),
