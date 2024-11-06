@@ -76,7 +76,8 @@ jetbrainsAnnotations = "26.0.1"
 json = "20240303"
 jsoup = "1.18.1"
 androidTestJunit = "1.2.1"
-junitJupiter= "5.11.3"
+junitJupiter = "5.11.3"
+junitPlatformLauncher = "1.11.3"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.0.21'
 kotlinxSerializationJson = "1.7.3"
@@ -180,6 +181,7 @@ ivanshafran-shared-preferences-mock = { module = "io.github.ivanshafran:shared-p
 json = { module = "org.json:json", version.ref = "json" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatformLauncher" }
 junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitJupiter" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
