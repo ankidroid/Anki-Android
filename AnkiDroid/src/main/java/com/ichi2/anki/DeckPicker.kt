@@ -99,6 +99,8 @@ import com.ichi2.anki.InitialActivity.StartupFailure.SD_CARD_NOT_MOUNTED
 import com.ichi2.anki.InitialActivity.StartupFailure.WEBVIEW_FAILED
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
 import com.ichi2.anki.deckpicker.BackgroundImage
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -154,8 +156,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.deleteMedia
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
-import com.ichi2.compat.CompatV24
-import com.ichi2.compat.shortcut
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -2422,7 +2422,7 @@ open class DeckPicker :
     }
 
     override val shortcuts
-        get() = CompatV24.ShortcutGroup(
+        get() = ShortcutGroup(
             listOf(
                 shortcut("A", R.string.menu_add_note),
                 shortcut("B", R.string.card_browser_context_menu),

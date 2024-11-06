@@ -82,6 +82,9 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.ShortcutGroupProvider
+import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.bottomsheet.ImageOcclusionBottomSheetFragment
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -130,10 +133,7 @@ import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatV24
-import com.ichi2.compat.ShortcutGroupProvider
 import com.ichi2.compat.setTooltipTextCompat
-import com.ichi2.compat.shortcut
 import com.ichi2.imagecropper.ImageCropper
 import com.ichi2.imagecropper.ImageCropper.Companion.CROP_IMAGE_RESULT
 import com.ichi2.imagecropper.ImageCropperLauncher
@@ -2352,7 +2352,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     }
 
     override val shortcuts
-        get() = CompatV24.ShortcutGroup(
+        get() = ShortcutGroup(
             listOf(
                 shortcut("Ctrl+ENTER", R.string.save),
                 shortcut("Ctrl+D", R.string.select_deck),

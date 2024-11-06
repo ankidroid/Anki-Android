@@ -52,6 +52,9 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.ShortcutGroupProvider
+import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.SimpleMessageDialog
@@ -64,13 +67,9 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
-import com.ichi2.compat.CompatV24
-import com.ichi2.compat.CompatV24.ShortcutGroup
-import com.ichi2.compat.ShortcutGroupProvider
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
-import com.ichi2.compat.shortcut
 import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
@@ -704,7 +703,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
     }
 
     override val shortcuts
-        get(): CompatV24.ShortcutGroup? = null
+        get(): ShortcutGroup? = null
 
     companion object {
         const val DIALOG_FRAGMENT_TAG = "dialog"

@@ -27,8 +27,8 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.async.CollectionLoader
-import com.ichi2.compat.CompatV24
 import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
@@ -226,5 +226,5 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     /**
      * Lists of shortcuts for this fragment, and the IdRes of the name of this shortcut group.
      */
-    open val shortcuts: CompatV24.ShortcutGroup? = null
+    open val shortcuts: ShortcutGroup? = null
 }
