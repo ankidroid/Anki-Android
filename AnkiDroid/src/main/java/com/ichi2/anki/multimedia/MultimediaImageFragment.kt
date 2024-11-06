@@ -18,6 +18,7 @@
 package com.ichi2.anki.multimedia
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -325,7 +326,12 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        pickImageLauncher.launch(intent)
+        try {
+            pickImageLauncher.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            Timber.w(e, "MultimediaImageFragment:: No app found to select image")
+            showSnackbar(R.string.activity_start_failed)
+        }
     }
 
     private fun openDrawingCanvas() {
@@ -347,7 +353,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 requireActivity().applicationContext.packageName + ".apkgfileprovider",
                 it
             )
-            cameraLauncher.launch(photoURI)
+
+            try {
+                cameraLauncher.launch(photoURI)
+            } catch (e: ActivityNotFoundException) {
+                Timber.w(e, "MultimediaImageFragment:: No camera found")
+                showSnackbar(R.string.activity_start_failed)
+            }
         }
     }
 
