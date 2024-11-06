@@ -548,7 +548,7 @@ public class AddContentApi(context: Context) {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
             // GET_META_DATA seems to work anyway
             val info =
-                if (Build.VERSION.SDK_INT >= 33) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     context.packageManager.resolveContentProvider(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.ComponentInfoFlags.of(
@@ -771,7 +771,7 @@ public class AddContentApi(context: Context) {
         @JvmStatic // required for API
         public fun getAnkiDroidPackageName(context: Context): String? {
             val manager = context.packageManager
-            return if (Build.VERSION.SDK_INT >= 33) {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 manager.resolveContentProvider(
                     FlashCardsContract.AUTHORITY,
                     PackageManager.ComponentInfoFlags.of(0L)
