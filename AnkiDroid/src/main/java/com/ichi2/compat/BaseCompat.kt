@@ -16,7 +16,6 @@
 
 package com.ichi2.compat
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -30,12 +29,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Vibrator
 import android.provider.MediaStore
-import android.view.KeyboardShortcutGroup
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.view.OnReceiveContentListener
-import androidx.draganddrop.DropHelper
-import com.ichi2.anki.AnkiActivity
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
@@ -46,7 +41,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.Serializable
-import java.util.Locale
 import kotlin.time.Duration
 
 /** Baseline implementation of [Compat], for API V23. Check [Compat] for more detail.  */
@@ -150,28 +144,6 @@ open class BaseCompat : Compat {
                 return paths[mOrd++]
             }
         }
-    }
-
-    // Until API 24
-    override fun configureView(
-        activity: Activity,
-        view: View,
-        mimeTypes: Array<String>,
-        options: DropHelper.Options,
-        onReceiveContentListener: OnReceiveContentListener
-    ) {
-        // No implementation possible.
-    }
-
-    // Until API 24
-    override fun showKeyboardShortcutsDialog(activity: AnkiActivity) {
-        // No implementation available
-    }
-
-    // Until API 24
-    override fun getShortcuts(activity: AnkiActivity): List<KeyboardShortcutGroup> {
-        // No implementation available
-        return listOf()
     }
 
     // Until API 26
@@ -279,48 +251,12 @@ open class BaseCompat : Compat {
         clazz: Class<T>
     ): T? = bundle.getSerializable(key) as? T?
 
-    override fun normalize(locale: Locale): Locale {
-        // normalises to "spa_MEX"
-        val iso3Code = getIso3Code(locale) ?: return locale
-        // convert back from this key to a two-letter mapping
-        return twoLetterSystemLocaleMapping[iso3Code] ?: locale
-    }
-
-    override val AXIS_RELATIVE_X: Int = 27
-    override val AXIS_RELATIVE_Y: Int = 28
     override val AXIS_GESTURE_X_OFFSET: Int = 48
     override val AXIS_GESTURE_Y_OFFSET: Int = 49
     override val AXIS_GESTURE_SCROLL_X_DISTANCE: Int = 50
     override val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int = 51
     override val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int = 52
-
-    companion object {
-        /**
-         * Maps from the ISO 3 code of a locale to the locale in
-         */
-        private val twoLetterSystemLocaleMapping: Map<String, Locale>
-
-        fun getIso3Code(locale: Locale): String? {
-            try {
-                if (locale.country.isBlank()) {
-                    return locale.isO3Language
-                }
-                return "${locale.isO3Language}_${locale.isO3Country}"
-            } catch (e: Exception) {
-                // MissingResourceException can be thrown, in which case return null
-                return null
-            }
-        }
-        init {
-            val locales = Locale.getAvailableLocales()
-            val validLocales = mutableMapOf<String, Locale>()
-            for (locale in locales) {
-                val code = getIso3Code(locale) ?: continue
-                validLocales.putIfAbsent(code, locale)
-            }
-            twoLetterSystemLocaleMapping = validLocales
-        }
-    }
 }
 
-typealias CompatV23 = BaseCompat
+// typically we want a typealias here. Unusually we keep CompatV24 around for a refactor
+// so this does not yet exist

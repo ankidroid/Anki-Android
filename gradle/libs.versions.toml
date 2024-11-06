@@ -1,6 +1,6 @@
 [versions]
 compileSdk = "35"
-minSdk = "23"  # also in testlib/build.gradle.kts
+minSdk = "24"  # also in testlib/build.gradle.kts
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
 acra = '5.12.0'
 # AGP is included in Android Studio and changelogs are not well maintained/at a stable URL

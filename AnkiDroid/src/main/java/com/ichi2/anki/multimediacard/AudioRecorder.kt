@@ -22,7 +22,6 @@ package com.ichi2.anki.multimediacard
 
 import android.content.Context
 import android.media.MediaRecorder
-import android.os.Build
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.IOException
@@ -104,23 +103,12 @@ class AudioRecorder {
     }
 
     fun pause() {
-        if (!this::recorder.isInitialized) {
-            return
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            recorder.pause()
-        } else {
-            recorder.stop()
-        }
+        if (!this::recorder.isInitialized) return
+        recorder.pause()
     }
 
     fun resume() {
-        if (this::recorder.isInitialized) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                recorder.resume()
-            } else {
-                recorder.start()
-            }
-        }
+        if (!this::recorder.isInitialized) return
+        recorder.resume()
     }
 }

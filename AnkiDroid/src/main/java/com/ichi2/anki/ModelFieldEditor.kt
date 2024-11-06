@@ -16,7 +16,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
@@ -25,7 +24,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
-import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -469,20 +467,12 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             ModelEditorContextMenuAction.Delete -> deleteFieldDialog()
             ModelEditorContextMenuAction.Rename -> renameFieldDialog()
             ModelEditorContextMenuAction.ToggleSticky -> toggleStickyField()
-            ModelEditorContextMenuAction.AddLanguageHint -> {
-                Timber.i("displaying locale hint dialog")
-                // localeHintDialog() is safe to be called here without the check but we can't
-                // suppress @RequiresApi just for the method call, we would have to do it on
-                // handleAction() which is not ok
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    localeHintDialog()
-                }
-            }
+            ModelEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private fun localeHintDialog() {
+        Timber.i("displaying locale hint dialog")
         // We don't currently show the current value, but we may want to in the future
         val dialogFragment: DialogFragment = LocaleSelectionDialog.newInstance(this)
         showDialogFragment(dialogFragment)
@@ -492,20 +482,17 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Sets the Locale Hint of the field to the provided value.
      * This allows some keyboard (GBoard) to change language
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private fun addFieldLocaleHint(selectedLocale: Locale) {
         setLanguageHintForField(getColUnsafe.notetypes, notetype, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     override fun onSelectedLocale(selectedLocale: Locale) {
         addFieldLocaleHint(selectedLocale)
         dismissAllDialogFragments()
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     override fun onLocaleSelectionCancelled() {
         dismissAllDialogFragments()
     }

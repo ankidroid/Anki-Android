@@ -19,7 +19,6 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -558,12 +557,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
 
             override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(insertFieldId) != null) {
+                if (menu.findItem(insertFieldId) != null) {
                     return false
                 }
                 val initialSize = menu.size()
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentEditorViewId != R.id.styling_edit) {
+                if (currentEditorViewId != R.id.styling_edit) {
                     // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
                     menu.add(Menu.FIRST, insertFieldId, 0, getString(R.string.card_template_editor_insert_field))
                 }
@@ -573,7 +572,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
                 val itemId = item.itemId
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == insertFieldId) {
+                return if (itemId == insertFieldId) {
                     showInsertFieldDialog()
                     mode.finish()
                     true
