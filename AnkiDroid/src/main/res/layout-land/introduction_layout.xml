@@ -15,15 +15,20 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="?android:attr/colorBackground">
 
-    <ImageView
+        <ImageView
         android:id="@+id/top_gradient"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -34,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@id/ankidroid_logo"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
+        <ImageView
         android:id="@+id/ankidroid_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -46,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+        <View
         android:id="@+id/title_divider"
         android:layout_width="100dp"
         android:layout_height="2dp"
@@ -57,7 +62,7 @@
         app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintBottom_toTopOf="@id/remember_more"/>
 
-    <LinearLayout
+        <LinearLayout
         android:id="@+id/btn_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +73,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp">
-        <com.google.android.material.button.MaterialButton
+
+            <com.google.android.material.button.MaterialButton
             android:id="@+id/get_started"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +84,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="20dp"/>
 
-        <com.google.android.material.button.MaterialButton
+            <com.google.android.material.button.MaterialButton
             android:id="@+id/sync_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,10 +94,9 @@
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="20dp"/>
 
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <com.ichi2.ui.FixedTextView
+        <com.ichi2.ui.FixedTextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@id/remember_more"
         app:layout_constraintBottom_toTopOf="@id/btn_container"/>
 
-    <com.ichi2.ui.FixedTextView
+        <com.ichi2.ui.FixedTextView
         android:id="@+id/study_less"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -123,7 +128,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/title_divider"/>
 
-    <com.ichi2.ui.FixedTextView
+        <com.ichi2.ui.FixedTextView
         android:id="@+id/remember_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,7 +143,7 @@
         app:layout_constraintTop_toBottomOf="@id/title_divider"
         app:layout_constraintBottom_toTopOf="@id/subtitle"/>
 
-    <androidx.constraintlayout.widget.Barrier
+        <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         app:barrierDirection="start"
@@ -148,4 +153,5 @@
         app:constraint_referenced_ids="study_less,title_divider,remember_more,subtitle,btn_container"
         android:layout_height="wrap_content" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
