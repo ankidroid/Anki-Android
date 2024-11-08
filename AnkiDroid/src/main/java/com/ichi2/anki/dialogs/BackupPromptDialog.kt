@@ -156,7 +156,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             backupPrompt.apply {
                 build(isLoggedIn) {
                     if (isLoggedIn) {
-                        deckPicker.sync(conflict = null)
+                        deckPicker.syncHandler.sync(conflict = null)
                     } else {
                         deckPicker.exportCollection()
                     }
