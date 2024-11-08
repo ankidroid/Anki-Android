@@ -49,10 +49,10 @@ import java.io.Serializable
 import java.util.Locale
 import kotlin.time.Duration
 
-/** Baseline implementation of [Compat]. Check [Compat]'s for more detail.  */
+/** Baseline implementation of [Compat], for API V23. Check [Compat] for more detail.  */
 @KotlinCleanup("add extension method logging file.delete() failure" + "Fix Deprecation")
 @Suppress("Deprecation")
-open class CompatV23 : Compat {
+open class BaseCompat : Compat {
     // Until API26, ignore notification channels
     override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
     }
@@ -322,3 +322,5 @@ open class CompatV23 : Compat {
         }
     }
 }
+
+typealias CompatV23 = BaseCompat

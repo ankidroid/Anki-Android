@@ -18,7 +18,6 @@ package com.ichi2.compat
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.CATEGORY_DEFAULT
 import android.content.IntentFilter
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -32,7 +31,6 @@ import android.view.KeyEvent.KEYCODE_PAGE_UP
 import android.view.View
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
-import com.ichi2.compat.CompatHelper.Companion.compat
 import java.io.Serializable
 
 /**
@@ -54,7 +52,7 @@ class CompatHelper private constructor() {
         sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
         sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
         sdkVersion >= Build.VERSION_CODES.N -> CompatV24()
-        else -> CompatV23()
+        else -> BaseCompat()
     }
 
     companion object {
