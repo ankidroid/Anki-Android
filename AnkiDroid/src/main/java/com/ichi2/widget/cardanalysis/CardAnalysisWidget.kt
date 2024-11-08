@@ -26,6 +26,7 @@ import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.EXTRA_DECK_ID
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -183,7 +184,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             val intent = if (!isEmptyDeck) {
                 Intent(context, Reviewer::class.java).apply {
                     action = Intent.ACTION_VIEW
-                    putExtra("deckId", deckData.deckId)
+                    putExtra(EXTRA_DECK_ID, deckData.deckId)
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
             } else {

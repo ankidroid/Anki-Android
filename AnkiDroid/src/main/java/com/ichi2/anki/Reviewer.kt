@@ -126,6 +126,11 @@ import timber.log.Timber
 import java.io.File
 import kotlin.coroutines.resume
 
+/**
+ * Bundle key for the deck id to review.
+ */
+const val EXTRA_DECK_ID = "deckId"
+
 @Suppress("LeakingThis")
 @KotlinCleanup("too many to count")
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
@@ -320,11 +325,11 @@ open class Reviewer :
 
     private fun selectDeckFromExtra() {
         val extras = intent.extras
-        if (extras == null || !extras.containsKey("deckId")) {
+        if (extras == null || !extras.containsKey(EXTRA_DECK_ID)) {
             // deckId is not set, load default
             return
         }
-        val did = extras.getLong("deckId", Long.MIN_VALUE)
+        val did = extras.getLong(EXTRA_DECK_ID, Long.MIN_VALUE)
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
         // deckId does not exist, load default

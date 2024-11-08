@@ -1953,7 +1953,7 @@ open class DeckPicker(
             .setIntent(
                 Intent(context, Reviewer::class.java)
                     .setAction(Intent.ACTION_VIEW)
-                    .putExtra("deckId", did)
+                    .putExtra(EXTRA_DECK_ID, did)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             )
             .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))

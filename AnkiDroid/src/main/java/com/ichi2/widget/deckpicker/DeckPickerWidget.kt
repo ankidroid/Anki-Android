@@ -27,6 +27,7 @@ import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.EXTRA_DECK_ID
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -143,7 +144,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 val intent = if (!isEmptyDeck) {
                     Intent(context, Reviewer::class.java).apply {
                         action = Intent.ACTION_VIEW
-                        putExtra("deckId", deck.deckId)
+                        putExtra(EXTRA_DECK_ID, deck.deckId)
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     }
                 } else {
