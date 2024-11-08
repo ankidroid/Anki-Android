@@ -2150,8 +2150,12 @@ abstract class AbstractFlashcardViewer :
             dispatchedTouchEvents.add(upEvent)
             Timber.d("Dispatching touch events")
             processCardAction { cardWebView: WebView? ->
-                cardWebView!!.dispatchTouchEvent(e)
-                cardWebView.dispatchTouchEvent(upEvent)
+                if (cardWebView != null) {
+                    cardWebView.dispatchTouchEvent(e)
+                    cardWebView.dispatchTouchEvent(upEvent)
+                } else {
+                    Timber.w("AbstractFlashcardViewer:: cardWebView is null")
+                }
             }
         }
 
