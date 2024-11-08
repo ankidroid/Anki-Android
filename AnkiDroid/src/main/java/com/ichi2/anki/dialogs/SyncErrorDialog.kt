@@ -37,7 +37,6 @@ class SyncErrorDialog : AsyncDialogFragment() {
         fun loginToSyncServer()
         fun sync(conflict: ConflictResolution? = null)
         fun mediaCheck()
-        fun dismissAllDialogFragments()
         fun integrityCheck()
     }
 
@@ -225,7 +224,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         }
 
     fun dismissAllDialogFragments() {
-        (activity as SyncErrorDialogListener).dismissAllDialogFragments()
+        (activity as AnkiActivity).dismissAllDialogFragments()
     }
 
     companion object {
@@ -278,7 +277,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         private val dialogMessage: String?
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
-            deckPicker.showSyncErrorDialog(dialogType, dialogMessage)
+            deckPicker.syncHandler.showSyncErrorDialog(dialogType, dialogMessage)
         }
 
         override fun toMessage(): Message = Message.obtain().apply {

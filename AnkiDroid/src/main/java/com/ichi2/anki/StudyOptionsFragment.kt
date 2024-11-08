@@ -383,7 +383,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, Toolbar.OnMen
                 menu.removeItem(R.id.action_export_collection)
 
                 deckPicker.executeDeckAction("configureToolbarInternal:: unable to set up menu items") {
-                    setupMediaSyncMenuItem(menu)
+                    syncHandler.setupMediaSyncMenuItem(menu)
                     updateMenuFromState(menu)
 
                     /**
