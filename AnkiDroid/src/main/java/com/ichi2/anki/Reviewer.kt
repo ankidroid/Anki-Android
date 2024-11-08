@@ -321,11 +321,11 @@ open class Reviewer :
 
     private fun selectDeckFromExtra() {
         val extras = intent.extras
-        if (extras == null || !extras.containsKey("deckId")) {
+        if (extras == null || !extras.containsKey(EXTRA_DECK_ID)) {
             // deckId is not set, load default
             return
         }
-        val did = extras.getLong("deckId", Long.MIN_VALUE)
+        val did = extras.getLong(EXTRA_DECK_ID, Long.MIN_VALUE)
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
         // deckId does not exist, load default
@@ -1613,6 +1613,11 @@ open class Reviewer :
     }
 
     companion object {
+        /**
+         * Bundle key for the deck id to review.
+         */
+        const val EXTRA_DECK_ID = "deckId"
+
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
         private const val TRANSPARENCY = 0.90f

@@ -18,6 +18,7 @@ package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.Reviewer.Companion.EXTRA_DECK_ID
 import com.ichi2.libanki.Card
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
@@ -36,7 +37,7 @@ class CardSoundConfigTest : JvmTest() {
         val note = addNoteUsingBasicModel()
         val card = note.firstCard()
         createCardSoundConfig(card).run {
-            assertThat("deckId", deckId, equalTo(card.did))
+            assertThat(EXTRA_DECK_ID, deckId, equalTo(card.did))
             // Anki Desktop: "Skip question when replaying answer" -> false
             // our variable is reversed, so true
             assertThat("replayQuestion", replayQuestion)
