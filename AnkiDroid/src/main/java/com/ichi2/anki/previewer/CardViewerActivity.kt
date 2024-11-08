@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.previewer
 
+import android.R.attr.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +23,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.utils.navBarNeedsScrim
 import com.ichi2.themes.Themes
 import kotlin.reflect.KClass
@@ -31,7 +33,9 @@ import kotlin.reflect.jvm.jvmName
  * @see PreviewerFragment
  * @see TemplatePreviewerFragment
  */
-class CardViewerActivity : SingleFragmentActivity() {
+class CardViewerActivity :
+    SingleFragmentActivity(),
+    SyncErrorDialog.SyncErrorDialogListenerProvider {
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge() // TODO assess moving this to SingleFragmentActivity
@@ -43,6 +47,12 @@ class CardViewerActivity : SingleFragmentActivity() {
             window.navigationBarColor = Themes.getColorFromAttr(this, R.attr.alternativeBackgroundColor)
         }
     }
+
+    /**
+     * Returns the fragment, in charge of dealing with the sync error. Fails if the fragment don't offer sync.
+     */
+    override fun requireSyncErrorDialogListener() =
+        (fragment as SyncErrorDialog.SyncErrorDialogListenerProvider).requireSyncErrorDialogListener()
 
     companion object {
         fun getIntent(

@@ -23,13 +23,16 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import android.webkit.WebView
 import android.widget.FrameLayout
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.MenuItemCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -46,24 +49,54 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
+import com.ichi2.anki.Reviewer.Companion.ENABLE_SYNC
+import com.ichi2.anki.SyncActionProvider
+import com.ichi2.anki.SyncHandler
+import com.ichi2.anki.SyncHandlerDelegate
 import com.ichi2.anki.cardviewer.CardMediaPlayer
+import com.ichi2.anki.dialogs.MediaCheckDialog
+import com.ichi2.anki.dialogs.SyncErrorDialog
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.previewer.CardViewerActivity
 import com.ichi2.anki.previewer.CardViewerFragment
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
+/**
+ * @param syncHandler This value is never expected to be set by a constructor. It's needed so that it can be a delegate of DeckPicker.
+ */
 class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
-    Toolbar.OnMenuItemClickListener {
+    SyncHandlerDelegate,
+    SyncErrorDialog.SyncErrorDialogListenerProvider,Toolbar.OnMenuItemClickListener {
+    /**
+     * Whether to offer the user to sync.
+     * Normally, only the deck picker deal with syncing. But direct intent could avoid the deckPicker.
+     * In this case, the reviewer deals with syncing.
+     */
+    private var syncIsEnabled = false
+
+    lateinit var syncHandler: SyncHandler
+
+    // flag keeping track of when the app has been paused
+    var activityPaused = false
+        private set
+
+    override fun activityPaused() = activityPaused
+
     override val viewModel: ReviewerViewModel by viewModels {
         ReviewerViewModel.factory(CardMediaPlayer())
     }
@@ -73,6 +106,20 @@ class ReviewerFragment :
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activityPaused = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activityPaused = true
     }
 
     override fun onStop() {
@@ -87,10 +134,13 @@ class ReviewerFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        syncHandler = SyncHandler(requireAnkiActivity(), this)
 
         setupImmersiveMode(view)
         setupAnswerButtons(view)
         setupCounts(view)
+
+        syncIsEnabled = requireActivity().intent.extras?.getBoolean(ENABLE_SYNC, false) == true
 
         view.findViewById<MaterialToolbar>(R.id.toolbar).apply {
             setOnMenuItemClickListener(this@ReviewerFragment)
@@ -124,9 +174,14 @@ class ReviewerFragment :
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(ENABLE_SYNC, syncIsEnabled)
+    }
+
     // TODO
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_sync -> launchSync(item)
             R.id.action_add_note -> launchAddNote()
             R.id.action_bury_card -> viewModel.buryCard()
             R.id.action_bury_note -> viewModel.buryNote()
@@ -158,6 +213,18 @@ class ReviewerFragment :
             R.id.user_action_9 -> viewModel.userAction(9)
         }
         return true
+    }
+
+    private fun launchSync(item: MenuItem) {
+        Timber.i("DeckPicker:: Sync button pressed")
+        val actionProvider = MenuItemCompat.getActionProvider(item) as? SyncActionProvider
+        if (actionProvider?.isProgressShown == true) {
+            launchCatchingTask {
+                syncHandler.monitorMediaSync()
+            }
+        } else {
+            syncHandler.sync()
+        }
     }
 
     private fun setupAnswerButtons(view: View) {
@@ -269,6 +336,14 @@ class ReviewerFragment :
 
     private fun setupMenuItems(menu: Menu) {
         setupFlagMenu(menu)
+
+        menu.findItem(R.id.action_sync).isVisible = syncIsEnabled
+        // Ensures the previous state is set back to avoid flickering.
+        syncHandler.updateSyncIconFromState(menu)
+        launchCatchingTask {
+            syncHandler.updateMenuState()
+            syncHandler.updateSyncIconFromState(menu)
+        }
 
         // TODO show that the card is marked somehow when the menu item is overflowed or not shown
         val markItem = menu.findItem(R.id.action_mark)
@@ -407,4 +482,34 @@ class ReviewerFragment :
     companion object {
         fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
     }
+
+    override fun onSyncStart() {
+        // Nothing to do during sync start
+    }
+
+    override fun refreshState() {
+        launchCatchingTask {
+            viewModel.refreshCard()
+        }
+    }
+
+    override fun syncCallback(callback: (ActivityResult) -> Unit) =
+        object : ActivityResultCallback<ActivityResult> {
+            override fun onActivityResult(result: ActivityResult) {
+                callback(result)
+            }
+        }
+
+    override fun showMediaCheckDialog(
+        dialogType: Int,
+        checkList: MediaCheckResult,
+    ) {
+        requireAnkiActivity().showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
+    }
+
+    fun dismissAllDialogFragments() {
+        requireAnkiActivity().dismissAllDialogFragments()
+    }
+
+    override fun requireSyncErrorDialogListener() = syncHandler
 }

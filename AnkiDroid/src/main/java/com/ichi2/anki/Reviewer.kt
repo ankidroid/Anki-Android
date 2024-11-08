@@ -28,6 +28,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.os.Parcelable
+import android.os.PersistableBundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.KeyEvent
@@ -41,6 +42,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
@@ -51,6 +54,7 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import anki.frontend.SetSchedulingStatesRequest
@@ -62,6 +66,8 @@ import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.dialogs.MediaCheckDialog
+import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListenerProvider
 import com.ichi2.anki.multimedia.audio.AudioRecordingController
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.generateTempAudioFile
 import com.ichi2.anki.multimedia.audio.AudioRecordingController.Companion.isAudioRecordingSaved
@@ -100,6 +106,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undoableOp
@@ -132,6 +139,8 @@ import kotlin.coroutines.resume
 @NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
 open class Reviewer :
     AbstractFlashcardViewer(),
+    SyncHandlerDelegate,
+    SyncErrorDialogListenerProvider,
     ReviewerUi {
     private var queueState: CurrentQueueState? = null
     private val customSchedulingKey = TimeManager.time.intTimeMS().toString()
@@ -164,6 +173,15 @@ open class Reviewer :
     private lateinit var textBarReview: TextView
     private lateinit var answerTimer: AnswerTimer
     private var prefHideDueCount = false
+
+    /**
+     * Whether to offer the user to sync.
+     * Normally, only the deck picker deal with syncing. But direct intent could avoid the deckPicker.
+     * In this case, the reviewer deals with syncing.
+     */
+    private var syncIsEnabled = false
+
+    val syncHandler: SyncHandler = SyncHandler(this, this)
 
     // Whiteboard
     var prefWhiteboard = false
@@ -206,6 +224,12 @@ open class Reviewer :
 
     private val flagItemIds = mutableSetOf<Int>()
 
+    // flag keeping track of when the app has been paused
+    var activityPaused = false
+        private set
+
+    override fun activityPaused() = activityPaused
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -214,6 +238,9 @@ open class Reviewer :
         if (!ensureStoragePermissions()) {
             return
         }
+
+        syncIsEnabled = intent.extras?.getBoolean(ENABLE_SYNC, false) == true
+
         colorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         textBarNew = findViewById(R.id.new_number)
@@ -232,12 +259,21 @@ open class Reviewer :
         registerOnForgetHandler { listOf(currentCardId!!) }
     }
 
+    override fun onSaveInstanceState(
+        outState: Bundle,
+        outPersistentState: PersistableBundle,
+    ) {
+        outPersistentState.putBoolean(ENABLE_SYNC, syncIsEnabled)
+    }
+
     override fun onPause() {
+        activityPaused = true
         answerTimer.pause()
         super.onPause()
     }
 
     override fun onResume() {
+        activityPaused = false
         when {
             stopTimerOnAnswer && isDisplayingAnswer -> {}
             else -> launchCatchingTask { answerTimer.resume() }
@@ -408,6 +444,18 @@ open class Reviewer :
             android.R.id.home -> {
                 Timber.i("Reviewer:: Home button pressed")
                 closeReviewer(RESULT_OK)
+            }
+            R.id.action_sync -> {
+                Timber.i("DeckPicker:: Sync button pressed")
+                val actionProvider = MenuItemCompat.getActionProvider(item) as? SyncActionProvider
+                if (actionProvider?.isProgressShown == true) {
+                    launchCatchingTask {
+                        syncHandler.monitorMediaSync()
+                    }
+                } else {
+                    syncHandler.sync()
+                }
+                return true
             }
             R.id.action_undo -> {
                 Timber.i("Reviewer:: Undo button pressed")
@@ -871,6 +919,14 @@ open class Reviewer :
             voicePlaybackIcon.setTitle(R.string.menu_enable_voice_playback)
         }
 
+        menu.findItem(R.id.action_sync).isVisible = syncIsEnabled
+        // Ensures the previous state is set back to avoid flickering.
+        syncHandler.updateSyncIconFromState(menu)
+        launchCatchingTask {
+            syncHandler.updateMenuState()
+            syncHandler.updateSyncIconFromState(menu)
+        }
+
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         tintOverflowMenuIcons(menu, skipIf = { isFlagItem(it) })
 
@@ -924,7 +980,20 @@ open class Reviewer :
         if (processor.onKeyUp(keyCode, event)) {
             true
         } else {
-            super.onKeyUp(keyCode, event)
+            when (keyCode) {
+                KeyEvent.KEYCODE_Y ->
+                    if (syncIsEnabled) {
+                        Timber.i("Sync from keypress")
+                        syncHandler.sync()
+                        true
+                    } else {
+                        false
+                    }
+
+                else -> {
+                    super.onKeyUp(keyCode, event)
+                }
+            }
         }
 
     override fun onGenericMotionEvent(event: MotionEvent?): Boolean {
@@ -1657,11 +1726,42 @@ open class Reviewer :
         return cardDataForJsAPI
     }
 
+    override fun onSyncStart() {
+        // Nothing to do during sync start
+    }
+
+    override fun refreshState() {
+        launchCatchingTask {
+            updateCardAndRedraw()
+        }
+    }
+
+    override fun syncCallback(callback: (ActivityResult) -> Unit) =
+        object : ActivityResultCallback<ActivityResult> {
+            override fun onActivityResult(result: ActivityResult) {
+                callback(result)
+            }
+        }
+
+    override fun showMediaCheckDialog(
+        dialogType: Int,
+        checkList: MediaCheckResult,
+    ) {
+        showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType, checkList))
+    }
+
+    override fun requireSyncErrorDialogListener() = syncHandler
+
     companion object {
         /**
          * Bundle key for the deck id to review.
          */
         const val EXTRA_DECK_ID = "deckId"
+
+/**
+         * Key of a bundle entry stating whether sync is enabled. This is the case when the reviewer was not opened through the deck picker.
+         */
+        const val ENABLE_SYNC = "enableSync"
 
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200

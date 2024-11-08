@@ -26,6 +26,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
+import com.ichi2.anki.Reviewer.Companion.ENABLE_SYNC
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.preferences.sharedPrefs
@@ -153,6 +154,9 @@ class IntentHandler : AbstractIntentHandler() {
             } else {
                 Intent(this, Reviewer::class.java)
             }
+        if (intent.extras?.getBoolean(ENABLE_SYNC) == true) {
+            reviewIntent.putExtra(ENABLE_SYNC, true)
+        }
         CollectionManager.getColUnsafe().decks.select(deckId)
         startActivity(reviewIntent)
         finish()
@@ -440,6 +444,7 @@ class IntentHandler : AbstractIntentHandler() {
             setAction(Intent.ACTION_VIEW)
             putExtra(ReminderService.EXTRA_DECK_ID, deckId)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra(ENABLE_SYNC, true)
         }
     }
 }
