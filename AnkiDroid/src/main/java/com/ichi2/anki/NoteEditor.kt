@@ -2464,7 +2464,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             kind = "edit"
             id = editorNote?.id!!
         }
-        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath)
+        val intent = ImageOcclusion.getIntent(requireContext(), kind, id, imagePath, deckId)
         requestIOEditorCloser.launch(intent)
     }
 
