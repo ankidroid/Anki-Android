@@ -244,6 +244,7 @@ fun Fragment.launchCatchingTask(
 
 fun showError(context: Context, msg: String) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg")
+    Timber.i("Error dialog displayed")
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
@@ -258,6 +259,7 @@ fun showError(context: Context, msg: String) {
 
 fun showError(context: Context, msg: String, exception: Throwable, crashReport: Boolean = true) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
+    Timber.i("Error dialog displayed")
     try {
         AlertDialog.Builder(context).show {
             title(R.string.vague_error)
