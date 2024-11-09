@@ -5,7 +5,9 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.ByteArrayOutputStream
+import java.util.Properties
 import kotlin.math.max
+import kotlin.system.exitProcess
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -20,11 +22,11 @@ plugins {
     alias(libs.plugins.keeper) apply false
 }
 
-val localProperties = java.util.Properties()
+val localProperties = Properties()
 if (project.rootProject.file("local.properties").exists()) {
     localProperties.load(project.rootProject.file("local.properties").inputStream())
 }
-val fatalWarnings = !(localProperties["fatal_warnings"] == "false")
+val fatalWarnings = localProperties["fatal_warnings"] != "false"
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
@@ -99,7 +101,7 @@ if (jvmVersion != "17" && jvmVersion != "21") {
     println("**************************************************************************************************************")
     println("\n\n\n")
     println("ERROR: AnkiDroid builds with JVM version 17 or 21.")
-    println("  Incompatible major version detected: '" + jvmVersion + "'")
+    println("  Incompatible major version detected: '$jvmVersion'")
     println("\n\n\n")
     println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
     println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
@@ -107,11 +109,11 @@ if (jvmVersion != "17" && jvmVersion != "21") {
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
-    System.exit(1)
+    exitProcess(1)
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // works for Travis CI or Github Actions
-// allows for -Dpre-dex=false to be set
+// allows for -Dare-dex=false to be set
 val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 // allows for universal APKs to be generated
 val universalApkEnabled by extra("true" == System.getProperty("universal-apk", "false"))
