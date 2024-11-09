@@ -179,7 +179,6 @@ import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkBoxPrompt
@@ -200,6 +199,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.Translations
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
@@ -1025,18 +1025,40 @@ open class DeckPicker :
             val undoAvailable = undoAvailable()
             Triple(searchIcon, undoLabel, undoAvailable)
         }?.let { (searchIcon, undoLabel, undoAvailable) ->
-            val syncIcon = fetchSyncStatus()
+            val syncIcon = fetchBadgeStatus()
             OptionsMenuState(searchIcon, undoLabel, syncIcon, undoAvailable)
         }
     }
 
-    private suspend fun fetchSyncStatus(): SyncIconState {
-        val auth = syncAuth()
-        return when (SyncStatus.getSyncStatus(this, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
-            SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
-            SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
-            SyncStatus.ONE_WAY -> SyncIconState.OneWay
+    private suspend fun fetchBadgeStatus(): SyncIconState {
+        if (isBadgeDisabled()) {
+            // The user disabled the colored badge
+            return SyncIconState.Normal
+        }
+        val auth = syncAuth() ?: return SyncIconState.NotLoggedIn
+
+        return try {
+            // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
+            // throws if a .colpkg import or similar occurs just before this call
+            val output =
+                withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
+            if (output.hasNewEndpoint()) {
+                sharedPrefs().edit {
+                    putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
+                }
+            }
+            when (output.required) {
+                SyncStatusResponse.Required.NO_CHANGES -> SyncIconState.Normal
+                SyncStatusResponse.Required.NORMAL_SYNC -> SyncIconState.PendingChanges
+                SyncStatusResponse.Required.FULL_SYNC -> SyncIconState.NotLoggedIn
+                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
+            }
+        } catch (_: BackendNetworkException) {
+            SyncIconState.Normal
+        } catch (e: Exception) {
+            Timber.d(e, "error obtaining sync status: collection likely closed")
+            // Don't show anything to the user. They can't sync if the database is closed
+            SyncIconState.Normal
         }
     }
 
@@ -2468,6 +2490,8 @@ open class DeckPicker :
         )
 
     companion object {
+        private fun isBadgeDisabled() = !AnkiDroidApp.sharedPrefs().getBoolean("showSyncStatusBadge", true)
+
         /**
          * Result codes from other activities
          */
