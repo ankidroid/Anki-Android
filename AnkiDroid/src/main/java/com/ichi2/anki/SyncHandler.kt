@@ -63,7 +63,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -80,9 +79,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
-
 
 /**
  * Class in charge of doing the sync work for another activity.
@@ -182,15 +181,37 @@ class SyncHandler(
         }
     }
 
-    suspend fun updateMenuState() = SyncMenuState(fetchSyncStatus()).apply { syncMenuState = this }
+    suspend fun updateMenuState() = SyncMenuState(fetchBadgeStatus()).apply { syncMenuState = this }
 
-    private suspend fun fetchSyncStatus(): SyncIconState {
-        val auth = syncAuth()
-        return when (SyncStatus.getSyncStatus(activity, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
-            SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
-            SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
-            SyncStatus.ONE_WAY -> SyncIconState.OneWay
+    private suspend fun fetchBadgeStatus(): SyncIconState {
+        if (isBadgeDisabled()) {
+            // The user disabled the colored badge
+            return SyncIconState.Normal
+        }
+        val auth = syncAuth() ?: return SyncIconState.NotLoggedIn
+
+        return try {
+            // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
+            // throws if a .colpkg import or similar occurs just before this call
+            val output =
+                withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
+            if (output.hasNewEndpoint()) {
+                activity.sharedPrefs().edit {
+                    putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
+                }
+            }
+            when (output.required) {
+                SyncStatusResponse.Required.NO_CHANGES -> SyncIconState.Normal
+                SyncStatusResponse.Required.NORMAL_SYNC -> SyncIconState.PendingChanges
+                SyncStatusResponse.Required.FULL_SYNC -> SyncIconState.NotLoggedIn
+                SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
+            }
+        } catch (_: BackendNetworkException) {
+            SyncIconState.Normal
+        } catch (e: Exception) {
+            Timber.d(e, "error obtaining sync status: collection likely closed")
+            // Don't show anything to the user. They can't sync if the database is closed
+            SyncIconState.Normal
         }
     }
 
@@ -232,7 +253,7 @@ class SyncHandler(
         val isAutoSyncEnabled = activity.sharedPrefs().getBoolean("automaticSyncMode", false)
 
         val isBlockedByMeteredConnection = !activity.sharedPrefs().getBoolean(activity.getString(R.string.metered_sync_key), false) &&
-                isActiveNetworkMetered()
+            isActiveNetworkMetered()
 
         when {
             !isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
@@ -305,7 +326,7 @@ class SyncHandler(
     }
 
     /** In the conflict case, we need to store the USN received from the initial sync, and reuse
-    it after the user has decided. */
+     it after the user has decided. */
     var mediaUsnOnConflict: Int? = null
 
     /**
@@ -549,7 +570,7 @@ class SyncHandler(
         val onlyIfUnmetered = activity.getString(R.string.sync_media_only_unmetered_value)
         val shouldFetchMedia = preferences.getString(activity.getString(R.string.sync_fetch_media_key), always)
         return shouldFetchMedia == always ||
-                (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
+            (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
     }
 
     suspend fun monitorMediaSync() {
@@ -597,6 +618,7 @@ class SyncHandler(
             }
         }
     }
+
     /**
      * Schedules a background job to find missing, unused and invalid media files.
      * Shows a progress dialog while operation is running.
@@ -637,5 +659,7 @@ class SyncHandler(
         // For automatic syncing
         // 10 minutes in milliseconds..
         private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
+
+        private fun isBadgeDisabled() = !AnkiDroidApp.sharedPrefs().getBoolean("showSyncStatusBadge", true)
     }
 }
