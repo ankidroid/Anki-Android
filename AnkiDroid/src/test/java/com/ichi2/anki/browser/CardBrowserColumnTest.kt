@@ -24,6 +24,7 @@ import com.ichi2.anki.browser.CardBrowserColumn.EDITED
 import com.ichi2.anki.browser.CardBrowserColumn.FSRS_DIFFICULTY
 import com.ichi2.anki.browser.CardBrowserColumn.FSRS_RETRIEVABILITY
 import com.ichi2.anki.browser.CardBrowserColumn.FSRS_STABILITY
+import com.ichi2.anki.browser.CardBrowserColumn.ORIGINAL_POSITION
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
@@ -108,6 +109,10 @@ class CardBrowserColumnTest : JvmTest() {
                 CardsOrNotes.CARDS -> "New #\u2068${oldData}\u2069"
                 CardsOrNotes.NOTES -> ""
             }
+        } else if (column == ORIGINAL_POSITION) {
+            // original position is generated in the backend.
+            // should be "1" since this is our first card.
+            oldData = "1"
         }
 
         assertThat(newData, equalTo(oldData))

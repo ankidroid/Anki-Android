@@ -357,14 +357,14 @@
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Đang tìm nạp&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Đang tính toán&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Bộ sưu tập không tồn tại</string>
-    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Hide system bars</string>
-    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">None</string>
-    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Status bar</string>
-    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Navigation bar</string>
-    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">All</string>
+    <string name="hide_system_bars" maxLength="41" comment="Title of a setting that allows to hide the system bars">Ẩn thanh hệ thống</string>
+    <string name="hide_system_bars_none" comment="Setting option to not hide any of the system bars">Không</string>
+    <string name="hide_system_bars_status_bar" comment="Setting option to hide the system status bar (the top one with clock, battery status, etc)">Thanh trạng thái</string>
+    <string name="hide_system_bars_navigation_bar" comment="Setting option to hide the system navigation bar (the bottom one that can go back, to home, etc)">Thanh điều hướng</string>
+    <string name="hide_system_bars_all_bars" comment="Setting option to hide all the system bars">Tất cả</string>
     <string name="ignore_display_cutout" maxLength="41">Ignore display cutout</string>
-    <string name="hide_answer_buttons" maxLength="41">Hide answer buttons</string>
+    <string name="hide_answer_buttons" maxLength="41">Ẩn các nút trả lời</string>
     <string name="hide_hard_and_easy" maxLength="41">Ẩn các nút \"Khó\' và \'Dễ\'</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Mở cài đặt</string>
 </resources>

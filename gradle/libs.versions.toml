@@ -1,8 +1,8 @@
 [versions]
-compileSdk = "34"
+compileSdk = "35"
 minSdk = "23"  # also in testlib/build.gradle.kts
 targetSdk = "34"  # also in  ../robolectricDownloader.gradle
-acra = '5.11.4'
+acra = '5.12.0'
 # AGP is included in Android Studio and changelogs are not well maintained/at a stable URL
 # Open https://developer.android.com/build/releases/gradle-plugin#patch-releases
 # Maybe select a "bug fixes" link ->
@@ -10,25 +10,25 @@ acra = '5.11.4'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.7.1"
+androidGradlePlugin = "8.7.2"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.3"
 # https://developer.android.com/jetpack/androidx/releases/annotation
-androidxAnnotation = "1.9.0"
+androidxAnnotation = "1.9.1"
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 androidxAppCompat = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/browser
 androidxBrowser = "1.8.0"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
-androidxConstraintlayout = "2.1.4"
+androidxConstraintlayout = "2.2.0"
 # https://developer.android.com/jetpack/androidx/releases/core
-androidxCoreKtx = "1.13.1"
+androidxCoreKtx = "1.15.0"
 # https://developer.android.com/jetpack/androidx/releases/draganddrop
 androidxDragAndDrop = "1.0.0"
 # https://developer.android.com/jetpack/androidx/releases/exifinterface
 androidxExifinterface = "1.3.7"
 # https://developer.android.com/jetpack/androidx/releases/fragment
-androidxFragmentKtx = "1.8.4"
+androidxFragmentKtx = "1.8.5"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
@@ -50,9 +50,8 @@ androidxViewpager2 = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/webkit
 androidxWebkit = "1.12.1"
 # https://developer.android.com/jetpack/androidx/releases/work
-androidxWork = "2.9.1"
-annotations = "26.0.1"
-ankiBackend = '0.1.43-anki24.06.3'
+androidxWork = "2.10.0"
+ankiBackend = '0.1.47-anki24.11rc1'
 autoService = "1.1.1"
 autoServiceAnnotations = "1.1.1"
 colorpicker = "1.2.0"
@@ -73,16 +72,17 @@ mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
 imageCropper = "4.6.0"
 javaSemver = "0.10.2"
+jetbrainsAnnotations = "26.0.1"
 json = "20240303"
 jsoup = "1.18.1"
 androidTestJunit = "1.2.1"
-junitJupiter= "5.11.2"
+junitJupiter= "5.11.3"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.0.21'
 kotlinxSerializationJson = "1.7.3"
 ktlint = "11.6.1"
 leakcanaryAndroid = "2.14"
-lint = '31.7.1'
+lint = '31.7.2'
 material = "1.12.0"
 materialTapTargetPrompt = "3.3.2"
 mockitoInline = "5.2.0"
@@ -91,7 +91,7 @@ mockk = "1.13.13"
 nanohttpd = "2.3.1"
 okhttp = "4.12.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.28.2"
+protobufKotlinLite = "4.28.3"
 robolectric = "4.13"
 searchpreference = "2.5.1"
 seismic = "1.0.3"
@@ -132,7 +132,7 @@ androidx-sqlite-framework = { module = "androidx.sqlite:sqlite-framework", versi
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidxRecyclerview" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 auto-service-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoServiceAnnotations" }
-jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrainsAnnotations" }
 colorpicker = { module = "com.github.mrudultora:Colorpicker", version.ref = "colorpicker" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commonsIo" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }

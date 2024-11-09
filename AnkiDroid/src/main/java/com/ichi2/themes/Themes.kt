@@ -23,11 +23,9 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiDroidApp
@@ -115,21 +113,17 @@ object Themes {
 
     @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
-    fun getColorFromAttr(context: Context, attrs: IntArray): IntArray {
-        val ta = context.obtainStyledAttributes(attrs)
-        for (i in attrs.indices) {
-            attrs[i] = ta.getColor(i, context.getColor(R.color.white))
-        }
-        ta.recycle()
-        return attrs
+    fun getColorFromAttr(context: Context, attr: Int): Int {
+        return MaterialColors.getColor(context, attr, 0)
     }
 
-    /**
-     * @return required color depending on the theme from the given attribute
-     */
+    @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
-    fun Fragment.getColorFromAttr(@AttrRes attribute: Int): Int {
-        return MaterialColors.getColor(requireContext(), attribute, 0)
+    fun getColorsFromAttrs(context: Context, attrs: IntArray): IntArray {
+        for (i in attrs.indices) {
+            attrs[i] = getColorFromAttr(context, attrs[i])
+        }
+        return attrs
     }
 
     /**
@@ -145,6 +139,7 @@ object Themes {
     }
 }
 
+@Suppress("deprecation", "API35 properly handle edge-to-edge")
 fun FragmentActivity.setTransparentStatusBar() {
     WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
         !Themes.currentTheme.isNightMode

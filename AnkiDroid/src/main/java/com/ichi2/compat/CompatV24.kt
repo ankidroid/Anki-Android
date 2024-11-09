@@ -48,7 +48,7 @@ open class CompatV24 : CompatV23() {
             val uLocale = ULocale(locale.language, locale.country, locale.variant)
             Locale(uLocale.language, uLocale.country, uLocale.variant)
         } catch (e: Exception) {
-            Timber.w("Failed to normalize locale %s", locale, e)
+            Timber.w(e, "Failed to normalize locale %s", locale)
             locale
         }
     }

@@ -85,8 +85,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21900206
-        versionName="2.19beta6"
+        versionCode=22000101
+        versionName="2.20alpha1"
         minSdk libs.versions.minSdk.get().toInteger()
 
         // Stays until this is in a release: https://github.com/google/desugar_jdk_libs/commit/c01a5446ca13586b801dbba4d83c6821337b3cc2
@@ -260,14 +260,18 @@ android {
 
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
-    track.set('beta')
+    track.set('alpha')
 }
 
 // Install Git pre-commit hook for Ktlint
 tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
-    fileMode 0755
+    filePermissions {
+        user {
+            read = write = execute = true
+        }
+    }
 }
 // to run manually: `./gradlew installGitHook`
 tasks.named('preBuild').configure { dependsOn('installGitHook') }
@@ -312,7 +316,7 @@ dependencies {
     configurations.configureEach {
         resolutionStrategy {
             // Timber has this as a dependency but they are not up to date. We want to force our version.
-            force 'org.jetbrains:annotations:24.1.0'
+            force libs.jetbrains.annotations
         }
     }
     api project(":api")

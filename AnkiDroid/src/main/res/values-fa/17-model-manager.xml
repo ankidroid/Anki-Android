@@ -76,8 +76,8 @@
     <string name="card_template_browser_appearance_restore_default_dialog">بازگردانی به مقادیر پیش‌فرض؟</string>
     <string name="card_template_browser_appearance_saving_note">این تغییرات پس از ذخیرۀ قالب کارت اعمال خواهند شد</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">بازنویسی دسته (روشن)</string>
-    <string name="card_template_editor_deck_override_off">بازنویسی دسته (خاموش)</string>
+    <string name="card_template_editor_deck_override_on">لغو دسته (روشن)</string>
+    <string name="card_template_editor_deck_override_off">لغو دسته (خاموش)</string>
     <string name="model_manager_deck_override_added_message">تنظيم ‘%1$s’ دسته ی پیش فرض به ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">دسته ی پیش فرض برای ‘%s’ حذف شد</string>
     <string name="deck_override_explanation">دسته ای را برای گزاشتن کارت های جدید ‘%s’ انتخاب کنید</string>

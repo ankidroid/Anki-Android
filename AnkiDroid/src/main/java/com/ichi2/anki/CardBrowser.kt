@@ -49,7 +49,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.ThemeUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
@@ -131,6 +130,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.stripAvRefs
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.themes.Themes
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.HandlerUtils
@@ -2173,7 +2173,7 @@ open class CardBrowser :
             } else {
                 android.R.attr.colorBackground
             }
-            return ThemeUtils.getThemeAttrColor(context, colorAttr)
+            return Themes.getColorFromAttr(context, colorAttr)
         }
 
         fun getColumnHeaderText(key: CardBrowserColumn?): String? {
@@ -2195,6 +2195,7 @@ open class CardBrowser :
                     updateSearchItemQA()
                     qa!!.first
                 }
+                CardBrowserColumn.ORIGINAL_POSITION -> card.originalPosition?.toString().orEmpty()
                 CardBrowserColumn.ANSWER -> {
                     updateSearchItemQA()
                     qa!!.second

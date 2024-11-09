@@ -304,7 +304,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     /** Returns the list of standard deck. */
     private suspend fun fetchDecks(): List<SelectableDeck> {
         return withContext(Dispatchers.IO) {
-            SelectableDeck.fromCollection(includeFiltered = false)
+            SelectableDeck.fromCollection(includeFiltered = true)
         }
     }
 

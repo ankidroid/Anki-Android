@@ -248,7 +248,7 @@ object CrashReportService {
                 Timber.w("Could not get WebView package information")
                 return webViewInfo
             }
-            webViewInfo[WEBVIEW_VER_NAME] = pi.versionName
+            pi.versionName?.let { webViewInfo[WEBVIEW_VER_NAME] = it }
             webViewInfo["WEBVIEW_VER_CODE"] = PackageInfoCompat.getLongVersionCode(pi).toString()
         } catch (e: Throwable) {
             Timber.w(e)

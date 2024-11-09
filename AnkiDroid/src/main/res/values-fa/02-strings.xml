@@ -52,7 +52,7 @@
     <string name="CardEditorModel">نوع:</string>
     <string name="CardEditorTags">برچسب ها: %1$s</string>
     <string name="CardEditorCards">کارت‌ها: %1$s</string>
-    <string name="edit_occlusions">ویرایش انسدادها</string>
+    <string name="edit_occlusions">ویرایش پوشانده ها</string>
     <string name="tag_name">نام برچسب</string>
     <string name="add_new_filter_tags">افزودن/فیلترکردن برچسب‌ها</string>
     <string name="add_tag" maxLength="28">اضافه نمودن برچسب</string>
@@ -75,7 +75,7 @@
     <string name="webview_crash_unknown">خطای ناشناخته</string>
     <string name="webview_crash_unknwon_detailed">خطای داخلی در نمایش web باعث این خطا شده است</string>
     <string name="webview_crash_oom">حافظه کافی نیست</string>
-    <string name="webview_crash_oom_details">نمای web به وسیلۀ سیستم پایان یافت. این معمولاً زمانی رخ می‌دهد که حافظۀ نرم‌افزار به دلیل قلم‌ها یا فایل‌های بزرگ پر شود. </string>
+    <string name="webview_crash_oom_details">WebView توسط سیستم متوقف شد. این معمولاً زمانی اتفاق می‌افتد که برنامه حافظه کافی ندارد، اغلب به دلیل قلم‌های بزرگ یا فایل‌های رسانه‌ای.</string>
     <string name="webview_crash_nonfatal">تنظیم‌کنندۀ ظاهر برنامه دچار مشکل شد. دلیل: %s</string>
     <string name="webview_crash_fatal">خطای وخیم: تنظیم‌کنندۀ ظاهر برنامه دچار مشکل شد. دلیل: %s</string>
     <string name="webview_crash_loop_dialog_title">مشکل در سیستم تنظیم‌کنندۀ ظاهر برنامه</string>

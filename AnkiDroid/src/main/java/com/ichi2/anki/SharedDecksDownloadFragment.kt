@@ -225,11 +225,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
                 // Return if mDownloadId does not match with the ID of the completed download.
                 if (downloadId != intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)) {
-                    Timber.w(
-                        "Download ID did not match with the ID of the completed download. " +
-                            "Download completion related to some other download might have been received. " +
-                            "Deck download might still be going on, when it completes then the method would be called again."
-                    )
+                    Timber.w("Download id did not match expected id. Ignoring this download completion")
                     return false
                 }
 

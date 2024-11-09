@@ -104,10 +104,11 @@ code#typeans {
 }
 
 /*
-Use hard-coded max dimensions. Modern webviews are able to zoom into images
-correctly even with max dimensions specified
+Use hard-coded max dimensions if using Chrome back-end. Chrome is able to
+zoom into images correctly even with max dimensions specified, so this way is
+preferred over using JavaScript.
 */
-img {
+.chrome img {
   max-width: 100%;
   max-height: 90%;
 }

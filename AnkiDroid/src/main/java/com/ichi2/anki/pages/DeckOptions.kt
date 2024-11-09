@@ -38,7 +38,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-@NeedsTest("pressing back: icon + button should go to the previous screen")
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 class DeckOptions : PageFragment() {
 
@@ -183,9 +182,9 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
     val output = withContext(Dispatchers.Main) {
         withProgress(
             extractProgress = {
-                text = if (progress.hasComputeWeights()) {
+                text = if (progress.hasComputeParams()) {
                     val tr = CollectionManager.TR
-                    val value = progress.computeWeights
+                    val value = progress.computeParams
                     val label = tr.deckConfigOptimizingPreset(
                         currentCount = value.currentPreset,
                         totalCount = value.totalPresets

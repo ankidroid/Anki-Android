@@ -44,14 +44,14 @@
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
     <string name="error_reporting_choice_always_report">সব সংবাদ</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_never_report">কখনো রিপোর্ট করবেন না</string>
+    <string name="error_reporting_choice_ask_user">আমাকে জিজ্ঞাসা করুন</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">প্রাচীনতম প্রথম দেখা</string>
+    <string name="cram_deck_conf_order_random">এলোমেলো</string>
     <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
     <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
@@ -65,24 +65,24 @@
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_light">আলো</string>
+    <string name="day_theme_plain">সমতল</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">কালো</string>
+    <string name="night_theme_dark">অন্ধকার</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
+    <string name="html_size_code_xx_small">xx-ছোট</string>
+    <string name="html_size_code_x_small">x-ছোট</string>
+    <string name="html_size_code_small">ছোট</string>
     <string name="html_size_code_medium">medium</string>
     <string name="html_size_code_large">large</string>
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Answer again</string>
-    <string name="answer_hard" maxLength="41">Answer hard</string>
-    <string name="answer_good" maxLength="41">Answer good</string>
-    <string name="answer_easy" maxLength="41">Answer easy</string>
+    <string name="answer_again" maxLength="41">আবার উত্তর দিন</string>
+    <string name="answer_hard" maxLength="41">কঠিন উত্তর দাও</string>
+    <string name="answer_good" maxLength="41">আনসার ভালো</string>
+    <string name="answer_easy" maxLength="41">সহজ উত্তর দিন</string>
     <string name="gesture_play" maxLength="41">Play media</string>
     <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
     <string name="gesture_flag_red" maxLength="41">Toggle Red Flag</string>

@@ -112,6 +112,7 @@ abstract class NavigationDrawerActivity :
     }
 
     // Navigation drawer initialisation
+    @Suppress("deprecation", "API35 properly handle edge-to-edge")
     protected fun initNavigationDrawer(mainView: View) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
         drawerLayout = mainView.findViewById(R.id.drawer_layout)
@@ -176,7 +177,7 @@ abstract class NavigationDrawerActivity :
         drawerLayout.addDrawerListener(drawerToggle)
 
         enablePostShortcut(this)
-        val intent = Intent("com.ichi2.widget.UPDATE_WIDGET")
+        val intent = Intent("com.ichi2.widget.UPDATE_WIDGET").setClassName("com.ichi2.widget", "WidgetPermissionReceiver")
         this.sendBroadcast(intent)
     }
 

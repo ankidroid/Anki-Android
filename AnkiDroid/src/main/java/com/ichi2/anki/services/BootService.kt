@@ -23,6 +23,10 @@ import java.util.Calendar
 class BootService : BroadcastReceiver() {
     private var failedToShowNotifications = false
     override fun onReceive(context: Context, intent: Intent) {
+        if (!intent.action.equals("android.intent.action.BOOT_COMPLETED")) {
+            Timber.w("BootService - unexpected action received, ignoring: %s", intent.action)
+            return
+        }
         if (sWasRun) {
             Timber.d("BootService - Already run")
             return

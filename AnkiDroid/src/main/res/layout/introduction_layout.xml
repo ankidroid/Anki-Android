@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:text="@string/intro_ankidroid_tagline_two"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/subtitle"

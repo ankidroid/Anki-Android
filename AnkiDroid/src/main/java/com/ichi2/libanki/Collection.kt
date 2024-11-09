@@ -743,8 +743,8 @@ class Collection(
         return backend.congratsInfoRaw(input = input)
     }
 
-    fun compareAnswer(expected: String, provided: String): String {
-        return backend.compareAnswer(expected = expected, provided = provided)
+    fun compareAnswer(expected: String, provided: String, combining: Boolean = true): String {
+        return backend.compareAnswer(expected = expected, provided = provided, combining = combining)
     }
 
     fun extractClozeForTyping(text: String, ordinal: Int): String {

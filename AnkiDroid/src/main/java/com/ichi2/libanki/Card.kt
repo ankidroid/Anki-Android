@@ -92,8 +92,8 @@ open class Card : Cloneable {
     var left = 0
     var oDue: Int = 0
     var oDid: DeckId = 0
+    var originalPosition: Int? = null
     private var customData: String = ""
-    private var originalPosition: Int? = null
     private var flags = 0
     private var memoryState: FsrsMemoryState? = null
     private var desiredRetention: Float? = null

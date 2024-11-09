@@ -44,6 +44,8 @@ Thumbs.db
 *.iws
 /.idea/*
 /captures
+# File that should be deleted by java's test but sometime is not
+AnkiDroid/.attach_pid*
 
 # IDEA/Android Studio Ignore exceptions - this lets you share things you specifically want all team members to use
 !/.idea/codeStyles/

@@ -33,9 +33,10 @@ import com.ichi2.libanki.getDeckNamesRaw
 import com.ichi2.libanki.getFieldNamesRaw
 import com.ichi2.libanki.getImportAnkiPackagePresetsRaw
 import com.ichi2.libanki.getNotetypeNamesRaw
-import com.ichi2.libanki.sched.computeFsrsWeightsRaw
+import com.ichi2.libanki.sched.computeFsrsParamsRaw
 import com.ichi2.libanki.sched.computeOptimalRetentionRaw
-import com.ichi2.libanki.sched.evaluateWeightsRaw
+import com.ichi2.libanki.sched.evaluateParamsRaw
+import com.ichi2.libanki.sched.simulateFsrsReviewRaw
 import com.ichi2.libanki.stats.cardStatsRaw
 import com.ichi2.libanki.stats.getGraphPreferencesRaw
 import com.ichi2.libanki.stats.graphsRaw
@@ -66,9 +67,10 @@ suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): B
         "cardStats" -> withCol { cardStatsRaw(bytes) }
         "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
         "getDeckConfigsForUpdate" -> withCol { getDeckConfigsForUpdateRaw(bytes) }
-        "computeFsrsWeights" -> withCol { computeFsrsWeightsRaw(bytes) }
+        "computeFsrsParams" -> withCol { computeFsrsParamsRaw(bytes) }
         "computeOptimalRetention" -> withCol { computeOptimalRetentionRaw(bytes) }
-        "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
+        "evaluateParams" -> withCol { evaluateParamsRaw(bytes) }
+        "simulateFsrsReview" -> withCol { simulateFsrsReviewRaw(bytes) }
         "getImageForOcclusion" -> withCol { getImageForOcclusionRaw(bytes) }
         "getImageOcclusionNote" -> withCol { getImageOcclusionNoteRaw(bytes) }
         "getImageForOcclusionFields" -> withCol { getImageOcclusionFieldsRaw(bytes) }
