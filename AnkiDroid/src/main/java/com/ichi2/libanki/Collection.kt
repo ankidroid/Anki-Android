@@ -743,6 +743,38 @@ class Collection(
         return backend.congratsInfoRaw(input = input)
     }
 
+    fun setWantsAbortRaw(input: ByteArray): ByteArray {
+        return backend.setWantsAbortRaw(input = input)
+    }
+
+    fun latestProgressRaw(input: ByteArray): ByteArray {
+        return backend.latestProgressRaw(input = input)
+    }
+
+    fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray {
+        return backend.getSchedulingStatesWithContextRaw(input = input)
+    }
+
+    fun setSchedulingStatesRaw(input: ByteArray): ByteArray {
+        return backend.setSchedulingStatesRaw(input = input)
+    }
+
+    fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray {
+        return backend.getChangeNotetypeInfoRaw(input = input)
+    }
+
+    fun changeNotetypeRaw(input: ByteArray): ByteArray {
+        return backend.changeNotetypeRaw(input = input)
+    }
+
+    fun importJsonStringRaw(input: ByteArray): ByteArray {
+        return backend.importJsonStringRaw(input = input)
+    }
+
+    fun importJsonFileRaw(input: ByteArray): ByteArray {
+        return backend.importJsonFileRaw(input = input)
+    }
+
     fun compareAnswer(expected: String, provided: String, combining: Boolean = true): String {
         return backend.compareAnswer(expected = expected, provided = provided, combining = combining)
     }
