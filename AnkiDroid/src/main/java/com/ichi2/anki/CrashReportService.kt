@@ -290,22 +290,20 @@ object CrashReportService {
         }
     }
 
-    private fun Throwable.throwableRules() = listOf {
+    /**
+     * Checks if the [Throwable] is safe from Personally Identifiable Information (PII)
+     * @return `false` if the [Throwable] contains PII, otherwise `true`
+     */
+    fun Throwable.safeFromPII(): Boolean {
+        if (this.containsPIINonRecursive()) return false
+        return this.cause?.safeFromPII() != false
+    }
+
+    private fun Throwable.containsPIINonRecursive(): Boolean {
         // BackendSyncServerMessage may contain PII and we do not want this leaked to ACRA.
         // Related: https://github.com/ankidroid/Anki-Android/issues/17392
         // and also https://github.com/ankitects/anki/commit/ba1f5f4
-        if (this is BackendSyncServerMessageException) false else true
-    }
-
-    // Check if the Throwable is safe from Personally Identifiable Information (PII)
-    // based on its class type. Returns false if it isn't, otherwise true.
-    fun Throwable.safeFromPII(): Boolean {
-        val current = throwableRules().all { rule -> rule.invoke() }
-        return if (current && this.cause != null && this.cause != this) {
-            this.cause!!.safeFromPII()
-        } else {
-            current
-        }
+        return this is BackendSyncServerMessageException
     }
 
     fun isProperServiceProcess(): Boolean {
