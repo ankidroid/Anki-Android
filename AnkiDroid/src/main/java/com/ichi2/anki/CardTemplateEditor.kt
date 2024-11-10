@@ -263,6 +263,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         fieldNames = tempModel!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
         viewPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
+        TabLayoutMediator(slidingTabLayout!!, viewPager) { tab: TabLayout.Tab, position: Int ->
+            tab.text = tempModel!!.getTemplate(position).getString("name")
+        }.apply { attach() }
 
         // Set activity title
         supportActionBar?.let {
@@ -456,7 +459,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private var cursorPosition = 0
 
         private lateinit var templateEditor: CardTemplateEditor
-        private var tabLayoutMediator: TabLayoutMediator? = null
         lateinit var tempModel: CardTemplateNotetype
         lateinit var bottomNavigation: BottomNavigationView
 
@@ -649,7 +651,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            initTabLayoutMediator()
             templateEditor.slidingTabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(p0: TabLayout.Tab?) {
                     templateEditor.loadTemplatePreviewerFragmentIfFragmented()
@@ -666,16 +667,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
             }
             setupMenu()
-        }
-
-        private fun initTabLayoutMediator() {
-            if (tabLayoutMediator != null) {
-                tabLayoutMediator!!.detach()
-            }
-            tabLayoutMediator = TabLayoutMediator(templateEditor.slidingTabLayout!!, templateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
-                tab.text = templateEditor.tempModel!!.getTemplate(position).getString("name")
-            }
-            tabLayoutMediator!!.attach()
         }
 
         /**
