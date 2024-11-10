@@ -1867,25 +1867,31 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
      */
     private fun addMediaFileToField(index: Int, field: IField) {
         lifecycleScope.launch {
-            val note = getCurrentMultimediaEditableNote()
-            note.setField(index, field)
-            val fieldEditText = editFields!![index]
+            if (index >= 0 && index < editFields!!.size) {
+                val note = getCurrentMultimediaEditableNote()
+                note.setField(index, field)
+                val fieldEditText = editFields!![index]
 
-            // Import field media
-            // This goes before setting formattedValue to update
-            // media paths with the checksum when they have the same name
-            withCol {
-                NoteService.importMediaToDirectory(this, field)
-            }
+                // Import field media
+                // This goes before setting formattedValue to update
+                // media paths with the checksum when they have the same name
+                withCol {
+                    NoteService.importMediaToDirectory(this, field)
+                }
 
-            // Completely replace text for text fields (because current text was passed in)
-            val formattedValue = field.formattedValue
-            if (field.type === EFieldType.TEXT) {
-                fieldEditText.setText(formattedValue)
-            } else if (fieldEditText.text != null) {
-                insertStringInField(fieldEditText, formattedValue)
+                // Completely replace text for text fields (because current text was passed in)
+                val formattedValue = field.formattedValue
+                if (field.type === EFieldType.TEXT) {
+                    fieldEditText.setText(formattedValue)
+                } else if (fieldEditText.text != null) {
+                    insertStringInField(fieldEditText, formattedValue)
+                }
+                changed = true
+            } else {
+                Timber.i("Index out of range: %d", index)
+                showSnackbar(R.string.something_wrong)
+                return@launch
             }
-            changed = true
         }
     }
 
