@@ -38,6 +38,7 @@ import kotlin.coroutines.resume
 /**
  * Get the size of user data and cache for the current package, in bytes.
  * This should amount to the sum of User data and Cache in App info -> Storage and cache.
+ * @throws NoSuchMethodException occasionally on some phones < [Build.VERSION_CODES.O] (#17387)
  */
 suspend fun Context.getUserDataAndCacheSize(): Long =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -107,6 +108,9 @@ private fun Context.getUserDataAndCacheSizeUsingStorageStatsManager(): Long {
  * The logic was taken from this SO question: https://stackoverflow.com/q/36944194#36983630
  * Asked by Chris Sherlock: https://stackoverflow.com/users/2992462/chris-sherlock
  * Answered by Mattia Maestrini: https://stackoverflow.com/users/2837959/mattia-maestrini
+ */
+/**
+ * @throws NoSuchMethodException on some API 25 phones (#17387)
  */
 private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Long {
     lateinit var continuation: Continuation<Long>
