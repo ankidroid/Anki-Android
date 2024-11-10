@@ -152,7 +152,13 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
         flowOfDeleteEverythingSize.emit(Size.Calculating)
         flowOfDeleteEverythingSize.emit(
             withContext(Dispatchers.IO) {
-                Size.Bytes(app.getUserDataAndCacheSize())
+                try {
+                    Size.Bytes(app.getUserDataAndCacheSize())
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Size.Error(e)
+                }
             }
         )
     }
