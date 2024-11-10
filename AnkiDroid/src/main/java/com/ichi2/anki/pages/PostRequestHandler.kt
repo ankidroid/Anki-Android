@@ -91,8 +91,8 @@ val collectionMethods = hashMapOf<String, CollectionBackendInterface>(
     "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) }
 )
 
-fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): ByteArray? {
-    return collectionMethods[methodName]?.let { bytes } ?: run {
+suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): ByteArray? {
+    return collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } } ?: run {
         Timber.w("Unknown TS method called.")
         Timber.d("handleCollectionPostRequest could not resolve TS method %s", methodName)
         null
@@ -128,7 +128,7 @@ suspend fun FragmentActivity?.handleUiPostRequest(
         return null
     }
 
-    val data = uiMethods[methodName]?.let { bytes } ?: run {
+    val data = uiMethods[methodName]?.invoke(this, bytes)?.await() ?: run {
         Timber.w("Unknown TS method called.")
         Timber.d("handleUiPostRequest could not resolve TS method %s", methodName)
         return null
