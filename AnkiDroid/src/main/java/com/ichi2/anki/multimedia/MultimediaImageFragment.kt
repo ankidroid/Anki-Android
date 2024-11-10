@@ -274,9 +274,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun handleImageUri() {
+        fun processExternalImage(uri: Uri): Uri? = internalizeUri(uri)?.let { Uri.fromFile(it) }
+
         if (imageUri != null) {
             view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
-            handleSelectImageIntent(imageUri)
+
+            val internalUri = imageUri?.let { processExternalImage(it) }
+            handleSelectImageIntent(internalUri)
         } else {
             handleSelectedImageOptions()
         }
