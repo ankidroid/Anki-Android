@@ -42,6 +42,8 @@ android {
     }
 }
 
+apply(from = "../lint.gradle")
+
 dependencies {
     implementation(project(":AnkiDroid"))
     implementation(libs.jakewharton.timber)

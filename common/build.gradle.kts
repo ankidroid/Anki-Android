@@ -35,6 +35,8 @@ android {
     }
 }
 
+apply(from = "../lint.gradle")
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
