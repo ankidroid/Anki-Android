@@ -33,16 +33,21 @@ import com.ichi2.anki.showError
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 
 class SyncErrorDialog : AsyncDialogFragment() {
-    interface SyncErrorDialogListener {
+    interface SyncErrorDialogListenerProvider {
+        fun requireSyncErrorDialogListener(): SyncErrorDialogListener
+    }
+
+    interface SyncErrorDialogListener : SyncErrorDialogListenerProvider {
         fun showSyncErrorDialog(dialogType: Int)
         fun showSyncErrorDialog(dialogType: Int, message: String?)
         fun loginToSyncServer()
         fun sync(conflict: ConflictResolution? = null)
         fun mediaCheck()
         fun integrityCheck()
+        override fun requireSyncErrorDialogListener() = this
     }
 
-    fun requireSyncErrorDialogListener() = activity as SyncErrorDialogListener
+    fun requireSyncErrorDialogListener() = (activity as SyncErrorDialogListenerProvider).requireSyncErrorDialogListener()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
