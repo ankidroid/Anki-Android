@@ -97,6 +97,7 @@ import com.ichi2.anki.InitialActivity.StartupFailure.DISK_FULL
 import com.ichi2.anki.InitialActivity.StartupFailure.FUTURE_ANKIDROID_VERSION
 import com.ichi2.anki.InitialActivity.StartupFailure.SD_CARD_NOT_MOUNTED
 import com.ichi2.anki.InitialActivity.StartupFailure.WEBVIEW_FAILED
+import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.deckpicker.BITMAP_BYTES_PER_PIXEL
@@ -2202,10 +2203,7 @@ open class DeckPicker :
         // This code should not be reachable with lower versions
         val shortcut = ShortcutInfoCompat.Builder(this, did.toString())
             .setIntent(
-                Intent(context, Reviewer::class.java)
-                    .setAction(Intent.ACTION_VIEW)
-                    .putExtra("deckId", did)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intentToReviewDeckFromShorcuts(context, did)
             )
             .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
             .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
