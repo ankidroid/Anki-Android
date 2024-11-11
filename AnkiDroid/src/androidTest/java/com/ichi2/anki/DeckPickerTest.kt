@@ -70,7 +70,7 @@ class DeckPickerTest : InstrumentedTest() {
         createDeckWithCard(testString)
 
         // Go to RecyclerView item having "Test Deck" and click on the counts layout
-        onView(withId(R.id.files)).perform(
+        onView(withId(R.id.decks)).perform(
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText("TestDeck$testString")),
                 clickChildViewWithId(R.id.counts_layout)
@@ -114,7 +114,7 @@ class DeckPickerTest : InstrumentedTest() {
         onView(withText(R.string.dialog_ok)).perform(click())
 
         // The deck is currently empty, so if we tap on it, it becomes the selected deck but doesn't enter
-        onView(withId(R.id.files)).perform(
+        onView(withId(R.id.decks)).perform(
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText("TestDeck$testString")),
                 clickChildViewWithId(R.id.counts_layout)
