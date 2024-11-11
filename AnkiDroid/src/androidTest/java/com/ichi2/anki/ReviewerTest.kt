@@ -31,9 +31,12 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.tests.libanki.RetryRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ThreadUtils
+import com.ichi2.anki.testutil.closeBackupCollectionDialogIfExists
+import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.libanki.Collection
@@ -226,13 +229,3 @@ class ReviewerTest : InstrumentedTest() {
 private var Collection.cardStateCustomizer: String?
     get() = config.get("cardStateCustomizer")
     set(value) { config.set("cardStateCustomizer", value) }
-
-fun closeGetStartedScreenIfExists() {
-    onView(withId(R.id.get_started)).withFailureHandler { _, _ -> }.perform(click())
-}
-
-fun closeBackupCollectionDialogIfExists() {
-    onView(withText(R.string.button_backup_later))
-        .withFailureHandler { _, _ -> }
-        .perform(click())
-}
