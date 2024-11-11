@@ -32,6 +32,8 @@ import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import com.ichi2.libanki.Collection
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
@@ -59,6 +61,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
     val retry = RetryRule(10)
 
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithCustomData() {
         setNewReviewer()
         col.cardStateCustomizer =
@@ -96,6 +99,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
     }
 
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithRuntimeError() {
         setNewReviewer()
         // Issue 15035 - runtime errors weren't handled
