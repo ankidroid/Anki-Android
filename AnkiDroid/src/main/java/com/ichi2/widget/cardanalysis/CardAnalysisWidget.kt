@@ -26,8 +26,8 @@ import android.view.View
 import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
 import com.ichi2.anki.R
-import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.pages.DeckOptions
@@ -181,11 +181,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             val isEmptyDeck = deckData.newCount == 0 && deckData.reviewCount == 0 && deckData.learnCount == 0
 
             val intent = if (!isEmptyDeck) {
-                Intent(context, Reviewer::class.java).apply {
-                    action = Intent.ACTION_VIEW
-                    putExtra("deckId", deckData.deckId)
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                }
+                intentToReviewDeckFromShorcuts(context, deckData.deckId)
             } else {
                 DeckOptions.getIntent(context, deckData.deckId)
             }

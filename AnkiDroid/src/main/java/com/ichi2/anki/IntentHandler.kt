@@ -31,8 +31,10 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.DeckId
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
@@ -138,7 +140,11 @@ class IntentHandler : AbstractIntentHandler() {
     private fun handleReviewIntent(intent: Intent) {
         val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
-        val reviewIntent = Intent(this, Reviewer::class.java)
+        val reviewIntent = if (sharedPrefs().getBoolean("newReviewer", false)) {
+            ReviewerFragment.getIntent(this)
+        } else {
+            Intent(this, Reviewer::class.java)
+        }
         CollectionManager.getColUnsafe().decks.select(deckId)
         startActivity(reviewIntent)
         finish()
@@ -375,5 +381,18 @@ class IntentHandler : AbstractIntentHandler() {
                     ).toLong()
             }
         }
+
+        /**
+         * Returns an intent to review a specific deck.
+         * This does not states which reviewer to use, instead IntentHandler will choose whether to use the
+         * legacy or the new reviewer based on the "newReviewer" preference.
+         * It is expected to be used from widget, shortcut, reminders but not from ankidroid directly because of the CLEAR_TOP flag.
+         */
+        fun intentToReviewDeckFromShorcuts(context: Context, deckId: DeckId) =
+            Intent(context, IntentHandler::class.java).apply {
+                setAction(Intent.ACTION_VIEW)
+                putExtra(ReminderService.EXTRA_DECK_ID, deckId)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
     }
 }
