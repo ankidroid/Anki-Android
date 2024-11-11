@@ -171,23 +171,23 @@ abstract class InstrumentedTest {
         check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
     }
+}
 
-    protected fun ViewInteraction.checkWithTimeout(
-        viewAssertion: ViewAssertion,
-        retryWaitTimeInMilliseconds: Long = 100,
-        maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
-    ) {
-        val startTime = TimeManager.time.intTimeMS()
+fun ViewInteraction.checkWithTimeout(
+    viewAssertion: ViewAssertion,
+    retryWaitTimeInMilliseconds: Long = 100,
+    maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
+) {
+    val startTime = TimeManager.time.intTimeMS()
 
-        while (TimeManager.time.intTimeMS() - startTime < maxWaitTimeInMilliseconds) {
-            try {
-                check(viewAssertion)
-                return
-            } catch (e: Throwable) {
-                Thread.sleep(retryWaitTimeInMilliseconds)
-            }
+    while (TimeManager.time.intTimeMS() - startTime < maxWaitTimeInMilliseconds) {
+        try {
+            check(viewAssertion)
+            return
+        } catch (e: Throwable) {
+            Thread.sleep(retryWaitTimeInMilliseconds)
         }
-
-        fail("View assertion was not true within $maxWaitTimeInMilliseconds milliseconds")
     }
+
+    fail("View assertion was not true within $maxWaitTimeInMilliseconds milliseconds")
 }

@@ -88,6 +88,10 @@ class IntroductionActivity : AnkiActivity() {
         const val RESULT_START_NEW = 1
         const val RESULT_SYNC_PROFILE = 2
 
+        /**
+         * Key for the preference recording that the slide "Study less/ Remember more" offering to
+         * get started or sync from ankiweb, was displayed. If so don't display it again.
+         */
         const val INTRODUCTION_SLIDES_SHOWN = "IntroductionSlidesShown"
     }
 }

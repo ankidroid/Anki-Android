@@ -16,10 +16,10 @@
 
 package com.ichi2.anki
 
-import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission
+import com.ichi2.anki.testutil.disableIntroductionSlide
 import com.ichi2.anki.testutil.grantPermissions
 import org.junit.Before
 import org.junit.Rule
@@ -31,9 +31,7 @@ class FilteredDeckOptionsTest : InstrumentedTest() {
 
     @Before
     fun before() {
-        AnkiDroidApp.sharedPrefs().edit {
-            putBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, true)
-        }
+        disableIntroductionSlide()
     }
 
     @Test
