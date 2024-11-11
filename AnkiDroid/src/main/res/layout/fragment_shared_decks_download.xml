@@ -81,8 +81,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/download_deck_from_AnkiWeb"
-        android:background="@color/material_blue_500"
-        android:textColor="@color/white"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:textColor="@color/material_blue_500"
         android:padding="8dp"
         android:layout_marginBottom="24dp"
         android:layout_marginStart="24dp"
@@ -122,7 +122,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
 
     <android.widget.Button
         android:id="@+id/import_shared_deck_button"

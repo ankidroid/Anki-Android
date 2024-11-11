@@ -72,7 +72,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private lateinit var downloadPercentageText: TextView
     private lateinit var downloadProgressBar: ProgressBar
     private lateinit var checkNetworkInfoText: TextView
-    private lateinit var downloadFromAnkiWeb: TextView
+    private lateinit var downloadFromAnkiWeb: Button
 
     /**
      * Android's DownloadManager - Used here to manage the functionality of downloading decks, one
@@ -103,6 +103,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
          * so our FileProvider can actually serve the file!
          */
         const val SHARED_DECKS_DOWNLOAD_FOLDER = "shared_decks"
+
+        private val deckIdRegex = "download-deck/(\\d+)".toRegex()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -148,11 +150,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     }
 
     private fun getDeckPageUri(orgUrl: String): Uri {
-        val deckIdRegex = "download-deck/(\\d+)".toRegex()
         val matchResult = deckIdRegex.find(orgUrl)
-
         val deckId = matchResult?.groups?.get(1)?.value
-
         return if (deckId != null) {
             Uri.parse("https://ankiweb.net/shared/info/$deckId")
         } else {
