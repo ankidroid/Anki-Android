@@ -511,7 +511,7 @@ open class DeckPicker :
         title = resources.getString(R.string.app_name)
 
         deckPickerContent = findViewById(R.id.deck_picker_content)
-        recyclerView = findViewById(R.id.files)
+        recyclerView = findViewById(R.id.decks)
         noDecksPlaceholder = findViewById(R.id.no_decks_placeholder)
 
         deckPickerContent.visibility = View.GONE
