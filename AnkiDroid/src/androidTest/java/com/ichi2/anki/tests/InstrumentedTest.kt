@@ -35,6 +35,8 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendException
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.lessThanOrEqualTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -173,21 +175,33 @@ abstract class InstrumentedTest {
     }
 }
 
+/**
+ * Execute [viewAssertion] every [retryWaitTimeInMilliseconds] ms (by default 100),
+ * last try being after [maxWaitTimeInMilliseconds] (by default 10 seconds).
+ */
 fun ViewInteraction.checkWithTimeout(
     viewAssertion: ViewAssertion,
     retryWaitTimeInMilliseconds: Long = 100,
     maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
 ) {
+    assertThat(
+        "The retry time is greater than the max wait time. You probably gave the argument in the wrong order.",
+        retryWaitTimeInMilliseconds,
+        lessThanOrEqualTo(maxWaitTimeInMilliseconds)
+    )
     val startTime = TimeManager.time.intTimeMS()
 
-    while (TimeManager.time.intTimeMS() - startTime < maxWaitTimeInMilliseconds) {
+    do {
+        val timedOut = TimeManager.time.intTimeMS() - startTime >= maxWaitTimeInMilliseconds
         try {
             check(viewAssertion)
             return
         } catch (e: Throwable) {
-            Thread.sleep(retryWaitTimeInMilliseconds)
+            if (timedOut) {
+                fail("View assertion was not true within $maxWaitTimeInMilliseconds milliseconds")
+            } else {
+                Thread.sleep(retryWaitTimeInMilliseconds)
+            }
         }
-    }
-
-    fail("View assertion was not true within $maxWaitTimeInMilliseconds milliseconds")
+    } while (true)
 }
