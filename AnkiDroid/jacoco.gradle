@@ -209,5 +209,4 @@ tasks.register('assertNonzeroAndroidTestCoverage') {
 }
 afterEvaluate {
     tasks.named('jacocoAndroidTestReport').configure { finalizedBy('assertNonzeroAndroidTestCoverage') }
-    tasks.named('jacocoTestReport').configure { finalizedBy('assertNonzeroAndroidTestCoverage') }
 }
