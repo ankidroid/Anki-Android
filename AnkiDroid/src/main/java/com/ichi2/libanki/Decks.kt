@@ -29,11 +29,13 @@ import androidx.annotation.CheckResult
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
+import anki.collection.opChangesWithId
 import anki.deck_config.DeckConfigsForUpdate
 import anki.deck_config.UpdateDeckConfigsRequest
 import anki.decks.DeckTreeNode
 import anki.decks.FilteredDeckForUpdate
 import anki.decks.SetDeckCollapsedRequest
+import anki.decks.copy
 import com.google.protobuf.kotlin.toByteStringUtf8
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.backend.BackendUtils
@@ -82,11 +84,19 @@ class Decks(private val col: Collection) {
      *************************************************************
      */
 
-    @RustCleanup("implement and make public")
+    /** If deck exists, return existing id */
     @LibAnkiAlias("add_normal_deck_with_name")
-    @Suppress("unused", "unused_parameter")
-    private fun addNormalDeckWithName(name: String): OpChangesWithId {
-        TODO()
+    @Suppress("unused")
+    fun addNormalDeckWithName(name: String): OpChangesWithId {
+        val id = col.decks.idForName(name)
+        return if (id != null) {
+            opChangesWithId { this.id = id }
+        } else {
+            val deck = col.decks.newDeck().copy {
+                this.name = name
+            }
+            addDeck(deck)
+        }
     }
 
     @LibAnkiAlias("add_deck_legacy")
@@ -152,10 +162,9 @@ class Decks(private val col: Collection) {
         }
     }
 
-    @RustCleanup("implement and make public")
-    @Suppress("unused", "unused_parameter")
-    private fun have(id: DeckId): Boolean {
-        TODO()
+    @Suppress("unused")
+    fun have(id: DeckId): Boolean {
+        return get(id) != null
     }
 
     @RustCleanup("implement and make public")
@@ -172,11 +181,10 @@ class Decks(private val col: Collection) {
         return col.backend.newDeck()
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("add_deck")
-    @Suppress("unused", "unused_parameter")
-    private fun addDeck(deck: Deck): OpChangesWithId {
-        TODO()
+    @Suppress("unused")
+    fun addDeck(deck: anki.decks.Deck): OpChangesWithId {
+        return col.backend.addDeck(input = deck)
     }
 
     @LibAnkiAlias("new_deck_legacy")
@@ -279,18 +287,19 @@ class Decks(private val col: Collection) {
         return null
     }
 
-    @RustCleanup("implement and make public")
-    @Suppress("unused", "unused_parameter")
     /** Add or update an existing deck. Used for syncing and merging. */
-    private fun update(deck: Deck, preserveUsn: Boolean) {
-        TODO()
+    @Suppress("unused")
+    fun update(deck: Deck, preserveUsn: Boolean) {
+        deck.id = col.backend.addOrUpdateDeckLegacy(
+            deck = BackendUtils.toJsonBytes(deck),
+            preserveUsnAndMtime = preserveUsn
+        )
     }
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("update_dict")
-    @Suppress("unused", "unused_parameter")
-    private fun updateDict(deck: Deck): OpChanges {
-        TODO()
+    @Suppress("unused")
+    fun updateDict(deck: Deck): OpChanges {
+        return col.backend.updateDeckLegacy(BackendUtils.toJsonBytes(deck))
     }
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
@@ -305,15 +314,17 @@ class Decks(private val col: Collection) {
      *************************************************************
      */
 
-    @RustCleanup("implement and make public")
-    @Suppress("unused", "unused_parameter")
     /**
      * Rename one or more source decks that were dropped on [newParent].
      *
      * If [newParent] is `0`, decks will be placed at the top level.
      */
-    private fun reparent(deckIds: List<DeckId>, newParent: DeckId): OpChangesWithCount {
-        TODO()
+    @Suppress("unused")
+    fun reparent(deckIds: List<DeckId>, newParent: DeckId): OpChangesWithCount {
+        return col.backend.reparentDecks(
+            deckIds = deckIds,
+            newParent = newParent
+        )
     }
 
     /*
@@ -321,11 +332,10 @@ class Decks(private val col: Collection) {
      *************************************************************
      */
 
-    @RustCleanup("implement and make public")
     @LibAnkiAlias("get_deck_configs_for_update")
-    @Suppress("unused", "unused_parameter")
-    private fun getDeckConfigsForUpdate(deckId: DeckId): DeckConfigsForUpdate {
-        TODO()
+    @Suppress("unused")
+    fun getDeckConfigsForUpdate(deckId: DeckId): DeckConfigsForUpdate {
+        return col.backend.getDeckConfigsForUpdate(deckId)
     }
 
     @RustCleanup("implement and make public")
