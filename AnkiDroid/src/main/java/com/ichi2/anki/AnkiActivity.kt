@@ -52,6 +52,9 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.ShortcutGroupProvider
+import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.SimpleMessageDialog
@@ -63,10 +66,7 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
-import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.registerReceiverCompat
-import com.ichi2.compat.CompatV24
-import com.ichi2.compat.ShortcutGroupProvider
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
@@ -637,14 +637,41 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
         menu: Menu?,
         deviceId: Int
     ) {
-        val shortcutGroups = CompatHelper.compat.getShortcuts(this)
+        val shortcutGroups = getShortcuts()
         data.addAll(shortcutGroups)
         super.onProvideKeyboardShortcuts(data, menu, deviceId)
     }
 
+    /**
+     * Shows keyboard shortcuts dialog
+     */
+    fun showKeyboardShortcutsDialog() {
+        val shortcutsGroup = getShortcuts()
+        // Don't show keyboard shortcuts dialog if there is no available shortcuts and also
+        // if there's 1 item because shortcutsGroup always includes generalShortcutGroup.
+        if (shortcutsGroup.size <= 1) return
+        Timber.i("displaying keyboard shortcut screen")
+        requestShowKeyboardShortcuts()
+    }
+
+    /**
+     * Get current activity keyboard shortcuts
+     */
+    fun getShortcuts(): List<KeyboardShortcutGroup> {
+        val generalShortcutGroup = ShortcutGroup(
+            listOf(
+                shortcut("Alt+K", R.string.show_keyboard_shortcuts_dialog),
+                shortcut("Ctrl+Z", R.string.undo)
+            ),
+            R.string.pref_cat_general
+        ).toShortcutGroup(this)
+
+        return listOfNotNull(shortcuts?.toShortcutGroup(this), generalShortcutGroup)
+    }
+
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         if (event.isAltPressed && keyCode == KeyEvent.KEYCODE_K) {
-            CompatHelper.compat.showKeyboardShortcutsDialog(this)
+            showKeyboardShortcutsDialog()
             return true
         }
 
@@ -676,7 +703,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
     }
 
     override val shortcuts
-        get(): CompatV24.ShortcutGroup? = null
+        get(): ShortcutGroup? = null
 
     companion object {
         const val DIALOG_FRAGMENT_TAG = "dialog"

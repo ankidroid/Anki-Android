@@ -144,7 +144,6 @@ class CongratsPage :
     private fun onStudyMore() {
         val col = CollectionManager.getColUnsafe()
         val dialogFragment = CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
-            CustomStudyDialog.ContextMenuConfiguration.STANDARD,
             col.decks.selected()
         )
         dialogFragment.show(childFragmentManager, null)

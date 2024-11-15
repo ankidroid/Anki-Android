@@ -135,7 +135,7 @@ object ImportUtils {
         fun getFileCachedCopy(context: Context, uri: Uri): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
             val tempFile = File(context.cacheDir, filename)
-            return if (copyFileToCache(context, uri, tempFile.absolutePath)) {
+            return if (copyFileToCache(context, uri, tempFile.absolutePath).first) {
                 tempFile.absolutePath
             } else {
                 null
@@ -200,7 +200,8 @@ object ImportUtils {
                 // Copy to temporary file
                 filename = ensureValidLength(filename)
                 tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
-                val errorMessage = if (copyFileToCache(context, importPathUri, tempOutDir)) {
+                val cachingResult = copyFileToCache(context, importPathUri, tempOutDir)
+                val errorMessage = if (cachingResult.first) {
                     null
                 } else {
                     context.getString(R.string.import_error_copy_to_cache)
@@ -210,7 +211,7 @@ object ImportUtils {
                     CrashReportService.sendExceptionReport(
                         RuntimeException("Error importing apkg file"),
                         "IntentHandler.java",
-                        "apkg import failed"
+                        cachingResult.second
                     )
                     return ImportResult.fromErrorString(errorMessage)
                 }
@@ -301,22 +302,27 @@ object ImportUtils {
          * Copy the data from the intent to a temporary file
          * @param data intent from which to get input stream
          * @param tempPath temporary path to store the cached file
-         * @return whether or not copy was successful
+         * @return a [Pair] with a boolean indicating if the copy to cache action was successful
+         * and an optional message if anything went wrong
          */
-        protected open fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Boolean {
+        protected open fun copyFileToCache(
+            context: Context,
+            data: Uri?,
+            tempPath: String
+        ): Pair<Boolean, String?> {
             // Get an input stream to the data in ContentProvider
             val inputStream: InputStream = try {
                 context.contentResolver.openInputStream(data!!)
             } catch (e: FileNotFoundException) {
                 Timber.e(e, "Could not open input stream to intent data")
-                return false
-            } ?: return false
+                return Pair(false, "copyFileToCache: FileNotFoundException when accessing ContentProvider")
+            } ?: return Pair(false, "copyFileToCache: provider recently crashed")
             // Check non-null
             try {
                 CompatHelper.compat.copyFile(inputStream, tempPath)
             } catch (e: IOException) {
                 Timber.e(e, "Could not copy file to %s", tempPath)
-                return false
+                return Pair(false, "copyFileToCache: ${e.javaClass} when copying the imported file")
             } finally {
                 try {
                     inputStream.close()
@@ -324,7 +330,7 @@ object ImportUtils {
                     Timber.e(e, "Error closing input stream")
                 }
             }
-            return true
+            return Pair(true, null)
         }
 
         companion object {

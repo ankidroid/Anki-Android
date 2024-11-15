@@ -17,7 +17,6 @@
 
 package com.ichi2.compat
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -29,19 +28,14 @@ import android.graphics.Bitmap.CompressFormat
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
-import android.view.KeyboardShortcutGroup
+import android.os.Environment
 import android.view.View
-import androidx.annotation.CheckResult
-import androidx.core.view.OnReceiveContentListener
-import androidx.draganddrop.DropHelper
-import com.ichi2.anki.AnkiActivity
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.Serializable
-import java.util.Locale
 import kotlin.time.Duration
 
 /**
@@ -50,18 +44,19 @@ import kotlin.time.Duration
  *
  * A set of implementations for the supported platforms are available.
  *
- *
- * Each implementation ends with a `V<n>` suffix, identifying the minimum API version on which this implementation
- * can be used. For example, see [CompatV23].
+ * BaseCompat is the implementation for our current [minSdk]. It is overridden by `CompatV<n>`,
+ * identifying the minimum API version on which this implementation
+ * can be used. For example, see [CompatV33].
  *
  *
  * Each implementation `CompatVn` should extend the implementation `CompatVm` for the greatest m<n such that `CompatVm`
- * exists. E.g. as of July 2021 `CompatV23` extends `CompatV21` because there is no `CompatV22`.
- * If `CompatV22` were to be created one day, it will extends `CompatV22` and be extended by `CompatV23`.
+ * exists, or BaseCompat if no such `m` exists.
+ * E.g. as of November 24 `CompatV29` extends `CompatV26` because there is no `CompatV27` or `CompatV28`.
+ * If `CompatV27` were to be created one day, it will extends `CompatV26` and be extended by `CompatV29`.
  *
  *
- * Each method `method` must be implemented in the lowest Compat implementation (right now `CompatV21`, but
- * it will change when min sdk change). It must also be implemented in `CompatVn` if, in version `n` and higher,
+ * Each method `method` must be implemented in [BaseCompat] .
+ * It must also be implemented in `CompatVn` if, in version `n` and higher,
  * a different implementation must be used. This can be done either because some method used in the API `n` got
  * deprecated, changed its behavior, or because the implementation of `method` can be more efficient.
  *
@@ -72,13 +67,13 @@ import kotlin.time.Duration
  * notification channels were introduced in API 26.
  *
  *
- * Example: `CompatV26` extends `CompatV23` which extends `CompatV21`. The method `vibrate` is
- * defined in `CompatV21` where only the number of seconds of vibration is taken into consideration, and is
- * redefined in `CompatV26` - using `@Override` - where the style of vibration is also taken into
- * consideration. It means that  on devices using APIs 21 to 25 included, the implementation of `CompatV21` is
- * used, and on devices using API 26 and higher, the implementation of `CompatV26` is used.
- * On the other hand a method like `setTime` that got defined in `CompatV21` and redefined in
- * `CompatV23` due to a change of API, need not be implemented again in CompatV26.
+ * Example: [CompatV26] extends [CompatV24] which extends [BaseCompat]. The method `vibrate` is
+ * defined in [BaseCompat] where only the number of seconds of vibration is taken into consideration, and is
+ * redefined in [CompatV26] - using `@Override` - where the style of vibration is also taken into
+ * consideration. It means that  on devices using APIs 23 to 25 included, the implementation of [BaseCompat] is
+ * used, and on devices using API 26 and higher, the implementation of [CompatV26] is used.
+ * On the other hand a method like [Compat.saveImage] that got defined in [BaseCompat] and redefined in
+ * [CompatV29] in order to use [Environment.DIRECTORY_PICTURES], need not be implemented again in [CompatV26].
  */
 interface Compat {
     fun setupNotificationChannel(context: Context)
@@ -205,45 +200,6 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
-
-    /**
-     * If possible, configures a [View] for drag and drop operations, including highlighting that
-     * indicates the view is a drop target. Sets a listener that enables the view to handle dropped data.
-     *
-     * @see DropHelper.configureView
-     */
-    fun configureView(
-        activity: Activity,
-        view: View,
-        mimeTypes: Array<String>,
-        options: DropHelper.Options,
-        onReceiveContentListener: OnReceiveContentListener
-    )
-
-    /**
-     * Shows keyboard shortcuts dialog
-     */
-    fun showKeyboardShortcutsDialog(
-        activity: AnkiActivity
-    )
-
-    /**
-     * Get current activity keyboard shortcuts
-     */
-    fun getShortcuts(activity: AnkiActivity): List<KeyboardShortcutGroup>
-
-    /**
-     * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)
-     * Locale("spa", "MEX", "001") => Locale("es", "MX", "001")
-     */
-    @CheckResult
-    fun normalize(locale: Locale): Locale
-
-    @Suppress("PropertyName")
-    val AXIS_RELATIVE_X: Int
-
-    @Suppress("PropertyName")
-    val AXIS_RELATIVE_Y: Int
 
     @Suppress("PropertyName")
     val AXIS_GESTURE_X_OFFSET: Int

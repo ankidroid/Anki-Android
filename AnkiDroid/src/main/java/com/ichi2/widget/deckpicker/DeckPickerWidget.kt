@@ -27,8 +27,8 @@ import android.widget.RemoteViews
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
 import com.ichi2.anki.R
-import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.isCollectionEmpty
 import com.ichi2.anki.pages.DeckOptions
@@ -141,11 +141,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                 val isEmptyDeck = deck.newCount == 0 && deck.reviewCount == 0 && deck.learnCount == 0
 
                 val intent = if (!isEmptyDeck) {
-                    Intent(context, Reviewer::class.java).apply {
-                        action = Intent.ACTION_VIEW
-                        putExtra("deckId", deck.deckId)
-                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    }
+                    intentToReviewDeckFromShorcuts(context, deck.deckId)
                 } else {
                     DeckOptions.getIntent(context, deck.deckId)
                 }

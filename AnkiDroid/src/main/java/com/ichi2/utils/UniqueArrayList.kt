@@ -15,7 +15,6 @@
  */
 package com.ichi2.utils
 
-import androidx.annotation.RequiresApi
 import org.apache.commons.collections4.list.SetUniqueList
 import java.util.Arrays
 import java.util.Spliterator
@@ -131,7 +130,6 @@ private constructor(
         }
     }
 
-    @RequiresApi(24)
     override fun spliterator(): Spliterator<E> {
         return super<SetUniqueList>.spliterator()
     }

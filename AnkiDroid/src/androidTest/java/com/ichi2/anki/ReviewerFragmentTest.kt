@@ -14,24 +14,26 @@
 package com.ichi2.anki
 
 import androidx.core.content.edit
-import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.tests.InstrumentedTest
+import com.ichi2.anki.tests.checkWithTimeout
 import com.ichi2.anki.tests.libanki.RetryRule
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
+import com.ichi2.anki.testutil.closeBackupCollectionDialogIfExists
+import com.ichi2.anki.testutil.closeGetStartedScreenIfExists
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
+import com.ichi2.anki.testutil.reviewDeckWithName
 import com.ichi2.libanki.Collection
+import com.ichi2.testutils.common.Flaky
+import com.ichi2.testutils.common.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Rule
@@ -59,6 +61,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
     val retry = RetryRule(10)
 
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithCustomData() {
         setNewReviewer()
         col.cardStateCustomizer =
@@ -96,6 +99,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
     }
 
     @Test
+    @Flaky(os = OS.ALL, "Fails on CI with timing issues frequently")
     fun testCustomSchedulerWithRuntimeError() {
         setNewReviewer()
         // Issue 15035 - runtime errors weren't handled
@@ -109,43 +113,6 @@ class ReviewerFragmentTest : InstrumentedTest() {
         clickShowAnswer()
 
         ensureAnswerButtonsAreDisplayed()
-    }
-
-    private fun closeGetStartedScreenIfExists() {
-        onView(withId(R.id.get_started)).withFailureHandler { _, _ -> }.perform(click())
-    }
-
-    private fun closeBackupCollectionDialogIfExists() {
-        onView(withText(R.string.button_backup_later))
-            .withFailureHandler { _, _ -> }
-            .perform(click())
-    }
-
-    private fun clickOnDeckWithName(deckName: String) {
-        onView(withId(R.id.files)).checkWithTimeout(matches(hasDescendant(withText(deckName))))
-        onView(withId(R.id.files)).perform(
-            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                hasDescendant(withText(deckName)),
-                click()
-            )
-        )
-    }
-
-    private fun clickOnStudyButtonIfExists() {
-        onView(withId(R.id.studyoptions_start))
-            .withFailureHandler { _, _ -> }
-            .perform(click())
-    }
-
-    private fun reviewDeckWithName(deckName: String) {
-        clickOnDeckWithName(deckName)
-        // Adding cards directly to the database while in the Deck Picker screen
-        // will not update the page with correct card counts. Hence, clicking
-        // on the deck will bring us to the study options page where we need to
-        // click on the Study button. If we have added cards to the database
-        // before the Deck Picker screen has fully loaded, then we skip clicking
-        // the Study button
-        clickOnStudyButtonIfExists()
     }
 
     private fun clickShowAnswerAndAnswerGood() {

@@ -21,14 +21,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.LocaleList
 import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.preferences.sharedPrefs
@@ -106,7 +104,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         super.onSelectionChanged(selStart, selEnd)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     fun setHintLocale(locale: Locale) {
         Timber.d("Setting hint locale to '%s'", locale)
         imeHintLocales = LocaleList(locale)

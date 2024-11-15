@@ -19,7 +19,6 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -55,6 +54,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.android.input.ShortcutGroup
+import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
@@ -72,8 +73,6 @@ import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.compat.CompatV24
-import com.ichi2.compat.shortcut
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
@@ -263,6 +262,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         fieldNames = tempModel!!.notetype.fieldsNames
         // Set up the ViewPager with the sections adapter.
         viewPager.adapter = TemplatePagerAdapter(this@CardTemplateEditor)
+        TabLayoutMediator(slidingTabLayout!!, viewPager) { tab: TabLayout.Tab, position: Int ->
+            tab.text = tempModel!!.getTemplate(position).getString("name")
+        }.apply { attach() }
 
         // Set activity title
         supportActionBar?.let {
@@ -429,7 +431,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     override val shortcuts
-        get() = CompatV24.ShortcutGroup(
+        get() = ShortcutGroup(
             listOf(
                 shortcut("Ctrl+P", R.string.card_editor_preview_card),
                 shortcut("Ctrl+1", R.string.edit_front_template),
@@ -456,7 +458,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private var cursorPosition = 0
 
         private lateinit var templateEditor: CardTemplateEditor
-        private var tabLayoutMediator: TabLayoutMediator? = null
         lateinit var tempModel: CardTemplateNotetype
         lateinit var bottomNavigation: BottomNavigationView
 
@@ -558,12 +559,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
 
             override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && menu.findItem(insertFieldId) != null) {
+                if (menu.findItem(insertFieldId) != null) {
                     return false
                 }
                 val initialSize = menu.size()
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && currentEditorViewId != R.id.styling_edit) {
+                if (currentEditorViewId != R.id.styling_edit) {
                     // 10644: Do not pass in a R.string as the final parameter as MIUI on Android 12 crashes.
                     menu.add(Menu.FIRST, insertFieldId, 0, getString(R.string.card_template_editor_insert_field))
                 }
@@ -573,7 +574,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
                 val itemId = item.itemId
-                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && itemId == insertFieldId) {
+                return if (itemId == insertFieldId) {
                     showInsertFieldDialog()
                     mode.finish()
                     true
@@ -649,7 +650,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            initTabLayoutMediator()
             templateEditor.slidingTabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(p0: TabLayout.Tab?) {
                     templateEditor.loadTemplatePreviewerFragmentIfFragmented()
@@ -666,16 +666,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
             }
             setupMenu()
-        }
-
-        private fun initTabLayoutMediator() {
-            if (tabLayoutMediator != null) {
-                tabLayoutMediator!!.detach()
-            }
-            tabLayoutMediator = TabLayoutMediator(templateEditor.slidingTabLayout!!, templateEditor.viewPager) { tab: TabLayout.Tab, position: Int ->
-                tab.text = templateEditor.tempModel!!.getTemplate(position).getString("name")
-            }
-            tabLayoutMediator!!.attach()
         }
 
         /**

@@ -41,7 +41,7 @@ class CompatDeleteFileTest(
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
         fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(CompatV23(), "CompatV23"))
+            yield(arrayOf(BaseCompat(), "BaseCompat"))
             yield(arrayOf(CompatV26(), "CompatV26"))
         }.asIterable()
     }

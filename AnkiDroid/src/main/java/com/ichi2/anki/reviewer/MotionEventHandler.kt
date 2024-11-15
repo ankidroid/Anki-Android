@@ -221,10 +221,10 @@ enum class Axis(val motionEventValue: Int) {
     HAT_Y(MotionEvent.AXIS_HAT_Y),
 
     /** @see MotionEvent.AXIS_RELATIVE_X */
-    AXIS_RELATIVE_X(CompatHelper.compat.AXIS_RELATIVE_X),
+    AXIS_RELATIVE_X(MotionEvent.AXIS_RELATIVE_X),
 
     /** @see MotionEvent.AXIS_RELATIVE_Y */
-    AXIS_RELATIVE_Y(CompatHelper.compat.AXIS_RELATIVE_Y),
+    AXIS_RELATIVE_Y(MotionEvent.AXIS_RELATIVE_Y),
 
     /** @see MotionEvent.AXIS_GESTURE_X_OFFSET */
     AXIS_GESTURE_X_OFFSET(CompatHelper.compat.AXIS_GESTURE_X_OFFSET),

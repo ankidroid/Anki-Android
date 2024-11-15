@@ -42,12 +42,15 @@ android {
     }
 }
 
+apply(from = "../lint.gradle")
+
 dependencies {
     implementation(project(":AnkiDroid"))
     implementation(libs.jakewharton.timber)
-    compileOnly(libs.kotlinx.coroutines.core)
-    compileOnly(libs.hamcrest)
-    compileOnly(libs.junit.jupiter)
-    compileOnly(libs.junit.jupiter.params)
-    compileOnly(libs.junit.vintage.engine)
+    implementation(libs.hamcrest)
+    implementation(libs.junit.jupiter)
+    implementation(libs.androidx.test.junit)
+    testImplementation(libs.junit.vintage.engine)
+    testImplementation(libs.androidx.test.rules)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
