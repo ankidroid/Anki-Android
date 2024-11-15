@@ -192,6 +192,14 @@ class Preferences :
         result.highlight(fragment as PreferenceFragmentCompat)
     }
 
+    fun handleHighlightPreferenceOnBack(key: String?) {
+        val fragmentManager = supportFragmentManager
+        if (key != null) {
+            val headerFragment = (fragmentManager.findFragmentById(R.id.lateral_nav_container) as? HeaderFragment)
+            headerFragment?.handelHighlightHeaderPreferenceOnBack(key)
+        }
+    }
+
     companion object {
 
         /* Only enable AnkiDroid notifications unrelated to due reminders */

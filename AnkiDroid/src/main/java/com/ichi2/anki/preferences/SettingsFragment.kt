@@ -100,6 +100,15 @@ abstract class SettingsFragment :
         dialogFragment.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
     }
 
+    override fun onResume() {
+        super.onResume()
+        preferenceScreen?.key?.let {
+            (requireActivity() as Preferences).handleHighlightPreferenceOnBack(
+                it
+            )
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         requireActivity().title = preferenceScreen.title

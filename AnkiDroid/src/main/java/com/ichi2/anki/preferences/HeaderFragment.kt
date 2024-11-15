@@ -24,7 +24,6 @@ import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.ichi2.anki.BuildConfig
-import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.ui.internationalization.toSentenceCase
@@ -43,7 +42,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
         highlightHeaderPreference(requirePreference<HeaderPreference>(selectedHeaderPreferenceKey))
 
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
-            .title = CollectionManager.TR.preferencesBackups()
+            .title = TR.preferencesBackups()
 
         requirePreference<Preference>(R.string.pref_advanced_screen_key).apply {
             if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
@@ -103,6 +102,10 @@ class HeaderFragment : PreferenceFragmentCompat() {
 
     fun setDevOptionsVisibility(isVisible: Boolean) {
         requirePreference<Preference>(R.string.pref_dev_options_screen_key).isVisible = isVisible
+    }
+
+    fun handelHighlightHeaderPreferenceOnBack(key: String) {
+        highlightHeaderPreference(requirePreference<HeaderPreference>(key))
     }
 
     companion object {
