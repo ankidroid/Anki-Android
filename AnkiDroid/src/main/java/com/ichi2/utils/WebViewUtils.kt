@@ -19,6 +19,8 @@ package com.ichi2.utils
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 
+internal const val OLDEST_WORKING_WEBVIEW_VERSION_CODE = 386507305L
+
 /**
  * Returns a [PackageInfo] from the current system WebView, or `null` if unavailable
  */
