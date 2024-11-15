@@ -33,6 +33,7 @@ import androidx.annotation.VisibleForTesting
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.getDescription
 import com.ichi2.utils.ClipboardUtil.getPlainText
@@ -171,7 +172,13 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return if (mediaUri == null) {
             false
         } else {
-            pasteListener!!.onPaste(this, mediaUri, description)
+            try {
+                pasteListener!!.onPaste(this, mediaUri, description)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to paste media")
+                showSnackbar(context.getString(R.string.multimedia_editor_something_wrong))
+                false
+            }
         }
     }
 
