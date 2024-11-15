@@ -1,13 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <item
-        android:id="@+id/action_undo_study_options"
-        android:enabled="true"
-        android:icon="@drawable/ic_undo_white"
-        android:title="@string/undo"
-        ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
-        ankidroid:showAsAction="always"/>
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_rebuild"
         android:title="@string/rebuild_cram_label"
@@ -25,31 +17,12 @@
         android:title="@string/custom_study"
         android:icon="@drawable/ic_build_white"
         ankidroid:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_rename"
-        android:title="@string/rename_deck"
-        android:visibility = "gone"/>
     <!-- the title for the following option will be set dynamically -->
     <item
         android:id="@+id/action_deck_or_study_options"
         android:title="@string/menu__deck_options"
         android:icon="@drawable/ic_tune_white"
         ankidroid:showAsAction="always"/>
-    <item
-        android:id="@+id/action_delete"
-        android:title="@string/contextmenu_deckpicker_delete_deck"
-        android:visibility = "gone"/>
-    <item
-        android:id="@+id/action_export"
-        tools:text="Export"
-        android:visibility="gone">
-        <menu>
-            <item
-                android:id="@+id/action_export_deck"
-                android:menuCategory="secondary"
-                android:title="@string/export_deck" />
-        </menu>
-    </item>
     <item
         android:id="@+id/action_unbury"
         android:title="@string/unbury"
