@@ -113,7 +113,7 @@ if (jvmVersion != "17" && jvmVersion != "21") {
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // works for Travis CI or Github Actions
-// allows for -Dare-dex=false to be set
+// allows for -Dpre-dex=false to be set
 val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 // allows for universal APKs to be generated
 val universalApkEnabled by extra("true" == System.getProperty("universal-apk", "false"))
