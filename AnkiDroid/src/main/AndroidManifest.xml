@@ -22,14 +22,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="auto">
 
-<!--    At the time of writing, ankidroid minSdk is 23. This library requires API 24.-->
-<!--    In order to use it, we use <uses-sdk tools:overrideLibrary instead of-->
-<!--    <uses-feature android:name. We must ensure this is never called when running on API 23.-->
-    <uses-sdk tools:overrideLibrary="androidx.draganddrop"/>
 
     <uses-feature android:name="android.hardware.audio.output" android:required="false" />
     <uses-feature android:name="android.software.app_widgets" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="androidx.draganddrop" android:required="false"/>
     <!-- `ScopedStorage` lint error is ignored:
         the recommended change is setting maxSDkVersion
          but this means preserveLegacyExternalStorage is inactive, and users do not have access to
