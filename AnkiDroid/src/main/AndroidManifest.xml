@@ -26,7 +26,6 @@
     <uses-feature android:name="android.hardware.audio.output" android:required="false" />
     <uses-feature android:name="android.software.app_widgets" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
-    <!--    <uses-feature android:name. We must ensure this is never called when running on API 23.-->
     <uses-feature android:name="androidx.draganddrop" android:required="false"/>
     <!-- `ScopedStorage` lint error is ignored:
         the recommended change is setting maxSDkVersion
