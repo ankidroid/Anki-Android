@@ -173,6 +173,7 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import com.ichi2.widget.WidgetStatus
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -205,6 +206,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     private var changed = false
     private var isTagsEdited = false
     private var isFieldEdited = false
+
+    private var multimediaActionJob: Job? = null
 
     /**
      * Flag which forces the calling activity to rebuild it's definition of current card from scratch
@@ -1754,8 +1757,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
      * @param fieldIndex the index of the field in the note where the multimedia content should be added
      */
     private fun handleMultimediaActions(fieldIndex: Int) {
+        // Cancel any existing subscription to avoid duplicate listeners
+        multimediaActionJob?.cancel()
+
         // Based on the type of multimedia action received, perform the corresponding operation
-        lifecycleScope.launch {
+        multimediaActionJob = lifecycleScope.launch {
             val note: MultimediaEditableNote = getCurrentMultimediaEditableNote()
             if (note.isEmpty) return@launch
 
