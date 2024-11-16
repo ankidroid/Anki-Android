@@ -49,6 +49,9 @@ import androidx.annotation.ColorInt
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
@@ -80,6 +83,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
@@ -162,6 +166,19 @@ open class CardBrowser :
     ChangeManager.Subscriber,
     ExportDialogsFactoryProvider {
 
+    /**
+     * Provides an instance of NoteEditorLauncher for adding a note
+     */
+    @get:VisibleForTesting
+    val addNoteLauncher: NoteEditorLauncher
+        get() = createAddNoteLauncher(viewModel, fragmented)
+
+    /**
+     * Provides an instance of NoteEditorLauncher for editing a note
+     */
+    private val editNoteLauncher: NoteEditorLauncher
+        get() = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT, fragmented)
+
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             launchCatchingTask { selectDeckAndSave(deck.deckId) }
@@ -173,6 +190,11 @@ open class CardBrowser :
     }
 
     lateinit var viewModel: CardBrowserViewModel
+
+    /**
+     * The frame containing the NoteEditor. Non null only in layout x-large.
+     */
+    private var noteEditorFrame: FragmentContainerView? = null
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
@@ -197,7 +219,10 @@ open class CardBrowser :
 
     private lateinit var exportingDelegate: ActivityExportingDelegate
 
-    // card that was clicked (not marked)
+    // The card to display in the note editor. Either in the trailing fragment or in an opened activity.
+    // It is the last card clicked without entering or being in multi select mode.
+    // If no card were clicked, then it's the first card of the search result, if any.
+    // Thus, it is null if and only if no cards are displayed.
     override var currentCardId
         get() = viewModel.currentCardId
         set(value) { viewModel.currentCardId = value }
@@ -371,8 +396,22 @@ open class CardBrowser :
         // must be called once we have an accessible collection
         viewModel = createViewModel(launchOptions)
 
-        setContentView(R.layout.card_browser)
+        setContentView(R.layout.cardbrowser)
         initNavigationDrawer(findViewById(android.R.id.content))
+
+        noteEditorFrame = findViewById(R.id.note_editor_frame)
+
+        if (!sharedPrefs().getBoolean("split_cardbrowser", false)) {
+            noteEditorFrame?.visibility = View.GONE
+        }
+
+        /**
+         * Check if noteEditorFrame is not null and if its visibility is set to VISIBLE.
+         * If both conditions are true, assign true to the variable [fragmented], otherwise assign false.
+         * [fragmented] will be true if the view size is large otherwise false
+         */
+        fragmented = noteEditorFrame?.visibility == View.VISIBLE
+
         // initialize the lateinit variables
         // Load reference to action bar title
         actionBarTitle = findViewById(R.id.toolbar_title)
@@ -424,6 +463,68 @@ open class CardBrowser :
 
         setupFlows()
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
+    }
+
+    private fun showSaveChangessDialog(launcher: NoteEditorLauncher) {
+        DiscardChangesDialog.showDialog(
+            context = this,
+            positiveButtonText = this.getString(R.string.save),
+            negativeButtonText = this.getString(R.string.discard),
+            message = this.getString(R.string.save_changes_message),
+            positiveMethod = {
+                launchCatchingTask {
+                    fragment?.saveNote()
+                    loadNoteEditorFragment(launcher)
+                }
+            },
+            negativeMethod = {
+                loadNoteEditorFragment(launcher)
+            }
+        )
+    }
+
+    private fun loadNoteEditorFragment(launcher: NoteEditorLauncher) {
+        val noteEditor = NoteEditor.newInstance(launcher)
+        supportFragmentManager.commit {
+            replace(R.id.note_editor_frame, noteEditor)
+        }
+        // Invalidate options menu so that note editor menu will show
+        invalidateOptionsMenu()
+    }
+
+    /**
+     * Retrieves the `NoteEditor` fragment if it is present in the fragment container
+     */
+    val fragment: NoteEditor?
+        get() {
+            val frag = supportFragmentManager.findFragmentById(R.id.note_editor_frame)
+            return if (frag is NoteEditor) {
+                frag
+            } else {
+                null
+            }
+        }
+
+    /**
+     * Loads the NoteEditor fragment in container if the view is x-large.
+     *
+     * @param launcher The NoteEditorLauncher containing the necessary data to initialize the NoteEditor Fragment.
+     */
+    private fun loadNoteEditorFragmentIfFragmented(launcher: NoteEditorLauncher) {
+        if (!fragmented) {
+            return
+        }
+        // Show note editor frame when adding first card
+        if (!noteEditorFrame!!.isVisible) {
+            noteEditorFrame!!.isVisible = true
+        }
+
+        // If there are unsaved changes in NoteEditor then show dialog for confirmation
+        if (fragment?.hasUnsavedChanges() == true) {
+            showSaveChangessDialog(launcher)
+        } else {
+            loadNoteEditorFragment(launcher)
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -583,15 +684,22 @@ open class CardBrowser :
         cards.reset()
 
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
-            if (viewModel.isInMultiSelectMode) {
-                // click on whole cell triggers select
-                val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
-                cb.toggle()
-                viewModel.toggleRowSelectionAtPosition(position)
-            } else {
-                launchCatchingTask {
+            launchCatchingTask {
+                val clickedCardId = viewModel.queryCardIdAtPosition(position)
+                // set selected position
+                cardsAdapter.selectedPosition = position
+                if (viewModel.isInMultiSelectMode) {
+                    // click on whole cell triggers select
+                    val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
+                    cb.toggle()
+                    viewModel.toggleRowSelectionAtPosition(position)
+                    // Load NoteEditor on trailing side if card is selected
+                    if (cb.isChecked) {
+                        currentCardId = clickedCardId
+                        loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+                    }
+                } else {
                     // load up the card selected on the list
-                    val clickedCardId = viewModel.queryCardIdAtPosition(position)
                     saveScrollingState(position)
                     openNoteEditorForCard(clickedCardId)
                 }
@@ -599,10 +707,13 @@ open class CardBrowser :
         }
         @KotlinCleanup("helper function for min/max range")
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
-            if (viewModel.isInMultiSelectMode) {
-                viewModel.selectRowsBetweenPositions(lastSelectedPosition, position)
-            } else {
-                launchCatchingTask {
+            launchCatchingTask {
+                currentCardId = viewModel.queryCardIdAtPosition(position)
+                // set selected position
+                cardsAdapter.selectedPosition = position
+                if (viewModel.isInMultiSelectMode) {
+                    viewModel.selectRowsBetweenPositions(lastSelectedPosition, position)
+                } else {
                     lastSelectedPosition = position
                     saveScrollingState(position)
 
@@ -613,6 +724,7 @@ open class CardBrowser :
                     recenterListView(view)
                     cardsAdapter.notifyDataSetChanged()
                 }
+                loadNoteEditorFragmentIfFragmented(editNoteLauncher)
             }
             true
         }
@@ -836,10 +948,14 @@ open class CardBrowser :
     @NeedsTest("I/O edits are saved")
     private fun openNoteEditorForCard(cardId: CardId) {
         currentCardId = cardId
-        val intent = NoteEditorLauncher.EditCard(currentCardId, Direction.DEFAULT).getIntent(this)
-        onEditCardActivityResult.launch(intent)
-        // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
-        viewModel.endMultiSelectMode()
+        // Load NoteEditor on trailing side if in fragmented mode
+        if (fragmented) {
+            loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+        } else {
+            onEditCardActivityResult.launch(editNoteLauncher.getIntent(this))
+            // #6432 - FIXME - onCreateOptionsMenu crashes if receiving an activity result from edit card when in multiselect
+            viewModel.endMultiSelectMode()
+        }
     }
 
     /**
@@ -999,6 +1115,10 @@ open class CardBrowser :
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
+        // Append note editor menu to card browser menu if fragmented and deck is not empty
+        if (fragmented && viewModel.rowCount != 0) {
+            fragment?.onCreateMenu(menu, menuInflater)
+        }
         actionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = getColUnsafe.undoAvailable()
             title = getColUnsafe.undoLabel()
@@ -1044,7 +1164,7 @@ open class CardBrowser :
     }
 
     private fun updatePreviewMenuItem() {
-        previewItem?.isVisible = viewModel.rowCount > 0
+        previewItem?.isVisible = !fragmented && viewModel.rowCount > 0
     }
 
     private fun updateMultiselectMenu() {
@@ -1090,7 +1210,7 @@ open class CardBrowser :
         // Note: Theoretically should not happen, as this should kick us back to the menu
         actionBarMenu.findItem(R.id.action_select_none).isVisible =
             viewModel.hasSelectedAnyRows()
-        actionBarMenu.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
+        actionBarMenu.findItem(R.id.action_edit_note).isVisible = !fragmented && canPerformMultiSelectEditNote()
         actionBarMenu.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
@@ -1260,7 +1380,7 @@ open class CardBrowser :
                 showCreateFilteredDeckDialog()
             }
         }
-        return super.onOptionsItemSelected(item)
+        return fragmented && fragment!!.onMenuItemSelected(item)
     }
 
     private fun showCreateFilteredDeckDialog() {
@@ -1456,12 +1576,12 @@ open class CardBrowser :
         showDialogFragment(dialog)
     }
 
-    @get:VisibleForTesting
-    val addNoteIntent: Intent
-        get() = createAddNoteIntent(this, viewModel)
-
     private fun addNoteFromCardBrowser() {
-        onAddNoteActivityResult.launch(addNoteIntent)
+        if (fragmented) {
+            loadNoteEditorFragmentIfFragmented(addNoteLauncher)
+        } else {
+            onAddNoteActivityResult.launch(addNoteLauncher.getIntent(this))
+        }
     }
 
     private val reviewerCardId: CardId
@@ -1613,6 +1733,17 @@ open class CardBrowser :
     private fun redrawAfterSearch() {
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
+        // Check whether deck is empty or not
+        val isDeckEmpty = viewModel.rowCount == 0
+        // Hide note editor frame if deck is empty and fragmented
+        noteEditorFrame?.visibility = if (fragmented && !isDeckEmpty) {
+            currentCardId = viewModel.cards[cardsAdapter.selectedPosition].id
+            loadNoteEditorFragmentIfFragmented(editNoteLauncher)
+            View.VISIBLE
+        } else {
+            invalidateOptionsMenu()
+            View.GONE
+        }
         /*check whether mSearchView is initialized as it is lateinit property.*/
         if (searchView == null || searchView!!.isIconified) {
             restoreScrollPositionIfRequested()
@@ -1950,6 +2081,7 @@ open class CardBrowser :
     ) : BaseAdapter() {
         private var originalTextSize = -1.0f
         private val inflater: LayoutInflater
+        var selectedPosition: Int = 0
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
             val v: View
@@ -1977,8 +2109,10 @@ open class CardBrowser :
                     setFont(column as TextView) // set font for column
                     column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
+            // check whether the view is selected
+            val isHighLight = position == selectedPosition
             // set card's background color
-            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser)
+            val backgroundColor: Int = card.getBackgroundColor(this@CardBrowser, isHighLight)
             v.setBackgroundColor(backgroundColor)
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
@@ -2160,12 +2294,14 @@ open class CardBrowser :
          * @return index into TypedArray specifying the background color
          */
         @ColorInt
-        fun getBackgroundColor(context: Context): Int {
+        fun getBackgroundColor(context: Context, isHighlight: Boolean): Int {
             val flagColor = Flag.fromCode(card.userFlag()).browserColorRes
             if (flagColor != null) {
                 return context.getColor(flagColor)
             }
-            val colorAttr = if (isMarked(col, card.note(col))) {
+            val colorAttr = if (isHighlight) {
+                R.attr.currentDeckBackgroundColor
+            } else if (isMarked(col, card.note(col))) {
                 R.attr.markedColor
             } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                 R.attr.suspendedColor
@@ -2425,8 +2561,8 @@ open class CardBrowser :
         fun clearLastDeckId() = SharedPreferencesLastDeckIdRepository.clearLastDeckId()
 
         @VisibleForTesting
-        fun createAddNoteIntent(context: Context, viewModel: CardBrowserViewModel): Intent {
-            return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
+        fun createAddNoteLauncher(viewModel: CardBrowserViewModel, inFragmentedActivity: Boolean = false): NoteEditorLauncher {
+            return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel, inFragmentedActivity)
         }
 
         @CheckResult

@@ -89,12 +89,13 @@ sealed interface NoteEditorLauncher {
      * Represents adding a note to the NoteEditor from the card browser.
      * @property viewModel The view model containing data from the card browser.
      */
-    data class AddNoteFromCardBrowser(val viewModel: CardBrowserViewModel) :
+    data class AddNoteFromCardBrowser(val viewModel: CardBrowserViewModel, val inFragmentedActivity: Boolean = false) :
         NoteEditorLauncher {
         override fun toBundle(): Bundle {
             val bundle = bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_CARDBROWSER_ADD,
-                NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms
+                NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms,
+                NoteEditor.IN_FRAGMENTED_ACTIVITY to inFragmentedActivity
             )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 bundle.putLong(NoteEditor.EXTRA_DID, viewModel.lastDeckId!!)
@@ -138,12 +139,13 @@ sealed interface NoteEditorLauncher {
      * @property cardId The ID of the card to edit.
      * @property animation The animation direction.
      */
-    data class EditCard(val cardId: CardId, val animation: ActivityTransitionAnimation.Direction) :
+    data class EditCard(val cardId: CardId, val animation: ActivityTransitionAnimation.Direction, val inFragmentedActivity: Boolean = false) :
         NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
             NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_EDIT,
             NoteEditor.EXTRA_CARD_ID to cardId,
-            AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable
+            AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable,
+            NoteEditor.IN_FRAGMENTED_ACTIVITY to inFragmentedActivity
         )
     }
 

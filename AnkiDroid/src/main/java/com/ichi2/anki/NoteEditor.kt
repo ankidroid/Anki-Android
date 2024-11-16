@@ -260,6 +260,12 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     var clipboard: ClipboardManager? = null
 
+    /**
+     * Whether this is displayed in a fragment view.
+     * If true, this fragment is on the trailing side of the card browser.
+     */
+    private var inFragmentedActivity = false
+
     private val requestAddLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
         NoteEditorActivityResultCallback {
@@ -478,6 +484,8 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Retrieve the boolean argument "inFragmentedActivity" from the fragment's arguments bundle
+        inFragmentedActivity = requireArguments().getBoolean(IN_FRAGMENTED_ACTIVITY)
         // Set up toolbar
         toolbar = findViewById(R.id.editor_toolbar)
         toolbar.apply {
@@ -495,6 +503,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             )
             setIconColor(MaterialColors.getColor(requireContext(), R.attr.toolbarIconColor, 0))
         }
+        // Hide mainToolbar since CardBrowser handles the toolbar in fragmented activities.
+        if (inFragmentedActivity) {
+            mainToolbar.visibility = View.GONE
+        }
+
         startLoadingCollection()
         // TODO this callback doesn't handle predictive back navigation!
         // see #14678, added to temporarily fix for a bug
@@ -1276,7 +1289,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             menu.findItem(R.id.action_save).isVisible = iconVisible
             menu.findItem(R.id.action_preview).isVisible = iconVisible
         } else {
-            menu.findItem(R.id.action_add_note_from_note_editor).isVisible = true
+            // Hide add note item if fragment is in fragmented activity
+            // because this item is already present in CardBrowser
+            menu.findItem(R.id.action_add_note_from_note_editor).isVisible = !inFragmentedActivity
         }
         if (editFields != null) {
             for (i in editFields!!.indices) {
@@ -1495,6 +1510,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             }
             // ensure there are no orphans from possible edit previews
             CardTemplateNotetype.clearTempModelFiles()
+
+            // Don't close this fragment if it is in fragmented activity
+            if (inFragmentedActivity) {
+                return
+            }
 
             // Set the finish animation if there is one on the intent which created the activity
             val animation = BundleCompat.getParcelable(
@@ -2670,6 +2690,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         const val NOTE_CHANGED_EXTRA_KEY = "noteChanged"
         const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
         const val EXTRA_IMG_OCCLUSION = "image_uri"
+        const val IN_FRAGMENTED_ACTIVITY = "inFragmentedActivity"
 
         // calling activity
         const val CALLER_NO_CALLER = 0
@@ -2693,6 +2714,12 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         private const val PREF_NOTE_EDITOR_CAPITALIZE = "note_editor_capitalize"
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
+
+        fun newInstance(launcher: NoteEditorLauncher): NoteEditor {
+            return NoteEditor().apply {
+                this.arguments = launcher.toBundle()
+            }
+        }
 
         private fun shouldReplaceNewlines(): Boolean {
             return AnkiDroidApp.instance.sharedPrefs()
