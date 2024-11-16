@@ -4,6 +4,9 @@ updates:
   directory: "/"
   schedule:
     interval: "daily"
+  target-branch: dependency-updates
+  labels:
+  - "dependencies"
 - package-ecosystem: gradle
   directory: "/"
   schedule:
