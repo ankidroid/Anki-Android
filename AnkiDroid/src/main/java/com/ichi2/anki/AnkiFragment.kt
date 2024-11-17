@@ -27,7 +27,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.ichi2.async.CollectionLoader
 import com.ichi2.compat.CompatV24
 import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes
@@ -60,13 +59,6 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
         get() = requireView().findViewById(R.id.toolbar)
 
     // Open function: These can be overridden to react to specific parts of the lifecycle
-
-    /**
-     * Callback for [startLoadingCollection], executed once the collection is available.
-     */
-    protected open fun onCollectionLoaded(col: Collection) {
-        hideProgressBar()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
@@ -110,16 +102,6 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     }
 
     /**
-     * Hides progress bar.
-     */
-    private fun hideProgressBar() = ankiActivity.hideProgressBar()
-
-    /**
-     * Shows progress bar.
-     */
-    private fun showProgressBar() = ankiActivity.showProgressBar()
-
-    /**
      * Unregisters a previously registered broadcast receiver.
      *
      * @param unmountReceiver The BroadcastReceiver instance to unregister.
@@ -159,32 +141,6 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
      */
     protected fun setTitle(@StringRes title: Int) {
         mainToolbar.setTitle(title)
-    }
-
-    /**
-     * Starts loading the Anki collection asynchronously if it hasn't been opened yet.
-     * If the collection is already open, calls `onCollectionLoaded` synchronously.
-     * Shows a progress bar during loading.
-     */
-    protected fun startLoadingCollection() {
-        Timber.d("AnkiFragment.startLoadingCollection()")
-        if (CollectionManager.isOpenUnsafe()) {
-            Timber.d("Synchronously calling onCollectionLoaded")
-            onCollectionLoaded(getColUnsafe)
-            return
-        }
-        // Open collection asynchronously if it hasn't already been opened
-        showProgressBar()
-        CollectionLoader.load(
-            this
-        ) { col: Collection? ->
-            if (col != null) {
-                Timber.d("Asynchronously calling onCollectionLoaded")
-                onCollectionLoaded(col)
-            } else {
-                ankiActivity.onCollectionLoadError()
-            }
-        }
     }
 
     /**
