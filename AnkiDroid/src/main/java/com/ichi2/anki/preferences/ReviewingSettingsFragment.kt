@@ -55,9 +55,9 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
         // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
         requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
-            launchCatchingTask { setValue(withCol { sched.timeboxSecs() / 60 }) }
+            launchCatchingTask { setValue(getTimeboxTimeLimit().toInt(DurationUnit.MINUTES)) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set("timeLim", (newValue as Int * 60)) } }
+                launchCatchingTask { setTimeboxTimeLimit((newValue as Int).toDuration(DurationUnit.MINUTES)) }
             }
         }
         // Start of next day
@@ -82,6 +82,19 @@ class ReviewingSettingsFragment : SettingsFragment() {
 
         undoableOp { setPreferences(newPrefs) }
         Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
+    }
+
+    private suspend fun getTimeboxTimeLimit(): Duration {
+        return withCol { getPreferences().reviewing.timeLimitSecs }.toDuration(DurationUnit.SECONDS)
+    }
+
+    private suspend fun setTimeboxTimeLimit(limit: Duration) {
+        val prefs = withCol { getPreferences() }
+        val newPrefs = prefs.copy {
+            reviewing = prefs.reviewing.copy { timeLimitSecs = limit.toInt(DurationUnit.SECONDS) }
+        }
+        undoableOp { setPreferences(newPrefs) }
+        Timber.i("Set timeLimitSecs to %d", limit.toInt(DurationUnit.SECONDS))
     }
 }
 
