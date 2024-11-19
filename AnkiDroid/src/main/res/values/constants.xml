@@ -249,7 +249,7 @@
 
     <string-array name="reviewing_summary_entries">
         <item>@string/pref_cat_scheduling</item>
-        <item>@string/timeout_answer_text</item>
+        <item>@string/pref_keep_screen_on</item>
     </string-array>
 
     <string-array name="sync_summary_entries">

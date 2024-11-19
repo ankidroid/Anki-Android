@@ -53,7 +53,6 @@ class AutomaticAnswerTest : JvmTest() {
         val answer = AutomaticAnswer(
             target = automaticallyAnsweredMock(),
             settings = AutomaticAnswerSettings(
-                useTimer = true,
                 secondsToShowQuestionFor = 0.0,
                 secondsToShowAnswerFor = 0.0
             )
@@ -136,7 +135,6 @@ class AutomaticAnswerTest : JvmTest() {
         return AutomaticAnswer(
             target = automaticAnswerHandler,
             settings = AutomaticAnswerSettings(
-                useTimer = true,
                 secondsToShowQuestionFor = 10.0,
                 secondsToShowAnswerFor = 10.0
             )

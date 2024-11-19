@@ -49,14 +49,6 @@
             app:min="0"
             app1:summaryFormat="@plurals/pref_summ_minutes"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/timeout_answer_text" >
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:disableDependentsState="false"
-            android:key="@string/timeout_answer_preference"
-            android:summary="@string/timeout_answer_summ2"
-            android:title="@string/timeout_answer_text" />
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
         <SwitchPreferenceCompat
             android:defaultValue="false"

@@ -1233,8 +1233,7 @@ abstract class AbstractFlashcardViewer :
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             showNextReviewTime = col.config.get("estTimes") ?: true
-            val preferences = baseContext.sharedPrefs()
-            automaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
+            automaticAnswer = AutomaticAnswer.createInstance(this, col)
         } catch (ex: Exception) {
             Timber.w(ex)
             onCollectionLoadError()

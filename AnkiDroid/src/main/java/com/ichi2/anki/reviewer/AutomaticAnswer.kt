@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.reviewer
 
-import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.CollectionManager.TR
@@ -149,7 +148,6 @@ class AutomaticAnswer(
 
     /** Stop any "Automatic show answer" tasks in order to avoid race conditions */
     fun onDisplayQuestion() {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingQuestion) return
         hasPlayedSounds = false
 
@@ -158,7 +156,6 @@ class AutomaticAnswer(
 
     /** Stop any "Automatic show question" tasks in order to avoid race conditions */
     fun onDisplayAnswer() {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingAnswer) return
         hasPlayedSounds = false
 
@@ -187,7 +184,6 @@ class AutomaticAnswer(
      * after a user-specified duration, plus an additional delay for media
      */
     fun scheduleAutomaticDisplayAnswer(additionalDelay: Long = 0) {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingQuestion) return
         if (hasPlayedSounds) return
         hasPlayedSounds = true
@@ -199,7 +195,6 @@ class AutomaticAnswer(
      * after a user-specified duration, plus an additional delay for media
      */
     fun scheduleAutomaticDisplayQuestion(additionalMediaDelay: Long = 0) {
-        if (!settings.useTimer) return
         if (!settings.autoAdvanceIfShowingAnswer) return
         if (hasPlayedSounds) return
         hasPlayedSounds = true
@@ -228,8 +223,8 @@ class AutomaticAnswer(
         }
 
         @CheckResult
-        fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
-            val settings = AutomaticAnswerSettings.createInstance(preferences, col)
+        fun createInstance(target: AutomaticallyAnswered, col: Collection): AutomaticAnswer {
+            val settings = AutomaticAnswerSettings.createInstance(col)
             return AutomaticAnswer(target, settings)
         }
     }
@@ -253,7 +248,6 @@ class AutomaticAnswer(
  */
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
-    @get:JvmName("useTimer") val useTimer: Boolean = false,
     private val secondsToShowQuestionFor: Double = 60.0,
     private val secondsToShowAnswerFor: Double = 20.0
 ) {
@@ -271,24 +265,21 @@ class AutomaticAnswerSettings(
          */
         @NeedsTest("ensure question setting maps to question parameter")
         fun queryOptions(
-            preferences: SharedPreferences,
             col: Collection,
             selectedDid: DeckId
         ): AutomaticAnswerSettings {
             val conf = col.decks.configDictForDeckId(selectedDid)
             val action = getAction(conf)
-            val useTimer = preferences.getBoolean("timeoutAnswer", false)
 
             return AutomaticAnswerSettings(
                 answerAction = action,
-                useTimer = useTimer,
                 secondsToShowQuestionFor = conf.secondsToShowQuestion,
                 secondsToShowAnswerFor = conf.secondsToShowAnswer
             )
         }
 
-        fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
-            return queryOptions(preferences, col, col.decks.selected())
+        fun createInstance(col: Collection): AutomaticAnswerSettings {
+            return queryOptions(col, col.decks.selected())
         }
 
         private fun getAction(conf: DeckConfig): AutomaticAnswerAction {
