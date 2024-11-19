@@ -466,7 +466,6 @@ object UsageAnalytics {
         "dayOffset", // Start of next day
         "learnCutoff", // Learn ahead limit
         "timeLimit", // Timebox time limit
-        "timeoutAnswer", // Automatic display answer
         "keepScreenOn", // Disable screen timeout
         "doubleTapTimeInterval", // Double tap time interval (milliseconds)
         // Sync

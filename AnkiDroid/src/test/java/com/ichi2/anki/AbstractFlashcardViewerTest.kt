@@ -271,7 +271,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() = runTest {
         val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
-        viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5.0, 5.0))
+        viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, 5.0, 5.0))
         viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
         assertThat("messages after flipping card", viewer.hasAutomaticAnswerQueued(), equalTo(true))
         controller.pause()
