@@ -19,12 +19,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.preferences
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
@@ -32,21 +30,15 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import anki.config.copy
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.undoableOp
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
@@ -229,23 +221,5 @@ class Preferences :
         /** Whether the user is logged on to AnkiWeb  */
         fun hasAnkiWebAccount(preferences: SharedPreferences): Boolean =
             preferences.getString("username", "")!!.isNotEmpty()
-
-        /** Sets the hour that the collection rolls over to the next day  */
-        @VisibleForTesting
-        @NeedsTest("ensure Start of Next Day is handled by the scheduler")
-        suspend fun setDayOffset(context: Context, hours: Int) {
-            val prefs = withCol { getPreferences() }
-            val newPrefs = prefs.copy { scheduling = prefs.scheduling.copy { rollover = hours } }
-
-            undoableOp {
-                setPreferences(newPrefs)
-            }
-            scheduleNotification(TimeManager.time, context)
-            Timber.i("set day offset: '%d'", hours)
-        }
-
-        suspend fun getDayOffset(): Int {
-            return withCol { getPreferences().scheduling.rollover }
-        }
     }
 }
