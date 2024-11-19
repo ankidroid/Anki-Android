@@ -22,7 +22,6 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
-import anki.config.ConfigKey
 import anki.config.copy
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
@@ -139,9 +138,11 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Note: Stored inverted in the collection as HIDE_AUDIO_PLAY_BUTTONS
         requirePreference<SwitchPreferenceCompat>(R.string.show_audio_play_buttons_key).apply {
             title = CollectionManager.TR.preferencesShowPlayButtonsOnCardsWith()
-            launchCatchingTask { isChecked = withCol { !config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS) } }
-            setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS, !(newValue as Boolean)) } }
+            launchCatchingTask { isChecked = !getHidePlayAudioButtons() }
+            setOnPreferenceChangeListener { _, newValue ->
+                val newValueBool = newValue as? Boolean ?: return@setOnPreferenceChangeListener false
+                launchCatchingTask { setHideAudioPlayButtons(!newValueBool) }
+                true
             }
         }
     }
@@ -211,7 +212,19 @@ class AppearanceSettingsFragment : SettingsFragment() {
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set showRemainingDueCounts to %b", value)
     }
+
+    private suspend fun setHideAudioPlayButtons(value: Boolean) {
+        val prefs = withCol { getPreferences() }
+        val newPrefs = prefs.copy {
+            reviewing = reviewing.copy { hideAudioPlayButtons = value }
+        }
+        undoableOp { setPreferences(newPrefs) }
+        Timber.i("Set hideAudioPlayButtons to %b", value)
+    }
 }
 
 suspend fun getShowIntervalOnButtons(): Boolean =
     withCol { getPreferences().reviewing.showIntervalsOnButtons }
+
+suspend fun getHidePlayAudioButtons(): Boolean =
+    withCol { getPreferences().reviewing.hideAudioPlayButtons }
