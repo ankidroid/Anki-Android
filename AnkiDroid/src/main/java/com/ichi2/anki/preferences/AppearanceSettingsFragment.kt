@@ -127,10 +127,10 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
         requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
-            launchCatchingTask { isChecked = withCol { config.get("dueCounts") ?: true } }
+            launchCatchingTask { isChecked = getShowRemainingDueCounts() }
             setOnPreferenceChangeListener { _, newDueCountsValue ->
                 val newDueCountsValueBool = newDueCountsValue as? Boolean ?: return@setOnPreferenceChangeListener false
-                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValueBool) } }
+                launchCatchingTask { setShowRemainingDueCounts(newDueCountsValueBool) }
                 true
             }
         }
@@ -198,6 +198,18 @@ class AppearanceSettingsFragment : SettingsFragment() {
         }
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set showIntervalsOnButtons to %b", value)
+    }
+
+    private suspend fun getShowRemainingDueCounts(): Boolean =
+        withCol { getPreferences().reviewing.showRemainingDueCounts }
+
+    private suspend fun setShowRemainingDueCounts(value: Boolean) {
+        val prefs = withCol { getPreferences() }
+        val newPrefs = prefs.copy {
+            reviewing = reviewing.copy { showRemainingDueCounts = value }
+        }
+        undoableOp { setPreferences(newPrefs) }
+        Timber.i("Set showRemainingDueCounts to %b", value)
     }
 }
 
