@@ -15,14 +15,16 @@
  */
 package com.ichi2.anki.preferences
 
+import android.content.Context
+import androidx.annotation.VisibleForTesting
 import anki.config.copy
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
-import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
-import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
+import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.undoableOp
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
 import timber.log.Timber
@@ -81,4 +83,23 @@ class ReviewingSettingsFragment : SettingsFragment() {
         undoableOp { setPreferences(newPrefs) }
         Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
     }
+}
+
+/** Sets the hour that the collection rolls over to the next day  */
+@VisibleForTesting
+@NeedsTest("ensure Start of Next Day is handled by the scheduler")
+suspend fun setDayOffset(context: Context, hours: Int) {
+    val prefs = withCol { getPreferences() }
+    val newPrefs = prefs.copy { scheduling = prefs.scheduling.copy { rollover = hours } }
+
+    undoableOp {
+        setPreferences(newPrefs)
+    }
+    scheduleNotification(TimeManager.time, context)
+    Timber.i("set day offset: '%d'", hours)
+}
+
+@VisibleForTesting
+suspend fun getDayOffset(): Int {
+    return withCol { getPreferences().scheduling.rollover }
 }
