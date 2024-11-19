@@ -55,7 +55,7 @@
     </plurals>
     <string name="card_browser_all_decks">Όλες οι τράπουλες</string>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
+        <item quantity="one">Διαγραφή σημείωσης</item>
         <item quantity="other">Διαγραφή σημειώσεων</item>
     </plurals>
     <string name="card_browser_change_deck" maxLength="28">Αλλαγή τράπουλας</string>
@@ -70,11 +70,11 @@
     <string name="card_browser_list_my_searches_new_name">Όνομα για την τρέχουσα αναζήτηση</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Δεν μπορείτε να αποθηκεύσετε μια αναζήτηση χωρίς όνομα</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Το όνομα υπάρχει</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Καμία σημείωση για επεξεργασία</string>
     <string name="card_browser_list_my_searches_remove_content">Διαγραφή του «%1$s»;</string>
     <string name="card_browser_change_display_order" maxLength="28">Αλλαγή σειράς εμφάνισης</string>
     <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Αναζήτηση</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Αναζήτηση</string>
     <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>
     <string name="card_details_tags">Ετικέτες</string>
     <string-array name="card_browser_order_labels">

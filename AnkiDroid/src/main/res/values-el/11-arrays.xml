@@ -79,19 +79,19 @@
     <string name="html_size_code_x_large">x-μεγάλο</string>
     <string name="html_size_code_xx_large">xx-μεγάλο</string>
     <!-- gestures_labels -->
-    <string name="answer_again" maxLength="41">Answer again</string>
-    <string name="answer_hard" maxLength="41">Answer hard</string>
-    <string name="answer_good" maxLength="41">Answer good</string>
-    <string name="answer_easy" maxLength="41">Answer easy</string>
+    <string name="answer_again" maxLength="41">Απάντηση ξανά</string>
+    <string name="answer_hard" maxLength="41">Απάντηση δύσκολο</string>
+    <string name="answer_good" maxLength="41">Απάντηση καλό</string>
+    <string name="answer_easy" maxLength="41">Απάντηση εύκολο</string>
     <string name="gesture_play" maxLength="41">Αναπαραγωγή πολυμέσων</string>
     <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
-    <string name="gesture_flag_red" maxLength="41">Toggle Red Flag</string>
-    <string name="gesture_flag_orange" maxLength="41">Toggle Orange Flag</string>
-    <string name="gesture_flag_green" maxLength="41">Toggle Green Flag</string>
-    <string name="gesture_flag_blue" maxLength="41">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle Purple Flag</string>
+    <string name="gesture_flag_red" maxLength="41">Εναλλαγή Κόκκινης Σημαίας</string>
+    <string name="gesture_flag_orange" maxLength="41">Εναλλαγή Πορτοκαλί Σημαίας</string>
+    <string name="gesture_flag_green" maxLength="41">Εναλλαγή Πράσινης Σημαίας</string>
+    <string name="gesture_flag_blue" maxLength="41">Εναλλαγή Μπλε Σημαίας</string>
+    <string name="gesture_flag_pink" maxLength="41">Εναλλαγή Ροζ Σημαίας</string>
+    <string name="gesture_flag_turquoise" maxLength="41">Εναλλαγή Σημαίας Τυρκουάζ</string>
+    <string name="gesture_flag_purple" maxLength="41">Εναλλαγή Μωβ Σημαίας</string>
     <string name="gesture_flag_remove" maxLength="41">Αφαίρεση σημαίας</string>
     <string name="gesture_page_up" maxLength="41">Page Up</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
@@ -101,5 +101,5 @@
     <string name="gesture_show_all_hints" maxLength="41">Εμφάνιση Όλων Των Υποδείξεων</string>
     <string name="record_voice" maxLength="41">Εγγραφή φωνής</string>
     <string name="replay_voice" maxLength="41">Επανάληψη φωνής</string>
-    <string name="save_voice" maxLength="41">Save Recording</string>
+    <string name="save_voice" maxLength="41">Αποθήκευση Εγγραφής</string>
 </resources>

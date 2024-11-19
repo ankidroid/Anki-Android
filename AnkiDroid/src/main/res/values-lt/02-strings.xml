@@ -175,7 +175,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Nustatyti skaitymo balsu kalbą</string>
     <string name="custom_study" maxLength="28">Individualus mokymasis</string>
-    <string name="more_options">Daugiau</string>
     <string name="dyn_deck_desc">Tai yra specialus rinkinys, skirtas mokytis papildomai. Peržiūrėjus korteles, jos bus automatiškai grąžintos į savo pagrindinius rinkinius. Ištrynus šį rinkinį iš sąrašo, visos kortelės bus grąžintos į savo pradinį rinkinį.</string>
     <string name="steps_error">Veiksmų skaičius privalo būti didesnis už 0</string>
     <string name="steps_min_error">Reikia nurodyti bent vieną veiksmą</string>

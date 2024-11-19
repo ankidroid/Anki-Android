@@ -169,7 +169,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Õppimise valikud</string>
     <string name="select_tts" maxLength="28">Vali TTS-i keel</string>
     <string name="custom_study" maxLength="28">Kohandatud õpe</string>
-    <string name="more_options">Rohkem</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>

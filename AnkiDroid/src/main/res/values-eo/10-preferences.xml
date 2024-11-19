@@ -361,5 +361,5 @@ Vi povas restarigi el sekurkopio aŭ elporti vian kolekton per la menuo de listo
     <string name="hide_answer_buttons" maxLength="41">Kaŝi respondajn butonojn</string>
     <string name="hide_hard_and_easy" maxLength="41">Kaŝi butonojn “malfacile” kaj “facile”</string>
     <!--Keyboard shortcuts dialog-->
-    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Open settings</string>
+    <string name="open_settings" comment="Description of the shortcut that opens the app settings">Malfermi agordojn</string>
 </resources>

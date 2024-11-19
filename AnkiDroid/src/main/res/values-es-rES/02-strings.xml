@@ -169,7 +169,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>
     <string name="select_tts" maxLength="28">Establecer idioma TTS</string>
     <string name="custom_study" maxLength="28">Estudio personalizado</string>
-    <string name="more_options">Más</string>
     <string name="dyn_deck_desc">Esta es un mazo especial para estudiar aparte del programa habitual. Las cartas se devolverán automáticamente a sus mazos originales después de que las revises. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
     <string name="steps_error">Los pasos deben ser un número mayor que 0</string>
     <string name="steps_min_error">Se requiere al menos un paso</string>

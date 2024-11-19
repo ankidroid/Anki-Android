@@ -169,7 +169,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">TTS hizkuntza ezarri</string>
     <string name="custom_study" maxLength="28">Neurrira egindako ikasketa saioa</string>
-    <string name="more_options">Gehiago</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Hurratsak 0 baino handiagoak diren zenbakiak izan behar dira</string>
     <string name="steps_min_error">Gutxienez hurrats bat behar da</string>
