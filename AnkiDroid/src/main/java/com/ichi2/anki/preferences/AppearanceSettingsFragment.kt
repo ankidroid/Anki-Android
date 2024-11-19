@@ -23,6 +23,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import anki.config.ConfigKey
+import anki.config.copy
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
@@ -31,6 +32,7 @@ import com.ichi2.anki.deckpicker.BackgroundImage.FileSizeResult
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.libanki.undoableOp
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.systemIsInNightMode
@@ -114,10 +116,10 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
         requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
-            launchCatchingTask { isChecked = withCol { config.get("estTimes") ?: true } }
+            launchCatchingTask { isChecked = getShowIntervalOnButtons() }
             setOnPreferenceChangeListener { _, newETA ->
                 val newETABool = newETA as? Boolean ?: return@setOnPreferenceChangeListener false
-                launchCatchingTask { withCol { config.set("estTimes", newETABool) } }
+                launchCatchingTask { setShowIntervalsOnButtons(newETABool) }
                 true
             }
         }
@@ -188,4 +190,16 @@ class AppearanceSettingsFragment : SettingsFragment() {
             showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
         }
     }
+
+    private suspend fun setShowIntervalsOnButtons(value: Boolean) {
+        val prefs = withCol { getPreferences() }
+        val newPrefs = prefs.copy {
+            reviewing = reviewing.copy { showIntervalsOnButtons = value }
+        }
+        undoableOp { setPreferences(newPrefs) }
+        Timber.i("Set showIntervalsOnButtons to %b", value)
+    }
 }
+
+suspend fun getShowIntervalOnButtons(): Boolean =
+    withCol { getPreferences().reviewing.showIntervalsOnButtons }
