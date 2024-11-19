@@ -35,6 +35,7 @@ import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
+import com.ichi2.anki.preferences.getShowIntervalOnButtons
 import com.ichi2.anki.previewer.CardViewerViewModel
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
@@ -99,7 +100,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
     val answerButtonsNextTimeFlow: MutableStateFlow<AnswerButtonsNextTime?> = MutableStateFlow(null)
     private val shouldShowNextTimes: Deferred<Boolean> = asyncIO {
-        withCol { config.get("estTimes") ?: true }
+        getShowIntervalOnButtons()
     }
 
     init {
