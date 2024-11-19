@@ -147,7 +147,7 @@ class Statistics :
      **/
     private fun changeDeck(selectedDeckName: String) {
         val javascriptCode = """
-        var textBox = [].slice.call(document.getElementsByTagName('input'), 0).filter(x => x.type == "text")[0];
+        var textBox = document.getElementById("statisticsSearchText");
         textBox.value = "deck:\"$selectedDeckName\"";
         textBox.dispatchEvent(new Event("input", { bubbles: true }));
         textBox.dispatchEvent(new Event("change"));
