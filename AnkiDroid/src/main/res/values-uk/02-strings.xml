@@ -175,7 +175,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>
     <string name="select_tts" maxLength="28">Обрати TTS мову</string>
     <string name="custom_study" maxLength="28">Додаткове навчання</string>
-    <string name="more_options">Ще</string>
     <string name="dyn_deck_desc">Це спеціальна колода для навчання поза межами нормального графіку. Картки будуть автоматично повернуті до своїх колод після повторення. Видалення цієї колоди поверне всі карточки до своїх колод.</string>
     <string name="steps_error">Кроки повинні бути числами, більшими ніж 0</string>
     <string name="steps_min_error">Принаймні один крок потрібний</string>

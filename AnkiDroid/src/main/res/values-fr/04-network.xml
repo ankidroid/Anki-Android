@@ -70,7 +70,7 @@
     <string name="sync_title">Synchronisation</string>
     <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
     <string name="sync_database_acknowledge">Collection synchronisée</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">Collection synchronisée. Les médias sont en cours de synchronisation en arrière-plan</string>
     <string name="sync_corrupt_database">Votre base de données est corrompue. Veuillez la réparer avant de tenter à nouveau de synchroniser.\n\nVoir %s pour plus d\'informations sur la réparation de votre base de données.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>

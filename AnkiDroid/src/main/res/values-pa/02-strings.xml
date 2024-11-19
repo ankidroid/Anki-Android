@@ -169,7 +169,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ਅਧਿਐਨ ਦੇ ਵਿਕਲਪ</string>
     <string name="select_tts" maxLength="28">TTS ਭਾਸ਼ਾ ਸੈੱਟ ਕਰੋ</string>
     <string name="custom_study" maxLength="28">ਕਸਟਮ ਅਧਿਐਨ</string>
-    <string name="more_options">ਹੋਰ</string>
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">ਕਦਮਾਂ ਦੀ ਗਿਣਤੀ 0 ਤੋਂ ਵੱਧ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ</string>
     <string name="steps_min_error">ਘੱਟੋ-ਘੱਟ ਇੱਕ ਕਦਮ ਦੀ ਲੋੜ ਹੈ</string>

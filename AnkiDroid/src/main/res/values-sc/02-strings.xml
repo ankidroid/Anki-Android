@@ -172,7 +172,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Optziones de istùdiu</string>
     <string name="select_tts" maxLength="28">Imposta sa limba de su sintetizadore de boghe</string>
     <string name="custom_study" maxLength="28">Istùdiu personalizadu</string>
-    <string name="more_options">Àteru</string>
     <string name="dyn_deck_desc">Custu est unu matzu ispetziale pro istudiare in foras de sa pranificatzione normale. Sas cartas ant a torrare in manera automàtica a sos matzos originales issoro a pustis chi las as a revisionare. Iscantzellende custu matzu dae sa lista de matzos at a fàghere torrare totu sas cartas chi abarrant a sos matzos originales issoro.</string>
     <string name="steps_error">Sos passos depent èssere in unu nùmeru prus mannu de 0</string>
     <string name="steps_min_error">B\'at bisòngiu de a su nessi unu passu</string>

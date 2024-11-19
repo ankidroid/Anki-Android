@@ -64,22 +64,22 @@
     <string name="log_out">Desconnecta</string>
     <string name="reset_password">Restableix la contrasenya</string>
     <string name="lost_mail_instructions">Heu oblidat el correu electrònic?</string>
-    <string name="sign_in">Signing in</string>
+    <string name="sign_in">S\'està iniciant la sessió</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opcions per XXX</string>
     <string name="sync_title">Sincronització</string>
     <string name="sync_log_uploading_message">Sincronització completa dels paquets locals</string>
     <string name="sync_database_acknowledge">Col·lecció sincronitzada</string>
-    <string name="col_synced_media_in_background">Collection synced. Media is being synced in the background.</string>
+    <string name="col_synced_media_in_background">La col·lecció està sincronitzada. Els mèdia s\'estan sincronitzant en segon pla.</string>
     <string name="sync_corrupt_database">La base de dades està feta malbé. Corregiu-ho abans d\'intentar una nova sincronització.\n\nVeieu %s per a obtenir informació sobre com reparar la base de dades.</string>
     <!-- Please run ‘Check database’ before syncing -->
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remot</string>
-    <string name="one_way_sync_title" maxLength="41">One-way sync</string>
-    <string name="one_way_sync_confirmation">One way sync requested</string>
+    <string name="one_way_sync_title" maxLength="41">Sincronització en un sol sentit</string>
+    <string name="one_way_sync_confirmation">S\'ha demanat sincronitzar en un sol sentit</string>
     <string name="full_sync_confirmation">El canvi sol·licitat requerirà una càrrega completa de la base de dades quan sincronitzeu la col·lecció. Si teniu revisions o altres canvis esperant a un altre dispositiu que encara no s\'han sincronitzat aquí encara, estaran perduts. Voleu continuar?</string>
     <string name="full_sync_confirmation_upgrade">Per un error en la versió anteriorment instal·lada de AnkiDroid, es recomana forçar una sincronització completa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_one_way_sync">Sync (one-way)</string>
+    <string name="sync_menu_title_one_way_sync">Sincronitza (en un sol sentit)</string>
     <string name="sync_menu_title_no_account">Sincronització (entrada)</string>
 </resources>

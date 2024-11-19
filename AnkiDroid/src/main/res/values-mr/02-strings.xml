@@ -169,7 +169,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">अभ्यासाचे पर्याय</string>
     <string name="select_tts" maxLength="28">TTS भाषा सेट करा</string>
     <string name="custom_study" maxLength="28">सानुकूल अभ्यास</string>
-    <string name="more_options">अधिक</string>
     <string name="dyn_deck_desc">सामान्य शेड्यूलच्या बाहेर अभ्यास करण्यासाठी हा एक विशेष डेक आहे. तुम्ही त्यांचे पुनरावलोकन केल्यानंतर कार्डे आपोआप त्यांच्या मूळ डेकवर परत येतील. डेक सूचीमधून हा डेक हटवल्याने उर्वरित सर्व कार्ड त्यांच्या मूळ डेकवर परत येतील.</string>
     <string name="steps_error">पायऱ्यांची संख्या 0 पेक्षा मोठी असणे आवश्यक आहे</string>
     <string name="steps_min_error">किमान एक पाऊल आवश्यक आहे</string>

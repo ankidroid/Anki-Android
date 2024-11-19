@@ -175,7 +175,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
     <string name="select_tts" maxLength="28">Nastavit jazyk TTS</string>
     <string name="custom_study" maxLength="28">Vlastní studium</string>
-    <string name="more_options">Více</string>
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="steps_error">Kroky musí být čísla větší než 0</string>
     <string name="steps_min_error">Je požadován alespoň jeden krok</string>

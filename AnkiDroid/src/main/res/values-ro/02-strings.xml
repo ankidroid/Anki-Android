@@ -172,7 +172,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
     <string name="select_tts" maxLength="28">Set TTS language</string>
     <string name="custom_study" maxLength="28">Studiu personalizat</string>
-    <string name="more_options">More</string>
     <string name="dyn_deck_desc">Acesta este un pachet special pentru a studia în afara programului normal. cardurile vor fi returnate automat la pachetele lor originale după ce le revizuiti. Şterge aceast pachet din lista de pachete va returna toate cărțile rămase in pachetele lor originale.</string>
     <string name="steps_error">Măsurile trebuie să fie numere mai mari decât 0</string>
     <string name="steps_min_error">Cel puțin un pas este necesar</string>

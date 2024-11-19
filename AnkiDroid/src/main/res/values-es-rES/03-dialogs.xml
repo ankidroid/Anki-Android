@@ -49,8 +49,8 @@
     <string name="contextmenu_deckpicker_delete_deck" maxLength="28">Eliminar mazo</string>
     <string name="delete_deck_title">¿Eliminar mazo?</string>
     <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards</item>
+        <item quantity="one">¿Eliminar todas las tarjetas en %1$s? Contiene %2$d tarjeta</item>
+        <item quantity="other">¿Eliminar todas las tarjetas en %1$s? Contiene %2$d tarjetas</item>
     </plurals>
     <string name="delete_cram_deck_message">Delete filtered deck %s and send all cards back to their original decks?</string>
     <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>

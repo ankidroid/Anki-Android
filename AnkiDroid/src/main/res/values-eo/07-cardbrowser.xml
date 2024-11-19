@@ -112,6 +112,6 @@
         <item quantity="other">Forigis %d kartojn</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Malfermi redaktilon de etikedoj</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Ŝanĝi ordigon</string>
 </resources>

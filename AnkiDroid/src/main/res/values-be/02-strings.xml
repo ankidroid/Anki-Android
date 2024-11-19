@@ -175,7 +175,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры навучання</string>
     <string name="select_tts" maxLength="28">Прызначыць сінтэз маўлення</string>
     <string name="custom_study" maxLength="28">Індывідуальнае навучанне</string>
-    <string name="more_options">Яшчэ</string>
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="steps_error">Крокі павінны быць лікамі, якія больш за 0</string>
     <string name="steps_min_error">Патрабуецца прынамсі адзін крок</string>

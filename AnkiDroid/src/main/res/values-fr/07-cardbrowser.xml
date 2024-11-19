@@ -70,11 +70,11 @@
     <string name="card_browser_list_my_searches_new_name">Nom de la recherche en cours</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Vous ne pouvez pas enregistrer une recherche sans nom.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Ce nom existe déjà !</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Aucune note à éditer</string>
     <string name="card_browser_list_my_searches_remove_content">Supprimer « %1$s » ?</string>
     <string name="card_browser_change_display_order" maxLength="28">Changer l\'ordre d\'affichage</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Recherche</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Recherche</string>
     <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
     <string name="card_details_tags">Étiquettes</string>
     <string-array name="card_browser_order_labels">
@@ -98,7 +98,7 @@
     <string name="card_browser_search_all_decks">Rechercher dans tous les paquets</string>
     <string name="card_browser_unknown_deck_name">Inconnu</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Tronquer le contenu</string>
-    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Today is ‘0 %1$s’, tomorrow is ‘1 %2$s’, etc&#8230;</string>
+    <string name="set_due_date_hintText" comment="plural set_due_date_label_suffix is used for parameters, parameter 1 is the plural for 0, parameter 2 is the plural for 1">Aujourd’hui est ‘0 %1$s’, demain est ‘1 %2$s’, etc&#8230;</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Exporter la carte</item>
         <item quantity="other">Exporter les cartes</item>
@@ -112,6 +112,6 @@
         <item quantity="other">%d cartes supprimées</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Boîte de dialogue d’édition des tags</string>
     <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
 </resources>

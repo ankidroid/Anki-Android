@@ -166,7 +166,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>
     <string name="select_tts" maxLength="28">Thiết lập ngôn ngữ TTS</string>
     <string name="custom_study" maxLength="28">Học theo tuỳ chọn</string>
-    <string name="more_options">Xem thêm</string>
     <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
     <string name="steps_error">Các bước phải là số lớn hơn 0</string>
     <string name="steps_min_error">Yêu cầu phải có ít nhất một bước</string>

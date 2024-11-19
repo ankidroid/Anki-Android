@@ -169,7 +169,6 @@ Context | Request Context    [1]</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">학습 옵션</string>
     <string name="select_tts" maxLength="28">TTS 언어 설정</string>
     <string name="custom_study" maxLength="28">맞춤 학습</string>
-    <string name="more_options">더 보기</string>
     <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 묶음입니다. 카드들은 복습 후 자동으로 원래의 카드 묶음으로 돌아가게 됩니다. 카드 묶음 목록에서 이 카드 묶음을 지운다면 남아 있는 모든 카드는 원래의 카드 묶음으로 돌아가게 됩니다.</string>
     <string name="steps_error">단계는 0보다 커야 합니다.</string>
     <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>

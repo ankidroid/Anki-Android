@@ -166,7 +166,6 @@
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
     <string name="select_tts" maxLength="28">设置 TTS 语言</string>
     <string name="custom_study" maxLength="28">自定义学习</string>
-    <string name="more_options">更多</string>
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
     <string name="steps_error">间隔必须是大于 0 的数字</string>
     <string name="steps_min_error">至少需要一个间隔</string>
