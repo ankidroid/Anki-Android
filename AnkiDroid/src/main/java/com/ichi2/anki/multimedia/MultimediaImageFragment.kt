@@ -315,17 +315,20 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 showLargeFileCropDialog(viewModel.selectedMediaFileSize)
                 return@setOnClickListener
             }
-
-            field.mediaPath = viewModel.currentMultimediaPath.value
-            field.hasTemporaryMedia = true
-
-            val resultData = Intent().apply {
-                putExtra(MULTIMEDIA_RESULT, field)
-                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-            }
-            requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
-            requireActivity().finish()
+            finishAddingImage()
         }
+    }
+
+    private fun finishAddingImage() {
+        field.mediaPath = viewModel.currentMultimediaPath.value
+        field.hasTemporaryMedia = true
+
+        val resultData = Intent().apply {
+            putExtra(MULTIMEDIA_RESULT, field)
+            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+        }
+        requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
+        requireActivity().finish()
     }
 
     private fun openGallery() {
