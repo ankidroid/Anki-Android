@@ -501,9 +501,20 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
         val imagePath = internalizedPick.absolutePath
 
-        viewModel.updateCurrentMultimediaUri(imageUri)
-        viewModel.updateCurrentMultimediaPath(imagePath)
-        imagePreview.setImageURI(imageUri)
+        try {
+            // set this first, if it blows up we don't want to set the others...
+            imagePreview.setImageURI(imageUri)
+
+            // if that worked, the image was not too large / good format, update viewModel
+            viewModel.updateCurrentMultimediaUri(imageUri)
+            viewModel.updateCurrentMultimediaPath(imagePath)
+        } catch (e: Exception) {
+            Timber.w(e, "handleSelectImageIntent() unable to set image for preview")
+            // clear the image out of the preview so we may recover
+            imagePreview.setImageURI(null)
+            showSomethingWentWrong()
+            return
+        }
         viewModel.selectedMediaFileSize = internalizedPick.length()
         updateAndDisplayImageSize(imagePath)
     }
