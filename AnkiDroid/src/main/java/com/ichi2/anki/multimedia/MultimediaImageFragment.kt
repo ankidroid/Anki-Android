@@ -67,7 +67,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.text.DecimalFormat
+import java.text.NumberFormat
 
 @NeedsTest("Ensure correct option is executed i.e. gallery or camera")
 class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_image) {
@@ -312,7 +312,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 return@setOnClickListener
             }
             if (viewModel.selectedMediaFileSize > IMAGE_LIMIT) {
-                showLargeFileCropDialog((1.0 * viewModel.selectedMediaFileSize / IMAGE_LIMIT).toFloat())
+                showLargeFileCropDialog(viewModel.selectedMediaFileSize)
                 return@setOnClickListener
             }
 
@@ -422,9 +422,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         imageFileSize.text = file.toHumanReadableSize()
     }
 
-    private fun showLargeFileCropDialog(length: Float) {
-        val decimalFormat = DecimalFormat(".00")
-        val size = decimalFormat.format(length.toDouble())
+    private fun showLargeFileCropDialog(length: Long) {
+        val numberFormat = NumberFormat.getInstance()
+        // length is in bits, other elements have MB, convert to MB
+        val size = numberFormat.format(length / 1000000.0)
         val message = getString(R.string.save_dialog_content, size)
         showCompressImageDialog(message)
     }
