@@ -446,7 +446,9 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                     }
                 }
             }
-            negativeButton(R.string.dialog_no)
+            negativeButton(R.string.dialog_no) {
+                finishAddingImage()
+            }
         }
     }
 
