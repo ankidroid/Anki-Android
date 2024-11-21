@@ -17,6 +17,7 @@
 package com.ichi2.anki.dialogs
 
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -29,6 +30,7 @@ import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.AssetHelper.TEXT_PLAIN
 import com.ichi2.utils.title
@@ -166,12 +168,17 @@ class ImportFileSelectionFragment : DialogFragment() {
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple)
             extraMimes?.let { intent.putExtra(Intent.EXTRA_MIME_TYPES, it) }
 
-            if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgImportResultLauncherProvider) {
-                activity.getApkgFileImportResultLauncher().launch(intent)
-            } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
-                activity.getCsvFileImportResultLauncher().launch(intent)
-            } else {
-                Timber.w("Activity($activity) can't handle requested import: $fileType")
+            try {
+                if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgImportResultLauncherProvider) {
+                    activity.getApkgFileImportResultLauncher().launch(intent)
+                } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
+                    activity.getCsvFileImportResultLauncher().launch(intent)
+                } else {
+                    Timber.w("Activity($activity) can't handle requested import: $fileType")
+                }
+            } catch (ex: ActivityNotFoundException) {
+                Timber.w("No activity to handle openImportFilePicker request")
+                activity.showSnackbar(R.string.activity_start_failed)
             }
         }
     }
