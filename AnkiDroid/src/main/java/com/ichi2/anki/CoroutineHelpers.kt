@@ -32,6 +32,7 @@ import androidx.lifecycle.viewModelScope
 import anki.collection.Progress
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.message
@@ -169,8 +170,9 @@ suspend fun <T> FragmentActivity.runCatching(
                 Timber.w(exc, errorMessage)
                 exc.localizedMessage?.let { showSnackbar(it) }
             }
-            is BackendNetworkException, is BackendSyncException -> {
+            is BackendNetworkException, is BackendSyncException, is StorageAccessException -> {
                 // these exceptions do not generate worthwhile crash reports
+                Timber.i("Showing error dialog but not sending a crash report.")
                 showError(this, exc.localizedMessage!!, exc, false)
             }
             is BackendException -> {

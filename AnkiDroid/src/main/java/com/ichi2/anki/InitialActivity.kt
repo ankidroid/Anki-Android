@@ -29,6 +29,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
+import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
@@ -68,6 +69,11 @@ object InitialActivity {
         } catch (e: SQLiteFullException) {
             Timber.w(e)
             StartupFailure.DISK_FULL
+        } catch (e: StorageAccessException) {
+            // Same handling as the fall through, but without the exception report
+            // These are now handled with a dialog and don't generate actionable reports
+            Timber.w(e)
+            StartupFailure.DB_ERROR
         } catch (e: Exception) {
             Timber.w(e)
             CrashReportService.sendExceptionReport(e, "InitialActivity::getStartupFailureType")
