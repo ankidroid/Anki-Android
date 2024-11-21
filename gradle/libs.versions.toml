@@ -62,9 +62,9 @@ commonsCompress = "1.27.1"
 # https://commons.apache.org/proper/commons-exec/changes-report.html
 commonsExec = "1.4.0"
 # https://commons.apache.org/proper/commons-io/changes-report.html
-commonsIo = "2.17.0"
+commonsIo = "2.18.0"
 coroutines = '1.9.0'
-desugar-jdk-libs-nio = "2.1.2"
+desugar-jdk-libs-nio = "2.1.3"
 drawer = "1.0.3"
 dokka = "1.9.20"
 espresso = '3.6.1'
@@ -93,7 +93,8 @@ nanohttpd = "2.3.1"
 okhttp = "4.12.0"
 # https://github.com/protocolbuffers/protobuf/releases
 protobufKotlinLite = "4.28.3"
-robolectric = "4.13"
+# ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
+robolectric = "4.14"
 searchpreference = "2.5.1"
 seismic = "1.0.3"
 sharedPreferencesMock = "1.2.4"
@@ -102,7 +103,7 @@ slf4jTimber = "3.1"
 timber = "5.0.1"
 # https://github.com/Triple-T/gradle-play-publisher/releases
 # In the past, releases have been published before the changelog
-triplet = "3.11.0"
+triplet = "3.12.1"
 turbine = "1.2.0"
 
 [libraries]

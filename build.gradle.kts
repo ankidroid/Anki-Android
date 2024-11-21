@@ -124,12 +124,9 @@ var androidTestName by extra(
 val gradleTestMaxParallelForks by extra(
     if (System.getProperty("os.name") == "Mac OS X") {
         // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
-        val outputStream = ByteArrayOutputStream()
-        project.exec {
+        providers.exec {
             commandLine("sysctl", "-n", "hw.physicalcpu")
-            standardOutput = outputStream
-        }
-        outputStream.toString().trim().toInt()
+        }.standardOutput.asText.get().trim().toInt()
     } else if (ciBuild) {
         // GitHub Actions run on Standard_D4ads_v5 Azure Compute Units with 4 vCPUs
         // They appear to be 2:1 vCPU to CPU on Linux/Windows with two vCPU cores but with performance 1:1-similar
