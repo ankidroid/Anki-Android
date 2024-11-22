@@ -70,11 +70,11 @@
     <string name="card_browser_list_my_searches_new_name">Որոնման անվանումը</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Որոնումը չի կարելի պահպանել առանց անվանման</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Անվանումը արդեն կա</string>
-    <string name="no_note_to_edit">No note to edit</string>
+    <string name="no_note_to_edit">Չկա խմբագրվելիք գրառում</string>
     <string name="card_browser_list_my_searches_remove_content">Ջնջե՞լ «%1$s»</string>
     <string name="card_browser_change_display_order" maxLength="28">Փոխել ցուցադրման հերթականությունը</string>
-    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Search</string>
-    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Search</string>
+    <string name="card_browser_search_hint" comment="Message displayed in the search text field in the card browser.">Որոնել</string>
+    <string name="card_browser_cram_search" maxLength="28" comment="Menu entry to start a search.">Որոնել</string>
     <string name="card_browser_change_display_order_title">Ընտրեք ցուցադրման հերթականությունը</string>
     <string name="card_details_tags">Պիտակներ</string>
     <string-array name="card_browser_order_labels">
@@ -112,6 +112,6 @@
         <item quantity="other">Ջնջվեց %d քարտ</item>
     </plurals>
     <!--Keyboard shortcuts dialog-->
-    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Edit tags dialog</string>
-    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Show order dialog</string>
+    <string name="edit_tags_dialog" comment="Description of the shortcut that opens the edit tags dialog">Պիտակների խմբագրման դիալոգ</string>
+    <string name="show_order_dialog" comment="Description of the shortcut that shows the order dialog">Ցուցադրել հերթականության դիալոգը</string>
 </resources>
