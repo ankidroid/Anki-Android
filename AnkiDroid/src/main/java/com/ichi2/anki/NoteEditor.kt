@@ -21,6 +21,7 @@ package com.ichi2.anki
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Activity.RESULT_CANCELED
+import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
@@ -655,7 +656,12 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                         }
 
                         override fun onGalleryClicked() {
-                            ioEditorLauncher.launch("image/*")
+                            try {
+                                ioEditorLauncher.launch("image/*")
+                            } catch (ex: ActivityNotFoundException) {
+                                Timber.w("No app found to handle onGalleryClicked request")
+                                activity?.showSnackbar(R.string.activity_start_failed)
+                            }
                         }
                     }
                 imageOcclusionBottomSheet.show(

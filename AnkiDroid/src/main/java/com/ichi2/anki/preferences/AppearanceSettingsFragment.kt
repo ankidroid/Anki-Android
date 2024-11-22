@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.preferences
 
+import android.content.ActivityNotFoundException
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -54,8 +55,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
         backgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             try {
                 backgroundImageResultLauncher.launch("image/*")
-            } catch (ex: Exception) {
-                Timber.w(ex)
+            } catch (ex: ActivityNotFoundException) {
+                Timber.w("No app found to handle background preference change request")
+                activity?.showSnackbar(R.string.activity_start_failed)
             }
             true
         }
