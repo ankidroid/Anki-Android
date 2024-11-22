@@ -16,6 +16,7 @@
 package com.ichi2.anki.export
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.Intent
 import android.net.Uri
@@ -132,7 +133,12 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             putExtra("android.content.extra.FANCY", true)
             putExtra("android.content.extra.SHOW_FILESIZE", true)
         }
-        saveFileLauncher.launch(saveIntent)
+        try {
+            saveFileLauncher.launch(saveIntent)
+        } catch (ex: ActivityNotFoundException) {
+            Timber.w("No activity found to handle saveExportFile request")
+            activity.showSnackbar(R.string.activity_start_failed)
+        }
     }
 
     fun onSaveInstanceState(outState: Bundle) {

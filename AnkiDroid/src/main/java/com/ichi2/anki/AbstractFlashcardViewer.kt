@@ -2498,7 +2498,8 @@ abstract class AbstractFlashcardViewer :
             try {
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
-                Timber.w(e) // Don't crash if the intent is not handled
+                Timber.w("No app found to handle open external url from AbstractFlashcardViewer")
+                showSnackbar(R.string.activity_start_failed)
             }
             return true
         }
