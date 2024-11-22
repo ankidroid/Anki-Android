@@ -580,10 +580,13 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
 
     // Dismiss whatever dialog is showing
     fun dismissAllDialogFragments() {
-        supportFragmentManager.popBackStack(
-            DIALOG_FRAGMENT_TAG,
-            FragmentManager.POP_BACK_STACK_INCLUSIVE
-        )
+        // trying to pop fragment manager back state crashes if state already saved
+        if (!supportFragmentManager.isStateSaved) {
+            supportFragmentManager.popBackStack(
+                DIALOG_FRAGMENT_TAG,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+        }
     }
 
     /**
