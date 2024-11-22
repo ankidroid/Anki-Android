@@ -221,8 +221,20 @@ object CollectionHelper {
      * @param context Used to get the External App-Specific directory for AnkiDroid
      * @return Returns the absolute path to the App-Specific External AnkiDroid directory
      */
-    private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String {
-        return context.getExternalFilesDir(null)!!.absolutePath
+    private fun getAppSpecificExternalAnkiDroidDirectory(context: Context): String? {
+        val externalFilesDir = context.getExternalFilesDir(null)
+
+        // This value *may* be null but we strictly require it. This has caused NullPointerException
+        // in previous releases as we dereference. We can't recover but for purposes of triage,
+        // we will now check for null and if so try to log more information about why.
+        if (externalFilesDir == null) {
+            Timber.e("Attempting to determine collection path, but no valid external storage?")
+            throw IllegalStateException(
+                "getExternalFilesDir unexpectedly returned null. Media state: " +
+                    Environment.getExternalStorageState()
+            )
+        }
+        return externalFilesDir.absolutePath
     }
 
     /**
