@@ -71,62 +71,73 @@ class DeckSpinnerSelection(
 
     // This should be deckDropDownAdapter.decks
     // but this class also handles initializeNoteEditorDeckSpinner, so this can't happen yet
-    private lateinit var dropDownDecks: MutableList<DeckNameId>
+    private var dropDownDecks: MutableList<DeckNameId>? = null
 
     @MainThread // spinner.adapter
     fun initializeActionBarDeckSpinner(col: Collection, actionBar: ActionBar) {
         actionBar.setDisplayShowTitleEnabled(false)
 
         // Add drop-down menu to select deck to action bar.
-        dropDownDecks = computeDropDownDecks(col, includeFiltered = showFilteredDecks).toMutableList()
-        deckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
-        spinner.adapter = deckDropDownAdapter
-        setSpinnerListener()
+        computeDropDownDecks(col, includeFiltered = showFilteredDecks).toMutableList().let {
+            dropDownDecks = it
+            deckDropDownAdapter = DeckDropDownAdapter(context, it)
+            spinner.adapter = deckDropDownAdapter
+            setSpinnerListener()
+        }
     }
 
     @MainThread // spinner.adapter
     suspend fun initializeStatsBarDeckSpinner() {
-        dropDownDecks = withCol {
+        withCol {
             decks.allNamesAndIds(includeFiltered = showFilteredDecks, skipEmptyDefault = true)
-        }.toMutableList()
-        // custom implementation as DeckDropDownAdapter automatically includes a ALL_DECKS entry +
-        // in order for the spinner to wrap the content a row layout with wrap_content for root
-        // width was introduced
-        spinner.adapter = object : ArrayAdapter<DeckNameId>(
-            context,
-            R.layout.item_stats_deck,
-            dropDownDecks
-        ) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val rowView = super.getView(position, convertView, parent)
-                rowView.findViewById<TextView>(R.id.title).text = getItem(position)!!.name
-                return rowView
-            }
-        }.apply { setDropDownViewResource(android.R.layout.simple_spinner_item) }
-        setSpinnerListener()
+        }.toMutableList().let {
+            dropDownDecks = it
+            // custom implementation as DeckDropDownAdapter automatically includes a ALL_DECKS entry +
+            // in order for the spinner to wrap the content a row layout with wrap_content for root
+            // width was introduced
+            spinner.adapter = object : ArrayAdapter<DeckNameId>(
+                context,
+                R.layout.item_stats_deck,
+                it
+            ) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val rowView = super.getView(position, convertView, parent)
+                    rowView.findViewById<TextView>(R.id.title).text = getItem(position)!!.name
+                    return rowView
+                }
+            }.apply { setDropDownViewResource(android.R.layout.simple_spinner_item) }
+            setSpinnerListener()
+        }
     }
 
     @MainThread // spinner.adapter
     fun initializeNoteEditorDeckSpinner(col: Collection, @LayoutRes layoutResource: Int = R.layout.multiline_spinner_item) {
-        dropDownDecks = computeDropDownDecks(col, includeFiltered = false).toMutableList()
-        val deckNames = dropDownDecks.map { it.name }
-        val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, layoutResource, deckNames as List<String?>) {
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                // Cast the drop down items (popup items) as text view
-                val tv = super.getDropDownView(position, convertView, parent) as TextView
+        computeDropDownDecks(col, includeFiltered = false).toMutableList().let {
+            dropDownDecks = it
+            val deckNames = it.map { it.name }
+            val noteDeckAdapter: ArrayAdapter<String?> = object :
+                ArrayAdapter<String?>(context, layoutResource, deckNames as List<String?>) {
+                override fun getDropDownView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup
+                ): View {
+                    // Cast the drop down items (popup items) as text view
+                    val tv = super.getDropDownView(position, convertView, parent) as TextView
 
-                // If this item is selected
-                if (position == spinner.selectedItemPosition) {
-                    tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
-                    tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
+                    // If this item is selected
+                    if (position == spinner.selectedItemPosition) {
+                        tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
+                        tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
+                    }
+
+                    // Return the modified view
+                    return tv
                 }
-
-                // Return the modified view
-                return tv
             }
+            spinner.adapter = noteDeckAdapter
+            setSpinnerListener()
         }
-        spinner.adapter = noteDeckAdapter
-        setSpinnerListener()
     }
 
     /** @return All decks.  */
@@ -154,7 +165,7 @@ class DeckSpinnerSelection(
      */
     fun updateDeckPosition(deckId: DeckId) {
         // TODO: This doesn't handle ALL_DECKS
-        val position = dropDownDecks.map { it.id }.indexOf(deckId)
+        val position = dropDownDecks?.map { it.id }?.indexOf(deckId) ?: -1
         if (position != -1) {
             spinner.setSelection(position)
         } else {
@@ -184,7 +195,7 @@ class DeckSpinnerSelection(
      * @return True if selection succeeded.
      */
     suspend fun selectDeckById(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
-        return if (deckId == ALL_DECKS_ID) {
+        return if (deckId == ALL_DECKS_ID || this.dropDownDecks == null) {
             selectAllDecks()
         } else {
             selectDeck(deckId, setAsCurrentDeck)
@@ -198,7 +209,7 @@ class DeckSpinnerSelection(
      * @return whether it was found
      */
     private suspend fun selectDeck(deckId: DeckId, setAsCurrentDeck: Boolean): Boolean {
-        val deck = this.dropDownDecks.withIndex().firstOrNull { it.value.id == deckId } ?: return false
+        val deck = this.dropDownDecks?.withIndex()?.firstOrNull { it.value.id == deckId } ?: return false
         val position = if (showAllDecks) deck.index + 1 else deck.index
         spinner.setSelection(position)
         if (setAsCurrentDeck) {
@@ -237,7 +248,7 @@ class DeckSpinnerSelection(
     private fun onDeckAdded(deck: DeckNameId) {
         Timber.d("added deck %s to spinner", deck)
         deckDropDownAdapter?.addDeck(deck)
-        dropDownDecks.add(deck)
+        dropDownDecks?.add(deck)
     }
 
     companion object {
