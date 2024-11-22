@@ -30,13 +30,22 @@ import timber.log.Timber
 class IntentHandler2 : AbstractIntentHandler() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Timber.v(intent.toString())
         if (NoteEditor.intentLaunchedWithImage(intent)) {
             Timber.i("Intent contained an image")
             intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_ADD_IMAGE)
         }
-        val noteEditorIntent = NoteEditorLauncher.PassArguments(intent.extras!!).getIntent(this, intent.action)
-        noteEditorIntent.setDataAndType(intent.data, intent.type)
-        startActivity(noteEditorIntent)
-        finish()
+        if (intent.extras == null) {
+            Timber.w("Intent unexpectedly has no extras. Notifying user, defaulting to add note.")
+            showThemedToast(this, getString(R.string.something_wrong), false)
+            startActivity(NoteEditorLauncher.AddNote().getIntent(this))
+            finish()
+        } else {
+            val noteEditorIntent =
+                NoteEditorLauncher.PassArguments(intent.extras!!).getIntent(this, intent.action)
+            noteEditorIntent.setDataAndType(intent.data, intent.type)
+            startActivity(noteEditorIntent)
+            finish()
+        }
     }
 }
