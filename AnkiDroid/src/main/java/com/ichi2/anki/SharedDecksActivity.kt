@@ -211,11 +211,14 @@ class SharedDecksActivity : AnkiActivity() {
         webView.loadUrl(resources.getString(R.string.shared_decks_url))
         webView.webViewClient = WebViewClient()
         webView.setDownloadListener { url, userAgent, contentDisposition, mimetype, _ ->
-            val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
-            sharedDecksDownloadFragment.arguments = bundleOf(DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype))
-
-            supportFragmentManager.commit {
-                add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT).addToBackStack(null)
+            // If the activity/fragment lifecycle has already begun teardown process,
+            // avoid handling the download, as FragmentManager.commit will throw
+            if (!supportFragmentManager.isStateSaved) {
+                val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
+                sharedDecksDownloadFragment.arguments = bundleOf(DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype))
+                supportFragmentManager.commit {
+                    add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT).addToBackStack(null)
+                }
             }
         }
 
