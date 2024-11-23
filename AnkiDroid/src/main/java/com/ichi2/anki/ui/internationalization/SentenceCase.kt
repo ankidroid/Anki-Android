@@ -16,7 +16,7 @@
 
 package com.ichi2.anki.ui.internationalization
 
-import android.app.Activity
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
@@ -30,10 +30,10 @@ import androidx.fragment.app.Fragment
  * ```
  */
 fun String.toSentenceCase(
-    activity: Activity,
+    context: Context,
     @StringRes resId: Int,
 ): String {
-    val resString = activity.getString(resId)
+    val resString = context.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
     if (this.lowercase() == resString.lowercase()) return resString
     return this
@@ -42,9 +42,4 @@ fun String.toSentenceCase(
 fun String.toSentenceCase(
     fragment: Fragment,
     @StringRes resId: Int,
-): String {
-    val resString = fragment.getString(resId)
-    // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
-    if (this.lowercase() == resString.lowercase()) return resString
-    return this
-}
+): String = toSentenceCase(fragment.requireContext(), resId)
