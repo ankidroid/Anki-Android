@@ -29,7 +29,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Screen
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */
 class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.CommandProcessor) {
-    private val keyMap: KeyMap
+    private val keyMap: KeyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
     private var hasSetup = false
     fun setup() {
         val preferences = AnkiDroidApp.instance.sharedPrefs()
@@ -94,9 +94,5 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         operator fun get(key: MappableBinding): ViewerCommand? {
             return bindingMap[key]
         }
-    }
-
-    init {
-        keyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
     }
 }
