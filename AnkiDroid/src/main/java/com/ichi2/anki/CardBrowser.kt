@@ -1563,7 +1563,7 @@ open class CardBrowser :
     }
 
     private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog(viewModel.cardsOrNotes, viewModel.isTruncated)
+        val dialog = BrowserOptionsDialog.newInstance(viewModel.cardsOrNotes, viewModel.isTruncated)
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
