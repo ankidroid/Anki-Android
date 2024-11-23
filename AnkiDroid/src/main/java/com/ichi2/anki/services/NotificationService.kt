@@ -25,7 +25,7 @@ import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.Channel
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
@@ -42,8 +42,8 @@ class NotificationService : BroadcastReceiver() {
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val preferences = context.sharedPrefs()
             val minCardsDue = preferences.getString(
-                Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
-                Preferences.PENDING_NOTIFICATIONS_ONLY.toString()
+                context.getString(R.string.pref_notifications_minimum_cards_due_key),
+                PENDING_NOTIFICATIONS_ONLY.toString()
             )!!.toInt()
             val dueCardsCount = WidgetStatus.fetchDue(context)
             if (dueCardsCount >= minCardsDue) {

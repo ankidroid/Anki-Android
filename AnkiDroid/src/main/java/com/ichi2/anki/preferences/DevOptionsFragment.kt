@@ -169,8 +169,12 @@ class DevOptionsFragment : SettingsFragment() {
      * Destroys the fragment and hides developer options on [HeaderFragment]
      */
     private fun disableDevOptions() {
-        (requireActivity() as Preferences).setDevOptionsEnabled(false)
+        // Update the "devOptionsEnabledByUser" pref value
+        AnkiDroidApp.sharedPrefs().edit {
+            putBoolean(getString(R.string.dev_options_enabled_by_user_key), false)
+        }
         parentFragmentManager.popBackStack()
+        requireActivity().recreate()
     }
 
     companion object {

@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".preferences.Preferences">
+    tools:context=".preferences.PreferencesFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -45,7 +45,7 @@
                 app:layout_collapseMode="pin"
                 app:navigationContentDescription="@string/abc_action_bar_up_description"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                tools:title="@string/settings"/>
+                app:title="@string/settings"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

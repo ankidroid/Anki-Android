@@ -25,7 +25,6 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
-import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DB
@@ -47,7 +46,7 @@ object CollectionHelper {
      * This directory contains all AnkiDroid data and media for a given collection
      * Except the Android preferences, cached files and [MetaDB]
      *
-     * This can be changed by the [Preferences] screen
+     * This can be changed by the Preferences screen
      * to allow a user to access a second collection via the same AnkiDroid app instance.
      *
      * The path also defines the collection that the AnkiDroid API accesses

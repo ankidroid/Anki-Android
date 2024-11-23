@@ -31,15 +31,16 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import kotlin.reflect.jvm.jvmName
 
 @RunWith(AndroidJUnit4::class)
 class PreferencesTest : RobolectricTest() {
-    private lateinit var preferences: Preferences
+    private lateinit var preferences: PreferencesActivity
 
     @Before
     override fun setUp() {
         super.setUp()
-        preferences = Preferences()
+        preferences = PreferencesActivity()
         val attachBaseContext = getJavaMethodAsAccessible(
             AppCompatActivity::class.java,
             "attachBaseContext",
@@ -72,14 +73,28 @@ class PreferencesTest : RobolectricTest() {
     /** checks if any of the Preferences fragments throws while being created */
     @Test
     fun fragmentsDoNotThrowOnCreation() {
-        ActivityScenario.launch(Preferences::class.java).use { activityScenario ->
-            activityScenario.onActivity { activity ->
-                PreferenceTestUtils.getAllPreferencesFragments(activity).forEach {
-                    activity.supportFragmentManager.commitNow {
-                        add(R.id.settings_container, it)
-                    }
+        val activityScenario = ActivityScenario.launch<PreferencesActivity>(PreferencesActivity.getIntent(targetContext))
+
+        activityScenario.onActivity { activity ->
+            PreferenceTestUtils.getAllPreferencesFragments(activity).forEach {
+                activity.supportFragmentManager.commitNow {
+                    add(R.id.settings_container, it)
                 }
             }
+        }
+    }
+
+    @Test
+    fun `All preferences fragments are TitleProvider`() {
+        val fragments = PreferenceTestUtils.getAllPreferencesFragments(targetContext)
+            .filter { it !is ReviewerOptionsFragment } // WIP dev options
+
+        fragments.forEach { fragment ->
+            assertThat(
+                "${fragment::class.jvmName} should implement TitleProvider",
+                fragment is TitleProvider,
+                equalTo(true)
+            )
         }
     }
 

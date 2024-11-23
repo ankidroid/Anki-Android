@@ -28,13 +28,18 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.ui.internationalization.toSentenceCase
+import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
 
-class HeaderFragment : PreferenceFragmentCompat() {
+class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
     private var selectedHeaderPreference: HeaderPreference? = null
     private var selectedHeaderPreferenceKey: String = DEFAULT_SELECTED_HEADER
+
+    override val title: CharSequence
+        get() = getString(R.string.settings)
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
@@ -51,9 +56,8 @@ class HeaderFragment : PreferenceFragmentCompat() {
             }
         }
 
-        if (DevOptionsFragment.isEnabled(requireContext())) {
-            setDevOptionsVisibility(true)
-        }
+        requirePreference<Preference>(R.string.pref_dev_options_screen_key)
+            .isVisible = DevOptionsFragment.isEnabled(requireContext())
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
@@ -62,7 +66,7 @@ class HeaderFragment : PreferenceFragmentCompat() {
     }
 
     private fun highlightHeaderPreference(headerPreference: HeaderPreference) {
-        if (!(activity as Preferences).hasLateralNavigation()) {
+        if (resources.isWindowCompact()) {
             return
         }
         selectedHeaderPreference?.setHighlighted(false)
@@ -88,21 +92,12 @@ class HeaderFragment : PreferenceFragmentCompat() {
         highlightHeaderPreference(requirePreference<HeaderPreference>(selectedHeaderPreferenceKey))
     }
 
-    override fun onStart() {
-        super.onStart()
-        requireActivity().setTitle(R.string.settings)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // use the same fragment container to search in case there is a navigation container
         requirePreference<SearchPreference>(R.string.search_preference_key)
             .searchConfiguration
             .setFragmentContainerViewId((view.parent as? ViewGroup)?.id ?: R.id.settings_container)
-    }
-
-    fun setDevOptionsVisibility(isVisible: Boolean) {
-        requirePreference<Preference>(R.string.pref_dev_options_screen_key).isVisible = isVisible
     }
 
     companion object {

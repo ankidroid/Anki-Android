@@ -140,6 +140,7 @@ import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.pages.CongratsPage
 import com.ichi2.anki.pages.CongratsPage.Companion.onDeckCompleted
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.ScopedStorageService
@@ -784,7 +785,7 @@ open class DeckPicker :
                 convertDpToPixel(32F, this@DeckPicker).toInt()
             )
             positiveButton(R.string.open_settings) {
-                val settingsIntent = AdvancedSettingsFragment.getSubscreenIntent(this@DeckPicker)
+                val settingsIntent = PreferencesActivity.getIntent(this@DeckPicker, AdvancedSettingsFragment::class)
                 requestPathUpdateLauncher.launch(settingsIntent)
             }
         }

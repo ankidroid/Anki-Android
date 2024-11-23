@@ -49,7 +49,7 @@ class NotificationsSettingsFragment : SettingsFragment() {
             updateNotificationPreference(this)
             setOnPreferenceChangeListener { preference, newValue ->
                 updateNotificationPreference(preference as ListPreference)
-                if ((newValue as String).toInt() < Preferences.PENDING_NOTIFICATIONS_ONLY) {
+                if ((newValue as String).toInt() < PENDING_NOTIFICATIONS_ONLY) {
                     scheduleNotification(TimeManager.time, requireContext())
                 } else {
                     val intent = PendingIntentCompat.getBroadcast(

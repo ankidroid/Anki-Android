@@ -63,3 +63,8 @@ private fun Context.getSystemBoolean(resName: String, fallback: Boolean): Boolea
 @NeedsTest("true if the navbar is transparent and needs a scrim, false if not")
 val FragmentActivity.navBarNeedsScrim: Boolean
     get() = getSystemBoolean("config_navBarNeedsScrim", true)
+
+// https://m3.material.io/foundations/layout/applying-layout/window-size-classes
+// adopted smallestScreenWidthDp instead of screenWidthDp
+// to avoid layout changes when rotating the device
+fun Resources.isWindowCompact() = configuration.smallestScreenWidthDp < 600
