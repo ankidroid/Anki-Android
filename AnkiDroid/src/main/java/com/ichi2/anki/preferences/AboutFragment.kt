@@ -25,6 +25,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiActivity
@@ -34,7 +35,7 @@ import com.ichi2.anki.Info
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.servicelayer.DebugInfoService
-import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.showThemedToast
 import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
@@ -46,7 +47,9 @@ import java.util.Date
 import java.util.Locale
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
-class AboutFragment : Fragment(R.layout.about_layout) {
+class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
+    override val title: CharSequence
+        get() = getString(R.string.pref_cat_about_title)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Version date
@@ -67,7 +70,7 @@ class AboutFragment : Fragment(R.layout.about_layout) {
 
         // Logo secret
         view.findViewById<ImageView>(R.id.about_app_logo)
-            .setOnClickListener(DevOptionsSecretClickListener(requireActivity() as Preferences))
+            .setOnClickListener(DevOptionsSecretClickListener(this))
 
         // Contributors text
         val contributorsLink = getString(R.string.link_contributors)
@@ -112,11 +115,6 @@ class AboutFragment : Fragment(R.layout.about_layout) {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        requireActivity().setTitle(R.string.pref_cat_about_title)
-    }
-
     /**
      * Copies debug info (from [DebugInfoService.getDebugInfo]) to the clipboard
      */
@@ -136,7 +134,7 @@ class AboutFragment : Fragment(R.layout.about_layout) {
      * Click listener which enables developer options on release builds
      * if the user clicks it a minimum number of times
      */
-    private class DevOptionsSecretClickListener(val preferencesActivity: Preferences) : View.OnClickListener {
+    private class DevOptionsSecretClickListener(val fragment: Fragment) : View.OnClickListener {
         private var clickCount = 0
         private val clickLimit = 6
 
@@ -157,20 +155,18 @@ class AboutFragment : Fragment(R.layout.about_layout) {
                 setTitle(R.string.dev_options_enabled_pref)
                 setIcon(R.drawable.ic_warning)
                 setMessage(R.string.dev_options_warning)
-                setPositiveButton(R.string.dialog_ok) { _, _ -> enableDevOptions() }
+                setPositiveButton(R.string.dialog_ok) { _, _ -> enableDevOptions(context) }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> clickCount = 0 }
                 setCancelable(false)
             }
         }
 
-        /**
-         * Enables developer options for the user and shows it on [HeaderFragment]
-         */
-        fun enableDevOptions() {
-            preferencesActivity.setDevOptionsEnabled(true)
-            preferencesActivity.showSnackbar(R.string.dev_options_enabled_msg) {
-                setAction(R.string.undo) { preferencesActivity.setDevOptionsEnabled(false) }
+        fun enableDevOptions(context: Context) {
+            context.sharedPrefs().edit {
+                putBoolean(context.getString(R.string.dev_options_enabled_by_user_key), true)
             }
+            fragment.requireActivity().recreate()
+            showThemedToast(context, R.string.dev_options_enabled_msg, shortLength = true)
         }
     }
 }

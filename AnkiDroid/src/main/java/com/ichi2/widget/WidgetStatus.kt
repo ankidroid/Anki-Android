@@ -18,7 +18,7 @@ import android.content.Context
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.MetaDB
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.widget.AnkiDroidWidgetSmall.UpdateService
@@ -48,7 +48,7 @@ object WidgetStatus {
         val preferences = context.sharedPrefs()
         enabled = preferences.getBoolean("widgetSmallEnabled", false)
         val notificationEnabled =
-            preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")!!
+            preferences.getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
                 .toInt() < 1000000
         val canExecuteTask = updateJob == null || updateJob?.isActive == false
         if ((enabled || notificationEnabled) && canExecuteTask) {

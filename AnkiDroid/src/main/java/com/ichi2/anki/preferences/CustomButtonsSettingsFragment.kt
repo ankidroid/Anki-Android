@@ -15,8 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import android.content.Context
-import android.content.Intent
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
@@ -58,11 +56,5 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun allKeys(): HashSet<String> {
         return allPreferences().mapTo(hashSetOf()) { it.key }
-    }
-
-    companion object {
-        fun getSubscreenIntent(context: Context): Intent {
-            return getSubscreenIntent(context, CustomButtonsSettingsFragment::class)
-        }
     }
 }

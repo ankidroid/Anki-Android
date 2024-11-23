@@ -346,7 +346,7 @@
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
-            android:name="com.ichi2.anki.preferences.Preferences"
+            android:name="com.ichi2.anki.preferences.PreferencesActivity"
             android:exported="false"
             android:configChanges="screenSize"
             >

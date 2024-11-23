@@ -9,7 +9,7 @@ import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.IntentHandler.Companion.grantedStoragePermissions
 import com.ichi2.anki.R
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.PENDING_NOTIFICATIONS_ONLY
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.annotations.NeedsTest
@@ -93,9 +93,9 @@ class BootService : BroadcastReceiver() {
             val sp = context.sharedPrefs()
             // Don't schedule a notification if the due reminders setting is not enabled
             if (sp.getString(
-                    Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
-                    Preferences.PENDING_NOTIFICATIONS_ONLY.toString()
-                )!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY
+                    context.getString(R.string.pref_notifications_minimum_cards_due_key),
+                    PENDING_NOTIFICATIONS_ONLY.toString()
+                )!!.toInt() >= PENDING_NOTIFICATIONS_ONLY
             ) {
                 return
             }

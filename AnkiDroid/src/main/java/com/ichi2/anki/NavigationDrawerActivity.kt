@@ -41,7 +41,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anki.dialogs.help.HelpDialog
-import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.compat.CompatHelper
@@ -357,10 +357,9 @@ abstract class NavigationDrawerActivity :
 
     /**
      * Opens AnkiDroid's Settings Screen.
-     * @see Preferences
      */
     protected fun openSettings() {
-        val intent = Intent(this, Preferences::class.java)
+        val intent = PreferencesActivity.getIntent(this)
         preferencesLauncher.launch(intent)
     }
 

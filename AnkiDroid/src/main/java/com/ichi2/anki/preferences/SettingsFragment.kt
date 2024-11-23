@@ -15,8 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.annotation.VisibleForTesting
@@ -31,17 +29,19 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.preferences.DialogFragmentProvider
 import timber.log.Timber
 import java.lang.NumberFormatException
-import kotlin.reflect.KClass
-import kotlin.reflect.jvm.jvmName
 
 abstract class SettingsFragment :
     PreferenceFragmentCompat(),
     OnPreferenceTreeClickListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    TitleProvider {
     /** @return The XML file which defines the preferences displayed by this PreferenceFragment
      */
     @get:XmlRes
     abstract val preferenceResource: Int
+
+    override val title: CharSequence
+        get() = preferenceManager?.preferenceScreen?.title ?: ""
 
     /**
      * Refreshes all values on the screen
@@ -102,7 +102,6 @@ abstract class SettingsFragment :
 
     override fun onStart() {
         super.onStart()
-        requireActivity().title = preferenceScreen.title
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .registerOnSharedPreferenceChangeListener(this)
     }
@@ -129,12 +128,6 @@ abstract class SettingsFragment :
     }
 
     companion object {
-        @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
-        protected fun getSubscreenIntent(context: Context, fragmentClass: KClass<out SettingsFragment>): Intent {
-            return Intent(context, Preferences::class.java)
-                .putExtra(Preferences.INITIAL_FRAGMENT_EXTRA, fragmentClass.jvmName)
-        }
-
         /**
          * Converts a preference value to a numeric number that
          * can be reported to analytics, since analytics events only accept

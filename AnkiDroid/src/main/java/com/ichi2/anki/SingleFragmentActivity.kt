@@ -84,7 +84,7 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
             arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
         }
         supportFragmentManager.commit {
-            replace(R.id.fragment_container, fragment)
+            replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
         }
     }
 
@@ -100,6 +100,7 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
     companion object {
         const val FRAGMENT_NAME_EXTRA = "fragmentName"
         const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
+        const val FRAGMENT_TAG = "SingleFragmentActivityTag"
 
         fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null, intentAction: String? = null): Intent {
             return Intent(context, SingleFragmentActivity::class.java).apply {
