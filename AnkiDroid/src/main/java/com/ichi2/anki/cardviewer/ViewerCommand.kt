@@ -30,7 +30,6 @@ import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.MappableBinding.Screen
 import java.util.Arrays
-import java.util.function.BiFunction
 import java.util.stream.Collectors
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
@@ -101,7 +100,7 @@ enum class ViewerCommand(val resourceId: Int) {
         get() = "binding_$name"
 
     fun addBinding(preferences: SharedPreferences, binding: MappableBinding) {
-        val addAtStart = BiFunction { collection: MutableList<MappableBinding>, element: MappableBinding ->
+        val addAtStart: (MutableList<MappableBinding>, MappableBinding) -> Boolean = { collection, element ->
             // reorder the elements, moving the added binding to the first position
             collection.remove(element)
             collection.add(0, element)
@@ -111,20 +110,25 @@ enum class ViewerCommand(val resourceId: Int) {
     }
 
     fun addBindingAtEnd(preferences: SharedPreferences, binding: MappableBinding) {
-        val addAtEnd = BiFunction { collection: MutableList<MappableBinding>, element: MappableBinding ->
-            // do not reorder the elements
+        val addAtEnd: (MutableList<MappableBinding>, MappableBinding) -> Boolean = { collection, element ->
+            // reorder the elements, moving the added binding to the first position
             if (collection.contains(element)) {
-                return@BiFunction false
+                false
+            } else {
+                collection.add(element)
+                true
             }
-            collection.add(element)
-            return@BiFunction true
         }
         addBindingInternal(preferences, binding, addAtEnd)
     }
 
-    private fun addBindingInternal(preferences: SharedPreferences, binding: MappableBinding, performAdd: BiFunction<MutableList<MappableBinding>, MappableBinding, Boolean>) {
+    private fun addBindingInternal(
+        preferences: SharedPreferences,
+        binding: MappableBinding,
+        performAdd: (MutableList<MappableBinding>, MappableBinding) -> Boolean
+    ) {
         val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
-        performAdd.apply(bindings, binding)
+        performAdd(bindings, binding)
         val newValue: String = bindings.toPreferenceString()
         preferences.edit { putString(preferenceKey, newValue) }
     }
