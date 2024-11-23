@@ -129,14 +129,6 @@ enum class ViewerCommand(val resourceId: Int) {
         preferences.edit { putString(preferenceKey, newValue) }
     }
 
-    fun removeBinding(prefs: SharedPreferences, binding: MappableBinding) {
-        val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(preferenceKey)
-        bindings.remove(binding)
-        prefs.edit {
-            putString(preferenceKey, bindings.toPreferenceString())
-        }
-    }
-
     // If we use the serialised format, then this adds additional coupling to the properties.
     val defaultValue: List<MappableBinding>
         get() {
