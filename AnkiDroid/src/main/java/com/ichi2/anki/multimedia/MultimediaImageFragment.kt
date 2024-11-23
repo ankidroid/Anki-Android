@@ -79,12 +79,16 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private lateinit var selectedImageOptions: ImageOptions
 
+    /** Keeps track of the process in case `Don't keep activities` in turned on*/
+    private var hasStartedImageSelection = false
+
     /**
      * Launches an activity to pick an image from the device's gallery.
      * This launcher is registered using `ActivityResultContracts.StartActivityForResult()`.
      */
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            hasStartedImageSelection = false
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
                     if (viewModel.currentMultimediaUri.value == null) {
@@ -144,6 +148,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     @NeedsTest("Works fine without permission as we use Camera as feature")
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isPictureTaken ->
+            hasStartedImageSelection = false
             when {
                 !isPictureTaken && viewModel.currentMultimediaUri.value == null -> {
                     val resultData = Intent().apply {
@@ -169,6 +174,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     /** Launches an activity to crop the image, using the [ImageCropper] */
     private val imageCropperLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            hasStartedImageSelection = false
             when (result.resultCode) {
                 Activity.RESULT_OK -> {
                     result.data?.let {
@@ -251,6 +257,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        hasStartedImageSelection = savedInstanceState?.getBoolean("HAS_STARTED_IMAGE_SELECTION", false) ?: false
+
         ankiCacheDirectory = FileUtil.getAnkiCacheDirectory(requireContext(), "temp-photos")
         if (ankiCacheDirectory == null) {
             Timber.e("createUI() failed to get cache directory")
@@ -273,6 +281,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         setupDoneButton()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("HAS_STARTED_IMAGE_SELECTION", hasStartedImageSelection)
+    }
+
     private fun handleImageUri() {
         if (imageUri != null) {
             view?.findViewById<TextView>(R.id.no_image_textview)?.visibility = View.GONE
@@ -283,6 +296,12 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun handleSelectedImageOptions() {
+        if (hasStartedImageSelection) {
+            Timber.d("Image selection already in progress, skipping.")
+            return
+        }
+        hasStartedImageSelection = true
+
         when (selectedImageOptions) {
             ImageOptions.GALLERY -> {
                 Timber.d("MultimediaImageFragment:: Opening gallery")
@@ -500,6 +519,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     private fun requestCrop() {
         val imageUri = viewModel.currentMultimediaUri.value ?: return
+        hasStartedImageSelection = true
         val intent = com.ichi2.imagecropper.ImageCropperLauncher.ImageUri(imageUri).getIntent(requireContext())
         imageCropperLauncher.launch(intent)
     }

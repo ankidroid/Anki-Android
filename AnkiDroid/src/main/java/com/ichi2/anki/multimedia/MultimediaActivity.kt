@@ -74,13 +74,14 @@ class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multimedia)
         setTransparentStatusBar()
+
+        val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
         // avoid recreating the fragment on configuration changes
         if (savedInstanceState != null) {
             return
         }
-
-        val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
 
         val fragmentClassName =
             requireNotNull(intent.getStringExtra(MULTIMEDIA_FRAGMENT_NAME_EXTRA)) {
