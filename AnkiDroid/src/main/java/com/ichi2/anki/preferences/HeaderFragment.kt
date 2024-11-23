@@ -73,6 +73,7 @@ class HeaderFragment :
             }
 
             parentFragmentManager.addOnBackStackChangedListener {
+                if (!isAdded) return@addOnBackStackChangedListener
                 val fragment =
                     parentFragmentManager.findFragmentById(R.id.settings_container)
                         ?: return@addOnBackStackChangedListener

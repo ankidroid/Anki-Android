@@ -17,10 +17,13 @@ package com.ichi2.anki.reviewer
 
 import android.view.KeyEvent
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.cardviewer.ViewerCommand.entries
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
 import org.junit.Test
+import java.util.Arrays
+import java.util.stream.Collectors
 
 class MappableBindingTest {
     @Test
@@ -39,7 +42,11 @@ class MappableBindingTest {
         assertThat(allBindings, not(hasItem(keyCode(KeyEvent.KEYCODE_L))))
     }
 
-    private fun getAllBindings() = ViewerCommand.allDefaultBindings
+    private fun getAllBindings() =
+        Arrays
+            .stream(entries.toTypedArray())
+            .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
+            .collect(Collectors.toList())
 
     @Suppress("SameParameterValue")
     private fun keyCode(code: Int) = fromBinding(BindingTest.keyCode(code))

@@ -29,9 +29,6 @@ import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.MappableBinding.Screen
-import java.util.Arrays
-import java.util.function.BiFunction
-import java.util.stream.Collectors
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
 enum class ViewerCommand(
@@ -91,13 +88,6 @@ enum class ViewerCommand(
     ;
 
     companion object {
-        val allDefaultBindings: List<MappableBinding>
-            get() =
-                Arrays
-                    .stream(entries.toTypedArray())
-                    .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
-                    .collect(Collectors.toList())
-
         fun fromPreferenceKey(key: String) = entries.first { it.preferenceKey == key }
     }
 
@@ -108,13 +98,12 @@ enum class ViewerCommand(
         preferences: SharedPreferences,
         binding: MappableBinding,
     ) {
-        val addAtStart =
-            BiFunction { collection: MutableList<MappableBinding>, element: MappableBinding ->
-                // reorder the elements, moving the added binding to the first position
-                collection.remove(element)
-                collection.add(0, element)
-                true
-            }
+        val addAtStart: (MutableList<MappableBinding>, MappableBinding) -> Boolean = { collection, element ->
+            // reorder the elements, moving the added binding to the first position
+            collection.remove(element)
+            collection.add(0, element)
+            true
+        }
         addBindingInternal(preferences, binding, addAtStart)
     }
 
@@ -122,38 +111,27 @@ enum class ViewerCommand(
         preferences: SharedPreferences,
         binding: MappableBinding,
     ) {
-        val addAtEnd =
-            BiFunction { collection: MutableList<MappableBinding>, element: MappableBinding ->
-                // do not reorder the elements
-                if (collection.contains(element)) {
-                    return@BiFunction false
-                }
+        val addAtEnd: (MutableList<MappableBinding>, MappableBinding) -> Boolean = { collection, element ->
+            // do not reorder the elements
+            if (collection.contains(element)) {
+                false
+            } else {
                 collection.add(element)
-                return@BiFunction true
+                true
             }
+        }
         addBindingInternal(preferences, binding, addAtEnd)
     }
 
     private fun addBindingInternal(
         preferences: SharedPreferences,
         binding: MappableBinding,
-        performAdd: BiFunction<MutableList<MappableBinding>, MappableBinding, Boolean>,
+        performAdd: (MutableList<MappableBinding>, MappableBinding) -> Boolean,
     ) {
         val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
-        performAdd.apply(bindings, binding)
+        performAdd(bindings, binding)
         val newValue: String = bindings.toPreferenceString()
         preferences.edit { putString(preferenceKey, newValue) }
-    }
-
-    fun removeBinding(
-        prefs: SharedPreferences,
-        binding: MappableBinding,
-    ) {
-        val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(preferenceKey)
-        bindings.remove(binding)
-        prefs.edit {
-            putString(preferenceKey, bindings.toPreferenceString())
-        }
     }
 
     // If we use the serialised format, then this adds additional coupling to the properties.

@@ -32,7 +32,7 @@ class PeripheralKeymap(
     reviewerUi: ReviewerUi,
     commandProcessor: ViewerCommand.CommandProcessor,
 ) {
-    private val keyMap: KeyMap
+    private val keyMap: KeyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
     private var hasSetup = false
 
     fun setup() {
@@ -109,9 +109,5 @@ class PeripheralKeymap(
         }
 
         operator fun get(key: MappableBinding): ViewerCommand? = bindingMap[key]
-    }
-
-    init {
-        keyMap = KeyMap(commandProcessor, reviewerUi) { Screen.Reviewer(it) }
     }
 }

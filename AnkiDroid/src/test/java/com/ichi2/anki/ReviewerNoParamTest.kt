@@ -32,6 +32,7 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.anki.reviewer.MappableBinding.Screen
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -299,7 +300,12 @@ class ReviewerNoParamTest : RobolectricTest() {
             for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
                 val gestureBinding = mappableBinding.binding as? Binding.GestureInput? ?: continue
                 if (gestureBinding.gesture in gestures) {
-                    command.removeBinding(prefs, mappableBinding)
+                    val bindings: MutableList<MappableBinding> =
+                        MappableBinding.fromPreferenceString(command.preferenceKey)
+                    bindings.remove(mappableBinding)
+                    prefs.edit {
+                        putString(command.preferenceKey, bindings.toPreferenceString())
+                    }
                 }
             }
         }
