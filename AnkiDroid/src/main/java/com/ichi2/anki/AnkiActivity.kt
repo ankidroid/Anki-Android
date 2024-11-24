@@ -584,6 +584,11 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
             DIALOG_FRAGMENT_TAG,
             FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
+        supportFragmentManager.fragments.forEach { fragment ->
+            if (fragment is DialogFragment) {
+                fragment.dismissAllowingStateLoss()
+            }
+        }
     }
 
     /**
