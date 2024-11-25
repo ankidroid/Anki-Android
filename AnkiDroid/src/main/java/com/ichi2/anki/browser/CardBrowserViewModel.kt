@@ -313,10 +313,7 @@ class CardBrowserViewModel(
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
-            val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
-            column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
-            column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
-
+            setUpColumns()
             setupColumns(cardsOrNotes)
 
             withCol {
@@ -331,6 +328,11 @@ class CardBrowserViewModel(
         }
     }
 
+    suspend fun setUpColumns() {
+        val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
+        column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
+        column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
+    }
     private suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {
         Timber.d("loading columns columns for %s mode", cardsOrNotes)
         val columns = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
