@@ -84,6 +84,8 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
     private lateinit var learningBuryText: TextView
     private lateinit var reviewCountText: TextView
     private lateinit var reviewBuryText: TextView
+    private lateinit var totalNewCardsCount: TextView
+    private lateinit var totalCardsCount: TextView
 
     private var retryMenuRefreshJob: Job? = null
 
@@ -227,6 +229,8 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         buttonStart = studyOptionsView.findViewById<Button?>(R.id.studyoptions_start).apply {
             setOnClickListener(buttonClickListener)
         }
+        totalNewCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_new_count)
+        totalCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_count)
     }
 
     /**
@@ -448,7 +452,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         val buriedNew: Int,
         val buriedLearning: Int,
         val buriedReview: Int,
-
+        val totalNewCards: Int,
         /**
          * Number of cards in this decks and its subdecks.
          */
@@ -582,6 +586,8 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
             learningBuryText.isVisible = result.buriedLearning != 0
             reviewBuryText.text = requireContext().resources.getQuantityString(R.plurals.studyoptions_buried_count, result.buriedReview, result.buriedReview)
             reviewBuryText.isVisible = result.buriedReview != 0
+            totalNewCardsCount.text = result.totalNewCards.toString()
+            totalCardsCount.text = result.numberOfCardsInDeck.toString()
             // Rebuild the options menu
             configureToolbar()
         }
@@ -614,6 +620,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
             buriedNew = buriedNew,
             buriedLearning = buriedLearning,
             buriedReview = buriedReview,
+            totalNewCards = sched.totalNewForCurrentDeck(),
             numberOfCardsInDeck = decks.cardCount(deckId, includeSubdecks = true)
         )
     }
