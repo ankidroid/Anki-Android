@@ -19,6 +19,7 @@ package com.ichi2.anki.android.input
 
 import android.view.KeyEvent
 import android.view.KeyboardShortcutInfo
+import androidx.annotation.CheckResult
 import androidx.annotation.StringRes
 import com.ichi2.anki.AnkiActivityProvider
 import com.ichi2.anki.CollectionManager.TR
@@ -75,6 +76,12 @@ data class Shortcut(val shortcut: String, val label: String) {
             in "0".."9" -> KeyEvent.KEYCODE_0 + (key.toInt() - 0) // Handle number keys
             else -> KeyEvent.keyCodeFromString(key)
         }
+    }
+
+    companion object {
+        @CheckResult
+        fun isPotentialShortcutCombination(event: KeyEvent, keyCode: Int): Boolean =
+            (event.isCtrlPressed || event.isAltPressed || event.isMetaPressed) && ((keyCode in KeyEvent.KEYCODE_A..KeyEvent.KEYCODE_Z) || (keyCode in KeyEvent.KEYCODE_NUMPAD_0..KeyEvent.KEYCODE_NUMPAD_9))
     }
 }
 
