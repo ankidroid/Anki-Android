@@ -52,6 +52,7 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.android.input.Shortcut
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
@@ -690,8 +691,10 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
 
         val done = super.onKeyUp(keyCode, event)
 
-        // Show snackbar only if the current activity have shortcuts, a modifier key is pressed and the keyCode is an unmapped alphabet key
-        if (!done && shortcuts != null && (event.isCtrlPressed || event.isAltPressed || event.isMetaPressed) && (keyCode in KeyEvent.KEYCODE_A..KeyEvent.KEYCODE_Z) || (keyCode in KeyEvent.KEYCODE_NUMPAD_0..KeyEvent.KEYCODE_NUMPAD_9)) {
+        if (done || shortcuts == null) return false
+
+        // Show snackbar only if the current activity have shortcuts, a modifier key is pressed and the keyCode is an unmapped alphabet or num key
+        if (Shortcut.isPotentialShortcutCombination(event, keyCode)) {
             showSnackbar(R.string.show_shortcuts_message, Snackbar.LENGTH_SHORT)
             return true
         }
