@@ -25,20 +25,20 @@ class WebViewUtilsTest {
     fun testWebviewVersionCodes() {
         assertThat(
             "Known old webview determined correctly",
-            checkWebViewVersionComponents("com.google.android.webview", "53.0.2785.124", OLDEST_WORKING_WEBVIEW_VERSION_CODE - 1),
+            checkWebViewVersionComponents("com.google.android.webview", "53.0.2785.124", OLDEST_WORKING_WEBVIEW_VERSION_CODE - 1, "Mozilla/5.0 (Linux; Android 7.0; Android SDK built for arm64 Build/NYC; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.124 Mobile Safari/537.36"),
             equalTo(53)
         )
 
         assertThat(
             "Known good webview determined correctly",
-            checkWebViewVersionComponents("com.google.android.webview", "131.0.6778.39", 677803933L),
+            checkWebViewVersionComponents("com.google.android.webview", "131.0.6778.39", 677803933L, "Mozilla/5.0 (Linux; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.036.A4; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/131.0.6778.39 Mobile Safari/537.36"),
             equalTo(null)
         )
 
         assertThat(
-            "Known confusing webview determined incorrectly",
-            checkWebViewVersionComponents("com.google.android.webview", "130.0.0.1", OLDEST_WORKING_WEBVIEW_VERSION_CODE - 1),
-            equalTo(130)
+            "Known confusing webview determined correctly",
+            checkWebViewVersionComponents("com.google.android.webview", "74.0.0.0", OLDEST_WORKING_WEBVIEW_VERSION_CODE - 1, "Mozilla/5.0 (Linux; Android 9; SM-A730F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.6723.102 Mobile Safari/537.36"),
+            equalTo(null)
         )
     }
 }
