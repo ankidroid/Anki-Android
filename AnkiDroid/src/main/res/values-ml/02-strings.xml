@@ -93,6 +93,8 @@
         <item quantity="one">+%d അടക്കം ചെയ്തു</item>
         <item quantity="other">+%d അടക്കം ചെയ്തു</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">കുറിപ്പ് എഡിറ്റുചെയ്യുക</string>
     <string name="discard">Discard</string>

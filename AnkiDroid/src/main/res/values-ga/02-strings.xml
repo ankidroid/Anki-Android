@@ -96,6 +96,8 @@
         <item quantity="many">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Edit note</string>
     <string name="discard">Discard</string>

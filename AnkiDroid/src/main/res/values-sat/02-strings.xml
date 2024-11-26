@@ -93,6 +93,8 @@
         <item quantity="one">+%d ᱫᱷᱩᱲᱤ ᱟᱠᱟᱱᱟ</item>
         <item quantity="other">+%d ᱫᱷᱩᱲᱤ ᱟᱠᱟᱱᱟ</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ</string>
     <string name="discard">ᱵᱟᱧᱪᱟᱣ ᱢᱮ</string>

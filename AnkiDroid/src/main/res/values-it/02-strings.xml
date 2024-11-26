@@ -93,6 +93,8 @@
         <item quantity="one">+sepolto</item>
         <item quantity="other">+sepolto</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Modifica nota</string>
     <string name="discard">Scarta</string>
