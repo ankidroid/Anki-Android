@@ -90,7 +90,7 @@
     <string name="custom_study_preview_new">Zeige Vorschau von neuen Karten</string>
     <string name="custom_study_limit_tags">Auf bestimmte Schlagwörter beschränken</string>
     <plurals name="studyoptions_buried_count">
-        <item quantity="one">+%d vergraben</item>
+        <item quantity="one">+%d aufgeschoben</item>
         <item quantity="other">+%d vergraben</item>
     </plurals>
     <!-- Card editor -->
@@ -216,7 +216,7 @@
     <!-- Deck Picker -->
     <string name="search_decks" maxLength="28">Stapel durchsuchen</string>
     <string name="ankidroid_init_failed_webview_title">Schwerer Fehler</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Updates installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Aktualisierungen installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size" maxLength="28">Schriftgröße</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown" maxLength="28">Werkzeug zeigen</string>
@@ -252,7 +252,7 @@
     <string name="back_pressed_once">Zum Beenden erneut \"Zurück\" drücken</string>
     <string name="back_pressed_once_reviewer">Drücken Sie erneut auf Zurück, um zurückzukehren</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
-    <string name="percentage">%s %%</string>
+    <string name="percentage">%s %%</string>
     <string name="download_deck">Stapel herunterladen</string>
     <string name="try_again">Erneut versuchen</string>
     <string name="cancel_download">Herunterladen abbrechen</string>
@@ -268,10 +268,10 @@
     <string name="home" maxLength="28">Start</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Karte begraben.</string>
+    <string name="card_buried">Karte aufgeschoben.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d Karte gesperrt.</item>
-        <item quantity="other">%d Karten gesperrt.</item>
+        <item quantity="one">%d Karte ausgeschlossen.</item>
+        <item quantity="other">%d Karten ausgeschlossen.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feld %s anpinnen</string>
@@ -330,7 +330,7 @@
     <string name="failed_to_copy">Kopieren fehlgeschlagen</string>
     <string name="card_browser_unavailable_when_notes_mode">Nicht verfügbar im \"Notiz\"-Modus</string>
     <plurals name="unbury_cards_feedback">
-        <item quantity="one">%d Karte ausgegraben</item>
+        <item quantity="one">%d Karte nicht mehr aufgeschoben</item>
         <item quantity="other">%d Karten ausgegraben</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Position ändern</string>
@@ -358,5 +358,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Browser-erscheinungsbild bearbeiten</string>
     <string name="show_shortcuts_message">Drücken Sie Alt+K, um tastenkombinationen anzuzeigen</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Benutzeraktion %s ist in diesem notiztyp nicht festgelegt. Bitte konfigurieren Sie es</string>
-    <string name="directory_inaccessible_info">Erfahren Sie hier mehr darüber, wie Sie den zugriff, wiederherstellen können %s oder gehen Sie zu den einstellungen, um den sammlung-ordner zu aktualisieren</string>
+    <string name="directory_inaccessible_info">Erfahren Sie hier %s mehr darüber, wie Sie den Zugriff wiederherstellen können, oder gehen Sie zu den Einstellungen, um den Sammlungsordner zu aktualisieren.</string>
 </resources>

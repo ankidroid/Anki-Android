@@ -45,7 +45,7 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">അടയ്‌ക്കേണ്ട കാർഡുകൾ</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">വിശകലനം ചെയ്യേണ്ട  കാർഡുകൾ</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid കാർഡ് കാരണം</item>
         <item quantity="other">%d അങ്കിഡ്രോയിഡ് കാർഡുകൾ കാരണം</item>
@@ -72,6 +72,6 @@
         <item quantity="one">നിങ്ങൾക്ക് %d ഡെക്ക് വരെ തിരഞ്ഞെടുക്കാം.</item>
         <item quantity="other">You can select up to %d decks.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">കാണാതായ ഡെക്ക്. മാറ്റുവാൻ തിരഞ്ഞെടുക്കുക</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">ശേഖരം ശൂന്യമാണ്, ഡെക്കുകൾ ചേർക്കാൻ ആപ്പ് ഉപയോഗിക്കുക, തുടർന്ന് വീണ്ടും കോൺഫിഗർ ചെയ്യുക</string>
 </resources>
