@@ -18,12 +18,11 @@ package com.ichi2.anki.servicelayer
 
 import android.content.Context
 import android.os.Build
-import android.webkit.WebView
-import androidx.annotation.MainThread
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import com.ichi2.utils.getWebviewUserAgent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.acra.util.Installation
@@ -64,16 +63,6 @@ object DebugInfoService {
                
                Crash Reports Enabled = ${isSendingCrashReports(info)}
         """.trimIndent()
-    }
-
-    @MainThread
-    private fun getWebviewUserAgent(context: Context): String? {
-        try {
-            return WebView(context).settings.userAgentString
-        } catch (e: Throwable) {
-            CrashReportService.sendExceptionReport(e, "Info::copyDebugInfo()", "some issue occurred while extracting webview user agent")
-        }
-        return null
     }
 
     private fun isSendingCrashReports(context: Context): Boolean {
