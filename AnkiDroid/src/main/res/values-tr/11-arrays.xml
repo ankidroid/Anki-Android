@@ -50,14 +50,14 @@
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Önce en eski görüntülenir</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">Önce en eski görülenler</string>
     <string name="cram_deck_conf_order_random">Rastgele</string>
     <string name="cram_deck_conf_order_increasing_intervals">Artan aralıkta</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Azalan aralıkta</string>
     <string name="cram_deck_conf_order_most_lapsed">En çok hata</string>
     <string name="cram_deck_conf_order_order_added">Ekleniş sırası</string>
     <string name="cram_deck_conf_order_order_due">Çıkma sırası</string>
-    <string name="cram_deck_conf_order_latest_added_first">En son eklenenler ilk</string>
+    <string name="cram_deck_conf_order_latest_added_first">Önce en son eklenenler</string>
     <string name="cram_deck_conf_order_relative_overdueness">Görece vadesi geçmişlik</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Geçerli desteyi kullan</string>
