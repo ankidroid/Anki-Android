@@ -105,7 +105,7 @@ constructor(
      * @param input User input in text editor.
      * @return The input value within acceptable range.
      */
-    private fun getValidatedRangeFromString(input: String): Int {
+    fun getValidatedRangeFromString(input: String): Int {
         return if (input.isEmpty()) {
             min
         } else {
@@ -185,7 +185,7 @@ constructor(
             if (!positiveResult || editText.text.isEmpty()) {
                 return
             }
-            val newValue = editText.text.toString().toInt()
+            val newValue = numberRangePreference.getValidatedRangeFromString(editText.text.toString())
             if (numberRangePreference.callChangeListener(newValue)) {
                 numberRangePreference.setValue(newValue)
             }
