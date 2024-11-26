@@ -21,6 +21,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.webkit.WebView
 import androidx.annotation.MainThread
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.pm.PackageInfoCompat
 import com.ichi2.anki.AnkiActivity
@@ -34,33 +35,18 @@ internal const val OLDEST_WORKING_WEBVIEW_VERSION = 77
 /**
  * Shows a dialog if the current WebView version is older than the last supported version.
  */
-fun checkWebviewVersion(packageManager: PackageManager, activity: AnkiActivity) {
-    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(packageManager) ?: return
-    val webviewVersion = webviewPackageInfo.versionName ?: run {
-        Timber.w("Failed to obtain WebView version")
-        return
-    }
-    val versionCode = PackageInfoCompat.getLongVersionCode(webviewPackageInfo)
-    // TODO modify the alert dialog text to handle the usage of developer builds for system WebView
-    val userVisibleCode = runCatching {
-        webviewVersion.split(".")[0].toInt()
-    }.getOrNull() ?: 0
-    if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION_CODE) {
-        Timber.d(
-            "WebView is up to date. %s: %s(%s)",
-            webviewPackageInfo.packageName,
-            webviewVersion,
-            versionCode.toString()
-        )
-        return
-    }
+fun checkWebviewVersion(activity: AnkiActivity) {
+    val userVisibleCode = getChromeLikeWebViewVersionIfOutdated(activity) ?: return
 
-    val legacyWebViewPackageInfo = getLegacyWebViewPackageInfo(packageManager)
+    // Provide guidance to the user if the WebView is outdated
+    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(activity.packageManager)
+    val legacyWebViewPackageInfo = getLegacyWebViewPackageInfo(activity.packageManager)
+    // TODO modify the alert dialog text to handle the usage of developer builds for system WebView
     if (legacyWebViewPackageInfo != null) {
         Timber.w("WebView is outdated. %s: %s", legacyWebViewPackageInfo.packageName, legacyWebViewPackageInfo.versionName)
         showOutdatedWebViewDialog(activity, userVisibleCode, activity.getString(R.string.link_legacy_webview_update))
     } else {
-        Timber.w("WebView is outdated. %s: %s", webviewPackageInfo.packageName, webviewPackageInfo.versionName)
+        Timber.w("WebView is outdated. %s: %s", webviewPackageInfo?.packageName, webviewPackageInfo?.versionName)
         showOutdatedWebViewDialog(activity, userVisibleCode, activity.getString(R.string.link_webview_update))
     }
 }
@@ -73,6 +59,37 @@ fun getWebviewUserAgent(context: Context): String? {
         CrashReportService.sendExceptionReport(e, "WebViewUtils", "some issue occurred while extracting webview user agent")
     }
     return null
+}
+
+/*
+ * Returns a Chrome-like WebView version if it is outdated, otherwise null if
+ * cannot be determined at all or if okay
+ */
+private fun getChromeLikeWebViewVersionIfOutdated(activity: AnkiActivity): Int? {
+    // If we cannot get the package information at all, return null
+    val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(activity.packageManager) ?: return null
+    val webviewVersion = webviewPackageInfo.versionName ?: run {
+        Timber.w("Failed to obtain WebView version")
+        return null
+    }
+    val versionCode = PackageInfoCompat.getLongVersionCode(webviewPackageInfo)
+    return checkWebViewVersionComponents(webviewPackageInfo.packageName, webviewVersion, versionCode)
+}
+
+@VisibleForTesting
+fun checkWebViewVersionComponents(packageName: String, webviewVersion: String, versionCode: Long): Int? {
+    if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION_CODE) {
+        Timber.d(
+            "WebView is up to date. %s: %s(%s)",
+            packageName,
+            webviewVersion,
+            versionCode.toString()
+        )
+        return null
+    }
+    return runCatching {
+        webviewVersion.split(".")[0].toInt()
+    }.getOrNull() ?: 0
 }
 
 private fun showOutdatedWebViewDialog(activity: AnkiActivity, installedVersion: Int, learnMoreUrl: String) {

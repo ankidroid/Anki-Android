@@ -569,7 +569,7 @@ open class DeckPicker :
 
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        checkWebviewVersion(packageManager, this)
+        checkWebviewVersion(this)
 
         supportFragmentManager.setFragmentResultListener(DeckPickerContextMenu.REQUEST_KEY_CONTEXT_MENU, this) { requestKey, arguments ->
             when (requestKey) {
