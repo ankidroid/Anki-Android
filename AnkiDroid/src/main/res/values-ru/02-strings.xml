@@ -95,6 +95,8 @@
         <item quantity="many">+%d отложено</item>
         <item quantity="other">+%d отложено</item>
     </plurals>
+    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Править запись</string>
     <string name="discard">Отменить</string>
