@@ -443,7 +443,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         collection.decks.save(dyn)
         // launch this in the activity scope, rather than the fragment scope
         requireActivity().launchCatchingTask { rebuildDynamicDeck() }
-        // Hide the dialogs
+        // Hide the dialogs (required due to a DeckPicker issue)
         customStudyListener?.dismissAllDialogFragments()
     }
 
