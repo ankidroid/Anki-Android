@@ -30,6 +30,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
@@ -55,6 +56,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
 import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
@@ -84,7 +86,8 @@ private const val DID = "did"
 private const val JUMP_TO_REVIEWER = "jumpToReviewer"
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 
-    interface CustomStudyListener : CreateCustomStudySessionListenerCallback {
+    interface CustomStudyListener {
+        fun onCreateCustomStudySession()
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment)
         fun dismissAllDialogFragments()
@@ -439,13 +442,17 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        requireActivity().launchCatchingTask {
-            withProgress {
-                rebuildCram(customStudyListener!!)
-            }
-        }
+        requireActivity().launchCatchingTask { rebuildCram(decks) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
+    }
+
+    private suspend fun rebuildCram(decks: Decks) {
+        withProgress {
+            Timber.d("rebuildCram()")
+            CollectionManager.withCol { sched.rebuildDyn(decks.selected()) }
+            customStudyListener?.onCreateCustomStudySession()
+        }
     }
 
     private fun onLimitsExtended(jumpToReviewer: Boolean) {
