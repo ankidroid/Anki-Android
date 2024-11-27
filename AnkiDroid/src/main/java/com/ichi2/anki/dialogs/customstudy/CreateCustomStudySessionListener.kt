@@ -20,27 +20,14 @@ import timber.log.Timber
 
 class CreateCustomStudySessionListener(val callback: Callback) {
     interface Callback {
-        fun hideProgressBar()
         fun onCreateCustomStudySession()
-        fun showProgressBar()
-    }
-
-    fun onPreExecute() {
-        callback.showProgressBar()
-    }
-
-    fun onPostExecute() {
-        callback.hideProgressBar()
-        callback.onCreateCustomStudySession()
     }
 }
 
-// TODO: See if listener can be simplified more
 suspend fun rebuildCram(listener: CreateCustomStudySessionListener) {
-    listener.onPreExecute()
     CollectionManager.withCol {
-        Timber.d("doInBackground - rebuildCram()")
+        Timber.d("rebuildCram()")
         sched.rebuildDyn(decks.selected())
     }
-    listener.onPostExecute()
+    listener.callback.onCreateCustomStudySession()
 }

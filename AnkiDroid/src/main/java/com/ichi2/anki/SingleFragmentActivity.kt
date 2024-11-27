@@ -124,7 +124,7 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
     }
 
     override fun onExtendStudyLimits() {
-        Timber.v("CustomStudyListener::hideProgressBar() - not handled")
+        Timber.v("CustomStudyListener::onExtendStudyLimits()")
         openStudyOptionsAndFinish()
     }
 
@@ -140,10 +140,6 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
     override fun onCreateCustomStudySession() {
         Timber.v("CustomStudyListener::onCreateCustomStudySession()")
         openStudyOptionsAndFinish()
-    }
-
-    override fun hideProgressBar() {
-        Timber.v("CustomStudyListener::hideProgressBar() - not handled")
     }
 
     // END CustomStudyListener temporary implementation - should refactor out

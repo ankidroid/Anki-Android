@@ -48,6 +48,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -438,7 +439,11 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        requireActivity().launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
+        requireActivity().launchCatchingTask {
+            withProgress {
+                rebuildCram(CreateCustomStudySessionListener(customStudyListener!!))
+            }
+        }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }
