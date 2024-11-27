@@ -924,8 +924,21 @@ open class DeckPicker :
                 }
 
                 override fun onQueryTextChange(newText: String): Boolean {
-                    val adapter = recyclerView.adapter as Filterable?
-                    adapter!!.filter.filter(newText)
+                    val adapter = recyclerView.adapter as? Filterable
+                    if (adapter == null || adapter.filter == null) {
+                        Timber.w(
+                            "DeckPicker.onQueryTextChange: adapter is null: %s, filter is null: %s, adapter type: %s",
+                            adapter == null,
+                            adapter?.filter == null,
+                            adapter?.javaClass?.simpleName ?: "Unknown"
+                        )
+                        CrashReportService.sendExceptionReport(
+                            Exception("DeckPicker.onQueryTextChanged with unexpected null adapter or filter. Carefully examine logcat"),
+                            "DeckPicker"
+                        )
+                        return true
+                    }
+                    adapter.filter.filter(newText)
                     return true
                 }
             })
