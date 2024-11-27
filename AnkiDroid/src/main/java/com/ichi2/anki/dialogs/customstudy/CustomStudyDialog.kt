@@ -442,13 +442,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         // PERF: Should be in background
         collection.decks.save(dyn)
         // launch this in the activity scope, rather than the fragment scope
-        requireActivity().launchCatchingTask { rebuildCram() }
+        requireActivity().launchCatchingTask { rebuildDynamicDeck() }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }
 
-    private suspend fun rebuildCram() {
-        Timber.d("rebuildCram()")
+    private suspend fun rebuildDynamicDeck() {
+        Timber.d("rebuildDynamicDeck()")
         withProgress {
             withCol { sched.rebuildDyn(decks.selected()) }
             customStudyListener?.onCreateCustomStudySession()
