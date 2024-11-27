@@ -53,6 +53,8 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction.DEFAULT
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.NONE
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog.SimpleMessageDialogListener
@@ -88,6 +90,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
      * @see broadcastsActions
      */
     private var broadcastReceiver: BroadcastReceiver? = null
+
+    var importColpkgListener: ImportColpkgListener? = null
 
     /** The name of the parent class (example: 'Reviewer')  */
     private val activityName: String
@@ -587,6 +591,12 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Shortc
                 FragmentManager.POP_BACK_STACK_INCLUSIVE
             )
         }
+    }
+
+    // Show dialogs to deal with database loading issues etc
+    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
+        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType)
+        showAsyncDialogFragment(newFragment)
     }
 
     /**

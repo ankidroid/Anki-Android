@@ -105,7 +105,6 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
-import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog
@@ -319,8 +318,6 @@ open class DeckPicker :
      */
     @VisibleForTesting
     internal var focusedDeck: DeckId = 0
-
-    var importColpkgListener: ImportColpkgListener? = null
 
     private var toolbarSearchItem: MenuItem? = null
     private var toolbarSearchView: AccessibleSearchView? = null
@@ -1690,12 +1687,6 @@ open class DeckPicker :
         }
     }
 
-    // Show dialogs to deal with database loading issues etc
-    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
-        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType)
-        showAsyncDialogFragment(newFragment)
-    }
-
     override fun showMediaCheckDialog(dialogType: Int) {
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
     }
@@ -2587,9 +2578,9 @@ class CollectionLoadingErrorDialog : DialogHandlerMessage(
     WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG,
     "CollectionLoadErrorDialog"
 ) {
-    override fun handleAsyncMessage(deckPicker: DeckPicker) {
+    override fun handleAsyncMessage(activity: AnkiActivity) {
         // Collection could not be opened
-        deckPicker.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
+        activity.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
     }
 
     override fun toMessage() = emptyMessage(this.what)
@@ -2599,7 +2590,7 @@ class OneWaySyncDialog(val message: String?) : DialogHandlerMessage(
     which = WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG,
     analyticName = "OneWaySyncDialog"
 ) {
-    override fun handleAsyncMessage(deckPicker: DeckPicker) {
+    override fun handleAsyncMessage(activity: AnkiActivity) {
         // Confirmation dialog for one-way sync
         val dialog = ConfirmationDialog()
         val confirm = Runnable {
@@ -2608,7 +2599,7 @@ class OneWaySyncDialog(val message: String?) : DialogHandlerMessage(
         }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)
-        deckPicker.showDialogFragment(dialog)
+        activity.showDialogFragment(dialog)
     }
 
     override fun toMessage(): Message = Message.obtain().apply {

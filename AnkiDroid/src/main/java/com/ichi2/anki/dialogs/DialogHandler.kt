@@ -42,8 +42,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
         val msg = DialogHandlerMessage.fromMessage(message)
         UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
         Timber.i("Handling Message: %s", msg.analyticName)
-        val deckPicker = activity.get() as DeckPicker
-        msg.handleAsyncMessage(deckPicker)
+        msg.handleAsyncMessage(activity.get() as AnkiActivity)
     }
 
     /**
@@ -100,7 +99,7 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
  */
 abstract class DialogHandlerMessage protected constructor(val which: WhichDialogHandler, val analyticName: String) {
     val what = which.what
-    abstract fun handleAsyncMessage(deckPicker: DeckPicker)
+    abstract fun handleAsyncMessage(activity: AnkiActivity)
 
     protected fun emptyMessage(what: Int): Message = Message.obtain().apply { this.what = what }
 

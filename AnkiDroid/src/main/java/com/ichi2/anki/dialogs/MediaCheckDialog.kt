@@ -13,8 +13,10 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.showError
 import com.ichi2.libanki.MediaCheckResult
 
 class MediaCheckDialog : AsyncDialogFragment() {
@@ -174,12 +176,22 @@ class MediaCheckDialog : AsyncDialogFragment() {
         private val unused: ArrayList<String>?,
         private val invalid: ArrayList<String>?
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG, "MediaCheckCompleteDialog") {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+        override fun handleAsyncMessage(activity: AnkiActivity) {
             // Media check results
             val id = dialogType
             if (id != DIALOG_CONFIRM_MEDIA_CHECK) {
+                // we may be called via any AnkiActivity but media check is a DeckPicker thing
+                if (activity !is DeckPicker) {
+                    showError(
+                        activity,
+                        activity.getString(R.string.something_wrong),
+                        ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
+                        true
+                    )
+                    return
+                }
                 val checkList = MediaCheckResult(noHave ?: arrayListOf(), unused ?: arrayListOf(), invalid ?: arrayListOf())
-                deckPicker.showMediaCheckDialog(id, checkList)
+                activity.showMediaCheckDialog(id, checkList)
             }
         }
 

@@ -422,16 +422,15 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             R.string.restore_data_from_backup,
             dismissesDialog = false,
             { activity ->
-                val deckPicker = activity as DeckPicker
                 Timber.i("Restoring from colpkg")
-                val newAnkiDroidDirectory = CollectionHelper.getDefaultAnkiDroidDirectory(deckPicker)
-                deckPicker.importColpkgListener = DatabaseRestorationListener(deckPicker, newAnkiDroidDirectory)
+                val newAnkiDroidDirectory = CollectionHelper.getDefaultAnkiDroidDirectory(activity)
+                activity.importColpkgListener = DatabaseRestorationListener(activity, newAnkiDroidDirectory)
 
-                deckPicker.launchCatchingTask {
+                activity.launchCatchingTask {
                     CollectionHelper.ankiDroidDirectoryOverride = newAnkiDroidDirectory
 
                     CollectionManager.withCol {
-                        deckPicker.showImportDialog(
+                        activity.showImportDialog(
                             ImportOptions(
                                 importTextFile = false,
                                 importColpkg = true,
@@ -560,7 +559,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), "dialog", DatabaseErrorDialogType::class.java)!!
 
     fun dismissAllDialogFragments() {
-        (activity as DeckPicker).dismissAllDialogFragments()
+        (activity as AnkiActivity).dismissAllDialogFragments()
     }
 
     @Parcelize
@@ -613,8 +612,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
         analyticName = "DatabaseErrorDialog"
     ) {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
-            deckPicker.showDatabaseErrorDialog(dialogType)
+        override fun handleAsyncMessage(activity: AnkiActivity) {
+            activity.showDatabaseErrorDialog(dialogType)
         }
 
         override fun toMessage(): Message = Message.obtain().apply {

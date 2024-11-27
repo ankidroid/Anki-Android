@@ -26,9 +26,9 @@ import android.provider.OpenableColumns
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
@@ -406,9 +406,9 @@ object ImportUtils {
         which = WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG,
         analyticName = "ImportReplaceDialog"
     ) {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+        override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of collection package APKG
-            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
+            activity.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
         }
 
         override fun toMessage(): Message = Message.obtain().apply {
@@ -427,9 +427,9 @@ object ImportUtils {
         WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG,
         "ImportAddDialog"
     ) {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+        override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of deck package APKG
-            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, importPath)
+            activity.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, importPath)
         }
 
         override fun toMessage(): Message = Message.obtain().apply {
