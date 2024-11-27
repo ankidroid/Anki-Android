@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.JavascriptInterface
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -155,18 +154,9 @@ class CongratsPage :
         openStudyOptionsAndFinish()
     }
 
-    override fun showDialogFragment(newFragment: DialogFragment) {
-        Timber.v("CustomStudyListener::showDialogFragment()")
-        newFragment.show(childFragmentManager, null)
-    }
-
     override fun onCreateCustomStudySession() {
         Timber.v("CustomStudyListener::onCreateCustomStudySession()")
         openStudyOptionsAndFinish()
-    }
-
-    override fun dismissAllDialogFragments() {
-        Timber.v("CustomStudyListener::dismissAllDialogFragments() - not handled")
     }
 
     companion object {
