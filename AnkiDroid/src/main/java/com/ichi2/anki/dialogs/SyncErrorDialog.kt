@@ -29,6 +29,7 @@ import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.joinSyncMessages
+import com.ichi2.anki.showError
 
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener {
@@ -277,8 +278,18 @@ class SyncErrorDialog : AsyncDialogFragment() {
         private val dialogType: Int,
         private val dialogMessage: String?
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
-            deckPicker.showSyncErrorDialog(dialogType, dialogMessage)
+        override fun handleAsyncMessage(activity: AnkiActivity) {
+            // we may be called via any AnkiActivity but media check is a DeckPicker thing
+            if (activity !is DeckPicker) {
+                showError(
+                    activity,
+                    activity.getString(R.string.something_wrong),
+                    ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
+                    true
+                )
+                return
+            }
+            activity.showSyncErrorDialog(dialogType, dialogMessage)
         }
 
         override fun toMessage(): Message = Message.obtain().apply {

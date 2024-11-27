@@ -21,8 +21,10 @@ import android.os.Bundle
 import android.os.Message
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
+import com.ichi2.anki.showError
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
@@ -64,9 +66,19 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
         which = WhichDialogHandler.MSG_EXPORT_READY,
         analyticName = "ExportReadyDialog"
     ) {
-        override fun handleAsyncMessage(deckPicker: DeckPicker) {
-            deckPicker.showDialogFragment(
-                deckPicker.exportingDelegate.dialogsFactory.newExportReadyDialog().withArguments(exportPath)
+        override fun handleAsyncMessage(activity: AnkiActivity) {
+            // we may be called via any AnkiActivity but export is a DeckPicker thing
+            if (activity !is DeckPicker) {
+                showError(
+                    activity,
+                    activity.getString(R.string.something_wrong),
+                    ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
+                    true
+                )
+                return
+            }
+            activity.showDialogFragment(
+                activity.exportingDelegate.dialogsFactory.newExportReadyDialog().withArguments(exportPath)
             )
         }
 

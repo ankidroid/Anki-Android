@@ -341,7 +341,20 @@ class IntentHandler : AbstractIntentHandler() {
             which = WhichDialogHandler.MSG_DO_SYNC,
             analyticName = "DoSyncDialog"
         ) {
-            override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            override fun handleAsyncMessage(activity: AnkiActivity) {
+                // we may be called via any AnkiActivity but sync is a DeckPicker thing
+                if (activity !is DeckPicker) {
+                    showError(
+                        activity,
+                        activity.getString(R.string.something_wrong),
+                        ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
+                        true
+                    )
+                    return
+                }
+                // let's be clear about the type now that we've checked
+                val deckPicker = activity
+
                 val preferences = deckPicker.sharedPrefs()
                 val res = deckPicker.resources
                 val hkey = preferences.getString("hkey", "")
