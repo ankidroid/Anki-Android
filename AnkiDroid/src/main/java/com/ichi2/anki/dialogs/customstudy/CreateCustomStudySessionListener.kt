@@ -18,16 +18,14 @@ package com.ichi2.anki.dialogs.customstudy
 import com.ichi2.anki.CollectionManager
 import timber.log.Timber
 
-class CreateCustomStudySessionListener(val callback: Callback) {
-    interface Callback {
-        fun onCreateCustomStudySession()
-    }
+interface CreateCustomStudySessionListenerCallback {
+    fun onCreateCustomStudySession()
 }
 
-suspend fun rebuildCram(listener: CreateCustomStudySessionListener) {
+suspend fun rebuildCram(callback: CreateCustomStudySessionListenerCallback) {
     CollectionManager.withCol {
         Timber.d("rebuildCram()")
         sched.rebuildDyn(decks.selected())
     }
-    listener.callback.onCreateCustomStudySession()
+    callback.onCreateCustomStudySession()
 }

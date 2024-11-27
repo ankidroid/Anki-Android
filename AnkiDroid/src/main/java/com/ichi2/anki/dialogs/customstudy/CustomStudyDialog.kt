@@ -84,7 +84,7 @@ private const val DID = "did"
 private const val JUMP_TO_REVIEWER = "jumpToReviewer"
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 
-    interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
+    interface CustomStudyListener : CreateCustomStudySessionListenerCallback {
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment)
         fun dismissAllDialogFragments()
@@ -441,7 +441,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         collection.decks.save(dyn)
         requireActivity().launchCatchingTask {
             withProgress {
-                rebuildCram(CreateCustomStudySessionListener(customStudyListener!!))
+                rebuildCram(customStudyListener!!)
             }
         }
         // Hide the dialogs
