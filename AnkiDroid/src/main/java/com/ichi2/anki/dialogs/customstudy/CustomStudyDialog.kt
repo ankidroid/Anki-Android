@@ -30,7 +30,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
-import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
@@ -56,7 +56,6 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Decks
 import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
@@ -442,15 +441,16 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        requireActivity().launchCatchingTask { rebuildCram(decks) }
+        // launch this in the activity scope, rather than the fragment scope
+        requireActivity().launchCatchingTask { rebuildCram() }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()
     }
 
-    private suspend fun rebuildCram(decks: Decks) {
+    private suspend fun rebuildCram() {
+        Timber.d("rebuildCram()")
         withProgress {
-            Timber.d("rebuildCram()")
-            CollectionManager.withCol { sched.rebuildDyn(decks.selected()) }
+            withCol { sched.rebuildDyn(decks.selected()) }
             customStudyListener?.onCreateCustomStudySession()
         }
     }
