@@ -278,7 +278,7 @@ class SetDueDateDialog : DialogFragment() {
 // this can outlive the lifetime of the fragment
 private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this.launchCatchingTask {
     // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
-    val cardsUpdated = withProgress(resources.getString(R.string.dialog_processing)) {
+    val cardsUpdated = withProgress {
         // this is async as it should be run on the viewModel
         viewModel.updateDueDateAsync().await()
     }
