@@ -17,9 +17,12 @@ package com.ichi2.anki.preferences
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
+import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
@@ -84,6 +87,24 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_lock_database_key).setOnPreferenceClickListener {
             Timber.w("Toggling database lock")
             launchCatchingTask { CollectionManager.withCol { Thread.sleep(1000 * 86400) } }
+            false
+        }
+        // Make it possible to test crash reporting
+        requirePreference<Preference>(R.string.pref_set_database_path_debug_key).setOnPreferenceClickListener {
+            AlertDialog.Builder(requireContext()).show {
+                setTitle("Warning!")
+                setMessage("This will most likely make it so that you cannot access your collection. It will be very difficult to recover your data.")
+                setPositiveButton(R.string.dialog_ok) { _, _ ->
+                    Timber.w("Setting collection path to /storage/emulated/0/AnkiDroid")
+                    AnkiDroidApp.sharedPrefs().edit {
+                        putString(
+                            CollectionHelper.PREF_COLLECTION_PATH,
+                            "/storage/emulated/0/AnkiDroid"
+                        )
+                    }
+                }
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            }
             false
         }
 
