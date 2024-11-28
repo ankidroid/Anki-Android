@@ -279,6 +279,12 @@ fun showError(context: Context, msg: String, exception: Throwable, crashReport: 
     } catch (ex: BadTokenException) {
         // issue 12718: activity provided by `context` was not running
         Timber.w(ex, "unable to display error dialog")
+        if (crashReport) {
+            CrashReportService.sendExceptionReport(
+                exception,
+                origin = context::class.java.simpleName
+            )
+        }
     }
 }
 
