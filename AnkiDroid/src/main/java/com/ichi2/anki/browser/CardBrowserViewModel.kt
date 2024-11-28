@@ -53,6 +53,7 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.undoableOp
+import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -241,6 +242,7 @@ class CardBrowserViewModel(
     }
 
     val flowOfInitCompleted = MutableStateFlow(false)
+    val flowOfLanguageChanged = MutableStateFlow(LanguageUtil.getSystemLocale().language)
 
     /**
      * Whether the task launched from CardBrowserViewModel.init has completed.
@@ -313,7 +315,7 @@ class CardBrowserViewModel(
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
-            setUpColumns()
+            fetchColumns()
             setupColumns(cardsOrNotes)
 
             withCol {
@@ -328,7 +330,7 @@ class CardBrowserViewModel(
         }
     }
 
-    suspend fun setUpColumns() {
+    suspend fun fetchColumns() {
         val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
         column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
         column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
@@ -341,6 +343,11 @@ class CardBrowserViewModel(
 
         // This impacts browserRowForId(), which we do not use yet
         withCol { backend.setActiveBrowserColumns(columns.backendKeys) }
+    }
+    fun checkLanguageChange() {
+        if (flowOfLanguageChanged.value != LanguageUtil.getSystemLocale().language) {
+            flowOfLanguageChanged.update { LanguageUtil.getSystemLocale().language }
+        }
     }
 
     @VisibleForTesting
