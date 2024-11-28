@@ -89,9 +89,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         try {
             sqliteInstalled = Runtime.getRuntime().exec("sqlite3 --version").waitFor() == 0
         } catch (e: IOException) {
-            Timber.w(e)
+            Timber.i("sqlite3 not installed: ${e.message}")
         } catch (e: InterruptedException) {
-            Timber.w(e)
+            Timber.i("test for sqlite3 failed: ${e.message}")
         }
         return when (requireDialogType()) {
             DIALOG_LOAD_FAILED -> {
