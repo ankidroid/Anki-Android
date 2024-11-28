@@ -113,10 +113,10 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         // add two example toolbar buttons
         val buttons = HashUtil.hashSetInit<String>(2)
 
-        var values = arrayOf(0, "<h1>", "</h1>")
+        var values = arrayOf("0", "<h1>", "</h1>")
         buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
 
-        values = arrayOf(1, "<p>", "</p>")
+        values = arrayOf("1", "<p>", "</p>")
         buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
 
         prefs.edit {
