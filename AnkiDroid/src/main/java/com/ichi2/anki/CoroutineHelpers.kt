@@ -355,7 +355,7 @@ suspend fun <T> Activity.withProgress(
 }
 
 /** @see withProgress(String, ...) */
-suspend fun <T> Fragment.withProgress(message: String, block: suspend () -> T): T =
+suspend fun <T> Fragment.withProgress(message: String = getString(R.string.dialog_processing), block: suspend () -> T): T =
     requireActivity().withProgress(message, block)
 
 /** @see withProgress(String, ...) */

@@ -159,7 +159,7 @@ private fun AnkiActivity.forgetCards(
         resetRepetitionAndLapseCounts
     )
     // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
-    withProgress(resources.getString(R.string.dialog_processing)) {
+    withProgress {
         undoableOp {
             sched.forgetCards(
                 cardsIds,
