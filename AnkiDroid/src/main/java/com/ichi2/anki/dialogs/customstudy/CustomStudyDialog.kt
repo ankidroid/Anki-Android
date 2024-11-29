@@ -116,10 +116,12 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         super.onCreate(savedInstanceState)
         val option = getOption()
         return if (option == null) {
+            Timber.i("Showing Custom Study main menu")
             // Select the specified deck
             collection.decks.select(requireArguments().getLong(DID))
             buildContextMenu()
         } else {
+            Timber.i("Showing Custom Study dialog: $option")
             buildInputDialog(option)
         }
     }
