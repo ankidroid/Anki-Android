@@ -25,7 +25,6 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.libanki.Collection
@@ -144,13 +143,6 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     protected fun setTitle(@StringRes title: Int) {
         mainToolbar.setTitle(title)
     }
-
-    /**
-     * Method to show dialog fragment including adding it to back stack
-     *
-     * @see AnkiActivity.showDialogFragment
-     */
-    protected open fun showDialogFragment(newFragment: DialogFragment) = ankiActivity.showDialogFragment(newFragment)
 
     /**
      * Run the provided operation, showing a progress window with the provided

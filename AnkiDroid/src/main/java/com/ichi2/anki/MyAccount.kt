@@ -39,6 +39,7 @@ import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup

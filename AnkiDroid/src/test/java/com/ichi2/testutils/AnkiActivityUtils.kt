@@ -18,9 +18,10 @@ package com.ichi2.testutils
 
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 
 object AnkiActivityUtils {
     inline fun <reified T : DialogFragment> AnkiActivity.getDialogFragment(): T? {
-        return supportFragmentManager.findFragmentByTag(AnkiActivity.DIALOG_FRAGMENT_TAG) as T?
+        return supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) as T?
     }
 }

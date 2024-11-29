@@ -43,6 +43,7 @@ import com.google.android.material.navigation.NavigationView
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.preferences.PreferencesActivity
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId

@@ -71,6 +71,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.isVisible
 import androidx.draganddrop.DropHelper
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -149,6 +150,8 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
@@ -1807,6 +1810,10 @@ open class DeckPicker :
             val mediaCheckResult = checkMedia()
             showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
         }
+    }
+
+    override fun dismissAllDialogFragments() {
+        (this as FragmentActivity).dismissAllDialogFragments()
     }
 
     override fun deleteUnused(unused: List<String>) {

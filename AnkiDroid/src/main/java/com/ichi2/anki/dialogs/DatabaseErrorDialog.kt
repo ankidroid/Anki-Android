@@ -56,6 +56,7 @@ import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.showImportDialog
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.UiUtil.makeBold

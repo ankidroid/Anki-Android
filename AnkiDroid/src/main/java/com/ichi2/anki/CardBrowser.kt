@@ -109,7 +109,9 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
+import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
 import com.ichi2.anki.utils.ext.ifNotZero
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest

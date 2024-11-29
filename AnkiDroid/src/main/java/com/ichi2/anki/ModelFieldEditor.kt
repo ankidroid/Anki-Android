@@ -37,6 +37,8 @@ import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.exception.ConfirmModSchemaException

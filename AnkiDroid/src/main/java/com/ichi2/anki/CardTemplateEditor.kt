@@ -69,7 +69,9 @@ import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerFragment
 import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.isImageOcclusion
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.postDelayed
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -947,7 +949,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val decks = SelectableDeck.fromCollection(includeFiltered = false)
             val title = getString(R.string.card_template_editor_deck_override)
             val dialog = DeckSelectionDialog.newInstance(title, explanation, true, decks)
-            showDialogFragment(activity, dialog)
+            activity.showDialogFragment(dialog)
         }
 
         private fun getCurrentTemplateName(tempModel: CardTemplateNotetype): String {
