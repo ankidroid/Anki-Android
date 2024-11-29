@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":AnkiDroid"))
     implementation(libs.jakewharton.timber)
     implementation(libs.hamcrest)
+    implementation(libs.hamcrest.library)
     implementation(libs.junit.jupiter)
     implementation(libs.androidx.test.junit)
     testImplementation(libs.junit.vintage.engine)
