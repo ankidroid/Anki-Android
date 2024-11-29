@@ -17,8 +17,10 @@ package com.ichi2.anki.utils.ext
 
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.showDialogFragmentImpl
 
 fun Fragment.sharedPrefs(): SharedPreferences {
     return requireContext().sharedPrefs()
@@ -26,3 +28,10 @@ fun Fragment.sharedPrefs(): SharedPreferences {
 
 val Fragment.packageManager: PackageManager
     get() = requireContext().packageManager
+
+/**
+ * Method to show dialog fragment including adding it to back stack
+ *
+ * @see showDialogFragmentImpl
+ */
+fun Fragment.showDialogFragment(newFragment: DialogFragment) = requireActivity().showDialogFragment(newFragment)

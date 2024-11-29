@@ -45,8 +45,9 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
@@ -141,7 +142,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             checkedTags = ArrayList(),
                             allTags = ArrayList(collection.tags.byDeck(currentDeck))
                         )
-                        requireAnkiActivity().showDialogFragment(dialogFragment)
+                        requireActivity().showDialogFragment(dialogFragment)
                     }
                     else -> {
                         // User asked for a standard custom study option
@@ -150,7 +151,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                                 requireArguments().getLong(DID),
                                 listIds[index]
                             )
-                        requireAnkiActivity().showDialogFragment(d)
+                        requireActivity().showDialogFragment(d)
                     }
                 }
             }.create()
@@ -264,7 +265,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
             }
             .negativeButton(R.string.dialog_cancel) {
-                requireAnkiActivity().dismissAllDialogFragments()
+                requireActivity().dismissAllDialogFragments()
             }
             .create() // Added .create() because we wanted to access alertDialog positive button enable state
         editText.addTextChangedListener(object : TextWatcher {
@@ -431,7 +432,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         // launch this in the activity scope, rather than the fragment scope
         requireActivity().launchCatchingTask { rebuildDynamicDeck() }
         // Hide the dialogs (required due to a DeckPicker issue)
-        requireAnkiActivity().dismissAllDialogFragments()
+        requireActivity().dismissAllDialogFragments()
     }
 
     private suspend fun rebuildDynamicDeck() {
@@ -444,7 +445,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private fun onLimitsExtended() {
         customStudyListener?.onExtendStudyLimits()
-        requireAnkiActivity().dismissAllDialogFragments()
+        requireActivity().dismissAllDialogFragments()
     }
 
     /**

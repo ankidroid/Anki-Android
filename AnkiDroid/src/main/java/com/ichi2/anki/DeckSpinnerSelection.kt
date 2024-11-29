@@ -30,6 +30,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckCreationListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
+import com.ichi2.anki.utils.showDialogFragmentImpl
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
@@ -242,7 +243,7 @@ class DeckSpinnerSelection(
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
         // TODO: retain state after onDestroy
         dialog.deckCreationListener = DeckCreationListener { onDeckAdded(it) }
-        AnkiActivity.showDialogFragment(fragmentManagerSupplier.getFragmentManager(), dialog)
+        showDialogFragmentImpl(fragmentManagerSupplier.getFragmentManager(), dialog)
     }
 
     private fun onDeckAdded(deck: DeckNameId) {
