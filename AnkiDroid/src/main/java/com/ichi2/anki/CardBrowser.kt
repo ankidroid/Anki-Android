@@ -109,7 +109,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.SECONDS_PER_DAY
-import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
+import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.ifNotZero
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
@@ -416,8 +416,7 @@ open class CardBrowser :
 
         // Selected cards aren't restored on activity recreation,
         // so it is necessary to dismiss the change deck dialog
-        val dialogFragment = supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG)
-        if (dialogFragment is DeckSelectionDialog) {
+        getCurrentDialogFragment<DeckSelectionDialog>()?.let { dialogFragment ->
             if (dialogFragment.requireArguments().getBoolean(CHANGE_DECK_KEY, false)) {
                 Timber.d("onCreate(): Change deck dialog dismissed")
                 dialogFragment.dismiss()
