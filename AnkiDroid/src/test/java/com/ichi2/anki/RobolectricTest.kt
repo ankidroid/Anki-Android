@@ -24,10 +24,8 @@ import android.content.SharedPreferences
 import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
-import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.core.app.ApplicationProvider
@@ -36,7 +34,6 @@ import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
 import com.ichi2.anki.CollectionManager.CollectionOpenFailure
 import com.ichi2.anki.dialogs.DialogHandler
-import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.Card
@@ -424,14 +421,6 @@ open class RobolectricTest : AndroidTest {
 
     fun equalFirstField(expected: Card, obtained: Card) {
         MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
-    }
-
-    @CheckResult
-    protected fun openDialogFragmentUsingActivity(menu: DialogFragment): FragmentTestActivity {
-        val startActivityIntent = Intent(targetContext, FragmentTestActivity::class.java)
-        val activity = startActivityNormallyOpenCollectionWithIntent(FragmentTestActivity::class.java, startActivityIntent)
-        activity.showDialogFragment(menu)
-        return activity
     }
 
     /**
