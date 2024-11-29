@@ -165,16 +165,8 @@ class CongratsPage :
         openStudyOptionsAndFinish()
     }
 
-    override fun showProgressBar() {
-        Timber.v("CustomStudyListener::showProgressBar() - not handled")
-    }
-
     override fun dismissAllDialogFragments() {
         Timber.v("CustomStudyListener::dismissAllDialogFragments() - not handled")
-    }
-
-    override fun hideProgressBar() {
-        Timber.v("CustomStudyListener::hideProgressBar() - not handled")
     }
 
     companion object {

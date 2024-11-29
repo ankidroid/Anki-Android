@@ -30,6 +30,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer
@@ -48,6 +49,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -83,7 +85,8 @@ private const val DID = "did"
 private const val JUMP_TO_REVIEWER = "jumpToReviewer"
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 
-    interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
+    interface CustomStudyListener {
+        fun onCreateCustomStudySession()
         fun onExtendStudyLimits()
         fun showDialogFragment(newFragment: DialogFragment)
         fun dismissAllDialogFragments()
@@ -440,9 +443,18 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
         collection.decks.save(dyn)
-        requireActivity().launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
-        // Hide the dialogs
+        // launch this in the activity scope, rather than the fragment scope
+        requireActivity().launchCatchingTask { rebuildDynamicDeck() }
+        // Hide the dialogs (required due to a DeckPicker issue)
         customStudyListener?.dismissAllDialogFragments()
+    }
+
+    private suspend fun rebuildDynamicDeck() {
+        Timber.d("rebuildDynamicDeck()")
+        withProgress {
+            withCol { sched.rebuildDyn(decks.selected()) }
+            customStudyListener?.onCreateCustomStudySession()
+        }
     }
 
     private fun onLimitsExtended(jumpToReviewer: Boolean) {
