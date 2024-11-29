@@ -36,7 +36,10 @@ android {
 
         packaging {
             resources {
+                // testlib is not compiled into the public apk
                 excludes += "META-INF/DEPENDENCIES"
+                excludes += "META-INF/LICENSE.md"
+                excludes += "META-INF/LICENSE-notice.md"
             }
         }
     }
@@ -48,6 +51,7 @@ dependencies {
     implementation(project(":AnkiDroid"))
     implementation(libs.jakewharton.timber)
     implementation(libs.hamcrest)
+    implementation(libs.hamcrest.library)
     implementation(libs.junit.jupiter)
     implementation(libs.androidx.test.junit)
     testImplementation(libs.junit.vintage.engine)
