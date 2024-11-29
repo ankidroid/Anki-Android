@@ -34,7 +34,15 @@
  *  Changes:
  *  * Renamed to AnkiFragmentScenario & changed Package name
  *  * Updated to use EmptyAnkiActivity + Robolectric hack to register activity
+ *  * Remove redundant public modifier
+ *  * Remove deprecated methods
+ *  * suppress unused methods
+ *  * use `Closeable by activityScenario`
+ *  * Don't redefine `FragmentAction`
+ *  * remove `themeResId` and `containerResId`
  */
+
+@file:Suppress("unused")
 
 package com.ichi2.testutils
 
@@ -42,73 +50,17 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.IdRes
-import androidx.annotation.StyleRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.commitNow
-import androidx.fragment.app.testing.EmptyFragmentActivity
 import androidx.fragment.app.testing.FragmentFactoryHolderViewModel
-import androidx.fragment.testing.manifest.R
+import androidx.fragment.app.testing.FragmentScenario.FragmentAction
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.ichi2.testutils.AnkiFragmentScenario.Companion.launch
 import java.io.Closeable
-
-@Deprecated(
-    "Superseded by launchFragment that takes an initialState",
-    level = DeprecationLevel.HIDDEN
-) // Binary API compatibility.
-public inline fun <reified F : Fragment> launchFragment(
-    fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
-    factory: FragmentFactory? = null
-): AnkiFragmentScenario<F> = launchFragment(
-    fragmentArgs,
-    themeResId,
-    Lifecycle.State.RESUMED,
-    factory
-)
-
-@Deprecated(
-    "Superseded by launchFragment that takes an initialState",
-    level = DeprecationLevel.HIDDEN
-) // Binary API compatibility.
-public inline fun <reified F : Fragment> launchFragment(
-    fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
-    crossinline instantiate: () -> F
-): AnkiFragmentScenario<F> = launchFragment(fragmentArgs, themeResId) {
-    instantiate()
-}
-
-@Deprecated(
-    "Superseded by launchFragmentInContainer that takes an initialState",
-    level = DeprecationLevel.HIDDEN
-) // Binary API compatibility.
-public inline fun <reified F : Fragment> launchFragmentInContainer(
-    fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
-    factory: FragmentFactory? = null
-): AnkiFragmentScenario<F> = launchFragmentInContainer(
-    fragmentArgs,
-    themeResId,
-    Lifecycle.State.RESUMED,
-    factory
-)
-
-@Deprecated(
-    "Superseded by launchFragmentInContainer that takes an initialState",
-    level = DeprecationLevel.HIDDEN
-) // Binary API compatibility.
-public inline fun <reified F : Fragment> launchFragmentInContainer(
-    fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
-    crossinline instantiate: () -> F
-): AnkiFragmentScenario<F> = launchFragmentInContainer(fragmentArgs, themeResId) {
-    instantiate()
-}
 
 /**
  * Launches a Fragment with given arguments hosted by an empty [FragmentActivity] using
@@ -117,20 +69,17 @@ public inline fun <reified F : Fragment> launchFragmentInContainer(
  * This method cannot be called from the main thread.
  *
  * @param fragmentArgs a bundle to passed into fragment
- * @param themeResId a style resource id to be set to the host activity's theme
  * @param initialState the initial [Lifecycle.State]. Passing in
  * [DESTROYED][Lifecycle.State.DESTROYED] will result in an [IllegalArgumentException].
  * @param factory a fragment factory to use or null to use default factory
  */
-public inline fun <reified F : Fragment> launchFragment(
+inline fun <reified F : Fragment> launchFragment(
     fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     factory: FragmentFactory? = null
 ): AnkiFragmentScenario<F> = launch(
     F::class.java,
     fragmentArgs,
-    themeResId,
     initialState,
     factory
 )
@@ -142,20 +91,17 @@ public inline fun <reified F : Fragment> launchFragment(
  * This method cannot be called from the main thread.
  *
  * @param fragmentArgs a bundle to passed into fragment
- * @param themeResId a style resource id to be set to the host activity's theme
  * @param initialState the initial [Lifecycle.State]. Passing in
  * [DESTROYED][Lifecycle.State.DESTROYED] will result in an [IllegalArgumentException].
  * @param instantiate method which will be used to instantiate the Fragment.
  */
-public inline fun <reified F : Fragment> launchFragment(
+inline fun <reified F : Fragment> launchFragment(
     fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     crossinline instantiate: () -> F
 ): AnkiFragmentScenario<F> = launch(
     F::class.java,
     fragmentArgs,
-    themeResId,
     initialState,
     object : FragmentFactory() {
         override fun instantiate(
@@ -175,20 +121,17 @@ public inline fun <reified F : Fragment> launchFragment(
  * This method cannot be called from the main thread.
  *
  * @param fragmentArgs a bundle to passed into fragment
- * @param themeResId a style resource id to be set to the host activity's theme
  * @param initialState the initial [Lifecycle.State]. Passing in
  * [DESTROYED][Lifecycle.State.DESTROYED] will result in an [IllegalArgumentException].
  * @param factory a fragment factory to use or null to use default factory
  */
-public inline fun <reified F : Fragment> launchFragmentInContainer(
+inline fun <reified F : Fragment> launchFragmentInContainer(
     fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     factory: FragmentFactory? = null
 ): AnkiFragmentScenario<F> = AnkiFragmentScenario.launchInContainer(
     F::class.java,
     fragmentArgs,
-    themeResId,
     initialState,
     factory
 )
@@ -201,22 +144,19 @@ public inline fun <reified F : Fragment> launchFragmentInContainer(
  * This method cannot be called from the main thread.
  *
  * @param fragmentArgs a bundle to passed into fragment
- * @param themeResId a style resource id to be set to the host activity's theme
  * @param initialState the initial [Lifecycle.State]. Passing in
  * [DESTROYED][Lifecycle.State.DESTROYED] will result in an [IllegalArgumentException].
  * @param instantiate method which will be used to instantiate the Fragment. This is a
  * simplification of the [FragmentFactory] interface for cases where only a single class
  * needs a custom constructor called.
  */
-public inline fun <reified F : Fragment> launchFragmentInContainer(
+inline fun <reified F : Fragment> launchFragmentInContainer(
     fragmentArgs: Bundle? = null,
-    @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     crossinline instantiate: () -> F
 ): AnkiFragmentScenario<F> = AnkiFragmentScenario.launchInContainer(
     F::class.java,
     fragmentArgs,
-    themeResId,
     initialState,
     object : FragmentFactory() {
         override fun instantiate(
@@ -235,7 +175,7 @@ public inline fun <reified F : Fragment> launchFragmentInContainer(
  * If any exceptions are raised while running [block], they are rethrown.
  */
 @SuppressWarnings("DocumentExceptions")
-public inline fun <reified F : Fragment, T : Any> AnkiFragmentScenario<F>.withFragment(
+inline fun <reified F : Fragment, T : Any> AnkiFragmentScenario<F>.withFragment(
     crossinline block: F.() -> T
 ): T {
     lateinit var value: T
@@ -261,18 +201,16 @@ public inline fun <reified F : Fragment, T : Any> AnkiFragmentScenario<F>.withFr
  * [android.app.Fragment], please update your code to
  * [androidx.fragment.app.Fragment][Fragment].
  *
- * If your testing Fragment has a dependency to specific theme such as `Theme.AppCompat`,
- * use the theme ID parameter in [launch] method.
  *
  * @param F The Fragment class being tested
  *
  * @see ActivityScenario a scenario API for Activity
  */
-public class AnkiFragmentScenario<F : Fragment> private constructor(
+class AnkiFragmentScenario<F : Fragment> private constructor(
     @Suppress("MemberVisibilityCanBePrivate") /* synthetic access */
-    internal val fragmentClass: Class<F>,
+    val fragmentClass: Class<F>,
     private val activityScenario: ActivityScenario<EmptyAnkiActivity>
-) : Closeable {
+) : Closeable by activityScenario {
 
     /**
      * Moves Fragment state to a new state.
@@ -283,7 +221,7 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
      *
      * This method cannot be called from the main thread.
      */
-    public fun moveToState(newState: Lifecycle.State): AnkiFragmentScenario<F> {
+    fun moveToState(newState: Lifecycle.State): AnkiFragmentScenario<F> {
         if (newState == Lifecycle.State.DESTROYED) {
             activityScenario.onActivity { activity ->
                 val fragment = activity.supportFragmentManager
@@ -318,26 +256,9 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
      *
      * This method cannot be called from the main thread.
      */
-    public fun recreate(): AnkiFragmentScenario<F> {
+    fun recreate(): AnkiFragmentScenario<F> {
         activityScenario.recreate()
         return this
-    }
-
-    /**
-     * FragmentAction interface should be implemented by any class whose instances are intended to
-     * be executed by the main thread. A Fragment that is instrumented by the FragmentScenario is
-     * passed to [FragmentAction.perform] method.
-     *
-     * You should never keep the Fragment reference as it will lead to unpredictable behaviour.
-     * It should only be accessed in [FragmentAction.perform] scope.
-     */
-    public fun interface FragmentAction<F : Fragment> {
-        /**
-         * This method is invoked on the main thread with the reference to the Fragment.
-         *
-         * @param fragment a Fragment instrumented by the FragmentScenario.
-         */
-        public fun perform(fragment: F)
     }
 
     /**
@@ -351,7 +272,7 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
      *
      * This method cannot be called from the main thread.
      */
-    public fun onFragment(action: FragmentAction<F>): AnkiFragmentScenario<F> {
+    fun onFragment(action: FragmentAction<F>): AnkiFragmentScenario<F> {
         activityScenario.onActivity { activity ->
             val fragment = requireNotNull(
                 activity.supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
@@ -364,16 +285,8 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
         return this
     }
 
-    /**
-     * Finishes the managed fragments and cleans up device's state. This method blocks execution
-     * until the host activity becomes [Lifecycle.State.DESTROYED].
-     */
-    public override fun close() {
-        activityScenario.close()
-    }
-
-    public companion object {
-        private const val FRAGMENT_TAG = "FragmentScenario_Fragment_Tag"
+    companion object {
+        private const val FRAGMENT_TAG = "AnkiFragmentScenario_Fragment_Tag"
 
         /**
          * Launches a Fragment with given arguments hosted by an empty [FragmentActivity] using
@@ -387,70 +300,39 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
          * @param factory a fragment factory to use or null to use default factory
          */
         @JvmStatic
-        public fun <F : Fragment> launch(
+        fun <F : Fragment> launch(
             fragmentClass: Class<F>,
             fragmentArgs: Bundle?,
             factory: FragmentFactory?
         ): AnkiFragmentScenario<F> = launch(
             fragmentClass,
             fragmentArgs,
-            R.style.FragmentScenarioEmptyFragmentActivityTheme,
             Lifecycle.State.RESUMED,
             factory
         )
 
         /**
-         * Launches a Fragment with given arguments hosted by an empty [FragmentActivity] themed
-         * by [themeResId], using the given [FragmentFactory] and waits for it to reach the
-         * resumed state.
+         * Launches a Fragment with given arguments hosted by an empty [FragmentActivity],
+         * using the given [FragmentFactory] and waits for it to reach [initialState].
          *
          * This method cannot be called from the main thread.
          *
          * @param fragmentClass a fragment class to instantiate
          * @param fragmentArgs a bundle to passed into fragment
-         * @param themeResId a style resource id to be set to the host activity's theme
-         * @param factory a fragment factory to use or null to use default factory
-         */
-        @JvmStatic
-        public fun <F : Fragment> launch(
-            fragmentClass: Class<F>,
-            fragmentArgs: Bundle?,
-            @StyleRes themeResId: Int,
-            factory: FragmentFactory?
-        ): AnkiFragmentScenario<F> = launch(
-            fragmentClass,
-            fragmentArgs,
-            themeResId,
-            Lifecycle.State.RESUMED,
-            factory
-        )
-
-        /**
-         * Launches a Fragment with given arguments hosted by an empty [FragmentActivity] themed
-         * by [themeResId], using the given [FragmentFactory] and waits for it to reach
-         * [initialState].
-         *
-         * This method cannot be called from the main thread.
-         *
-         * @param fragmentClass a fragment class to instantiate
-         * @param fragmentArgs a bundle to passed into fragment
-         * @param themeResId a style resource id to be set to the host activity's theme
          * @param initialState The initial [Lifecycle.State]. Passing in
          * [DESTROYED][Lifecycle.State.DESTROYED] will result in an [IllegalArgumentException].
          * @param factory a fragment factory to use or null to use default factory
          */
         @JvmOverloads
         @JvmStatic
-        public fun <F : Fragment> launch(
+        fun <F : Fragment> launch(
             fragmentClass: Class<F>,
             fragmentArgs: Bundle? = null,
-            @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
             initialState: Lifecycle.State = Lifecycle.State.RESUMED,
             factory: FragmentFactory? = null
         ): AnkiFragmentScenario<F> = internalLaunch(
             fragmentClass,
             fragmentArgs,
-            themeResId,
             initialState,
             factory,
             0 /*containerViewId=*/
@@ -468,70 +350,40 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
          * @param factory a fragment factory to use or null to use default factory
          */
         @JvmStatic
-        public fun <F : Fragment> launchInContainer(
+        fun <F : Fragment> launchInContainer(
             fragmentClass: Class<F>,
             fragmentArgs: Bundle?,
             factory: FragmentFactory?
         ): AnkiFragmentScenario<F> = launchInContainer(
             fragmentClass,
             fragmentArgs,
-            R.style.FragmentScenarioEmptyFragmentActivityTheme,
             Lifecycle.State.RESUMED,
             factory
         )
 
         /**
          * Launches a Fragment in the Activity's root view container `android.R.id.content`, with
-         * given arguments hosted by an empty [FragmentActivity] themed by [themeResId],
-         * using the given [FragmentFactory] and waits for it to reach the resumed state.
-         *
-         * This method cannot be called from the main thread.
-         *
-         * @param fragmentClass a fragment class to instantiate
-         * @param fragmentArgs a bundle to passed into fragment
-         * @param themeResId a style resource id to be set to the host activity's theme
-         * @param factory a fragment factory to use or null to use default factory
-         */
-        @JvmStatic
-        public fun <F : Fragment> launchInContainer(
-            fragmentClass: Class<F>,
-            fragmentArgs: Bundle?,
-            @StyleRes themeResId: Int,
-            factory: FragmentFactory?
-        ): AnkiFragmentScenario<F> = launchInContainer(
-            fragmentClass,
-            fragmentArgs,
-            themeResId,
-            Lifecycle.State.RESUMED,
-            factory
-        )
-
-        /**
-         * Launches a Fragment in the Activity's root view container `android.R.id.content`, with
-         * given arguments hosted by an empty [FragmentActivity] themed by [themeResId],
+         * given arguments hosted by an empty [FragmentActivity],
          * using the given [FragmentFactory] and waits for it to reach [initialState].
          *
          * This method cannot be called from the main thread.
          *
          * @param fragmentClass a fragment class to instantiate
          * @param fragmentArgs a bundle to passed into fragment
-         * @param themeResId a style resource id to be set to the host activity's theme
          * @param initialState The initial [Lifecycle.State]. Passing in
          * [DESTROYED][Lifecycle.State.DESTROYED] will result in an [IllegalArgumentException].
          * @param factory a fragment factory to use or null to use default factory
          */
         @JvmOverloads
         @JvmStatic
-        public fun <F : Fragment> launchInContainer(
+        fun <F : Fragment> launchInContainer(
             fragmentClass: Class<F>,
             fragmentArgs: Bundle? = null,
-            @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
             initialState: Lifecycle.State = Lifecycle.State.RESUMED,
             factory: FragmentFactory? = null
         ): AnkiFragmentScenario<F> = internalLaunch(
             fragmentClass,
             fragmentArgs,
-            themeResId,
             initialState,
             factory,
             android.R.id.content
@@ -540,7 +392,6 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
         internal fun <F : Fragment> internalLaunch(
             fragmentClass: Class<F>,
             fragmentArgs: Bundle?,
-            @StyleRes themeResId: Int,
             initialState: Lifecycle.State,
             factory: FragmentFactory?,
             @IdRes containerViewId: Int
@@ -556,7 +407,7 @@ public class AnkiFragmentScenario<F : Fragment> private constructor(
             Robolectric.registerTestActivity<EmptyAnkiActivity>()
 
             val startActivityIntent = Intent.makeMainActivity(componentName)
-                .putExtra(EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY, themeResId)
+
             val scenario = AnkiFragmentScenario(
                 fragmentClass,
                 ActivityScenario.launch(
