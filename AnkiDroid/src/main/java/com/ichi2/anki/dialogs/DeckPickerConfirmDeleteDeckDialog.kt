@@ -23,6 +23,7 @@ import androidx.core.text.HtmlCompat
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
 
@@ -55,10 +56,10 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
             .setIcon(R.drawable.ic_warning)
             .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
-                (activity as DeckPicker).dismissAllDialogFragments()
+                activity?.dismissAllDialogFragments()
             }
             .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                (activity as DeckPicker).dismissAllDialogFragments()
+                activity?.dismissAllDialogFragments()
             }
             .create()
     }

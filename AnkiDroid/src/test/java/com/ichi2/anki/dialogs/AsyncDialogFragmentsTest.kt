@@ -70,8 +70,6 @@ class AsyncDialogFragmentsTest {
 
     private fun emptyExportListener(): ExportReadyDialog.ExportReadyDialogListener {
         return object : ExportReadyDialog.ExportReadyDialogListener {
-            override fun dismissAllDialogFragments() { }
-
             override fun shareFile(path: String) { }
 
             override fun saveExportFile(exportPath: String) { }

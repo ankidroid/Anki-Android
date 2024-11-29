@@ -31,7 +31,6 @@ import com.ichi2.utils.positiveButton
 
 class ExportReadyDialog(private val listener: ExportReadyDialogListener) : AsyncDialogFragment() {
     interface ExportReadyDialogListener {
-        fun dismissAllDialogFragments()
         fun shareFile(path: String) // path of the file to be shared
         fun saveExportFile(exportPath: String)
     }

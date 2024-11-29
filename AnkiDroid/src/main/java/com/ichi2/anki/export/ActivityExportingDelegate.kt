@@ -62,7 +62,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private val saveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var fileExportPath: String
 
-    override fun dismissAllDialogFragments() {
+    fun dismissAllDialogFragments() {
         activity.dismissAllDialogFragments()
     }
 

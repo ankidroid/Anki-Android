@@ -126,7 +126,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     negativeButton(R.string.answering_error_report) {
                         (activity as DeckPicker).sendErrorReport()
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     neutralButton(R.string.close) {
                         closeCollectionAndFinish()
@@ -200,7 +200,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.dialog_positive_repair) {
                         (activity as DeckPicker).repairCollection()
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -236,7 +236,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                     ?.restoreFromBackup(
                                         backups[index].path
                                     )
-                                dismissAllDialogFragments()
+                                activity?.dismissAllDialogFragments()
                             } else {
                                 // otherwise show an error dialog
                                 AlertDialog.Builder(requireActivity()).show {
@@ -250,7 +250,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 alertDialog.setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
                         Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                         return@setOnKeyListener true
                     }
                     false
@@ -285,7 +285,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
                         (activity as DeckPicker).integrityCheck()
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -309,7 +309,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
                         (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -553,10 +553,6 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         get() = ShowDatabaseErrorDialog(requireDialogType())
 
     private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), "dialog", DatabaseErrorDialogType::class.java)!!
-
-    fun dismissAllDialogFragments() {
-        (activity as AnkiActivity).dismissAllDialogFragments()
-    }
 
     @Parcelize
     enum class DatabaseErrorDialogType : Parcelable {
