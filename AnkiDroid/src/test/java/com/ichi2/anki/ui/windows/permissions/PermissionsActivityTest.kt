@@ -71,8 +71,10 @@ class PermissionsActivityTest : RobolectricTest() {
             ApplicationProvider.getApplicationContext(),
             permissionSet
         )
-        ActivityScenario.launch<PermissionsActivity>(intent).onActivity { activity ->
-            action.perform(activity)
+        ActivityScenario.launch<PermissionsActivity>(intent).use { scenario ->
+            scenario.onActivity { activity ->
+                action.perform(activity)
+            }
         }
     }
 
