@@ -622,9 +622,10 @@ class TagsDialogTest : RobolectricTest() {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { Timber.d("Dialog successfully opened") }
+        FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory).use { scenario ->
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onFragment { Timber.d("Dialog successfully opened") }
+        }
     }
 
     @Test
@@ -637,20 +638,21 @@ class TagsDialogTest : RobolectricTest() {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory)
-        scenario.moveToState(Lifecycle.State.STARTED)
-        scenario.onFragment { f ->
-            val tagsFile = requireNotNull(
-                BundleCompat.getParcelable(
-                    f.requireArguments(),
-                    "tagsFile",
-                    TagsFile::class.java
+        FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory).use { scenario ->
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.onFragment { f ->
+                val tagsFile = requireNotNull(
+                    BundleCompat.getParcelable(
+                        f.requireArguments(),
+                        "tagsFile",
+                        TagsFile::class.java
+                    )
                 )
-            )
 
-            val dataFromArguments = tagsFile.getData()
+                val dataFromArguments = tagsFile.getData()
 
-            assertThat(dataFromArguments.allTags, containsInAnyOrder(allTags))
+                assertThat(dataFromArguments.allTags, containsInAnyOrder(allTags))
+            }
         }
     }
 

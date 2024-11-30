@@ -39,18 +39,19 @@ class DeckOptionsTest : RobolectricTest() {
         // Launch deck options
         val intent = DeckOptions.getIntent(targetContext, col.decks.selected())
 
-        val scenario = ActivityScenario.launch<SingleFragmentActivity>(intent)
-        scenario.moveToState(Lifecycle.State.RESUMED)
-        scenario.onActivity { activity ->
-            assertThat("Activity should not be finishing", !activity.isFinishing)
+        ActivityScenario.launch<SingleFragmentActivity>(intent).use { scenario ->
+            scenario.moveToState(Lifecycle.State.RESUMED)
+            scenario.onActivity { activity ->
+                assertThat("Activity should not be finishing", !activity.isFinishing)
 
-            // Perform system-level back press
-            pressBack()
+                // Perform system-level back press
+                pressBack()
 
-            // Discard on modal
-            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+                // Discard on modal
+                clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
 
-            assertThat("Activity should be finishing", activity.isFinishing)
+                assertThat("Activity should be finishing", activity.isFinishing)
+            }
         }
     }
 
@@ -59,24 +60,25 @@ class DeckOptionsTest : RobolectricTest() {
         // Launch deck options
         val intent = DeckOptions.getIntent(targetContext, col.decks.selected())
 
-        val scenario = ActivityScenario.launch<SingleFragmentActivity>(intent)
-        scenario.moveToState(Lifecycle.State.RESUMED)
-        scenario.onActivity { activity ->
-            assertThat("Activity should not be finishing", !activity.isFinishing)
-        }
+        ActivityScenario.launch<SingleFragmentActivity>(intent).use { scenario ->
+            scenario.moveToState(Lifecycle.State.RESUMED)
+            scenario.onActivity { activity ->
+                assertThat("Activity should not be finishing", !activity.isFinishing)
+            }
 
-        // Perform toolbar up button press
-        try {
-            onView(withContentDescription("Navigate up")).perform(click())
-        } catch (ex: NoMatchingViewException) {
-            Timber.d("Toolbar UP button not found. Is english locale being used?")
-            return // Abort
-        }
+            // Perform toolbar up button press
+            try {
+                onView(withContentDescription("Navigate up")).perform(click())
+            } catch (ex: NoMatchingViewException) {
+                Timber.d("Toolbar UP button not found. Is english locale being used?")
+                return // Abort
+            }
 
-        scenario.onActivity { activity ->
-            // Discard on modal
-            clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
-            assertThat("Activity should be finishing", activity.isFinishing)
+            scenario.onActivity { activity ->
+                // Discard on modal
+                clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
+                assertThat("Activity should be finishing", activity.isFinishing)
+            }
         }
     }
 }
