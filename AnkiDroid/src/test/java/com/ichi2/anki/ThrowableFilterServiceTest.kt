@@ -18,7 +18,7 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.backend.BackendError
-import com.ichi2.anki.CrashReportService.safeFromPII
+import com.ichi2.anki.servicelayer.ThrowableFilterService.safeFromPII
 import com.ichi2.testutils.JvmTest
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncServerMessageException
@@ -28,7 +28,8 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
-class CrashReportServiceTest : JvmTest() {
+class ThrowableFilterServiceTest : JvmTest() {
+
     @Test
     fun `Normal exceptions are flagged as PII-safe`() {
         val exception = BackendDeckIsFilteredException(BackendError.newBuilder().build())

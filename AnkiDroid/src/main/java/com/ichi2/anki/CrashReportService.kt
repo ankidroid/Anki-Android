@@ -29,9 +29,9 @@ import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
-import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncServerMessageException
 import org.acra.ACRA
 import org.acra.ReportField
 import org.acra.config.CoreConfigurationBuilder
@@ -282,28 +282,12 @@ object CrashReportService {
             }
         }
         if (FEEDBACK_REPORT_NEVER != reportMode) {
-            if (!e.safeFromPII()) return
+            if (ThrowableFilterService.shouldDiscardThrowable(e)) return
 
             ACRA.errorReporter.putCustomData("origin", origin ?: "")
             ACRA.errorReporter.putCustomData("additionalInfo", additionalInfo ?: "")
             ACRA.errorReporter.handleException(e)
         }
-    }
-
-    /**
-     * Checks if the [Throwable] is safe from Personally Identifiable Information (PII)
-     * @return `false` if the [Throwable] contains PII, otherwise `true`
-     */
-    fun Throwable.safeFromPII(): Boolean {
-        if (this.containsPIINonRecursive()) return false
-        return this.cause?.safeFromPII() != false
-    }
-
-    private fun Throwable.containsPIINonRecursive(): Boolean {
-        // BackendSyncServerMessage may contain PII and we do not want this leaked to ACRA.
-        // Related: https://github.com/ankidroid/Anki-Android/issues/17392
-        // and also https://github.com/ankitects/anki/commit/ba1f5f4
-        return this is BackendSyncServerMessageException
     }
 
     fun isProperServiceProcess(): Boolean {
@@ -338,6 +322,7 @@ object CrashReportService {
         deleteACRALimiterData(ctx)
         // We also need to re-chain our UncaughtExceptionHandlers
         UsageAnalytics.reInitialize()
+        ThrowableFilterService.reInitialize()
     }
 
     /**
