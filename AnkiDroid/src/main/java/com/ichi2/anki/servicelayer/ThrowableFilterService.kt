@@ -17,6 +17,9 @@
 package com.ichi2.anki.servicelayer
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.exception.StorageAccessException
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
+import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncServerMessageException
 import timber.log.Timber
 
@@ -79,7 +82,22 @@ object ThrowableFilterService {
     }
 
     fun shouldDiscardThrowable(t: Throwable): Boolean {
-        return !t.safeFromPII()
+        // Note that an exception may have a nested BackendSyncException,
+        // so we check if it is safe from PII despite also filtering by type
+        return exceptionIsUnwanted(t) || !t.safeFromPII()
+    }
+
+    // There are few exception types that are common, but are unwanted in
+    // our analytics or crash report service because they are not actionable
+    fun exceptionIsUnwanted(t: Throwable): Boolean {
+        Timber.v("exceptionIsUnwanted - examining %s", t.javaClass.simpleName)
+        when (t) {
+            is BackendNetworkException -> return true
+            is BackendSyncException -> return true
+            is StorageAccessException -> return true
+        }
+        Timber.v("exceptionIsUnwanted - exception was wanted")
+        return false
     }
 
     /**
