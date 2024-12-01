@@ -112,6 +112,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         importDeckButton = view.findViewById(R.id.import_shared_deck_button)
         tryAgainButton = view.findViewById(R.id.try_again_deck_download)
         checkNetworkInfoText = view.findViewById(R.id.check_network_info_text)
+        downloadManuallyButton = view.findViewById(R.id.download_manually_button)
 
         val fileToBeDownloaded = arguments?.getSerializableCompat<DownloadFile>(DOWNLOAD_FILE)!!
         downloadManager = (activity as SharedDecksActivity).downloadManager
@@ -135,6 +136,10 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             cancelButton.visibility = View.VISIBLE
             tryAgainButton.visibility = View.GONE
         }
+        downloadManuallyButton.setOnClickListener {
+        openDeckOnAnkiWeb(fileToBeDownloaded.url)
+    }
+}
     }
 
     /**
@@ -475,6 +480,16 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 downloadProgressBar.progress = DOWNLOAD_STARTED_PROGRESS_PERCENTAGE.toInt()
             }
         }
+        if (!isSuccessful) {
+        Timber.i("Download failed. Showing 'Download Manually' button.")
+
+        downloadManuallyButton.visibility = View.VISIBLE
+        cancelButton.visibility = View.GONE
+        tryAgainButton.visibility = View.VISIBLE
+    }
+
+    isDownloadInProgress = false
+}
 
         unregisterReceiver()
         isDownloadInProgress = false
@@ -503,4 +518,21 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     private fun removeCancelConfirmationDialog() {
         downloadCancelConfirmationDialog?.dismiss()
     }
+    private fun openDeckOnAnkiWeb(deckUrl: String?) {
+    val urlToOpen = deckUrl ?: "https://ankiweb.net/shared/decks"
+    
+    try {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(urlToOpen)
+        }
+        startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        Timber.e("No browser found to open the AnkiWeb URL")
+        showSnackbar(R.string.error_no_browser_found)
+    }
+}
+    downloadManuallyButton.setOnClickListener {
+    openDeckOnAnkiWeb(fileToBeDownloaded.url) // Replace `fileToBeDownloaded.url` with the actual URL or `null`
+}
+
 }
