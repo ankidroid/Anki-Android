@@ -57,16 +57,16 @@
     <string name="expand">Utvid</string>
     <string name="collapse">Skjul</string>
     <plurals name="reviewer_window_title">
-        <item quantity="one">%d minute left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="one">%d minutt igjen</item>
+        <item quantity="other">%d minutter igjen</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">%1$d time %2$d igjen</item>
+        <item quantity="other">%1$d timer %2$d igjen</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">%1$d dag %2$dt igjen</item>
+        <item quantity="other">%1$d dager %2$dt igjen</item>
     </plurals>
     <string name="no_cards_placeholder_title">Samlinga er tom</string>
     <string name="no_cards_placeholder_description">Trykk på + for\nå leggja til kort</string>
@@ -88,7 +88,7 @@
     <string name="rename_deck" maxLength="28">Døyp om kortleiken</string>
     <string name="create_shortcut">Lag ein snarveg</string>
     <string name="browse_cards">Blad igjennom kort</string>
-    <string name="edit_deck_description" comment="edit the deck description">Edit description</string>
+    <string name="edit_deck_description" comment="edit the deck description">Rediger beskrivelsen</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings" maxLength="28">Legg til</string>
     <string name="menu_add_note" maxLength="28">Legg til notat</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Synkroniser konto</string>
@@ -108,8 +108,8 @@
     <string name="menu_search" maxLength="28">Oppslag i %1$s</string>
     <string name="menu_mark_note" maxLength="28">Marker notat</string>
     <string name="menu_unmark_note">Fjern markering på notat</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Aktiver stemmeavspilling</string>
+    <string name="menu_disable_voice_playback">Deaktiver stemmeavspilling</string>
     <string name="new_deck">Lag ein kortleik</string>
     <string name="new_dynamic_deck">Lag en filtrert kortstokk</string>
     <string name="directory_inaccessible">AnkiDroid-mappa er utilgjengeleg</string>
@@ -138,9 +138,9 @@
     <string name="continue_sync" tools:ignore="UnusedResources">Fortsett synkronisering</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering Avbrutt</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter&#8230;\nDet kan ta en stund.</string>
-    <string name="syncing_media">Syncing media</string>
+    <string name="syncing_media">Synkroniserer medier</string>
     <string name="export_deck" maxLength="28">Før ut kortleiken</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Eksporter sett</string>
     <string name="nothing">Ingenting</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kortslag</string>
@@ -182,22 +182,22 @@
     <string name="sync_conflict_replace_title">Byt ut samlinga</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Utilgjengelig sett</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
     <string name="directory_revoked_after_inactivity" comment="the first parameter is WRITE_EXTERNAL_STORAGE the second parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Android has removed AnkiDroid\'s %1$s permission due to app inactivity.\n\nYour data is safe and can be restored. It is located at\n%2$s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="restore_data_from_ankiweb">Gjenopprett fra AnkiWeb (anbefalt)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Gjenopprett mappetilgang (anbefalt)</string>
+    <string name="install_non_play_store_ankidroid">Gjenopprett mappetilgang (avansert)</string>
+    <string name="restore_data_from_backup">Gjenopprett fra .colpkg sikkerhetskopi (avansert)</string>
+    <string name="create_new_collection">Opprett et nytt sett</string>
+    <string name="new_unsafe_collection">Det nye settet vil bli slettet fra telefonen hvis du avinstallerer AnkiDroid</string>
     <!-- Permissions screen -->
     <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
+    <string name="storage_access_title">Lagringstilgang</string>
     <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
     <string name="image_occlusion">Image Occlusion</string>
-    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Remove account</string>
+    <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Slett konto</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
 </resources>

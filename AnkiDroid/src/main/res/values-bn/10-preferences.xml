@@ -138,40 +138,40 @@
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
-    <string name="day_theme" maxLength="41">Day theme</string>
-    <string name="night_theme" maxLength="41">Night theme</string>
-    <string name="language" maxLength="41">Language</string>
-    <string name="language_system">System language</string>
+    <string name="backup_limits_frequency">ফ্রিকোয়েন্সি</string>
+    <string name="backup_limits_lifetime">চিরকাল</string>
+    <string name="app_theme" maxLength="41">থিম</string>
+    <string name="day_theme" maxLength="41">দিনের থিম</string>
+    <string name="night_theme" maxLength="41">রাতের থিম</string>
+    <string name="language" maxLength="41">ভাষা</string>
+    <string name="language_system">সিস্টেম ভাষা</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
     <string name="notification_pref_title" maxLength="41">Notify when</string>
-    <string name="never_notify">Never notify</string>
-    <string name="notify_when_pending">Pending messages available</string>
-    <string name="notification_minimum_cards_due">More than %d cards due</string>
-    <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
-    <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
+    <string name="never_notify">কখনই অবহিত করবেন না</string>
+    <string name="notify_when_pending">মুলতুবি বার্তা পাওয়া যায়</string>
+    <string name="notification_minimum_cards_due">%dটির বেশি কার্ড বাকি আছে</string>
+    <string name="notification_minimum_cards_due_vibrate" maxLength="41">কম্পন</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">মিটমিট করে আলো</string>
     <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
-    <string name="select_locale_title">Select language</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
+    <string name="timeout_answer_summ2">ব্যবহারকারীর ইনপুট ছাড়াই স্বয়ংক্রিয়ভাবে উত্তর দেখান। ডেক বিকল্পগুলি থেকে কনফিগার করুন।</string>
+    <string name="select_locale_title">ভাষা নির্বাচন করুন</string>
+    <string name="software_render" maxLength="41">কার্ড হার্ডওয়্যার রেন্ডার অক্ষম করুন</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
-    <string name="safe_display" maxLength="41">Safe display mode</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="safe_display" maxLength="41">নিরাপদ প্রদর্শন মোড</string>
+    <string name="safe_display_summ">সমস্ত অ্যানিমেশন অক্ষম করুন এবং কার্ড আঁকতে নিরাপদ পদ্ধতি ব্যবহার করুন। এটি ই-কালি ডিভাইসের জন্য প্রয়োজন হতে পারে</string>
+    <string name="disable_extended_text_ui" maxLength="41">একক-ক্ষেত্র সম্পাদনা মোড অক্ষম করুন</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
-    <string name="vertical_centering" maxLength="41">Center align</string>
-    <string name="vertical_centering_summ">Center the content of cards vertically</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press_time" maxLength="41">Show answer long-press time</string>
-    <string name="pref_show_answer_long_press_time_summary">Minimum pressing time before the show answer button registers a touch.</string>
+    <string name="disable_extended_text_ui_summ">ল্যান্ডস্কেপ মোডে থাকাকালীন \'মোছা বন্ধ করুন\' প্রসঙ্গ মেনুকে অনুমতি দেয়</string>
+    <string name="vertical_centering" maxLength="41">কেন্দ্র সারিবদ্ধ</string>
+    <string name="vertical_centering_summ">কার্ডের বিষয়বস্তু উল্লম্বভাবে কেন্দ্রে রাখুন</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ডবল ট্যাপ সময়ের ব্যবধান (মিলিসেকেন্ড)</string>
+    <string name="pref_double_tap_time_interval_summary">এই সময় অতিবাহিত না হলে উত্তর বোতামগুলির একটি দ্বিতীয় ট্যাপ উপেক্ষা করা হবে। এটি দুর্ঘটনাজনিত ডবল ট্যাপ প্রতিরোধ করে</string>
+    <string name="pref_show_answer_long_press_time" maxLength="41">দীর্ঘ প্রেস করার সময় উত্তর দেখান</string>
+    <string name="pref_show_answer_long_press_time_summary">একটি স্পর্শ নিবন্ধন করার আগে উত্তর বোতাম ন্যূনতম প্রেস সময় দেখান.</string>
     <string name="show_estimates" maxLength="41">বোতামের সময় দেখান</string>
-    <string name="show_estimates_summ">Show next review time on answer buttons</string>
+    <string name="show_estimates_summ">উত্তর বোতামে পরবর্তী পর্যালোচনা সময় দেখান</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">2 সারিতে উত্তর বোতাম দেখান</string>
     <string name="show_top_bar" maxLength="41">শীর্ষ বার দেখান</string>
     <string name="show_top_bar_summary">কার্ড গণনা, উত্তর টাইমার, পতাকা এবং শীর্ষ বিএ প্রতীক দেখান</string>
     <string name="show_progress" maxLength="41">বাকিটা দেখান</string>
@@ -205,10 +205,10 @@
     <string name="show_deck_title" maxLength="41">ডেক শিরোনাম দেখান</string>
     <string name="accessibility" maxLength="41">Accessibility</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
+    <string name="paste_as_png" maxLength="41">PNG হিসাবে ক্লিপবোর্ড ছবি আটকান</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="exit_via_double_tap_back" maxLength="41">ফিরে যেতে/প্রস্থান করতে দুবার ব্যাক টিপুন</string>
+    <string name="exit_via_double_tap_back_summ">ভুলবশত রিভিউয়ার বা অ্যাপ ছেড়ে যাওয়া এড়াতে</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
@@ -255,11 +255,11 @@
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="open_changelog">চেঞ্জলগ খুলুন</string>
+    <string name="pref_cat_about_title" maxLength="41">সম্পর্কে</string>
+    <string name="contributors_title">অবদানকারী</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">লাইসেন্স</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
@@ -267,10 +267,10 @@
     <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">Add key</string>
     <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
-    <string name="binding_add_axis">Add joystick/motion controller</string>
-    <string name="axis_picker_move_joystick">Move a joystick/motion controller</string>
-    <string name="user_actions" maxLength="41">User actions</string>
+    <string name="key_picker_default_press_key">একটি কী টিপুন</string>
+    <string name="binding_add_axis">জয়স্টিক/মোশন কন্ট্রোল যোগ করুন</string>
+    <string name="axis_picker_move_joystick">একটি জয়স্টিক/মোশন কন্ট্রোলার সরান</string>
+    <string name="user_actions" maxLength="41">ব্যবহারকারী কার্যকলাপ</string>
     <string name="user_actions_summary" maxLength="41">Trigger JavaScript from the review screen</string>
     <string name="user_action_1" maxLength="28">User action 1</string>
     <string name="user_action_2" maxLength="28">User action 2</string>

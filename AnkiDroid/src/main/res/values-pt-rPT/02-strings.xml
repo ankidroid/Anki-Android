@@ -93,8 +93,8 @@
         <item quantity="one">+%d adiada</item>
         <item quantity="other">+%d adiadas</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Total de fichas novas</string>
+    <string name="studyoptions_total_label">Total de fichas</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Editar nota</string>
     <string name="discard">Descartar</string>

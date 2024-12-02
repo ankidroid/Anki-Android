@@ -44,13 +44,13 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_storage_left">ᱥᱚᱯᱷᱴᱣᱮᱭᱟᱨ ᱫᱚ ᱵᱟᱝ ᱥᱟᱦᱟᱣ ᱟᱠᱟᱱᱟ. ᱟᱢᱟᱜ ᱥᱴᱳᱨᱮᱡ ᱨᱮ ᱥᱯᱮᱥᱮᱡᱽ ᱵᱟᱹᱱᱩᱜᱼᱟ᱾ ᱵᱮᱠᱟᱨᱯᱷ ᱰᱤᱯᱷᱤᱰ ᱠᱚᱢ ᱢᱮ ᱟᱨᱵᱟᱝ ᱮᱴᱟᱜ ᱯᱷᱟᱤᱞ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ.</string>
     <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
     <string name="backup_restore" maxLength="28">ᱱᱚᱠᱚᱞ-ᱡᱚ ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ </string>
     <string name="backup_new_collection">ᱱᱟᱶᱟ ᱴᱩᱢᱟᱹᱞ</string>
     <string name="backup_del_collection">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ</string>
     <string name="backup_del_collection_question">ᱴᱩᱢᱟᱹᱞ ᱜᱮᱫ ᱜᱤᱲᱤ ᱢᱮ ᱟᱨ ᱱᱟᱶᱟ ᱛᱮᱭᱟᱨ ᱢᱮ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱞᱨᱟᱣᱟᱭ, ᱡᱷᱚᱛᱚ ᱠᱟᱰ ᱢᱮᱴᱟᱣᱼᱜ ᱛᱟᱢᱟ ᱾ ᱾</string>
-    <string name="backup_one_way_sync_from_server">One-way sync from server</string>
+    <string name="backup_one_way_sync_from_server">ᱥᱮᱵᱟ ᱠᱷᱚᱱ ᱢᱤᱫ ᱫᱷᱟᱨᱟ ᱥᱤᱸᱠᱨᱚᱱ</string>
     <string name="backup_full_sync_from_server_question">ᱟᱢᱟᱜ ᱴᱩᱢᱟᱞ ᱟᱨ ᱢᱤᱫᱴᱟᱝ AnkiWeb ᱴᱩᱢᱟᱹᱞ ᱥᱟᱞᱟᱜ ᱫᱩᱦᱰᱟ ᱚᱞᱟᱭ? ᱱᱚᱶᱟ ᱟᱢᱟᱜ ᱪᱮᱫᱚᱜ ᱴᱷᱚᱠᱨᱟᱣᱟᱭ ᱟᱨ ᱞᱟᱹᱭ ᱥᱚᱫᱚᱨ ᱠᱚ ᱢᱮᱴᱮᱣᱚᱜ ᱛᱟᱢᱟ ᱢᱟᱲᱟᱝ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱟᱹᱵᱤᱡ ᱾</string>
     <string name="error_handling_title">ᱵᱮᱵᱦᱟᱨ ᱵᱷᱩᱞ</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱠ</string>

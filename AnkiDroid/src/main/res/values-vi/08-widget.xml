@@ -57,17 +57,17 @@
         <item quantity="other">%d phút còn lại</item>
     </plurals>
     <string name="widget_add_note_button">Thêm ghi chú AnkiDroid mới</string>
-    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Deck Picker</string>
-    <string name="card_analysis_extra_widget_description">Card Analysis</string>
+    <string name="deck_picker_widget_description" comment="Title of the Deck Picker Widget. Displayed to the user in Android\'s Widget Selection menu">Trình chọn bộ thẻ</string>
+    <string name="card_analysis_extra_widget_description">Phân tích thẻ</string>
     <!-- Strings to explain usage in Deck Picker and Card Analysis Widget Configuration screen -->
-    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Select decks</string>
-    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Select a deck</string>
-    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Select decks to display in the widget. Select decks with the + icon.</string>
+    <string name="select_decks_title" comment="Title for Deck Selection Dialog">Chọn bộ thẻ</string>
+    <string name="select_deck_title" comment="Title for Deck Selection Dialog">Chọn một bộ thẻ</string>
+    <string name="no_selected_deck_placeholder_title" comment="Placeholder title when no decks are selected">Chọn bộ bài để hiển thị trong widget. Chọn bộ thẻ bằng biểu tượng +.</string>
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Đã xoá bộ thẻ</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Bộ thẻ này đã được chọn rồi</string>
     <plurals name="deck_limit_reached">
         <item quantity="other">Bạn có thể chọn tối đa %d bộ thẻ.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Missing deck. Tap to reconfigure.</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Bộ thẻ bị thiếu. Nhấn để cấu hình lại.</string>
     <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Collection is empty, use app to add decks then reconfigure</string>
 </resources>
