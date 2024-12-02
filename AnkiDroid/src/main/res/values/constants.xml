@@ -154,6 +154,7 @@
     <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
     <string name="link_set_due_date_help">https://docs.ankiweb.net/browsing.html#cards</string>
     <string name="link_full_storage_access">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
+    <string name="link_help_forget_cards">https://docs.ankiweb.net/studying.html#editing-and-more</string>
 
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>
