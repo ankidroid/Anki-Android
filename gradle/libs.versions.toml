@@ -10,7 +10,7 @@ acra = '5.12.0'
 #
 # Old changelogs - See 'Table of Contents' in sidebar
 # https://developer.android.com/build/releases/past-releases
-androidGradlePlugin = "8.7.2"
+androidGradlePlugin = "8.7.3"
 # https://developer.android.com/jetpack/androidx/releases/activity
 androidxActivity = "1.9.3"
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -32,7 +32,7 @@ androidxFragmentKtx = "1.8.5"
 # https://developer.android.com/jetpack/androidx/releases/media
 androidxMedia = "1.7.0"
 # https://developer.android.com/jetpack/androidx/releases/media3
-androidxMedia3 = "1.4.1"
+androidxMedia3 = "1.5.0"
 # https://developer.android.com/jetpack/androidx/releases/preference
 androidxPreferenceKtx = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -74,12 +74,12 @@ imageCropper = "4.6.0"
 javaSemver = "0.10.2"
 jetbrainsAnnotations = "26.0.1"
 json = "20240303"
-jsoup = "1.18.1"
+jsoup = "1.18.3"
 androidTestJunit = "1.2.1"
 junitJupiter = "5.11.3"
 junitPlatformLauncher = "1.11.3"
 # https://github.com/JetBrains/kotlin/releases/
-kotlin = '2.0.21'
+kotlin = '2.1.0'
 kotlinxSerializationJson = "1.7.3"
 ktlint = "11.6.1"
 leakcanaryAndroid = "2.14"
@@ -92,7 +92,7 @@ mockk = "1.13.13"
 nanohttpd = "2.3.1"
 okhttp = "4.12.0"
 # https://github.com/protocolbuffers/protobuf/releases
-protobufKotlinLite = "4.28.3"
+protobufKotlinLite = "4.29.0"
 # ../AnkiDroid/robolectricDownload.gradle may need changes - read instructions in that file
 robolectric = "4.14.1"
 searchpreference = "2.5.1"
