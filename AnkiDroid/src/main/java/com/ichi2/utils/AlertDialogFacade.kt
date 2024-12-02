@@ -29,7 +29,9 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -41,6 +43,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 import com.ichi2.ui.FixedTextView
+import timber.log.Timber
 
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
 typealias DialogInterfaceListener = (DialogInterface) -> Unit
@@ -356,4 +359,44 @@ fun AlertDialog.Builder.listItemsAndMessage(message: String?, items: List<CharSe
         onClick(dialog, index)
     }
     return this.setView(dialogView)
+}
+
+/**
+ * Adds a custom title view to the dialog with a 'help' icon. Typically used to open the Anki Manual
+ *
+ * **Example:**
+ * ```kotlin
+ * MaterialAlertDialogBuilder(context).create {
+ *     titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
+ *         requireActivity().openUrl(Uri.parse(getString(R.string.link_manual)))
+ *     }
+ * }
+ * ```
+ *
+ * @param block action executed when the help icon is clicked
+ *
+ */
+fun AlertDialog.Builder.titleWithHelpIcon(
+    @StringRes stringRes: Int? = null,
+    text: String? = null,
+    block: View.OnClickListener
+) {
+    // setup the view for the dialog
+    val customTitleView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_title_with_help, null, false)
+    setCustomTitle(customTitleView)
+
+    // apply a custom title
+    val titleTextView = customTitleView.findViewById<TextView>(android.R.id.title)
+
+    if (stringRes != null) {
+        titleTextView.setText(stringRes)
+    } else if (text != null) {
+        titleTextView.text = text
+    }
+
+    // set the action when clicking the help icon
+    customTitleView.findViewById<ImageView>(R.id.help_icon).setOnClickListener { v ->
+        Timber.i("dialog help icon click")
+        block.onClick(v)
+    }
 }
