@@ -85,8 +85,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=22000200
-        versionName="2.20.0beta0"
+        versionCode=22000201
+        versionName="2.20.0beta1"
         minSdk libs.versions.minSdk.get().toInteger()
 
         // After #13695: change .tests_emulator.yml
