@@ -52,18 +52,18 @@
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">প্রাচীনতম প্রথম দেখা</string>
     <string name="cram_deck_conf_order_random">এলোমেলো</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
+    <string name="cram_deck_conf_order_increasing_intervals">ক্রমবর্ধমান ব্যবধান</string>
     <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_most_lapsed">বেশিরভাগই ল্যাপসড</string>
+    <string name="cram_deck_conf_order_order_added">অর্ডার যোগ করা হয়েছে</string>
+    <string name="cram_deck_conf_order_order_due">অর্ডার পেন্ডিং</string>
+    <string name="cram_deck_conf_order_latest_added_first">শেষ প্রথম যোগ করা হয়েছে</string>
+    <string name="cram_deck_conf_order_relative_overdueness">আপেক্ষিক অতিরিক্ত ঘনত্ব</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">বর্তমান ডেক ব্যবহার করুন</string>
+    <string name="add_to_deck_decide_by_note_type">নোট টাইপ দ্বারা সিদ্ধান্ত</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">সিস্টেম অনুসরণ করুন</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">আলো</string>
     <string name="day_theme_plain">সমতল</string>
@@ -74,32 +74,32 @@
     <string name="html_size_code_xx_small">xx-ছোট</string>
     <string name="html_size_code_x_small">x-ছোট</string>
     <string name="html_size_code_small">ছোট</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_medium">মধ্যপন্থী</string>
+    <string name="html_size_code_large">বড়</string>
+    <string name="html_size_code_x_large">x-বড়</string>
+    <string name="html_size_code_xx_large">xx-বড়</string>
     <!-- gestures_labels -->
     <string name="answer_again" maxLength="41">আবার উত্তর দিন</string>
     <string name="answer_hard" maxLength="41">কঠিন উত্তর দাও</string>
     <string name="answer_good" maxLength="41">আনসার ভালো</string>
     <string name="answer_easy" maxLength="41">সহজ উত্তর দিন</string>
-    <string name="gesture_play" maxLength="41">Play media</string>
+    <string name="gesture_play" maxLength="41">মিডিয়া প্লে করুন</string>
     <string name="gesture_abort_learning" maxLength="41">Close reviewer</string>
-    <string name="gesture_flag_red" maxLength="41">Toggle Red Flag</string>
-    <string name="gesture_flag_orange" maxLength="41">Toggle Orange Flag</string>
-    <string name="gesture_flag_green" maxLength="41">Toggle Green Flag</string>
-    <string name="gesture_flag_blue" maxLength="41">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink" maxLength="41">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise" maxLength="41">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple" maxLength="41">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove" maxLength="41">Remove Flag</string>
-    <string name="gesture_page_up" maxLength="41">Page Up</string>
+    <string name="gesture_flag_red" maxLength="41">লাল পতাকা টগল করুন</string>
+    <string name="gesture_flag_orange" maxLength="41">কমলা পতাকা টগল করুন</string>
+    <string name="gesture_flag_green" maxLength="41">সবুজ পতাকা টগল করুন</string>
+    <string name="gesture_flag_blue" maxLength="41">নীল পতাকা টগল করুন</string>
+    <string name="gesture_flag_pink" maxLength="41">গোলাপী পতাকা টগল করুন</string>
+    <string name="gesture_flag_turquoise" maxLength="41">ফিরোজা পতাকা টগল করুন</string>
+    <string name="gesture_flag_purple" maxLength="41">বেগুনি পতাকা টগল করুন</string>
+    <string name="gesture_flag_remove" maxLength="41">পতাকা সরান</string>
+    <string name="gesture_page_up" maxLength="41">পৃষ্ঠা আপ</string>
     <string name="gesture_page_down" maxLength="41">Page Down</string>
-    <string name="gesture_abort_sync" maxLength="41">Close reviewer and Sync</string>
-    <string name="gesture_toggle_whiteboard" maxLength="41">Toggle Whiteboard</string>
-    <string name="gesture_show_hint" maxLength="41">Show Hint</string>
-    <string name="gesture_show_all_hints" maxLength="41">Show All Hints</string>
-    <string name="record_voice" maxLength="41">Record Voice</string>
-    <string name="replay_voice" maxLength="41">Replay Voice</string>
-    <string name="save_voice" maxLength="41">Save Recording</string>
+    <string name="gesture_abort_sync" maxLength="41">সমালোচক এবং সিঙ্ক বন্ধ করুন</string>
+    <string name="gesture_toggle_whiteboard" maxLength="41">হোয়াইটবোর্ড টগল করুন</string>
+    <string name="gesture_show_hint" maxLength="41">ইঙ্গিত দেখান</string>
+    <string name="gesture_show_all_hints" maxLength="41">সব ইঙ্গিত দেখান</string>
+    <string name="record_voice" maxLength="41">ভয়েস রেকর্ড করুন</string>
+    <string name="replay_voice" maxLength="41">ভয়েস রিপ্লে করুন</string>
+    <string name="save_voice" maxLength="41">রেকর্ডিং সংরক্ষণ করুন</string>
 </resources>

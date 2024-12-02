@@ -82,8 +82,8 @@
     <string name="webview_crash_loop_dialog_content">System-WebView konnte die Karte »%1$s« nicht rendern.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Flaggen</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Heutiges Limit für neue Karten ändern</string>
-    <string name="custom_study_increase_review_limit">Heutiges Limit für Karten-Wiederholungen ändern</string>
+    <string name="custom_study_increase_new_limit">Heutigen Tageshöchstwert für neue Karten ändern</string>
+    <string name="custom_study_increase_review_limit">Heutigen Tageshöchstwert für Wiederholungskarten ändern</string>
     <string name="custom_study_review_forgotten">Vergessene Karten nochmal lernen</string>
     <string name="custom_study_review_ahead">Im Voraus lernen</string>
     <string name="custom_study_random_selection">Zufällige Kartenauswahl lernen</string>
@@ -93,8 +93,8 @@
         <item quantity="one">+%d aufgeschoben</item>
         <item quantity="other">+%d vergraben</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Neue Karten insgesamt</string>
+    <string name="studyoptions_total_label">Karten insgesamt</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Notiz bearbeiten</string>
     <string name="discard">Verwerfen</string>
@@ -166,9 +166,9 @@
     <string name="export_choice_share">Teilen</string>
     <string name="export_choice_save_to">Speichern unter</string>
     <string name="export_saving_exported_collection">Exportierte Datei speichern&#8230;</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Optionen</string>
-    <string name="menu__deck_options" maxLength="28">Stapeloptionen</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Lernoptionen</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options" maxLength="28">Einstellungen</string>
+    <string name="menu__deck_options" maxLength="28">Einstellungen</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Lerneinstellungen</string>
     <string name="select_tts" maxLength="28">Vorlesesprache festlegen</string>
     <string name="custom_study" maxLength="28">Benutzer&#173;de&#173;fi&#173;nier&#173;tes Lernen</string>
     <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb des regulären Zeitplans zu lernen. Karten werden nach dem Wiederholen automatisch in ihren ursprünglichen Stapel zurückgelegt. Beim Löschen dieses Stapels aus der Stapelliste werden alle verbleibenden Karten in ihren ursprünglichen Stapel zurückgelegt.</string>
@@ -303,7 +303,7 @@
     <string name="deck_created">Stapel wurde erstellt</string>
     <string name="deck_renamed">Stapel wurde umbenannt</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck würde gelöscht. Bitte den Shortcut entfernen</string>
+    <string name="deck_shortcut_doesnt_exist">Stapel würde gelöscht. Bitte den Shortcut entfernen</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Karten</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notizen</string>
@@ -333,7 +333,7 @@
     <string name="card_browser_unavailable_when_notes_mode">Nicht verfügbar im \"Notiz\"-Modus</string>
     <plurals name="unbury_cards_feedback">
         <item quantity="one">%d Karte nicht mehr aufgeschoben</item>
-        <item quantity="other">%d Karten ausgegraben</item>
+        <item quantity="other">%d Karten nicht mehr aufgeschoben</item>
     </plurals>
     <string name="card_template_reposition_template" comment="move a card template to a new position" maxLength="28">Position ändern</string>
     <string name="start_recording">Datensatz</string>
@@ -346,10 +346,10 @@
     <string name="voice_not_supported">Stimme nicht unterstützt. Versuchen Sie eine andere oder installieren Sie eine Sprach-Engine.</string>
     <!--Keyboard shortcuts dialog-->
     <string name="show_keyboard_shortcuts_dialog" comment="Description of the shortcut that shows the keyboard shortcuts dialog">Tastenkombinationen-Dialog anzeigen</string>
-    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Stapelauswählers</string>
-    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Staple ohne Bestätigung löschen</string>
+    <string name="deck_picker_group" comment="Label for the group of shortcuts related to the deck picker">Stapelauswähler</string>
+    <string name="delete_deck_without_confirmation" comment="Description of the shortcut that deletes the deck without asking for confirmation">Stapel ohne Bestätigung löschen</string>
     <string name="note_editor_group" comment="Label for the group of shortcuts related to the note editor">Notizeditors</string>
-    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Stapel Auswählen</string>
+    <string name="select_deck" comment="Description of the shortcut that opens the deck selection dialog">Stapel auswählen</string>
     <string name="select_note_type" comment="Description of the shortcut that shows the note selection spinner">Notiztyp auswählen</string>
     <string name="tag_editor" comment="Description of the shortcut that opens the tags dialog">Tag-Editor</string>
     <string name="card_template_editor_group" comment="Label for the group of shortcuts related to the card template editor">Kartenvorlagen-Editor</string>

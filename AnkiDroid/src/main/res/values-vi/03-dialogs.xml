@@ -105,9 +105,9 @@
     <string name="dialog_positive_repair">Sửa chữa</string>
     <string name="dialog_positive_replace">Thay thế</string>
     <string name="dialog_collection_path_not_dir">Đường dẫn đã chỉ định không phải thư mục hợp lệ</string>
-    <string name="dialog_invalid_custom_certificate">The provided text does not resolve to a valid PEM-encoded X509 certificate</string>
-    <string name="dialog_invalid_custom_certificate_title">Error parsing certificate</string>
-    <string name="dialog_updated_custom_certificate">Certificate updated</string>
+    <string name="dialog_invalid_custom_certificate">Dòng văn bản được cung cấp không phải là chứng chỉ X509 được mã hóa PEM hợp lệ</string>
+    <string name="dialog_invalid_custom_certificate_title">Lỗi phân tích chứng chỉ</string>
+    <string name="dialog_updated_custom_certificate">Chứng chỉ đã được cập nhật</string>
     <!-- Media checking -->
     <string name="check_media_title">Kiểm tra tệp đa phương tiện?</string>
     <string name="check_media_warning">Có thể hơi lâu với các bộ sưu tập đa phương tiện lớn</string>
@@ -161,7 +161,7 @@
     <string name="failed_to_apply_background_image">Không áp dụng được hình nền %s</string>
     <string name="background_image_too_large">Ảnh nền bộ chọn thẻ quá lớn</string>
     <string name="image_max_size_allowed">Kích thước hình ảnh tối đa %d cho phép</string>
-    <string name="image_dimensions_too_large">Image dimensions are too large (%1$d × %2$d)</string>
+    <string name="image_dimensions_too_large">Kích thước ảnh quá lớn (%1$d × %2$d)</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">Không thể truy cập bộ nhớ. Hãy cấp quyền truy cập và thử lại.</string>
@@ -204,7 +204,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">Đồng bộ hóa tự động có thể được kích hoạt sau %d giây</item>
     </plurals>
-    <string name="metered_sync_data_warning">Your internet provider may charge money for data use</string>
+    <string name="metered_sync_data_warning">Nhà cung cấp dịch vụ internet của bạn có thể tính phí cho việc sử dụng dữ liệu.</string>
     <string name="deck_picker_new">Số thẻ mới trong bộ thẻ của ngày hôm nay</string>
     <string name="deck_picker_rev">Số thẻ đến hạn trong bộ thẻ của ngày hôm nay.</string>
     <string name="deck_picker_lrn">Số thẻ đang học trong bộ thẻ.</string>
@@ -230,7 +230,7 @@
     <string name="dismiss_backup_warning_upgrade">        Do những thay đổi về quyền riêng tư của Android, dữ liệu và các bản sao lưu tự động của bạn sẽ không thể truy cập được nếu ứng dụng bị gỡ cài đặt
     </string>
     <string name="deck_already_exists">Bộ thẻ đã tồn tại</string>
-    <string name="empty_deck_name">Deck name cannot be empty</string>
+    <string name="empty_deck_name">Tên bộ thẻ không được để trống</string>
     <string name="create_deck_numeric_hint">If you have deck ordering issues (e.g. ‘10’ appears before ‘2’), replace ‘2’ with ‘02’</string>
     <!-- Set Due Date -->
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">Set interval to same value</string>
@@ -253,14 +253,14 @@
     <string name="change_cloze_number">Change cloze number</string>
     <string name="cloze_number">Cloze number:</string>
     <string name="change_editor_mode">Change editor mode</string>
-    <string name="open_note_editor">Open note editor</string>
+    <string name="open_note_editor">Mở trình chỉnh sửa ghi chú</string>
     <string name="change_cloze_mode">Change cloze mode</string>
     <!-- Outdated WebView dialog -->
-    <string name="webview_update_message">The system WebView is outdated. Some features won’t work correctly. Please update it.\n\nInstalled version: %1$d\nMinimum required version: %2$d</string>
+    <string name="webview_update_message">Hệ thống WebView đã lỗi thời. Một số tính năng sẽ không hoạt động đúng cách. Vui lòng cập nhật.\n\nPhiên bản đã cài đặt: %1$d\nPhiên bản yêu cầu tối thiểu: %2$d</string>
     <string name="compress">Nén</string>
     <!-- Tts playback error dialog -->
     <string name="tts_error_dialog_title">Ngôn ngữ không được hỗ trợ</string>
     <string name="tts_error_dialog_reason_text">Công cụ chuyển văn bản thành giọng nói <b>%1$s</b> không hỗ trợ ngôn ngữ sau: <b>%2$s</b></string>
     <string name="tts_error_dialog_change_button_text">Thay đổi công cụ</string>
-    <string name="tts_error_dialog_supported_voices_button_text">Voice options</string>
+    <string name="tts_error_dialog_supported_voices_button_text">Tùy chọn giọng nói</string>
 </resources>

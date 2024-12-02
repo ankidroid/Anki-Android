@@ -69,9 +69,9 @@
     <string name="deck_removed_from_widget" comment="Snackbar when deck is removed from widget">Stapel entfernt</string>
     <string name="deck_already_selected_message" comment="Snackbar when user try to select the same deck again">Dieser Stapel ist bereits ausgewählt</string>
     <plurals name="deck_limit_reached">
-        <item quantity="one">Sie können bis zu %d stapel auswählen.</item>
+        <item quantity="one">Sie können bis zu %d Stapel auswählen.</item>
         <item quantity="other">Sie können bis zu %d Stapel auswählen.</item>
     </plurals>
-    <string name="empty_widget_state" comment="To denote the widget is empty">Fehlender stapel. Tippen, um neu zu konfigurieren.</string>
-    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Sammlung ist leer, verwenden Sie die App, um stapel hinzuzufügen, und konfigurieren Sie dann neu</string>
+    <string name="empty_widget_state" comment="To denote the widget is empty">Fehlender Stapel. Tippen, um neu zu konfigurieren.</string>
+    <string name="empty_collection_state_in_widget" comment="To denote the collection is empty">Sammlung ist leer, verwenden Sie die App, um Stapel hinzuzufügen, und konfigurieren Sie dann neu</string>
 </resources>

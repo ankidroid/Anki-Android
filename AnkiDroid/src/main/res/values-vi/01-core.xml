@@ -105,8 +105,8 @@
     <string name="menu_search" maxLength="28">Tra cứu trong %1$s</string>
     <string name="menu_mark_note" maxLength="28">Đánh dấu ghi chú</string>
     <string name="menu_unmark_note">Bỏ đánh dấu ghi chú</string>
-    <string name="menu_enable_voice_playback" maxLength="28">Enable voice playback</string>
-    <string name="menu_disable_voice_playback">Disable voice playback</string>
+    <string name="menu_enable_voice_playback" maxLength="28">Kích hoạt phát âm thanh</string>
+    <string name="menu_disable_voice_playback">Tắt phát âm thanh</string>
     <string name="new_deck">Tạo bộ thẻ</string>
     <string name="new_dynamic_deck">Tạo bộ thẻ đã lọc</string>
     <string name="directory_inaccessible">Không thể truy cập thư mục AnkiDroid</string>
@@ -127,7 +127,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck" maxLength="28">Tìm kiếm bộ thẻ</string>
     <string name="invalid_deck_name">Tên bộ thẻ không hợp lệ</string>
     <string name="studyoptions_congrats_finished">Chúc mừng! Bây giờ bạn đã hoàn thành.</string>
-    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Deck finished for now! %s</string>
+    <string name="studyoptions_congrats_next_due_in" comment="The param will be replaced with \'The next card will be ready in X time\'">Bộ thẻ tạm thời hoàn tất! %s</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
     <string name="button_sync" comment="Text of the sync button" maxLength="28">Đồng bộ</string>

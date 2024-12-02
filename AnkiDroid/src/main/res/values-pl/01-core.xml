@@ -69,10 +69,10 @@
         <item quantity="other">Pozostało %1$d godzin %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$dh left</item>
-        <item quantity="few">%1$d days %2$dh left</item>
-        <item quantity="many">%1$d days %2$dh left</item>
-        <item quantity="other">%1$d days %2$dh left</item>
+        <item quantity="one">Pozostał %1$d dzień i %2$dh</item>
+        <item quantity="few">Pozostały %1$d dni i %2$dh</item>
+        <item quantity="many">Pozostało %1$d dni i %2$dh</item>
+        <item quantity="other">Pozostało %1$d dni i %2$dh</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekcja jest pusta</string>
     <string name="no_cards_placeholder_description">Zacznij dodawać karty używając przycisku +</string>
@@ -109,7 +109,7 @@
     <string name="menu_flag" maxLength="41">Oflaguj</string>
     <string name="rename_flag">Zmień flagi</string>
     <string name="menu_flag_card" maxLength="28">Oflaguj kartę</string>
-    <string name="menu_edit_tags" maxLength="28">Edytuj etykiety</string>
+    <string name="menu_edit_tags" maxLength="28">Edytuj tagi</string>
     <string name="delete_note_message">Jesteś pewny, że chcesz usunąć tę notatkę i wszystkie jej karty?\n%s</string>
     <string name="menu_search" maxLength="28">Wyszukiwanie w %1$s</string>
     <string name="menu_mark_note" maxLength="28">Wyróżnij notatkę</string>
@@ -146,7 +146,7 @@
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulowanie&#8230;\nTo może chwilę zająć.</string>
     <string name="syncing_media">Synchronizowanie mediów</string>
     <string name="export_deck" maxLength="28">Eksportuj talię</string>
-    <string name="export_collection">Export collection</string>
+    <string name="export_collection">Eksportuj kolekcję</string>
     <string name="nothing">Nic</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Typ karty</string>
@@ -206,7 +206,7 @@
     <string name="storage_access_title">Dostęp do pamięci</string>
     <string name="storage_access_summary">Zapisuje twoją kolekcję w bezpiecznym miejscu, żeby w przypadku odinstalowania aplikacji nie została usunięta</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Dostęp do wszystkich plików</string>
-    <string name="image_occlusion">Image Occlusion</string>
+    <string name="image_occlusion">Okluzja obrazu</string>
     <string name="remove_account" comment="open a website to start the deletion of an AnkiWeb account">Usuń konto</string>
     <!-- Instant Note Editor -->
     <string name="instant_card" comment="This does not need to be translated literally, translate the concept of quickly adding a Cloze note with a popup. Used in the Android system context menu/share dialog.">Instant card</string>
