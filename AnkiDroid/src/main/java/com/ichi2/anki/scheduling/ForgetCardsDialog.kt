@@ -17,6 +17,7 @@
 package com.ichi2.anki.scheduling
 
 import android.app.Dialog
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -28,6 +29,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.CardId
@@ -36,7 +38,7 @@ import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.create
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
-import com.ichi2.utils.title
+import com.ichi2.utils.titleWithHelpIcon
 import timber.log.Timber
 
 /**
@@ -102,7 +104,9 @@ class ForgetCardsDialog : DialogFragment() {
             // BUG: this is 'Reset Card'/'Forget Card' in Anki Desktop (24.04)
             // title(text = TR.actionsForgetCard().toSentenceCase(R.string.sentence_forget_cards))
             // "Reset card progress" is less explicit on the singular/plural dimension
-            title(text = getString(R.string.reset_card_dialog_title))
+            titleWithHelpIcon(stringRes = R.string.reset_card_dialog_title) {
+                requireActivity().openUrl(Uri.parse(getString(R.string.link_help_forget_cards)))
+            }
             positiveButton(R.string.dialog_ok) {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_FORGET,
