@@ -48,7 +48,7 @@ import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatTextView
 import timber.log.Timber
 
-class FixedTextView : AppCompatTextView {
+open class FixedTextView : AppCompatTextView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
