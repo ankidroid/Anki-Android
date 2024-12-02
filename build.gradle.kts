@@ -41,6 +41,9 @@ subprojects {
                 // tell backend to avoid rollover time, and disable interval fuzzing
                 it.environment("ANKI_TEST_MODE", "1")
 
+                it.maxHeapSize = "2g"
+                it.minHeapSize = "1g"
+
                 it.useJUnitPlatform()
                 it.testLogging {
                     events("failed", "skipped")

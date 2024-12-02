@@ -48,6 +48,19 @@ object UsageAnalytics {
     private var sAnalyticsTrackingId: String? = null
     private var sAnalyticsSamplePercentage = -1
 
+    @FunctionalInterface
+    fun interface AnalyticsLoggingExceptionHandler : Thread.UncaughtExceptionHandler
+
+    var uncaughtExceptionHandler = AnalyticsLoggingExceptionHandler {
+            thread: Thread?, throwable: Throwable ->
+        sendAnalyticsException(throwable, true)
+        if (thread == null) {
+            Timber.w("unexpected: thread was null")
+            return@AnalyticsLoggingExceptionHandler
+        }
+        sOriginalUncaughtExceptionHandler!!.uncaughtException(thread, throwable)
+    }
+
     /**
      * Initialize the analytics provider - must be called prior to sending anything.
      * Usage after that is static
@@ -118,23 +131,19 @@ object UsageAnalytics {
      * We want to send an analytics hit on any exception, then chain to other handlers (e.g., ACRA)
      */
     @Synchronized
-    private fun installDefaultExceptionHandler() {
+    @VisibleForTesting
+    fun installDefaultExceptionHandler() {
         sOriginalUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-        Thread.setDefaultUncaughtExceptionHandler { thread: Thread?, throwable: Throwable ->
-            sendAnalyticsException(throwable, true)
-            if (thread == null) {
-                Timber.w("unexpected: thread was null")
-                return@setDefaultUncaughtExceptionHandler
-            }
-            sOriginalUncaughtExceptionHandler!!.uncaughtException(thread, throwable)
-        }
+        Timber.d("Chaining to uncaughtExceptionHandler (%s)", sOriginalUncaughtExceptionHandler)
+        Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler)
     }
 
     /**
      * Reset the default exception handler
      */
     @Synchronized
-    private fun unInstallDefaultExceptionHandler() {
+    @VisibleForTesting
+    fun unInstallDefaultExceptionHandler() {
         Thread.setDefaultUncaughtExceptionHandler(sOriginalUncaughtExceptionHandler)
         sOriginalUncaughtExceptionHandler = null
     }

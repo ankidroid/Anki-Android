@@ -27,8 +27,10 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
+import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.logging.ProductionCrashReportingTree
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.acra.ACRA
 import org.acra.builder.ReportBuilder
@@ -228,6 +230,37 @@ class ACRATest : InstrumentedTest() {
         setAcraReportingMode(FEEDBACK_REPORT_ALWAYS)
 
         assertToastMessage(R.string.feedback_auto_toast_text)
+    }
+
+    @Test
+    fun verifyExceptionHandlerChain() {
+        // contains assumptions about ordering in ACRA, ThrowableFilter and UsageAnalytics
+        // making sure they are correct is vital though, so we will accept the need to change
+        // this test if you re-order them
+        var firstExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        assertThat("First handler is ThrowableFilterService", firstExceptionHandler is ThrowableFilterService.FilteringExceptionHandler)
+        ThrowableFilterService.unInstallDefaultExceptionHandler()
+        var secondExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        assertThat("Second handler is AnalyticsLoggingExceptionHandler", secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler)
+        UsageAnalytics.unInstallDefaultExceptionHandler()
+        var thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        assertThat("Third handler is neither Analytics nor ThrowableFilter", thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler && thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler)
+
+        // chain them again
+        UsageAnalytics.installDefaultExceptionHandler()
+        ThrowableFilterService.installDefaultExceptionHandler()
+
+        // reinitialize things and make sure they came through correctly again
+        CrashReportService.onPreferenceChanged(app!!.applicationContext, FEEDBACK_REPORT_ASK)
+        firstExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        assertThat("First handler is ThrowableFilterService", firstExceptionHandler is ThrowableFilterService.FilteringExceptionHandler)
+        ThrowableFilterService.unInstallDefaultExceptionHandler()
+        secondExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Timber.i("Second handler is a %s", secondExceptionHandler)
+        assertThat("Second handler is AnalyticsLoggingExceptionHandler", secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler)
+        UsageAnalytics.unInstallDefaultExceptionHandler()
+        thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        assertThat("Third handler is neither Analytics nor ThrowableFilter", thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler && thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler)
     }
 
     private fun setAcraReportingMode(feedbackReportAlways: String) {

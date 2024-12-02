@@ -49,6 +49,7 @@ import com.ichi2.anki.logging.RobolectricDebugTree
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.DebugInfoService
+import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
@@ -145,6 +146,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
         if (BuildConfig.DEBUG) {
             UsageAnalytics.setDryRun(true)
         }
+
+        // Last in the UncaughtExceptionHandlers chain is our filter service
+        ThrowableFilterService.initialize()
 
         applicationScope.launch {
             Timber.i(DebugInfoService.getDebugInfo(this@AnkiDroidApp))

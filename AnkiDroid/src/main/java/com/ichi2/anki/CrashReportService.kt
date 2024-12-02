@@ -29,6 +29,7 @@ import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
@@ -281,6 +282,8 @@ object CrashReportService {
             }
         }
         if (FEEDBACK_REPORT_NEVER != reportMode) {
+            if (ThrowableFilterService.shouldDiscardThrowable(e)) return
+
             ACRA.errorReporter.putCustomData("origin", origin ?: "")
             ACRA.errorReporter.putCustomData("additionalInfo", additionalInfo ?: "")
             ACRA.errorReporter.handleException(e)
@@ -319,6 +322,7 @@ object CrashReportService {
         deleteACRALimiterData(ctx)
         // We also need to re-chain our UncaughtExceptionHandlers
         UsageAnalytics.reInitialize()
+        ThrowableFilterService.reInitialize()
     }
 
     /**
