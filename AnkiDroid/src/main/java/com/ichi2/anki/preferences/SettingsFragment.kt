@@ -43,16 +43,6 @@ abstract class SettingsFragment :
     override val title: CharSequence
         get() = preferenceManager?.preferenceScreen?.title ?: ""
 
-    /**
-     * Refreshes all values on the screen
-     * Call if a large number of values are changed from one preference.
-     */
-    protected fun refreshScreen() {
-        preferenceScreen.removeAll()
-        addPreferencesFromResource(preferenceResource)
-        initSubscreen()
-    }
-
     abstract fun initSubscreen()
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
