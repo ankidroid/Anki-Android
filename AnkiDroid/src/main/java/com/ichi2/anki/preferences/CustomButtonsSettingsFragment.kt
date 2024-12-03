@@ -45,7 +45,9 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                         }
                     }
                     // #9263: refresh the screen to display the changes
-                    refreshScreen()
+                    preferenceScreen.removeAll()
+                    addPreferencesFromResource(preferenceResource)
+                    initSubscreen()
                 }
                 negativeButton(R.string.dialog_cancel)
             }
