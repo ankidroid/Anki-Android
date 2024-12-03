@@ -19,7 +19,7 @@
     "dependencies": {
         "@crowdin/crowdin-api-client": "^1.39.1",
         "axios": "^1.7.8",
-        "dotenv": "^16.4.4",
+        "dotenv": "^16.4.6",
         "extract-zip": "^2.0.1",
         "typescript": "^5.7.2"
     },
