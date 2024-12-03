@@ -279,6 +279,13 @@ tasks.register('copyTestLibIntoAndroidTest', Copy) {
     }
 }
 tasks.named('preBuild').configure { dependsOn('copyTestLibIntoAndroidTest') }
+
+//Issue 17520 -ensures testlib is built
+tasks.named("assemble") {
+    dependsOn(":testlib:assemblePlayDebugAndroidTest")
+}
+
+
 tasks.named('runKtlintCheckOverAndroidTestSourceSet').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
 
 // Issue 11078 - some emulators run, but run zero tests, and still report success
