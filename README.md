@@ -47,7 +47,7 @@ Install
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
     <!--suppress CheckImageSize -->
-    <img alt="Get it on F-Droid" height=80
+    <img alt="Get it on F-Droid" height="80"
         src="docs/graphics/logos/f-droid-badge.png"></a>
 
 <a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards">
