@@ -28,6 +28,7 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.DiscardChangesDialog
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
@@ -39,6 +40,39 @@ import timber.log.Timber
 
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 class DeckOptions : PageFragment() {
+
+    override val bridgeCommands = mapOf<String, () -> Unit>(
+        "confirmDiscardChanges" to {
+            launchCatchingTask {
+                requestConfirmDiscard()
+            }
+        },
+        "_close" to {
+            actuallyClose()
+        }
+    )
+
+    /**
+     * Close the view, discarding change if needed.
+     */
+    private fun actuallyClose() {
+        onBackFromDeckOptions.isEnabled = false
+        Timber.v("webView: navigating back")
+        launchCatchingTask {
+            // Required to be in a task to ensure the callback is disabled.
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    /**
+     * Request the user to confirm they want to close the options, discarding change. If they accept, do it.
+     */
+    private fun requestConfirmDiscard() {
+        Timber.v("DeckOptions: showing 'discard changes'")
+        DiscardChangesDialog.showDialog(requireActivity()) {
+            actuallyClose()
+        }
+    }
 
     /**
      * Callback enabled when the manual is opened in the deck options.
@@ -53,16 +87,15 @@ class DeckOptions : PageFragment() {
 
     /**
      * Callback used when nothing is on top of the deck options, neither manual nor modal.
-     * It asks the user to confirm whether they want to close the webview without saving current
-     * options.
+     * It sends the webview a request to deal with the closing request, requesting confirmation if
+     * that would lose the local changes and otherwise close the webview.
      */
     private val onBackFromDeckOptions = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            Timber.v("DeckOptions: showing 'discard changes'")
-            DiscardChangesDialog.showDialog(requireContext()) {
-                Timber.i("OK button pressed to confirm discard changes")
-                this.isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+            Timber.v("DeckOptions: requesting the webview to handle the user close request.")
+            webView.evaluateJavascript("anki.deckOptionsPendingChanges()") {
+                // No callback. Checking whether there are change is asynchronous. Javascript will use the BridgeCommand to request
+                // Kotlin to either close (if there is no change) or request the user to confirm they want to discard the changes.
             }
         }
     }
