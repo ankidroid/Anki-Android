@@ -1,6 +1,5 @@
-<p style="text-align: center;">
-    <img src="docs/graphics/logos/banner_readme.png" alt="">
-</p>
+<p align="center">
+<img alt="" src="docs/graphics/logos/banner_readme.png"/>
 
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
 <a href="https://github.com/ankidroid/Anki-Android/actions"><img src="https://img.shields.io/github/checks-status/ankidroid/Anki-Android/main?label=build" alt="build"/></a>
