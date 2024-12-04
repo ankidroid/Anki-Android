@@ -438,6 +438,7 @@ dependencies {
     androidTestImplementation libs.androidx.test.core
     androidTestImplementation libs.androidx.test.junit
     androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.androidx.espresso.web
     androidTestImplementation libs.androidx.uiautomator
     androidTestImplementation libs.kotlin.test
     androidTestImplementation libs.kotlin.test.junit
