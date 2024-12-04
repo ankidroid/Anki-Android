@@ -98,19 +98,33 @@ subprojects {
 val jvmVersion = Jvm.current().javaVersion?.majorVersion
 if (jvmVersion != "17" && jvmVersion != "21") {
     println(
-        "\n\n\n*****************************************************\n\n\n" +
-        "ERROR: AnkiDroid builds with JVM version 17 or 21.\n" +
-        "Incompatible major version detected: '$jvmVersion'\n\n\n" +
-        "If you receive this error because you want to use a newer JDK, we may accept PRs to support it.\n" +
-        "Edit the main build.gradle file, find this message in the file, and add support for the newer version.\n" +
-        "Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion.\n\n\n" +
-        "*****************************************************\n\n\n"
+        """
+            
+            
+            
+            *****************************************************
+            
+            
+            ERROR: AnkiDroid builds with JVM version 17 or 21.
+            Incompatible major version detected: '$jvmVersion'
+            
+            
+            If you receive this error because you want to use a newer JDK, we may accept PRs to support it.
+            Edit the main build.gradle file, find this message in the file, and add support for the newer version.
+            Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion.
+            
+            
+            *****************************************************
+            
+            
+            
+            """.trimIndent()
     )
     exitProcess(1)
 }
 
 val ciBuild by extra(System.getenv("CI") == "true") // works for Travis CI or Github Actions
-// allows for -Dare-dex=false to be set
+// allows for -Dpre-dex=false to be set
 val preDexEnabled by extra("true" == System.getProperty("pre-dex", "true"))
 // allows for universal APKs to be generated
 val universalApkEnabled by extra("true" == System.getProperty("universal-apk", "false"))
