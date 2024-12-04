@@ -128,7 +128,7 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
         expected = listOf("foo.jpg")
         actual = ret.unusedFileNames.toMutableList()
-        actual.retainAll(expected)
+        actual.retainAll(expected.toSet())
         assertEquals(expected.size, actual.size)
     }
 
