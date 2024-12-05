@@ -36,7 +36,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
     }
 
     /** use named arguments with this method for clarity */
-    fun setArgs(title: String?, prompt: String?, digits: Int, content: String? = null, defaultValue: String? = null) {
+    fun setArgs(title: String, prompt: String?, digits: Int, content: String? = null, defaultValue: String? = null) {
         val args = Bundle()
         args.putString("title", title)
         args.putString("prompt", prompt)
@@ -49,7 +49,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
         return AlertDialog.Builder(requireActivity()).show {
-            title(text = requireArguments().getString("title")!!)
+            title(text = requireArguments().getString("title"))
             positiveButton(R.string.dialog_ok)
             negativeButton(R.string.dialog_cancel)
             setMessage(requireArguments().getString("content"))
