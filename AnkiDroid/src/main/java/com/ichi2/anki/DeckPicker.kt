@@ -1991,20 +1991,20 @@ open class DeckPicker :
 
     private fun promptUserToUpdateScheduler() {
         AlertDialog.Builder(this).show {
-            message(text = getColUnsafe.tr.schedulingUpdateRequired())
+            message(text = TR.schedulingUpdateRequired())
             positiveButton(R.string.dialog_ok) {
                 launchCatchingTask {
                     if (!userAcceptsSchemaChange(getColUnsafe)) {
                         return@launchCatchingTask
                     }
                     withProgress { withCol { sched.upgradeToV2() } }
-                    showThemedToast(this@DeckPicker, getColUnsafe.tr.schedulingUpdateDone(), false)
+                    showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
                     refreshState()
                 }
             }
             negativeButton(R.string.dialog_cancel)
             if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
-                neutralButton(text = getColUnsafe.tr.schedulingUpdateMoreInfoButton()) {
+                neutralButton(text = TR.schedulingUpdateMoreInfoButton()) {
                     this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
                 }
             }
