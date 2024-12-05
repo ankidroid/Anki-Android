@@ -1455,7 +1455,7 @@ open class DeckPicker :
         val (deckName, totalCards, isFilteredDeck) = withCol {
             Triple(
                 decks.name(focusedDeck),
-                sched.cardCount(),
+                decks.cardCount(focusedDeck, includeSubdecks = true),
                 decks.isFiltered(focusedDeck)
             )
         }
