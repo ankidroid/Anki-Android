@@ -128,10 +128,6 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
         openStudyOptionsAndFinish()
     }
 
-    override fun startActivity(intent: Intent) {
-        Timber.v("CustomStudyListener::startActivity() - not handled")
-    }
-
     override fun onCreateCustomStudySession() {
         Timber.v("CustomStudyListener::onCreateCustomStudySession()")
         openStudyOptionsAndFinish()
