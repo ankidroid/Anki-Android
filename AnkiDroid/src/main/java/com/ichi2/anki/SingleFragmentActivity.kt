@@ -19,7 +19,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
@@ -127,15 +126,6 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
     override fun onExtendStudyLimits() {
         Timber.v("CustomStudyListener::onExtendStudyLimits()")
         openStudyOptionsAndFinish()
-    }
-
-    override fun showDialogFragment(newFragment: DialogFragment) {
-        Timber.v("CustomStudyListener::showDialogFragment()")
-        newFragment.show(supportFragmentManager, null)
-    }
-
-    override fun startActivity(intent: Intent) {
-        Timber.v("CustomStudyListener::startActivity() - not handled")
     }
 
     override fun onCreateCustomStudySession() {

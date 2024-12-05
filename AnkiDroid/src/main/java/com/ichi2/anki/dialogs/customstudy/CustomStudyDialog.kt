@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs.customstudy
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -29,11 +28,9 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.Reviewer
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
@@ -49,6 +46,8 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
@@ -79,23 +78,15 @@ private const val ID = "id"
  */
 private const val DID = "did"
 
-/**
- * Key for whether or not to jump to the reviewer.
- */
-private const val JUMP_TO_REVIEWER = "jumpToReviewer"
 class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 
     interface CustomStudyListener {
         fun onCreateCustomStudySession()
         fun onExtendStudyLimits()
-        fun showDialogFragment(newFragment: DialogFragment)
-        fun dismissAllDialogFragments()
-        fun startActivity(intent: Intent)
     }
 
     fun withArguments(
         did: DeckId,
-        jumpToReviewer: Boolean = false,
         contextMenuAttribute: ContextMenuOption? = null
     ): CustomStudyDialog {
         val args = this.arguments ?: Bundle()
@@ -104,7 +95,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 putInt(ID, contextMenuAttribute.ordinal)
             }
             putLong(DID, did)
-            putBoolean(JUMP_TO_REVIEWER, jumpToReviewer)
         }
         this.arguments = args
         return this
@@ -131,7 +121,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private fun buildContextMenu(): AlertDialog {
         val listIds = getListIds()
-        val jumpToReviewer = requireArguments().getBoolean(JUMP_TO_REVIEWER)
         val titles = listIds.map { resources.getString(it.stringResource) }
 
         return AlertDialog.Builder(requireActivity())
@@ -153,17 +142,16 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                             checkedTags = ArrayList(),
                             allTags = ArrayList(collection.tags.byDeck(currentDeck))
                         )
-                        customStudyListener?.showDialogFragment(dialogFragment)
+                        requireActivity().showDialogFragment(dialogFragment)
                     }
                     else -> {
                         // User asked for a standard custom study option
                         val d = CustomStudyDialog(collection, customStudyListener)
                             .withArguments(
                                 requireArguments().getLong(DID),
-                                jumpToReviewer,
                                 listIds[index]
                             )
-                        customStudyListener?.showDialogFragment(d)
+                        requireActivity().showDialogFragment(d)
                     }
                 }
             }.create()
@@ -197,8 +185,6 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
         // deck id
         val did = requireArguments().getLong(DID)
-        // Whether or not to jump straight to the reviewer
-        val jumpToReviewer = requireArguments().getBoolean(JUMP_TO_REVIEWER)
         // Set material dialog parameters
         val dialog = AlertDialog.Builder(requireActivity())
             .customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
@@ -218,7 +204,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(n, 0)
-                        onLimitsExtended(jumpToReviewer)
+                        onLimitsExtended()
                     }
                     STUDY_REV -> {
                         requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
@@ -226,7 +212,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(0, n)
-                        onLimitsExtended(jumpToReviewer)
+                        onLimitsExtended()
                     }
                     STUDY_FORGOT -> {
                         val ar = JSONArray()
@@ -279,7 +265,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
             }
             .negativeButton(R.string.dialog_cancel) {
-                customStudyListener?.dismissAllDialogFragments()
+                requireActivity().dismissAllDialogFragments()
             }
             .create() // Added .create() because we wanted to access alertDialog positive button enable state
         editText.addTextChangedListener(object : TextWatcher {
@@ -446,7 +432,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         // launch this in the activity scope, rather than the fragment scope
         requireActivity().launchCatchingTask { rebuildDynamicDeck() }
         // Hide the dialogs (required due to a DeckPicker issue)
-        customStudyListener?.dismissAllDialogFragments()
+        requireActivity().dismissAllDialogFragments()
     }
 
     private suspend fun rebuildDynamicDeck() {
@@ -457,13 +443,9 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     }
 
-    private fun onLimitsExtended(jumpToReviewer: Boolean) {
-        if (jumpToReviewer) {
-            customStudyListener?.startActivity(Intent(requireContext(), Reviewer::class.java))
-        } else {
-            customStudyListener?.onExtendStudyLimits()
-        }
-        customStudyListener?.dismissAllDialogFragments()
+    private fun onLimitsExtended() {
+        customStudyListener?.onExtendStudyLimits()
+        requireActivity().dismissAllDialogFragments()
     }
 
     /**

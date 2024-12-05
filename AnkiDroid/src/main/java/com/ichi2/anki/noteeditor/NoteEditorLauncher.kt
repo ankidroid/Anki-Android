@@ -25,6 +25,7 @@ import androidx.core.os.bundleOf
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.NoteEditor
+import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.libanki.CardId
@@ -58,7 +59,7 @@ sealed interface NoteEditorLauncher {
      */
     data class ImageOcclusion(val imageUri: Uri?) : NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_IMG_OCCLUSION,
+            NoteEditor.EXTRA_CALLER to NoteEditorCaller.IMG_OCCLUSION.value,
             NoteEditor.EXTRA_IMG_OCCLUSION to imageUri
         )
     }
@@ -79,7 +80,7 @@ sealed interface NoteEditorLauncher {
      */
     data class AddNote(val deckId: DeckId? = null) : NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_DECKPICKER
+            NoteEditor.EXTRA_CALLER to NoteEditorCaller.DECKPICKER.value
         ).also { bundle ->
             deckId?.let { deckId -> bundle.putLong(NoteEditor.EXTRA_DID, deckId) }
         }
@@ -93,7 +94,7 @@ sealed interface NoteEditorLauncher {
         NoteEditorLauncher {
         override fun toBundle(): Bundle {
             val bundle = bundleOf(
-                NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_CARDBROWSER_ADD,
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.CARDBROWSER_ADD.value,
                 NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms
             )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
@@ -110,7 +111,7 @@ sealed interface NoteEditorLauncher {
     data class AddNoteFromReviewer(val animation: ActivityTransitionAnimation.Direction? = null) :
         NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_REVIEWER_ADD
+            NoteEditor.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value
         ).also { bundle ->
             animation?.let { animation ->
                 bundle.putParcelable(
@@ -128,7 +129,7 @@ sealed interface NoteEditorLauncher {
      */
     data class AddInstantNote(val sharedText: String) : NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditor.INSTANT_NOTE_EDITOR,
+            NoteEditor.EXTRA_CALLER to NoteEditorCaller.INSTANT_NOTE_EDITOR.value,
             Intent.EXTRA_TEXT to sharedText
         )
     }
@@ -141,7 +142,7 @@ sealed interface NoteEditorLauncher {
     data class EditCard(val cardId: CardId, val animation: ActivityTransitionAnimation.Direction) :
         NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_EDIT,
+            NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
             NoteEditor.EXTRA_CARD_ID to cardId,
             AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable
         )
@@ -153,7 +154,7 @@ sealed interface NoteEditorLauncher {
      */
     data class EditNoteFromPreviewer(val cardId: Long) : NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_PREVIEWER_EDIT,
+            NoteEditor.EXTRA_CALLER to NoteEditorCaller.PREVIEWER_EDIT.value,
             NoteEditor.EXTRA_EDIT_FROM_CARD_ID to cardId
         )
     }
@@ -170,7 +171,7 @@ sealed interface NoteEditorLauncher {
         val tags: List<String>? = null
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditor.CALLER_NOTEEDITOR,
+            NoteEditor.EXTRA_CALLER to NoteEditorCaller.NOTEEDITOR.value,
             NoteEditor.EXTRA_DID to deckId,
             NoteEditor.EXTRA_CONTENTS to fieldsText
         ).also { bundle ->

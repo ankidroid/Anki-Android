@@ -17,6 +17,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.showError
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.MediaCheckResult
 
 class MediaCheckDialog : AsyncDialogFragment() {
@@ -25,7 +26,6 @@ class MediaCheckDialog : AsyncDialogFragment() {
         fun showMediaCheckDialog(dialogType: Int, checkList: MediaCheckResult)
         fun mediaCheck()
         fun deleteUnused(unused: List<String>)
-        fun dismissAllDialogFragments()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -37,10 +37,10 @@ class MediaCheckDialog : AsyncDialogFragment() {
                 dialog.setMessage(notificationMessage)
                     .setPositiveButton(R.string.dialog_ok) { _, _ ->
                         (activity as MediaCheckDialogListener?)?.mediaCheck()
-                        (activity as MediaCheckDialogListener?)?.dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                        (activity as MediaCheckDialogListener?)?.dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     .create()
             }
@@ -88,15 +88,15 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     fileListTextView.setTextIsSelectable(true)
                     dialog.setPositiveButton(R.string.check_media_delete_unused) { _, _ ->
                         (activity as MediaCheckDialogListener?)?.deleteUnused(unused)
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                         .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                            (activity as MediaCheckDialogListener?)?.dismissAllDialogFragments()
+                            activity?.dismissAllDialogFragments()
                         }
                 } else {
                     fileListTextView.visibility = View.GONE
                     dialog.setNegativeButton(R.string.dialog_ok) { _, _ ->
-                        (activity as MediaCheckDialogListener).dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                 }
                 dialog.setView(dialogBody)
@@ -105,10 +105,6 @@ class MediaCheckDialog : AsyncDialogFragment() {
             }
             else -> null!!
         }
-    }
-
-    fun dismissAllDialogFragments() {
-        (activity as MediaCheckDialogListener).dismissAllDialogFragments()
     }
 
     override val notificationMessage: String

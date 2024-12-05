@@ -25,12 +25,12 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.showError
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
 class ExportReadyDialog(private val listener: ExportReadyDialogListener) : AsyncDialogFragment() {
     interface ExportReadyDialogListener {
-        fun dismissAllDialogFragments()
         fun shareFile(path: String) // path of the file to be shared
         fun saveExportFile(exportPath: String)
     }

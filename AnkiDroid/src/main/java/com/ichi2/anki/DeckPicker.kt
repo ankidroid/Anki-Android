@@ -149,6 +149,8 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
@@ -1453,7 +1455,7 @@ open class DeckPicker :
         val (deckName, totalCards, isFilteredDeck) = withCol {
             Triple(
                 decks.name(focusedDeck),
-                sched.cardCount(),
+                decks.cardCount(focusedDeck, includeSubdecks = true),
                 decks.isFiltered(focusedDeck)
             )
         }
@@ -1989,20 +1991,20 @@ open class DeckPicker :
 
     private fun promptUserToUpdateScheduler() {
         AlertDialog.Builder(this).show {
-            message(text = getColUnsafe.tr.schedulingUpdateRequired())
+            message(text = TR.schedulingUpdateRequired())
             positiveButton(R.string.dialog_ok) {
                 launchCatchingTask {
                     if (!userAcceptsSchemaChange(getColUnsafe)) {
                         return@launchCatchingTask
                     }
                     withProgress { withCol { sched.upgradeToV2() } }
-                    showThemedToast(this@DeckPicker, getColUnsafe.tr.schedulingUpdateDone(), false)
+                    showThemedToast(this@DeckPicker, TR.schedulingUpdateDone(), false)
                     refreshState()
                 }
             }
             negativeButton(R.string.dialog_cancel)
             if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
-                neutralButton(text = getColUnsafe.tr.schedulingUpdateMoreInfoButton()) {
+                neutralButton(text = TR.schedulingUpdateMoreInfoButton()) {
                     this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
                 }
             }

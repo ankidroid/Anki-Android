@@ -35,6 +35,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
@@ -61,7 +62,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private val saveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var fileExportPath: String
 
-    override fun dismissAllDialogFragments() {
+    fun dismissAllDialogFragments() {
         activity.dismissAllDialogFragments()
     }
 

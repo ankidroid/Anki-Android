@@ -16,7 +16,6 @@
 package com.ichi2.anki.dialogs
 
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
@@ -31,6 +30,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Scheduler
+import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.isJsonEqual
 import com.ichi2.utils.KotlinCleanup
@@ -71,7 +71,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             )
             .arguments
         val factory = CustomStudyDialogFactory({ this.col }, mockListener)
-        FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory).use { scenario ->
+        AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.RESUMED)
             scenario.onFragment { f: CustomStudyDialog ->
                 val dialog = assertNotNull(f.dialog as AlertDialog?)
@@ -122,7 +122,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         whenever(mockCollection.sched).thenReturn(mockSched)
         whenever(mockSched.newCount()).thenReturn(0)
         val factory = CustomStudyDialogFactory({ mockCollection }, mockListener)
-        FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory).use { scenario ->
+        AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)
             scenario.onFragment { f: CustomStudyDialog ->
                 val dialog = f.dialog as AlertDialog?

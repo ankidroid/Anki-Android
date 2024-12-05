@@ -82,6 +82,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.NoteEditor.Companion.NoteEditorCaller.Companion.fromValue
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
 import com.ichi2.anki.android.input.ShortcutGroup
 import com.ichi2.anki.android.input.ShortcutGroupProvider
@@ -131,6 +132,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.utils.ext.isImageOcclusion
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
@@ -183,6 +185,8 @@ import java.util.function.Consumer
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+
+const val CALLER_KEY = "caller"
 
 /**
  * Allows the user to edit a note, for instance if there is a typo. A card is a presentation of a note, and has two
@@ -247,7 +251,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     private var aedictIntent = false
 
     /* indicates which activity called Note Editor */
-    private var caller = 0
+    private var caller = NoteEditorCaller.NO_CALLER
     private var editFields: LinkedList<FieldEditText>? = null
     private var sourceText: Array<String?>? = null
     private val fieldState = FieldState.fromEditor(this)
@@ -456,7 +460,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         fieldState.setInstanceState(savedInstanceState)
         val intent = requireActivity().intent
         if (savedInstanceState != null) {
-            caller = savedInstanceState.getInt("caller")
+            caller = fromValue(savedInstanceState.getInt(CALLER_KEY))
             addNote = savedInstanceState.getBoolean("addNote")
             deckId = savedInstanceState.getLong("did")
             selectedTags = savedInstanceState.getStringArrayList("tags")
@@ -467,11 +471,11 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 savedInstanceState.getSerializableCompat<HashMap<Int, String?>>("toggleSticky")!!
             changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
         } else {
-            caller = requireArguments().getInt(EXTRA_CALLER, CALLER_NO_CALLER)
-            if (caller == CALLER_NO_CALLER) {
+            caller = fromValue(requireArguments().getInt(EXTRA_CALLER, NoteEditorCaller.NO_CALLER.value))
+            if (caller == NoteEditorCaller.NO_CALLER) {
                 val action = intent.action
                 if (ACTION_CREATE_FLASHCARD == action || ACTION_CREATE_FLASHCARD_SEND == action || Intent.ACTION_PROCESS_TEXT == action) {
-                    caller = CALLER_NOTEEDITOR_INTENT_ADD
+                    caller = NoteEditorCaller.NOTEEDITOR_INTENT_ADD
                 }
             }
         }
@@ -562,7 +566,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
     private fun addInstanceStateToBundle(savedInstanceState: Bundle) {
         Timber.i("Saving instance")
-        savedInstanceState.putInt("caller", caller)
+        savedInstanceState.putInt(CALLER_KEY, caller.value)
         savedInstanceState.putBoolean("addNote", addNote)
         savedInstanceState.putLong("did", deckId)
         savedInstanceState.putBoolean(NOTE_CHANGED_EXTRA_KEY, changed)
@@ -582,7 +586,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     // Finish initializing the fragment after the collection has been correctly loaded
     private fun setupEditor(col: Collection) {
         val intent = requireActivity().intent
-        Timber.d("NoteEditor() onCollectionLoaded: caller: %d", caller)
+        Timber.d("NoteEditor() onCollectionLoaded: caller: %s", caller)
         ankiActivity.registerReceiver()
         fieldsLayoutContainer = findViewById(R.id.CardEditorEditFieldsLayout)
         tagsButton = findViewById(R.id.CardEditorTagButton)
@@ -605,25 +609,25 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         aedictIntent = false
         currentEditedCard = null
         when (caller) {
-            CALLER_NO_CALLER -> {
+            NoteEditorCaller.NO_CALLER -> {
                 Timber.e("no caller could be identified, closing")
                 requireActivity().finish()
                 return
             }
-            CALLER_EDIT -> {
+            NoteEditorCaller.EDIT -> {
                 val cardId = requireNotNull(requireArguments().getLong(EXTRA_CARD_ID)) { "EXTRA_CARD_ID" }
                 currentEditedCard = col.getCard(cardId)
                 editorNote = currentEditedCard!!.note(col)
                 addNote = false
             }
-            CALLER_PREVIEWER_EDIT -> {
+            NoteEditorCaller.PREVIEWER_EDIT -> {
                 val id = requireArguments().getLong(EXTRA_EDIT_FROM_CARD_ID)
                 currentEditedCard = col.getCard(id)
                 editorNote = currentEditedCard!!.note(getColUnsafe)
             }
-            CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
+            NoteEditorCaller.STUDYOPTIONS, NoteEditorCaller.DECKPICKER, NoteEditorCaller.REVIEWER_ADD, NoteEditorCaller.CARDBROWSER_ADD, NoteEditorCaller.NOTEEDITOR ->
                 addNote = true
-            CALLER_NOTEEDITOR_INTENT_ADD, INSTANT_NOTE_EDITOR -> {
+            NoteEditorCaller.NOTEEDITOR_INTENT_ADD, NoteEditorCaller.INSTANT_NOTE_EDITOR -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
                     requireActivity().finish()
@@ -637,10 +641,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             }
             // image occlusion is handled at the end of this method, grep: CALLER_IMG_OCCLUSION
             // we need to have loaded the current note type
-            CALLER_IMG_OCCLUSION, CALLER_ADD_IMAGE -> {
+            NoteEditorCaller.IMG_OCCLUSION, NoteEditorCaller.ADD_IMAGE -> {
                 addNote = true
             }
-            else -> {}
         }
 
         if (addNote) {
@@ -728,7 +731,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
 
             try {
                 // If content has been shared, we can't share to an image occlusion note type
-                if (currentNotetypeIsImageOcclusion() && (sourceText != null || caller == CALLER_ADD_IMAGE)) {
+                if (currentNotetypeIsImageOcclusion() && (sourceText != null || caller == NoteEditorCaller.ADD_IMAGE)) {
                     val model = col.notetypes.all().first {
                         !it.isImageOcclusion
                     }
@@ -738,7 +741,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 showSnackbar(R.string.missing_note_type)
                 // setting the text to null & caller to CALLER_NO_CALLER would skip adding text/image to edit field
                 sourceText = null
-                caller = CALLER_NO_CALLER
+                caller = NoteEditorCaller.NO_CALLER
                 Timber.w(e)
             }
 
@@ -759,7 +762,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             contents?.let { setEditFieldTexts(it) }
             tags?.let { setTags(it) }
             // If the activity was called to handle an image addition, launch a coroutine to process the image intent.
-            if (caller == CALLER_ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
+            if (caller == NoteEditorCaller.ADD_IMAGE) lifecycleScope.launch { handleImageIntent(intent) }
         } else {
             noteTypeSpinner!!.onItemSelectedListener = EditNoteTypeListener()
             setTitle(R.string.cardeditor_title_edit_card)
@@ -795,7 +798,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             editFields!!.first().requestFocus()
         }
 
-        if (caller == CALLER_IMG_OCCLUSION) {
+        if (caller == NoteEditorCaller.IMG_OCCLUSION) {
             // val saveImageUri = ImageIntentManager.getImageUri()
             val saveImageUri = BundleCompat.getParcelable(requireArguments(), EXTRA_IMG_OCCLUSION, Uri::class.java)
             if (saveImageUri != null) {
@@ -1105,9 +1108,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
         showSnackbar(TR.addingAdded(), Snackbar.LENGTH_SHORT)
 
-        if (caller == CALLER_NOTEEDITOR || aedictIntent) {
+        if (caller == NoteEditorCaller.NOTEEDITOR || aedictIntent) {
             closeEditorAfterSave = true
-        } else if (caller == CALLER_NOTEEDITOR_INTENT_ADD) {
+        } else if (caller == NoteEditorCaller.NOTEEDITOR_INTENT_ADD) {
             closeEditorAfterSave = true
             closeIntent = Intent().apply { putExtra(EXTRA_ID, requireArguments().getString(EXTRA_ID)) }
         } else if (!editFields!!.isEmpty()) {
@@ -1237,7 +1240,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
             // these activities are updated to handle `opChanges`
             // and no longer using the legacy ActivityResultCallback/onActivityResult to
             // accept & update the note in the activity
-            if (caller == CALLER_PREVIEWER_EDIT || caller == CALLER_EDIT) {
+            if (caller == NoteEditorCaller.PREVIEWER_EDIT || caller == NoteEditorCaller.EDIT) {
                 withProgress {
                     undoableOp {
                         updateNote(currentEditedCard!!.note(this@undoableOp))
@@ -1485,7 +1488,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         val result: Int = if (changed) {
             Activity.RESULT_OK
         } else {
-            Activity.RESULT_CANCELED
+            RESULT_CANCELED
         }
         if (reloadRequired) {
             intent.putExtra(RELOAD_REQUIRED_EXTRA_KEY, true)
@@ -2682,19 +2685,24 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         const val EXTRA_IMG_OCCLUSION = "image_uri"
 
         // calling activity
-        const val CALLER_NO_CALLER = 0
-        const val CALLER_EDIT = 1
-        const val CALLER_STUDYOPTIONS = 2
-        const val CALLER_DECKPICKER = 3
-        const val CALLER_REVIEWER_ADD = 11
-        const val CALLER_CARDBROWSER_ADD = 7
-        const val CALLER_NOTEEDITOR = 8
-        const val CALLER_PREVIEWER_EDIT = 9
-        const val CALLER_NOTEEDITOR_INTENT_ADD = 10
+        enum class NoteEditorCaller(val value: Int) {
+            NO_CALLER(0),
+            EDIT(1),
+            STUDYOPTIONS(2),
+            DECKPICKER(3),
+            REVIEWER_ADD(11),
+            CARDBROWSER_ADD(7),
+            NOTEEDITOR(8),
+            PREVIEWER_EDIT(9),
+            NOTEEDITOR_INTENT_ADD(10),
+            IMG_OCCLUSION(12),
+            ADD_IMAGE(13),
+            INSTANT_NOTE_EDITOR(14);
+            companion object {
+                fun fromValue(value: Int) = NoteEditorCaller.entries.first { it.value == value }
+            }
+        }
         const val RESULT_UPDATED_IO_NOTE = 11
-        const val CALLER_IMG_OCCLUSION = 12
-        const val CALLER_ADD_IMAGE = 13
-        const val INSTANT_NOTE_EDITOR = 14
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"

@@ -43,6 +43,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.description
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks
@@ -237,10 +238,10 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
      * Show the context menu for the custom study options
      */
     private fun showCustomStudyContextMenu() {
-        val ankiActivity = requireActivity() as AnkiActivity
-        val contextMenu = instantiate(ankiActivity, CustomStudyDialog::class.java)
+        val activity = requireActivity()
+        val contextMenu = instantiate(activity, CustomStudyDialog::class.java)
         contextMenu.withArguments(col!!.decks.selected())
-        ankiActivity.showDialogFragment(contextMenu)
+        activity.showDialogFragment(contextMenu)
     }
 
     override fun onMenuItemSelected(item: MenuItem): Boolean {

@@ -47,13 +47,14 @@ import com.ichi2.anki.model.SortType
 import com.ichi2.anki.scheduling.ForgetCardsDialog
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
+import com.ichi2.anki.utils.ext.getCurrentDialogFragment
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.BrowserConfig
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
 import com.ichi2.testutils.IntentAssert
@@ -616,12 +617,12 @@ class CardBrowserTest : RobolectricTest() {
         val dialog = cardBrowser.getChangeDeckDialog(listOf())
         cardBrowser.showDialogFragment(dialog)
 
-        val shownDialog: Fragment? = cardBrowser.getDialogFragment()
+        val shownDialog: Fragment? = cardBrowser.getCurrentDialogFragment()
         assertNotNull(shownDialog)
 
         ActivityCompat.recreate(cardBrowser)
         advanceRobolectricUiLooper()
-        val dialogAfterRecreate: Fragment? = cardBrowser.getDialogFragment()
+        val dialogAfterRecreate: Fragment? = cardBrowser.getCurrentDialogFragment()
         assertNull(dialogAfterRecreate)
     }
 

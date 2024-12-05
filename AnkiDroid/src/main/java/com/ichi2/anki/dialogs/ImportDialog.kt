@@ -21,6 +21,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import timber.log.Timber
@@ -30,7 +31,6 @@ class ImportDialog : AsyncDialogFragment() {
     interface ImportDialogListener {
         fun importAdd(importPath: String)
         fun importReplace(importPath: String)
-        fun dismissAllDialogFragments()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
@@ -47,7 +47,7 @@ class ImportDialog : AsyncDialogFragment() {
                     .setMessage(res().getString(R.string.import_dialog_message_add, displayFileName))
                     .positiveButton(R.string.import_message_add) {
                         (activity as ImportDialogListener).importAdd(packagePath)
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     .negativeButton(R.string.dialog_cancel)
                     .create()
@@ -57,7 +57,7 @@ class ImportDialog : AsyncDialogFragment() {
                     .setMessage(res().getString(R.string.import_message_replace_confirm, displayFileName))
                     .positiveButton(R.string.dialog_positive_replace) {
                         (activity as ImportDialogListener).importReplace(packagePath)
-                        dismissAllDialogFragments()
+                        activity?.dismissAllDialogFragments()
                     }
                     .negativeButton(R.string.dialog_cancel)
                     .create()
@@ -86,10 +86,6 @@ class ImportDialog : AsyncDialogFragment() {
         get() {
             return res().getString(R.string.import_title)
         }
-
-    fun dismissAllDialogFragments() {
-        (activity as ImportDialogListener).dismissAllDialogFragments()
-    }
 
     companion object {
         const val DIALOG_IMPORT_ADD_CONFIRM = 2
