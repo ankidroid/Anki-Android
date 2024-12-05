@@ -43,9 +43,6 @@ import kotlin.reflect.jvm.jvmName
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
 open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStudyListener {
-    /** The displayed fragment. */
-    lateinit var fragment: Fragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -66,12 +63,7 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
         // avoid recreating the fragment on configuration changes
         // the fragment should handle state restoration
         if (savedInstanceState != null) {
-            Timber.d("restoring fragment due to config changes")
-            supportFragmentManager.findFragmentById(R.id.fragment_container)?.let { fragment ->
-                this.fragment = fragment
-                return
-            }
-            Timber.w("Fragment not found after config change. Recreating it")
+            return
         }
 
         val fragmentClassName = requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
@@ -80,7 +72,7 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
 
         Timber.d("Creating fragment %s", fragmentClassName)
 
-        fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
+        val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
             arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
         }
         supportFragmentManager.commit {
@@ -97,6 +89,9 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
         }
     }
 
+    override val shortcuts: ShortcutGroup?
+        get() = (supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as? ShortcutGroupProvider)?.shortcuts
+
     companion object {
         const val FRAGMENT_NAME_EXTRA = "fragmentName"
         const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
@@ -110,9 +105,6 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
             }
         }
     }
-
-    override val shortcuts: ShortcutGroup?
-        get() = (fragment as? ShortcutGroupProvider)?.shortcuts
 
     // Begin - implementation of CustomStudyListener methods here for crash fix
     // TODO - refactor https://github.com/ankidroid/Anki-Android/pull/17508#pullrequestreview-2465561993
