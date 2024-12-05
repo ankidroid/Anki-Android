@@ -57,7 +57,6 @@
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
 
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>

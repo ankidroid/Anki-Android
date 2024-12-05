@@ -35,7 +35,6 @@ import anki.scheduler.CustomStudyRequestKt
 import anki.scheduler.customStudyRequest
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
@@ -461,15 +460,6 @@ class CustomStudyDialog(
                     showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
                     return
                 }
-        }
-        if (!dyn.has("terms")) {
-            // #5959 - temp code to diagnose why terms doesn't exist.
-            // normally we wouldn't want to log this much, but we need to know how deep the corruption is to fix the
-            // issue
-            Timber.w("Invalid Dynamic Deck: %s", dyn)
-            CrashReportService.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession")
-            showThemedToast(requireContext(), getString(R.string.custom_study_rebuild_deck_corrupt), false)
-            return
         }
         // and then set various options
         dyn.put("delays", JSONObject.NULL)
