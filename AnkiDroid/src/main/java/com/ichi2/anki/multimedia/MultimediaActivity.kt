@@ -34,7 +34,7 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableExtraCompat
 import com.ichi2.themes.setTransparentStatusBar
-import com.ichi2.utils.getInstanceFromClassName
+import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import java.io.Serializable
 import kotlin.reflect.KClass
@@ -87,7 +87,7 @@ class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
                 "'$MULTIMEDIA_FRAGMENT_NAME_EXTRA' extra should be provided"
             }
 
-        val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
+        val fragment = FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
             arguments = bundleOf(
                 MULTIMEDIA_ARGS_EXTRA to intent.multimediaArgsExtra,
                 EXTRA_MEDIA_OPTIONS to intent.mediaOptionsExtra

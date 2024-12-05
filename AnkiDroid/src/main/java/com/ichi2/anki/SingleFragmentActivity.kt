@@ -28,7 +28,7 @@ import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.utils.ExtendedFragmentFactory
-import com.ichi2.utils.getInstanceFromClassName
+import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -72,7 +72,7 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
 
         Timber.d("Creating fragment %s", fragmentClassName)
 
-        val fragment = getInstanceFromClassName<Fragment>(fragmentClassName).apply {
+        val fragment = FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
             arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
         }
         supportFragmentManager.commit {

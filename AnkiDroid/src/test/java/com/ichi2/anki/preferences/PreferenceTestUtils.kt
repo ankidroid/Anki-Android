@@ -20,7 +20,7 @@ import androidx.annotation.XmlRes
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
-import com.ichi2.utils.getInstanceFromClassName
+import com.ichi2.testutils.getInstanceFromClassName
 import org.xmlpull.v1.XmlPullParser
 
 object PreferenceTestUtils {

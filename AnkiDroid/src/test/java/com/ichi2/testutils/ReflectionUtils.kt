@@ -45,3 +45,7 @@ fun getJavaMethodAsAccessible(clazz: Class<*>, methodName: String, vararg parame
         isAccessible = true
     }
 }
+
+inline fun <reified T> getInstanceFromClassName(javaClassName: String): T {
+    return Class.forName(javaClassName).getDeclaredConstructor().newInstance() as T
+}
