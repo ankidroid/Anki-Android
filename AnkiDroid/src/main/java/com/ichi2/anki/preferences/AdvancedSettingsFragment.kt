@@ -18,6 +18,7 @@ package com.ichi2.anki.preferences
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.speech.tts.TextToSpeech
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
@@ -76,6 +77,20 @@ class AdvancedSettingsFragment : SettingsFragment() {
         val ttsPref = requirePreference<SwitchPreferenceCompat>(R.string.tts_key)
         ttsPref.setOnPreferenceChangeListener { _, isChecked ->
             if (!(isChecked as Boolean)) return@setOnPreferenceChangeListener true
+
+            // check whether tts is available or not first
+            val ttsAvailable = checkTtsEngine()
+            if (!ttsAvailable) {
+                AlertDialog.Builder(requireContext()).show {
+                    setTitle(R.string.tts_unavailable_title)
+                    setMessage(R.string.tts_unavailable_message)
+                    setIcon(R.drawable.ic_warning)
+                    setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                }
+                ttsPref.isChecked = false
+                return@setOnPreferenceChangeListener false
+            }
+
             AlertDialog.Builder(requireContext()).show {
                 setIcon(R.drawable.ic_warning)
                 setMessage(R.string.readtext_deprecation_warn)
@@ -140,5 +155,11 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 preferenceScreen.removePreference(doubleScrolling)
             }
         }
+    }
+
+    private fun checkTtsEngine(): Boolean {
+        val intent = Intent(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA)
+        val resolveInfo = requireContext().packageManager.queryIntentActivities(intent, 0)
+        return resolveInfo.isNotEmpty()
     }
 }
