@@ -385,11 +385,15 @@ suspend fun <T> withProgressDialog(
         if (manualCancelButton != null) {
             setCancelable(false)
             setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(manualCancelButton)) { _, _ ->
+                Timber.i("Progress dialog cancelled via cancel button")
                 onCancel?.let { it() }
             }
         } else {
             onCancel?.let {
-                setOnCancelListener { it() }
+                setOnCancelListener {
+                    Timber.i("Progress dialog cancelled via cancel listener")
+                    it()
+                }
             }
         }
     }
@@ -400,9 +404,12 @@ suspend fun <T> withProgressDialog(
     val dialogJob = launch {
         delay(delayMillis)
         if (!AnkiDroidApp.instance.progressDialogShown) {
+            Timber.i("Displaying progress dialog: ${delayMillis}ms elapsed; cancellable: ${onCancel != null}; manualCancel: ${manualCancelButton != null}")
             dialog.show()
             AnkiDroidApp.instance.progressDialogShown = true
             dialogIsOurs = true
+        } else {
+            Timber.w("A progress dialog is already displayed, not displaying progress dialog: ${onCancel != null}; manualCancel: ${manualCancelButton != null}")
         }
     }
     try {
