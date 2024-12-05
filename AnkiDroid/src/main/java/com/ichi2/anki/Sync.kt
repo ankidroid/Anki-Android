@@ -212,6 +212,7 @@ private suspend fun handleNormalSync(
     auth: SyncAuth,
     syncMedia: Boolean
 ) {
+    Timber.i("Sync: Normal collection sync")
     var auth2 = auth
     val output = deckPicker.withProgress(
         extractProgress = {
@@ -228,6 +229,7 @@ private suspend fun handleNormalSync(
     }
 
     if (output.hasNewEndpoint()) {
+        Timber.i("sync endpoint updated")
         deckPicker.sharedPrefs().edit {
             putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
         }
@@ -235,6 +237,7 @@ private suspend fun handleNormalSync(
     }
     val mediaUsn = if (syncMedia) { output.serverMediaUsn } else { null }
 
+    Timber.i("sync result: ${output.required}")
     when (output.required) {
         // a successful sync returns this value
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
@@ -283,6 +286,7 @@ private suspend fun handleDownload(
     auth: SyncAuth,
     mediaUsn: Int?
 ) {
+    Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
         onCancel = ::cancelSync
@@ -315,6 +319,7 @@ private suspend fun handleUpload(
     auth: SyncAuth,
     mediaUsn: Int?
 ) {
+    Timber.i("Sync: Full collection upload requested")
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
         onCancel = ::cancelSync

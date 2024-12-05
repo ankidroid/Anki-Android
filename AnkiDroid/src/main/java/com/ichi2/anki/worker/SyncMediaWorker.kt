@@ -180,6 +180,7 @@ class SyncMediaWorker(
         }
 
         fun start(context: Context, auth: SyncAuth) {
+            Timber.i("Launching background media sync")
             val request = getWorkRequest(auth)
 
             WorkManager.getInstance(context)
