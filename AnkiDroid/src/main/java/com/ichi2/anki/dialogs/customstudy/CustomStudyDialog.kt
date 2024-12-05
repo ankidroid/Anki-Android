@@ -31,6 +31,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import anki.scheduler.CustomStudyDefaultsResponse
+import anki.scheduler.CustomStudyRequestKt
+import anki.scheduler.customStudyRequest
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
@@ -41,7 +43,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.ST
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_FORGOT
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_NEW
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_PREVIEW
-import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_RANDOM
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_REV
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.STUDY_TAGS
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyDefaults.Companion.toDomainModel
@@ -53,6 +54,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
@@ -61,6 +63,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.BundleUtils.getNullableInt
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.cancelable
@@ -70,10 +73,8 @@ import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
-import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
-import java.util.Locale
 
 /**
  * Implements custom studying either by:
@@ -196,7 +197,6 @@ class CustomStudyDialog(
                     STUDY_REV,
                     STUDY_FORGOT,
                     STUDY_AHEAD,
-                    STUDY_RANDOM,
                     STUDY_PREVIEW,
                     -> {
                         // User asked for a standard custom study option
@@ -250,71 +250,7 @@ class CustomStudyDialog(
                             // This should never happen because we disable positive button for non-parsable inputs
                             return@positiveButton
                         }
-                    when (contextMenuOption) {
-                        STUDY_NEW -> {
-                            requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
-                            val deck = collection.decks.get(dialogDeckId)!!
-                            deck.put("extendNew", n)
-                            collection.decks.save(deck)
-                            collection.sched.extendLimits(n, 0)
-                            onLimitsExtended()
-                        }
-                        STUDY_REV -> {
-                            requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
-                            val deck = collection.decks.get(dialogDeckId)!!
-                            deck.put("extendRev", n)
-                            collection.decks.save(deck)
-                            collection.sched.extendLimits(0, n)
-                            onLimitsExtended()
-                        }
-                        STUDY_FORGOT -> {
-                            val ar = JSONArray()
-                            ar.put(0, 1)
-                            createCustomStudySession(
-                                ar,
-                                arrayOf(
-                                    String.format(
-                                        Locale.US,
-                                        "rated:%d:1",
-                                        n,
-                                    ),
-                                    Consts.DYN_MAX_SIZE,
-                                    Consts.DYN_RANDOM,
-                                ),
-                                false,
-                            )
-                        }
-                        STUDY_AHEAD -> {
-                            createCustomStudySession(
-                                JSONArray(),
-                                arrayOf(
-                                    String.format(
-                                        Locale.US,
-                                        "prop:due<=%d",
-                                        n,
-                                    ),
-                                    Consts.DYN_MAX_SIZE,
-                                    Consts.DYN_DUE,
-                                ),
-                                true,
-                            )
-                        }
-                        STUDY_RANDOM -> {
-                            createCustomStudySession(JSONArray(), arrayOf("", n, Consts.DYN_RANDOM), true)
-                        }
-                        STUDY_PREVIEW -> {
-                            createCustomStudySession(
-                                JSONArray(),
-                                arrayOf(
-                                    "is:new added:$n",
-                                    Consts.DYN_MAX_SIZE,
-                                    Consts.DYN_OLDEST,
-                                ),
-                                false,
-                            )
-                        }
-                        STUDY_TAGS -> TODO("This branch has not been covered before")
-                    }
+                    requireActivity().launchCatchingTask { customStudy(contextMenuOption, n) }
                 }.negativeButton(R.string.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
                 }.create() // Added .create() because we wanted to access alertDialog positive button enable state
@@ -351,6 +287,59 @@ class CustomStudyDialog(
         return dialog
     }
 
+    private suspend fun customStudy(
+        contextMenuOption: ContextMenuOption,
+        userEntry: Int,
+    ) {
+        Timber.i("Custom study: $contextMenuOption; input = $userEntry")
+
+        suspend fun customStudy(block: CustomStudyRequestKt.Dsl.() -> Unit) {
+            undoableOp {
+                collection.sched.customStudy(
+                    customStudyRequest {
+                        deckId = dialogDeckId
+                        block(this)
+                    },
+                )
+            }
+        }
+
+        suspend fun extendLimits(block: CustomStudyRequestKt.Dsl.() -> Unit) {
+            try {
+                customStudy { block(this) }
+                customStudyListener?.onExtendStudyLimits()
+            } finally {
+                requireActivity().dismissAllDialogFragments()
+            }
+        }
+
+        suspend fun createCustomStudy(block: CustomStudyRequestKt.Dsl.() -> Unit) {
+            try {
+                customStudy { block(this) }
+                customStudyListener?.onCreateCustomStudySession()
+            } finally {
+                requireActivity().dismissAllDialogFragments()
+            }
+        }
+
+        // save the default values (not in upstream)
+        when (contextMenuOption) {
+            STUDY_FORGOT -> sharedPrefs().edit { putInt("forgottenDays", userEntry) }
+            STUDY_AHEAD -> sharedPrefs().edit { putInt("aheadDays", userEntry) }
+            STUDY_PREVIEW -> sharedPrefs().edit { putInt("previewDays", userEntry) }
+            else -> {}
+        }
+
+        when (contextMenuOption) {
+            STUDY_NEW -> extendLimits { newLimitDelta = userEntry }
+            STUDY_REV -> extendLimits { reviewLimitDelta = userEntry }
+            STUDY_FORGOT -> createCustomStudy { forgotDays = userEntry }
+            STUDY_AHEAD -> createCustomStudy { reviewAheadDays = userEntry }
+            STUDY_PREVIEW -> createCustomStudy { previewDays = userEntry }
+            STUDY_TAGS -> TODO("This branch has not been covered before")
+        }
+    }
+
     /**
      * Gathers the final selection of tags and type of cards,
      * Generates the search screen for the custom study deck.
@@ -369,14 +358,12 @@ class CustomStudyDialog(
             }
             sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
-        createCustomStudySession(
-            JSONArray(),
+        createTagsCustomStudySession(
             arrayOf(
                 sb.toString(),
                 Consts.DYN_MAX_SIZE,
                 Consts.DYN_RANDOM,
             ),
-            true,
         )
     }
 
@@ -386,7 +373,7 @@ class CustomStudyDialog(
      */
     private fun getListIds(): List<ContextMenuOption> {
         // Standard context menu
-        return mutableListOf(STUDY_FORGOT, STUDY_AHEAD, STUDY_RANDOM, STUDY_PREVIEW, STUDY_TAGS).apply {
+        return mutableListOf(STUDY_FORGOT, STUDY_AHEAD, STUDY_PREVIEW, STUDY_TAGS).apply {
             if (defaults.extendReview.isUsable) {
                 this.add(0, STUDY_REV)
             }
@@ -405,7 +392,6 @@ class CustomStudyDialog(
                 STUDY_REV -> defaults.labelForReviewQueueAvailable()
                 STUDY_FORGOT,
                 STUDY_AHEAD,
-                STUDY_RANDOM,
                 STUDY_PREVIEW,
                 STUDY_TAGS,
                 null,
@@ -420,7 +406,6 @@ class CustomStudyDialog(
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
                 STUDY_AHEAD -> res.getString(R.string.custom_study_ahead)
-                STUDY_RANDOM -> res.getString(R.string.custom_study_random)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
                 STUDY_TAGS,
                 null,
@@ -435,7 +420,6 @@ class CustomStudyDialog(
                 STUDY_REV -> defaults.extendReview.initialValue.toString()
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
                 STUDY_AHEAD -> prefs.getInt("aheadDays", 1).toString()
-                STUDY_RANDOM -> prefs.getInt("randomCards", 100).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
                 STUDY_TAGS,
                 null,
@@ -445,15 +429,9 @@ class CustomStudyDialog(
 
     /**
      * Create a custom study session
-     * @param delays delay options for scheduling algorithm
      * @param terms search terms
-     * @param resched whether to reschedule the cards based on the answers given (or ignore them if false)
      */
-    private fun createCustomStudySession(
-        delays: JSONArray,
-        terms: Array<Any>,
-        resched: Boolean,
-    ) {
+    private fun createTagsCustomStudySession(terms: Array<Any>) {
         val dyn: Deck
 
         val decks = collection.decks
@@ -494,17 +472,13 @@ class CustomStudyDialog(
             return
         }
         // and then set various options
-        if (delays.length() > 0) {
-            dyn.put("delays", delays)
-        } else {
-            dyn.put("delays", JSONObject.NULL)
-        }
+        dyn.put("delays", JSONObject.NULL)
         val ar = dyn.getJSONArray("terms")
         ar.getJSONArray(0).put(0, """deck:"$deckToStudyName" terms[0]""")
         ar.getJSONArray(0).put(1, terms[1])
         @DynPriority val priority = terms[2] as Int
         ar.getJSONArray(0).put(2, priority)
-        dyn.put("resched", resched)
+        dyn.put("resched", true)
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
@@ -521,11 +495,6 @@ class CustomStudyDialog(
             withCol { sched.rebuildDyn(decks.selected()) }
             customStudyListener?.onCreateCustomStudySession()
         }
-    }
-
-    private fun onLimitsExtended() {
-        customStudyListener?.onExtendStudyLimits()
-        requireActivity().dismissAllDialogFragments()
     }
 
     /**
@@ -546,8 +515,6 @@ class CustomStudyDialog(
 
         /** Review ahead */
         STUDY_AHEAD({ TR.customStudyReviewAhead() }),
-
-        STUDY_RANDOM({ getString(R.string.custom_study_random_selection) }),
 
         /** Preview new cards */
         STUDY_PREVIEW({ TR.customStudyPreviewNewCards() }),

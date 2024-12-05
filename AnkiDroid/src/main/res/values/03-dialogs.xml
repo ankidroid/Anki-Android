@@ -56,7 +56,6 @@
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
 
