@@ -14,14 +14,14 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki
+package com.ichi2.libanki;
 
-import anki.import_export.ExportLimit
-import anki.import_export.ImportAnkiPackageOptions
-import anki.import_export.ImportResponse
-import anki.import_export.exportAnkiPackageOptions
-import anki.search.SearchNode
-import net.ankiweb.rsdroid.Backend
+import anki.import_export.ExportLimit;
+import anki.import_export.ImportAnkiPackageOptions;
+import anki.import_export.ImportResponse;
+import anki.import_export.exportAnkiPackageOptions;
+import anki.search.SearchNode;
+import net.ankiweb.rsdroid.Backend;
 
 /**
  * (Maybe) create a colpkg backup, while keeping the collection open. If the
@@ -35,7 +35,6 @@ import net.ankiweb.rsdroid.Backend
  * to check for success.
  *
  * Backups are automatically expired according to the user's settings.
- *
  */
 fun Collection.createBackup(
     backupFolder: String,
@@ -46,7 +45,7 @@ fun Collection.createBackup(
         backupFolder = backupFolder,
         force = force,
         waitForCompletion = waitForCompletion
-    )
+    );
 }
 
 /**
@@ -55,13 +54,13 @@ fun Collection.createBackup(
  * once; subsequent calls are a no-op until another backup is run.
  */
 fun Collection.awaitBackupCompletion() {
-    backend.awaitBackupCompletion()
+    backend.awaitBackupCompletion();
 }
 
 /**
  * Replace the collection file with the one in the provided .colpkg file.
  * The collection must be already closed, and must be opened afterwards.
- * */
+ */
 fun importCollectionPackage(
     backend: Backend,
     colPath: String,
@@ -72,44 +71,44 @@ fun importCollectionPackage(
         backupPath = colpkgPath,
         mediaFolder = colPath.replace(".anki2", ".media"),
         mediaDb = colPath.replace(".anki2", ".media.db")
-    )
+    );
 }
 
 /**
  * Export the collection into a .colpkg file.
- * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
- * create, but older clients can not read it.
+ * The `legacy` parameter must be explicitly set. If legacy=false, a file targeting Anki 2.1.50+
+ * is created. It compresses better and is faster to create, but older clients cannot read it.
  */
 fun Collection.exportCollectionPackage(
     outPath: String,
     includeMedia: Boolean,
-    legacy: Boolean = true
+    legacy: Boolean
 ) {
-    close(forFullSync = true)
+    close(forFullSync = true);
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,
         legacy = legacy
-    )
-    reopen()
+    );
+    reopen();
 }
 
 fun Collection.importAnkiPackage(packagePath: String, options: ImportAnkiPackageOptions): ImportResponse {
-    return backend.importAnkiPackage(packagePath, options)
+    return backend.importAnkiPackage(packagePath, options);
 }
 
 fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray {
-    return backend.importAnkiPackageRaw(input)
+    return backend.importAnkiPackageRaw(input);
 }
 
 fun Collection.getImportAnkiPackagePresetsRaw(input: ByteArray): ByteArray {
-    return backend.getImportAnkiPackagePresetsRaw(input)
+    return backend.getImportAnkiPackagePresetsRaw(input);
 }
 
 /**
  * Export the specified deck to an .apkg file.
- * * If legacy is false, an apkg will be created that can only
- * be opened with recent Anki versions.
+ * The `legacy` parameter must be explicitly set. If legacy=false, an apkg will be created
+ * that can only be opened with recent Anki versions.
  */
 fun Collection.exportAnkiPackage(
     outPath: String,
@@ -117,15 +116,15 @@ fun Collection.exportAnkiPackage(
     withDeckConfigs: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
-    legacy: Boolean = true
+    legacy: Boolean
 ) {
     val options = exportAnkiPackageOptions {
-        this.withScheduling = withScheduling
-        this.withMedia = withMedia
-        this.legacy = legacy
-        this.withDeckConfigs = withDeckConfigs
-    }
-    backend.exportAnkiPackage(outPath, options, limit)
+        this.withScheduling = withScheduling;
+        this.withMedia = withMedia;
+        this.legacy = legacy;
+        this.withDeckConfigs = withDeckConfigs;
+    };
+    backend.exportAnkiPackage(outPath, options, limit);
 }
 
 fun Collection.exportNotesCsv(
@@ -137,21 +136,21 @@ fun Collection.exportNotesCsv(
     withGuid: Boolean,
     limit: ExportLimit
 ) {
-    backend.exportNoteCsv(outPath, withHtml, withTags, withDeck, withNotetype, withGuid, limit)
+    backend.exportNoteCsv(outPath, withHtml, withTags, withDeck, withNotetype, withGuid, limit);
 }
 
 fun Collection.exportCardsCsv(outPath: String, withHtml: Boolean, limit: ExportLimit) {
-    backend.exportCardCsv(outPath, withHtml, limit)
+    backend.exportCardCsv(outPath, withHtml, limit);
 }
 
 fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray {
-    return backend.getCsvMetadataRaw(input)
+    return backend.getCsvMetadataRaw(input);
 }
 
 fun Collection.importCsvRaw(input: ByteArray): ByteArray {
-    return backend.importCsvRaw(input)
+    return backend.importCsvRaw(input);
 }
 
 fun Collection.buildSearchString(input: ByteArray): String {
-    return backend.buildSearchString(SearchNode.parseFrom(input))
+    return backend.buildSearchString(SearchNode.parseFrom(input));
 }
