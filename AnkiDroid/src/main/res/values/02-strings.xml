@@ -62,7 +62,6 @@
     <string name="filter_by_flags" maxLength="41">Flags</string>
 
     <!-- Custom study options -->
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d buried</item>

@@ -17,7 +17,6 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -30,6 +29,7 @@ import anki.scheduler.customStudyDefaultsResponse
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.dialogs.utils.performPositiveClick
@@ -41,8 +41,7 @@ import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.isJsonEqual
 import io.mockk.every
 import io.mockk.mockk
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import org.junit.After
@@ -69,50 +68,55 @@ class CustomStudyDialogTest : RobolectricTest() {
     }
 
     @Test
-    fun learnAheadCardsRegressionTest() {
-        // #6289 - Regression Test
-        val args =
-            CustomStudyDialog(mock(), ParametersUtils.whatever())
-                .withArguments(
-                    1,
-                    contextMenuAttribute = CustomStudyDialog.ContextMenuOption.STUDY_AHEAD,
-                ).arguments
-        val factory = CustomStudyDialogFactory({ this.col }, mockListener)
-        AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
-            scenario.moveToState(Lifecycle.State.RESUMED)
-            scenario.onFragment { f: CustomStudyDialog ->
-                val dialog = assertNotNull(f.dialog as AlertDialog?)
+    fun `new custom study decks have expected structure - issue 6289`() =
+        runTest {
+            val studyType = ContextMenuOption.STUDY_PREVIEW
+            // we need a non-empty deck to custom study
+            addNoteUsingBasicModel()
+
+            withCustomStudyFragment(
+                args = argumentsDisplayingSubscreen(studyType),
+            ) { dialogFragment: CustomStudyDialog ->
+                val dialog = assertNotNull(dialogFragment.dialog as? AlertDialog?, "dialog")
                 dialog.performPositiveClick()
             }
+
             val customStudy = col.decks.current()
-            MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isFiltered)
-            MatcherAssert.assertThat("could not find deck: Custom study session", customStudy, notNullValue())
+            assertThat("Custom Study should be filtered", customStudy.isFiltered)
+
+            // remove timestamps to allow us to compare JSON
             customStudy.remove("id")
             customStudy.remove("mod")
             customStudy.remove("name")
-            @Language("JSON")
+
+            // compare JSON
+            @Language("json")
             val expected =
-                """{
-                    "browserCollapsed":false,
-                    "collapsed":false,
-                    "delays":null,
-                    "desc":"",
-                    "dyn":1,
-                    "lrnToday":[0,0],
-                    "newToday":[0,0],
-                    "previewDelay":0,
-                    "previewAgainSecs":60,"previewHardSecs":600,"previewGoodSecs":0,
-                    "resched":true,
-                    "revToday":[0,0],
-                    "separate":true,
-                    "terms":[["deck:\"Default\" prop:due<=1",99999,6]],
-                    "timeToday":[0,0],
-                    "usn":-1
-                    }
                 """
-            MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
+                {
+                    "browserCollapsed": false,
+                    "collapsed": false,
+                    "delays": null,
+                    "desc": "",
+                    "dyn": 1,
+                    "lrnToday": [0, 0],
+                    "newToday": [0, 0],
+                    "previewDelay": 0,
+                    "previewAgainSecs": 60,
+                    "previewHardSecs": 600,
+                    "previewGoodSecs": 0,
+                    "resched": true,
+                    "revToday": [0, 0],
+                    "separate": true,
+                    "terms": [
+                        ["deck:\"Default\" prop:due<=1", 99999, 6]
+                    ],
+                    "timeToday": [0, 0],
+                    "usn": -1
+                }
+                """.trimIndent()
+            assertThat(customStudy, isJsonEqual(JSONObject(expected)))
         }
-    }
 
     @Test
     @Config(qualifiers = "en")
@@ -181,7 +185,7 @@ class CustomStudyDialogTest : RobolectricTest() {
      */
     private fun withCustomStudyFragment(
         args: Bundle,
-        factory: CustomStudyDialogFactory,
+        factory: CustomStudyDialogFactory = dialogFactory(),
         block: (CustomStudyDialog) -> Unit,
     ) {
         AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
@@ -199,12 +203,24 @@ class CustomStudyDialogTest : RobolectricTest() {
                 }
         }
 
-    private fun dialogFactory(col: Collection) = CustomStudyDialogFactory({ col }, mockListener)
+    private fun dialogFactory(col: Collection? = null) = CustomStudyDialogFactory({ col ?: this.col }, mockListener)
 
     private fun argumentsDisplayingMainScreen() =
         CustomStudyDialog(mock(), ParametersUtils.whatever())
             .displayingMainScreen()
             .requireArguments()
+
+    @Suppress("SameParameterValue")
+    private fun argumentsDisplayingSubscreen(subscreen: ContextMenuOption) =
+        CustomStudyDialog(mock(), ParametersUtils.whatever())
+            .displayingSubscreen(subscreen)
+            .requireArguments()
+
+    private fun CustomStudyDialog.displayingSubscreen(subscreen: ContextMenuOption) =
+        withArguments(
+            did = Consts.DEFAULT_DECK_ID,
+            contextMenuAttribute = subscreen,
+        )
 
     private fun CustomStudyDialog.displayingMainScreen() =
         withArguments(
