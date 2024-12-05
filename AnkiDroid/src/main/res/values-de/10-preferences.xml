@@ -329,9 +329,9 @@
         <item quantity="other">%1$d Dateien\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Löschen von nicht verwendeten Medien Dateien</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Löschen von nicht verwendeten Mediendateien</string>
     <string name="pref__delete_unused_media_files__summary">Löschen von Bildern und anderen Medien, die nicht mit _ vorangestellt sind und nicht bei Anmerkungen verwiesen sind</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Löschen von nicht verwendeten Medien Dateien</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Löschen von nicht verwendeten Mediendateien</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Sicherungen löschen</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Sicherungen löschen</string>

@@ -93,7 +93,7 @@
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 숨겨짐</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
+    <string name="studyoptions_total_new_label">새 카드 수</string>
     <string name="studyoptions_total_label">Total cards</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">노트 편집하기</string>
@@ -357,5 +357,5 @@ Context | Request Context    [1]</string>
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">브라우저 외관 편집</string>
     <string name="show_shortcuts_message">키보드 단축키를 보려면 Alt + K를 누르세요.</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">이 노트 유형에는 사용자 행동 %s이(가) 설정되어 있지 않습니다. 설정을 확인해 주세요.</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="directory_inaccessible_info">여기에서 액세스를 복원하는 방법에 대해 자세히 알아보세요 %s 또는 설정으로 이동하여 컬렉션 폴더를 업데이트하세요.</string>
 </resources>

@@ -87,7 +87,7 @@
         <item>Nach Intervall</item>
         <item>Nach Leichtigkeit</item>
         <item>Nach Wiederholungen</item>
-        <item>Nach Vergessenen</item>
+        <item>Nach Fehlversuchen</item>
     </string-array>
     <string name="card_browser_select_all" maxLength="28">Alle auswählen</string>
     <string name="card_browser_select_none" maxLength="28">Keine auswählen</string>
