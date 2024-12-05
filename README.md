@@ -1,5 +1,5 @@
 <p align="center">
-<img src="docs/graphics/logos/banner_readme.png" alt = "">
+<img alt="Ankidroid Mobile Promo Banner" src="docs/graphics/logos/banner_readme.png">
 </p>
 
 <a href="https://github.com/ankidroid/Anki-Android/releases"><img src="https://img.shields.io/github/v/release/ankidroid/Anki-Android" alt="release"/></a>
