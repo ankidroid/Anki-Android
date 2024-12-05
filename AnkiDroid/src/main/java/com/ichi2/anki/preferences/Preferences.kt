@@ -39,7 +39,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
 import com.ichi2.anki.utils.isWindowCompact
-import com.ichi2.utils.getInstanceFromClassName
+import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
@@ -140,11 +140,7 @@ class PreferencesFragment :
         val initialFragment = if (fragmentClassName == null) {
             if (resources.isWindowCompact()) HeaderFragment() else GeneralSettingsFragment()
         } else {
-            try {
-                getInstanceFromClassName<Fragment>(fragmentClassName)
-            } catch (e: Exception) {
-                throw RuntimeException("Failed to load $fragmentClassName", e)
-            }
+            FragmentFactoryUtils.instantiate<Fragment>(requireActivity(), fragmentClassName)
         }
         childFragmentManager.commit {
             // In big screens, show the headers fragment at the lateral navigation container

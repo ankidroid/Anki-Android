@@ -27,8 +27,8 @@ import com.ichi2.anki.preferences.HeaderFragment.Companion.getHeaderKeyForFragme
 import com.ichi2.anki.preferences.PreferenceTestUtils.getAttrFromXml
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.preferences.HeaderPreference
+import com.ichi2.testutils.getInstanceFromClassName
 import com.ichi2.testutils.getJavaMethodAsAccessible
-import com.ichi2.utils.getInstanceFromClassName
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
