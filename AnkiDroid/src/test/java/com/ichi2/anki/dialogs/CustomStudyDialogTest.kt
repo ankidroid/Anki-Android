@@ -15,13 +15,18 @@
  */
 package com.ichi2.anki.dialogs
 
+import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.scheduler.CustomStudyDefaultsResponse
+import anki.scheduler.customStudyDefaultsResponse
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
@@ -29,14 +34,15 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.dialogs.utils.performPositiveClick
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.AnkiFragmentScenario
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.isJsonEqual
-import com.ichi2.utils.KotlinCleanup
+import io.mockk.every
+import io.mockk.mockk
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert
-import org.hamcrest.core.IsNull
 import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import org.junit.After
@@ -44,7 +50,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
 import kotlin.test.assertNotNull
 
@@ -111,30 +116,68 @@ class CustomStudyDialogTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")
-    @KotlinCleanup("Use kotlin based Mockito extensions")
-    fun increaseNewCardLimitRegressionTest() {
-        // #8338 - Regression Test
-        val args =
-            CustomStudyDialog(mock(), ParametersUtils.whatever())
-                .withArguments(1)
-                .arguments
+    fun `'increase new limit' is shown when there are new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableNew = 1 }
 
-        // we are using mock collection for the CustomStudyDialog but still other parts of the code
-        // access a real collection, so we must ensure that collection is loaded first
-        // so we don't get net/ankiweb/rsdroid/BackendException$BackendDbException$BackendDbLockedException
-        ensureCollectionLoadIsSynchronous()
-        val mockCollection = Mockito.mock(Collection::class.java, Mockito.RETURNS_DEEP_STUBS)
-        val mockSched = Mockito.mock(Scheduler::class.java)
-        whenever(mockCollection.sched).thenReturn(mockSched)
-        whenever(mockSched.newCount()).thenReturn(0)
-        val factory = CustomStudyDialogFactory({ mockCollection }, mockListener)
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            assertNotNull(dialogFragment.dialog as? AlertDialog?, "dialog")
+            onView(withText(R.string.custom_study_increase_new_limit))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'increase new limit' is not shown when there are no new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableNew = 0 }
+
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            assertNotNull(dialogFragment.dialog as? AlertDialog?, "dialog")
+            onView(withText(R.string.custom_study_increase_new_limit))
+                .inRoot(isDialog())
+                .check(doesNotExist())
+        }
+    }
+
+    /**
+     * Runs [block] on a [CustomStudyDialog]
+     */
+    private fun withCustomStudyFragment(
+        args: Bundle,
+        factory: CustomStudyDialogFactory,
+        block: (CustomStudyDialog) -> Unit,
+    ) {
         AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
-            scenario.moveToState(Lifecycle.State.STARTED)
-            scenario.onFragment { f: CustomStudyDialog ->
-                val dialog = f.dialog as AlertDialog?
-                MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-                onView(withText(R.string.custom_study_increase_new_limit)).inRoot(isDialog()).check(doesNotExist())
+            scenario.onFragment { dialogFragment: CustomStudyDialog ->
+                block(dialogFragment)
             }
         }
     }
+
+    private fun mockCollectionWithSchedulerReturning(response: CustomStudyDefaultsResponse) =
+        mockk<Collection>(relaxed = true) {
+            every { sched } returns
+                mockk<Scheduler> {
+                    every { customStudyDefaults(Consts.DEFAULT_DECK_ID) } returns response
+                }
+        }
+
+    private fun dialogFactory(col: Collection) = CustomStudyDialogFactory({ col }, mockListener)
+
+    private fun argumentsDisplayingMainScreen() =
+        CustomStudyDialog(mock(), ParametersUtils.whatever())
+            .displayingMainScreen()
+            .requireArguments()
+
+    private fun CustomStudyDialog.displayingMainScreen() =
+        withArguments(
+            did = Consts.DEFAULT_DECK_ID,
+        )
 }
