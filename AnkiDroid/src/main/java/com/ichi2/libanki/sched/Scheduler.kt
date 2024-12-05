@@ -549,13 +549,6 @@ open class Scheduler(val col: Collection) {
         return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
     }
 
-    /** @return Number of cards in the current deck and its descendants.
-     */
-    fun cardCount(): Int {
-        val dids = deckLimit()
-        return col.db.queryScalar("SELECT count() FROM cards WHERE did IN $dids")
-    }
-
     private val etaCache: DoubleArray = doubleArrayOf(-1.0, -1.0, -1.0, -1.0, -1.0, -1.0)
 
     /**
