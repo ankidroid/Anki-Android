@@ -386,7 +386,11 @@ class CustomStudyDialog(
      */
     private fun getListIds(): List<ContextMenuOption> {
         // Standard context menu
-        return mutableListOf(STUDY_REV, STUDY_FORGOT, STUDY_AHEAD, STUDY_RANDOM, STUDY_PREVIEW, STUDY_TAGS).apply {
+        return mutableListOf(STUDY_FORGOT, STUDY_AHEAD, STUDY_RANDOM, STUDY_PREVIEW, STUDY_TAGS).apply {
+            if (defaults.extendReview.isUsable) {
+                this.add(0, STUDY_REV)
+            }
+            // We want 'Extend new' above 'Extend review' if both appear
             if (defaults.extendNew.isUsable) {
                 this.add(0, STUDY_NEW)
             }
