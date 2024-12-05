@@ -95,8 +95,8 @@
         <item quantity="many">+%d відкладено</item>
         <item quantity="other">+%d відкладено</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Всього нових карток</string>
+    <string name="studyoptions_total_label">Всього карток</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Редагувати запис</string>
     <string name="discard">Відкинути</string>
@@ -371,5 +371,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Редагувати вигляд браузера</string>
     <string name="show_shortcuts_message">Натисніть Alt+K, щоб показати комбінації клавіш</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Дію користувача %s не встановлено в цьому типі запису. Будь ласка, налаштуйте її</string>
-    <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+    <string name="directory_inaccessible_info">Дізнайтесь більше про те, як відновити доступ до %s або перейдіть в налаштування щоб оновити теку колекції.</string>
 </resources>

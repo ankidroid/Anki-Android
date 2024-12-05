@@ -93,11 +93,11 @@
         <item quantity="one">+%d enterrada</item>
         <item quantity="other">+%d enterradas</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">Total de cartas nuevas</string>
+    <string name="studyoptions_total_label">Cartas totales</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">Editar nota</string>
-    <string name="discard">Borrar </string>
+    <string name="discard">Desechar</string>
     <string name="note_editor_no_cards_created">No se han creado tarjetas. Por favor, rellena más campos</string>
     <string name="note_editor_no_cards_created_all_fields">El tipo de nota actual no produjo ninguna tarjeta.\nPor favor, elije otro tipo de nota o haz clic en \"Tarjetas\" y añade un sustituto de campo</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Las preguntas anidadas sólo funcionarán en un tipo de nota de Pregunta anidada (Cloze)</string>
