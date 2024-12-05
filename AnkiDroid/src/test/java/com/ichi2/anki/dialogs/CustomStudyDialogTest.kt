@@ -146,6 +146,36 @@ class CustomStudyDialogTest : RobolectricTest() {
         }
     }
 
+    @Test
+    @Config(qualifiers = "en")
+    fun `'increase review limit' is shown when there are new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableReview = 1 }
+
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()))
+        }
+    }
+
+    @Test
+    @Config(qualifiers = "en")
+    fun `'increase review limit' is not shown when there are no new cards`() {
+        val studyDefaults = customStudyDefaultsResponse { availableReview = 0 }
+
+        withCustomStudyFragment(
+            args = argumentsDisplayingMainScreen(),
+            factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
+        ) { dialogFragment: CustomStudyDialog ->
+            onView(withText(TR.customStudyIncreaseTodaysReviewCardLimit()))
+                .inRoot(isDialog())
+                .check(doesNotExist())
+        }
+    }
+
     /**
      * Runs [block] on a [CustomStudyDialog]
      */
