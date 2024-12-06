@@ -153,8 +153,6 @@
     <string name="notification_minimum_cards_due">Viac ako %d kartičiek na preskúšanie</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrovať</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blikajúce svetlo</string>
-    <string name="timeout_answer_text" maxLength="41">Automatické zobrazenie odpovede</string>
-    <string name="timeout_answer_summ2">Ukázať odpoveď automaticky bez zadávania vstupu. Nastavte v možnostiach balíčka.</string>
     <string name="select_locale_title">Zvoliť jazyk</string>
     <string name="software_render" maxLength="41">Vypnúť hardvérové renderovanie kartičky</string>
     <string name="software_render_summ">Hardvérové renderovanie je rýchlejšie, ale môže spôsobiť problémy, najmä na Android 8/8.1. Ak nemôžete vidieť časti užívateľského rozhrania pri opakovaní kartičiek, skúste toto nastavenie.</string>

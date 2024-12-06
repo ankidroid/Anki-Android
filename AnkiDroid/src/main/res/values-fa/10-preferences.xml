@@ -150,9 +150,6 @@
     <string name="notification_minimum_cards_due">موعد مرور بیش از %d کارت</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">لرزش</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">چشمک زدن نور</string>
-    <string name="timeout_answer_text" maxLength="41">نمایش پاسخ بصورت خودکار</string>
-    <string name="timeout_answer_summ2">جواب را به صورت خودکار بدون دریافت ورودی از کاربر نشان بده.
-از بخش تنظیمات دسته‌کارت‌ تغییر دهید.</string>
     <string name="select_locale_title">انتخاب زبان</string>
     <string name="software_render" maxLength="41">غیر فعال کردن رندر سخت‌افزار کارت</string>
     <string name="software_render_summ">رندر سخت افزاری سریع تر است ولی ممکن است مشکل داشته باشد، مخصوصا روی اندروید 8 یا 8.1. اگر بعضی از دکمه های مرور کارت ها را نمیبینید، این تنظیمات را امتحان کنید.</string>

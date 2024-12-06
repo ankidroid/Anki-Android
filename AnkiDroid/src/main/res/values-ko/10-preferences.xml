@@ -149,8 +149,6 @@
     <string name="notification_minimum_cards_due">%d 보다 많은 카드 남음</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">진동</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED 깜빡이기</string>
-    <string name="timeout_answer_text" maxLength="41">자동으로 정답 표시</string>
-    <string name="timeout_answer_summ2">사용자가 입력하지 않아도 자동으로 답을 보여줍니다. 덱 옵션에서 설정합니다.</string>
     <string name="select_locale_title">언어 선택</string>
     <string name="software_render" maxLength="41">카드 하드웨어 랜더링 비활성화</string>
     <string name="software_render_summ">하드웨어 렌더링은 더 빠르지만 특히 Android 8/8.1에서 문제가 있을 수 있습니다.  카드 리뷰시 사용자 인터페이스의 일부가 표시되지 않으면 이 설정을 시도해 보십시오.</string>

@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Lebih daripada %d kad tunggakan</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Getaran</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Kelip lampu</string>
-    <string name="timeout_answer_text" maxLength="41">Papar jawapan secara automatik</string>
-    <string name="timeout_answer_summ2">Show answer automatically without user input. Configure from deck options.</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Lumpuhkan pemapar perkakasan kad</string>
     <string name="software_render_summ">Pemapar perkakasan lebih pantas namun mungkin terdapat kesulitan, khususnya pada Android 8/8.1. Jika anda tidak dapat melihat sebahagian daripada antara muka semakan kad, cuba tetapan ini.</string>

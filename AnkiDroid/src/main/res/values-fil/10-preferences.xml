@@ -151,8 +151,6 @@
     <string name="notification_minimum_cards_due">Mahigit sa%d card dahil</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrate</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Blink light</string>
-    <string name="timeout_answer_text" maxLength="41">Awtomatikong i-display ang sagot</string>
-    <string name="timeout_answer_summ2">Ipakita ang sagot ng kusa ng walang input mula sa user. Ikonpigura sa mga option sa deck.</string>
     <string name="select_locale_title">Piliin ang wika</string>
     <string name="software_render" maxLength="41">Hindi paganahin ang card hardware render</string>
     <string name="software_render_summ">Mas mabilis ang hardware render pero maaring magkaroon ng mga problema, lalo na sa Android 8/8.1. Kung hindi mo makita ang ibang bahagi ng user interface sa pag-repaso ng card, subukan ang setting na ito.</string>

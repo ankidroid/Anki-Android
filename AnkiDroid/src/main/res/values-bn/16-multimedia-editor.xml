@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">কিছু একটি সমস্যা হয়েছে</string>
-    <string name="multimedia_editor_svg_preview">SVG ফাইল প্রিভিউ করা যাবে না</string>
     <string name="multimedia_editor_png_paste_error">ক্লিপবোর্ড ছবিকে png তে পরিবর্তনে ত্রুটি: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <!-- Audio view -->
