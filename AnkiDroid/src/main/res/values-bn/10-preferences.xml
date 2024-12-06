@@ -152,8 +152,6 @@
     <string name="notification_minimum_cards_due">%dটির বেশি কার্ড বাকি আছে</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">কম্পন</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">মিটমিট করে আলো</string>
-    <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
-    <string name="timeout_answer_summ2">ব্যবহারকারীর ইনপুট ছাড়াই স্বয়ংক্রিয়ভাবে উত্তর দেখান। ডেক বিকল্পগুলি থেকে কনফিগার করুন।</string>
     <string name="select_locale_title">ভাষা নির্বাচন করুন</string>
     <string name="software_render" maxLength="41">কার্ড হার্ডওয়্যার রেন্ডার অক্ষম করুন</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>

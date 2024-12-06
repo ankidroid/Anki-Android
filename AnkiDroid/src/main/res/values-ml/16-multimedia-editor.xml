@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">എന്തോ കുഴപ്പം സംഭവിച്ചു</string>
-    <string name="multimedia_editor_svg_preview">പ്രിവ്യൂവിന് SVG-കൾ ലഭ്യമല്ല</string>
     <string name="multimedia_editor_png_paste_error">ക്ലിപ്പ്ബോർഡ് ചിത്രം png-ലേക്ക് പരിവർത്തനം ചെയ്യുന്നതിൽ പിശക്: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
     <!-- Audio view -->

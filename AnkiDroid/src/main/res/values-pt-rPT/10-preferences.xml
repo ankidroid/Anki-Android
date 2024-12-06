@@ -151,8 +151,6 @@
     <string name="notification_minimum_cards_due">Mais do que %d fichas pendentes</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrar</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Luz intermitente</string>
-    <string name="timeout_answer_text" maxLength="41">Mostrar automaticamente a resposta</string>
-    <string name="timeout_answer_summ2">Mostrar a resposta automaticamente, sem intervenção do utilizador. Configurar a partir das opções de baralho.</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="software_render" maxLength="41">Desactivar processamento de fichas por \"hardware\"</string>
     <string name="software_render_summ">O processamento por \"hardware\" é mais rápido, mas pode causar problemas, principalmente em Android 8/8.1. Se não conseguir ver partes da “interface” aquando da revisão de fichas, experimente esta opção.</string>

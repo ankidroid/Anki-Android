@@ -153,8 +153,6 @@
     <string name="notification_minimum_cards_due">У чарзе наступная колькасць картак: %d</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Вібрацыя</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Мігаценне святлодыёда</string>
-    <string name="timeout_answer_text" maxLength="41">Аўтаматычна паказваць адказ</string>
-    <string name="timeout_answer_summ2">Паказваць адказ аўтаматычна без удзелу карыстальніка. Наладжваецца з параметраў калоды.</string>
     <string name="select_locale_title">Выберыце мову</string>
     <string name="software_render" maxLength="41">Адключыць апаратны апрацоўшчык картак</string>
     <string name="software_render_summ">Апаратны апрацоўшчык працуе хутчэй, але можа выклікаць праблемы (асабліва ў АС Android 8/8.1). Паспрабуйце гэтыя налады, калі ў вас праблемы з адлюстраваннем картак у рэжыме паўтарэння.</string>

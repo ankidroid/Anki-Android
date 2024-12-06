@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Pri pli ol %d kartoj por lerni</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibri</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumpulsi</string>
-    <string name="timeout_answer_text" maxLength="41">Aŭtomate montri respondon</string>
-    <string name="timeout_answer_summ2">Montri respondon aŭtomate sen enigi datumojn fare de uzanto. Agordebla en agordoj de kartaro.</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
     <string name="software_render_summ">Aparatara bildigilo estas pli rapida, sed povas kaŭzi problemojn, precipe ĉe Android 8/8.1. Se parto de fasado ĉe la ekrano “ripeti karton” ne aperas, provu aktivigi tiun ĉi agordon.</string>

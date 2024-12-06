@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">%d ಕ್ಕಿಂತ ಹೆಚ್ಚು ಕಾರ್ಡ್‌ಗಳು ಬಾಕಿ ಉಳಿದಿವೆ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ವೈಬ್ರೇಟ್</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ಮಿಟುಕಿಸುವ ಬೆಳಕು</string>
-    <string name="timeout_answer_text" maxLength="41">ಸ್ವಯಂಚಾಲಿತ ಪ್ರದರ್ಶನ ಉತ್ತರ</string>
-    <string name="timeout_answer_summ2">ಬಳಕೆದಾರರ ಇನ್‌ಪುಟ್ ಇಲ್ಲದೆಯೇ ಉತ್ತರವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ತೋರಿಸಿ. ಡೆಕ್ ಆಯ್ಕೆಗಳಿಂದ ಕಾನ್ಫಿಗರ್ ಮಾಡಿ.</string>
     <string name="select_locale_title">ಒಂದು ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="software_render" maxLength="41">ಕಾರ್ಡ್ ಹಾರ್ಡ್‌ವೇರ್ ರೆಂಡರ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="software_render_summ">ಹಾರ್ಡ್‌ವೇರ್ ರೆಂಡರ್ ವೇಗವಾಗಿದೆ ಆದರೆ ವಿಶೇಷವಾಗಿ Android 8/8.1 ನಲ್ಲಿ ಸಮಸ್ಯೆಗಳನ್ನು ಹೊಂದಿರಬಹುದು. ಕಾರ್ಡ್ ವಿಮರ್ಶೆ ಬಳಕೆದಾರ ಇಂಟರ್ಫೇಸ್‌ನ ಭಾಗಗಳನ್ನು ನೀವು ನೋಡಲು ಸಾಧ್ಯವಾಗದಿದ್ದರೆ, ಈ ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಪ್ರಯತ್ನಿಸಿ.</string>

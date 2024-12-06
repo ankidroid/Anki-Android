@@ -150,9 +150,6 @@
     <string name="notification_minimum_cards_due">%d க்கும் மேற்பட்ட கார்டுகள் நிலுவையில் உள்ளன</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">அதிர்வு</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ஒளிரும் ஒளி</string>
-    <string name="timeout_answer_text" maxLength="41">தானியங்கி காட்சி பதில்</string>
-    <string name="timeout_answer_summ2">கடைசி ஒத்திசைவு 10க்கு மேல் இருந்தால் ஆப்ஸ் தொடக்கம்/வெளியேறும் போது தானாகவே ஒத்திசைக்கப்படும்
-        நிமிடங்களுக்கு முன்பு.</string>
     <string name="select_locale_title">மொழியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="software_render" maxLength="41">கார்டு வன்பொருள் ரெண்டரிங்கை முடக்கு</string>
     <string name="software_render_summ">ஹார்டுவேர் ரெண்டர் வேகமானது ஆனால் சிக்கல்கள் இருக்கலாம், குறிப்பாக Android 8/8.1 இல். கார்டு மதிப்பாய்வு பயனர் இடைமுகத்தின் பகுதிகளை உங்களால் பார்க்க முடியவில்லை என்றால், இந்த அமைப்பை முயற்சிக்கவும்.</string>

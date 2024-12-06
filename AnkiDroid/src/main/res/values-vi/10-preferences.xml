@@ -149,8 +149,6 @@
     <string name="notification_minimum_cards_due">Nhiều hơn %d thẻ cho phép</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Báo rung</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Nhấp nháy ánh sáng</string>
-    <string name="timeout_answer_text" maxLength="41">Tự động hiển thị trả lời</string>
-    <string name="timeout_answer_summ2">Hiển thị câu trả lời tự động mà không cần người dùng nhập. Cấu hình trong tùy chọn bộ thẻ.</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
     <string name="software_render" maxLength="41">Tắt kết xuất phần cứng thẻ</string>
     <string name="software_render_summ">Kết xuất phần cứng nhanh hơn nhưng có thể gặp sự cố, cụ thể là trên Android 8 / 8.1. Nếu bạn không thể thấy các phần của giao diện người dùng xem xét thẻ, hãy thử cài đặt này.</string>

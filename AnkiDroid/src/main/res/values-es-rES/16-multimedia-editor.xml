@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Algo salió mal</string>
-    <string name="multimedia_editor_svg_preview">Los archivos SVG no están disponibles para la previsualización</string>
     <string name="multimedia_editor_png_paste_error">Error al convertir la imagen del portapapeles a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Colocar contenido multimedia en el campo %1$s</string>
     <!-- Audio view -->

@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">કંઈક ખોટું થયું</string>
-    <string name="multimedia_editor_svg_preview">SVG પૂર્વાવલોકન માટે ઉપલબ્ધ નથી</string>
     <string name="multimedia_editor_png_paste_error">ક્લિપબોર્ડ છબીને png માં રૂપાંતરિત કરવામાં ભૂલ: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s ફીલ્ડમાં મલ્ટીમીડિયા સામગ્રી ઉમેરો</string>
     <!-- Audio view -->

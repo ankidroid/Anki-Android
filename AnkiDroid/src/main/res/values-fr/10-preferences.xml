@@ -150,8 +150,6 @@
     <string name="notification_minimum_cards_due">Plus de %d cartes dues</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Lumière de notification</string>
-    <string name="timeout_answer_text" maxLength="41">Affichage automatique de la réponse</string>
-    <string name="timeout_answer_summ2">Afficher la réponse automatiquement sans intervention de l\'utilisateur. Configurer à partir des options du deck.</string>
     <string name="select_locale_title">Sélectionnez la langue</string>
     <string name="software_render" maxLength="41">Désactiver le rendu matériel de carte</string>
     <string name="software_render_summ">Le rendu matériel est plus rapide mais peut rencontrer des problèmes, en particulier sur Android 8/8.1. Si vous ne pouvez pas visualiser certaines parties de l\'interface de révision des cartes, essayez d\'activer cette option.</string>

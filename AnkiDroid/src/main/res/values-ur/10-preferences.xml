@@ -151,8 +151,6 @@
     <string name="notification_minimum_cards_due">%d سے زیادہ کارڈز باقی ہیں۔</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">کمپن</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">ٹمٹماتی روشنی</string>
-    <string name="timeout_answer_text" maxLength="41">خودکار ڈسپلے جواب</string>
-    <string name="timeout_answer_summ2">صارف کے ان پٹ کے بغیر خود بخود جواب دکھائیں۔ ڈیک کے اختیارات سے ترتیب دیں۔</string>
     <string name="select_locale_title">زبان منتخب کریں</string>
     <string name="software_render" maxLength="41">کارڈ ہارڈویئر رینڈر کو غیر فعال کریں</string>
     <string name="software_render_summ">ہارڈ ویئر رینڈر تیز تر ہے لیکن اس میں مسائل ہو سکتے ہیں، خاص طور پر Android 8/8.1 پر۔ اگر آپ کارڈ ریویو یوزر انٹرفیس کے حصے نہیں دیکھ سکتے ہیں تو اس ترتیب کو آزمائیں۔</string>

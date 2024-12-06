@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Alguna cosa ha anat malament</string>
-    <string name="multimedia_editor_svg_preview">No hi ha cap imatge SVG per a previsualitzar</string>
     <string name="multimedia_editor_png_paste_error">Error en convertir la imatge del porta-retalls a png: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Adjuntar contingut multimèdia al camp %1$s</string>
     <!-- Audio view -->

@@ -59,7 +59,6 @@
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">무언가가 잘못되었습니다</string>
-    <string name="multimedia_editor_svg_preview">SVG는 미리볼 수 없습니다</string>
     <string name="multimedia_editor_png_paste_error">클립보드 이미지의 png 변환 오류: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">%1$s 영역에 멀티미디어 항목 첨부</string>
     <!-- Audio view -->
