@@ -90,13 +90,13 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.InitialActivity.StartupFailure
-import com.ichi2.anki.InitialActivity.StartupFailure.DATABASE_LOCKED
-import com.ichi2.anki.InitialActivity.StartupFailure.DB_ERROR
-import com.ichi2.anki.InitialActivity.StartupFailure.DIRECTORY_NOT_ACCESSIBLE
-import com.ichi2.anki.InitialActivity.StartupFailure.DISK_FULL
-import com.ichi2.anki.InitialActivity.StartupFailure.FUTURE_ANKIDROID_VERSION
-import com.ichi2.anki.InitialActivity.StartupFailure.SD_CARD_NOT_MOUNTED
-import com.ichi2.anki.InitialActivity.StartupFailure.WEBVIEW_FAILED
+import com.ichi2.anki.InitialActivity.StartupFailure.DBError
+import com.ichi2.anki.InitialActivity.StartupFailure.DatabaseLocked
+import com.ichi2.anki.InitialActivity.StartupFailure.DirectoryNotAccessible
+import com.ichi2.anki.InitialActivity.StartupFailure.DiskFull
+import com.ichi2.anki.InitialActivity.StartupFailure.FutureAnkidroidVersion
+import com.ichi2.anki.InitialActivity.StartupFailure.SDCardNotMounted
+import com.ichi2.anki.InitialActivity.StartupFailure.WebviewFailed
 import com.ichi2.anki.IntentHandler.Companion.intentToReviewDeckFromShorcuts
 import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -108,6 +108,7 @@ import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.BackupPromptDialog
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.CreateDeckDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerAnalyticsOptInDialog
 import com.ichi2.anki.dialogs.DeckPickerBackupNoSpaceLeftDialog
@@ -729,11 +730,11 @@ open class DeckPicker :
     @VisibleForTesting
     fun handleStartupFailure(failure: StartupFailure?) {
         when (failure) {
-            SD_CARD_NOT_MOUNTED -> {
+            is SDCardNotMounted -> {
                 Timber.i("SD card not mounted")
                 onSdCardNotMounted()
             }
-            DIRECTORY_NOT_ACCESSIBLE -> {
+            is DirectoryNotAccessible -> {
                 Timber.i("AnkiDroid directory inaccessible")
                 if (ScopedStorageService.collectionWasMadeInaccessibleAfterUninstall(this)) {
                     showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
@@ -741,15 +742,15 @@ open class DeckPicker :
                     showDirectoryNotAccessibleDialog()
                 }
             }
-            FUTURE_ANKIDROID_VERSION -> {
+            is FutureAnkidroidVersion -> {
                 Timber.i("Displaying database versioning")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION)
             }
-            DATABASE_LOCKED -> {
+            is DatabaseLocked -> {
                 Timber.i("Displaying database locked error")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
-            WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
+            is WebviewFailed -> AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
                 message(
                     text = getString(
@@ -762,8 +763,8 @@ open class DeckPicker :
                 }
                 cancelable(false)
             }
-            DISK_FULL -> displayNoStorageError()
-            DB_ERROR -> displayDatabaseFailure()
+            is DiskFull -> displayNoStorageError()
+            is DBError -> displayDatabaseFailure(CustomExceptionData.fromException(failure.exception))
             else -> displayDatabaseFailure()
         }
     }
@@ -793,10 +794,11 @@ open class DeckPicker :
         }
     }
 
-    private fun displayDatabaseFailure() {
+    private fun displayDatabaseFailure(exceptionData: CustomExceptionData? = null) {
         Timber.i("Displaying database failure")
-        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED, exceptionData)
     }
+
     private fun displayNoStorageError() {
         Timber.i("Displaying no storage error")
         showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)

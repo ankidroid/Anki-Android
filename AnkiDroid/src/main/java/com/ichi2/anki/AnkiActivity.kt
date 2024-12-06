@@ -56,6 +56,7 @@ import com.ichi2.anki.android.input.ShortcutGroupProvider
 import com.ichi2.anki.android.input.shortcut
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.CustomExceptionData
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.SimpleMessageDialog
@@ -559,8 +560,8 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     }
 
     // Show dialogs to deal with database loading issues etc
-    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
-        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType)
+    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType, exceptionData: CustomExceptionData? = null) {
+        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType, exceptionData)
         showAsyncDialogFragment(newFragment)
     }
 

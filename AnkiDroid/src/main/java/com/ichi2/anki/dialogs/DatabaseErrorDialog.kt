@@ -30,6 +30,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
@@ -55,12 +56,14 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMP
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.UiUtil.makeBold
 import com.ichi2.utils.cancelable
+import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.create
 import com.ichi2.utils.listItems
 import com.ichi2.utils.listItemsAndMessage
@@ -70,6 +73,9 @@ import com.ichi2.utils.neutralButton
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.File
@@ -105,7 +111,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
                     }
                     negativeButton(R.string.close) {
                         closeCollectionAndFinish()
@@ -122,7 +128,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
                     }
                     negativeButton(R.string.answering_error_report) {
                         (activity as DeckPicker).sendErrorReport()
@@ -139,8 +145,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_ERROR_HANDLING -> {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
                 // to the previous dialog
-                val options = ArrayList<String>(6)
-                val values = ArrayList<ErrorHandlingEntries>(6)
+                val options = ArrayList<String>(7)
+                val values = ArrayList<ErrorHandlingEntries>(7)
                 if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
@@ -162,6 +168,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // delete old collection and build new one
                 options.add(res.getString(R.string.backup_del_collection))
                 values.add(ErrorHandlingEntries.NEW)
+                // copy stack trace and debug info
+                options.add(res.getString(R.string.feedback_copy_debug))
+                values.add(ErrorHandlingEntries.DEBUG_INFO)
+
                 alertDialog.show {
                     title(R.string.error_handling_title)
                     setIcon(R.drawable.ic_warning)
@@ -173,19 +183,29 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 return@listItems
                             }
                             ErrorHandlingEntries.REPAIR -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION, exceptionData)
                                 return@listItems
                             }
                             ErrorHandlingEntries.RESTORE -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
                                 return@listItems
                             }
                             ErrorHandlingEntries.ONE_WAY -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER, exceptionData)
                                 return@listItems
                             }
                             ErrorHandlingEntries.NEW -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
+                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION, exceptionData)
+                                return@listItems
+                            }
+
+                            ErrorHandlingEntries.DEBUG_INFO -> {
+                                lifecycleScope.launch {
+                                    /* Using NonCancellable to ensure that debug information collection completes even if the coroutine is canceled */
+                                    withContext(NonCancellable) {
+                                        copyStackTraceAndDebugInfo()
+                                    }
+                                }
                                 return@listItems
                             }
                         }
@@ -214,7 +234,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         .title(text = message)
                         .positiveButton(R.string.dialog_ok) {
                             (activity as DeckPicker?)
-                                ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                                ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
                         }
                 } else {
                     // Show backups sorted with latest on top
@@ -272,7 +292,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             ActivityCompat.recreate(activity as DeckPicker)
                         } else {
-                            (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
+                            (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED, exceptionData)
                         }
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -297,7 +317,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     positiveButton(R.string.dialog_continue) {
                         (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
+                            ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -344,10 +364,12 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listItemsAndMessage(message = message, items = options) { _, index: Int ->
                         when (values[index]) {
                             IncompatibleDbVersionEntries.RESTORE -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_RESTORE_BACKUP
+                                DIALOG_RESTORE_BACKUP,
+                                exceptionData
                             )
                             IncompatibleDbVersionEntries.ONE_WAY -> (activity as DeckPicker).showDatabaseErrorDialog(
-                                DIALOG_ONE_WAY_SYNC_FROM_SERVER
+                                DIALOG_ONE_WAY_SYNC_FROM_SERVER,
+                                exceptionData
                             )
                         }
                     }
@@ -377,6 +399,24 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
         }
+    }
+
+    /**
+     * Collects the current exception's stack trace and debug information,
+     * and copies the combines information to the Android clipboard.
+     */
+    private suspend fun copyStackTraceAndDebugInfo() {
+        val combinedInfo = listOf(
+            exceptionData?.toHumanReadableString(),
+            DebugInfoService.getDebugInfo(requireContext())
+        )
+            .filterNotNull()
+            .joinToString(separator = "\n")
+
+        requireContext().copyToClipboard(
+            combinedInfo,
+            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+        )
     }
 
     /** List items for [DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL] */
@@ -552,7 +592,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     override val dialogHandlerMessage
         get() = ShowDatabaseErrorDialog(requireDialogType())
 
-    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), "dialog", DatabaseErrorDialogType::class.java)!!
+    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), DIALOG_KEY, DatabaseErrorDialogType::class.java)!!
+
+    private val exceptionData: CustomExceptionData? by lazy {
+        BundleCompat.getParcelable(requireArguments(), EXCEPTION_KEY, CustomExceptionData::class.java)
+    }
 
     @Parcelize
     enum class DatabaseErrorDialogType : Parcelable {
@@ -585,15 +629,27 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         var databaseCorruptFlag = false
 
         /**
+         * Key for passing a CustomExceptionData object in a Bundle,
+         * contains error message and stack trace.
+         *
+         * @see CustomExceptionData
+         */
+        private const val EXCEPTION_KEY = "exception"
+
+        // Key for the dialog type in the Bundle, indicating which dialog to show
+        private const val DIALOG_KEY = "dialog"
+
+        /**
          * A set of dialogs which deal with problems with the database when it can't load
          *
          * @param dialogType the sub-dialog to show
          */
         @CheckResult
-        fun newInstance(dialogType: DatabaseErrorDialogType): DatabaseErrorDialog {
+        fun newInstance(dialogType: DatabaseErrorDialogType, exceptionData: CustomExceptionData? = null): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()
-            args.putParcelable("dialog", dialogType)
+            args.putParcelable(DIALOG_KEY, dialogType)
+            exceptionData?.let { args.putParcelable(EXCEPTION_KEY, it) }
             f.arguments = args
             return f
         }
@@ -611,21 +667,44 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         override fun toMessage(): Message = Message.obtain().apply {
             what = this@ShowDatabaseErrorDialog.what
             data = bundleOf(
-                "dialog" to dialogType
+                DIALOG_KEY to dialogType
             )
         }
 
         companion object {
             fun fromMessage(message: Message): ShowDatabaseErrorDialog {
-                val dialogType = BundleCompat.getParcelable(message.data, "dialog", DatabaseErrorDialogType::class.java)!!
+                val dialogType = BundleCompat.getParcelable(message.data, DIALOG_KEY, DatabaseErrorDialogType::class.java)!!
                 return ShowDatabaseErrorDialog(dialogType)
+            }
+        }
+    }
+
+    @Parcelize
+    class CustomExceptionData(
+        val stackTrace: String
+    ) : Parcelable {
+        fun toHumanReadableString() = stackTrace
+
+        companion object {
+            private const val MAX_STACKTRACE_LINES = 2000
+
+            @CheckResult
+            fun fromException(exception: Exception): CustomExceptionData {
+                val stackTraceLines = exception.stackTraceToString().lines()
+                val truncatedStackTrace = if (stackTraceLines.size > MAX_STACKTRACE_LINES) {
+                    stackTraceLines.take(MAX_STACKTRACE_LINES).joinToString("\n") + "\n...<stack trace truncated>...\n"
+                } else {
+                    stackTraceLines.joinToString("\n")
+                }
+
+                return CustomExceptionData(truncatedStackTrace)
             }
         }
     }
 }
 
 private enum class ErrorHandlingEntries {
-    RETRY, REPAIR, RESTORE, ONE_WAY, NEW,
+    RETRY, REPAIR, RESTORE, ONE_WAY, NEW, DEBUG_INFO
 }
 
 private enum class IncompatibleDbVersionEntries {

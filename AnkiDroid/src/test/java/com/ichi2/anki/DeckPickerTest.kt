@@ -13,6 +13,7 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.test.core.app.ActivityScenario
+import com.ichi2.anki.dialogs.DatabaseErrorDialog
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerContextMenu
 import com.ichi2.anki.dialogs.DeckPickerContextMenu.DeckPickerContextMenuOption
@@ -210,7 +211,7 @@ class DeckPickerTest : RobolectricTest() {
     fun databaseLockedTest() {
         // don't call .onCreate
         val deckPicker = Robolectric.buildActivity(DeckPickerEx::class.java, Intent()).get()
-        deckPicker.handleStartupFailure(InitialActivity.StartupFailure.DATABASE_LOCKED)
+        deckPicker.handleStartupFailure(InitialActivity.StartupFailure.DatabaseLocked)
         assertThat(
             deckPicker.databaseErrorDialog,
             equalTo(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
@@ -746,7 +747,7 @@ class DeckPickerTest : RobolectricTest() {
         var displayedAnalyticsOptIn = false
         var optionsMenu: Menu? = null
 
-        override fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
+        override fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType, exceptionData: DatabaseErrorDialog.CustomExceptionData?) {
             databaseErrorDialog = errorDialogType
         }
 
