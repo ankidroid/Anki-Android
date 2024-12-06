@@ -47,7 +47,7 @@ object InitialActivity {
     fun getStartupFailureType(context: Context): StartupFailure? {
         // A WebView failure means that we skip `AnkiDroidApp`, and therefore haven't loaded the collection
         if (AnkiDroidApp.webViewFailedToLoad()) {
-            return StartupFailure.WEBVIEW_FAILED
+            return StartupFailure.WebviewFailed
         }
 
         val failure = try {
@@ -55,28 +55,28 @@ object InitialActivity {
             return null
         } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
             Timber.w(e)
-            StartupFailure.DATABASE_LOCKED
+            StartupFailure.DatabaseLocked
         } catch (e: BackendException.BackendDbException.BackendDbFileTooNewException) {
             Timber.w(e)
-            StartupFailure.FUTURE_ANKIDROID_VERSION
+            StartupFailure.FutureAnkidroidVersion
         } catch (e: SQLiteFullException) {
             Timber.w(e)
-            StartupFailure.DISK_FULL
+            StartupFailure.DiskFull
         } catch (e: StorageAccessException) {
             // Same handling as the fall through, but without the exception report
             // These are now handled with a dialog and don't generate actionable reports
             Timber.w(e)
-            StartupFailure.DB_ERROR
+            StartupFailure.DBError(e)
         } catch (e: Exception) {
             Timber.w(e)
             CrashReportService.sendExceptionReport(e, "InitialActivity::getStartupFailureType")
-            StartupFailure.DB_ERROR
+            StartupFailure.DBError(e)
         }
 
         if (!AnkiDroidApp.isSdCardMounted) {
-            return StartupFailure.SD_CARD_NOT_MOUNTED
+            return StartupFailure.SDCardNotMounted
         } else if (!CollectionHelper.isCurrentAnkiDroidDirAccessible(context)) {
-            return StartupFailure.DIRECTORY_NOT_ACCESSIBLE
+            return StartupFailure.DirectoryNotAccessible
         }
 
         return failure
@@ -135,9 +135,14 @@ object InitialActivity {
         return preferences.getString("lastVersion", "") == pkgVersionName
     }
 
-    enum class StartupFailure {
-        SD_CARD_NOT_MOUNTED, DIRECTORY_NOT_ACCESSIBLE, FUTURE_ANKIDROID_VERSION,
-        DB_ERROR, DATABASE_LOCKED, WEBVIEW_FAILED, DISK_FULL
+    sealed class StartupFailure {
+        object SDCardNotMounted : StartupFailure()
+        object DirectoryNotAccessible : StartupFailure()
+        object FutureAnkidroidVersion : StartupFailure()
+        class DBError(val exception: Exception) : StartupFailure()
+        object DatabaseLocked : StartupFailure()
+        object WebviewFailed : StartupFailure()
+        object DiskFull : StartupFailure()
     }
 }
 
