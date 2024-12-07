@@ -23,7 +23,6 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.activity.result.ActivityResult
@@ -31,6 +30,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.ViewCompat
@@ -50,9 +50,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer.Companion.ENABLE_SYNC
-import com.ichi2.anki.SyncActionProvider
-import com.ichi2.anki.SyncHandler
-import com.ichi2.anki.SyncHandlerDelegate
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.dialogs.MediaCheckDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
@@ -64,6 +61,9 @@ import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.SyncActionProvider
+import com.ichi2.anki.sync.SyncHandler
+import com.ichi2.anki.sync.SyncHandlerDelegate
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -81,7 +81,8 @@ class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
     SyncHandlerDelegate,
-    SyncErrorDialog.SyncErrorDialogListenerProvider,Toolbar.OnMenuItemClickListener {
+    SyncErrorDialog.SyncErrorDialogListenerProvider,
+    Toolbar.OnMenuItemClickListener {
     /**
      * Whether to offer the user to sync.
      * Normally, only the deck picker deal with syncing. But direct intent could avoid the deckPicker.

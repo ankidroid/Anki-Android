@@ -21,9 +21,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.customSyncBase
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.customSyncBase
 import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.utils.show
 

@@ -14,7 +14,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki
+package com.ichi2.anki.sync
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -22,9 +22,15 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.core.content.edit
 import anki.sync.SyncAuth
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.ProgressContext
+import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.withProgress
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.libanki.createBackup
@@ -117,10 +123,7 @@ suspend fun syncLogout(context: Context) {
  * or even that the ankiweb account is still valid.
  */
 fun isLoggedIn() =
-    AnkiDroidApp.instance
-        .sharedPrefs()
-        .getString(SyncPreferences.HKEY, "")!!
-        .isNotEmpty()
+    AnkiDroidApp.Companion.instance.sharedPrefs().getString(SyncPreferences.HKEY, "")!!.isNotEmpty()
 
 fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
 

@@ -38,8 +38,8 @@ import anki.sync.syncAuth
 import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.cancelMediaSync
 import com.ichi2.anki.notifications.NotificationId
+import com.ichi2.anki.sync.cancelMediaSync
 import com.ichi2.anki.utils.ext.trySetForeground
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay

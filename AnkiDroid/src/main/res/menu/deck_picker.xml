@@ -13,7 +13,7 @@
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync"
         android:title="@string/button_sync"
-        ankidroid:actionProviderClass="com.ichi2.anki.SyncActionProvider"
+        ankidroid:actionProviderClass="com.ichi2.anki.sync.SyncActionProvider"
         ankidroid:showAsAction="always"/>
     <item
         android:id="@+id/action_undo"

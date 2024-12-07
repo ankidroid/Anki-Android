@@ -19,7 +19,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.anki
+package com.ichi2.anki.sync
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -41,16 +41,28 @@ import anki.sync.SyncCollectionResponse
 import anki.sync.SyncStatusResponse
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.BackupManager
+import com.ichi2.anki.Channel
+import com.ichi2.anki.CollectionIntegrityStorageCheck
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.MyAccount
+import com.ichi2.anki.ProgressContext
+import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.AsyncDialogFragment
 import com.ichi2.anki.dialogs.MediaCheckDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
+import com.ichi2.anki.handleDatabaseCheck
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.checkMedia
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.anki.worker.SyncMediaWorker
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.anki.worker.UniqueWorkNames
@@ -336,7 +348,7 @@ class SyncHandler(
     override fun integrityCheck() {
         // #5852 - We were having issues with integrity checks where the users had run out of space.
         // display a dialog box if we don't have the space
-        val status = CollectionIntegrityStorageCheck.createInstance(activity)
+        val status = CollectionIntegrityStorageCheck.Companion.createInstance(activity)
         if (status.shouldWarnOnIntegrityCheck()) {
             Timber.d("Displaying File Size confirmation")
             AlertDialog.Builder(activity).show {
@@ -376,7 +388,7 @@ class SyncHandler(
             return
         }
 
-        MyAccount.checkNotificationPermission(activity, notificationPermissionLauncher)
+        MyAccount.Companion.checkNotificationPermission(activity, notificationPermissionLauncher)
 
         /** Nested private function that makes the connection to
          * the sync server and starts syncing the data */
@@ -547,7 +559,7 @@ class SyncHandler(
             withCol {
                 try {
                     createBackup(
-                        BackupManager.getBackupDirectoryFromCollection(path),
+                        BackupManager.Companion.getBackupDirectoryFromCollection(path),
                         force = true,
                         waitForCompletion = true,
                     )
@@ -669,7 +681,7 @@ class SyncHandler(
         syncMessage: String?,
     ) {
         if (delegate.activityPaused()) {
-            val res = AnkiDroidApp.appResources
+            val res = AnkiDroidApp.Companion.appResources
             activity.showSimpleNotification(
                 res.getString(R.string.app_name),
                 res.getString(messageResource),
@@ -679,7 +691,7 @@ class SyncHandler(
             if (syncMessage.isNullOrEmpty()) {
                 activity.showSnackbar(messageResource)
             } else {
-                val res = AnkiDroidApp.appResources
+                val res = AnkiDroidApp.Companion.appResources
                 activity.showSimpleMessageDialog(title = res.getString(messageResource), message = syncMessage)
             }
         }

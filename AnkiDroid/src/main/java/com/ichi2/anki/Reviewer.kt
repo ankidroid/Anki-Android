@@ -97,6 +97,9 @@ import com.ichi2.anki.scheduling.registerOnForgetHandler
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.SyncActionProvider
+import com.ichi2.anki.sync.SyncHandler
+import com.ichi2.anki.sync.SyncHandlerDelegate
 import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.utils.navBarNeedsScrim

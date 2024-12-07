@@ -41,11 +41,11 @@ import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.SyncPreferences
-import com.ichi2.anki.cancelSync
 import com.ichi2.anki.notifications.NotificationId
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.setLastSyncTimeToNow
+import com.ichi2.anki.sync.SyncPreferences
+import com.ichi2.anki.sync.cancelSync
+import com.ichi2.anki.sync.setLastSyncTimeToNow
 import com.ichi2.anki.utils.ext.trySetForeground
 import com.ichi2.libanki.syncCollection
 import kotlinx.coroutines.CoroutineScope

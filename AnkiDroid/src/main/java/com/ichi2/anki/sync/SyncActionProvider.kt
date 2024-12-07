@@ -13,7 +13,7 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.anki
+package com.ichi2.anki.sync
 
 import android.app.Activity
 import android.content.Context
@@ -24,6 +24,8 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.isVisible
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.ichi2.anki.ActionProviderCompat
+import com.ichi2.anki.R
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.ui.RtlCompliantActionProvider.Companion.unwrapContext
 

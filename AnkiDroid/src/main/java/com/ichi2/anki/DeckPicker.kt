@@ -139,6 +139,11 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.SyncActionProvider
+import com.ichi2.anki.sync.SyncCompletion
+import com.ichi2.anki.sync.SyncCompletionListener
+import com.ichi2.anki.sync.SyncHandler
+import com.ichi2.anki.sync.SyncHandlerDelegate
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
