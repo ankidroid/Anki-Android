@@ -66,13 +66,13 @@ class DeckPickerContextMenuTest {
     @Test
     fun ensure_cannot_be_instantiated_without_expected_arguments() {
         // fails on deck id missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("id") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("id") }
         // fails on deck name missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("name") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("name") }
         // fails on deck dynamic status missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("dynamic") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("dynamic") }
         // fails on deck having buried status missing from arguments
-        assertFailsWith<AssertionError> { startContextMenuWithMissingArgument("hasBuried") }
+        assertFailsWith<IllegalArgumentException> { startContextMenuWithMissingArgument("hasBuried") }
     }
 
     /**

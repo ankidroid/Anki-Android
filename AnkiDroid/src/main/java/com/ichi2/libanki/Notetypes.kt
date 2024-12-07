@@ -54,7 +54,6 @@ import com.ichi2.libanki.utils.insert
 import com.ichi2.libanki.utils.len
 import com.ichi2.libanki.utils.remove
 import com.ichi2.libanki.utils.set
-import com.ichi2.utils.Assert
 import com.ichi2.utils.HashUtil
 import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
@@ -364,14 +363,14 @@ class Notetypes(val col: Collection) {
 
     @LibAnkiAlias("rename_field")
     fun renameField(notetype: NotetypeJson, field: Field, newName: String) {
-        assert(notetype.flds.jsonObjectIterable().contains(field))
+        check(notetype.flds.jsonObjectIterable().contains(field)) { "Field to be renamed was not found in the notetype fields" }
         field["name"] = newName
     }
 
     /** Modifies schema. */
     @LibAnkiAlias("set_sort_index")
     fun setSortIndex(nt: NotetypeJson, idx: Int) {
-        assert(0 <= idx && idx < len(nt.flds))
+        require(0 <= idx && idx < len(nt.flds)) { "Selected sort field's index is not valid" }
         nt.sortf = idx
     }
 
@@ -411,7 +410,7 @@ class Notetypes(val col: Collection) {
      */
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
     fun addFieldInNewModel(notetype: NotetypeJson, field: JSONObject) {
-        Assert.that(isModelNew(notetype), "Model was assumed to be new, but is not")
+        check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
         try {
             addFieldLegacy(notetype, field)
         } catch (e: ConfirmModSchemaException) {
@@ -424,7 +423,7 @@ class Notetypes(val col: Collection) {
     fun addTemplateInNewModel(notetype: NotetypeJson, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
-        Assert.that(isModelNew(notetype), "Model was assumed to be new, but is not")
+        check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
 
         try {
             addTemplate(notetype, template)
@@ -439,14 +438,14 @@ class Notetypes(val col: Collection) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
-        Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
+        check(col.schemaChanged()) { "Mod was assumed to be already changed, but is not" }
         addFieldLegacy(notetype, field)
     }
 
     fun addTemplateModChanged(notetype: NotetypeJson, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
-        Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
+        check(col.schemaChanged()) { "Mod was assumed to be already changed, but is not" }
         addTemplate(notetype, template)
     }
 
@@ -476,7 +475,7 @@ class Notetypes(val col: Collection) {
     /** Modifies schema */
     @LibAnkiAlias("remove_template")
     fun removeTemplate(notetype: NotetypeJson, template: Template) {
-        assert(len(notetype.tmpls) > 1)
+        check(len(notetype.tmpls) > 1) { "Attempting to remove the last template" }
         notetype.tmpls.remove(template)
     }
 
