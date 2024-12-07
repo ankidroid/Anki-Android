@@ -42,6 +42,8 @@ class SyncErrorDialog : AsyncDialogFragment() {
         fun integrityCheck()
     }
 
+    fun requireSyncErrorDialogListener() = activity as SyncErrorDialogListener
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val dialog = AlertDialog.Builder(requireContext())
@@ -52,7 +54,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // User not logged in; take them to login screen
                 dialog.setIcon(R.drawable.ic_sync_problem)
                     .setPositiveButton(R.string.log_in) { _, _ ->
-                        (activity as SyncErrorDialogListener).loginToSyncServer()
+                        requireSyncErrorDialogListener().loginToSyncServer()
                     }
                     .setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                     .create()
@@ -72,12 +74,10 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
                 dialog.setIcon(R.drawable.ic_sync_problem)
                     .setPositiveButton(R.string.sync_conflict_keep_local_new) { _, _ ->
-                        (activity as SyncErrorDialogListener?)
-                            ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
+                        requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
                     }
                     .setNegativeButton(R.string.sync_conflict_keep_remote_new) { _, _ ->
-                        (activity as SyncErrorDialogListener?)
-                            ?.showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE)
+                        requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE)
                     }
                     .setNeutralButton(R.string.dialog_cancel) { _, _ ->
                         activity?.dismissAllDialogFragments()
@@ -105,12 +105,10 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_SYNC_SANITY_ERROR -> {
                 // Sync sanity check error; allow user to cancel, or choose between local and remote versions
                 dialog.setPositiveButton(R.string.sync_sanity_local) { _, _ ->
-                    (activity as SyncErrorDialogListener?)
-                        ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL)
+                    requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL)
                 }
                     .setNeutralButton(R.string.sync_sanity_remote) { _, _ ->
-                        (activity as SyncErrorDialogListener?)
-                            ?.showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE)
+                        requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE)
                     }
                     .setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                     .create()
@@ -133,7 +131,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_MEDIA_SYNC_ERROR -> {
                 dialog.setPositiveButton(R.string.check_media) { _, _ ->
-                    (activity as SyncErrorDialogListener).mediaCheck()
+                    requireSyncErrorDialogListener().mediaCheck()
                     activity?.dismissAllDialogFragments()
                 }
                     .setNegativeButton(R.string.dialog_cancel) { _, _ -> }
@@ -149,7 +147,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
             }
             DIALOG_SYNC_BASIC_CHECK_ERROR -> {
                 dialog.setPositiveButton(R.string.check_db) { _, _ ->
-                    (activity as SyncErrorDialogListener).integrityCheck()
+                    requireSyncErrorDialogListener().integrityCheck()
                     activity?.dismissAllDialogFragments()
                 }
                     .setNegativeButton(R.string.dialog_cancel) { _, _ -> }
@@ -222,7 +220,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
      * Syncs with [conflictResolution] then dismisses all dialog fragments.
      */
     fun syncAndDismissAllDialogFragments(conflictResolution: ConflictResolution? = null) {
-        (activity as SyncErrorDialogListener).sync(conflictResolution)
+        requireSyncErrorDialogListener().sync(conflictResolution)
         activity?.dismissAllDialogFragments()
     }
 
