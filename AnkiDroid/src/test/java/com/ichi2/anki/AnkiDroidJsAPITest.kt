@@ -19,6 +19,8 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.AnkiDroidJsAPI.Companion.SUCCESS_KEY
+import com.ichi2.anki.AnkiDroidJsAPI.Companion.VALUE_KEY
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.BASIC_MODEL_NAME
@@ -365,7 +367,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // get card id for testing due
         val cardIdRes = getDataFromRequest("cardId", jsapi)
         val jsonObject = JSONObject(cardIdRes)
-        val cardId = jsonObject.get("value").toString().toLong()
+        val cardId = jsonObject.get(VALUE_KEY).toString().toLong()
 
         // test that card rescheduled for 15 days interval and returned true
         assertThat(getDataFromRequest("setCardDue", jsapi, "15"), equalTo(formatApiResult(true)))
@@ -419,26 +421,15 @@ class AnkiDroidJsAPITest : RobolectricTest() {
                 put("data", data)
             }.toString().toByteArray()
         }
+        private inline fun formatSuccessfulApiResult(block: JSONObject.() -> Unit) = JSONObject().apply {
+            put(SUCCESS_KEY, true)
+            block(this)
+        }.toString()
 
-        fun formatApiResult(res: Any): String {
-            return JSONObject().apply {
-                put("success", true)
-                when (res) {
-                    is Boolean -> {
-                        put("value", res)
-                    }
-                    is Int -> {
-                        put("value", res)
-                    }
-                    is Long -> {
-                        put("value", res)
-                    }
-                    else -> {
-                        put("value", res.toString())
-                    }
-                }
-            }.toString()
-        }
+        fun formatApiResult(res: Boolean) = formatSuccessfulApiResult { put(VALUE_KEY, res) }
+        fun formatApiResult(res: Int) = formatSuccessfulApiResult { put(VALUE_KEY, res) }
+        fun formatApiResult(res: Long) = formatSuccessfulApiResult { put(VALUE_KEY, res) }
+        fun formatApiResult(res: String) = formatSuccessfulApiResult { put(VALUE_KEY, res) }
 
         suspend fun getDataFromRequest(
             methodName: String,
