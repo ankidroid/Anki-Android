@@ -56,6 +56,7 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMP
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -112,7 +113,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
-                        requireDeckPicker().showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
+                        showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                     }
                     negativeButton(R.string.close) {
                         closeCollectionAndFinish()
@@ -128,11 +129,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
-                        requireDeckPicker().showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
+                        showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                     }
                     negativeButton(R.string.answering_error_report) {
                         requireDeckPicker().sendErrorReport()
-                        activity?.dismissAllDialogFragments()
+                        requireActivity().dismissAllDialogFragments()
                     }
                     neutralButton(R.string.close) {
                         closeCollectionAndFinish()
@@ -179,23 +180,23 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listItems(items = options) { _, index ->
                         when (values[index]) {
                             ErrorHandlingEntries.RETRY -> {
-                                ActivityCompat.recreate(requireDeckPicker())
+                                ActivityCompat.recreate(requireActivity())
                                 return@listItems
                             }
                             ErrorHandlingEntries.REPAIR -> {
-                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION, exceptionData)
+                                showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION)
                                 return@listItems
                             }
                             ErrorHandlingEntries.RESTORE -> {
-                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
+                                showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
                                 return@listItems
                             }
                             ErrorHandlingEntries.ONE_WAY -> {
-                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER, exceptionData)
+                                showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER)
                                 return@listItems
                             }
                             ErrorHandlingEntries.NEW -> {
-                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_NEW_COLLECTION, exceptionData)
+                                showDatabaseErrorDialog(DIALOG_NEW_COLLECTION)
                                 return@listItems
                             }
 
@@ -220,7 +221,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.dialog_positive_repair) {
                         requireDeckPicker().repairCollection()
-                        activity?.dismissAllDialogFragments()
+                        requireActivity().dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -233,7 +234,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     alertDialog.title(R.string.backup_restore)
                         .title(text = message)
                         .positiveButton(R.string.dialog_ok) {
-                            requireDeckPicker().showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
+                            showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
                         }
                 } else {
                     // Show backups sorted with latest on top
@@ -254,7 +255,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 requireDeckPicker().restoreFromBackup(
                                     backups[index].path
                                 )
-                                activity?.dismissAllDialogFragments()
+                                requireActivity().dismissAllDialogFragments()
                             } else {
                                 // otherwise show an error dialog
                                 AlertDialog.Builder(requireActivity()).show {
@@ -268,7 +269,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 alertDialog.setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
                     if (keyCode == KeyEvent.KEYCODE_BACK) {
                         Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
-                        activity?.dismissAllDialogFragments()
+                        requireActivity().dismissAllDialogFragments()
                         return@setOnKeyListener true
                     }
                     false
@@ -290,7 +291,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             ActivityCompat.recreate(requireDeckPicker())
                         } else {
-                            requireDeckPicker().showDatabaseErrorDialog(DIALOG_LOAD_FAILED, exceptionData)
+                            showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
                         }
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -303,7 +304,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
                         requireDeckPicker().integrityCheck()
-                        activity?.dismissAllDialogFragments()
+                        requireActivity().dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -314,7 +315,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.restore_backup_title)
                     message(text = message)
                     positiveButton(R.string.dialog_continue) {
-                        requireDeckPicker().showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
+                        showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP)
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -326,7 +327,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
                         requireDeckPicker().sync(ConflictResolution.FULL_DOWNLOAD)
-                        activity?.dismissAllDialogFragments()
+                        requireActivity().dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
@@ -360,13 +361,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     listItemsAndMessage(message = message, items = options) { _, index: Int ->
                         when (values[index]) {
-                            IncompatibleDbVersionEntries.RESTORE -> requireDeckPicker().showDatabaseErrorDialog(
-                                DIALOG_RESTORE_BACKUP,
-                                exceptionData
+                            IncompatibleDbVersionEntries.RESTORE -> showDatabaseErrorDialog(
+                                DIALOG_RESTORE_BACKUP
                             )
-                            IncompatibleDbVersionEntries.ONE_WAY -> requireDeckPicker().showDatabaseErrorDialog(
-                                DIALOG_ONE_WAY_SYNC_FROM_SERVER,
-                                exceptionData
+                            IncompatibleDbVersionEntries.ONE_WAY -> showDatabaseErrorDialog(
+                                DIALOG_ONE_WAY_SYNC_FROM_SERVER
                             )
                         }
                     }
@@ -387,7 +386,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.directory_inaccessible_after_uninstall)
                     listItemsAndMessage(message = message, items = listItems.map { getString(it.stringRes) }) { _, index: Int ->
                         val listItem = listItems[index]
-                        listItem.onClick(requireDeckPicker())
+                        listItem.onClick(requireAnkiActivity())
                         if (listItem.dismissesDialog) {
                             dismiss()
                         }
@@ -396,6 +395,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 }
             }
         }
+    }
+
+    /** @see DeckPicker.showDatabaseErrorDialog */
+    private fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
+        requireDeckPicker().showDatabaseErrorDialog(errorDialogType, exceptionData)
     }
 
     /**
@@ -521,7 +525,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     private fun closeCollectionAndFinish() {
-        (activity as AnkiActivity).closeCollectionAndFinish()
+        (requireActivity() as AnkiActivity).closeCollectionAndFinish()
     } // Generic message shown when a libanki task failed
 
     // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
