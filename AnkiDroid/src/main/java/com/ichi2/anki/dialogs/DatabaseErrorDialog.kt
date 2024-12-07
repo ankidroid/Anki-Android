@@ -112,8 +112,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
-                        (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
+                        requireDeckPicker().showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
                     }
                     negativeButton(R.string.close) {
                         closeCollectionAndFinish()
@@ -129,8 +128,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
-                        (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
+                        requireDeckPicker().showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
                     }
                     negativeButton(R.string.answering_error_report) {
                         requireDeckPicker().sendErrorReport()
@@ -235,8 +233,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     alertDialog.title(R.string.backup_restore)
                         .title(text = message)
                         .positiveButton(R.string.dialog_ok) {
-                            (activity as DeckPicker?)
-                                ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
+                            requireDeckPicker().showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
                         }
                 } else {
                     // Show backups sorted with latest on top
@@ -254,10 +251,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         .setSingleChoiceItems(dates.toTypedArray(), -1) { _, index: Int ->
                             if (backups[index].length() > 0) {
                                 // restore the backup if it's valid
-                                (activity as DeckPicker?)
-                                    ?.restoreFromBackup(
-                                        backups[index].path
-                                    )
+                                requireDeckPicker().restoreFromBackup(
+                                    backups[index].path
+                                )
                                 activity?.dismissAllDialogFragments()
                             } else {
                                 // otherwise show an error dialog
@@ -318,8 +314,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.restore_backup_title)
                     message(text = message)
                     positiveButton(R.string.dialog_continue) {
-                        (activity as DeckPicker?)
-                            ?.showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
+                        requireDeckPicker().showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
                     }
                     negativeButton(R.string.dialog_cancel)
                 }
