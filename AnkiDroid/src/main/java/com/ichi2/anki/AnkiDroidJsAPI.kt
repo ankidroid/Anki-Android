@@ -55,6 +55,12 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
+typealias JvmBoolean = Boolean
+typealias JvmInt = Int
+typealias JvmFloat = Float
+typealias JvmLong = Long
+typealias JvmString = String
+
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val currentCard: Card
         get() = activity.currentCard!!
@@ -76,19 +82,19 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val speechRecognizer = JavaScriptSTT(context)
 
     open fun convertToByteArray(apiContract: ApiContract, boolean: Boolean): ByteArray {
-        return ApiResult(apiContract.isValid, boolean).toString().toByteArray()
+        return ApiResult.Boolean(apiContract.isValid, boolean).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, int: Int): ByteArray {
-        return ApiResult(apiContract.isValid, int).toString().toByteArray()
+        return ApiResult.Integer(apiContract.isValid, int).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, long: Long): ByteArray {
-        return ApiResult(apiContract.isValid, long).toString().toByteArray()
+        return ApiResult.Long(apiContract.isValid, long).toString().toByteArray()
     }
 
     open fun convertToByteArray(apiContract: ApiContract, string: String): ByteArray {
-        return ApiResult(apiContract.isValid, string).toString().toByteArray()
+        return ApiResult.String(apiContract.isValid, string).toString().toByteArray()
     }
 
     /**
@@ -349,14 +355,14 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 val callback = object : JavaScriptSTT.SpeechRecognitionCallback {
                     override fun onResult(results: List<String>) {
                         activity.lifecycleScope.launch {
-                            val apiResult = ApiResult(true, Json.encodeToString(ListSerializer(String.serializer()), results))
+                            val apiResult = ApiResult.success(Json.encodeToString(ListSerializer(String.serializer()), results))
                             val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
                             activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
                         }
                     }
                     override fun onError(errorMessage: String) {
                         activity.lifecycleScope.launch {
-                            val apiResult = ApiResult(false, errorMessage)
+                            val apiResult = ApiResult.failure(errorMessage)
                             val jsonEncodedString = withContext(Dispatchers.Default) { JSONObject.quote(apiResult.toString()) }
                             activity.webView!!.evaluateJavascript("ankiSttResult($jsonEncodedString)", null)
                         }
@@ -436,27 +442,54 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var nextTime4 = ""
     }
 
-    class ApiResult(private val status: Boolean, private val value: Any) {
-        override fun toString(): String {
-            return JSONObject().apply {
-                put("success", status)
-                when (value) {
-                    is Boolean -> {
-                        put("value", value)
-                    }
-                    is Int -> {
-                        put("value", value)
-                    }
-                    is Long -> {
-                        put("value", value)
-                    }
-                    else -> {
-                        put("value", value.toString())
-                    }
-                }
-            }.toString()
+    sealed class ApiResult protected constructor(private val status: JvmBoolean) {
+        class Boolean(status: JvmBoolean, val value: JvmBoolean) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+        class Integer(status: JvmBoolean, val value: JvmInt) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+        class Float(status: JvmBoolean, val value: JvmFloat) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+        class Long(status: JvmBoolean, val value: JvmLong) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+        class String(status: JvmBoolean, val value: JvmString) : ApiResult(status) {
+            override fun putValue(o: JSONObject) {
+                o.put(VALUE_KEY, value)
+            }
+        }
+
+        abstract fun putValue(o: JSONObject)
+
+        override fun toString() = JSONObject().apply {
+            put(SUCCESS_KEY, status)
+            putValue(this)
+        }.toString()
+
+        @Suppress("RemoveRedundantQualifierName") // we don't want `String(true, value)`
+        companion object {
+            fun success(value: JvmString) = ApiResult.String(true, value)
+            fun failure(value: JvmString) = ApiResult.String(false, value)
         }
     }
 
     class ApiContract(val isValid: Boolean, val cardSuppliedDeveloperContact: String, val cardSuppliedData: String)
+
+    companion object {
+        /**
+         * Key for a success value.
+         */
+        const val VALUE_KEY = "value"
+        const val SUCCESS_KEY = "success"
+    }
 }
