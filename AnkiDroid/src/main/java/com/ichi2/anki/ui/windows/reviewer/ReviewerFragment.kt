@@ -50,9 +50,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.Reviewer.Companion.ENABLE_SYNC
-import com.ichi2.anki.SyncActionProvider
-import com.ichi2.anki.SyncHandler
-import com.ichi2.anki.SyncHandlerDelegate
 import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.dialogs.MediaCheckDialog
 import com.ichi2.anki.dialogs.SyncErrorDialog
@@ -64,6 +61,9 @@ import com.ichi2.anki.requireAnkiActivity
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.SyncActionProvider
+import com.ichi2.anki.sync.SyncHandler
+import com.ichi2.anki.sync.SyncHandlerDelegate
 import com.ichi2.anki.utils.ext.collectIn
 import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments

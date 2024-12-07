@@ -21,8 +21,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.SyncPreferences
 import com.ichi2.preferences.VersatileTextPreference
 import com.ichi2.utils.show
 import okhttp3.HttpUrl.Companion.toHttpUrl

@@ -39,6 +39,11 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.help.HelpDialog
 import com.ichi2.anki.pages.RemoveAccountFragment
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.sync.cancelSync
+import com.ichi2.anki.sync.getEndpoint
+import com.ichi2.anki.sync.isLoggedIn
+import com.ichi2.anki.sync.syncLogout
+import com.ichi2.anki.sync.updateLogin
 import com.ichi2.anki.utils.ext.removeFragmentFromContainer
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.syncLogin

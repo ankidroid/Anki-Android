@@ -32,6 +32,7 @@ import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.sync.millisecondsSinceLastSync
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
