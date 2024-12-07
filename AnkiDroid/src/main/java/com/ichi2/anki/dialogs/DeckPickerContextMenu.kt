@@ -30,10 +30,10 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        assert(requireArguments().containsKey(ARG_DECK_ID))
-        assert(requireArguments().containsKey(ARG_DECK_NAME))
-        assert(requireArguments().containsKey(ARG_DECK_IS_DYN))
-        assert(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK))
+        require(requireArguments().containsKey(ARG_DECK_ID)) { "Missing argument deck id" }
+        require(requireArguments().containsKey(ARG_DECK_NAME)) { "Missing argument deck name" }
+        require(requireArguments().containsKey(ARG_DECK_IS_DYN)) { "Missing argument deck is dynamic" }
+        require(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK)) { "Missing argument deck has buried" }
         val options = createOptionsList()
         return AlertDialog.Builder(requireActivity())
             .title(text = requireArguments().getString(ARG_DECK_NAME))
