@@ -84,6 +84,8 @@ import java.io.IOException
 class DatabaseErrorDialog : AsyncDialogFragment() {
     private lateinit var backups: Array<File>
 
+    private fun requireDeckPicker() = activity as DeckPicker
+
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
@@ -131,7 +133,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING, exceptionData)
                     }
                     negativeButton(R.string.answering_error_report) {
-                        (activity as DeckPicker).sendErrorReport()
+                        requireDeckPicker().sendErrorReport()
                         activity?.dismissAllDialogFragments()
                     }
                     neutralButton(R.string.close) {
@@ -139,7 +141,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                 }.apply {
                     show()
-                    getButton(Dialog.BUTTON_NEGATIVE).isEnabled = (activity as DeckPicker).hasErrorFiles()
+                    getButton(Dialog.BUTTON_NEGATIVE).isEnabled = requireDeckPicker().hasErrorFiles()
                 }
             }
             DIALOG_ERROR_HANDLING -> {
@@ -179,23 +181,23 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listItems(items = options) { _, index ->
                         when (values[index]) {
                             ErrorHandlingEntries.RETRY -> {
-                                ActivityCompat.recreate(activity as DeckPicker)
+                                ActivityCompat.recreate(requireDeckPicker())
                                 return@listItems
                             }
                             ErrorHandlingEntries.REPAIR -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION, exceptionData)
+                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_REPAIR_COLLECTION, exceptionData)
                                 return@listItems
                             }
                             ErrorHandlingEntries.RESTORE -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
+                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_RESTORE_BACKUP, exceptionData)
                                 return@listItems
                             }
                             ErrorHandlingEntries.ONE_WAY -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER, exceptionData)
+                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_ONE_WAY_SYNC_FROM_SERVER, exceptionData)
                                 return@listItems
                             }
                             ErrorHandlingEntries.NEW -> {
-                                (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_NEW_COLLECTION, exceptionData)
+                                requireDeckPicker().showDatabaseErrorDialog(DIALOG_NEW_COLLECTION, exceptionData)
                                 return@listItems
                             }
 
@@ -219,7 +221,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     message(text = message)
                     setIcon(R.drawable.ic_warning)
                     positiveButton(R.string.dialog_positive_repair) {
-                        (activity as DeckPicker).repairCollection()
+                        requireDeckPicker().repairCollection()
                         activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -290,9 +292,9 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         CollectionManager.closeCollectionBlocking()
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
-                            ActivityCompat.recreate(activity as DeckPicker)
+                            ActivityCompat.recreate(requireDeckPicker())
                         } else {
-                            (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED, exceptionData)
+                            requireDeckPicker().showDatabaseErrorDialog(DIALOG_LOAD_FAILED, exceptionData)
                         }
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -304,7 +306,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.check_db_title)
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
-                        (activity as DeckPicker).integrityCheck()
+                        requireDeckPicker().integrityCheck()
                         activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -328,7 +330,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.backup_one_way_sync_from_server)
                     message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
-                        (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
+                        requireDeckPicker().sync(ConflictResolution.FULL_DOWNLOAD)
                         activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -363,11 +365,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     }
                     listItemsAndMessage(message = message, items = options) { _, index: Int ->
                         when (values[index]) {
-                            IncompatibleDbVersionEntries.RESTORE -> (activity as DeckPicker).showDatabaseErrorDialog(
+                            IncompatibleDbVersionEntries.RESTORE -> requireDeckPicker().showDatabaseErrorDialog(
                                 DIALOG_RESTORE_BACKUP,
                                 exceptionData
                             )
-                            IncompatibleDbVersionEntries.ONE_WAY -> (activity as DeckPicker).showDatabaseErrorDialog(
+                            IncompatibleDbVersionEntries.ONE_WAY -> requireDeckPicker().showDatabaseErrorDialog(
                                 DIALOG_ONE_WAY_SYNC_FROM_SERVER,
                                 exceptionData
                             )
@@ -390,7 +392,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.directory_inaccessible_after_uninstall)
                     listItemsAndMessage(message = message, items = listItems.map { getString(it.stringRes) }) { _, index: Int ->
                         val listItem = listItems[index]
-                        listItem.onClick(activity as DeckPicker)
+                        listItem.onClick(requireDeckPicker())
                         if (listItem.dismissesDialog) {
                             dismiss()
                         }
