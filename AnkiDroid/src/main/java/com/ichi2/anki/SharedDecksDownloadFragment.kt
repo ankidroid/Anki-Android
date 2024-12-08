@@ -30,7 +30,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.webkit.CookieManager
-import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -163,11 +162,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             ContextCompat.RECEIVER_EXPORTED
         )
 
-        val currentFileName = URLUtil.guessFileName(
-            fileToBeDownloaded.url,
-            fileToBeDownloaded.contentDisposition,
-            fileToBeDownloaded.mimeType
-        )
+        val currentFileName = fileToBeDownloaded.toFileName(extension = "apkg")
 
         val downloadRequest = generateDeckDownloadRequest(fileToBeDownloaded, currentFileName)
 

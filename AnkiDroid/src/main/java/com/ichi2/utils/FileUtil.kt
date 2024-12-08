@@ -141,12 +141,28 @@ object FileUtil {
  * @param fileName name of the file, before the '.'
  * @param extensionWithDot extension of the file, with a '.'
  */
-data class FileNameAndExtension(val fileName: String, val extensionWithDot: String) {
+@ConsistentCopyVisibility
+data class FileNameAndExtension private constructor(
+    val fileName: String,
+    val extensionWithDot: String
+) {
+    init {
+        require(extensionWithDot.startsWith('.')) { "extension must start with '.'" }
+    }
+
     /**
      * Ensures the filename is valid for [File.createTempFile], which requires `name.length() >= 3`
      */
     fun renameForCreateTempFile(): FileNameAndExtension =
         if (fileName.length >= 3) this else this.copy(fileName = "$fileName-name")
+
+    /**
+     * Returns a [FileNameAndExtension] with a custom extension
+     */
+    fun replaceExtension(extension: String): FileNameAndExtension {
+        val withDot = if (extension.startsWith(".")) extension else ".$extension"
+        return copy(extensionWithDot = withDot)
+    }
 
     override fun toString() = "$fileName$extensionWithDot"
 
