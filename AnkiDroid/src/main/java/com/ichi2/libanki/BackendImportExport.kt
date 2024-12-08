@@ -83,7 +83,7 @@ fun importCollectionPackage(
 fun Collection.exportCollectionPackage(
     outPath: String,
     includeMedia: Boolean,
-    legacy: Boolean = true
+    legacy: Boolean
 ) {
     close(forFullSync = true)
     backend.exportCollectionPackage(
@@ -117,7 +117,7 @@ fun Collection.exportAnkiPackage(
     withDeckConfigs: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
-    legacy: Boolean = true
+    legacy: Boolean 
 ) {
     val options = exportAnkiPackageOptions {
         this.withScheduling = withScheduling
