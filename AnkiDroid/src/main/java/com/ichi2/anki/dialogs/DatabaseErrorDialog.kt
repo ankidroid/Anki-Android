@@ -568,7 +568,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     ?: res().getString(R.string.card_browser_unknown_deck_name)
                 res().getString(R.string.directory_inaccessible_after_uninstall_summary, directory)
             }
-            else -> requireArguments().getString("dialogMessage")
+            DIALOG_ERROR_HANDLING -> requireArguments().getString("dialogMessage")
         }
     private val title: String
         get() = when (requireDialogType()) {

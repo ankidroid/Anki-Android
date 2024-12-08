@@ -146,8 +146,7 @@ object NoteService {
                     }
                     when (field.type) {
                         EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP, EFieldType.IMAGE -> field.mediaPath = outFile.absolutePath
-                        else -> {
-                        }
+                        EFieldType.TEXT -> {}
                     }
                 }
             } catch (e: IOException) {

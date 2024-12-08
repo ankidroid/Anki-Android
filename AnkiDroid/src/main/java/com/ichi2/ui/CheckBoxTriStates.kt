@@ -167,7 +167,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
         val btnDrawable: Int = when (_state) {
             State.UNCHECKED -> R.drawable.ic_baseline_check_box_outline_blank_24_inset
             State.CHECKED -> R.drawable.ic_baseline_check_box_24_inset
-            else -> R.drawable.ic_baseline_indeterminate_check_box_24_inset
+            State.INDETERMINATE -> R.drawable.ic_baseline_indeterminate_check_box_24_inset
         }
         setButtonDrawable(btnDrawable)
     }
