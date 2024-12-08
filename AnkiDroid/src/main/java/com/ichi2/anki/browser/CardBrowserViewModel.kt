@@ -110,13 +110,12 @@ class CardBrowserViewModel(
 
     val flowOfSearchState = MutableSharedFlow<SearchState>()
 
-    var searchTerms = ""
+    var searchTerms = SearchParameters.EMPTY
         private set
-    private var restrictOnDeck: String = ""
 
     /** text in the search box (potentially unsubmitted) */
     // this does not currently bind to the value in the UI and is only used for posting
-    val flowOfFilterQuery = MutableSharedFlow<String>()
+    val flowOfFilterQuery = MutableSharedFlow<SearchParameters>()
 
     /**
      * Whether the browser is working in Cards mode or Notes mode.
@@ -163,7 +162,8 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = flowOfIsTruncated.value
 
-    private val _selectedRows: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
+    private val _selectedRows: MutableSet<CardBrowser.CardCache> =
+        Collections.synchronizedSet(LinkedHashSet())
 
     // immutable accessor for _selectedRows
     val selectedRows: Set<CardBrowser.CardCache> get() = _selectedRows
@@ -203,15 +203,15 @@ class CardBrowserViewModel(
     val lastDeckId: DeckId?
         get() = lastDeckIdRepository.lastDeckId
 
-    suspend fun setDeckId(deckId: DeckId) {
+    fun setDeckId(deckId: DeckId) {
         Timber.i("setting deck: %d", deckId)
         lastDeckIdRepository.lastDeckId = deckId
-        restrictOnDeck = if (deckId == ALL_DECKS_ID) {
-            ""
+        val newDeckRestriction = if (deckId == ALL_DECKS_ID) {
+            setOf()
         } else {
-            val deckName = withCol { decks.name(deckId) }
-            "deck:\"$deckName\" "
+            setOf(deckId)
         }
+        searchTerms = searchTerms.copy(deckIds = newDeckRestriction)
         flowOfDeckId.update { deckId }
     }
 
@@ -262,22 +262,30 @@ class CardBrowserViewModel(
      *
      * @see launchSearchForCards
      */
-    private val performSearchFlow = flowOfInitCompleted.combineTransform(searchRequested) { init, _ ->
-        if (!init) return@combineTransform
-        emit(Unit)
-    }
+    private val performSearchFlow =
+        flowOfInitCompleted.combineTransform(searchRequested) { init, _ ->
+            if (!init) return@combineTransform
+            emit(Unit)
+        }
 
     init {
         Timber.d("CardBrowserViewModel::init")
 
         var selectAllDecks = false
         when (options) {
-            is CardBrowserLaunchOptions.SystemContextMenu -> { searchTerms = options.search.toString() }
+            is CardBrowserLaunchOptions.SystemContextMenu -> {
+                searchTerms = searchTerms.copy(userInput = options.search.toString())
+            }
+
             is CardBrowserLaunchOptions.SearchQueryJs -> {
-                searchTerms = options.search
+                searchTerms = searchTerms.copy(userInput = options.search)
                 selectAllDecks = options.allDecks
             }
-            is CardBrowserLaunchOptions.DeepLink -> { searchTerms = options.search }
+
+            is CardBrowserLaunchOptions.DeepLink -> {
+                searchTerms = searchTerms.copy(userInput = options.search)
+            }
+
             null -> {}
         }
 
@@ -313,8 +321,10 @@ class CardBrowserViewModel(
             flowOfCardsOrNotes.update { cardsOrNotes }
 
             val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
-            column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
-            column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
+            column1Candidates =
+                CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
+            column2Candidates =
+                CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
 
             setupColumns(cardsOrNotes)
 
@@ -484,6 +494,7 @@ class CardBrowserViewModel(
                 reverseDirectionFlow.update { ReverseDirection(orderAsc = false) }
                 launchSearchForCards()
             }
+
             ChangeCardOrder.DirectionChange -> {
                 reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
                 cards.reverse()
@@ -619,6 +630,7 @@ class CardBrowserViewModel(
         withCol { config.set("savedFilters", filters) }
         return filters
     }
+
     suspend fun savedSearches(): HashMap<String, String> =
         withCol { config.get("savedFilters") } ?: hashMapOf()
 
@@ -650,18 +662,13 @@ class CardBrowserViewModel(
     private fun <T> Flow<T>.ignoreValuesFromViewModelLaunch(): Flow<T> =
         this.filter { initCompleted }
 
-    suspend fun setFilterQuery(filterQuery: String) {
-        this.flowOfFilterQuery.emit(filterQuery)
-        launchSearchForCards(filterQuery)
-    }
-
     /**
      * Searches for all marked notes and replaces the current search results with these marked notes.
      */
     suspend fun searchForMarkedNotes() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
-        setFilterQuery("tag:marked")
+        launchSearchForCards(searchTerms.copy(userInput = "tag:marked"))
     }
 
     /**
@@ -670,18 +677,7 @@ class CardBrowserViewModel(
     suspend fun searchForSuspendedCards() {
         // only intended to be used if the user has no selection
         if (hasSelectedAnyRows()) return
-        setFilterQuery("is:suspended")
-    }
-
-    suspend fun setFlagFilter(flag: Flag) {
-        Timber.i("filtering to flag: %s", flag)
-        val flagSearchTerm = "flag:${flag.code}"
-        val searchTerms = when {
-            searchTerms.contains("flag:") -> searchTerms.replaceFirst("flag:.".toRegex(), flagSearchTerm)
-            searchTerms.isNotEmpty() -> "$flagSearchTerm $searchTerms"
-            else -> flagSearchTerm
-        }
-        setFilterQuery(searchTerms)
+        launchSearchForCards(searchTerms.copy(userInput = "is:suspended"))
     }
 
     suspend fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
@@ -691,14 +687,17 @@ class CardBrowserViewModel(
         if (selectedTags.isNotEmpty()) {
             sb.append("($tagsConcat)") // Only if we added anything to the tag list
         }
-        setFilterQuery(sb.toString())
+        launchSearchForCards(searchTerms.copy(userInput = sb.toString()))
     }
 
     /** Previewing */
     suspend fun queryPreviewIntentData(): PreviewerDestination {
         // If in NOTES mode, we show one Card per Note, as this matches Anki Desktop
         return if (selectedRowCount() > 1) {
-            PreviewerDestination(currentIndex = 0, PreviewerIdsFile(cacheDir, queryAllSelectedCardIds()))
+            PreviewerDestination(
+                currentIndex = 0,
+                PreviewerIdsFile(cacheDir, queryAllSelectedCardIds())
+            )
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = indexOfFirstCheckedCard() ?: 0
@@ -737,12 +736,13 @@ class CardBrowserViewModel(
         searchQueryInputFlow.update { null }
     }
 
-    fun moveSelectedCardsToDeck(deckId: DeckId): Deferred<OpChangesWithCount> = viewModelScope.async {
-        val selectedCardIds = queryAllSelectedCardIds()
-        return@async undoableOp {
-            setDeck(selectedCardIds, deckId)
+    fun moveSelectedCardsToDeck(deckId: DeckId): Deferred<OpChangesWithCount> =
+        viewModelScope.async {
+            val selectedCardIds = queryAllSelectedCardIds()
+            return@async undoableOp {
+                setDeck(selectedCardIds, deckId)
+            }
         }
-    }
 
     suspend fun updateSelectedCardsFlag(flag: Flag): List<CardId> {
         val idsToChange = queryAllSelectedCardIds()
@@ -755,8 +755,9 @@ class CardBrowserViewModel(
      */
     fun endMultiSelectMode() = selectNone()
 
-    suspend fun launchSearchForCards(searchQuery: String): Job? {
+    suspend fun launchSearchForCards(searchQuery: SearchParameters): Job? {
         searchTerms = searchQuery
+        flowOfFilterQuery.emit(searchTerms)
         return launchSearchForCards()
     }
 
@@ -769,11 +770,7 @@ class CardBrowserViewModel(
         // update the UI while we're searching
         clearCardsList()
 
-        val query: String = if (searchTerms.contains("deck:")) {
-            "($searchTerms)"
-        } else {
-            if ("" != searchTerms) "$restrictOnDeck($searchTerms)" else restrictOnDeck
-        }
+        val query: String = searchTerms.toQuery()
 
         searchJob?.cancel()
         searchJob = launchCatchingIO(
