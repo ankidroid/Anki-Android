@@ -35,7 +35,6 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
-import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DatabaseRestorationListener
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.LocalizedUnambiguousBackupTimeFormatter
@@ -54,10 +53,11 @@ import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
-import com.ichi2.anki.isLoggedIn
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.servicelayer.DebugInfoService
 import com.ichi2.anki.showImportDialog
+import com.ichi2.anki.sync.ConflictResolution
+import com.ichi2.anki.sync.isLoggedIn
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
@@ -304,7 +304,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.check_db_title)
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
-                        (activity as DeckPicker).integrityCheck()
+                        (activity as DeckPicker).syncHandler.integrityCheck()
                         activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -328,7 +328,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.backup_one_way_sync_from_server)
                     message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
-                        (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
+                        (activity as DeckPicker).syncHandler.sync(ConflictResolution.FULL_DOWNLOAD)
                         activity?.dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)

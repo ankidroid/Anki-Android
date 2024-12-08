@@ -21,6 +21,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario.launchActivityForResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.sync.SyncPreferences
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals

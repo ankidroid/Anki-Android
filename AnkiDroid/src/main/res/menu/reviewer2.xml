@@ -18,6 +18,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
+        android:id="@+id/action_sync"
+        android:icon="@drawable/ic_sync"
+        android:title="@string/button_sync"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/action_undo"
         android:enabled="false"
         android:icon="@drawable/ic_undo_white"

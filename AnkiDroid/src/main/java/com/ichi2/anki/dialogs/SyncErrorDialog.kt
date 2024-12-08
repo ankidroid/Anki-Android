@@ -25,24 +25,29 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
-import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
-import com.ichi2.anki.joinSyncMessages
 import com.ichi2.anki.showError
+import com.ichi2.anki.sync.ConflictResolution
+import com.ichi2.anki.sync.joinSyncMessages
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 
 class SyncErrorDialog : AsyncDialogFragment() {
-    interface SyncErrorDialogListener {
+    interface SyncErrorDialogListenerProvider {
+        fun requireSyncErrorDialogListener(): SyncErrorDialogListener
+    }
+
+    interface SyncErrorDialogListener : SyncErrorDialogListenerProvider {
         fun showSyncErrorDialog(dialogType: Int)
         fun showSyncErrorDialog(dialogType: Int, message: String?)
         fun loginToSyncServer()
         fun sync(conflict: ConflictResolution? = null)
         fun mediaCheck()
         fun integrityCheck()
+        override fun requireSyncErrorDialogListener() = this
     }
 
-    fun requireSyncErrorDialogListener() = activity as SyncErrorDialogListener
+    fun requireSyncErrorDialogListener() = (activity as SyncErrorDialogListenerProvider).requireSyncErrorDialogListener()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
@@ -284,7 +289,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 )
                 return
             }
-            activity.showSyncErrorDialog(dialogType, dialogMessage)
+            activity.syncHandler.showSyncErrorDialog(dialogType, dialogMessage)
         }
 
         override fun toMessage(): Message = Message.obtain().apply {

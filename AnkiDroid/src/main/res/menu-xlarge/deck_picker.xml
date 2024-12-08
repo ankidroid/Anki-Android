@@ -12,7 +12,7 @@
         android:id="@+id/action_sync"
         android:icon="@drawable/ic_sync"
         android:title="@string/button_sync"
-        app:actionProviderClass="com.ichi2.anki.SyncActionProvider"
+        app:actionProviderClass="com.ichi2.anki.sync.SyncActionProvider"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_deck_rename"
