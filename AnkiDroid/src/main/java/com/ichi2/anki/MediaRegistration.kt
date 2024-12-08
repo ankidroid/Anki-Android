@@ -27,13 +27,14 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.ClipboardUtil
 import com.ichi2.utils.ContentResolverUtil.getFileName
-import com.ichi2.utils.FileUtil.getFileNameAndExtension
+import com.ichi2.utils.FileNameAndExtension
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.lang.IllegalStateException
 
 /**
  * RegisterMediaForWebView is used for registering media in temp path,
@@ -51,15 +52,11 @@ class MediaRegistration(private val context: Context) {
      */
     @Throws(IOException::class)
     fun loadMediaIntoCollection(uri: Uri, description: ClipDescription): String? {
-        val fileName: String
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
-        val fileNameAndExtension = getFileNameAndExtension(filename)
-        fileName = if (checkFilename(fileNameAndExtension!!)) {
-            "${fileNameAndExtension.key}-name"
-        } else {
-            fileNameAndExtension.key
-        }
+        val (fileName, fileExtensionWithDot) = FileNameAndExtension.fromString(filename)
+            ?.renameForCreateTempFile()
+            ?: throw IllegalStateException("Unable to determine valid filename")
         var clipCopy: File
         var bytesWritten: Long
         val isImage = ClipboardUtil.hasImage(description)
@@ -67,7 +64,7 @@ class MediaRegistration(private val context: Context) {
 
         openInputStreamWithURI(uri).use { copyFd ->
             // no conversion to jpg in cases of gif and jpg and if png image with alpha channel
-            if (shouldConvertToJPG(fileNameAndExtension.value, copyFd, isImage)) {
+            if (shouldConvertToJPG(fileExtensionWithDot, copyFd, isImage)) {
                 clipCopy = File.createTempFile(fileName, ".jpg")
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
                 // return null if jpg conversion false.
@@ -75,7 +72,7 @@ class MediaRegistration(private val context: Context) {
                     return null
                 }
             } else {
-                clipCopy = File.createTempFile(fileName, fileNameAndExtension.value)
+                clipCopy = File.createTempFile(fileName, fileExtensionWithDot)
                 bytesWritten = CompatHelper.compat.copyFile(fd, clipCopy.absolutePath)
             }
         }
@@ -146,10 +143,6 @@ class MediaRegistration(private val context: Context) {
             return false // pngs with transparency would be ruined by conversion
         }
         return true
-    }
-
-    private fun checkFilename(fileNameAndExtension: Map.Entry<String, String>): Boolean {
-        return fileNameAndExtension.key.length <= 3
     }
 
     fun onPaste(uri: Uri, description: ClipDescription): String? {
