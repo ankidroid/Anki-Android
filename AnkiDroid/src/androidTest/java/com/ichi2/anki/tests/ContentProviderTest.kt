@@ -75,7 +75,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
  */
 class ContentProviderTest : InstrumentedTest() {
     @get:Rule
-    var runtimePermissionRule = grantPermissions(storagePermission, FlashCardsContract.READ_WRITE_PERMISSION)
+    var runtimePermissionRule = grantPermissions(storagePermission, FlashCardsContract.getPermission())
 
     // Whether tear down should be executed. I.e. if set up was not cancelled.
     private var tearDown = false
