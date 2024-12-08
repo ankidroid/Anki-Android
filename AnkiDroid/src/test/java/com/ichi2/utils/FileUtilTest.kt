@@ -115,7 +115,7 @@ class FileUtilTest {
 
     @Test
     fun `test create temp file - too short`() {
-        // createTempFile fails with a 2-character prefix
+        // createTempFile fails with a 2-character filename
         val invalidTempFile = getValidFileNameAndExtension("ok.computer")
         assertThrows<IllegalArgumentException> {
             File.createTempFile(invalidTempFile.fileName, invalidTempFile.extensionWithDot)
@@ -128,6 +128,17 @@ class FileUtilTest {
     fun `string representation is unchanged`() {
         val underTest = getValidFileNameAndExtension("file.ext")
         assertThat("toString()", underTest.toString(), equalTo("file.ext"))
+    }
+
+    @Test
+    fun `extension replacement dot handling`() {
+        // I felt that requiring the '.' prefix was unintuitive and would lead to errors
+        // so both the missing and valid cases are handled
+
+        val underTest = getValidFileNameAndExtension("file.ext")
+
+        assertThat("replace extension, no .", underTest.replaceExtension(extension = "file").toString(), equalTo("file.file"))
+        assertThat("replace extension, with .", underTest.replaceExtension(extension = ".file").toString(), equalTo("file.file"))
     }
 
     /**
