@@ -22,7 +22,7 @@ import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.R
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
@@ -127,7 +127,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             scenario.onFragment { f: CustomStudyDialog ->
                 val dialog = f.dialog as AlertDialog?
                 MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-                onView(withText(R.string.custom_study_increase_new_limit)).inRoot(isDialog()).check(doesNotExist())
+                onView(withText(TR.customStudyIncreaseTodaysNewCardLimit())).inRoot(isDialog()).check(doesNotExist())
             }
         }
     }

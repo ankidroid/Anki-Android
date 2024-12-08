@@ -99,10 +99,10 @@ import com.ichi2.anki.cardviewer.ViewerRefresh
 import com.ichi2.anki.cardviewer.handledGamepadKeyDown
 import com.ichi2.anki.cardviewer.handledGamepadKeyUp
 import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
+import com.ichi2.anki.dialogs.customstudy.CustomStudyCramResponse
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.pages.CongratsPage
@@ -2589,7 +2589,7 @@ abstract class AbstractFlashcardViewer :
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        customStudyExtra: CustomStudyCramResponse
     ) {
         launchCatchingTask {
             val note = withCol { currentCard!!.note(this@withCol) }

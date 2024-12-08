@@ -82,6 +82,7 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyCramResponse
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -1691,9 +1692,9 @@ open class CardBrowser :
         deckSpinnerSelection.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, customStudyExtra: CustomStudyCramResponse) {
         when (tagsDialogListenerAction) {
-            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, stateFilter)
+            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags)
             TagsDialogListenerAction.EDIT_TAGS -> launchCatchingTask {
                 editSelectedCardsTags(selectedTags, indeterminateTags)
             }
@@ -1721,9 +1722,9 @@ open class CardBrowser :
         }
     }
 
-    private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) =
+    private fun filterByTags(selectedTags: List<String>) =
         launchCatchingTask {
-            viewModel.filterByTags(selectedTags, cardState)
+            viewModel.filterByTags(selectedTags)
         }
 
     /** Updates search terms to only show cards with selected flag.  */
@@ -2343,11 +2344,16 @@ open class CardBrowser :
         renderBrowserQAParams(0, viewModel.rowCount - 1, viewModel.cards.toList())
     }
 
+    @KotlinCleanup("just call filterByTags")
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun filterByTag(vararg tags: String) {
         tagsDialogListenerAction = TagsDialogListenerAction.FILTER
-        onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
-        filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
+        val unused = CustomStudyCramResponse(
+            kind = CardStateFilter.ALL_CARDS.cramKind,
+            cardLimit = 100
+        )
+        onSelectedTags(tags.toList(), emptyList(), unused)
+        filterByTags(tags.toList())
     }
 
     @VisibleForTesting

@@ -93,10 +93,10 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.IntegerDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyCramResponse
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
-import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimedia.AudioRecordingFragment
 import com.ichi2.anki.multimedia.AudioVideoFragment
 import com.ichi2.anki.multimedia.MultimediaActivity.Companion.MULTIMEDIA_RESULT
@@ -1546,7 +1546,7 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        customStudyExtra: CustomStudyCramResponse
     ) {
         if (this.selectedTags != selectedTags) {
             isTagsEdited = true

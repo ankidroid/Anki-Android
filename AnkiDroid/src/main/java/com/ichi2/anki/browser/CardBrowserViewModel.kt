@@ -35,7 +35,6 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewerDestination
 import com.ichi2.anki.export.ExportDialogFragment.ExportType
 import com.ichi2.anki.launchCatchingIO
-import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.CARDS
 import com.ichi2.anki.model.CardsOrNotes.NOTES
@@ -684,8 +683,8 @@ class CardBrowserViewModel(
         setFilterQuery(searchTerms)
     }
 
-    suspend fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
-        val sb = StringBuilder(cardState.toSearch)
+    suspend fun filterByTags(selectedTags: List<String>) {
+        val sb = StringBuilder()
         // join selectedTags as "tag:$tag" with " or " between them
         val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
         if (selectedTags.isNotEmpty()) {

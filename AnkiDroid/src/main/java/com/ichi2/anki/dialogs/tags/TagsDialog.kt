@@ -14,7 +14,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
@@ -25,13 +28,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.OnContextAndLongClickListener
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.dialogs.IntegerDialog
+import com.ichi2.anki.dialogs.customstudy.CustomStudyCramResponse
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
@@ -85,6 +93,15 @@ class TagsDialog : AnalyticsDialogFragment {
     private val listener: TagsDialogListener?
 
     private lateinit var selectedOption: CardStateFilter
+    private var customStudyCardLimit: Int = 100
+        set(value) {
+            field = value
+            // WARN: Anki concats with an input box, leading to incorrect plural:
+            // 'Select [1 -+] cards from this deck'
+            this.dialog
+                ?.findViewById<TextView>(R.id.custom_study_card_count)
+                ?.text = "${TR.customStudySelect()} $value ${TR.customStudyCardsFromTheDeck()}"
+        }
 
     /**
      * Constructs a new [TagsDialog] that will communicate the results using the provided listener.
@@ -100,6 +117,11 @@ class TagsDialog : AnalyticsDialogFragment {
      */
     constructor() {
         listener = null
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("customStudyCardLimit", customStudyCardLimit)
     }
 
     /**
@@ -138,6 +160,9 @@ class TagsDialog : AnalyticsDialogFragment {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (savedInstanceState?.containsKey("customStudyCardLimit") == true) {
+            customStudyCardLimit = savedInstanceState.getInt("customStudyCardLimit")
+        }
         resizeWhenSoftInputShown(requireActivity().window)
 
         val tagsFile = requireNotNull(
@@ -179,16 +204,12 @@ class TagsDialog : AnalyticsDialogFragment {
         if (tags!!.isEmpty) {
             noTagsTextView?.visibility = View.VISIBLE
         }
-        val optionsGroup = tagsDialogView.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
-        for (i in 0 until optionsGroup.childCount) {
-            optionsGroup.getChildAt(i).id = i
-        }
-        optionsGroup.check(0)
-        selectedOption = radioButtonIdToCardState(optionsGroup.checkedRadioButtonId)
-        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = radioButtonIdToCardState(checkedId) }
+
+        // setup options group (only visible for custom study)
+        setupCustomStudyOptions(tagsDialogView)
+
         if (type == DialogType.EDIT_TAGS) {
             dialogTitle = resources.getString(R.string.card_details_tags)
-            optionsGroup.visibility = View.GONE
             positiveText = getString(R.string.dialog_ok)
             tagsArrayAdapter!!.tagContextAndLongClickListener =
                 OnContextAndLongClickListener { v ->
@@ -203,10 +224,14 @@ class TagsDialog : AnalyticsDialogFragment {
         adjustToolbar(tagsDialogView)
         dialog = AlertDialog.Builder(requireActivity())
             .positiveButton(text = positiveText!!) {
+                val response = CustomStudyCramResponse(
+                    kind = selectedOption.cramKind,
+                    cardLimit = customStudyCardLimit
+                )
                 tagsDialogListener.onSelectedTags(
                     tags!!.copyOfCheckedTagList(),
                     tags!!.copyOfIndeterminateTagList(),
-                    selectedOption
+                    response
                 )
             }
             .negativeButton(R.string.dialog_cancel)
@@ -217,21 +242,57 @@ class TagsDialog : AnalyticsDialogFragment {
         return dialog
     }
 
+    // TODO: This should probably be a separate dialog
+    private fun setupCustomStudyOptions(view: View) {
+        if (type != DialogType.CUSTOM_STUDY_TAGS) {
+            view.findViewById<View>(R.id.custom_study_tag_settings).isVisible = false
+            return
+        }
+
+        // 'cards to study' - Anki default is 100
+        view.findViewById<Button>(R.id.custom_study_set_card_count).setOnClickListener {
+            // TODO: Could be a better dialog
+            var dialog = IntegerDialog().apply {
+                setArgs(
+                    title = "",
+                    prompt = null,
+                    defaultValue = customStudyCardLimit.toString(),
+                    digits = 5
+                )
+                setCallbackRunnable { customStudyCardLimit = it }
+            }
+            showDialogFragment(dialog)
+        }
+
+        // setup radio buttons
+        val optionsGroup = view.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
+        for (filter in CardStateFilter.entries) {
+            RadioButton(optionsGroup.context).apply {
+                id = filter.order
+                text = filter.getDescription()
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, // full width to make more clickable
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                optionsGroup.addView(this)
+            }
+        }
+        optionsGroup.check(0)
+        selectedOption = radioButtonIdToCardState(optionsGroup.checkedRadioButtonId)
+        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = radioButtonIdToCardState(checkedId) }
+        optionsGroup.isVisible = true
+    }
+
     override fun onResume() {
         super.onResume()
         dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+
+        // Update the UI now we have a view we can access
+        this.customStudyCardLimit = customStudyCardLimit
     }
 
     private fun radioButtonIdToCardState(id: Int) =
-        when (id) {
-            0 -> CardStateFilter.ALL_CARDS
-            1 -> CardStateFilter.NEW
-            2 -> CardStateFilter.DUE
-            else -> {
-                Timber.w("unexpected value: %d", id)
-                CardStateFilter.ALL_CARDS
-            }
-        }
+        CardStateFilter.fromOrder(id) ?: CardStateFilter.ALL_CARDS
 
     private fun adjustToolbar(tagsDialogView: View) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar)
