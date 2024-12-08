@@ -26,7 +26,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.util.AbstractMap
 
 object FileUtil {
 
@@ -107,21 +106,6 @@ object FileUtil {
     }
 
     /**
-     * @return Key: Filename; Value: extension including dot
-     */
-    fun getFileNameAndExtension(fileName: String?): Map.Entry<String, String>? {
-        if (fileName == null) {
-            return null
-        }
-        val index = fileName.lastIndexOf(".")
-        return if (index < 1) {
-            null
-        } else {
-            AbstractMap.SimpleEntry(fileName.substring(0, index), fileName.substring(index))
-        }
-    }
-
-    /**
      * Wraps [File.listFiles] and throws an exception instead of returning `null` if dir does not
      * denote an actual directory.
      *
@@ -149,4 +133,38 @@ object FileUtil {
     }
 
     fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
+}
+
+/**
+ * A filename without a path (e.g `collection.apkg`)
+ *
+ * @param fileName name of the file, before the '.'
+ * @param extensionWithDot extension of the file, with a '.'
+ */
+data class FileNameAndExtension(val fileName: String, val extensionWithDot: String) {
+    /**
+     * Ensures the filename is valid for [File.createTempFile], which requires `name.length() >= 3`
+     */
+    fun renameForCreateTempFile(): FileNameAndExtension =
+        if (fileName.length >= 3) this else this.copy(fileName = "$fileName-name")
+
+    override fun toString() = "$fileName$extensionWithDot"
+
+    companion object {
+
+        /**
+         * @return a valid [FileNameAndExtension]. `null` if [fileName] does not contain '.'
+         */
+        fun fromString(fileName: String): FileNameAndExtension? {
+            val index = fileName.lastIndexOf(".")
+            return if (index < 1) {
+                null
+            } else {
+                FileNameAndExtension(
+                    fileName = fileName.substring(0, index),
+                    extensionWithDot = fileName.substring(index)
+                )
+            }
+        }
+    }
 }
