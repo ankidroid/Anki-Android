@@ -1067,7 +1067,7 @@ open class Reviewer :
         }.also {
             if (ease == Ease.AGAIN && wasLeech) {
                 state.topCard.load(getColUnsafe)
-                val leechMessage: String = if (state.topCard.queue < 0) {
+                val leechMessage: String = if (!state.topCard.queue.reviewable()) {
                     resources.getString(R.string.leech_suspend_notification)
                 } else {
                     resources.getString(R.string.leech_notification)
@@ -1571,7 +1571,7 @@ open class Reviewer :
             false
         } else {
             getColUnsafe.db.queryScalar(
-                "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+                "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QueueType.SUSPENDED.toInt() + " limit 1",
                 currentCard!!.nid,
                 currentCard!!.id
             ) == 1
@@ -1585,7 +1585,7 @@ open class Reviewer :
             false
         } else {
             getColUnsafe.db.queryScalar(
-                "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+                "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QueueType.NEW.toInt() + " limit 1",
                 currentCard!!.nid,
                 currentCard!!.id
             ) == 1

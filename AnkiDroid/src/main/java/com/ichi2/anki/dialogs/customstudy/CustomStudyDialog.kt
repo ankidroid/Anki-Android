@@ -52,7 +52,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Consts.DynPriority
+import com.ichi2.libanki.Consts.Dyn.Companion.toDyn
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.getNullableInt
@@ -224,45 +224,39 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         ar.put(0, 1)
                         createCustomStudySession(
                             ar,
-                            arrayOf(
-                                String.format(
-                                    Locale.US,
-                                    "rated:%d:1",
-                                    n
-                                ),
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_RANDOM
+                            String.format(
+                                Locale.US,
+                                "rated:%d:1",
+                                n
                             ),
+                            Consts.Dyn.MAX_SIZE,
+                            Consts.Dyn.RANDOM,
                             false
                         )
                     }
                     STUDY_AHEAD -> {
                         createCustomStudySession(
                             JSONArray(),
-                            arrayOf(
-                                String.format(
-                                    Locale.US,
-                                    "prop:due<=%d",
-                                    n
-                                ),
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_DUE
+                            String.format(
+                                Locale.US,
+                                "prop:due<=%d",
+                                n
                             ),
+                            Consts.Dyn.MAX_SIZE,
+                            Consts.Dyn.DUE,
                             true
                         )
                     }
                     STUDY_RANDOM -> {
-                        createCustomStudySession(JSONArray(), arrayOf("", n, Consts.DYN_RANDOM), true)
+                        createCustomStudySession(JSONArray(), "", n.toDyn(), Consts.Dyn.RANDOM, true)
                     }
                     STUDY_PREVIEW -> {
                         createCustomStudySession(
                             JSONArray(),
-                            arrayOf(
-                                "is:new added:" +
-                                    n,
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_OLDEST
-                            ),
+                            "is:new added:" +
+                                n,
+                            Consts.Dyn.MAX_SIZE,
+                            Consts.Dyn.OLDEST,
                             false
                         )
                     }
@@ -308,11 +302,9 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
         createCustomStudySession(
             JSONArray(),
-            arrayOf(
-                sb.toString(),
-                Consts.DYN_MAX_SIZE,
-                Consts.DYN_RANDOM
-            ),
+            sb.toString(),
+            Consts.Dyn.MAX_SIZE,
+            Consts.Dyn.RANDOM,
             true
         )
     }
@@ -382,10 +374,12 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     /**
      * Create a custom study session
      * @param delays delay options for scheduling algorithm
-     * @param terms search terms
+     * @param query a query in the language of the card browser
+     * @param priority1 the first priority in the deck settings
+     * @param priority2 the second priority in the deck settings
      * @param resched whether to reschedule the cards based on the answers given (or ignore them if false)
      */
-    private fun createCustomStudySession(delays: JSONArray, terms: Array<Any>, resched: Boolean) {
+    private fun createCustomStudySession(delays: JSONArray, query: String, priority1: Consts.Dyn, priority2: Consts.Dyn, resched: Boolean) {
         val dyn: Deck
         val did = requireArguments().getLong(DID)
 
@@ -432,10 +426,9 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             dyn.put("delays", JSONObject.NULL)
         }
         val ar = dyn.getJSONArray("terms")
-        ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0])
-        ar.getJSONArray(0).put(1, terms[1])
-        @DynPriority val priority = terms[2] as Int
-        ar.getJSONArray(0).put(2, priority)
+        ar.getJSONArray(0).put(0, "deck:\"$deckToStudyName\" $query")
+        ar.getJSONArray(0).put(1, priority1.code)
+        ar.getJSONArray(0).put(2, priority2.code)
         dyn.put("resched", resched)
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck")

@@ -41,6 +41,8 @@ import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.Flag
+import com.ichi2.libanki.Consts.ModelType
+import com.ichi2.libanki.Consts.ModelType.Companion.toModelType
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -612,7 +614,7 @@ class Collection(
         // invalid ords
         for (m in notetypes.all()) {
             // ignore clozes
-            if (m.getInt("type") != Consts.MODEL_STD) {
+            if (m.getInt("type").toModelType() == ModelType.CLOZE) {
                 continue
             }
             // Make a list of valid ords for this model

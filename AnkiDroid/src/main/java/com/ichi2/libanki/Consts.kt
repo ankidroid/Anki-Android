@@ -15,57 +15,73 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
-import androidx.annotation.IntDef
-import kotlin.annotation.Retention
-
 object Consts {
     // Queue types
-    const val QUEUE_TYPE_MANUALLY_BURIED = -3
-    const val QUEUE_TYPE_SIBLING_BURIED = -2
-    const val QUEUE_TYPE_SUSPENDED = -1
-    const val QUEUE_TYPE_NEW = 0
-    const val QUEUE_TYPE_LRN = 1
-    const val QUEUE_TYPE_REV = 2
-    const val QUEUE_TYPE_DAY_LEARN_RELEARN = 3
-    const val QUEUE_TYPE_PREVIEW = 4
+    enum class QueueType {
+        MANUALLY_BURIED,
+        SIBLING_BURIED,
+        SUSPENDED,
+        NEW,
+        LRN,
+        REV,
+        DAY_LEARN_RELEARN,
+        PREVIEW;
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(QUEUE_TYPE_MANUALLY_BURIED, QUEUE_TYPE_SIBLING_BURIED, QUEUE_TYPE_SUSPENDED, QUEUE_TYPE_NEW, QUEUE_TYPE_LRN, QUEUE_TYPE_REV, QUEUE_TYPE_DAY_LEARN_RELEARN, QUEUE_TYPE_PREVIEW)
-    annotation class CardQueue
+        /**
+         * Whether this card can be reviewed.
+         */
+        fun reviewable() =
+            when (this) {
+                MANUALLY_BURIED, SIBLING_BURIED, SUSPENDED -> false
+                NEW, LRN, REV, DAY_LEARN_RELEARN, PREVIEW -> true
+            }
+
+        fun toInt() = ordinal - 3
+
+        companion object {
+            fun Int.toQueueType() =
+                QueueType.entries[this + 3]
+        }
+    }
 
     // Card types
-    const val CARD_TYPE_NEW = 0
-    const val CARD_TYPE_LRN = 1
-    const val CARD_TYPE_REV = 2
-    const val CARD_TYPE_RELEARNING = 3
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING)
-    annotation class CardType
+    enum class CardType {
+        NEW, LRN, REV, RELEARNING;
+        companion object {
+            fun Int.toCardType() = CardType.entries[this]
+        }
+    }
 
     // dynamic deck order
-    const val DYN_OLDEST = 0
-    const val DYN_RANDOM = 1
-    const val DYN_SMALLINT = 2
-    const val DYN_BIGINT = 3
-    const val DYN_LAPSES = 4
-    const val DYN_ADDED = 5
-    const val DYN_DUE = 6
-    const val DYN_REVADDED = 7
-    const val DYN_DUEPRIORITY = 8
-    const val DYN_MAX_SIZE = 99999
+    /**
+     * The priority order for filtered deck.
+     * @param code The integer encoding this value in json.
+     */
+    enum class Dyn(val code: Int) {
+        OLDEST(0),
+        RANDOM(1),
+        SMALLINT(2),
+        BIGINT(3),
+        LAPSES(4),
+        ADDED(5),
+        DUE(6),
+        REVADDED(7),
+        DUEPRIORITY(8),
+        MAX_SIZE(99999);
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(DYN_OLDEST, DYN_RANDOM, DYN_SMALLINT, DYN_BIGINT, DYN_LAPSES, DYN_ADDED, DYN_DUE, DYN_REVADDED, DYN_DUEPRIORITY)
-    annotation class DynPriority
+        companion object {
+            fun Int.toDyn() = Dyn.entries.first { it.code == this }
+        }
+    }
 
     // model types
-    const val MODEL_STD = 0
-    const val MODEL_CLOZE = 1
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(MODEL_STD, MODEL_CLOZE)
-    annotation class ModelType
+    enum class ModelType {
+        STD,
+        CLOZE;
+        companion object {
+            fun Int.toModelType() = ModelType.entries[this]
+        }
+    }
 
     const val STARTING_FACTOR = 2500
 

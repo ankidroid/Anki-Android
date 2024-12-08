@@ -17,9 +17,11 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.Ease
-import com.ichi2.libanki.Consts.CARD_TYPE_REV
-import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
-import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
+import com.ichi2.libanki.Consts.CardType
+import com.ichi2.libanki.Consts.CardType.REV
+import com.ichi2.libanki.Consts.QueueType
+import com.ichi2.libanki.Consts.QueueType.REV
+import com.ichi2.libanki.Consts.QueueType.SUSPENDED
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.TimeManager
@@ -86,7 +88,7 @@ class FinderTest : JvmTest() {
     private fun burySiblings(sched: Scheduler, toManuallyBury: Card): Card {
         sched.answerCard(toManuallyBury, Ease.AGAIN)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
-        assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
+        assertThat(siblingBuried.queue, equalTo(Consts.QueueType.SIBLING_BURIED))
         return siblingBuried
     }
 
@@ -95,7 +97,7 @@ class FinderTest : JvmTest() {
         val manuallyBuriedCard = Card(col, id)
         assertThat(
             manuallyBuriedCard.queue,
-            equalTo(Consts.QUEUE_TYPE_MANUALLY_BURIED)
+            equalTo(Consts.QueueType.MANUALLY_BURIED)
         )
         return manuallyBuriedCard
     }
@@ -175,8 +177,8 @@ class FinderTest : JvmTest() {
         // card states
         var c = note.cards()[0].apply {
             due = 999999
-            queue = QUEUE_TYPE_REV
-            type = CARD_TYPE_REV
+            queue = QueueType.REV
+            type = CardType.REV
         }
         assertEquals(0, col.findCards("is:review").size)
         col.updateCard(c, skipUndoEntry = true)
@@ -184,12 +186,12 @@ class FinderTest : JvmTest() {
         assertEquals(0, col.findCards("is:due").size)
         c.update {
             due = 0
-            queue = QUEUE_TYPE_REV
+            queue = QueueType.REV
         }
         AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:due"))
         assertEquals(4, col.findCards("-is:due").size)
         // ensure this card gets a later mod time
-        c.update { queue = QUEUE_TYPE_SUSPENDED }
+        c.update { queue = SUSPENDED }
         col.db.execute("update cards set mod = mod + 1 where id = ?", c.id)
         AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:suspended"))
         // nids

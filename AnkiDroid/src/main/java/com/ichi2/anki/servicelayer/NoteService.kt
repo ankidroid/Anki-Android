@@ -213,7 +213,7 @@ object NoteService {
      * or if all the cards in the note are new, returns null
      */
     fun avgEase(col: Collection, note: Note): Int? {
-        val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
+        val nonNewCards = note.cards(col).filter { it.type != Consts.CardType.NEW }
 
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
@@ -228,7 +228,7 @@ object NoteService {
      * or if all the cards in the note are new or learning, returns null
      */
     fun avgInterval(col: Collection, note: Note): Int? {
-        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
+        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CardType.NEW && it.type != Consts.CardType.LRN }
 
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
     }
@@ -252,7 +252,7 @@ fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(
 suspend fun isBuryNoteAvailable(card: Card): Boolean {
     return withCol {
         db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QueueType.NEW.toInt() + " limit 1",
             card.nid,
             card.id
         ) == 1
@@ -262,7 +262,7 @@ suspend fun isBuryNoteAvailable(card: Card): Boolean {
 suspend fun isSuspendNoteAvailable(card: Card): Boolean {
     return withCol {
         db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QueueType.SUSPENDED.toInt() + " limit 1",
             card.nid,
             card.id
         ) == 1

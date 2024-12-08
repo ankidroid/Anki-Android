@@ -22,6 +22,6 @@ import org.hamcrest.Matchers.equalTo
 
 object CollectionAssert {
     fun assertSuspended(collection: Collection, cardId: Long) {
-        assertThat("Card should be suspended", collection.getCard(cardId).queue, equalTo(Consts.QUEUE_TYPE_SUSPENDED))
+        assertThat("Card should be suspended", collection.getCard(cardId).queue, equalTo(Consts.QueueType.SUSPENDED))
     }
 }

@@ -245,7 +245,7 @@ class NoteServiceTest : RobolectricTest() {
         // factor for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {
             card.update {
-                type = Consts.CARD_TYPE_REV
+                type = Consts.CardType.REV
                 factor = 3000 / (i + 1)
             }
         }
@@ -254,13 +254,13 @@ class NoteServiceTest : RobolectricTest() {
 
         // test case: one card is new
         note.cards()[2].update {
-            type = Consts.CARD_TYPE_NEW
+            type = Consts.CardType.NEW
         }
         // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
         assertEquals(175, NoteService.avgEase(col, note))
 
         // test case: all cards are new
-        note.updateCards { type = Consts.CARD_TYPE_NEW }
+        note.updateCards { type = Consts.CardType.NEW }
         // no cards are rev, so avg ease cannot be calculated
         assertEquals(null, NoteService.avgEase(col, note))
     }
@@ -269,8 +269,8 @@ class NoteServiceTest : RobolectricTest() {
     fun testAvgInterval() {
         // basic case: all cards are relearning or review
         val note = addNoteUsingModelName("Cloze", "{{c1::Hello}}{{c2::World}}{{c3::foo}}{{c4::bar}}", "extra")
-        val reviewOrRelearningList = listOf(Consts.CARD_TYPE_REV, Consts.CARD_TYPE_RELEARNING)
-        val newOrLearningList = listOf(Consts.CARD_TYPE_NEW, Consts.CARD_TYPE_LRN)
+        val reviewOrRelearningList = listOf(Consts.CardType.REV, Consts.CardType.RELEARNING)
+        val newOrLearningList = listOf(Consts.CardType.NEW, Consts.CardType.LRN)
 
         // interval for cards: 3000, 1500, 1000, 750
         for ((i, card) in note.cards().withIndex()) {

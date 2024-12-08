@@ -21,8 +21,9 @@ import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
 import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
-import com.ichi2.libanki.Consts.CardQueue
 import com.ichi2.libanki.Consts.CardType
+import com.ichi2.libanki.Consts.CardType.Companion.toCardType
+import com.ichi2.libanki.Consts.QueueType.Companion.toQueueType
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -75,13 +76,9 @@ open class Card : Cloneable {
     var mod: Long = 0
     private var usn = 0
 
-    @get:CardType
-    @CardType
-    var type = 0
+    var type: CardType = CardType.NEW
 
-    @get:CardQueue
-    @CardQueue
-    var queue = 0
+    var queue = Consts.QueueType.NEW
     var due: Int = 0
     var ivl = 0
     var factor = 0
@@ -130,8 +127,8 @@ open class Card : Cloneable {
         ord = card.templateIdx
         mod = card.mtimeSecs
         usn = card.usn
-        type = card.ctype
-        queue = card.queue
+        type = card.ctype.toCardType()
+        queue = card.queue.toQueueType()
         due = card.due
         ivl = card.interval
         factor = card.easeFactor
@@ -154,8 +151,8 @@ open class Card : Cloneable {
             .setNoteId(nid)
             .setDeckId(did)
             .setTemplateIdx(ord)
-            .setCtype(type)
-            .setQueue(queue)
+            .setCtype(type.ordinal)
+            .setQueue(queue.toInt())
             .setDue(due)
             .setInterval(ivl)
             .setEaseFactor(factor)
@@ -453,8 +450,6 @@ open class Card : Cloneable {
     }
 
     companion object {
-        const val TYPE_REV = 2
-
         // A list of class members to skip in the toString() representation
         val SKIP_PRINT: Set<String> = HashSet(
             listOf(
