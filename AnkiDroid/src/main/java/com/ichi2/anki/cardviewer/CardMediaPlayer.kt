@@ -286,7 +286,6 @@ class CardMediaPlayer : Closeable {
                         soundErrorListener?.onTtsError(it, isAutomaticPlayback)
                     }
                 }
-                else -> Timber.w("unknown audio: ${tag.javaClass}")
             }
             ensureActive()
         }

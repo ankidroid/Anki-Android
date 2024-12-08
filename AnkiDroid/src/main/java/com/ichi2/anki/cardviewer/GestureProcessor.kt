@@ -107,11 +107,11 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
     }
 
     private fun execute(gesture: Gesture?): Boolean? {
-        val command = mapGestureToCommand(gesture) ?: return false
+        val command = gesture?.let { mapGestureToCommand(it) } ?: return false
         return processor?.executeCommand(command, gesture)
     }
 
-    private fun mapGestureToCommand(gesture: Gesture?): ViewerCommand? {
+    private fun mapGestureToCommand(gesture: Gesture): ViewerCommand? {
         return when (gesture) {
             Gesture.SWIPE_UP -> gestureSwipeUp
             Gesture.SWIPE_DOWN -> gestureSwipeDown
@@ -129,7 +129,6 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             Gesture.DOUBLE_TAP -> gestureDoubleTap
             Gesture.LONG_TAP -> gestureLongclick
             Gesture.SHAKE -> gestureShake
-            else -> null
         }
     }
 

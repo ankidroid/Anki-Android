@@ -728,7 +728,7 @@ open class DeckPicker :
     }
 
     @VisibleForTesting
-    fun handleStartupFailure(failure: StartupFailure?) {
+    fun handleStartupFailure(failure: StartupFailure) {
         when (failure) {
             is SDCardNotMounted -> {
                 Timber.i("SD card not mounted")

@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 
 object ActivityTransitionAnimation {
     @Suppress("DEPRECATION", "deprecated in API34 for predictive back, must plumb through new open/close parameter")
-    fun slide(activity: Activity, direction: Direction?) {
+    fun slide(activity: Activity, direction: Direction) {
         when (direction) {
             Direction.START -> if (isRightToLeft(activity)) {
                 activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out)
@@ -31,8 +31,6 @@ object ActivityTransitionAnimation {
             Direction.DOWN -> activity.overridePendingTransition(R.anim.slide_down_in, R.anim.slide_down_out)
             Direction.NONE -> activity.overridePendingTransition(R.anim.none, R.anim.none)
             Direction.DEFAULT -> {
-            }
-            else -> {
             }
         }
     }

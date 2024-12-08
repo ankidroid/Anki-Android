@@ -84,13 +84,13 @@ data class SoundOrVideoTag(val filename: String) : AvTag() {
     }
 }
 
-/** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
-open class AvTag
-
 /**
  * [Regex] used to identify the markers for sound files
  */
 val SOUND_RE = Pattern.compile("\\[sound:([^\\[\\]]*)]").toRegex()
+
+/** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
+sealed class AvTag
 
 fun stripAvRefs(text: String, replacement: String = "") = AvRef.REGEX.replace(text, replacement)
 
