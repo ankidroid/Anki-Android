@@ -81,7 +81,7 @@ import com.ichi2.anki.api.Ease
  * models                      | All models as JSONObjects.
  *                             | Supports query(). For code examples see class description of [Model].
  * --------------------------------------------------------------------------------------------------------------------
- * model/<model_id>            | Direct access to model `model_id` as JSONObject.
+ * models/<model_id>           | Direct access to model `model_id` as JSONObject.
  *                             | Supports query(). For code examples see class description of [Model].
  * --------------------------------------------------------------------------------------------------------------------
  * ```
@@ -779,7 +779,7 @@ public object FlashCardsContract {
          */
         public const val EASE: String = "answer_ease"
 
-        /*
+        /**
          * Time it took to answer the card (in ms)
          */
         public const val TIME_TAKEN: String = "time_taken"
@@ -986,5 +986,73 @@ public object FlashCardsContract {
          * The preferred name for the file that will be inserted/copied into collection.media
          */
         public const val PREFERRED_NAME: String = "preferred_name"
+    }
+
+    public object TrueCard {
+        @JvmField // required for Java API
+        public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "cards")
+
+        @Suppress("ConstPropertyName")
+        public const val _ID: String = "_id"
+
+        public const val NID: String = "nid"
+
+        public const val DID: String = "did"
+
+        public const val ORD: String = "ord"
+
+        public const val MOD: String = "mod"
+
+        public const val USN: String = "usn"
+
+        public const val TYPE: String = "type"
+
+        public const val QUEUE: String = "queue"
+
+        public const val DUE: String = "due"
+
+        public const val IVL: String = "ivl"
+
+        public const val FACTOR: String = "factor"
+
+        public const val REPS: String = "reps"
+
+        public const val LAPSES: String = "lapses"
+
+        public const val LEFT: String = "left"
+
+        public const val ODUE: String = "odue"
+
+        public const val ODID: String = "odid"
+
+        public const val FLAGS: String = "flags"
+
+        public const val DATA: String = "data"
+
+        @JvmField // required for Java API
+        public val DEFAULT_PROJECTION: Array<String> = arrayOf(
+            _ID,
+            NID,
+            DID,
+            ORD,
+            MOD,
+            USN,
+            TYPE,
+            QUEUE,
+            DUE,
+            IVL,
+            FACTOR,
+            REPS,
+            LAPSES,
+            LEFT,
+            ODUE,
+            ODID,
+            FLAGS,
+            DATA
+        )
+
+        public const val CONTENT_ITEM_TYPE: String = "vnd.android.cursor.item/vnd.com.ichi2.anki.card"
+
+        public const val CONTENT_TYPE: String = "vnd.android.cursor.dir/vnd.com.ichi2.anki.card"
     }
 }

@@ -108,6 +108,7 @@ class CardContentProvider : ContentProvider() {
         private const val DECK_SELECTED = 4001
         private const val DECKS_ID = 4002
         private const val MEDIA = 5000
+        private const val CARDS = 6000
         private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         /**
@@ -120,6 +121,7 @@ class CardContentProvider : ContentProvider() {
          * applied to more columns. "MID", "USN", "MOD" are not really user friendly.
          */
         private val sDefaultNoteProjectionDBAccess = FlashCardsContract.Note.DEFAULT_PROJECTION.clone()
+        private val sDefaultCardProjectionDBAccess = FlashCardsContract.TrueCard.DEFAULT_PROJECTION.clone()
 
         private fun sanitizeNoteProjection(projection: Array<String>?): Array<String> {
             if (projection.isNullOrEmpty()) {
@@ -130,6 +132,22 @@ class CardContentProvider : ContentProvider() {
                 val idx = FlashCardsContract.Note.DEFAULT_PROJECTION.indexOf(column)
                 if (idx >= 0) {
                     sanitized.add(sDefaultNoteProjectionDBAccess[idx])
+                } else {
+                    throw IllegalArgumentException("Unknown column $column")
+                }
+            }
+            return sanitized.toTypedArray()
+        }
+
+        private fun sanitizeCardProjection(projection: Array<String>?): Array<String> {
+            if (projection.isNullOrEmpty()) {
+                return sDefaultCardProjectionDBAccess
+            }
+            val sanitized = ArrayList<String>(projection.size)
+            for (column in projection) {
+                val idx = FlashCardsContract.TrueCard.DEFAULT_PROJECTION.indexOf(column)
+                if (idx >= 0) {
+                    sanitized.add(sDefaultCardProjectionDBAccess[idx])
                 } else {
                     throw IllegalArgumentException("Unknown column $column")
                 }
@@ -156,10 +174,17 @@ class CardContentProvider : ContentProvider() {
             addUri("decks/#", DECKS_ID)
             addUri("selected_deck/", DECK_SELECTED)
             addUri("media", MEDIA)
+            addUri("cards", CARDS)
 
             for (idx in sDefaultNoteProjectionDBAccess.indices) {
                 if (sDefaultNoteProjectionDBAccess[idx] == FlashCardsContract.Note._ID) {
                     sDefaultNoteProjectionDBAccess[idx] = "id as _id"
+                }
+            }
+
+            for (idx in sDefaultCardProjectionDBAccess.indices) {
+                if (sDefaultCardProjectionDBAccess[idx] == FlashCardsContract.TrueCard._ID) {
+                    sDefaultCardProjectionDBAccess[idx] = "id as _id"
                 }
             }
         }
@@ -187,6 +212,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES_ID -> FlashCardsContract.CardTemplate.CONTENT_ITEM_TYPE
             SCHEDULE -> FlashCardsContract.ReviewInfo.CONTENT_TYPE
             DECKS, DECK_SELECTED, DECKS_ID -> FlashCardsContract.Deck.CONTENT_TYPE
+            CARDS -> FlashCardsContract.TrueCard.CONTENT_TYPE
             else -> throw IllegalArgumentException("uri $uri is not supported")
         }
     }
@@ -393,6 +419,19 @@ class CardContentProvider : ContentProvider() {
                 val counts = JSONArray(listOf(col.sched.counts()))
                 addDeckToCursor(id, name, counts, rv, col, columns)
                 rv
+            }
+            CARDS -> {
+                /* Search for cards using the libanki browser syntax */
+                val proj = sanitizeCardProjection(projection)
+                val query = selection ?: ""
+                val cardIds = col.findCards(query)
+                if (cardIds.isNotEmpty()) {
+                    val sel = "id in (${cardIds.joinToString(",")})"
+                    val sql = SQLiteQueryBuilder.buildQueryString(false, "cards", proj, sel, null, null, order, null)
+                    col.db.database.query(sql)
+                } else {
+                    null
+                }
             }
             else -> throw IllegalArgumentException("uri $uri is not supported")
         }
