@@ -426,4 +426,8 @@ opening the system text to speech settings fails">
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">User action %s is not set in this notetype. Please configure it</string>
 
     <string name="directory_inaccessible_info">Learn more about how to restore access here %s or go to settings to update collection folder.</string>
+
+    <!--TTS engine dialog-->
+    <string name="tts_unavailable_title">Text-to-Speech Unavailable</string>
+    <string name="tts_unavailable_message">"Your device does not have in-built Text-to-Speech engine. Download an external Text-to-Speech engine to avail this. "</string>
 </resources>
