@@ -14,23 +14,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/note_name"
-                tools:text="Basic (and reversed card)"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/note_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    tools:text="Basic (and reversed card)" />
+
+             <TextView
+                    android:id="@+id/note_use_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    tools:text="912 notes"/>
+            </LinearLayout>
+            <CheckBox
+                android:id="@+id/selected_item_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-            <TextView
-                android:id="@+id/note_use_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
-                tools:text="912 notes"/>
+                android:checked="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:visibility="gone"
+                android:clickable="false"
+                tools:visibility="visible" />
+
         </LinearLayout>
 
         <androidx.appcompat.widget.ButtonBarLayout
@@ -48,7 +67,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/note_rename"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintHorizontal_bias="0.0"
+                tools:visibility="visible"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/note_rename"
