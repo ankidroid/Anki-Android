@@ -380,7 +380,7 @@ fun AlertDialog.Builder.titleWithHelpIcon(
     @StringRes stringRes: Int? = null,
     text: String? = null,
     block: View.OnClickListener
-) {
+): AlertDialog.Builder {
     // setup the view for the dialog
     val customTitleView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_title_with_help, null, false)
     setCustomTitle(customTitleView)
@@ -399,4 +399,6 @@ fun AlertDialog.Builder.titleWithHelpIcon(
         Timber.i("dialog help icon click")
         block.onClick(v)
     }
+    // Return the builder to support chaining
+    return this
 }

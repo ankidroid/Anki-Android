@@ -31,6 +31,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.joinSyncMessages
 import com.ichi2.anki.showError
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
+import com.ichi2.anki.utils.openUrl
+import com.ichi2.utils.titleWithHelpIcon
 
 class SyncErrorDialog : AsyncDialogFragment() {
     interface SyncErrorDialogListener {
@@ -73,6 +75,9 @@ class SyncErrorDialog : AsyncDialogFragment() {
             DIALOG_SYNC_CONFLICT_RESOLUTION -> {
                 // Sync conflict; allow user to cancel, or choose between local and remote versions
                 dialog.setIcon(R.drawable.ic_sync_problem)
+                    .titleWithHelpIcon(stringRes = R.string.sync_conflict_title_new) {
+                        requireActivity().openUrl(Uri.parse(getString(R.string.link_help_sync_conflict)))
+                    }
                     .setPositiveButton(R.string.sync_conflict_keep_local_new) { _, _ ->
                         requireSyncErrorDialogListener().showSyncErrorDialog(DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL)
                     }
