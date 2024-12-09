@@ -73,7 +73,7 @@ fun Activity.onSelectedCsvForImport(data: Intent) {
     stackBuilder.startActivities()
 }
 
-fun AnkiActivity.showImportDialog(id: Int, importPath: String) {
+fun AnkiActivity.showImportDialog(id: ImportDialog.Type, importPath: String) {
     Timber.d("showImportDialog() delegating to ImportDialog")
     val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, importPath)
     showAsyncDialogFragment(newFragment)
