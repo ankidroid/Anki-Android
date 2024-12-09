@@ -1140,6 +1140,8 @@ open class CardBrowser :
         return true
     }
 
+    @NeedsTest("filter-marked query needs testing")
+    @NeedsTest("filter-suspended query needs testing")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when {
             drawerToggle.onOptionsItemSelected(item) -> return true
@@ -1179,14 +1181,10 @@ open class CardBrowser :
                 changeDisplayOrder()
                 return true
             }
-
-            @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
                 searchForMarkedNotes()
                 return true
             }
-
-            @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
                 searchForSuspendedCards()
                 return true
