@@ -29,6 +29,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -55,6 +56,12 @@ class SharedDecksActivity : AnkiActivity() {
     private var shouldHistoryBeCleared = false
 
     private val allowedHosts = listOf(Regex("""^(?:.*\.)?ankiweb\.net$"""), Regex("""^ankiuser\.net$"""), Regex("""^ankisrs\.net$"""))
+    private val onBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (webView.canGoBack()) webView.goBack()
+            }
+        }
 
     /**
      * Handle condition when page finishes loading and history needs to be cleared.
@@ -66,6 +73,15 @@ class SharedDecksActivity : AnkiActivity() {
     private val webViewClient =
         object : WebViewClient() {
             private var redirectTimes = 0
+
+            override fun doUpdateVisitedHistory(
+                view: WebView?,
+                url: String?,
+                isReload: Boolean,
+            ) {
+                super.doUpdateVisitedHistory(view, url, isReload)
+                onBackPressedCallback.isEnabled = webView.canGoBack()
+            }
 
             override fun onPageFinished(
                 view: WebView?,
@@ -240,13 +256,13 @@ class SharedDecksActivity : AnkiActivity() {
         }
 
         webView.webViewClient = webViewClient
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
     /**
      * If download screen is open:
      *      If download is in progress: Show download cancellation dialog
      *      If download is not in progress: Close the download screen
-     * If user can go back in WebView, navigate to previous webpage.
      * Otherwise, close the WebView.
      */
     @Deprecated("Deprecated in Java")
@@ -268,10 +284,6 @@ class SharedDecksActivity : AnkiActivity() {
                     }
                 }
                 supportFragmentManager.popBackStackImmediate()
-            }
-            webView.canGoBack() -> {
-                Timber.i("Back pressed when user can navigate back to other webpages inside WebView")
-                webView.goBack()
             }
             else -> {
                 Timber.i("Back pressed which would lead to closing of the WebView")
