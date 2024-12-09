@@ -71,7 +71,8 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
         val elementsToCheck =
             when (element.tagName) {
                 SdkConstants.TAG_PLURALS ->
-                    element.childrenSequence()
+                    element
+                        .childrenSequence()
                         // skip if the item was not a plural (style, etc...)
                         .filter { it.nodeName == SdkConstants.TAG_ITEM }
                         .filter { it.nodeType == Node.ELEMENT_NODE }
@@ -82,7 +83,8 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
             }
 
         val validFormatData =
-            elementsToCheck.mapNotNull { getStringFromElement(it) }
+            elementsToCheck
+                .mapNotNull { getStringFromElement(it) }
                 .filter { it.isNotEmpty() }
                 // Filter to only string format data
                 .mapNotNull {

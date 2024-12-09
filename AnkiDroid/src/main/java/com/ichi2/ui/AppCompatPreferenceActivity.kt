@@ -163,41 +163,29 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
                 get() = this@AbstractPreferenceHack
         }
 
-        override fun contains(key: String): Boolean {
-            return values.containsKey(key)
-        }
+        override fun contains(key: String): Boolean = values.containsKey(key)
 
-        override fun getAll(): Map<String, *> {
-            return values
-        }
+        override fun getAll(): Map<String, *> = values
 
         override fun getBoolean(
             key: String,
             defValue: Boolean,
-        ): Boolean {
-            return java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
-        }
+        ): Boolean = java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
 
         override fun getFloat(
             key: String,
             defValue: Float,
-        ): Float {
-            return this.getString(key, defValue.toString())!!.toFloat()
-        }
+        ): Float = this.getString(key, defValue.toString())!!.toFloat()
 
         override fun getInt(
             key: String,
             defValue: Int,
-        ): Int {
-            return this.getString(key, defValue.toString())!!.toInt()
-        }
+        ): Int = this.getString(key, defValue.toString())!!.toInt()
 
         override fun getLong(
             key: String,
             defValue: Long,
-        ): Long {
-            return this.getString(key, defValue.toString())!!.toLong()
-        }
+        ): Long = this.getString(key, defValue.toString())!!.toLong()
 
         override fun getString(
             key: String,
@@ -253,9 +241,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         delegate.setSupportActionBar(toolbar)
     }
 
-    override fun getMenuInflater(): MenuInflater {
-        return delegate.menuInflater
-    }
+    override fun getMenuInflater(): MenuInflater = delegate.menuInflater
 
     override fun setContentView(
         @LayoutRes layoutResID: Int,

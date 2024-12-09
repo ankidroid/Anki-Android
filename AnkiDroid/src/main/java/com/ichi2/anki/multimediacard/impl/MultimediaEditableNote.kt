@@ -64,13 +64,12 @@ class MultimediaEditableNote : IMultimediaEditableNote {
     override val numberOfFields: Int
         get() = fieldsPrivate.size
 
-    override fun getField(index: Int): IField? {
-        return if (index in 0 until numberOfFields) {
+    override fun getField(index: Int): IField? =
+        if (index in 0 until numberOfFields) {
             fieldsPrivate[index]
         } else {
             null
         }
-    }
 
     override fun setField(
         index: Int,
@@ -101,13 +100,9 @@ class MultimediaEditableNote : IMultimediaEditableNote {
     override val initialFieldCount: Int
         get() = initialFields!!.size
 
-    override fun getInitialField(index: Int): IField? {
-        return cloneField(initialFields!![index])
-    }
+    override fun getInitialField(index: Int): IField? = cloneField(initialFields!![index])
 
-    private fun cloneField(f: IField?): IField? {
-        return IOUtils.deserialize(IField::class.java, IOUtils.serialize(f!!))
-    }
+    private fun cloneField(f: IField?): IField? = IOUtils.deserialize(IField::class.java, IOUtils.serialize(f!!))
 
     val isEmpty: Boolean
         get() = fields.isNullOrEmpty()

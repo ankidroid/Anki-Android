@@ -60,7 +60,9 @@ class AddonData(
 )
 
 @Serializable
-data class DistInfo(val tarball: String)
+data class DistInfo(
+    val tarball: String,
+)
 
 /**
  * Check if npm package is valid or not by fields ankidroidJsApi, keywords (ankidroid-js-addon) and
@@ -94,8 +96,12 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     val errorList: MutableList<String> = ArrayList()
 
     // either fields not present in package.json or failed to parse the fields
-    if (addonData.name.isNullOrBlank() || addonData.addonTitle.isNullOrBlank() || addonData.main.isNullOrBlank() ||
-        addonData.ankidroidJsApi.isNullOrBlank() || addonData.addonType.isNullOrBlank() || addonData.homepage.isNullOrBlank() ||
+    if (addonData.name.isNullOrBlank() ||
+        addonData.addonTitle.isNullOrBlank() ||
+        addonData.main.isNullOrBlank() ||
+        addonData.ankidroidJsApi.isNullOrBlank() ||
+        addonData.addonType.isNullOrBlank() ||
+        addonData.homepage.isNullOrBlank() ||
         addonData.keywords.isNullOrEmpty()
     ) {
         errorStr = "Invalid addon package: fields in package.json are empty or null"

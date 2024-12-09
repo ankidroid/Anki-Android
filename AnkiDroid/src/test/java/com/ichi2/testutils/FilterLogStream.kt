@@ -20,7 +20,10 @@ import java.io.OutputStream
 import java.io.PrintStream
 import java.util.regex.Pattern
 
-class FilterLogStream(stream: OutputStream, private val pattern: Pattern) : PrintStream(stream) {
+class FilterLogStream(
+    stream: OutputStream,
+    private val pattern: Pattern,
+) : PrintStream(stream) {
     override fun println(x: String) {
         if (!pattern.matcher(x).find()) return
         super.println(x)

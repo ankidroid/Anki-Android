@@ -101,18 +101,18 @@ class FixedPreferencesTitleLengthTest {
 
     @Test
     fun showsErrorForInvalidFile() {
-        TestLintTask.lint().allowMissingSdk()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
             .allowCompilationErrors()
             .files(
                 TestFiles.xml("res/xml/preference_general_invalid.xml", preferenceString),
                 TestFiles.xml("res/values/10-preferences.xml", strings10XmlInvalid),
                 TestFiles.xml("res/values/01-core.xml", strings1XmlInvalid),
-            )
-            .issues(
+            ).issues(
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
-            )
-            .run()
+            ).run()
             .expectErrorCount(3)
             .expect(
                 """res/values/01-core.xml:5: Error: Preference title 'checkbox_title' must be less than 41 characters (currently 46). [FixedPreferencesTitleLength]
@@ -130,34 +130,34 @@ res/values/10-preferences.xml:6: Error: Preference title 'button_sync' has maxLe
 
     @Test
     fun showsNoErrorForValidFile() {
-        TestLintTask.lint().allowMissingSdk()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
             .allowCompilationErrors()
             .files(
                 TestFiles.xml("res/xml/preference_general_valid.xml", preferenceString),
                 TestFiles.xml("res/values/10-preferences.xml", strings10XmlValid),
                 TestFiles.xml("res/values/01-core.xml", strings1XmlValid),
-            )
-            .issues(
+            ).issues(
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
-            )
-            .run()
+            ).run()
             .expectClean()
     }
 
     @Test
     fun hardcodedTitleIsNotFlagged() {
-        TestLintTask.lint().allowMissingSdk()
+        TestLintTask
+            .lint()
+            .allowMissingSdk()
             .allowCompilationErrors()
             .files(
                 TestFiles.xml("res/xml/preference_general_valid.xml", preferenceWithHardcodedTitle),
                 TestFiles.xml("res/values/01-core.xml", strings1XmlValid),
-            )
-            .issues(
+            ).issues(
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
-            )
-            .run()
+            ).run()
             .expectClean()
     }
 }

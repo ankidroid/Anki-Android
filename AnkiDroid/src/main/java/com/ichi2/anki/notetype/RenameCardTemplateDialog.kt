@@ -32,12 +32,13 @@ class RenameCardTemplateDialog {
             prefill: String,
             block: (result: String) -> Unit,
         ) {
-            AlertDialog.Builder(context).show {
-                positiveButton(R.string.dialog_ok) { }
-                negativeButton(R.string.dialog_cancel)
-                setView(R.layout.dialog_generic_text_input)
-            }
-                .input(
+            AlertDialog
+                .Builder(context)
+                .show {
+                    positiveButton(R.string.dialog_ok) { }
+                    negativeButton(R.string.dialog_cancel)
+                    setView(R.layout.dialog_generic_text_input)
+                }.input(
                     hint = CollectionManager.TR.actionsNewName(),
                     displayKeyboard = true,
                     allowEmpty = false,

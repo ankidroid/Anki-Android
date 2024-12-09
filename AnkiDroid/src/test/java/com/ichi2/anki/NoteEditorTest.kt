@@ -523,8 +523,8 @@ class NoteEditorTest : RobolectricTest() {
         return NoteEditorTestBuilder(n)
     }
 
-    private fun makeNoteForType(noteType: NoteType): NotetypeJson? {
-        return when (noteType) {
+    private fun makeNoteForType(noteType: NoteType): NotetypeJson? =
+        when (noteType) {
             NoteType.BASIC -> col.notetypes.byName("Basic")
             NoteType.CLOZE -> col.notetypes.byName("Cloze")
             NoteType.BACK_TO_FRONT -> {
@@ -537,7 +537,6 @@ class NoteEditorTest : RobolectricTest() {
             }
             NoteType.IMAGE_OCCLUSION -> col.notetypes.byName("Image Occlusion")
         }
-    }
 
     private fun getNoteEditorAddingNote(from: FromScreen): NoteEditor {
         ensureCollectionLoadIsSynchronous()
@@ -598,9 +597,7 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @DuplicatedCode("NoteEditor in androidTest")
-    fun SingleFragmentActivity.getEditor(): NoteEditor {
-        return supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
-    }
+    fun SingleFragmentActivity.getEditor(): NoteEditor = supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
 
     private enum class FromScreen {
         DECK_LIST,
@@ -618,7 +615,9 @@ class NoteEditorTest : RobolectricTest() {
         IMAGE_OCCLUSION,
     }
 
-    inner class NoteEditorTestBuilder(notetype: NotetypeJson?) {
+    inner class NoteEditorTestBuilder(
+        notetype: NotetypeJson?,
+    ) {
         private val notetype: NotetypeJson
         private var firstField: String? = null
         private var secondField: String? = null
@@ -649,9 +648,7 @@ class NoteEditorTest : RobolectricTest() {
             return noteEditor
         }
 
-        fun withNoFirstField(): NoteEditorTestBuilder {
-            return this
-        }
+        fun withNoFirstField(): NoteEditorTestBuilder = this
 
         fun withFirstField(text: String?): NoteEditorTestBuilder {
             firstField = text

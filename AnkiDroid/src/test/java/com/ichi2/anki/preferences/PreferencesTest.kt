@@ -94,7 +94,8 @@ class PreferencesTest : RobolectricTest() {
     @Test
     fun `All preferences fragments are TitleProvider`() {
         val fragments =
-            PreferenceTestUtils.getAllPreferencesFragments(targetContext)
+            PreferenceTestUtils
+                .getAllPreferencesFragments(targetContext)
                 .filter { it !is ReviewerOptionsFragment } // WIP dev options
 
         fragments.forEach { fragment ->
@@ -109,11 +110,12 @@ class PreferencesTest : RobolectricTest() {
     @Test
     fun `All preferences fragments highlight the correct header`() {
         val headers =
-            PreferenceTestUtils.getAttrsFromXml(
-                targetContext,
-                R.xml.preference_headers,
-                listOf("key", "fragment"),
-            ).filter { it["fragment"] != null }
+            PreferenceTestUtils
+                .getAttrsFromXml(
+                    targetContext,
+                    R.xml.preference_headers,
+                    listOf("key", "fragment"),
+                ).filter { it["fragment"] != null }
 
         assertTrue(headers.all { it["key"] != null })
 

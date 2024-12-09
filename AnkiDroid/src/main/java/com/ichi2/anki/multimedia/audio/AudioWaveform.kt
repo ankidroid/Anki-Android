@@ -29,7 +29,10 @@ import com.ichi2.anki.R
 /**This class represents a custom View used for creating audio waveforms when recording audio.
  * It loops over each spike and add it on the screen and the height of the spike is determined by the
  * amplitude that is returned by the audio recorder while recording audio. **/
-class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class AudioWaveform(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : View(context, attrs) {
     private var spikePaint =
         Paint().apply {
             color = Color.rgb(244, 81, 30)

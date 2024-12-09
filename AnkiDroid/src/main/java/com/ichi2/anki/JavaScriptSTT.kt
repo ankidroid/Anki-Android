@@ -24,7 +24,9 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import com.ichi2.utils.Permissions.canRecordAudio
 
-class JavaScriptSTT(private val context: Context) {
+class JavaScriptSTT(
+    private val context: Context,
+) {
     private var speechRecognizer: SpeechRecognizer? = null
     private var recognitionCallback: SpeechRecognitionCallback? = null
     private var language: String? = null
@@ -76,8 +78,8 @@ class JavaScriptSTT(private val context: Context) {
         return true
     }
 
-    private fun createRecognitionListener(): RecognitionListener {
-        return object : RecognitionListener {
+    private fun createRecognitionListener(): RecognitionListener =
+        object : RecognitionListener {
             override fun onReadyForSpeech(params: Bundle?) {}
 
             override fun onBeginningOfSpeech() {}
@@ -121,5 +123,4 @@ class JavaScriptSTT(private val context: Context) {
                 params: Bundle?,
             ) {}
         }
-    }
 }

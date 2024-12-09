@@ -48,8 +48,8 @@ class CardBrowserNonAndroidTest {
     }
 
     @CheckResult
-    private fun formatWithFilenamesRetained(input: String): String {
-        return CardBrowser.formatQAInternal(
+    private fun formatWithFilenamesRetained(input: String): String =
+        CardBrowser.formatQAInternal(
             input,
             TemplateRenderOutput(
                 questionText = input,
@@ -60,11 +60,10 @@ class CardBrowserNonAndroidTest {
             ),
             true,
         )
-    }
 
     @CheckResult
-    private fun formatWithFilenamesStripped(input: String): String {
-        return CardBrowser.formatQAInternal(
+    private fun formatWithFilenamesStripped(input: String): String =
+        CardBrowser.formatQAInternal(
             input,
             TemplateRenderOutput(
                 questionText = input,
@@ -75,5 +74,4 @@ class CardBrowserNonAndroidTest {
             ),
             false,
         )
-    }
 }

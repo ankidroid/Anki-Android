@@ -64,9 +64,7 @@ object LaTeX {
         html: String,
         col: Collection,
         svg: Boolean,
-    ): String {
-        return mungeQA(html, col.media, svg)
-    }
+    ): String = mungeQA(html, col.media, svg)
 
     fun convertHTML(
         html: String,

@@ -285,7 +285,8 @@ class ReviewerTest : RobolectricTest() {
 
             waitForAsyncTasksToComplete()
             assertThat(
-                jsApi.handleJsApiRequest("deckName", jsApiContract(), false)
+                jsApi
+                    .handleJsApiRequest("deckName", jsApiContract(), false)
                     .decodeToString(),
                 equalTo(formatApiResult("B")),
             )
@@ -490,9 +491,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @CheckResult
-    private fun <T : Reviewer?> startReviewer(clazz: Class<T>): T {
-        return startReviewer(this, clazz)
-    }
+    private fun <T : Reviewer?> startReviewer(clazz: Class<T>): T = startReviewer(this, clazz)
 
     private fun runReviewer(
         cards: List<String>,
@@ -523,9 +522,7 @@ class ReviewerTest : RobolectricTest() {
             return super.onCreateOptionsMenu(menu)
         }
 
-        fun getVisibleButtonNames(): List<String> {
-            return getVisibleButtonNamesExcept()
-        }
+        fun getVisibleButtonNames(): List<String> = getVisibleButtonNamesExcept()
 
         fun getVisibleButtonNamesExcept(vararg doNotReturn: Int): List<String> {
             val visibleButtons = arrayListOf<String>()
@@ -545,9 +542,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     companion object {
-        fun startReviewer(testClass: RobolectricTest): Reviewer {
-            return startReviewer(testClass, Reviewer::class.java)
-        }
+        fun startReviewer(testClass: RobolectricTest): Reviewer = startReviewer(testClass, Reviewer::class.java)
 
         fun <T : Reviewer?> startReviewer(
             testClass: RobolectricTest,

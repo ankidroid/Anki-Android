@@ -21,15 +21,11 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 
 /** returns a mock which will throw on all invocations which are not explicitly provided */
-inline fun <reified T> strictMock(): T {
-    return Mockito.mock(T::class.java, ThrowingAnswer())
-}
+inline fun <reified T> strictMock(): T = Mockito.mock(T::class.java, ThrowingAnswer())
 
 class StrictMock {
     companion object {
-        fun <T> strictMock(clazz: Class<T>): T {
-            return Mockito.mock(clazz, ThrowingAnswer())
-        }
+        fun <T> strictMock(clazz: Class<T>): T = Mockito.mock(clazz, ThrowingAnswer())
     }
 }
 
@@ -37,7 +33,5 @@ class StrictMock {
 
 /** Answer for use in a strict mock */
 class ThrowingAnswer : Answer<Any?> {
-    override fun answer(invocation: InvocationOnMock): Any {
-        throw AssertionError("Unexpected invocation: $invocation")
-    }
+    override fun answer(invocation: InvocationOnMock): Any = throw AssertionError("Unexpected invocation: $invocation")
 }

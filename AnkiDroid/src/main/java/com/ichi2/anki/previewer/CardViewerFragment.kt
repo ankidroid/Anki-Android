@@ -104,20 +104,19 @@ abstract class CardViewerFragment(
             .flowWithLifecycle(lifecycle)
             .onEach { eval ->
                 webView.evaluateJavascript(eval, null)
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
     }
 
     private fun setupErrorListeners() {
         viewModel.onError
             .flowWithLifecycle(lifecycle)
             .onEach { errorMessage ->
-                AlertDialog.Builder(requireContext())
+                AlertDialog
+                    .Builder(requireContext())
                     .setTitle(R.string.vague_error)
                     .setMessage(errorMessage)
                     .show()
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         viewModel.onMediaError
             .onEach { showMediaErrorSnackbar(it) }
@@ -134,9 +133,7 @@ abstract class CardViewerFragment(
             override fun shouldInterceptRequest(
                 view: WebView?,
                 request: WebResourceRequest,
-            ): WebResourceResponse? {
-                return resourceHandler.shouldInterceptRequest(request)
-            }
+            ): WebResourceResponse? = resourceHandler.shouldInterceptRequest(request)
 
             override fun onPageFinished(
                 view: WebView?,
@@ -148,9 +145,7 @@ abstract class CardViewerFragment(
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 request: WebResourceRequest,
-            ): Boolean {
-                return handleUrl(request.url)
-            }
+            ): Boolean = handleUrl(request.url)
 
             @Suppress("DEPRECATION") // necessary in API 23
             @Deprecated("Deprecated in Java")
@@ -213,8 +208,8 @@ abstract class CardViewerFragment(
         }
     }
 
-    private fun onCreateWebChromeClient(): WebChromeClient {
-        return object : WebChromeClient() {
+    private fun onCreateWebChromeClient(): WebChromeClient =
+        object : WebChromeClient() {
             private lateinit var customView: View
 
             // used for displaying `<video>` in fullscreen.
@@ -250,7 +245,6 @@ abstract class CardViewerFragment(
                 }
             }
         }
-    }
 
     private fun showMediaErrorSnackbar(filename: String) {
         showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {

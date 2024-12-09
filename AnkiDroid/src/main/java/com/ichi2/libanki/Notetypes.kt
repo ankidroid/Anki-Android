@@ -62,7 +62,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 
-class NoteTypeNameID(val name: String, val id: NoteTypeId)
+class NoteTypeNameID(
+    val name: String,
+    val id: NoteTypeId,
+)
 
 private typealias int = Long
 
@@ -70,7 +73,9 @@ private typealias int = Long
 private typealias Field = JSONObject // Dict<str, Any>
 typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
-class Notetypes(val col: Collection) {
+class Notetypes(
+    val col: Collection,
+) {
     /*
     # Saving/loading registry
     #############################################################
@@ -113,9 +118,7 @@ class Notetypes(val col: Collection) {
     }
 
     @LibAnkiAlias("_get_cached")
-    private fun getCached(ntid: int): NotetypeJson? {
-        return _cache[ntid]
-    }
+    private fun getCached(ntid: int): NotetypeJson? = _cache[ntid]
 
     @NeedsTest("14827: styles are updated after syncing style changes")
     @LibAnkiAlias("_clear_cache")
@@ -127,17 +130,16 @@ class Notetypes(val col: Collection) {
      */
 
     @LibAnkiAlias("all_names_and_ids")
-    fun allNamesAndIds(): Sequence<NoteTypeNameID> {
-        return col.backend.getNotetypeNames().map {
-            NoteTypeNameID(it.name, it.id)
-        }.asSequence()
-    }
+    fun allNamesAndIds(): Sequence<NoteTypeNameID> =
+        col.backend
+            .getNotetypeNames()
+            .map {
+                NoteTypeNameID(it.name, it.id)
+            }.asSequence()
 
     // legacy
 
-    fun ids(): Set<int> {
-        return allNamesAndIds().map { it.id }.toSet()
-    }
+    fun ids(): Set<int> = allNamesAndIds().map { it.id }.toSet()
 
     // only used by importing code
     fun have(id: int): Boolean = allNamesAndIds().any { it.id == id }
@@ -170,18 +172,15 @@ class Notetypes(val col: Collection) {
      */
 
     @LibAnkiAlias("id_for_name")
-    fun idForName(name: String): Long? {
-        return try {
+    fun idForName(name: String): Long? =
+        try {
             col.backend.getNotetypeIdByName(name)
         } catch (e: BackendNotFoundException) {
             null
         }
-    }
 
     /** "Get model with ID, or None." */
-    fun get(id: int): NotetypeJson? {
-        return get(id as int?)
-    }
+    fun get(id: int): NotetypeJson? = get(id as int?)
 
     /** Externally, we do not want to pass in a null id */
     private fun get(id: int?): NotetypeJson? {
@@ -206,9 +205,7 @@ class Notetypes(val col: Collection) {
     }
 
     /** Get all models */
-    fun all(): List<NotetypeJson> {
-        return allNamesAndIds().map { get(it.id)!! }.toMutableList()
-    }
+    fun all(): List<NotetypeJson> = allNamesAndIds().map { get(it.id)!! }.toMutableList()
 
     /** Get model with NAME. */
     fun byName(name: String): NotetypeJson? {
@@ -226,13 +223,12 @@ class Notetypes(val col: Collection) {
         return nt
     }
 
-    fun newBasicNotetype(): NotetypeJson {
-        return NotetypeJson(
+    fun newBasicNotetype(): NotetypeJson =
+        NotetypeJson(
             BackendUtils.fromJsonBytes(
                 col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
             ),
         )
-    }
 
     /** Delete model, and all its cards/notes. */
     fun rem(notetype: NotetypeJson) {
@@ -293,26 +289,21 @@ class Notetypes(val col: Collection) {
     fun nids(model: NotetypeJson): List<int> = nids(model.getLong("id"))
 
     /** Note ids for M. */
-    fun nids(ntid: int): List<int> {
-        return col.db.queryLongList("select id from notes where mid = ?", ntid)
-    }
+    fun nids(ntid: int): List<int> = col.db.queryLongList("select id from notes where mid = ?", ntid)
 
     /** Number of note using M. */
-    fun useCount(notetype: NotetypeJson): Int {
-        return col.db.queryLongScalar("select count() from notes where mid = ?", notetype.id).toInt()
-    }
+    fun useCount(notetype: NotetypeJson): Int = col.db.queryLongScalar("select count() from notes where mid = ?", notetype.id).toInt()
 
     @RustCleanup("not in libAnki any more - may not be needed")
     fun tmplUseCount(
         notetype: NotetypeJson,
         ord: Int,
-    ): Int {
-        return col.db.queryScalar(
+    ): Int =
+        col.db.queryScalar(
             "select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?",
             notetype.id,
             ord,
         )
-    }
 
     /*
     # Copying
@@ -668,9 +659,7 @@ class Notetypes(val col: Collection) {
      * ***********************************************************************************************
      */
 
-    fun count(): Int {
-        return allNamesAndIds().count()
-    }
+    fun count(): Int = allNamesAndIds().count()
 
     /**
      * Extracted from remTemplate so we can test if removing templates is safe without actually removing them
@@ -686,7 +675,8 @@ class Notetypes(val col: Collection) {
         modelId: NoteTypeId,
         ords: IntArray,
     ): List<Long>? {
-        val cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
+        val cardIdsToDeleteSql =
+            "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
         val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
         // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, modelId, Utils.ids2str(ords))
@@ -696,7 +686,8 @@ class Notetypes(val col: Collection) {
         val preDeleteNoteCount: Int = col.db.queryScalar(noteCountPreDeleteSql, modelId)
         Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql)
         Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount)
-        val noteCountPostDeleteSql = "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords)
+        val noteCountPostDeleteSql =
+            "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords)
         Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql)
         val postDeleteNoteCount: Int = col.db.queryScalar(noteCountPostDeleteSql, modelId)
         Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount)
@@ -736,9 +727,7 @@ class Notetypes(val col: Collection) {
         }
 
         // not in anki
-        fun isModelNew(notetype: NotetypeJson): Boolean {
-            return notetype.getLong("id") == 0L
-        }
+        fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
 
         fun _updateTemplOrds(notetype: NotetypeJson) {
             val tmpls = notetype.getJSONArray("tmpls")
@@ -768,42 +757,22 @@ private fun Deck.getLongOrNull(key: String): int? {
 }
 
 // These take and return bytes that the frontend TypeScript code will encode/decode.
-fun Collection.getNotetypeNamesRaw(input: ByteArray): ByteArray {
-    return backend.getNotetypeNamesRaw(input)
-}
+fun Collection.getNotetypeNamesRaw(input: ByteArray): ByteArray = backend.getNotetypeNamesRaw(input)
 
-fun Collection.getFieldNamesRaw(input: ByteArray): ByteArray {
-    return backend.getFieldNamesRaw(input)
-}
+fun Collection.getFieldNamesRaw(input: ByteArray): ByteArray = backend.getFieldNamesRaw(input)
 
-fun Collection.updateNotetype(updatedNotetype: Notetype): OpChanges {
-    return backend.updateNotetype(input = updatedNotetype)
-}
+fun Collection.updateNotetype(updatedNotetype: Notetype): OpChanges = backend.updateNotetype(input = updatedNotetype)
 
-fun Collection.removeNotetype(notetypeId: Long): OpChanges {
-    return backend.removeNotetype(ntid = notetypeId)
-}
+fun Collection.removeNotetype(notetypeId: Long): OpChanges = backend.removeNotetype(ntid = notetypeId)
 
-fun Collection.addNotetype(newNotetype: Notetype): OpChangesWithId {
-    return backend.addNotetype(input = newNotetype)
-}
+fun Collection.addNotetype(newNotetype: Notetype): OpChangesWithId = backend.addNotetype(input = newNotetype)
 
-fun Collection.getNotetypeNameIdUseCount(): List<NotetypeNameIdUseCount> {
-    return backend.getNotetypeNamesAndCounts()
-}
+fun Collection.getNotetypeNameIdUseCount(): List<NotetypeNameIdUseCount> = backend.getNotetypeNamesAndCounts()
 
-fun Collection.getNotetype(notetypeId: Long): Notetype {
-    return backend.getNotetype(ntid = notetypeId)
-}
+fun Collection.getNotetype(notetypeId: Long): Notetype = backend.getNotetype(ntid = notetypeId)
 
-fun Collection.getNotetypeNames(): List<NotetypeNameId> {
-    return backend.getNotetypeNames()
-}
+fun Collection.getNotetypeNames(): List<NotetypeNameId> = backend.getNotetypeNames()
 
-fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId {
-    return backend.addNotetypeLegacy(json = json)
-}
+fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId = backend.addNotetypeLegacy(json = json)
 
-fun Collection.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString {
-    return backend.getStockNotetypeLegacy(kind = kind)
-}
+fun Collection.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString = backend.getStockNotetypeLegacy(kind = kind)

@@ -99,8 +99,11 @@ object MultimediaUtils {
 
                             // raw:/storage/emulated/0/Download/pexels-pixabay-36717.jpg
                             docId.startsWith(RAW_DOCUMENTS_FILE_PREFIX) -> {
-                                docId.substring(RAW_DOCUMENTS_FILE_PREFIX.length).split("/")
-                                    .toTypedArray().last()
+                                docId
+                                    .substring(RAW_DOCUMENTS_FILE_PREFIX.length)
+                                    .split("/")
+                                    .toTypedArray()
+                                    .last()
                             }
 
                             docId.toLongOrNull() != null -> {

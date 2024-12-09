@@ -31,7 +31,9 @@ import kotlin.io.path.pathString
 private const val RANGE_HEADER = "Range"
 private const val MATHJAX_PATH_PREFIX = "/_anki/js/vendor/mathjax"
 
-class ViewerResourceHandler(context: Context) {
+class ViewerResourceHandler(
+    context: Context,
+) {
     private val assetManager = context.assets
     private val mediaDir = CollectionHelper.getMediaDirectory(context)
 
@@ -49,10 +51,11 @@ class ViewerResourceHandler(context: Context) {
         try {
             if (path.startsWith(MATHJAX_PATH_PREFIX)) {
                 val mathjaxAssetPath =
-                    Paths.get(
-                        "backend/js/vendor/mathjax",
-                        path.removePrefix(MATHJAX_PATH_PREFIX),
-                    ).pathString
+                    Paths
+                        .get(
+                            "backend/js/vendor/mathjax",
+                            path.removePrefix(MATHJAX_PATH_PREFIX),
+                        ).pathString
                 val inputStream = assetManager.open(mathjaxAssetPath)
                 return WebResourceResponse(guessMimeType(path), null, inputStream)
             }
@@ -114,7 +117,10 @@ class ViewerResourceHandler(context: Context) {
 /**
  * Handles the "range" header in a HTTP Request
  */
-data class RangeHeader(val start: Long, val end: Long) {
+data class RangeHeader(
+    val start: Long,
+    val end: Long,
+) {
     companion object {
         fun from(
             range: String,

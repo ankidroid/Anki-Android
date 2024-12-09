@@ -46,7 +46,9 @@ sealed interface ImageCropperLauncher {
      * Represents opening the ImageCropper with an image URI.
      * @property imageUri The URI of the image to crop.
      */
-    data class ImageUri(val imageUri: Uri?) : ImageCropperLauncher {
+    data class ImageUri(
+        val imageUri: Uri?,
+    ) : ImageCropperLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 ImageCropper.CROP_IMAGE_URI to imageUri,

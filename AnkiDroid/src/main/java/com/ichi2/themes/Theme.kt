@@ -35,8 +35,6 @@ enum class Theme(
         val fallback: Theme
             get() = LIGHT
 
-        fun ofId(id: String): Theme {
-            return entries.find { it.id == id } ?: fallback
-        }
+        fun ofId(id: String): Theme = entries.find { it.id == id } ?: fallback
     }
 }

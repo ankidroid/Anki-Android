@@ -142,18 +142,15 @@ open class BackupManager {
      * @return last date in parsable file names or null if all names can't be parsed
      * Expects a sorted array of backups, as returned by getBackups()
      */
-    fun getLastBackupDate(files: Array<File>): Date? {
-        return files.lastOrNull()?.let {
+    fun getLastBackupDate(files: Array<File>): Date? =
+        files.lastOrNull()?.let {
             getBackupDate(it.name)
         }
-    }
 
     fun getBackupFile(
         colFile: File,
         backupFilename: String,
-    ): File {
-        return File(getBackupDirectory(colFile.parentFile!!), backupFilename)
-    }
+    ): File = File(getBackupDirectory(colFile.parentFile!!), backupFilename)
 
     fun performBackupInNewThread(
         colFile: File,
@@ -184,7 +181,8 @@ open class BackupManager {
             // Delete old backup files if needed
             val prefs = AnkiDroidApp.instance.baseContext.sharedPrefs()
             val backupLimits =
-                BackupLimits.newBuilder()
+                BackupLimits
+                    .newBuilder()
                     .setDaily(prefs.getInt("daily_backups_to_keep", 8))
                     .setWeekly(prefs.getInt("weekly_backups_to_keep", 8))
                     .setMonthly(prefs.getInt("monthly_backups_to_keep", 8))
@@ -206,21 +204,16 @@ open class BackupManager {
         }
     }
 
-    fun collectionIsTooSmallToBeValid(colFile: File): Boolean {
-        return (
+    fun collectionIsTooSmallToBeValid(colFile: File): Boolean =
+        (
             colFile.length()
                 < MIN_BACKUP_COL_SIZE
         )
-    }
 
-    fun hasFreeDiscSpace(colFile: File): Boolean {
-        return getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile)
-    }
+    fun hasFreeDiscSpace(colFile: File): Boolean = getFreeDiscSpace(colFile) >= getRequiredFreeSpace(colFile)
 
     @VisibleForTesting
-    fun hasDisabledBackups(prefs: SharedPreferences): Boolean {
-        return prefs.getInt("backupMax", 8) == 0
-    }
+    fun hasDisabledBackups(prefs: SharedPreferences): Boolean = prefs.getInt("backupMax", 8) == 0
 
     companion object {
         /**
@@ -245,9 +238,7 @@ open class BackupManager {
             return directory
         }
 
-        fun getBackupDirectoryFromCollection(colPath: String): String {
-            return getBackupDirectory(File(colPath).parentFile!!).absolutePath
-        }
+        fun getBackupDirectoryFromCollection(colPath: String): String = getBackupDirectory(File(colPath).parentFile!!).absolutePath
 
         private fun getBrokenDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BROKEN_COLLECTIONS_SUFFIX)
@@ -266,20 +257,14 @@ open class BackupManager {
             return colFile.length() + MIN_FREE_SPACE * 1024 * 1024
         }
 
-        fun enoughDiscSpace(path: String?): Boolean {
-            return getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
-        }
+        fun enoughDiscSpace(path: String?): Boolean = getFreeDiscSpace(path) >= MIN_FREE_SPACE * 1024 * 1024
 
         /**
          * Get free disc space in bytes from path to Collection
          */
-        fun getFreeDiscSpace(path: String?): Long {
-            return getFreeDiscSpace(File(path!!))
-        }
+        fun getFreeDiscSpace(path: String?): Long = getFreeDiscSpace(File(path!!))
 
-        private fun getFreeDiscSpace(file: File): Long {
-            return getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
-        }
+        private fun getFreeDiscSpace(file: File): Long = getFreeDiskSpace(file, (MIN_FREE_SPACE * 1024 * 1024).toLong())
 
         /**
          * Run the sqlite3 command-line-tool (if it exists) on the collection to dump to a text file
@@ -373,15 +358,13 @@ open class BackupManager {
          * @param fileName String with pattern "collection-yyyy-MM-dd-HH-mm.colpkg"
          * @return Its dateformat parsable string or null if it doesn't match naming pattern
          */
-        fun getBackupTimeString(fileName: String): String? {
-            return backupNameRegex.matchEntire(fileName)?.groupValues?.get(1)
-        }
+        fun getBackupTimeString(fileName: String): String? = backupNameRegex.matchEntire(fileName)?.groupValues?.get(1)
 
         /**
          * @return date in string if it matches backup naming pattern or null if not
          */
-        fun parseBackupTimeString(timeString: String): Date? {
-            return try {
+        fun parseBackupTimeString(timeString: String): Date? =
+            try {
                 legacyDateFormat.parse(timeString)
             } catch (e: ParseException) {
                 try {
@@ -390,14 +373,11 @@ open class BackupManager {
                     null
                 }
             }
-        }
 
         /**
          * @return date in fileName if it matches backup naming pattern or null if not
          */
-        fun getBackupDate(fileName: String): Date? {
-            return getBackupTimeString(fileName)?.let { parseBackupTimeString(it) }
-        }
+        fun getBackupDate(fileName: String): Date? = getBackupTimeString(fileName)?.let { parseBackupTimeString(it) }
 
         /**
          * @return filename with pattern collection-yyyy-MM-dd-HH-mm based on given time parameter
@@ -428,8 +408,7 @@ open class BackupManager {
                         getBackupTimeString(file.name)?.let { time ->
                             Pair(time, file)
                         }
-                    }
-                    .sortedBy { it.first }
+                    }.sortedBy { it.first }
                     .map { it.second }
             return backups.toTypedArray()
         }
@@ -453,9 +432,7 @@ open class BackupManager {
             colPath: String,
             backupLimits: BackupLimits,
             today: LocalDate = LocalDate.now(),
-        ): Boolean {
-            return deleteColBackups(getBackups(File(colPath)), backupLimits, today)
-        }
+        ): Boolean = deleteColBackups(getBackups(File(colPath)), backupLimits, today)
 
         private fun deleteColBackups(
             backups: Array<File>,
@@ -514,9 +491,7 @@ open class BackupManager {
         }
 
         @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-        fun createInstance(): BackupManager {
-            return BackupManager()
-        }
+        fun createInstance(): BackupManager = BackupManager()
     }
 }
 
@@ -559,7 +534,10 @@ enum class BackupStage {
 }
 
 // see https://github.com/ankitects/anki/blob/f3bb845961973bcfab34acfdc4d314294285ee74/rslib/src/collection/backup.rs#L186
-private class BackupFilter(private val today: LocalDate, private var limits: BackupLimits) {
+private class BackupFilter(
+    private val today: LocalDate,
+    private var limits: BackupLimits,
+) {
     private val epoch = LocalDate.ofEpochDay(0)
     private var lastKeptDay: Long = ChronoUnit.DAYS.between(epoch, today)
     private var lastKeptWeek: Long = ChronoUnit.WEEKS.between(epoch, today)

@@ -77,9 +77,10 @@ abstract class InstrumentedTest {
          * https://github.com/react-native-community/react-native-device-info/blob/bb505716ff50e5900214fcbcc6e6434198010d95/android/src/main/java/com/learnium/RNDeviceInfo/RNDeviceModule.java#L185
          * @return boolean true if the execution environment is most likely an emulator
          */
-        fun isEmulator(): Boolean {
-            return (
-                Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic") ||
+        fun isEmulator(): Boolean =
+            (
+                Build.BRAND.startsWith("generic") &&
+                    Build.DEVICE.startsWith("generic") ||
                     Build.FINGERPRINT.startsWith("generic") ||
                     Build.FINGERPRINT.startsWith("unknown") ||
                     Build.HARDWARE.contains("goldfish") ||
@@ -96,7 +97,6 @@ abstract class InstrumentedTest {
                     Build.PRODUCT.contains("emulator") ||
                     Build.PRODUCT.contains("simulator")
             )
-        }
     }
 
     @Before
@@ -159,9 +159,7 @@ abstract class InstrumentedTest {
     internal fun addNoteUsingBasicModel(
         front: String = "Front",
         back: String = "Back",
-    ): Note {
-        return addNoteUsingModelName("Basic", front, back)
-    }
+    ): Note = addNoteUsingModelName("Basic", front, back)
 
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     private fun addNoteUsingModelName(

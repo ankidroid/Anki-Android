@@ -29,7 +29,9 @@ import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
-class ExportReadyDialog(private val listener: ExportReadyDialogListener) : AsyncDialogFragment() {
+class ExportReadyDialog(
+    private val listener: ExportReadyDialogListener,
+) : AsyncDialogFragment() {
     interface ExportReadyDialogListener {
         fun shareFile(path: String) // path of the file to be shared
 
@@ -48,7 +50,8 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         val dialog = AlertDialog.Builder(requireActivity())
 
-        dialog.setTitle(notificationTitle)
+        dialog
+            .setTitle(notificationTitle)
             .positiveButton(R.string.export_choice_save_to) { listener.saveExportFile(exportPath) }
             .negativeButton(R.string.export_choice_share) { listener.shareFile(exportPath) }
 
@@ -64,10 +67,12 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
         get() = ExportReadyDialogMessage(exportPath)
 
     /** Export ready dialog message*/
-    class ExportReadyDialogMessage(private val exportPath: String) : DialogHandlerMessage(
-        which = WhichDialogHandler.MSG_EXPORT_READY,
-        analyticName = "ExportReadyDialog",
-    ) {
+    class ExportReadyDialogMessage(
+        private val exportPath: String,
+    ) : DialogHandlerMessage(
+            which = WhichDialogHandler.MSG_EXPORT_READY,
+            analyticName = "ExportReadyDialog",
+        ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // we may be called via any AnkiActivity but export is a DeckPicker thing
             if (activity !is DeckPicker) {
@@ -80,7 +85,9 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
                 return
             }
             activity.showDialogFragment(
-                activity.exportingDelegate.dialogsFactory.newExportReadyDialog().withArguments(exportPath),
+                activity.exportingDelegate.dialogsFactory
+                    .newExportReadyDialog()
+                    .withArguments(exportPath),
             )
         }
 

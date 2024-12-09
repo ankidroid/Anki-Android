@@ -108,7 +108,8 @@ class ControlPreference : ListPreference {
 
     /** The summary that appears on the preference */
     override fun getSummary(): CharSequence =
-        MappableBinding.fromPreferenceString(value)
+        MappableBinding
+            .fromPreferenceString(value)
             .joinToString(", ") { it.toDisplayString(context) }
 
     /** Called when an element is selected in the ListView */
@@ -195,7 +196,8 @@ class ControlPreference : ListPreference {
         val actionName = title
         val axisPicker: AxisPicker = AxisPicker.inflate(context)
         val dialog =
-            AlertDialog.Builder(context)
+            AlertDialog
+                .Builder(context)
                 .customView(view = axisPicker.rootLayout)
                 .title(text = actionName.toString())
                 .negativeButton(R.string.dialog_cancel) { it.dismiss() }
@@ -221,9 +223,7 @@ class ControlPreference : ListPreference {
     /**
      * Return if another command uses
      */
-    private fun bindingIsUsedOnAnotherCommand(binding: MappableBinding): Boolean {
-        return getCommandWithBindingExceptThis(binding) != null
-    }
+    private fun bindingIsUsedOnAnotherCommand(binding: MappableBinding): Boolean = getCommandWithBindingExceptThis(binding) != null
 
     private fun warnIfBindingIsUsed(
         binding: MappableBinding,
@@ -248,11 +248,12 @@ class ControlPreference : ListPreference {
     }
 
     /** @return command where the binding is mapped excluding the current command */
-    private fun getCommandWithBindingExceptThis(binding: MappableBinding): ViewerCommand? {
-        return MappableBinding.allMappings(context.sharedPrefs())
+    private fun getCommandWithBindingExceptThis(binding: MappableBinding): ViewerCommand? =
+        MappableBinding
+            .allMappings(context.sharedPrefs())
             // filter to the commands which have a binding matching this one except this
-            .firstOrNull { x -> x.second.any { cmdBinding -> cmdBinding == binding } && x.first.preferenceKey != key }?.first
-    }
+            .firstOrNull { x -> x.second.any { cmdBinding -> cmdBinding == binding } && x.first.preferenceKey != key }
+            ?.first
 
     private fun addBinding(binding: MappableBinding) {
         val bindings = MappableBinding.fromPreferenceString(value)

@@ -84,8 +84,8 @@ fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
     block: suspend CoroutineScope.() -> Unit,
-): Job {
-    return launch(context) {
+): Job =
+    launch(context) {
         try {
             block()
         } catch (cancellationException: CancellationException) {
@@ -100,37 +100,30 @@ fun CoroutineScope.launchCatching(
             errorMessageHandler.invoke(exception.toString())
         }
     }
-}
 
 interface OnErrorListener {
     val onError: MutableSharedFlow<String>
 }
 
-fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener {
-    return viewModelScope.launchCatching(
+fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel, T : OnErrorListener =
+    viewModelScope.launchCatching(
         ioDispatcher,
         { onError.emit(it) },
         { block() },
     )
-}
 
 fun <T> T.launchCatchingIO(
     errorMessageHandler: suspend (String) -> Unit,
     block: suspend CoroutineScope.() -> Unit,
-): Job where T : ViewModel {
-    return viewModelScope.launchCatching(
+): Job where T : ViewModel =
+    viewModelScope.launchCatching(
         ioDispatcher,
         errorMessageHandler,
     ) { block() }
-}
 
-fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
-    return async(ioDispatcher, block = block)
-}
+fun <T> CoroutineScope.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> = async(ioDispatcher, block = block)
 
-fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
-    return viewModelScope.asyncIO(block)
-}
+fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> = viewModelScope.asyncIO(block)
 
 /**
  * Runs a suspend function that catches any uncaught errors and reports them to the user.
@@ -153,7 +146,9 @@ suspend fun <T> FragmentActivity.runCatching(
     //  This is only performed in DEBUG mode to reduce performance impact
     val callerTrace =
         if (BuildConfig.DEBUG) {
-            Thread.currentThread().stackTrace
+            Thread
+                .currentThread()
+                .stackTrace
                 .drop(14)
                 .joinToString(prefix = "\tat ", separator = "\n\tat ")
         } else {
@@ -231,21 +226,19 @@ fun getCoroutineExceptionHandler(
 fun FragmentActivity.launchCatchingTask(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> Unit,
-): Job {
-    return lifecycle.coroutineScope.launch {
+): Job =
+    lifecycle.coroutineScope.launch {
         runCatching(errorMessage) { block() }
     }
-}
 
 /** See [FragmentActivity.launchCatchingTask] */
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
     block: suspend CoroutineScope.() -> Unit,
-): Job {
-    return lifecycle.coroutineScope.launch {
+): Job =
+    lifecycle.coroutineScope.launch {
         requireActivity().runCatching(errorMessage) { block() }
     }
-}
 
 fun showError(
     context: Context,
@@ -307,8 +300,8 @@ suspend fun <T> Backend.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
     block: suspend CoroutineScope.() -> T,
-): T {
-    return coroutineScope {
+): T =
+    coroutineScope {
         val monitor =
             launch {
                 monitorProgress(this@withProgress, extractProgress, updateUi)
@@ -319,7 +312,6 @@ suspend fun <T> Backend.withProgress(
             monitor.cancel()
         }
     }
-}
 
 /**
  * Run the provided operation, showing a progress window until it completes.

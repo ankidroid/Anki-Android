@@ -43,8 +43,8 @@ object ActivityTransitionAnimation {
     fun getAnimationOptions(
         activity: Activity,
         direction: Direction?,
-    ): ActivityOptionsCompat {
-        return when (direction) {
+    ): ActivityOptionsCompat =
+        when (direction) {
             Direction.START ->
                 if (isRightToLeft(
                         activity,
@@ -81,11 +81,8 @@ object ActivityTransitionAnimation {
                 ActivityOptionsCompat.makeBasic()
             else -> ActivityOptionsCompat.makeBasic()
         }
-    }
 
-    private fun isRightToLeft(c: Context): Boolean {
-        return c.resources.configuration.layoutDirection == LayoutDirection.RTL
-    }
+    private fun isRightToLeft(c: Context): Boolean = c.resources.configuration.layoutDirection == LayoutDirection.RTL
 
     @Parcelize
     enum class Direction : Parcelable {
@@ -108,8 +105,8 @@ object ActivityTransitionAnimation {
      * @return inverse transition of [direction]
      * if there isn't one, return the same [direction]
      */
-    fun getInverseTransition(direction: Direction): Direction {
-        return when (direction) {
+    fun getInverseTransition(direction: Direction): Direction =
+        when (direction) {
             // Directional transitions which should return their opposites
             Direction.RIGHT -> Direction.LEFT
             Direction.LEFT -> Direction.RIGHT
@@ -122,5 +119,4 @@ object ActivityTransitionAnimation {
             Direction.DEFAULT -> Direction.DEFAULT
             Direction.NONE -> Direction.NONE
         }
-    }
 }

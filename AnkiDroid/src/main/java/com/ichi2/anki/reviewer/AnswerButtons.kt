@@ -71,14 +71,13 @@ enum class AnswerButtons {
 
     ;
 
-    fun toViewerCommand(): ViewerCommand {
-        return when (this) {
+    fun toViewerCommand(): ViewerCommand =
+        when (this) {
             AGAIN -> ViewerCommand.FLIP_OR_ANSWER_EASE1
             HARD -> ViewerCommand.FLIP_OR_ANSWER_EASE2
             GOOD -> ViewerCommand.FLIP_OR_ANSWER_EASE3
             EASY -> ViewerCommand.FLIP_OR_ANSWER_EASE4
         }
-    }
 
     companion object {
         fun getBackgroundColors(ctx: AnkiActivity): IntArray {
@@ -101,8 +100,8 @@ enum class AnswerButtons {
             return Themes.getResFromAttr(ctx, backgroundIds)
         }
 
-        fun getTextColors(ctx: Context): IntArray {
-            return Themes.getColorsFromAttrs(
+        fun getTextColors(ctx: Context): IntArray =
+            Themes.getColorsFromAttrs(
                 ctx,
                 intArrayOf(
                     R.attr.againButtonTextColor,
@@ -111,6 +110,5 @@ enum class AnswerButtons {
                     R.attr.easyButtonTextColor,
                 ),
             )
-        }
     }
 }

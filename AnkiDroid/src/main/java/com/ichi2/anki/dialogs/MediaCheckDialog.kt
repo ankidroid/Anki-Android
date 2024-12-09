@@ -37,19 +37,19 @@ class MediaCheckDialog : AsyncDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val dialog =
-            AlertDialog.Builder(requireContext())
+            AlertDialog
+                .Builder(requireContext())
                 .setTitle(notificationTitle)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
-                dialog.setMessage(notificationMessage)
+                dialog
+                    .setMessage(notificationMessage)
                     .setPositiveButton(R.string.dialog_ok) { _, _ ->
                         (activity as MediaCheckDialogListener?)?.mediaCheck()
                         activity?.dismissAllDialogFragments()
-                    }
-                    .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                    }.setNegativeButton(R.string.dialog_cancel) { _, _ ->
                         activity?.dismissAllDialogFragments()
-                    }
-                    .create()
+                    }.create()
             }
             DIALOG_MEDIA_CHECK_RESULTS -> {
                 val nohave = requireArguments().getStringArrayList("nohave")
@@ -94,11 +94,11 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
                     fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
                     fileListTextView.setTextIsSelectable(true)
-                    dialog.setPositiveButton(R.string.check_media_delete_unused) { _, _ ->
-                        (activity as MediaCheckDialogListener?)?.deleteUnused(unused)
-                        activity?.dismissAllDialogFragments()
-                    }
-                        .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                    dialog
+                        .setPositiveButton(R.string.check_media_delete_unused) { _, _ ->
+                            (activity as MediaCheckDialogListener?)?.deleteUnused(unused)
+                            activity?.dismissAllDialogFragments()
+                        }.setNegativeButton(R.string.dialog_cancel) { _, _ ->
                             activity?.dismissAllDialogFragments()
                         }
                 } else {
@@ -107,7 +107,8 @@ class MediaCheckDialog : AsyncDialogFragment() {
                         activity?.dismissAllDialogFragments()
                     }
                 }
-                dialog.setView(dialogBody)
+                dialog
+                    .setView(dialogBody)
                     .setCancelable(false)
                     .create()
             }

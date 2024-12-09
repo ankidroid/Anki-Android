@@ -34,7 +34,8 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         require(requireArguments().containsKey(ARG_DECK_IS_DYN)) { "Missing argument deck is dynamic" }
         require(requireArguments().containsKey(ARG_DECK_HAS_BURIED_IN_DECK)) { "Missing argument deck has buried" }
         val options = createOptionsList()
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .title(text = requireArguments().getString(ARG_DECK_NAME))
             .setItems(
                 options.map { resources.getString(it.optionName) }.toTypedArray(),
@@ -46,8 +47,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
                         CONTEXT_MENU_DECK_OPTION to options[index],
                     ),
                 )
-            }
-            .create()
+            }.create()
     }
 
     private fun createOptionsList(): List<DeckPickerContextMenuOption> =

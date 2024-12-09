@@ -52,12 +52,13 @@ object BitmapUtil {
             var scale = 1
             if (o.outHeight > imageMaxSize || o.outWidth > imageMaxSize) {
                 scale =
-                    2.0.pow(
-                        (
-                            ln(imageMaxSize / o.outHeight.coerceAtLeast(o.outWidth).toDouble()) /
-                                ln(0.5)
-                        ).roundToInt().toDouble(),
-                    ).toInt()
+                    2.0
+                        .pow(
+                            (
+                                ln(imageMaxSize / o.outHeight.coerceAtLeast(o.outWidth).toDouble()) /
+                                    ln(0.5)
+                            ).roundToInt().toDouble(),
+                        ).toInt()
             }
 
             // Decode with inSampleSize

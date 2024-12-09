@@ -63,7 +63,11 @@ object Aapt2Util {
          * @param hasNonPositionalArguments Whether the string contains any non-positional arguments: %1$s
          * @param string The format string, for debugging
          */
-        data class StringFormatData(val argCount: Int, val hasNonPositionalArguments: Boolean, val string: String) : FormatData() {
+        data class StringFormatData(
+            val argCount: Int,
+            val hasNonPositionalArguments: Boolean,
+            val string: String,
+        ) : FormatData() {
             /**
              * Multiple arguments were specified, but some or all were non positional.
              * Translated strings may rearrange the order of the arguments,
@@ -115,9 +119,15 @@ object Aapt2Util {
                 }
 
                 // Ignore size, width, flags, etc.
-                while (index < str.length && (
-                        c() == '-' || c() == '#' || c() == '+' || c() == ' ' ||
-                            c() == ',' || c() == '(' || (c() in '0'..'9')
+                while (index < str.length &&
+                    (
+                        c() == '-' ||
+                            c() == '#' ||
+                            c() == '+' ||
+                            c() == ' ' ||
+                            c() == ',' ||
+                            c() == '(' ||
+                            (c() in '0'..'9')
                     )
                 ) {
                     index++

@@ -27,7 +27,9 @@ class DeckConfig
  * This function will perform deepCopy on the passed object
  *
  */
-(json: JSONObject) : JSONObject() {
+(
+    json: JSONObject,
+) : JSONObject() {
     var conf: Long
         get() = getLong("conf")
         set(value) {

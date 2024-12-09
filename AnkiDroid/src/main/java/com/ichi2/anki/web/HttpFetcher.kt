@@ -54,7 +54,8 @@ object HttpFetcher {
             clientBuilder.addNetworkInterceptor(
                 Interceptor { chain: Interceptor.Chain ->
                     chain.proceed(
-                        chain.request()
+                        chain
+                            .request()
                             .newBuilder()
                             .header("Referer", "com.ichi2.anki")
                             .header("User-Agent", "Mozilla/5.0 ( compatible ) ")
@@ -67,7 +68,8 @@ object HttpFetcher {
             clientBuilder.addNetworkInterceptor(
                 Interceptor { chain: Interceptor.Chain ->
                     chain.proceed(
-                        chain.request()
+                        chain
+                            .request()
                             .newBuilder()
                             .header("User-Agent", "AnkiDroid-$pkgVersionName")
                             .build(),

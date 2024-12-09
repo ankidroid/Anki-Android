@@ -56,7 +56,10 @@ import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
 import timber.log.Timber
 
-class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider {
+class StudyOptionsFragment :
+    Fragment(),
+    ChangeManager.Subscriber,
+    MenuProvider {
     /**
      * Preferences
      */
@@ -265,7 +268,9 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
                 if (col!!.decks.isFiltered(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
-                    val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
+                    val i =
+                        com.ichi2.anki.pages.DeckOptions
+                            .getIntent(requireContext(), col!!.decks.current().id)
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
                 }
@@ -388,7 +393,8 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
             if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
                 // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
                 if (col!!.sched.totalCount() > 0 && studyOptionsView != null) {
-                    studyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
+                    studyOptionsView!!
+                        .findViewById<View>(R.id.studyoptions_main)
                         .showSnackbar(R.string.studyoptions_no_cards_due)
                 }
             }

@@ -101,7 +101,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView =
-            LayoutInflater.from(activity)
+            LayoutInflater
+                .from(activity)
                 .inflate(R.layout.deck_picker_dialog, null, false)
         val summary = dialogView.findViewById<TextView>(R.id.deck_picker_dialog_summary)
         val arguments = requireArguments()
@@ -151,9 +152,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         decks: List<SelectableDeck>,
     ) = decks.indexOfFirst { it.deckId == did }
 
-    private fun getSummaryMessage(arguments: Bundle): String? {
-        return arguments.getString(SUMMARY_MESSAGE)
-    }
+    private fun getSummaryMessage(arguments: Bundle): String? = arguments.getString(SUMMARY_MESSAGE)
 
     private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> =
         BundleCompat.getParcelableArrayList(arguments, DECK_NAMES, SelectableDeck::class.java)!!
@@ -284,8 +283,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         dialog!!.dismiss()
     }
 
-    open inner class DecksArrayAdapter(deckNames: List<SelectableDeck>) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(), Filterable {
-        inner class ViewHolder(deckHolder: View) : RecyclerView.ViewHolder(deckHolder) {
+    open inner class DecksArrayAdapter(
+        deckNames: List<SelectableDeck>,
+    ) : RecyclerView.Adapter<DecksArrayAdapter.ViewHolder>(),
+        Filterable {
+        inner class ViewHolder(
+            deckHolder: View,
+        ) : RecyclerView.ViewHolder(deckHolder) {
             var deckName: String = ""
             private var deckID: Long = -1L
 
@@ -345,7 +349,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             viewType: Int,
         ): ViewHolder {
             val v =
-                LayoutInflater.from(parent.context)
+                LayoutInflater
+                    .from(parent.context)
                     .inflate(R.layout.deck_picker_dialog_list_item, parent, false)
             return ViewHolder(v)
         }
@@ -391,26 +396,18 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             indent.minimumWidth = node.depth * expander.resources.getDimensionPixelSize(R.dimen.keyline_1)
         }
 
-        private fun hasSubDecks(node: DeckNode): Boolean {
-            return node.children.isNotEmpty()
-        }
+        private fun hasSubDecks(node: DeckNode): Boolean = node.children.isNotEmpty()
 
         private fun isViewable(deck: DeckNode): Boolean {
             val parentNode = deck.parent ?: return true
             return !parentNode.get()?.collapsed!! && isViewable(parentNode.get()!!)
         }
 
-        override fun getItemCount(): Int {
-            return currentlyDisplayedDecks.size
-        }
+        override fun getItemCount(): Int = currentlyDisplayedDecks.size
 
-        override fun getFilter(): Filter {
-            return DecksFilter()
-        }
+        override fun getFilter(): Filter = DecksFilter()
 
-        fun getCurrentlyDisplayedDecks(): List<SelectableDeck> {
-            return currentlyDisplayedDecks.map { SelectableDeck(it.did, it.fullDeckName) }
-        }
+        fun getCurrentlyDisplayedDecks(): List<SelectableDeck> = currentlyDisplayedDecks.map { SelectableDeck(it.did, it.fullDeckName) }
 
         private inner class DecksFilter : TypedFilter<DeckNode>(allDecksList) {
             override fun filterResults(
@@ -442,7 +439,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 val allDecksSet = deckNames.filter { it.deckId != 0L }.mapNotNull { decksRoot.find(it.deckId) }.toSet()
                 if (deckNames.any { it.deckId == ALL_DECKS_ID }) {
                     val newDeckNode =
-                        DeckTreeNode.newBuilder()
+                        DeckTreeNode
+                            .newBuilder()
                             .setDeckId(ALL_DECKS_ID)
                             .setName("all")
                             .build()
@@ -460,7 +458,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * @param name Name of the deck, or localization of "all decks"
      */
     @Parcelize
-    class SelectableDeck(val deckId: DeckId, val name: String) : Parcelable {
+    class SelectableDeck(
+        val deckId: DeckId,
+        val name: String,
+    ) : Parcelable {
         /**
          * The name to be displayed to the user. Contains only
          * the sub-deck name rather than the entire deck name.

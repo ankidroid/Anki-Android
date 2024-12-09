@@ -23,7 +23,10 @@ import com.ichi2.anki.Flag
 import com.ichi2.anki.R
 
 /** Handles the star and flag marker for the card viewer  */
-class CardMarker(private val markView: ImageView, private val flagView: ImageView) {
+class CardMarker(
+    private val markView: ImageView,
+    private val flagView: ImageView,
+) {
     /** Sets the mark icon on a card (the star)  */
     fun displayMark(markStatus: Boolean) {
         if (markStatus) {

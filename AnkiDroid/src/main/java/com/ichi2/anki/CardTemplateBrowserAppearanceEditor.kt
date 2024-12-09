@@ -134,22 +134,16 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         setTitle(R.string.card_template_browser_appearance_title)
     }
 
-    private fun answerHasChanged(intent: Intent): Boolean {
-        return intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat
-    }
+    private fun answerHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_ANSWER_FORMAT) != answerFormat
 
-    private fun questionHasChanged(intent: Intent): Boolean {
-        return intent.getStringExtra(INTENT_QUESTION_FORMAT) != questionFormat
-    }
+    private fun questionHasChanged(intent: Intent): Boolean = intent.getStringExtra(INTENT_QUESTION_FORMAT) != questionFormat
 
     private val questionFormat: String
         get() = getTextValue(questionEditText)
     private val answerFormat: String
         get() = getTextValue(answerEditText)
 
-    private fun getTextValue(editText: EditText): String {
-        return editText.text.toString()
-    }
+    private fun getTextValue(editText: EditText): String = editText.text.toString()
 
     private fun restoreDefaultAndClose() {
         Timber.i("Restoring Default and Closing")
@@ -175,16 +169,18 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         finish()
     }
 
-    private fun hasChanges(): Boolean {
-        return try {
+    private fun hasChanges(): Boolean =
+        try {
             questionHasChanged(intent) || answerHasChanged(intent)
         } catch (e: Exception) {
             Timber.w(e, "Failed to detect changes. Assuming true")
             true
         }
-    }
 
-    class Result private constructor(question: String?, answer: String?) {
+    class Result private constructor(
+        question: String?,
+        answer: String?,
+    ) {
         val question: String = question ?: VALUE_USE_DEFAULT
         val answer: String = answer ?: VALUE_USE_DEFAULT
 
@@ -195,8 +191,8 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
 
         companion object {
             @Contract("null -> null")
-            fun fromIntent(intent: Intent?): Result? {
-                return if (intent == null) {
+            fun fromIntent(intent: Intent?): Result? =
+                if (intent == null) {
                     null
                 } else {
                     try {
@@ -208,7 +204,6 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
                         null
                     }
                 }
-            }
         }
     }
 
@@ -234,11 +229,10 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
             context: Context,
             questionFormat: String,
             answerFormat: String,
-        ): Intent {
-            return Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
+        ): Intent =
+            Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
                 putExtra(INTENT_QUESTION_FORMAT, questionFormat)
                 putExtra(INTENT_ANSWER_FORMAT, answerFormat)
             }
-        }
     }
 }

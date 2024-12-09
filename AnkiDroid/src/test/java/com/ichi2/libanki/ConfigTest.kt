@@ -84,4 +84,7 @@ class ConfigTest : JvmTest() {
 }
 
 @Serializable
-data class Example(val hello: String, val world: Int)
+data class Example(
+    val hello: String,
+    val world: Int,
+)

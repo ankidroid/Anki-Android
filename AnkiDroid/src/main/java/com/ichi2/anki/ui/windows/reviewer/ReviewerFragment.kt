@@ -102,7 +102,8 @@ class ReviewerFragment :
             }
         }
 
-        viewModel.actionFeedbackFlow.flowWithLifecycle(lifecycle)
+        viewModel.actionFeedbackFlow
+            .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { message ->
                 showSnackbar(message, duration = 500)
             }
@@ -191,7 +192,8 @@ class ReviewerFragment :
                 setOnClickListener { viewModel.answerEasy() }
             }
 
-        viewModel.answerButtonsNextTimeFlow.flowWithLifecycle(lifecycle)
+        viewModel.answerButtonsNextTimeFlow
+            .flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { times ->
                 againButton.setAnswerButtonNextTime(R.string.ease_button_again, times?.again)
                 hardButton.setAnswerButtonNextTime(R.string.ease_button_hard, times?.hard)
@@ -229,7 +231,8 @@ class ReviewerFragment :
         val learnCount = view.findViewById<MaterialTextView>(R.id.lrn_count)
         val reviewCount = view.findViewById<MaterialTextView>(R.id.rev_count)
 
-        viewModel.countsFlow.flowWithLifecycle(lifecycle)
+        viewModel.countsFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { (counts, countsType) ->
                 newCount.text = counts.new.toString()
                 learnCount.text = counts.lrn.toString()
@@ -251,12 +254,14 @@ class ReviewerFragment :
         val submenu = menu.findItem(R.id.action_flag).subMenu
         lifecycleScope.launch {
             for ((flag, name) in Flag.queryDisplayNames()) {
-                submenu?.add(Menu.NONE, flag.id, Menu.NONE, name)
+                submenu
+                    ?.add(Menu.NONE, flag.id, Menu.NONE, name)
                     ?.setIcon(flag.drawableRes)
             }
         }
 
-        viewModel.flagFlow.flowWithLifecycle(lifecycle)
+        viewModel.flagFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { flagCode ->
                 menu.findItem(R.id.action_flag).setIcon(flagCode.drawableRes)
             }
@@ -267,7 +272,8 @@ class ReviewerFragment :
 
         // TODO show that the card is marked somehow when the menu item is overflowed or not shown
         val markItem = menu.findItem(R.id.action_mark)
-        viewModel.isMarkedFlow.flowWithLifecycle(lifecycle)
+        viewModel.isMarkedFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { isMarked ->
                 if (isMarked) {
                     markItem.setIcon(R.drawable.ic_star)
@@ -280,7 +286,8 @@ class ReviewerFragment :
 
         val buryItem = menu.findItem(R.id.action_bury)
         val buryCardItem = menu.findItem(R.id.action_bury_card)
-        viewModel.canBuryNoteFlow.flowWithLifecycle(lifecycle)
+        viewModel.canBuryNoteFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { canBuryNote ->
                 if (canBuryNote) {
                     buryItem.isVisible = true
@@ -293,7 +300,8 @@ class ReviewerFragment :
 
         val suspendItem = menu.findItem(R.id.action_suspend)
         val suspendCardItem = menu.findItem(R.id.action_suspend_card)
-        viewModel.canSuspendNoteFlow.flowWithLifecycle(lifecycle)
+        viewModel.canSuspendNoteFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { canSuspendNote ->
                 if (canSuspendNote) {
                     suspendItem.isVisible = true
@@ -305,14 +313,16 @@ class ReviewerFragment :
             }
 
         val undoItem = menu.findItem(R.id.action_undo)
-        viewModel.undoLabelFlow.flowWithLifecycle(lifecycle)
+        viewModel.undoLabelFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { label ->
                 undoItem.title = label ?: CollectionManager.TR.undoUndo()
                 undoItem.isEnabled = label != null
             }
 
         val redoItem = menu.findItem(R.id.action_redo)
-        viewModel.redoLabelFlow.flowWithLifecycle(lifecycle)
+        viewModel.redoLabelFlow
+            .flowWithLifecycle(lifecycle)
             .collectLatestIn(lifecycleScope) { label ->
                 redoItem.title = label ?: CollectionManager.TR.undoRedo()
                 redoItem.isEnabled = label != null
@@ -395,8 +405,6 @@ class ReviewerFragment :
     }
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return CardViewerActivity.getIntent(context, ReviewerFragment::class)
-        }
+        fun getIntent(context: Context): Intent = CardViewerActivity.getIntent(context, ReviewerFragment::class)
     }
 }

@@ -60,7 +60,8 @@ class HelpDialog : DialogFragment() {
             REQUEST_HELP_PAGE,
             this,
         ) { _, arguments -> handleItemSelection(arguments) }
-        return AlertDialog.Builder(requireContext())
+        return AlertDialog
+            .Builder(requireContext())
             .title(requireArguments().getInt(ARG_MENU_TITLE))
             .customView(customView)
             .createAndApply {

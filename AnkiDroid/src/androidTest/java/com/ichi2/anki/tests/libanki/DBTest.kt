@@ -82,7 +82,9 @@ class DBTest : InstrumentedTest() {
     }
 
     // Test fixture that lets us inspect corruption handler status
-    inner class TestCallback(version: Int) : AnkiSupportSQLiteDatabase.DefaultDbCallback(version) {
+    inner class TestCallback(
+        version: Int,
+    ) : AnkiSupportSQLiteDatabase.DefaultDbCallback(version) {
         internal var databaseIsCorrupt = false
 
         override fun onCorruption(db: SupportSQLiteDatabase) {

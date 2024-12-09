@@ -133,9 +133,7 @@ class Collection(
     private val lastSync: Long
         get() = db.queryLongScalar("select ls from col")
 
-    fun usn(): Int {
-        return -1
-    }
+    fun usn(): Int = -1
 
     var ls: Long = 0
     // END: SQL table columns
@@ -268,42 +266,30 @@ class Collection(
     }
 
     /** True if schema changed since last sync.  */
-    fun schemaChanged(): Boolean {
-        return scm > lastSync
-    }
+    fun schemaChanged(): Boolean = scm > lastSync
 
     /**
      * Object creation helpers **************************************************
      * *********************************************
      */
-    fun getCard(id: Long): Card {
-        return Card(this, id)
-    }
+    fun getCard(id: Long): Card = Card(this, id)
 
     fun updateCards(
         cards: Iterable<Card>,
         skipUndoEntry: Boolean = false,
-    ): OpChanges {
-        return backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
-    }
+    ): OpChanges = backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
 
     fun updateCard(
         card: Card,
         skipUndoEntry: Boolean = false,
-    ): OpChanges {
-        return updateCards(listOf(card), skipUndoEntry)
-    }
+    ): OpChanges = updateCards(listOf(card), skipUndoEntry)
 
-    fun getNote(id: Long): Note {
-        return Note(this, id)
-    }
+    fun getNote(id: Long): Note = Note(this, id)
 
     /**
      * Notes ******************************************************************** ***************************
      */
-    fun noteCount(): Int {
-        return db.queryScalar("SELECT count() FROM notes")
-    }
+    fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
 
     /**
      * Return a new note with the model derived from the deck or the configuration
@@ -311,18 +297,14 @@ class Collection(
      * the configuration (curModel)
      * @return The new note
      */
-    fun newNote(forDeck: Boolean = true): Note {
-        return newNote(notetypes.current(forDeck))
-    }
+    fun newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
 
     /**
      * Return a new note with a specific model
      * @param notetype The model to use for the new note
      * @return The new note
      */
-    fun newNote(notetype: NotetypeJson): Note {
-        return Note.fromNotetypeId(this, notetype.id)
-    }
+    fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
 
     /**
      * Cards ******************************************************************** ***************************
@@ -335,9 +317,7 @@ class Collection(
     val isEmpty: Boolean
         get() = db.queryScalar("SELECT 1 FROM cards LIMIT 1") == 0
 
-    fun cardCount(): Int {
-        return db.queryScalar("SELECT count() FROM cards")
-    }
+    fun cardCount(): Int = db.queryScalar("SELECT count() FROM cards")
 
     /*
       Finding cards ************************************************************ ***********************************
@@ -368,9 +348,7 @@ class Collection(
      * ```
      */
     @Suppress("unused")
-    fun buildSearchString(node: SearchNode): String {
-        return backend.buildSearchString(node)
-    }
+    fun buildSearchString(node: SearchNode): String = backend.buildSearchString(node)
 
     /**
      * Return a list of card ids
@@ -418,7 +396,10 @@ class Collection(
         return noteIDsList
     }
 
-    data class CardIdToNoteId(val id: Long, val nid: Long)
+    data class CardIdToNoteId(
+        val id: Long,
+        val nid: Long,
+    )
 
     /** Return a list of card ids  */
     @RustCleanup("Remove in V16.")
@@ -472,9 +453,7 @@ class Collection(
         regex: Boolean = false,
         field: String? = null,
         fold: Boolean = true,
-    ): Int {
-        return backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
-    }
+    ): Int = backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
 
     // Browser Table
 
@@ -544,7 +523,10 @@ class Collection(
         startReps = sched.reps
     }
 
-    data class TimeboxReached(val secs: Int, val reps: Int)
+    data class TimeboxReached(
+        val secs: Int,
+        val reps: Int,
+    )
 
     /* Return (elapsedTime, reps) if timebox reached, or null.
      * Automatically restarts timebox if expired. */
@@ -587,18 +569,15 @@ class Collection(
         return action?.let { tr.undoRedoAction(it) }
     }
 
-    fun redoAvailable(): Boolean {
-        return undoStatus().redo != null
-    }
+    fun redoAvailable(): Boolean = undoStatus().redo != null
 
     fun removeNotes(
         nids: Iterable<NoteId> = listOf(),
         cids: Iterable<CardId> = listOf(),
-    ): OpChangesWithCount {
-        return backend.removeNotes(noteIds = nids, cardIds = cids).also {
+    ): OpChangesWithCount =
+        backend.removeNotes(noteIds = nids, cardIds = cids).also {
             Timber.d("removeNotes: %d changes", it.count)
         }
-    }
 
     fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
         backend.removeCards(cardIds)
@@ -689,69 +668,45 @@ class Collection(
 
     @NotInLibAnki
     @CheckResult
-    fun filterToValidCards(cards: LongArray?): List<Long> {
-        return db.queryLongList("select id from cards where id in " + ids2str(cards))
-    }
+    fun filterToValidCards(cards: LongArray?): List<Long> = db.queryLongList("select id from cards where id in " + ids2str(cards))
 
     fun setDeck(
         cids: Iterable<CardId>,
         did: DeckId,
-    ): OpChangesWithCount {
-        return backend.setDeck(cardIds = cids, deckId = did)
-    }
+    ): OpChangesWithCount = backend.setDeck(cardIds = cids, deckId = did)
 
     /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
      * not be used for adding new notes. */
-    fun updateNote(note: Note): OpChanges {
-        return backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
-    }
+    fun updateNote(note: Note): OpChanges = backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
 
-    fun updateNotes(notes: Iterable<Note>): OpChanges {
-        return backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
-    }
+    fun updateNotes(notes: Iterable<Note>): OpChanges = backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
 
     @NotInLibAnki
-    fun emptyCids(): List<CardId> {
-        return getEmptyCards().notesList.flatMap { it.cardIdsList }
-    }
+    fun emptyCids(): List<CardId> = getEmptyCards().notesList.flatMap { it.cardIdsList }
 
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
-    fun fixIntegrity(): List<String> {
-        return backend.checkDatabase()
-    }
+    fun fixIntegrity(): List<String> = backend.checkDatabase()
 
     /** Change the flag color of the specified cards. flag=0 removes flag. */
     @CheckResult
     fun setUserFlagForCards(
         cids: Iterable<Long>,
         flag: Flag,
-    ): OpChangesWithCount {
-        return backend.setFlag(cardIds = cids, flag = flag.code)
-    }
+    ): OpChangesWithCount = backend.setFlag(cardIds = cids, flag = flag.code)
 
-    fun getEmptyCards(): EmptyCardsReport {
-        return backend.getEmptyCards()
-    }
+    fun getEmptyCards(): EmptyCardsReport = backend.getEmptyCards()
 
     @Suppress("unused")
-    fun syncStatus(auth: SyncAuth): SyncStatusResponse {
-        return backend.syncStatus(input = auth)
-    }
+    fun syncStatus(auth: SyncAuth): SyncStatusResponse = backend.syncStatus(input = auth)
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
-    fun i18nResourcesRaw(input: ByteArray): ByteArray {
-        return backend.i18nResourcesRaw(input = input)
-    }
+    fun i18nResourcesRaw(input: ByteArray): ByteArray = backend.i18nResourcesRaw(input = input)
 
     // Python code has a cardsOfNote, but not vice-versa yet
-    fun notesOfCards(cids: Iterable<CardId>): List<NoteId> {
-        return db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
-    }
+    fun notesOfCards(cids: Iterable<CardId>): List<NoteId> = db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
 
-    fun cardIdsOfNote(nid: NoteId): List<CardId> {
-        return backend.cardsOfNote(nid = nid)
-    }
+    fun cardIdsOfNote(nid: NoteId): List<CardId> = backend.cardsOfNote(nid = nid)
 
     /**
      * returns the list of cloze ordinals in a note
@@ -760,91 +715,56 @@ class Collection(
      */
     fun clozeNumbersInNote(n: Note): List<Int> {
         // the call appears to be non-deterministic. Sort ascending
-        return backend.clozeNumbersInNote(n.toBackendNote())
+        return backend
+            .clozeNumbersInNote(n.toBackendNote())
             .sorted()
     }
 
-    fun getImageForOcclusionRaw(input: ByteArray): ByteArray {
-        return backend.getImageForOcclusionRaw(input = input)
-    }
+    fun getImageForOcclusionRaw(input: ByteArray): ByteArray = backend.getImageForOcclusionRaw(input = input)
 
-    fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray {
-        return backend.getImageOcclusionNoteRaw(input = input)
-    }
+    fun getImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.getImageOcclusionNoteRaw(input = input)
 
-    fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray {
-        return backend.getImageOcclusionFieldsRaw(input = input)
-    }
+    fun getImageOcclusionFieldsRaw(input: ByteArray): ByteArray = backend.getImageOcclusionFieldsRaw(input = input)
 
-    fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray {
-        return backend.addImageOcclusionNoteRaw(input = input)
-    }
+    fun addImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.addImageOcclusionNoteRaw(input = input)
 
-    fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray {
-        return backend.updateImageOcclusionNoteRaw(input = input)
-    }
+    fun updateImageOcclusionNoteRaw(input: ByteArray): ByteArray = backend.updateImageOcclusionNoteRaw(input = input)
 
-    fun congratsInfoRaw(input: ByteArray): ByteArray {
-        return backend.congratsInfoRaw(input = input)
-    }
+    fun congratsInfoRaw(input: ByteArray): ByteArray = backend.congratsInfoRaw(input = input)
 
-    fun setWantsAbortRaw(input: ByteArray): ByteArray {
-        return backend.setWantsAbortRaw(input = input)
-    }
+    fun setWantsAbortRaw(input: ByteArray): ByteArray = backend.setWantsAbortRaw(input = input)
 
-    fun latestProgressRaw(input: ByteArray): ByteArray {
-        return backend.latestProgressRaw(input = input)
-    }
+    fun latestProgressRaw(input: ByteArray): ByteArray = backend.latestProgressRaw(input = input)
 
-    fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray {
-        return backend.getSchedulingStatesWithContextRaw(input = input)
-    }
+    fun getSchedulingStatesWithContextRaw(input: ByteArray): ByteArray = backend.getSchedulingStatesWithContextRaw(input = input)
 
-    fun setSchedulingStatesRaw(input: ByteArray): ByteArray {
-        return backend.setSchedulingStatesRaw(input = input)
-    }
+    fun setSchedulingStatesRaw(input: ByteArray): ByteArray = backend.setSchedulingStatesRaw(input = input)
 
-    fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray {
-        return backend.getChangeNotetypeInfoRaw(input = input)
-    }
+    fun getChangeNotetypeInfoRaw(input: ByteArray): ByteArray = backend.getChangeNotetypeInfoRaw(input = input)
 
-    fun changeNotetypeRaw(input: ByteArray): ByteArray {
-        return backend.changeNotetypeRaw(input = input)
-    }
+    fun changeNotetypeRaw(input: ByteArray): ByteArray = backend.changeNotetypeRaw(input = input)
 
-    fun importJsonStringRaw(input: ByteArray): ByteArray {
-        return backend.importJsonStringRaw(input = input)
-    }
+    fun importJsonStringRaw(input: ByteArray): ByteArray = backend.importJsonStringRaw(input = input)
 
-    fun importJsonFileRaw(input: ByteArray): ByteArray {
-        return backend.importJsonFileRaw(input = input)
-    }
+    fun importJsonFileRaw(input: ByteArray): ByteArray = backend.importJsonFileRaw(input = input)
 
     fun compareAnswer(
         expected: String,
         provided: String,
         combining: Boolean = true,
-    ): String {
-        return backend.compareAnswer(expected = expected, provided = provided, combining = combining)
-    }
+    ): String = backend.compareAnswer(expected = expected, provided = provided, combining = combining)
 
     fun extractClozeForTyping(
         text: String,
         ordinal: Int,
-    ): String {
-        return backend.extractClozeForTyping(text = text, ordinal = ordinal)
-    }
+    ): String = backend.extractClozeForTyping(text = text, ordinal = ordinal)
 
     fun defaultsForAdding(currentReviewCard: Card? = null): anki.notes.DeckAndNotetype {
         val homeDeck = currentReviewCard?.currentDeckId()?.did ?: 0L
         return backend.defaultsForAdding(homeDeckOfCurrentReviewCard = homeDeck)
     }
 
-    fun getPreferences(): Preferences {
-        return backend.getPreferences()
-    }
+    fun getPreferences(): Preferences = backend.getPreferences()
 
-    fun setPreferences(preferences: Preferences): OpChanges {
-        return backend.setPreferences(preferences)
-    }
+    fun setPreferences(preferences: Preferences): OpChanges = backend.setPreferences(preferences)
 }

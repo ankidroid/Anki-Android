@@ -82,12 +82,11 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
         fun getIntent(
             context: Context,
             arguments: TemplatePreviewerArguments,
-        ): Intent {
-            return CardViewerActivity.getIntent(
+        ): Intent =
+            CardViewerActivity.getIntent(
                 context,
                 TemplatePreviewerPage::class,
                 bundleOf(ARGS_KEY to arguments),
             )
-        }
     }
 }

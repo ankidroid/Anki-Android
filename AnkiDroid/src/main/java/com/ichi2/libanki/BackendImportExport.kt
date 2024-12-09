@@ -41,13 +41,12 @@ fun Collection.createBackup(
     backupFolder: String,
     force: Boolean,
     waitForCompletion: Boolean,
-): Boolean {
-    return backend.createBackup(
+): Boolean =
+    backend.createBackup(
         backupFolder = backupFolder,
         force = force,
         waitForCompletion = waitForCompletion,
     )
-}
 
 /**
  * If a backup is running, block until it completes, throwing if it fails, or already
@@ -97,17 +96,11 @@ fun Collection.exportCollectionPackage(
 fun Collection.importAnkiPackage(
     packagePath: String,
     options: ImportAnkiPackageOptions,
-): ImportResponse {
-    return backend.importAnkiPackage(packagePath, options)
-}
+): ImportResponse = backend.importAnkiPackage(packagePath, options)
 
-fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray {
-    return backend.importAnkiPackageRaw(input)
-}
+fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray = backend.importAnkiPackageRaw(input)
 
-fun Collection.getImportAnkiPackagePresetsRaw(input: ByteArray): ByteArray {
-    return backend.getImportAnkiPackagePresetsRaw(input)
-}
+fun Collection.getImportAnkiPackagePresetsRaw(input: ByteArray): ByteArray = backend.getImportAnkiPackagePresetsRaw(input)
 
 /**
  * Export the specified deck to an .apkg file.
@@ -152,14 +145,8 @@ fun Collection.exportCardsCsv(
     backend.exportCardCsv(outPath, withHtml, limit)
 }
 
-fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray {
-    return backend.getCsvMetadataRaw(input)
-}
+fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray = backend.getCsvMetadataRaw(input)
 
-fun Collection.importCsvRaw(input: ByteArray): ByteArray {
-    return backend.importCsvRaw(input)
-}
+fun Collection.importCsvRaw(input: ByteArray): ByteArray = backend.importCsvRaw(input)
 
-fun Collection.buildSearchString(input: ByteArray): String {
-    return backend.buildSearchString(SearchNode.parseFrom(input))
-}
+fun Collection.buildSearchString(input: ByteArray): String = backend.buildSearchString(SearchNode.parseFrom(input))

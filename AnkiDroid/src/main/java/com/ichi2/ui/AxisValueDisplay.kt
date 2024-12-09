@@ -38,7 +38,10 @@ typealias MeasureSpecValue = Int
  *
  * Invokes [extremityListener] each time an 'extreme' value is provided
  */
-class AxisValueDisplay(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class AxisValueDisplay(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : View(context, attrs) {
     /** Called when [isExtremity] returns true */
     private var extremityListener: ((value: Float) -> Unit)? = null
 

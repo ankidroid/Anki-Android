@@ -44,7 +44,9 @@ import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 
-class FieldEditText : FixedEditText, NoteService.NoteField {
+class FieldEditText :
+    FixedEditText,
+    NoteService.NoteField {
     override var ord = 0
     private var origBackground: Drawable? = null
     private var selectionChangeListener: TextSelectionListener? = null
@@ -65,9 +67,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         }
     }
 
-    private fun shouldDisableExtendedTextUi(): Boolean {
-        return this.context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
-    }
+    private fun shouldDisableExtendedTextUi(): Boolean = this.context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
 
     @KotlinCleanup("Simplify")
     override val fieldText: String?
@@ -175,8 +175,8 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     private fun onPaste(
         mediaUri: Uri?,
         description: ClipDescription?,
-    ): Boolean {
-        return if (mediaUri == null) {
+    ): Boolean =
+        if (mediaUri == null) {
             false
         } else {
             try {
@@ -187,7 +187,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
                 false
             }
         }
-    }
 
     override fun onRestoreInstanceState(state: Parcelable) {
         if (state !is SavedState) {
@@ -212,7 +211,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         get() = this.inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES == InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
 
     @Parcelize
-    internal class SavedState(val state: Parcelable?, val ord: Int) : BaseSavedState(state)
+    internal class SavedState(
+        val state: Parcelable?,
+        val ord: Int,
+    ) : BaseSavedState(state)
 
     interface TextSelectionListener {
         fun onSelectionChanged(

@@ -27,7 +27,9 @@ import androidx.preference.PreferenceManager.getDefaultSharedPreferences
  * This allows showing a dialog in the currently started activity if one exists,
  * or, if the app is in background, scheduling it to be shown the next time any activity is started.
  */
-class ActivityAgnosticDialogs private constructor(private val application: Application) {
+class ActivityAgnosticDialogs private constructor(
+    private val application: Application,
+) {
     private val preferences = getDefaultSharedPreferences(application)
 
     private val startedActivityStack = mutableListOf<Activity>()

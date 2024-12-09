@@ -69,7 +69,9 @@ class UniqueArrayList<E> /**
          */
         private val list: MutableList<E>,
         set: Set<E>?,
-    ) : SetUniqueList<E>(list, set), MutableList<E>, MutableSet<E> {
+    ) : SetUniqueList<E>(list, set),
+        MutableList<E>,
+        MutableSet<E> {
         /**
          * Constructs a new empty [UniqueArrayList]
          */
@@ -132,9 +134,7 @@ class UniqueArrayList<E> /**
             }
         }
 
-        override fun spliterator(): Spliterator<E> {
-            return super<SetUniqueList>.spliterator()
-        }
+        override fun spliterator(): Spliterator<E> = super<SetUniqueList>.spliterator()
 
         companion object {
             /**

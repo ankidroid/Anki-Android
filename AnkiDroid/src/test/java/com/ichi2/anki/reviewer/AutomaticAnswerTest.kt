@@ -146,7 +146,10 @@ class AutomaticAnswerTest : JvmTest() {
         }
     }
 
-    private class AutoAnswerMock(var answerShown: Boolean = false, var questionShown: Boolean = false) : AutomaticallyAnswered {
+    private class AutoAnswerMock(
+        var answerShown: Boolean = false,
+        var questionShown: Boolean = false,
+    ) : AutomaticallyAnswered {
         override fun automaticShowAnswer() {
             answerShown = true
         }

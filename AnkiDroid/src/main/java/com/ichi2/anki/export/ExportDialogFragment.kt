@@ -97,7 +97,8 @@ class ExportDialogFragment : DialogFragment() {
         } else {
             showExtrasOptionsFor(dialogView, ExportConfiguration.Collection)
         }
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .setView(dialogView)
             .negativeButton(R.string.dialog_cancel)
             .positiveButton(R.string.dialog_ok) {
@@ -112,8 +113,7 @@ class ExportDialogFragment : DialogFragment() {
                     ExportConfiguration.Notes -> handleNotesInPlainTextExport()
                     ExportConfiguration.Cards -> handleCardsInPlainTextExport()
                 }
-            }
-            .create()
+            }.create()
     }
 
     /**
@@ -431,21 +431,19 @@ class ExportDialogFragment : DialogFragment() {
             position: Int,
             convertView: View?,
             parent: ViewGroup,
-        ): View {
-            return super.getView(position, convertView, parent).apply {
+        ): View =
+            super.getView(position, convertView, parent).apply {
                 findViewById<TextView>(android.R.id.text1).text = decks[position].name
             }
-        }
 
         override fun getDropDownView(
             position: Int,
             convertView: View?,
             parent: ViewGroup,
-        ): View {
-            return super.getDropDownView(position, convertView, parent).apply {
+        ): View =
+            super.getDropDownView(position, convertView, parent).apply {
                 findViewById<TextView>(android.R.id.text1).text = decks[position].name
             }
-        }
     }
 
     /**

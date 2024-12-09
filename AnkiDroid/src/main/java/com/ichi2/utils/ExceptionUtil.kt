@@ -25,9 +25,7 @@ import java.io.StringWriter
 
 object ExceptionUtil {
     @CheckResult
-    fun getExceptionMessage(e: Throwable?): String {
-        return getExceptionMessage(e, "\n")
-    }
+    fun getExceptionMessage(e: Throwable?): String = getExceptionMessage(e, "\n")
 
     @CheckResult
     fun getExceptionMessage(

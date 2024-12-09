@@ -341,17 +341,14 @@ open class Reviewer :
         getColUnsafe.decks.select(did)
     }
 
-    override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
-        return when (fullscreenMode) {
+    override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int =
+        when (fullscreenMode) {
             FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen
             FullScreenMode.FULLSCREEN_ALL_GONE -> R.layout.reviewer_fullscreen_noanswers
             FullScreenMode.BUTTONS_AND_MENU -> R.layout.reviewer
         }
-    }
 
-    public override fun fitsSystemWindows(): Boolean {
-        return !fullscreenMode.isFullScreenReview()
-    }
+    public override fun fitsSystemWindows(): Boolean = !fullscreenMode.isFullScreenReview()
 
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
@@ -495,7 +492,9 @@ open class Reviewer :
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
-                val i = com.ichi2.anki.pages.DeckOptions.getIntent(this, getColUnsafe.decks.current().id)
+                val i =
+                    com.ichi2.anki.pages.DeckOptions
+                        .getIntent(this, getColUnsafe.decks.current().id)
                 deckOptionsLauncher.launch(i)
             }
             R.id.action_select_tts -> {
@@ -678,7 +677,8 @@ open class Reviewer :
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_AUDIO_PERMISSION &&
-            permissions.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            permissions.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
             // Get get audio record permission, so we can create the record tool bar
             toggleMicToolBar()
@@ -813,11 +813,13 @@ open class Reviewer :
             val whiteboardIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
             val whiteboardColorPaletteIcon =
-                VectorDrawableCompat.create(
-                    resources,
-                    R.drawable.ic_color_lens_white_24dp,
-                    this.theme,
-                )!!.mutate()
+                VectorDrawableCompat
+                    .create(
+                        resources,
+                        R.drawable.ic_color_lens_white_24dp,
+                        this.theme,
+                    )!!
+                    .mutate()
             if (showWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
@@ -879,7 +881,8 @@ open class Reviewer :
         lifecycleScope.launch {
             for ((flag, displayName) in Flag.queryDisplayNames()) {
                 val menuItem =
-                    subMenu.add(Menu.NONE, flag.code, Menu.NONE, displayName)
+                    subMenu
+                        .add(Menu.NONE, flag.code, Menu.NONE, displayName)
                         .setIcon(flag.drawableRes)
                 flagItemIds.add(menuItem.itemId)
             }
@@ -899,9 +902,7 @@ open class Reviewer :
         }
     }
 
-    private fun isFlagItem(menuItem: MenuItem): Boolean {
-        return flagItemIds.contains(menuItem.itemId)
-    }
+    private fun isFlagItem(menuItem: MenuItem): Boolean = flagItemIds.contains(menuItem.itemId)
 
     override fun onKeyDown(
         keyCode: Int,
@@ -919,13 +920,12 @@ open class Reviewer :
     override fun onKeyUp(
         keyCode: Int,
         event: KeyEvent,
-    ): Boolean {
-        return if (processor.onKeyUp(keyCode, event)) {
+    ): Boolean =
+        if (processor.onKeyUp(keyCode, event)) {
             true
         } else {
             super.onKeyUp(keyCode, event)
         }
-    }
 
     override fun onGenericMotionEvent(event: MotionEvent?): Boolean {
         if (motionEventHandler.onGenericMotionEvent(event)) {
@@ -934,9 +934,7 @@ open class Reviewer :
         return super.onGenericMotionEvent(event)
     }
 
-    override fun canAccessScheduler(): Boolean {
-        return true
-    }
+    override fun canAccessScheduler(): Boolean = true
 
     override fun performReload() {
         launchCatchingTask { updateCardAndRedraw() }
@@ -997,7 +995,8 @@ open class Reviewer :
 
     private fun updateWhiteboardEditorPosition() {
         answerButtonsPosition =
-            this.sharedPrefs()
+            this
+                .sharedPrefs()
                 .getString("answerButtonPosition", "bottom")
         val layoutParams: RelativeLayout.LayoutParams
         when (answerButtonsPosition) {
@@ -1443,11 +1442,16 @@ open class Reviewer :
     private fun showViewWithAnimation(view: View) {
         view.alpha = 0.0f
         view.visibility = View.VISIBLE
-        view.animate().alpha(TRANSPARENCY).setDuration(ANIMATION_DURATION.toLong()).setListener(null)
+        view
+            .animate()
+            .alpha(TRANSPARENCY)
+            .setDuration(ANIMATION_DURATION.toLong())
+            .setListener(null)
     }
 
     private fun hideViewWithAnimation(view: View) {
-        view.animate()
+        view
+            .animate()
             .alpha(0f)
             .setDuration(ANIMATION_DURATION.toLong())
             .setListener(
@@ -1460,15 +1464,15 @@ open class Reviewer :
     }
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
-    private fun isImmersiveSystemUiVisible(activity: AnkiActivity): Boolean {
-        return activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
-    }
+    private fun isImmersiveSystemUiVisible(
+        activity: AnkiActivity,
+    ): Boolean = activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
 
     override suspend fun handlePostRequest(
         uri: String,
         bytes: ByteArray,
-    ): ByteArray {
-        return if (uri.startsWith(ANKI_PREFIX)) {
+    ): ByteArray =
+        if (uri.startsWith(ANKI_PREFIX)) {
             when (val methodName = uri.substring(ANKI_PREFIX.length)) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
                 "setSchedulingStates" -> setSchedulingStates(bytes)
@@ -1484,18 +1488,22 @@ open class Reviewer :
         } else {
             throw IllegalArgumentException("unhandled request: $uri")
         }
-    }
 
     private fun getSchedulingStatesWithContext(): ByteArray {
         val state = queueState ?: return ByteArray(0)
-        return state.schedulingStatesWithContext().toBuilder()
+        return state
+            .schedulingStatesWithContext()
+            .toBuilder()
             .mergeStates(
-                state.states.toBuilder().mergeCurrent(
-                    state.states.current.toBuilder()
-                        .setCustomData(state.topCard.toBackendCard().customData).build(),
-                ).build(),
-            )
-            .build()
+                state.states
+                    .toBuilder()
+                    .mergeCurrent(
+                        state.states.current
+                            .toBuilder()
+                            .setCustomData(state.topCard.toBackendCard().customData)
+                            .build(),
+                    ).build(),
+            ).build()
             .toByteArray()
     }
 
@@ -1532,11 +1540,13 @@ open class Reviewer :
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
             if (event == null) return@setOnTouchListener false
             // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
-            if (!whiteboard!!.isCurrentlyDrawing && (
-                    !showWhiteboard || (
-                        prefFullscreenReview &&
-                            isImmersiveSystemUiVisible(this@Reviewer)
-                    )
+            if (!whiteboard!!.isCurrentlyDrawing &&
+                (
+                    !showWhiteboard ||
+                        (
+                            prefFullscreenReview &&
+                                isImmersiveSystemUiVisible(this@Reviewer)
+                        )
                 )
             ) {
                 // Bypass whiteboard listener when it's hidden or fullscreen immersive mode is temporarily suspended
@@ -1630,9 +1640,7 @@ open class Reviewer :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun hasDrawerSwipeConflicts(): Boolean {
-        return hasDrawerSwipeConflicts
-    }
+    fun hasDrawerSwipeConflicts(): Boolean = hasDrawerSwipeConflicts
 
     override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
         val cardDataForJsAPI =

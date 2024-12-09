@@ -72,12 +72,11 @@ fun File.withTempFile(
 fun File.addTempFile(
     fileName: String,
     content: String = "default content",
-): File {
-    return File(this, fileName).also {
+): File =
+    File(this, fileName).also {
         IOUtils.writeStringToFile(it, content)
         it.deleteOnExit()
     }
-}
 
 /** Adds a directory to the directory with the provided name and content. Return the new directory. */
 fun File.addTempDirectory(directoryName: String): Directory {

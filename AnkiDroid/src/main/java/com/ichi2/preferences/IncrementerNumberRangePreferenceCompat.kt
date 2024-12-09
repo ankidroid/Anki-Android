@@ -28,7 +28,9 @@ import android.widget.LinearLayout
 import com.ichi2.anki.R
 
 /** Marker class to be used in preferences */
-class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, DialogFragmentProvider {
+class IncrementerNumberRangePreferenceCompat :
+    NumberRangePreferenceCompat,
+    DialogFragmentProvider {
     @Suppress("unused")
     constructor(
         context: Context,

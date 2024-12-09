@@ -39,7 +39,10 @@ open class TtsVoice(
     open fun unavailable(): Boolean = false
 }
 
-data class TtsVoiceMatch(val voice: TtsVoice, val rank: Int)
+data class TtsVoiceMatch(
+    val voice: TtsVoice,
+    val rank: Int,
+)
 
 abstract class TtsPlayer : Closeable {
     open val defaultRank = 0
@@ -50,7 +53,10 @@ abstract class TtsPlayer : Closeable {
 
     abstract class TtsError
 
-    data class TtsCompletionStatus(val success: Boolean?, val error: TtsError? = null) {
+    data class TtsCompletionStatus(
+        val success: Boolean?,
+        val error: TtsError? = null,
+    ) {
         companion object {
             fun success() = TtsCompletionStatus(success = true)
 

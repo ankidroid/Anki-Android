@@ -115,12 +115,11 @@ abstract class CardViewerViewModel(
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L358) */
     private suspend fun mungeQA(text: String): String = typeAnsFilter(prepareCardTextForDisplay(text))
 
-    private suspend fun prepareCardTextForDisplay(text: String): String {
-        return Sound.addPlayButtons(
+    private suspend fun prepareCardTextForDisplay(text: String): String =
+        Sound.addPlayButtons(
             text = withCol { media.escapeMediaFilenames(text) },
             renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } },
         )
-    }
 
     protected open suspend fun showQuestion() {
         Timber.v("showQuestion()")
@@ -187,8 +186,8 @@ abstract class CardViewerViewModel(
     override suspend fun handlePostRequest(
         uri: String,
         bytes: ByteArray,
-    ): ByteArray {
-        return if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+    ): ByteArray =
+        if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
             when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
                 "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
                 else -> throw IllegalArgumentException("Unhandled Anki request: $uri")
@@ -196,7 +195,6 @@ abstract class CardViewerViewModel(
         } else {
             throw IllegalArgumentException("Unhandled POST request: $uri")
         }
-    }
 
     companion object {
         // ********************************** Type-in answer ************************************

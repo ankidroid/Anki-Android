@@ -26,11 +26,11 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.PromptOptions
 /**
  * Used for changing PromptBackgroundInterface to PromptBackground.
  */
-class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackgroundInterface) : PromptBackground() {
+class PromptBackgroundAdapter(
+    private val promptBackgroundInterface: PromptBackgroundInterface,
+) : PromptBackground() {
     companion object {
-        fun PromptBackgroundInterface.toPromptBackground(): PromptBackground {
-            return PromptBackgroundAdapter(this)
-        }
+        fun PromptBackgroundInterface.toPromptBackground(): PromptBackground = PromptBackgroundAdapter(this)
     }
 
     override fun update(
@@ -48,9 +48,7 @@ class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackg
     override fun contains(
         x: Float,
         y: Float,
-    ): Boolean {
-        return promptBackgroundInterface.contains(x, y)
-    }
+    ): Boolean = promptBackgroundInterface.contains(x, y)
 
     override fun setColour(colour: Int) {
         promptBackgroundInterface.setColour(colour)

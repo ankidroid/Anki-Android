@@ -34,7 +34,9 @@ import java.util.GregorianCalendar
  * This custom Lint rules will raise an error if a developer creates [GregorianCalendar] instances directly
  * instead of using the collection's getTime() method.
  */
-class DirectGregorianInstantiation : Detector(), SourceCodeScanner {
+class DirectGregorianInstantiation :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectGregorianInstantiation"

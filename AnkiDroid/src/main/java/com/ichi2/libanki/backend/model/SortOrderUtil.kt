@@ -33,9 +33,9 @@ fun SortOrder.toProtoBuf(): anki.search.SortOrder {
     }.build()
 }
 
-fun SortOrder.BuiltinSortKind.toProtoBuf(): anki.search.SortOrder.Builtin {
-    return anki.search.SortOrder.Builtin.newBuilder()
+fun SortOrder.BuiltinSortKind.toProtoBuf(): anki.search.SortOrder.Builtin =
+    anki.search.SortOrder.Builtin
+        .newBuilder()
         .setColumn(value)
         .setReverse(reverse)
         .build()
-}

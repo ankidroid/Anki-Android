@@ -57,9 +57,7 @@ class NotificationChannelTest : InstrumentedTest() {
         manager = targetContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    private fun channelsInAPI(): Boolean {
-        return currentAPI >= 26
-    }
+    private fun channelsInAPI(): Boolean = currentAPI >= 26
 
     @Test
     fun testChannelCreation() {

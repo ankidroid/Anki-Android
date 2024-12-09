@@ -54,7 +54,10 @@ import timber.log.Timber
 
 // TODO: Ensure that the Deck Selection Dialog does not close automatically while the user is interacting with it.
 
-class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackbarBuilderProvider {
+class CardAnalysisWidgetConfig :
+    AnkiActivity(),
+    DeckSelectionListener,
+    BaseSnackbarBuilderProvider {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var cardAnalysisWidgetPreferences: CardAnalysisWidgetPreferences
@@ -261,11 +264,10 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
     }
 
     /** Returns the list of standard deck. */
-    private suspend fun fetchDecks(): List<SelectableDeck> {
-        return withContext(Dispatchers.IO) {
+    private suspend fun fetchDecks(): List<SelectableDeck> =
+        withContext(Dispatchers.IO) {
             SelectableDeck.fromCollection(includeFiltered = false)
         }
-    }
 
     /** Displays the deck selection dialog with the provided list of decks. */
     private fun displayDeckSelectionDialog(decks: List<SelectableDeck>) {

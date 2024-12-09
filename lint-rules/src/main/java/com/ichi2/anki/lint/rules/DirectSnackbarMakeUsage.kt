@@ -34,7 +34,9 @@ import org.jetbrains.uast.UCallExpression
  * the com.google.android.material.snackbar.Snackbar.make method instead of
  * using the method provided in com.ichi2.anki.snackbar.SnackbarsKt.showSnackbar.
  */
-class DirectSnackbarMakeUsage : Detector(), SourceCodeScanner {
+class DirectSnackbarMakeUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectSnackbarMakeUsage"

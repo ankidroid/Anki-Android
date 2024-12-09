@@ -38,7 +38,9 @@ class CardBrowserCardCollectionTest {
         return cardCollection
     }
 
-    private class Positioned(override var position: Int) : PositionAware {
+    private class Positioned(
+        override var position: Int,
+    ) : PositionAware {
         val initialValue: Int = position
     }
 }

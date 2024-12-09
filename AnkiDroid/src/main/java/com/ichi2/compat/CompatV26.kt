@@ -72,17 +72,13 @@ open class CompatV26 : CompatV24() {
     override fun copyFile(
         source: String,
         target: OutputStream,
-    ): Long {
-        return Files.copy(Paths.get(source), target)
-    }
+    ): Long = Files.copy(Paths.get(source), target)
 
     @Throws(IOException::class)
     override fun copyFile(
         source: InputStream,
         target: String,
-    ): Long {
-        return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
-    }
+    ): Long = Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
 
     @Throws(IOException::class)
     override fun deleteFile(file: File) {
@@ -100,9 +96,7 @@ open class CompatV26 : CompatV24() {
 
     @VisibleForTesting
     @Throws(IOException::class)
-    fun newDirectoryStream(dir: Path?): DirectoryStream<Path> {
-        return Files.newDirectoryStream(dir)
-    }
+    fun newDirectoryStream(dir: Path?): DirectoryStream<Path> = Files.newDirectoryStream(dir)
 
     /*
      * This method uses [Files.newDirectoryStream].
@@ -130,14 +124,13 @@ open class CompatV26 : CompatV24() {
             }
 
             @Throws(IOException::class)
-            override operator fun hasNext(): Boolean {
-                return try {
+            override operator fun hasNext(): Boolean =
+                try {
                     paths.hasNext()
                 } catch (e: DirectoryIteratorException) {
                     // According to the documentation, it's the only exception it can throws.
                     throw e.cause!!
                 }
-            }
 
             @Throws(IOException::class)
             override operator fun next(): File {

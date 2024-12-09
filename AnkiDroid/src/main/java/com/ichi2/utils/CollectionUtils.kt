@@ -35,7 +35,5 @@ object CollectionUtils {
      * Return the average of the elements in the iterable,
      * or null if the iterable is empty.
      */
-    fun <T> Iterable<T>.average(f: (T) -> Int): Double? {
-        return this.map(f).average().let { if (it.isNaN()) null else it }
-    }
+    fun <T> Iterable<T>.average(f: (T) -> Int): Double? = this.map(f).average().let { if (it.isNaN()) null else it }
 }

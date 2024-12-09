@@ -94,15 +94,15 @@ interface PromptBackgroundInterface {
  * Converts from abstract [PromptBackground] to [PromptBackgroundInterface] to allow extensions of a
  * [PromptBackground] without the requirement to inherit from an empty abstract class.
  */
-class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackground) : PromptBackgroundInterface {
+class PromptBackgroundInterfaceAdapter(
+    private val promptBackground: PromptBackground,
+) : PromptBackgroundInterface {
     companion object {
         /**
          * Takes PromptBackground and returns PromptBackgroundInterfaceAdapter which
          * implements PromptBackgroundInterface.
          */
-        fun PromptBackground.toInterface(): PromptBackgroundInterface {
-            return PromptBackgroundInterfaceAdapter(this)
-        }
+        fun PromptBackground.toInterface(): PromptBackgroundInterface = PromptBackgroundInterfaceAdapter(this)
     }
 
     override fun update(
@@ -120,9 +120,7 @@ class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackg
     override fun contains(
         x: Float,
         y: Float,
-    ): Boolean {
-        return promptBackground.contains(x, y)
-    }
+    ): Boolean = promptBackground.contains(x, y)
 
     override fun setColour(colour: Int) {
         promptBackground.setColour(colour)

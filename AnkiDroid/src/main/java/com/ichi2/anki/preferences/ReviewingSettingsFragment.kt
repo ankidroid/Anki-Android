@@ -85,9 +85,8 @@ class ReviewingSettingsFragment : SettingsFragment() {
         Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
     }
 
-    private suspend fun getTimeboxTimeLimit(): Duration {
-        return withCol { getPreferences().reviewing.timeLimitSecs }.toDuration(DurationUnit.SECONDS)
-    }
+    private suspend fun getTimeboxTimeLimit(): Duration =
+        withCol { getPreferences().reviewing.timeLimitSecs }.toDuration(DurationUnit.SECONDS)
 
     private suspend fun setTimeboxTimeLimit(limit: Duration) {
         val prefs = withCol { getPreferences() }
@@ -118,6 +117,4 @@ suspend fun setDayOffset(
 }
 
 @VisibleForTesting
-suspend fun getDayOffset(): Int {
-    return withCol { getPreferences().scheduling.rollover }
-}
+suspend fun getDayOffset(): Int = withCol { getPreferences().scheduling.rollover }

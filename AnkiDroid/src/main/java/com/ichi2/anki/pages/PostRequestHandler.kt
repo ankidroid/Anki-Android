@@ -98,13 +98,12 @@ val collectionMethods =
 suspend fun handleCollectionPostRequest(
     methodName: String,
     bytes: ByteArray,
-): ByteArray? {
-    return collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } } ?: run {
+): ByteArray? =
+    collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } } ?: run {
         Timber.w("Unknown TS method called.")
         Timber.d("handleCollectionPostRequest could not resolve TS method %s", methodName)
         null
     }
-}
 
 typealias UIBackendInterface = FragmentActivity.(bytes: ByteArray) -> Deferred<ByteArray>
 

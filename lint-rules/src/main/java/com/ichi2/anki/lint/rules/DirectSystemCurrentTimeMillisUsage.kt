@@ -33,7 +33,9 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer uses the [System.currentTimeMillis] method instead
  * of using the time provided by the new Time class.
  */
-class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
+class DirectSystemCurrentTimeMillisUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectSystemCurrentTimeMillisUsage"

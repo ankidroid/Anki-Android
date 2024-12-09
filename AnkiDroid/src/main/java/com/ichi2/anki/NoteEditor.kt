@@ -314,7 +314,8 @@ class NoteEditor :
                 reloadRequired = true
                 editorNote!!.notetype = getColUnsafe.notetypes.get(editorNote!!.mid)!!
                 if (currentEditedCard == null ||
-                    !editorNote!!.cardIds(getColUnsafe)
+                    !editorNote!!
+                        .cardIds(getColUnsafe)
                         .contains(currentEditedCard!!.id)
                 ) {
                     if (!addNote) {
@@ -1145,9 +1146,7 @@ class NoteEditor :
         // changed tags?
     }
 
-    private fun collectionHasLoaded(): Boolean {
-        return allModelIds != null
-    }
+    private fun collectionHasLoaded(): Boolean = allModelIds != null
 
     // ----------------------------------------------------------------------------
     // SAVE NOTE METHODS
@@ -1735,7 +1734,8 @@ class NoteEditor :
             editLineView.configureView(
                 requireActivity(),
                 MEDIA_MIME_TYPES,
-                DropHelper.Options.Builder()
+                DropHelper.Options
+                    .Builder()
                     .setHighlightColor(R.color.material_lime_green_A700)
                     .setHighlightCornerRadiusPx(0)
                     .addInnerEditTexts(newEditText)
@@ -1807,8 +1807,8 @@ class NoteEditor :
     private fun getActionModeCallback(
         textBox: FieldEditText,
         clozeMenuId: Int,
-    ): ActionMode.Callback {
-        return CustomActionModeCallback(
+    ): ActionMode.Callback =
+        CustomActionModeCallback(
             isClozeType,
             getString(R.string.multimedia_editor_popup_cloze),
             clozeMenuId,
@@ -1822,7 +1822,6 @@ class NoteEditor :
                 }
             },
         )
-    }
 
     @VisibleForTesting
     fun showMultimediaBottomSheet() {
@@ -2321,7 +2320,8 @@ class NoteEditor :
             if (shouldHideToolbar()) {
                 0
             } else {
-                resources.getDimension(R.dimen.note_editor_toolbar_height)
+                resources
+                    .getDimension(R.dimen.note_editor_toolbar_height)
                     .toInt()
             }
         val params = editorLayout.layoutParams as MarginLayoutParams
@@ -2378,7 +2378,8 @@ class NoteEditor :
     private val toolbarButtons: ArrayList<CustomToolbarButton>
         get() {
             val set =
-                this.sharedPrefs()
+                this
+                    .sharedPrefs()
                     .getStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, HashUtil.hashSetInit(0))
             return CustomToolbarButton.fromStringSet(set!!)
         }
@@ -2445,11 +2446,11 @@ class NoteEditor :
 
     private val toolbarDialog: AlertDialog.Builder
         get() =
-            AlertDialog.Builder(requireContext())
+            AlertDialog
+                .Builder(requireContext())
                 .neutralButton(R.string.help) {
                     openUrl(Uri.parse(getString(R.string.link_manual_note_format_toolbar)))
-                }
-                .negativeButton(R.string.dialog_cancel)
+                }.negativeButton(R.string.dialog_cancel)
 
     private fun displayAddToolbarDialog() {
         val v = layoutInflater.inflate(R.layout.note_editor_toolbar_add_custom_item, null)
@@ -2484,8 +2485,7 @@ class NoteEditor :
                         et2.text.toString(),
                         currentButton,
                     )
-                }
-                .create()
+                }.create()
         btnDelete.setOnClickListener {
             suggestRemoveButton(
                 currentButton,
@@ -2524,7 +2524,10 @@ class NoteEditor :
         tagsButton!!.text =
             resources.getString(
                 R.string.CardEditorTags,
-                getColUnsafe.tags.join(getColUnsafe.tags.canonify(selectedTags!!)).trim { it <= ' ' }.replace(" ", ", "),
+                getColUnsafe.tags
+                    .join(getColUnsafe.tags.canonify(selectedTags!!))
+                    .trim { it <= ' ' }
+                    .replace(" ", ", "),
             )
     }
 
@@ -2538,7 +2541,8 @@ class NoteEditor :
         for (i in 0 until tmpls.length()) {
             var name = tmpls.getJSONObject(i).optString("name")
             // If more than one card, and we have an existing card, underline existing card
-            if (!addNote && tmpls.length() > 1 &&
+            if (!addNote &&
+                tmpls.length() > 1 &&
                 model === editorNote!!.notetype &&
                 currentEditedCard != null &&
                 currentEditedCard!!.template(getColUnsafe).optString("name") == name
@@ -2571,9 +2575,7 @@ class NoteEditor :
         return false
     }
 
-    private fun tagsAsString(tags: List<String>): String {
-        return tags.joinToString(" ")
-    }
+    private fun tagsAsString(tags: List<String>): String = tags.joinToString(" ")
 
     private val currentlySelectedNotetype: NotetypeJson?
         get() =
@@ -2756,9 +2758,7 @@ class NoteEditor :
         modifyCurrentSelection(TextWrapper(prefix, suffix), textBox)
     }
 
-    private fun hasClozeDeletions(): Boolean {
-        return nextClozeIndex > 1
-    }
+    private fun hasClozeDeletions(): Boolean = nextClozeIndex > 1
 
     // BUG: This assumes all fields are inserted as: {{cloze:Text}}
     private val nextClozeIndex: Int
@@ -2789,9 +2789,7 @@ class NoteEditor :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun getFieldForTest(index: Int): FieldEditText {
-        return editFields!![index]
-    }
+    fun getFieldForTest(index: Int): FieldEditText = editFields!![index]
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun setCurrentlySelectedModel(mid: NoteTypeId) {
@@ -2805,7 +2803,9 @@ class NoteEditor :
      */
     private var loadingStickyFields = false
 
-    private inner class EditFieldTextWatcher(private val index: Int) : TextWatcher {
+    private inner class EditFieldTextWatcher(
+        private val index: Int,
+    ) : TextWatcher {
         override fun afterTextChanged(arg0: Editable) {
             if (!loadingStickyFields) {
                 isFieldEdited = true
@@ -2862,7 +2862,9 @@ class NoteEditor :
         const val EXTRA_IMG_OCCLUSION = "image_uri"
 
         // calling activity
-        enum class NoteEditorCaller(val value: Int) {
+        enum class NoteEditorCaller(
+            val value: Int,
+        ) {
             NO_CALLER(0),
             EDIT(1),
             STUDYOPTIONS(2),
@@ -2892,10 +2894,10 @@ class NoteEditor :
         private const val PREF_NOTE_EDITOR_FONT_SIZE = "note_editor_font_size"
         private const val PREF_NOTE_EDITOR_CUSTOM_BUTTONS = "note_editor_custom_buttons"
 
-        private fun shouldReplaceNewlines(): Boolean {
-            return AnkiDroidApp.instance.sharedPrefs()
+        private fun shouldReplaceNewlines(): Boolean =
+            AnkiDroidApp.instance
+                .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_NEWLINE_REPLACE, true)
-        }
 
         @VisibleForTesting
         @CheckResult
@@ -2905,9 +2907,9 @@ class NoteEditor :
             return intent.resolveMimeType()?.startsWith("image/") == true
         }
 
-        private fun shouldHideToolbar(): Boolean {
-            return !AnkiDroidApp.instance.sharedPrefs()
+        private fun shouldHideToolbar(): Boolean =
+            !AnkiDroidApp.instance
+                .sharedPrefs()
                 .getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)
-        }
     }
 }

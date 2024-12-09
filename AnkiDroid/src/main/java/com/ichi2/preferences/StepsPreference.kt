@@ -29,7 +29,9 @@ import org.json.JSONException
 import timber.log.Timber
 
 @Suppress("deprecation", "OVERRIDE_DEPRECATION") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
-class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
+class StepsPreference :
+    android.preference.EditTextPreference,
+    AutoFocusable {
     private val allowEmpty: Boolean
 
     @Suppress("unused")
@@ -102,10 +104,9 @@ class StepsPreference : android.preference.EditTextPreference, AutoFocusable {
         }
     }
 
-    private fun getAllowEmptyFromAttributes(attrs: AttributeSet?): Boolean {
-        return attrs?.getAttributeBooleanValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "allowEmpty", true)
+    private fun getAllowEmptyFromAttributes(attrs: AttributeSet?): Boolean =
+        attrs?.getAttributeBooleanValue(AnkiDroidApp.XML_CUSTOM_NAMESPACE, "allowEmpty", true)
             ?: true
-    }
 
     companion object {
         /**

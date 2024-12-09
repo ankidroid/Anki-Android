@@ -96,17 +96,16 @@ open class FixedEditText : AppCompatEditText {
         }
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        return try {
+    override fun onTouchEvent(event: MotionEvent): Boolean =
+        try {
             super.onTouchEvent(event)
         } catch (ex: Throwable) {
             Timber.w(ex)
             false
         }
-    }
 
-    override fun performLongClick(): Boolean {
-        return try {
+    override fun performLongClick(): Boolean =
+        try {
             super.performLongClick()
         } catch (ex: Throwable) {
         /*
@@ -121,7 +120,6 @@ open class FixedEditText : AppCompatEditText {
             Timber.w(ex)
             false
         }
-    }
 
     /**
      * Focuses the edit text and opens the soft keyboard.

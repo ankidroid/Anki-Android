@@ -134,28 +134,38 @@ class HelpDialogTest {
         ).onFragment {
             onView(withText(R.string.help_title_community)).inRoot(isDialog()).perform(click())
             // check that the expected six children are shown
-            onView(withText(R.string.help_item_discord)).inRoot(isDialog())
+            onView(withText(R.string.help_item_discord))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_reddit)).inRoot(isDialog())
+            onView(withText(R.string.help_item_reddit))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_facebook)).inRoot(isDialog())
+            onView(withText(R.string.help_item_facebook))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_mailing_list)).inRoot(isDialog())
+            onView(withText(R.string.help_item_mailing_list))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_twitter)).inRoot(isDialog())
+            onView(withText(R.string.help_item_twitter))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_item_anki_forums)).inRoot(isDialog())
+            onView(withText(R.string.help_item_anki_forums))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
             // press back
             pressBackUnconditionally()
             // check that the expected initial four menu items are shown
-            onView(withText(R.string.help_title_community)).inRoot(isDialog())
+            onView(withText(R.string.help_title_community))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_title_get_help)).inRoot(isDialog())
+            onView(withText(R.string.help_title_get_help))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_title_privacy)).inRoot(isDialog())
+            onView(withText(R.string.help_title_privacy))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
-            onView(withText(R.string.help_title_using_ankidroid)).inRoot(isDialog())
+            onView(withText(R.string.help_title_using_ankidroid))
+                .inRoot(isDialog())
                 .check(matches(isDisplayed()))
         }
     }
@@ -174,10 +184,12 @@ class HelpDialogTest {
         ).onFragment { fragment ->
             fragment.actionsDispatcher = mockActionDispatcher
             // start the first submenu
-            onView(withText(R.string.help_title_using_ankidroid)).inRoot(isDialog())
+            onView(withText(R.string.help_title_using_ankidroid))
+                .inRoot(isDialog())
                 .perform(click())
             // the manual url is being shown
-            onView(withText(R.string.help_item_ankidroid_manual)).inRoot(isDialog())
+            onView(withText(R.string.help_item_ankidroid_manual))
+                .inRoot(isDialog())
                 .perform(click())
             verify(exactly = 1) { mockActionDispatcher.onOpenUrl(AnkiDroidApp.manualUrl) }
             // an url resource is being shown
@@ -190,7 +202,8 @@ class HelpDialogTest {
             onView(withText(R.string.help_item_report_bug)).inRoot(isDialog()).perform(click())
             verify(exactly = 1) { mockActionDispatcher.onOpenUrl(AnkiDroidApp.feedbackUrl) }
             // a report is sent
-            onView(withText(R.string.help_title_send_exception)).inRoot(isDialog())
+            onView(withText(R.string.help_title_send_exception))
+                .inRoot(isDialog())
                 .perform(click())
             verify(exactly = 1) { mockActionDispatcher.onSendReport() }
         }

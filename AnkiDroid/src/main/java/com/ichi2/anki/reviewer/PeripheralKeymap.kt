@@ -28,7 +28,10 @@ import com.ichi2.anki.reviewer.MappableBinding.Screen
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */
-class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.CommandProcessor) {
+class PeripheralKeymap(
+    reviewerUi: ReviewerUi,
+    commandProcessor: ViewerCommand.CommandProcessor,
+) {
     private val keyMap: KeyMap
     private var hasSetup = false
 
@@ -62,21 +65,18 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
     fun onKeyDown(
         keyCode: Int,
         event: KeyEvent,
-    ): Boolean {
-        return if (!hasSetup || event.repeatCount > 0) {
+    ): Boolean =
+        if (!hasSetup || event.repeatCount > 0) {
             false
         } else {
             keyMap.onKeyDown(keyCode, event)
         }
-    }
 
     @Suppress("UNUSED_PARAMETER")
     fun onKeyUp(
         keyCode: Int,
         event: KeyEvent?,
-    ): Boolean {
-        return false
-    }
+    ): Boolean = false
 
     class KeyMap(
         private val processor: ViewerCommand.CommandProcessor,
@@ -108,9 +108,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
             bindingMap[key] = value
         }
 
-        operator fun get(key: MappableBinding): ViewerCommand? {
-            return bindingMap[key]
-        }
+        operator fun get(key: MappableBinding): ViewerCommand? = bindingMap[key]
     }
 
     init {

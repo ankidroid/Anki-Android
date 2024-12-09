@@ -47,7 +47,9 @@ import java.util.Date
 import java.util.Locale
 import net.ankiweb.rsdroid.BuildConfig as BackendBuildConfig
 
-class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
+class AboutFragment :
+    Fragment(R.layout.about_layout),
+    TitleProvider {
     override val title: CharSequence
         get() = getString(R.string.pref_cat_about_title)
 
@@ -73,7 +75,8 @@ class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
         view.findViewById<TextView>(R.id.about_fsrs).text = "(FSRS ${BackendBuildConfig.FSRS_VERSION})"
 
         // Logo secret
-        view.findViewById<ImageView>(R.id.about_app_logo)
+        view
+            .findViewById<ImageView>(R.id.about_app_logo)
             .setOnClickListener(DevOptionsSecretClickListener(this))
 
         // Contributors text
@@ -140,7 +143,9 @@ class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
      * Click listener which enables developer options on release builds
      * if the user clicks it a minimum number of times
      */
-    private class DevOptionsSecretClickListener(val fragment: Fragment) : View.OnClickListener {
+    private class DevOptionsSecretClickListener(
+        val fragment: Fragment,
+    ) : View.OnClickListener {
         private var clickCount = 0
         private val clickLimit = 6
 

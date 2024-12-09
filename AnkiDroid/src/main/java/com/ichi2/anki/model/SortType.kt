@@ -36,7 +36,10 @@ import timber.log.Timber
  * @param cardBrowserLabelIndex The index into [R.array.card_browser_order_labels]
  */
 @Suppress("unused") // 'unused' entries are iterated over by .entries
-enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
+enum class SortType(
+    val ankiSortType: String?,
+    val cardBrowserLabelIndex: Int,
+) {
     NO_SORTING(null, 0),
     SORT_FIELD("noteFld", 1),
     CREATED_TIME("noteCrt", 2),
@@ -83,8 +86,6 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
             return type
         }
 
-        fun fromCardBrowserLabelIndex(index: Int): SortType {
-            return entries.firstOrNull { it.cardBrowserLabelIndex == index } ?: NO_SORTING
-        }
+        fun fromCardBrowserLabelIndex(index: Int): SortType = entries.firstOrNull { it.cardBrowserLabelIndex == index } ?: NO_SORTING
     }
 }

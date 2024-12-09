@@ -26,13 +26,9 @@ import org.json.JSONObject
 
 object BackendUtils {
     @LibAnkiAlias("from_json_bytes")
-    fun fromJsonBytes(json: ByteString): JSONObject {
-        return JSONObject(json.toStringUtf8())
-    }
+    fun fromJsonBytes(json: ByteString): JSONObject = JSONObject(json.toStringUtf8())
 
-    fun jsonToArray(json: ByteString): JSONArray {
-        return JSONArray(json.toStringUtf8())
-    }
+    fun jsonToArray(json: ByteString): JSONArray = JSONArray(json.toStringUtf8())
 
     @RustCleanup("Confirm edge cases")
     fun toByteString(conf: Any?): ByteString {

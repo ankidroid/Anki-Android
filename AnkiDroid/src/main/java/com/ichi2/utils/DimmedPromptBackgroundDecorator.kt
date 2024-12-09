@@ -52,7 +52,9 @@ import uk.co.samuelwall.materialtaptargetprompt.extras.PromptOptions
  * Decorator for [DimmedPromptBackgroundInterface]: Dims the background of the screen so that the
  * highlighted view remains in focus.
  */
-class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackgroundInterface) : PromptBackgroundInterface {
+class DimmedPromptBackgroundDecorator(
+    val promptBackgroundInterface: PromptBackgroundInterface,
+) : PromptBackgroundInterface {
     constructor(promptBackground: PromptBackground) : this(promptBackground.toInterface())
 
     private val dimBounds = RectF()
@@ -94,9 +96,7 @@ class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackg
     override fun contains(
         x: Float,
         y: Float,
-    ): Boolean {
-        return promptBackgroundInterface.contains(x, y)
-    }
+    ): Boolean = promptBackgroundInterface.contains(x, y)
 
     override fun setColour(colour: Int) {
         promptBackgroundInterface.setColour(colour)

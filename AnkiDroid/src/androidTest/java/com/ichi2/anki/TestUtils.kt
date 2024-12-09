@@ -61,15 +61,11 @@ object TestUtils {
     /**
      * Click on a view using its ID inside a RecyclerView item
      */
-    fun clickChildViewWithId(id: Int): ViewAction {
-        return object : ViewAction {
-            override fun getConstraints(): Matcher<View>? {
-                return null
-            }
+    fun clickChildViewWithId(id: Int): ViewAction =
+        object : ViewAction {
+            override fun getConstraints(): Matcher<View>? = null
 
-            override fun getDescription(): String {
-                return "Click on a child view with specified id."
-            }
+            override fun getDescription(): String = "Click on a child view with specified id."
 
             override fun perform(
                 uiController: UiController,
@@ -79,7 +75,6 @@ object TestUtils {
                 v.performClick()
             }
         }
-    }
 
     /** @return if the instrumented tests were built on a CI machine
      */

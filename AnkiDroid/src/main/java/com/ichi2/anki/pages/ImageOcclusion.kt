@@ -84,8 +84,8 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
         }
     }
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        return object : PageWebViewClient() {
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient =
+        object : PageWebViewClient() {
             override fun onPageFinished(
                 view: WebView?,
                 url: String?,
@@ -110,7 +110,6 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
                 }
             }
         }
-    }
 
     companion object {
         private const val ARG_KEY_KIND = "kind"

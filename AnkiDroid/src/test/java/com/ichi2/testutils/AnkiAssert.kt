@@ -60,16 +60,12 @@ object AnkiAssert {
         assertListEquals(expected.toList(), actual)
     }
 
-    fun without_unicode_isolation(s: String): String {
-        return s.replace("\u2068", "").replace("\u2069", "")
-    }
+    fun without_unicode_isolation(s: String): String = s.replace("\u2068", "").replace("\u2069", "")
 
     fun checkRevIvl(
         c: Card,
         targetIvl: Int,
-    ): Boolean {
-        return c.ivl == targetIvl
-    }
+    ): Boolean = c.ivl == targetIvl
 }
 
 /** Asserts that the expression is `false` with an optional [message]. */

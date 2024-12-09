@@ -31,13 +31,9 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
-fun clozeClass(): String {
-    return "class=\"cloze\""
-}
+fun clozeClass(): String = "class=\"cloze\""
 
-fun clozeData(data: String): String {
-    return " data-cloze=\"${data}\""
-}
+fun clozeData(data: String): String = " data-cloze=\"${data}\""
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("improve kotlin code where possible")
@@ -142,11 +138,12 @@ class NotetypeTest : JvmTest() {
         col.notetypes.addFieldLegacy(m, field!!)
         assertEquals(
             listOf("1", "2", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         assertNotEquals(h, col.notetypes.scmhash(m))
         // rename it
@@ -157,31 +154,34 @@ class NotetypeTest : JvmTest() {
         col.notetypes.remFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1))
         assertEquals(
             listOf("1", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 0 -> 1
         col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertEquals(
             listOf("", "1"),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 1 -> 0
         col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1), 0)
         assertEquals(
             listOf("1", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // add another and put in middle
         field = col.notetypes.newField("baz")
@@ -191,41 +191,45 @@ class NotetypeTest : JvmTest() {
         note.flush()
         assertEquals(
             listOf("1", "", "2"),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 2 -> 1
         col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(2), 1)
         assertEquals(
             listOf("1", "2", ""),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 0 -> 2
         col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 2)
         assertEquals(
             listOf("2", "", "1"),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
         // move 0 -> 1
         col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertEquals(
             listOf("", "2", "1"),
-            col.getNote(
-                col.notetypes.nids(
-                    m,
-                )[0],
-            ).fields,
+            col
+                .getNote(
+                    col.notetypes.nids(
+                        m,
+                    )[0],
+                ).fields,
         )
     }
 

@@ -41,10 +41,12 @@ class NotificationService : BroadcastReceiver() {
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val preferences = context.sharedPrefs()
             val minCardsDue =
-                preferences.getString(
-                    context.getString(R.string.pref_notifications_minimum_cards_due_key),
-                    PENDING_NOTIFICATIONS_ONLY.toString(),
-                )!!.toInt()
+                preferences
+                    .getString(
+                        context.getString(R.string.pref_notifications_minimum_cards_due_key),
+                        PENDING_NOTIFICATIONS_ONLY.toString(),
+                    )!!
+                    .toInt()
             val dueCardsCount = WidgetStatus.fetchDue(context)
             if (dueCardsCount >= minCardsDue) {
                 // Build basic notification
@@ -58,11 +60,11 @@ class NotificationService : BroadcastReceiver() {
                 // This generates a log warning "Use of stream types is deprecated..."
                 // The NotificationCompat code uses setSound() no matter what we do and triggers it.
                 val builder =
-                    NotificationCompat.Builder(
-                        context,
-                        Channel.GENERAL.id,
-                    )
-                        .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                    NotificationCompat
+                        .Builder(
+                            context,
+                            Channel.GENERAL.id,
+                        ).setCategory(NotificationCompat.CATEGORY_REMINDER)
                         .setSmallIcon(R.drawable.ic_star_notify)
                         .setColor(context.getColor(R.color.material_light_blue_700))
                         .setContentTitle(cardsDueText)

@@ -26,7 +26,9 @@ import java.util.Locale
  * 8236 -> `20-search-preference.xml` in the URL https://crowdin.com/editor/ankidroid/8236/en-yu
  */
 @JvmInline
-value class CrowdinFileIdentifier(private val value: Long) {
+value class CrowdinFileIdentifier(
+    private val value: Long,
+) {
     override fun toString(): String = value.toString()
 
     companion object {
@@ -57,7 +59,9 @@ value class CrowdinFileIdentifier(private val value: Long) {
  * The language key which Crowdin uses to represent the language: `yu`, NOT `yue`
  */
 @JvmInline
-value class CrowdinLanguageTag(private val tag: String) {
+value class CrowdinLanguageTag(
+    private val tag: String,
+) {
     override fun toString() = tag
 
     companion object {
@@ -89,7 +93,8 @@ value class CrowdinLanguageTag(private val tag: String) {
             if (!folderName.startsWith("values-")) return null
 
             val language =
-                folderName.substring("values-".length)
+                folderName
+                    .substring("values-".length)
                     .replace("-r", "") // es-rAR -> esAR
                     .lowercase(Locale.ROOT) // esAR -> esar
 
@@ -107,7 +112,10 @@ value class CrowdinLanguageTag(private val tag: String) {
  * @param languageTag How 'values-zh-rCN' is represented. See [CrowdinLanguageTag]
  * @param fileIdentifier How `01-core` is represented. See [CrowdinFileIdentifier]
  */
-data class CrowdinContext(val languageTag: CrowdinLanguageTag, val fileIdentifier: CrowdinFileIdentifier) {
+data class CrowdinContext(
+    val languageTag: CrowdinLanguageTag,
+    val fileIdentifier: CrowdinFileIdentifier,
+) {
     private fun getStringName(element: Element): String? = if (element.hasAttribute("name")) element.getAttribute("name") else null
 
     fun getEditUrl(element: Element): String? {

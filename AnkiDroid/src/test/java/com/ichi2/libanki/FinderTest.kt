@@ -222,18 +222,20 @@ class FinderTest : JvmTest() {
 
         assertTrue(
             latestCardIds.contains(
-                col.findCards(
-                    "front:*",
-                    SortOrder.UseCollectionOrdering(),
-                ).last(),
+                col
+                    .findCards(
+                        "front:*",
+                        SortOrder.UseCollectionOrdering(),
+                    ).last(),
             ),
         )
         assertTrue(
             latestCardIds.contains(
-                col.findCards(
-                    "",
-                    SortOrder.UseCollectionOrdering(),
-                ).last(),
+                col
+                    .findCards(
+                        "",
+                        SortOrder.UseCollectionOrdering(),
+                    ).last(),
             ),
         )
         col.config.set("sortType", "noteFld")
@@ -241,20 +243,22 @@ class FinderTest : JvmTest() {
         assertEquals(catCard.id, col.findCards("", SortOrder.UseCollectionOrdering())[0])
         assertTrue(
             latestCardIds.contains(
-                col.findCards(
-                    "",
-                    SortOrder.UseCollectionOrdering(),
-                ).last(),
+                col
+                    .findCards(
+                        "",
+                        SortOrder.UseCollectionOrdering(),
+                    ).last(),
             ),
         )
         col.config.set("sortType", "cardMod")
 
         assertTrue(
             latestCardIds.contains(
-                col.findCards(
-                    "",
-                    SortOrder.UseCollectionOrdering(),
-                ).last(),
+                col
+                    .findCards(
+                        "",
+                        SortOrder.UseCollectionOrdering(),
+                    ).last(),
             ),
         )
         assertEquals(firstCardId, col.findCards("", SortOrder.UseCollectionOrdering())[0])

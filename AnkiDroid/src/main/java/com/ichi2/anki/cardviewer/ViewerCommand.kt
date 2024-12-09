@@ -34,7 +34,9 @@ import java.util.function.BiFunction
 import java.util.stream.Collectors
 
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
-enum class ViewerCommand(val resourceId: Int) {
+enum class ViewerCommand(
+    val resourceId: Int,
+) {
     SHOW_ANSWER(R.string.show_answer),
     FLIP_OR_ANSWER_EASE1(R.string.answer_again),
     FLIP_OR_ANSWER_EASE2(R.string.answer_hard),
@@ -91,7 +93,8 @@ enum class ViewerCommand(val resourceId: Int) {
     companion object {
         val allDefaultBindings: List<MappableBinding>
             get() =
-                Arrays.stream(entries.toTypedArray())
+                Arrays
+                    .stream(entries.toTypedArray())
                     .flatMap { x: ViewerCommand -> x.defaultValue.stream() }
                     .collect(Collectors.toList())
 
@@ -277,16 +280,12 @@ enum class ViewerCommand(val resourceId: Int) {
         keycode: Int,
         screen: Screen,
         keys: ModifierKeys = ModifierKeys.none(),
-    ): MappableBinding {
-        return MappableBinding(keyCode(keys, keycode), screen)
-    }
+    ): MappableBinding = MappableBinding(keyCode(keys, keycode), screen)
 
     private fun unicode(
         c: Char,
         screen: Screen,
-    ): MappableBinding {
-        return MappableBinding(unicode(c), screen)
-    }
+    ): MappableBinding = MappableBinding(unicode(c), screen)
 
     fun interface CommandProcessor {
         /**

@@ -72,7 +72,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         override val elapsedRealTime: Long
             get() {
                 lastTime +=
-                    baseContext.sharedPrefs()
+                    baseContext
+                        .sharedPrefs()
                         .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
                 return lastTime.toLong()
             }
@@ -82,9 +83,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 return imeHintLocales.toLanguageTags()
             }
 
-        fun hasAutomaticAnswerQueued(): Boolean {
-            return automaticAnswer.timeoutHandler.hasMessages(0)
-        }
+        fun hasAutomaticAnswerQueued(): Boolean = automaticAnswer.timeoutHandler.hasMessages(0)
 
         /**
          * Fixes an issue with noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632
@@ -347,17 +346,13 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         get() = getViewer(true)
 
     @CheckResult
-    private fun getViewer(addCard: Boolean): NonAbstractFlashcardViewer {
-        return getViewer(addCard, false)
-    }
+    private fun getViewer(addCard: Boolean): NonAbstractFlashcardViewer = getViewer(addCard, false)
 
     @CheckResult
     private fun getViewer(
         addCard: Boolean,
         startedWithShortcut: Boolean,
-    ): NonAbstractFlashcardViewer {
-        return getViewerController(addCard, startedWithShortcut).get()
-    }
+    ): NonAbstractFlashcardViewer = getViewerController(addCard, startedWithShortcut).get()
 
     @CheckResult
     private fun getViewerController(
@@ -374,8 +369,12 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
             intent.putExtra(NavigationDrawerActivity.EXTRA_STARTED_WITH_SHORTCUT, true)
         }
         val multimediaController =
-            Robolectric.buildActivity(NonAbstractFlashcardViewer::class.java, intent)
-                .create().start().resume().visible()
+            Robolectric
+                .buildActivity(NonAbstractFlashcardViewer::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(multimediaController)
         val viewer = multimediaController.get()
         viewer.onCollectionLoaded(col)

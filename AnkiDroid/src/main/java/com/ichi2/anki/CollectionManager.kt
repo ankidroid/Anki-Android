@@ -117,12 +117,11 @@ object CollectionManager {
      */
     suspend fun <T> withCol(
         @WorkerThread block: Collection.() -> T,
-    ): T {
-        return withQueue {
+    ): T =
+        withQueue {
             ensureOpenInner()
             block(collection!!)
         }
-    }
 
     /**
      * Execute the provided block if the collection is already open. See [withCol] for more.
@@ -133,15 +132,14 @@ object CollectionManager {
      */
     suspend fun <T> withOpenColOrNull(
         @WorkerThread block: Collection.() -> T,
-    ): T? {
-        return withQueue {
+    ): T? =
+        withQueue {
             if (collection != null && !collection!!.dbClosed) {
                 block(collection!!)
             } else {
                 null
             }
         }
-    }
 
     /**
      * Return a handle to the backend, creating if necessary. This should only be used
@@ -281,8 +279,8 @@ object CollectionManager {
      * Note: [runBlocking] inside `RobolectricTest.runTest` will lead to deadlocks, so
      * under Robolectric, this uses a mutex
      */
-    private fun <T> blockForQueue(block: CollectionManager.() -> T): T {
-        return if (isRobolectric) {
+    private fun <T> blockForQueue(block: CollectionManager.() -> T): T =
+        if (isRobolectric) {
             testMutex.withLock {
                 block(this)
             }
@@ -291,7 +289,6 @@ object CollectionManager {
                 withQueue(block)
             }
         }
-    }
 
     fun closeCollectionBlocking() {
         runBlocking { ensureClosed() }
@@ -303,14 +300,13 @@ object CollectionManager {
      * the collection while the reference is held. [withCol]
      * is a better alternative.
      */
-    fun getColUnsafe(): Collection {
-        return logUIHangs {
+    fun getColUnsafe(): Collection =
+        logUIHangs {
             blockForQueue {
                 ensureOpenInner()
                 collection!!
             }
         }
-    }
 
     /**
      Execute [block]. If it takes more than 100ms of real time, Timber an error like:
@@ -328,23 +324,24 @@ object CollectionManager {
                 // locate the probable calling file/line in the stack trace, by filtering
                 // out our own code, and standard dalvik/java.lang stack frames
                 val caller =
-                    stackTraceElements.filter {
-                        val klass = it.className
-                        val toCheck =
-                            listOf(
-                                "CollectionManager",
-                                "dalvik",
-                                "java.lang",
-                                "CollectionHelper",
-                                "AnkiActivity",
-                            )
-                        for (text in toCheck) {
-                            if (text in klass) {
-                                return@filter false
+                    stackTraceElements
+                        .filter {
+                            val klass = it.className
+                            val toCheck =
+                                listOf(
+                                    "CollectionManager",
+                                    "dalvik",
+                                    "java.lang",
+                                    "CollectionHelper",
+                                    "AnkiActivity",
+                                )
+                            for (text in toCheck) {
+                                if (text in klass) {
+                                    return@filter false
+                                }
                             }
-                        }
-                        true
-                    }.first()
+                            true
+                        }.first()
                 Timber.w("blocked main thread for %dms:\n%s", elapsed, caller)
             }
         }
@@ -353,8 +350,8 @@ object CollectionManager {
     /**
      * True if the collection is open. Unsafe, as it has the potential to race.
      */
-    fun isOpenUnsafe(): Boolean {
-        return logUIHangs {
+    fun isOpenUnsafe(): Boolean =
+        logUIHangs {
             blockForQueue {
                 if (emulatedOpenFailure != null) {
                     false
@@ -363,7 +360,6 @@ object CollectionManager {
                 }
             }
         }
-    }
 
     /**
      Use [col] as collection in tests.

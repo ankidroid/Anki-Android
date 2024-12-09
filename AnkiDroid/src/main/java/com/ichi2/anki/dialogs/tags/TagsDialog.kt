@@ -113,9 +113,7 @@ class TagsDialog : AnalyticsDialogFragment {
         type: DialogType,
         checkedTags: List<String>,
         allTags: List<String>,
-    ): TagsDialog {
-        return withArguments(context, type, checkedTags, null, allTags)
-    }
+    ): TagsDialog = withArguments(context, type, checkedTags, null, allTags)
 
     /**
      * Construct a tags dialog for a collection of notes
@@ -210,15 +208,15 @@ class TagsDialog : AnalyticsDialogFragment {
         }
         adjustToolbar(tagsDialogView)
         dialog =
-            AlertDialog.Builder(requireActivity())
+            AlertDialog
+                .Builder(requireActivity())
                 .positiveButton(text = positiveText!!) {
                     tagsDialogListener.onSelectedTags(
                         tags!!.copyOfCheckedTagList(),
                         tags!!.copyOfIndeterminateTagList(),
                         selectedOption,
                     )
-                }
-                .negativeButton(R.string.dialog_cancel)
+                }.negativeButton(R.string.dialog_cancel)
                 .customView(view = tagsDialogView)
                 .create()
         val dialog: AlertDialog? = dialog
@@ -305,18 +303,20 @@ class TagsDialog : AnalyticsDialogFragment {
     @NeedsTest("The prefixTag should be prefilled properly")
     private fun createAddTagDialog(prefixTag: String?) {
         val addTagDialog =
-            AlertDialog.Builder(requireActivity()).show {
-                title(text = getString(R.string.add_tag))
-                positiveButton(R.string.dialog_ok)
-                negativeButton(R.string.dialog_cancel)
-                setView(R.layout.dialog_generic_text_input)
-            }.input(
-                hint = getString(R.string.tag_name),
-                inputType = InputType.TYPE_CLASS_TEXT,
-            ) { d: AlertDialog?, input: CharSequence ->
-                addTag(input.toString())
-                d?.dismiss()
-            }
+            AlertDialog
+                .Builder(requireActivity())
+                .show {
+                    title(text = getString(R.string.add_tag))
+                    positiveButton(R.string.dialog_ok)
+                    negativeButton(R.string.dialog_cancel)
+                    setView(R.layout.dialog_generic_text_input)
+                }.input(
+                    hint = getString(R.string.tag_name),
+                    inputType = InputType.TYPE_CLASS_TEXT,
+                ) { d: AlertDialog?, input: CharSequence ->
+                    addTag(input.toString())
+                    d?.dismiss()
+                }
         val inputET = addTagDialog.getInputField()
         inputET.filters = arrayOf(addTagFilter)
         if (!prefixTag.isNullOrEmpty()) {
@@ -356,9 +356,7 @@ class TagsDialog : AnalyticsDialogFragment {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    internal fun getSearchView(): AccessibleSearchView? {
-        return toolbarSearchView
-    }
+    internal fun getSearchView(): AccessibleSearchView? = toolbarSearchView
 
     companion object {
         private const val ARG_TAGS_FILE = "tagsFile"
@@ -416,7 +414,10 @@ class TagsDialog : AnalyticsDialogFragment {
  *
  */
 @WorkerThread
-class TagsFile(path: String) : File(path), Parcelable {
+class TagsFile(
+    path: String,
+) : File(path),
+    Parcelable {
     /**
      * @param directory parent directory of the file. Generally it should be the cache directory
      * @param data data for the dialog to display. Typically [Context.getCacheDir]
@@ -449,13 +450,9 @@ class TagsFile(path: String) : File(path), Parcelable {
         @Suppress("unused")
         val CREATOR =
             object : Parcelable.Creator<TagsFile> {
-                override fun createFromParcel(source: Parcel?): TagsFile {
-                    return TagsFile(source!!.readString()!!)
-                }
+                override fun createFromParcel(source: Parcel?): TagsFile = TagsFile(source!!.readString()!!)
 
-                override fun newArray(size: Int): Array<TagsFile> {
-                    return arrayOf()
-                }
+                override fun newArray(size: Int): Array<TagsFile> = arrayOf()
             }
     }
 

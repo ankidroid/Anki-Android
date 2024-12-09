@@ -28,7 +28,5 @@ object HtmlUtils {
         return withoutWindowsLineEndings.replace("\n", "<br/>")
     }
 
-    fun escape(html: String): String {
-        return TextUtils.htmlEncode(html)
-    }
+    fun escape(html: String): String = TextUtils.htmlEncode(html)
 }

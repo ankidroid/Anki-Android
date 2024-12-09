@@ -34,7 +34,9 @@ import org.jetbrains.uast.UImportStatement
 /**
  * This custom Lint rule raises a warning if a developer uses the `android.app.AlertDialog` class.
  */
-class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
+class AvoidAlertDialogUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "AvoidAlertDialogUsage"
@@ -57,12 +59,10 @@ class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
             )
     }
 
-    override fun getApplicableUastTypes(): List<Class<out UElement>> {
-        return listOf(UImportStatement::class.java)
-    }
+    override fun getApplicableUastTypes(): List<Class<out UElement>> = listOf(UImportStatement::class.java)
 
-    override fun createUastHandler(context: JavaContext): UElementHandler {
-        return object : UElementHandler() {
+    override fun createUastHandler(context: JavaContext): UElementHandler =
+        object : UElementHandler() {
             override fun visitImportStatement(node: UImportStatement) {
                 val importReference = node.asSourceString()
                 if (importReference.contains("android.app.AlertDialog") &&
@@ -78,14 +78,12 @@ class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
                 }
             }
         }
-    }
 
-    private fun createFix(): LintFix {
-        return fix()
+    private fun createFix(): LintFix =
+        fix()
             .name("Replace with androidx.appcompat.app.AlertDialog")
             .replace()
             .text("android.app.AlertDialog")
             .with("androidx.appcompat.app.AlertDialog")
             .build()
-    }
 }

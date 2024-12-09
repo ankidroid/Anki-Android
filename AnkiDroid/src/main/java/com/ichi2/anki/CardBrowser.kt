@@ -356,9 +356,7 @@ open class CardBrowser :
         searchView!!.setQuery(query, submit = true)
     }
 
-    private fun canPerformCardInfo(): Boolean {
-        return viewModel.selectedRowCount() == 1
-    }
+    private fun canPerformCardInfo(): Boolean = viewModel.selectedRowCount() == 1
 
     private fun canPerformMultiSelectEditNote(): Boolean {
         // The noteId is not currently available. Only allow if a single card is selected for now.
@@ -370,12 +368,11 @@ open class CardBrowser :
      * @param did Id of the deck
      */
     @VisibleForTesting
-    fun moveSelectedCardsToDeck(did: DeckId): Job {
-        return launchCatchingTask {
+    fun moveSelectedCardsToDeck(did: DeckId): Job =
+        launchCatchingTask {
             val changed = withProgress { viewModel.moveSelectedCardsToDeck(did).await() }
             showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -974,8 +971,7 @@ open class CardBrowser :
             // restore drawer click listener and icon
             restoreDrawerIcon()
             menuInflater.inflate(R.menu.card_browser, menu)
-            menu.findItem(R.id.action_search_by_flag).subMenu?.let {
-                    subMenu ->
+            menu.findItem(R.id.action_search_by_flag).subMenu?.let { subMenu ->
                 setupFlags(subMenu, Mode.SINGLE_SELECT)
             }
             menu.findItem(R.id.action_create_filtered_deck).title = TR.qtMiscCreateFilteredDeck()
@@ -1037,8 +1033,7 @@ open class CardBrowser :
         } else {
             // multi-select mode
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
-            menu.findItem(R.id.action_flag).subMenu?.let {
-                    subMenu ->
+            menu.findItem(R.id.action_flag).subMenu?.let { subMenu ->
                 setupFlags(subMenu, Mode.MULTI_SELECT)
             }
             showBackIcon()
@@ -1061,7 +1056,9 @@ open class CardBrowser :
     /**
      * Representing different selection modes.
      */
-    enum class Mode(val value: Int) {
+    enum class Mode(
+        val value: Int,
+    ) {
         SINGLE_SELECT(1000),
         MULTI_SELECT(1001),
     }
@@ -1078,7 +1075,8 @@ open class CardBrowser :
                 }
 
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                subMenu.add(groupId, flag.code, Menu.NONE, displayName)
+                subMenu
+                    .add(groupId, flag.code, Menu.NONE, displayName)
                     .setIcon(flag.drawableRes)
             }
         }
@@ -1470,9 +1468,7 @@ open class CardBrowser :
     private fun getPreviewIntent(
         index: Int,
         previewerIdsFile: PreviewerIdsFile,
-    ): Intent {
-        return PreviewerDestination(index, previewerIdsFile).toIntent(this)
-    }
+    ): Intent = PreviewerDestination(index, previewerIdsFile).toIntent(this)
 
     private fun rescheduleSelectedCards() {
         if (!viewModel.hasSelectedAnyRows()) {
@@ -1558,8 +1554,7 @@ open class CardBrowser :
                             .flatMap { nid ->
                                 progress++
                                 getNote(nid).tags // requires withCol
-                            }
-                            .distinct()
+                            }.distinct()
                             .toList()
                     }
 
@@ -1588,8 +1583,7 @@ open class CardBrowser :
                                 val note = getNote(nid) // requires withCol
                                 val noteTags = note.tags.toSet()
                                 allTags.filter { t: String? -> !noteTags.contains(t) }
-                            }
-                            .distinct()
+                            }.distinct()
                             .toList()
                     }
 
@@ -2149,15 +2143,11 @@ open class CardBrowser :
             fromMapping = fromMap
         }
 
-        override fun getCount(): Int {
-            return viewModel.rowCount
-        }
+        override fun getCount(): Int = viewModel.rowCount
 
         override fun getItem(position: Int): CardCache = viewModel.getRowAtPosition(position)
 
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
+        override fun getItemId(position: Int): Long = position.toLong()
 
         init {
             inflater = LayoutInflater.from(context)
@@ -2210,13 +2200,9 @@ open class CardBrowser :
         var wrapped: MutableList<T> = ArrayList(0)
             private set
 
-        fun size(): Int {
-            return wrapped.size
-        }
+        fun size(): Int = wrapped.size
 
-        operator fun get(index: Int): T {
-            return wrapped[index]
-        }
+        operator fun get(index: Int): T = wrapped[index]
 
         fun reset() {
             wrapped = ArrayList(0)
@@ -2231,9 +2217,7 @@ open class CardBrowser :
             wrapped.forEachIndexed { pos, card -> card!!.position = pos }
         }
 
-        override fun iterator(): MutableIterator<T> {
-            return wrapped.iterator()
-        }
+        override fun iterator(): MutableIterator<T> = wrapped.iterator()
 
         fun clear() {
             wrapped.clear()
@@ -2245,7 +2229,9 @@ open class CardBrowser :
         var position: Int
     }
 
-    class CardCache : Card.Cache, PositionAware {
+    class CardCache :
+        Card.Cache,
+        PositionAware {
         var isLoaded = false
             private set
         private var qa: Pair<String, String>? = null
@@ -2292,8 +2278,8 @@ open class CardBrowser :
             return Themes.getColorFromAttr(context, colorAttr)
         }
 
-        fun getColumnHeaderText(key: CardBrowserColumn): String? {
-            return when (key) {
+        fun getColumnHeaderText(key: CardBrowserColumn): String? =
+            when (key) {
                 CardBrowserColumn.SFLD -> card.note(col).sFld(col)
                 CardBrowserColumn.DECK -> col.decks.name(card.did)
                 CardBrowserColumn.TAGS -> card.note(col).stringTags(col)
@@ -2321,15 +2307,13 @@ open class CardBrowser :
                 CardBrowserColumn.FSRS_STABILITY,
                 -> null
             }
-        }
 
-        private fun getEaseForCards(): String {
-            return if (card.type == Consts.CARD_TYPE_NEW) {
+        private fun getEaseForCards(): String =
+            if (card.type == Consts.CARD_TYPE_NEW) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
             } else {
                 "${card.factor / 10}%"
             }
-        }
 
         private fun getAvgEaseForNotes(): String {
             val avgEase = NoteService.avgEase(col, card.note(col))
@@ -2341,13 +2325,12 @@ open class CardBrowser :
             }
         }
 
-        private fun queryIntervalForCards(): String {
-            return when (card.type) {
+        private fun queryIntervalForCards(): String =
+            when (card.type) {
                 Consts.CARD_TYPE_NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
                 Consts.CARD_TYPE_LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
                 else -> roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * SECONDS_PER_DAY)
             }
-        }
 
         private fun queryAvgIntervalForNotes(): String {
             val avgInterval = card.avgIntervalOfNote(col)
@@ -2429,9 +2412,10 @@ open class CardBrowser :
             }
         }
 
-        override fun hashCode(): Int {
-            return java.lang.Long.valueOf(id).hashCode()
-        }
+        override fun hashCode(): Int =
+            java.lang.Long
+                .valueOf(id)
+                .hashCode()
     }
 
     /**
@@ -2557,9 +2541,7 @@ open class CardBrowser :
         fun createAddNoteIntent(
             context: Context,
             viewModel: CardBrowserViewModel,
-        ): Intent {
-            return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
-        }
+        ): Intent = NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
 
         @CheckResult
         private fun formatQA(
@@ -2627,7 +2609,8 @@ open class CardBrowser :
                     return due.toString()
                 } else if (card.queue == Consts.QUEUE_TYPE_REV ||
                     card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ||
-                    card.type == Consts.CARD_TYPE_REV && card.queue < 0
+                    card.type == Consts.CARD_TYPE_REV &&
+                    card.queue < 0
                 ) {
                     val time = TimeManager.time.intTime()
                     val nbDaySinceCreation = due - col.sched.today
@@ -2659,22 +2642,23 @@ suspend fun searchForCards(
     query: String,
     order: SortOrder,
     cardsOrNotes: CardsOrNotes,
-): MutableList<CardBrowser.CardCache> {
-    return withCol {
-        (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
+): MutableList<CardBrowser.CardCache> =
+    withCol {
+        (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order))
+            .asSequence()
             .toCardCache(this@withCol, cardsOrNotes)
             .toMutableList()
     }
-}
 
 private fun Sequence<CardId>.toCardCache(
     col: Collection,
     isInCardMode: CardsOrNotes,
-): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
-}
+): Sequence<CardBrowser.CardCache> = this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
 
-class PreviewerDestination(val currentIndex: Int, val previewerIdsFile: PreviewerIdsFile)
+class PreviewerDestination(
+    val currentIndex: Int,
+    val previewerIdsFile: PreviewerIdsFile,
+)
 
 @CheckResult
 fun PreviewerDestination.toIntent(context: Context) = PreviewerFragment.getIntent(context, previewerIdsFile, currentIndex)

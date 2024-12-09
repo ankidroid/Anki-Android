@@ -22,8 +22,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.MediaCheckResult
 
-suspend fun AnkiActivity.checkMedia(): MediaCheckResult {
-    return withProgress(R.string.check_media_message) {
+suspend fun AnkiActivity.checkMedia(): MediaCheckResult =
+    withProgress(R.string.check_media_message) {
         CollectionManager.withCol { media.check() }
     }
-}

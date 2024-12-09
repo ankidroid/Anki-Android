@@ -30,7 +30,9 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
-class SimpleBinder<S : Service>(val service: S) : Binder()
+class SimpleBinder<S : Service>(
+    val service: S,
+) : Binder()
 
 interface ServiceWithASimpleBinder<S : Service> {
     fun onBind(intent: Intent): SimpleBinder<S>

@@ -102,9 +102,7 @@ open class BackupManagerTest {
     private fun performBackup(
         bm: BackupManager,
         time: Time = MockTime(100000000),
-    ): Boolean {
-        return bm.performBackupInBackground("/AnkiDroid/", time)
-    }
+    ): Boolean = bm.performBackupInBackground("/AnkiDroid/", time)
 
     /** Returns a spy of BackupManager which would pass  */
     private val passingBackupManagerSpy: BackupManager

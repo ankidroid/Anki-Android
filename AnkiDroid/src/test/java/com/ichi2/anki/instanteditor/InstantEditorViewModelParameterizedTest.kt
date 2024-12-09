@@ -45,8 +45,8 @@ class InstantEditorViewModelParameterizedTest : RobolectricTest() {
     companion object {
         @Parameterized.Parameters(name = "{0} -> {1}")
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<out Any>> {
-            return listOf(
+        fun initParameters(): Collection<Array<out Any>> =
+            listOf(
                 arrayOf("Student's", "{{c1::Student's}}"),
                 arrayOf("Note(s)", "{{c1::Note(s)}}"),
                 arrayOf("20%", "{{c1::20}}%"),
@@ -58,6 +58,5 @@ class InstantEditorViewModelParameterizedTest : RobolectricTest() {
                 arrayOf("test,", "{{c1::test}},"),
                 arrayOf("{{c1::test}},", "test,"),
             )
-        }
     }
 }

@@ -46,12 +46,11 @@ class MediaErrorHandlerTest {
         sut = MediaErrorHandler()
     }
 
-    private fun defaultHandler(): (String) -> Unit {
-        return { f: String? ->
+    private fun defaultHandler(): (String) -> Unit =
+        { f: String? ->
             timesCalled++
             fileNames.add(f)
         }
-    }
 
     @Test
     fun firstTimeOnNewCardSends() {
@@ -145,31 +144,18 @@ class MediaErrorHandlerTest {
         return getWebResourceRequest(url)
     }
 
-    private fun getWebResourceRequest(url: String): WebResourceRequest {
-        return object : WebResourceRequest {
-            override fun getUrl(): Uri {
-                return Uri.parse(url)
-            }
+    private fun getWebResourceRequest(url: String): WebResourceRequest =
+        object : WebResourceRequest {
+            override fun getUrl(): Uri = Uri.parse(url)
 
-            override fun isForMainFrame(): Boolean {
-                return false
-            }
+            override fun isForMainFrame(): Boolean = false
 
-            override fun isRedirect(): Boolean {
-                return false
-            }
+            override fun isRedirect(): Boolean = false
 
-            override fun hasGesture(): Boolean {
-                return false
-            }
+            override fun hasGesture(): Boolean = false
 
-            override fun getMethod(): String? {
-                return null
-            }
+            override fun getMethod(): String? = null
 
-            override fun getRequestHeaders(): Map<String, String>? {
-                return null
-            }
+            override fun getRequestHeaders(): Map<String, String>? = null
         }
-    }
 }

@@ -35,7 +35,5 @@ open class CompatV31 : CompatV29() {
         vibrator.vibrate(effect)
     }
 
-    override fun getMediaRecorder(context: Context): MediaRecorder {
-        return MediaRecorder(context)
-    }
+    override fun getMediaRecorder(context: Context): MediaRecorder = MediaRecorder(context)
 }

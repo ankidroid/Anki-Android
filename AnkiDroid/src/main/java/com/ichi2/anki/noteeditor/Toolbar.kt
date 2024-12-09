@@ -176,9 +176,7 @@ class Toolbar : FrameLayout {
         id: Int,
         drawable: Drawable?,
         formatter: TextFormatter,
-    ): View {
-        return insertItem(id, drawable) { onFormat(formatter) }
-    }
+    ): View = insertItem(id, drawable) { onFormat(formatter) }
 
     fun insertItem(
         @IdRes id: Int,
@@ -210,7 +208,8 @@ class Toolbar : FrameLayout {
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
         // end apply style
         val shouldScroll =
-            AnkiDroidApp.instance.sharedPrefs()
+            AnkiDroidApp.instance
+                .sharedPrefs()
                 .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         if (shouldScroll) {
             toolbar.addView(button, toolbar.childCount)
@@ -235,7 +234,8 @@ class Toolbar : FrameLayout {
     private val screenWidth: Int
         get() {
             val displayMetrics = DisplayMetrics()
-            (context as Activity).windowManager
+            (context as Activity)
+                .windowManager
                 .defaultDisplay
                 .getMetrics(displayMetrics)
             return displayMetrics.widthPixels
@@ -342,7 +342,8 @@ class Toolbar : FrameLayout {
     fun setIconColor(
         @ColorInt color: Int,
     ) {
-        ViewGroupUtils.getAllChildren(toolbar)
+        ViewGroupUtils
+            .getAllChildren(toolbar)
             .forEach { (it as AppCompatImageButton).setColorFilter(color) }
         stringPaint!!.color = color
     }
@@ -376,9 +377,12 @@ class Toolbar : FrameLayout {
      * If there's no selected, the cursor is in the middle of the prefix and suffix
      * If there is text selected, the whole string is selected
      */
-    class TextWrapper(private val prefix: String, private val suffix: String) : TextFormatter {
-        override fun format(s: String): StringFormat {
-            return StringFormat(result = prefix + s + suffix).apply {
+    class TextWrapper(
+        private val prefix: String,
+        private val suffix: String,
+    ) : TextFormatter {
+        override fun format(s: String): StringFormat =
+            StringFormat(result = prefix + s + suffix).apply {
                 if (s.isEmpty()) {
                     // if there's no selection: place the cursor between the start and end tag
                     selectionStart = prefix.length
@@ -389,7 +393,6 @@ class Toolbar : FrameLayout {
                     selectionEnd = result.length
                 }
             }
-        }
     }
 
     /**

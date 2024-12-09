@@ -25,30 +25,26 @@ import android.os.Bundle
 import java.io.Serializable
 
 @TargetApi(33)
-open class CompatV33 : CompatV31(), Compat {
+open class CompatV33 :
+    CompatV31(),
+    Compat {
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
         flags: ResolveInfoFlagsCompat,
-    ): ResolveInfo? {
-        return packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
-    }
+    ): ResolveInfo? = packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
 
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
         className: Class<T>,
-    ): T? {
-        return intent.getSerializableExtra(name, className)
-    }
+    ): T? = intent.getSerializableExtra(name, className)
 
     override fun <T : Serializable?> getSerializable(
         bundle: Bundle,
         key: String,
         clazz: Class<T>,
-    ): T? {
-        return bundle.getSerializable(key, clazz)
-    }
+    ): T? = bundle.getSerializable(key, clazz)
 
     override fun getPackageInfo(
         packageManager: PackageManager,
@@ -60,15 +56,11 @@ open class CompatV33 : CompatV31(), Compat {
         packageManager: PackageManager,
         intent: Intent,
         flags: ResolveInfoFlagsCompat,
-    ): ResolveInfo? {
-        return packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
-    }
+    ): ResolveInfo? = packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
 
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
         flags: ResolveInfoFlagsCompat,
-    ): List<ResolveInfo> {
-        return packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
-    }
+    ): List<ResolveInfo> = packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
 }

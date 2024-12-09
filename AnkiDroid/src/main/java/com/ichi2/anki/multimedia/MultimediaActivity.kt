@@ -59,7 +59,9 @@ data class MultimediaActivityExtra(
 /**
  * Multimedia activity that allows users to attach media files to an input field in NoteEditor.
  */
-class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
+class MultimediaActivity :
+    AnkiActivity(),
+    BaseSnackbarBuilderProvider {
     private val Intent.multimediaArgsExtra: MultimediaActivityExtra?
         get() = extras?.getSerializableCompat(MULTIMEDIA_ARGS_EXTRA)
 
@@ -132,12 +134,11 @@ class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
             fragmentClass: KClass<out Fragment>,
             arguments: MultimediaActivityExtra? = null,
             mediaOptions: Serializable? = null,
-        ): Intent {
-            return Intent(context, MultimediaActivity::class.java).apply {
+        ): Intent =
+            Intent(context, MultimediaActivity::class.java).apply {
                 putExtra(MULTIMEDIA_ARGS_EXTRA, arguments)
                 putExtra(MULTIMEDIA_FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(EXTRA_MEDIA_OPTIONS, mediaOptions)
             }
-        }
     }
 }

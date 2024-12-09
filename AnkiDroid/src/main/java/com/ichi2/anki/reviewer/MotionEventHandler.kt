@@ -37,7 +37,11 @@ class MotionEventHandler(
     private val commandProcessor: ViewerCommand.CommandProcessor,
     private val detectors: List<SingleAxisDetector>,
 ) {
-    data class SingleAxisDetector(val axis: Axis, val command: ViewerCommand, val threshold: Float) {
+    data class SingleAxisDetector(
+        val axis: Axis,
+        val command: ViewerCommand,
+        val threshold: Float,
+    ) {
         constructor(command: ViewerCommand, binding: Binding.AxisButtonBinding) : this(
             command = command,
             axis = binding.axis,
@@ -125,7 +129,9 @@ class MotionEventHandler(
  * Constants used in [MotionEvent.getAxisValue]. Axes can be in a bidirectional range [-1, 1]
  * @see MotionEvent
  */
-enum class Axis(val motionEventValue: Int) {
+enum class Axis(
+    val motionEventValue: Int,
+) {
     /** @see MotionEvent.AXIS_X */
     X(MotionEvent.AXIS_X),
 

@@ -54,7 +54,9 @@ import timber.log.Timber
  *
  * See [shouldShowDialog] for the criteria to display the dialog
  */
-class BackupPromptDialog private constructor(private val windowContext: Context) {
+class BackupPromptDialog private constructor(
+    private val windowContext: Context,
+) {
     private lateinit var alertDialog: AlertDialog
 
     /**
@@ -70,7 +72,8 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     private var timesDialogDismissed: Int
         get() = windowContext.sharedPrefs().getInt("backupPromptDismissedCount", 0)
         set(value) =
-            windowContext.sharedPrefs()
+            windowContext
+                .sharedPrefs()
                 .edit { putInt("backupPromptDismissedCount", value) }
 
     private var dialogPermanentlyDismissed: Boolean
@@ -88,7 +91,8 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     private var nextTimeToShowDialog: Long
         get() = windowContext.sharedPrefs().getLong("timeToShowBackupDialog", 0)
         set(value) {
-            windowContext.sharedPrefs()
+            windowContext
+                .sharedPrefs()
                 .edit { putLong("timeToShowBackupDialog", value) }
         }
 
@@ -286,10 +290,11 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     /** The time at which the app was first installed. Units are as per [System.currentTimeMillis()]. */
     private fun getFirstInstallTime(): Long? {
         return try {
-            return windowContext.packageManager.getPackageInfoCompat(
-                windowContext.packageName,
-                PackageInfoFlagsCompat.of(0),
-            )?.firstInstallTime
+            return windowContext.packageManager
+                .getPackageInfoCompat(
+                    windowContext.packageName,
+                    PackageInfoFlagsCompat.of(0),
+                )?.firstInstallTime
         } catch (exception: Exception) {
             Timber.w("failed to get first install time")
             null

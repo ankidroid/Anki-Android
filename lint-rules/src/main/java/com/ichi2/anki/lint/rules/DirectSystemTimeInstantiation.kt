@@ -36,7 +36,9 @@ import org.jetbrains.uast.UCallExpression
  * NOTE: For future reference, if you plan on creating a Lint rule which looks for a constructor invocation, make sure
  * that the target class has a constructor defined in its source code!
  */
-class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
+class DirectSystemTimeInstantiation :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectSystemTimeInstantiation"

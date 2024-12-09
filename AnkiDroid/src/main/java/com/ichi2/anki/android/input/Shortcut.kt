@@ -31,7 +31,10 @@ import net.ankiweb.rsdroid.Translations
  * @param shortcut The string representation of the keyboard shortcut (e.g., "Ctrl+Alt+S").
  * @param label The string resource for the shortcut label.
  */
-data class Shortcut(val shortcut: String, val label: String) {
+data class Shortcut(
+    val shortcut: String,
+    val label: String,
+) {
     /**
      * Converts the shortcut string into a KeyboardShortcutInfo object.
      *
@@ -52,15 +55,14 @@ data class Shortcut(val shortcut: String, val label: String) {
      * @param modifier The modifier string (e.g., "Ctrl", "Alt", "Shift").
      * @return The corresponding KeyEvent meta flag.
      */
-    private fun getModifier(modifier: String): Int {
-        return when (modifier) {
+    private fun getModifier(modifier: String): Int =
+        when (modifier) {
             "Ctrl" -> KeyEvent.META_CTRL_ON
             "Alt" -> KeyEvent.META_ALT_ON
             "Shift" -> KeyEvent.META_SHIFT_ON
 
             else -> 0
         }
-    }
 
     /**
      * Maps a key string to its corresponding keycode.
@@ -68,14 +70,13 @@ data class Shortcut(val shortcut: String, val label: String) {
      * @param key The key string.
      * @return The corresponding keycode, or 0 if the key string is invalid or not recognized.
      */
-    private fun getKey(key: String): Int {
-        return when (key) {
+    private fun getKey(key: String): Int =
+        when (key) {
             "/" -> KeyEvent.KEYCODE_SLASH
             "Esc" -> KeyEvent.KEYCODE_ESCAPE
             in "0".."9" -> KeyEvent.KEYCODE_0 + (key.toInt() - 0) // Handle number keys
             else -> KeyEvent.keyCodeFromString(key)
         }
-    }
 
     companion object {
         @CheckResult

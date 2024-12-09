@@ -28,7 +28,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-data class SmallWidgetStatus(var due: Int, var eta: Int)
+data class SmallWidgetStatus(
+    var due: Int,
+    var eta: Int,
+)
 
 /**
  * The status of the widget.
@@ -48,7 +51,8 @@ object WidgetStatus {
         val preferences = context.sharedPrefs()
         enabled = preferences.getBoolean("widgetSmallEnabled", false)
         val notificationEnabled =
-            preferences.getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
+            preferences
+                .getString(context.getString(R.string.pref_notifications_minimum_cards_due_key), "1000001")!!
                 .toInt() < 1000000
         val canExecuteTask = updateJob == null || updateJob?.isActive == false
         if ((enabled || notificationEnabled) && canExecuteTask) {
@@ -60,15 +64,14 @@ object WidgetStatus {
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun launchUpdateJob(context: Context): Job {
-        return GlobalScope.launch {
+    private fun launchUpdateJob(context: Context): Job =
+        GlobalScope.launch {
             try {
                 updateStatus(context)
             } catch (exc: java.lang.Exception) {
                 Timber.w(exc, "failure in widget update")
             }
         }
-    }
 
     suspend fun updateStatus(context: Context) {
         if (!AnkiDroidApp.isSdCardMounted) {
@@ -83,13 +86,9 @@ object WidgetStatus {
     }
 
     /** Returns the status of each of the decks.  */
-    fun fetchSmall(context: Context): IntArray {
-        return MetaDB.getWidgetSmallStatus(context)
-    }
+    fun fetchSmall(context: Context): IntArray = MetaDB.getWidgetSmallStatus(context)
 
-    fun fetchDue(context: Context): Int {
-        return MetaDB.getNotificationStatus(context)
-    }
+    fun fetchDue(context: Context): Int = MetaDB.getNotificationStatus(context)
 
     private suspend fun updateCounts() {
         val total = Counts()

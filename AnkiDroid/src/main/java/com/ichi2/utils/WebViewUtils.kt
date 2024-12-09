@@ -126,25 +126,23 @@ private fun showOutdatedWebViewDialog(
     }
 }
 
-private fun getLegacyWebViewPackageInfo(packageManager: PackageManager): PackageInfo? {
-    return try {
+private fun getLegacyWebViewPackageInfo(packageManager: PackageManager): PackageInfo? =
+    try {
         packageManager.getPackageInfo("com.android.webview", 0)
     } catch (_: PackageManager.NameNotFoundException) {
         null
     }
-}
 
 /**
  * Returns a [PackageInfo] from the current system WebView, or `null` if unavailable
  */
 private fun getAndroidSystemWebViewPackageInfo(packageManager: PackageManager): PackageInfo? {
-    fun getPackage(packageName: String): PackageInfo? {
-        return try {
+    fun getPackage(packageName: String): PackageInfo? =
+        try {
             packageManager.getPackageInfo(packageName, 0)
         } catch (_: PackageManager.NameNotFoundException) {
             null
         }
-    }
 
     // The WebView is called com.android.webview by default.
     // Partner devices which ship with Google applications ship the Google-specific version

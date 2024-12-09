@@ -210,15 +210,16 @@ class SyncWorker(
         notify(buildNotification(builder))
     }
 
-    private fun buildNotification(block: NotificationCompat.Builder.() -> Unit): Notification {
-        return NotificationCompat.Builder(applicationContext, Channel.SYNC.id).apply {
-            priority = NotificationCompat.PRIORITY_LOW
-            setSmallIcon(R.drawable.ic_star_notify)
-            setCategory(NotificationCompat.CATEGORY_PROGRESS)
-            setSilent(true)
-            block()
-        }.build()
-    }
+    private fun buildNotification(block: NotificationCompat.Builder.() -> Unit): Notification =
+        NotificationCompat
+            .Builder(applicationContext, Channel.SYNC.id)
+            .apply {
+                priority = NotificationCompat.PRIORITY_LOW
+                setSmallIcon(R.drawable.ic_star_notify)
+                setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                setSilent(true)
+                block()
+            }.build()
 
     private fun getProgressNotification(progress: CharSequence): Notification {
         val cancelTitle = applicationContext.getString(R.string.dialog_cancel)
@@ -242,12 +243,14 @@ class SyncWorker(
             syncMedia: Boolean,
         ) {
             val constraints =
-                Constraints.Builder()
+                Constraints
+                    .Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED)
                     .build()
 
             val data =
-                Data.Builder()
+                Data
+                    .Builder()
                     .putString(HKEY_KEY, syncAuth.hkey)
                     .putString(ENDPOINT_KEY, syncAuth.endpoint)
                     .putBoolean(SYNC_MEDIA_KEY, syncMedia)
@@ -260,12 +263,14 @@ class SyncWorker(
                     .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                     .build()
 
-            WorkManager.getInstance(context)
+            WorkManager
+                .getInstance(context)
                 .enqueueUniqueWork(UniqueWorkNames.SYNC, ExistingWorkPolicy.KEEP, request)
         }
 
         fun cancel(context: Context) {
-            WorkManager.getInstance(context)
+            WorkManager
+                .getInstance(context)
                 .cancelUniqueWork(UniqueWorkNames.SYNC)
         }
     }

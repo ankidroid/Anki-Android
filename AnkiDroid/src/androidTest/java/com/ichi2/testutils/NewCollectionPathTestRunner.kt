@@ -30,7 +30,5 @@ class NewCollectionPathTestRunner : AndroidJUnitRunner() {
         cl: ClassLoader?,
         className: String?,
         context: Context?,
-    ): Application {
-        return super.newApplication(cl, TestingApplication::class.java.name, context)
-    }
+    ): Application = super.newApplication(cl, TestingApplication::class.java.name, context)
 }

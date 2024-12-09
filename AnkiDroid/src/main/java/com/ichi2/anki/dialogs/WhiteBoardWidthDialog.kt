@@ -30,7 +30,10 @@ import com.ichi2.utils.show
 import com.ichi2.utils.title
 import java.util.function.Consumer
 
-class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWidth: Int) {
+class WhiteBoardWidthDialog(
+    private val context: Context,
+    private var wbStrokeWidth: Int,
+) {
     private var strokeWidthText: FixedTextView? = null
     var onStrokeWidthChanged: Consumer<Int>? = null
     private val seekBarChangeListener: OnSeekBarChangeListener =

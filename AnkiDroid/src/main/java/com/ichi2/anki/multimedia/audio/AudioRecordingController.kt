@@ -71,9 +71,8 @@ class AudioRecordingController(
     val linearLayout: LinearLayout? = null,
     val viewModel: MultimediaViewModel? = null,
     val note: IMultimediaEditableNote? = null,
-) :
-    AudioTimer.OnTimerTickListener,
-        AudioTimer.OnAudioTickListener {
+) : AudioTimer.OnTimerTickListener,
+    AudioTimer.OnAudioTickListener {
     private lateinit var audioRecorder: AudioRecorder
     private var state: RecordingState = AppendToRecording.CLEARED
 

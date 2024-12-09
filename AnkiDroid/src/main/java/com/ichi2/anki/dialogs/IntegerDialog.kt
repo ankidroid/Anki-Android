@@ -55,21 +55,23 @@ open class IntegerDialog : AnalyticsDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreateDialog(savedInstanceState)
-        return AlertDialog.Builder(requireActivity()).show {
-            title(text = requireArguments().getString("title"))
-            positiveButton(R.string.dialog_ok)
-            negativeButton(R.string.dialog_cancel)
-            setMessage(requireArguments().getString("content"))
-            setView(R.layout.dialog_generic_text_input)
-        }.input(
-            hint = requireArguments().getString("prompt"),
-            inputType = InputType.TYPE_CLASS_NUMBER,
-            maxLength = requireArguments().getInt("digits"),
-            prefill = requireArguments().getString("defaultValue"),
-            displayKeyboard = true,
-        ) { _, text: CharSequence ->
-            consumer!!.accept(text.toString().toInt())
-            dismiss()
-        }
+        return AlertDialog
+            .Builder(requireActivity())
+            .show {
+                title(text = requireArguments().getString("title"))
+                positiveButton(R.string.dialog_ok)
+                negativeButton(R.string.dialog_cancel)
+                setMessage(requireArguments().getString("content"))
+                setView(R.layout.dialog_generic_text_input)
+            }.input(
+                hint = requireArguments().getString("prompt"),
+                inputType = InputType.TYPE_CLASS_NUMBER,
+                maxLength = requireArguments().getInt("digits"),
+                prefill = requireArguments().getString("defaultValue"),
+                displayKeyboard = true,
+            ) { _, text: CharSequence ->
+                consumer!!.accept(text.toString().toInt())
+                dismiss()
+            }
     }
 }

@@ -47,7 +47,5 @@ class MultimediaMenuProvider(
         onCreateMenuCondition?.invoke(menu)
     }
 
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return onMenuItemClicked(menuItem)
-    }
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = onMenuItemClicked(menuItem)
 }

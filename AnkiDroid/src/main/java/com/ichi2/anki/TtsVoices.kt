@@ -260,9 +260,7 @@ class AndroidTtsVoice(
     val voice: Voice,
     val engine: String,
 ) : TtsVoice(name = "$engine-${voice.name}", lang = toAnkiTwoLetterCode(voice.locale)) {
-    override fun unavailable(): Boolean {
-        return voice.features.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)
-    }
+    override fun unavailable(): Boolean = voice.features.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)
 
     /**
      * The locale of the voice normalized to a human readable language/country, missing the variant

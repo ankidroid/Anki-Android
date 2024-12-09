@@ -26,7 +26,9 @@ import timber.log.Timber
  *  * Note: In some contexts, a long press (long click) is expected to be informational, whereas a right-click (context click) is expected to be functional.
  *  * Ensure that using the same action for both is appropriate for your use case.
  */
-fun interface OnContextAndLongClickListener : View.OnContextClickListener, View.OnLongClickListener {
+fun interface OnContextAndLongClickListener :
+    View.OnContextClickListener,
+    View.OnLongClickListener {
     /**
      * The action to do for both contextClick and long click
      * @returns whether the operation was successful

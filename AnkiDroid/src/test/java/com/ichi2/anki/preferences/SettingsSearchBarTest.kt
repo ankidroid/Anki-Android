@@ -59,7 +59,8 @@ class SettingsSearchBarTest : RobolectricTest() {
 
         // Join both lists
         val allResIds =
-            filesResIds.plus(prefItemsResIds)
+            filesResIds
+                .plus(prefItemsResIds)
                 .distinct() as List<Int>
 
         // Check if all indexed XML resIDs lead to the correct fragments on getFragmentFromXmlRes
@@ -77,7 +78,11 @@ class SettingsSearchBarTest : RobolectricTest() {
 
     private fun getPreferencesActivity(): PreferencesActivity {
         val intent = PreferencesActivity.getIntent(targetContext)
-        return Robolectric.buildActivity(PreferencesActivity::class.java, intent)
-            .create().start().resume().get()
+        return Robolectric
+            .buildActivity(PreferencesActivity::class.java, intent)
+            .create()
+            .start()
+            .resume()
+            .get()
     }
 }

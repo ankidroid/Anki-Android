@@ -33,7 +33,5 @@ class TaskSchedulerRule : TestRule {
     }
 
     /** Whether the currently executing test should be run in the foreground  */
-    fun shouldRunInForeground(): Boolean {
-        return checkNotNull(runInForeground) { "Rule was queried before apply was called" }
-    }
+    fun shouldRunInForeground(): Boolean = checkNotNull(runInForeground) { "Rule was queried before apply was called" }
 }

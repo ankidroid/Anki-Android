@@ -26,7 +26,9 @@ import java.util.regex.Pattern
 /**
  * Implementation of Audio field types
  */
-abstract class AudioField : FieldBase(), IField {
+abstract class AudioField :
+    FieldBase(),
+    IField {
     override var mediaPath: String? = null
         get() = field
         set(value) {

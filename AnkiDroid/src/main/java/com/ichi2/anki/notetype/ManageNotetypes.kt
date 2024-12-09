@@ -116,9 +116,7 @@ class ManageNotetypes : AnkiActivity() {
 
         searchView?.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    return true
-                }
+                override fun onQueryTextSubmit(query: String): Boolean = true
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     // Update the search query
@@ -157,33 +155,36 @@ class ManageNotetypes : AnkiActivity() {
                 },
             )
             val dialog =
-                AlertDialog.Builder(this@ManageNotetypes).show {
-                    title(R.string.rename_model)
-                    positiveButton(R.string.rename) {
-                        launchCatchingTask {
-                            runAndRefreshAfter {
-                                val initialNotetype = getNotetype(manageNoteTypeUiModel.id)
-                                val renamedNotetype =
-                                    initialNotetype.copy {
-                                        this.name = (it as AlertDialog).getInputField().text.toString()
-                                    }
-                                updateNotetype(renamedNotetype)
+                AlertDialog
+                    .Builder(this@ManageNotetypes)
+                    .show {
+                        title(R.string.rename_model)
+                        positiveButton(R.string.rename) {
+                            launchCatchingTask {
+                                runAndRefreshAfter {
+                                    val initialNotetype = getNotetype(manageNoteTypeUiModel.id)
+                                    val renamedNotetype =
+                                        initialNotetype.copy {
+                                            this.name = (it as AlertDialog).getInputField().text.toString()
+                                        }
+                                    updateNotetype(renamedNotetype)
+                                }
                             }
                         }
-                    }
-                    negativeButton(R.string.dialog_cancel)
-                    setView(R.layout.dialog_generic_text_input)
-                }.input(
-                    prefill = manageNoteTypeUiModel.name,
-                    waitForPositiveButton = false,
-                    displayKeyboard = true,
-                    callback = { dialog, text ->
-                        dialog.positiveButton.isEnabled =
-                            text.isNotEmpty() &&
-                            !allNotetypes.map { it.name }
-                                .contains(text.toString())
-                    },
-                )
+                        negativeButton(R.string.dialog_cancel)
+                        setView(R.layout.dialog_generic_text_input)
+                    }.input(
+                        prefill = manageNoteTypeUiModel.name,
+                        waitForPositiveButton = false,
+                        displayKeyboard = true,
+                        callback = { dialog, text ->
+                            dialog.positiveButton.isEnabled =
+                                text.isNotEmpty() &&
+                                !allNotetypes
+                                    .map { it.name }
+                                    .contains(text.toString())
+                        },
+                    )
             // start with the button disabled as dialog shows the initial name
             dialog.positiveButton.isEnabled = false
         }

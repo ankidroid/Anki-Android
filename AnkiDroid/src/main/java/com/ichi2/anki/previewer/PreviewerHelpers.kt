@@ -49,21 +49,23 @@ fun stdHtml(
     val colors =
         if (!nightMode) {
             val canvasColor =
-                MaterialColors.getColor(
-                    context,
-                    android.R.attr.colorBackground,
-                    android.R.color.white,
-                ).toRGBHex()
+                MaterialColors
+                    .getColor(
+                        context,
+                        android.R.attr.colorBackground,
+                        android.R.color.white,
+                    ).toRGBHex()
             val fgColor =
                 MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
             ":root { --canvas: $canvasColor ; --fg: $fgColor; }"
         } else {
             val canvasColor =
-                MaterialColors.getColor(
-                    context,
-                    android.R.attr.colorBackground,
-                    android.R.color.black,
-                ).toRGBHex()
+                MaterialColors
+                    .getColor(
+                        context,
+                        android.R.attr.colorBackground,
+                        android.R.color.black,
+                    ).toRGBHex()
             val fgColor =
                 MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
             ":root[class*=night-mode] { --canvas: $canvasColor; --fg: $fgColor; }"
@@ -104,10 +106,6 @@ fun stdHtml(
 fun bodyClassForCardOrd(
     cardOrd: Int,
     nightMode: Boolean = Themes.currentTheme.isNightMode,
-): String {
-    return "card card${cardOrd + 1} ${bodyClass(nightMode)}"
-}
+): String = "card card${cardOrd + 1} ${bodyClass(nightMode)}"
 
-private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String {
-    return if (nightMode) "nightMode night_mode" else ""
-}
+private fun bodyClass(nightMode: Boolean = Themes.currentTheme.isNightMode): String = if (nightMode) "nightMode night_mode" else ""

@@ -123,7 +123,11 @@ fun createTransientFile(
     content: String = "",
     extension: String? = null,
 ): File =
-    File(kotlin.io.path.createTempFile(suffix = if (extension == null) null else ".$extension").pathString).also {
+    File(
+        kotlin.io.path
+            .createTempFile(suffix = if (extension == null) null else ".$extension")
+            .pathString,
+    ).also {
         it.deleteOnExit()
         IOUtils.writeStringToFile(it, content)
     }

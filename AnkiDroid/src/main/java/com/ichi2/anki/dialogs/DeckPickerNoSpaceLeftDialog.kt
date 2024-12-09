@@ -40,8 +40,6 @@ class DeckPickerNoSpaceLeftDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        fun newInstance(): DeckPickerNoSpaceLeftDialog {
-            return DeckPickerNoSpaceLeftDialog()
-        }
+        fun newInstance(): DeckPickerNoSpaceLeftDialog = DeckPickerNoSpaceLeftDialog()
     }
 }

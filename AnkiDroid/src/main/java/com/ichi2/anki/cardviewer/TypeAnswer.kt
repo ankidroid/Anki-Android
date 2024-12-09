@@ -74,13 +74,9 @@ class TypeAnswer(
      * @return true If entering input via EditText
      * and if the current card has a `{{type:field}}` on the card template
      */
-    fun validForEditText(): Boolean {
-        return !useInputTag && correct != null
-    }
+    fun validForEditText(): Boolean = !useInputTag && correct != null
 
-    fun autoFocusEditText(): Boolean {
-        return validForEditText() && autoFocus
-    }
+    fun autoFocusEditText(): Boolean = validForEditText() && autoFocus
 
     /**
      * Extract type answer/cloze text and font/size
@@ -173,8 +169,11 @@ class TypeAnswer(
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn't show the input tag there. Do it with standard values here instead.)
             if (font.isNotEmpty() && size > 0) {
-                append("style=\"font-family: '").append(font).append("'; font-size: ")
-                    .append(size).append("px;\" ")
+                append("style=\"font-family: '")
+                    .append(font)
+                    .append("'; font-size: ")
+                    .append(size)
+                    .append("px;\" ")
             }
             append(">\n</center>\n")
         } else {
@@ -230,12 +229,11 @@ class TypeAnswer(
         /** Regular expression in card data for a 'type answer' after processing has occurred */
         val PATTERN: Pattern = Pattern.compile("\\[\\[type:(.+?)]]")
 
-        fun createInstance(preferences: SharedPreferences): TypeAnswer {
-            return TypeAnswer(
+        fun createInstance(preferences: SharedPreferences): TypeAnswer =
+            TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
                 autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", true),
             )
-        }
 
         /**
          * Return the correct answer to use for {{type::cloze::NN}} fields.

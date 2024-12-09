@@ -74,12 +74,15 @@ object AnalyticsConstantsTest {
 
     internal val analyticsConstantFields
         get() =
-            UsageAnalytics.Actions::class.memberProperties
+            UsageAnalytics.Actions::class
+                .memberProperties
                 .filter { x -> x.javaField!!.getAnnotation(AnalyticsConstant::class.java) != null }
                 .also { list -> assertThat(list.size, not(equalTo(0))) }
 
     @RunWith(Parameterized::class)
-    class AnalyticsConstantsFieldValuesTest(private val analyticsString: String) {
+    class AnalyticsConstantsFieldValuesTest(
+        private val analyticsString: String,
+    ) {
         /**
          * The message here means that the string being checked cannot be found in Actions class.
          * If encountered with this message, re-check the list present here and constants in Actions class, to resolve
@@ -93,8 +96,8 @@ object AnalyticsConstantsTest {
                     |Actions class or AnalyticsConstantsTest.listOfConstantFields. 
                     |If so, revert them as those string constants must not change as they are 
                     |compared in analytics.
-                    |"""
-                    .trimMargin(),
+                    |
+                """.trimMargin(),
                 analyticsString,
                 getStringFromReflection(analyticsString),
             )
@@ -114,9 +117,7 @@ object AnalyticsConstantsTest {
         companion object {
             @JvmStatic // required for Parameters
             @Parameterized.Parameters
-            fun addAnalyticsConstants(): List<String> {
-                return listOfConstantFields
-            }
+            fun addAnalyticsConstants(): List<String> = listOfConstantFields
         }
     }
 
@@ -130,8 +131,8 @@ object AnalyticsConstantsTest {
                         |NOTE: Constants 
                         |should not be renamed as we cannot compare these 
                         |in analytics.
-                        |"""
-                        .trimMargin(),
+                        |
+                    """.trimMargin(),
                     listOfConstantFields.size,
                     fieldSize,
                 )
@@ -142,8 +143,8 @@ object AnalyticsConstantsTest {
                         |est.listOfConstantFields. 
                         |NOTE: Constants should not be renamed as we cannot compare 
                         |these in analytics.
-                        |"""
-                        .trimMargin(),
+                        |
+                    """.trimMargin(),
                     listOfConstantFields.size,
                     fieldSize,
                 )
@@ -170,7 +171,8 @@ object AnalyticsConstantsTest {
         }
 
         private fun getProperties() =
-            UsageAnalytics.Actions::class.memberProperties
+            UsageAnalytics.Actions::class
+                .memberProperties
                 .mapNotNull { it.javaField }
                 .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
 

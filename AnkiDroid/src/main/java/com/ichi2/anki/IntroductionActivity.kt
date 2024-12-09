@@ -96,6 +96,4 @@ class IntroductionActivity : AnkiActivity() {
     }
 }
 
-internal fun Context.hasShownAppIntro(): Boolean {
-    return sharedPrefs().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)
-}
+internal fun Context.hasShownAppIntro(): Boolean = sharedPrefs().getBoolean(IntroductionActivity.INTRODUCTION_SLIDES_SHOWN, false)

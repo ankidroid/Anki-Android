@@ -45,8 +45,11 @@ import java.util.TreeSet
 class TagsArrayAdapter(
     private val tags: TagsList,
     private val resources: Resources,
-) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(), Filterable {
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(),
+    Filterable {
+    class ViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         internal lateinit var node: TagTreeNode
         internal val expandButton: ImageButton = itemView.findViewById(R.id.id_expand_button)
         internal val checkBoxView: CheckBoxTriStates = itemView.findViewById(R.id.tags_dialog_tag_item_checkbox)
@@ -111,16 +114,12 @@ class TagsArrayAdapter(
          *
          * @return The number of visible nodes in the subtree.
          */
-        fun getContributeSize(): Int {
-            return if (isExpanded) subtreeSize else 1
-        }
+        fun getContributeSize(): Int = if (isExpanded) subtreeSize else 1
 
         /**
          * @return If the node has one or more children.
          */
-        fun isNotLeaf(): Boolean {
-            return children.isNotEmpty()
-        }
+        fun isNotLeaf(): Boolean = children.isNotEmpty()
 
         /**
          * Toggle the expand state of the node, then iterate up to the root to maintain the tree.
@@ -245,7 +244,8 @@ class TagsArrayAdapter(
         viewType: Int,
     ): ViewHolder {
         val v =
-            LayoutInflater.from(parent.context)
+            LayoutInflater
+                .from(parent.context)
                 .inflate(R.layout.tags_item_list_dialog, parent, false)
         val vh = ViewHolder(v.findViewById(R.id.tags_dialog_tag_item))
         // clicking the checkbox toggles the tag's check state
@@ -344,9 +344,7 @@ class TagsArrayAdapter(
     /**
      * @return The number of visible tags.
      */
-    override fun getItemCount(): Int {
-        return treeRoot.subtreeSize
-    }
+    override fun getItemCount(): Int = treeRoot.subtreeSize
 
     /**
      * Build the tag tree. The tags have been sorted using the hierarchical comparator
@@ -422,9 +420,7 @@ class TagsArrayAdapter(
         }
     }
 
-    override fun getFilter(): TagsFilter {
-        return TagsFilter()
-    }
+    override fun getFilter(): TagsFilter = TagsFilter()
 
     // Custom Filter class - as seen in http://stackoverflow.com/a/29792313/1332026
     inner class TagsFilter : TypedFilter<String>({ tags.toList() }) {

@@ -218,8 +218,8 @@ class InstantEditorViewModelTest : RobolectricTest() {
         testBody: suspend InstantEditorViewModel.() -> Unit,
     ) = runInstantEditorViewModelTest(initViewModel, testBody)
 
-    private fun saveNoteResult(result: SaveNoteResult): String? {
-        return when (result) {
+    private fun saveNoteResult(result: SaveNoteResult): String? =
+        when (result) {
             is SaveNoteResult.Failure -> result.message
 
             SaveNoteResult.Success -> {
@@ -229,7 +229,6 @@ class InstantEditorViewModelTest : RobolectricTest() {
 
             is SaveNoteResult.Warning -> result.message
         }
-    }
 
     companion object {
         fun TestClass.runInstantEditorViewModelTest(

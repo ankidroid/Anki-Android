@@ -119,7 +119,8 @@ class InvalidStringFormatDetectorTest {
 
     @Test
     fun error_if_string_format_invalid() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .allowDuplicates()
@@ -131,7 +132,8 @@ class InvalidStringFormatDetectorTest {
 
     @Test
     fun no_error_if_string_format_valid() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", valid))
@@ -142,7 +144,8 @@ class InvalidStringFormatDetectorTest {
 
     @Test
     fun error_if_capitalization_invalid() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .allowDuplicates()
@@ -154,7 +157,8 @@ class InvalidStringFormatDetectorTest {
 
     @Test
     fun no_error_if_capitalization_valid() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", validCapitalization))

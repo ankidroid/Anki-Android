@@ -41,7 +41,9 @@ import kotlin.reflect.jvm.jvmName
  *
  * [getIntent] can be used as an easy way to build a [SingleFragmentActivity]
  */
-open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStudyListener {
+open class SingleFragmentActivity :
+    AnkiActivity(),
+    CustomStudyDialog.CustomStudyListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -103,13 +105,12 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
             fragmentClass: KClass<out Fragment>,
             arguments: Bundle? = null,
             intentAction: String? = null,
-        ): Intent {
-            return Intent(context, SingleFragmentActivity::class.java).apply {
+        ): Intent =
+            Intent(context, SingleFragmentActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)
                 action = intentAction
             }
-        }
     }
 
     // Begin - implementation of CustomStudyListener methods here for crash fix

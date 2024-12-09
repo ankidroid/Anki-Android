@@ -37,7 +37,9 @@ import org.jetbrains.uast.UCallExpression
  *
  * TODO/PERF: Only run this in tests, there's no JUnit in /src/
  */
-class JUnitNullAssertionDetector : Detector(), SourceCodeScanner {
+class JUnitNullAssertionDetector :
+    Detector(),
+    SourceCodeScanner {
     /** Detect both assertNotNull and assertNull: assertNotNull is the most likely to cause improvements */
     override fun getApplicableMethodNames(): List<String> = arrayListOf("assertNotNull", "assertNull")
 

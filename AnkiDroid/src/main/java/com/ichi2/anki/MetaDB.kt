@@ -268,19 +268,20 @@ object MetaDB {
         var language = ""
         val query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1"
         try {
-            mMetaDb!!.rawQuery(
-                query,
-                arrayOf(
-                    did.toString(),
-                    ord.toString(),
-                    qa.int.toString(),
-                ),
-            ).use { cur ->
-                Timber.v("getLanguage: %s", query)
-                if (cur.moveToNext()) {
-                    language = cur.getString(0)
+            mMetaDb!!
+                .rawQuery(
+                    query,
+                    arrayOf(
+                        did.toString(),
+                        ord.toString(),
+                        qa.int.toString(),
+                    ),
+                ).use { cur ->
+                    Timber.v("getLanguage: %s", query)
+                    if (cur.moveToNext()) {
+                        language = cur.getString(0)
+                    }
                 }
-            }
         } catch (e: Exception) {
             Timber.e(e, "Error fetching language ")
         }
@@ -298,10 +299,11 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
-                "SELECT state FROM whiteboardState  WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
+            mMetaDb!!
+                .rawQuery(
+                    "SELECT state FROM whiteboardState  WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
         } catch (e: Exception) {
             Timber.e(e, "Error retrieving whiteboard state from MetaDB ")
             return false
@@ -323,24 +325,25 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
-            metaDb.rawQuery(
-                "SELECT _id FROM whiteboardState WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur ->
-                if (cur.moveToNext()) {
-                    metaDb.execSQL(
-                        "UPDATE whiteboardState SET did = ?, state=? WHERE _id=?;",
-                        arrayOf<Any>(did, state, cur.getString(0)),
-                    )
-                    Timber.d("Store whiteboard state (%d) for deck %d", state, did)
-                } else {
-                    metaDb.execSQL(
-                        "INSERT INTO whiteboardState (did, state) VALUES (?, ?)",
-                        arrayOf<Any>(did, state),
-                    )
-                    Timber.d("Store whiteboard state (%d) for deck %d", state, did)
+            metaDb
+                .rawQuery(
+                    "SELECT _id FROM whiteboardState WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur ->
+                    if (cur.moveToNext()) {
+                        metaDb.execSQL(
+                            "UPDATE whiteboardState SET did = ?, state=? WHERE _id=?;",
+                            arrayOf<Any>(did, state, cur.getString(0)),
+                        )
+                        Timber.d("Store whiteboard state (%d) for deck %d", state, did)
+                    } else {
+                        metaDb.execSQL(
+                            "INSERT INTO whiteboardState (did, state) VALUES (?, ?)",
+                            arrayOf<Any>(did, state),
+                        )
+                        Timber.d("Store whiteboard state (%d) for deck %d", state, did)
+                    }
                 }
-            }
         } catch (e: Exception) {
             Timber.e(e, "Error storing whiteboard state in MetaDB ")
         }
@@ -357,10 +360,11 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
-                "SELECT stylus FROM whiteboardState WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
+            mMetaDb!!
+                .rawQuery(
+                    "SELECT stylus FROM whiteboardState WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
         } catch (e: Exception) {
             Timber.e(e, "Error retrieving whiteboard stylus mode state from MetaDB ")
             return false
@@ -382,24 +386,25 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
-            metaDb.rawQuery(
-                "SELECT _id FROM whiteboardState WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur ->
-                if (cur.moveToNext()) {
-                    metaDb.execSQL(
-                        "UPDATE whiteboardState SET did = ?, stylus=? WHERE _id=?;",
-                        arrayOf<Any>(did, state, cur.getString(0)),
-                    )
-                    Timber.d("Store whiteboard stylus mode state (%d) for deck %d", state, did)
-                } else {
-                    metaDb.execSQL(
-                        "INSERT INTO whiteboardState (did, stylus) VALUES (?, ?)",
-                        arrayOf<Any>(did, state),
-                    )
-                    Timber.d("Store whiteboard stylus mode state (%d) for deck %d", state, did)
+            metaDb
+                .rawQuery(
+                    "SELECT _id FROM whiteboardState WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur ->
+                    if (cur.moveToNext()) {
+                        metaDb.execSQL(
+                            "UPDATE whiteboardState SET did = ?, stylus=? WHERE _id=?;",
+                            arrayOf<Any>(did, state, cur.getString(0)),
+                        )
+                        Timber.d("Store whiteboard stylus mode state (%d) for deck %d", state, did)
+                    } else {
+                        metaDb.execSQL(
+                            "INSERT INTO whiteboardState (did, stylus) VALUES (?, ?)",
+                            arrayOf<Any>(did, state),
+                        )
+                        Timber.d("Store whiteboard stylus mode state (%d) for deck %d", state, did)
+                    }
                 }
-            }
         } catch (e: Exception) {
             Timber.e(e, "Error storing whiteboard stylus mode state in MetaDB ")
         }
@@ -416,10 +421,11 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
-                "SELECT visible FROM whiteboardState WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
+            mMetaDb!!
+                .rawQuery(
+                    "SELECT visible FROM whiteboardState WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
         } catch (e: Exception) {
             Timber.e(e, "Error retrieving whiteboard state from MetaDB ")
             return false
@@ -441,24 +447,25 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
-            metaDb.rawQuery(
-                "SELECT _id FROM whiteboardState WHERE did  = ?",
-                arrayOf(did.toString()),
-            ).use { cur ->
-                if (cur.moveToNext()) {
-                    metaDb.execSQL(
-                        "UPDATE whiteboardState SET did = ?, visible= ?  WHERE _id=?;",
-                        arrayOf<Any>(did, isVisibleState, cur.getString(0)),
-                    )
-                    Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did)
-                } else {
-                    metaDb.execSQL(
-                        "INSERT INTO whiteboardState (did, visible) VALUES (?, ?)",
-                        arrayOf<Any>(did, isVisibleState),
-                    )
-                    Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did)
+            metaDb
+                .rawQuery(
+                    "SELECT _id FROM whiteboardState WHERE did  = ?",
+                    arrayOf(did.toString()),
+                ).use { cur ->
+                    if (cur.moveToNext()) {
+                        metaDb.execSQL(
+                            "UPDATE whiteboardState SET did = ?, visible= ?  WHERE _id=?;",
+                            arrayOf<Any>(did, isVisibleState, cur.getString(0)),
+                        )
+                        Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did)
+                    } else {
+                        metaDb.execSQL(
+                            "INSERT INTO whiteboardState (did, visible) VALUES (?, ?)",
+                            arrayOf<Any>(did, isVisibleState),
+                        )
+                        Timber.d("Store whiteboard visibility (%d) for deck %d", isVisibleState, did)
+                    }
                 }
-            }
         } catch (e: Exception) {
             Timber.e(e, "Error storing whiteboard visibility in MetaDB ")
         }
@@ -473,15 +480,16 @@ object MetaDB {
     ): WhiteboardPenColor {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
-                "SELECT lightpencolor, darkpencolor FROM whiteboardState WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur ->
-                cur.moveToFirst()
-                val light = DatabaseUtil.getInteger(cur, 0)
-                val dark = DatabaseUtil.getInteger(cur, 1)
-                return WhiteboardPenColor(light, dark)
-            }
+            mMetaDb!!
+                .rawQuery(
+                    "SELECT lightpencolor, darkpencolor FROM whiteboardState WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur ->
+                    cur.moveToFirst()
+                    val light = DatabaseUtil.getInteger(cur, 0)
+                    val dark = DatabaseUtil.getInteger(cur, 1)
+                    return WhiteboardPenColor(light, dark)
+                }
         } catch (e: Exception) {
             Timber.e(e, "Error retrieving whiteboard pen color from MetaDB ")
             return default
@@ -505,23 +513,24 @@ object MetaDB {
         val columnName = if (isLight) "lightpencolor" else "darkpencolor"
         try {
             val metaDb = mMetaDb!!
-            metaDb.rawQuery(
-                "SELECT _id FROM whiteboardState WHERE did  = ?",
-                arrayOf(did.toString()),
-            ).use { cur ->
-                if (cur.moveToNext()) {
-                    metaDb.execSQL(
-                        "UPDATE whiteboardState SET did = ?, " +
-                            columnName + "= ? " +
-                            " WHERE _id=?;",
-                        arrayOf<Any?>(did, value, cur.getString(0)),
-                    )
-                } else {
-                    val sql = "INSERT INTO whiteboardState (did, $columnName) VALUES (?, ?)"
-                    metaDb.execSQL(sql, arrayOf<Any?>(did, value))
+            metaDb
+                .rawQuery(
+                    "SELECT _id FROM whiteboardState WHERE did  = ?",
+                    arrayOf(did.toString()),
+                ).use { cur ->
+                    if (cur.moveToNext()) {
+                        metaDb.execSQL(
+                            "UPDATE whiteboardState SET did = ?, " +
+                                columnName + "= ? " +
+                                " WHERE _id=?;",
+                            arrayOf<Any?>(did, value, cur.getString(0)),
+                        )
+                    } else {
+                        val sql = "INSERT INTO whiteboardState (did, $columnName) VALUES (?, ?)"
+                        metaDb.execSQL(sql, arrayOf<Any?>(did, value))
+                    }
+                    Timber.d("Store whiteboard %s (%d) for deck %d", columnName, value, did)
                 }
-                Timber.d("Store whiteboard %s (%d) for deck %d", columnName, value, did)
-            }
         } catch (e: Exception) {
             Timber.w(e, "Error storing whiteboard color in MetaDB")
         }
@@ -538,10 +547,11 @@ object MetaDB {
     ): Boolean {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.rawQuery(
-                "SELECT state FROM micToolbarState  WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
+            mMetaDb!!
+                .rawQuery(
+                    "SELECT state FROM micToolbarState  WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur -> return DatabaseUtil.getScalarBoolean(cur) }
         } catch (e: Exception) {
             Timber.e(e, "Error retrieving micToolbar state from MetaDB ")
             return false
@@ -563,23 +573,24 @@ object MetaDB {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
-            metaDb.rawQuery(
-                "SELECT _id FROM micToolbarState WHERE did = ?",
-                arrayOf(did.toString()),
-            ).use { cur ->
-                if (cur.moveToNext()) {
-                    metaDb.execSQL(
-                        "UPDATE micToolbarState SET did = ?, state = ? WHERE _id = ?;",
-                        arrayOf<Any>(did, state, cur.getString(0)),
-                    )
-                } else {
-                    metaDb.execSQL(
-                        "INSERT INTO micToolbarState (did, state) VALUES (?, ?)",
-                        arrayOf<Any>(did, state),
-                    )
+            metaDb
+                .rawQuery(
+                    "SELECT _id FROM micToolbarState WHERE did = ?",
+                    arrayOf(did.toString()),
+                ).use { cur ->
+                    if (cur.moveToNext()) {
+                        metaDb.execSQL(
+                            "UPDATE micToolbarState SET did = ?, state = ? WHERE _id = ?;",
+                            arrayOf<Any>(did, state, cur.getString(0)),
+                        )
+                    } else {
+                        metaDb.execSQL(
+                            "INSERT INTO micToolbarState (did, state) VALUES (?, ?)",
+                            arrayOf<Any>(did, state),
+                        )
+                    }
+                    Timber.d("Store mic toolbar state (%d) for deck %d", state, did)
                 }
-                Timber.d("Store mic toolbar state (%d) for deck %d", state, did)
-            }
         } catch (e: Exception) {
             Timber.e(e, "Error storing mic toolbar state in MetaDB ")
         }
@@ -593,19 +604,20 @@ object MetaDB {
     fun getWidgetSmallStatus(context: Context): IntArray {
         openDBIfClosed(context)
         try {
-            mMetaDb!!.query(
-                "smallWidgetStatus",
-                arrayOf("due", "eta"),
-                null,
-                null,
-                null,
-                null,
-                null,
-            ).use { cursor ->
-                if (cursor.moveToNext()) {
-                    return intArrayOf(cursor.getInt(0), cursor.getInt(1))
+            mMetaDb!!
+                .query(
+                    "smallWidgetStatus",
+                    arrayOf("due", "eta"),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                ).use { cursor ->
+                    if (cursor.moveToNext()) {
+                        return intArrayOf(cursor.getInt(0), cursor.getInt(1))
+                    }
                 }
-            }
         } catch (e: SQLiteException) {
             Timber.e(e, "Error while querying widgetStatus")
         }
@@ -666,13 +678,12 @@ object MetaDB {
     }
 
     private object DatabaseUtil {
-        fun getScalarBoolean(cur: Cursor): Boolean {
-            return if (cur.moveToNext()) {
+        fun getScalarBoolean(cur: Cursor): Boolean =
+            if (cur.moveToNext()) {
                 cur.getInt(0) > 0
             } else {
                 false
             }
-        }
 
         // API LEVEL
         fun getTableColumnCount(
@@ -685,9 +696,7 @@ object MetaDB {
         fun getInteger(
             cur: Cursor,
             columnIndex: Int,
-        ): Int? {
-            return if (cur.isNull(columnIndex)) null else cur.getInt(columnIndex)
-        }
+        ): Int? = if (cur.isNull(columnIndex)) null else cur.getInt(columnIndex)
     }
 
     private fun isDBOpen() = mMetaDb?.isOpen == true

@@ -40,7 +40,9 @@ import timber.log.Timber
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @Ignore("flaky in ci")
-class UpgradeGesturesToControlsTest(private val testData: TestData) : RobolectricTest() {
+class UpgradeGesturesToControlsTest(
+    private val testData: TestData,
+) : RobolectricTest() {
     private val changedKeys = HashSet<String>()
 
     private lateinit var prefs: SharedPreferences

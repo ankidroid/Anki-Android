@@ -22,12 +22,19 @@ package com.ichi2.utils
 
 /** Use when code can be changed after further conversion to Kotlin */
 @Target(
-    AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
-    AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION,
-    AnnotationTarget.FIELD, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE,
-    AnnotationTarget.CONSTRUCTOR, AnnotationTarget.FILE,
+    AnnotationTarget.CLASS,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.VALUE_PARAMETER,
+    AnnotationTarget.EXPRESSION,
+    AnnotationTarget.FIELD,
+    AnnotationTarget.PROPERTY,
+    AnnotationTarget.LOCAL_VARIABLE,
+    AnnotationTarget.CONSTRUCTOR,
+    AnnotationTarget.FILE,
 )
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable
 @MustBeDocumented
-annotation class KotlinCleanup(val value: String)
+annotation class KotlinCleanup(
+    val value: String,
+)

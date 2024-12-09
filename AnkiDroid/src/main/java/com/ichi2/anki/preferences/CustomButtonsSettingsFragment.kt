@@ -57,7 +57,5 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun allKeys(): HashSet<String> {
-        return allPreferences().mapTo(hashSetOf()) { it.key }
-    }
+    fun allKeys(): HashSet<String> = allPreferences().mapTo(hashSetOf()) { it.key }
 }

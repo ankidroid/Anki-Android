@@ -47,13 +47,12 @@ class TTS {
     private fun getOrdUsingCardType(
         card: Card,
         col: Collection,
-    ): Int {
-        return if (card.noteType(col).isCloze) {
+    ): Int =
+        if (card.noteType(col).isCloze) {
             0
         } else {
             card.ord
         }
-    }
 
     /**
      * Reads the text (using TTS) for the given side of a card.

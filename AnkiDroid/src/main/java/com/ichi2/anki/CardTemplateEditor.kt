@@ -103,7 +103,9 @@ import kotlin.time.Duration.Companion.seconds
  * Allows the user to view the template for the current note type
  */
 @KotlinCleanup("lateinit wherever possible")
-open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
+open class CardTemplateEditor :
+    AnkiActivity(),
+    DeckSelectionListener {
     @VisibleForTesting
     lateinit var viewPager: ViewPager2
     private var slidingTabLayout: TabLayout? = null
@@ -415,7 +417,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
      * A [androidx.viewpager2.adapter.FragmentStateAdapter] that returns a fragment corresponding to
      * one of the tabs.
      */
-    inner class TemplatePagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+    inner class TemplatePagerAdapter(
+        fragmentActivity: FragmentActivity,
+    ) : FragmentStateAdapter(fragmentActivity) {
         private var baseId: Long = 0
 
         override fun createFragment(position: Int): Fragment {
@@ -426,9 +430,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         override fun getItemCount(): Int = tempModel?.templateCount ?: 0
 
-        override fun getItemId(position: Int): Long {
-            return baseId + position
-        }
+        override fun getItemId(position: Int): Long = baseId + position
 
         override fun containsItem(id: Long): Boolean {
             @Suppress("ConvertTwoComparisonsToRangeCheck") // more readable without the range check
@@ -592,9 +594,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             override fun onCreateActionMode(
                 mode: ActionMode,
                 menu: Menu,
-            ): Boolean {
-                return true
-            }
+            ): Boolean = true
 
             override fun onPrepareActionMode(
                 mode: ActionMode,
@@ -746,9 +746,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         setupCommonMenu(menu)
                     }
 
-                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                        return handleCommonMenuItemSelected(menuItem)
-                    }
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = handleCommonMenuItemSelected(menuItem)
                 },
                 viewLifecycleOwner,
                 Lifecycle.State.RESUMED,
@@ -788,7 +786,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             would leave some notes without any cards (orphan notes) */
         private fun showOrphanNoteDialog() {
             val builder =
-                AlertDialog.Builder(requireContext())
+                AlertDialog
+                    .Builder(requireContext())
                     .setTitle(R.string.orphan_note_title)
                     .setMessage(R.string.orphan_note_message)
                     .setPositiveButton(android.R.string.ok, null)
@@ -1015,8 +1014,8 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 activity.showDialogFragment(dialog)
             }
 
-        private fun getCurrentTemplateName(tempModel: CardTemplateNotetype): String {
-            return try {
+        private fun getCurrentTemplateName(tempModel: CardTemplateNotetype): String =
+            try {
                 val ordinal = templateEditor.viewPager.currentItem
                 val template = tempModel.getTemplate(ordinal)
                 template.getString("name")
@@ -1024,7 +1023,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 Timber.w(e, "Failed to get name for template")
                 ""
             }
-        }
 
         private fun launchCardBrowserAppearance(currentTemplate: JSONObject) {
             val context = AnkiDroidApp.instance.baseContext
@@ -1036,7 +1034,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private fun getCurrentTemplate(): JSONObject? {
             val currentCardTemplateIndex = getCurrentCardTemplateIndex()
             return try {
-                templateEditor.tempModel!!.notetype.getJSONArray("tmpls")
+                templateEditor.tempModel!!
+                    .notetype
+                    .getJSONArray("tmpls")
                     .getJSONObject(currentCardTemplateIndex)
             } catch (e: JSONException) {
                 Timber.w(e, "CardTemplateEditor::getCurrentTemplate - unexpectedly unable to fetch template? %d", currentCardTemplateIndex)
@@ -1107,9 +1107,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
-        private fun modelHasChanged(): Boolean {
-            return templateEditor.modelHasChanged()
-        }
+        private fun modelHasChanged(): Boolean = templateEditor.modelHasChanged()
 
         /**
          * Confirm if the user wants to delete all the cards associated with current template
@@ -1290,7 +1288,11 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             }
         }
 
-        data class CardTemplate(val front: String, val back: String, val style: String) {
+        data class CardTemplate(
+            val front: String,
+            val back: String,
+            val style: String,
+        ) {
             fun toMarkdown(context: Context) =
                 // backticks are not supported by old reddit
                 buildString {

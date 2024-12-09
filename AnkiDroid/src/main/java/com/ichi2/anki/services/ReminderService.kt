@@ -99,11 +99,11 @@ class ReminderService : BroadcastReceiver() {
             }
             Timber.v("onReceive - deck '%s' due count %d", deckDue.fullDeckName, total)
             val notification =
-                NotificationCompat.Builder(
-                    context,
-                    Channel.DECK_REMINDERS.id,
-                )
-                    .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                NotificationCompat
+                    .Builder(
+                        context,
+                        Channel.DECK_REMINDERS.id,
+                    ).setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setContentTitle(context.getString(R.string.reminder_title))
                     .setContentText(
                         context.resources.getQuantityString(
@@ -112,8 +112,7 @@ class ReminderService : BroadcastReceiver() {
                             deckDue.fullDeckName,
                             total,
                         ),
-                    )
-                    .setSmallIcon(R.drawable.ic_star_notify)
+                    ).setSmallIcon(R.drawable.ic_star_notify)
                     .setColor(context.getColor(R.color.material_light_blue_700))
                     .setContentIntent(
                         PendingIntentCompat.getActivity(
@@ -123,8 +122,7 @@ class ReminderService : BroadcastReceiver() {
                             PendingIntent.FLAG_UPDATE_CURRENT,
                             false,
                         ),
-                    )
-                    .setAutoCancel(true)
+                    ).setAutoCancel(true)
                     .build()
             notificationManager.notify(deckId.toInt(), notification)
             Timber.v("onReceive - notification state: %s", notification)
@@ -179,8 +177,6 @@ class ReminderService : BroadcastReceiver() {
         fun getReviewDeckIntent(
             context: Context,
             deckId: DeckId,
-        ): Intent {
-            return Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
-        }
+        ): Intent = Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
     }
 }

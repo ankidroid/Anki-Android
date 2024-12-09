@@ -64,9 +64,7 @@ class InsertFieldDialog : DialogFragment() {
                     textView.setOnClickListener { selectFieldAndClose(textView) }
                 }
 
-                override fun getItemCount(): Int {
-                    return fieldList.size
-                }
+                override fun getItemCount(): Int = fieldList.size
             }
         return AlertDialog.Builder(requireContext()).create {
             title(R.string.card_template_editor_select_field)

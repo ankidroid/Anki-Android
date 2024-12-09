@@ -51,9 +51,7 @@ class HardcodedPreferenceKey : ResourceXmlDetector() {
             )
     }
 
-    override fun getApplicableElements(): Collection<String>? {
-        return ALL
-    }
+    override fun getApplicableElements(): Collection<String>? = ALL
 
     override fun visitElement(
         context: XmlContext,
@@ -80,7 +78,5 @@ class HardcodedPreferenceKey : ResourceXmlDetector() {
         return string.isNotEmpty() && !string.startsWith("@") && !string.startsWith("?")
     }
 
-    override fun appliesTo(folderType: ResourceFolderType): Boolean {
-        return folderType == ResourceFolderType.XML
-    }
+    override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.XML
 }

@@ -88,7 +88,10 @@ abstract class Test21And26 {
      * Represents structure and compat required to simulate https://github.com/ankidroid/Anki-Android/issues/10358
      * This is a bug that occurred in a smartphone, where listFiles returned `null` on an existing directory.
      */
-    inner class PermissionDenied(val directory: Directory, val compat: Compat) {
+    inner class PermissionDenied(
+        val directory: Directory,
+        val compat: Compat,
+    ) {
         /**
          * This run test, ensuring that [newDirectoryStream] throws on [directory].
          * This is useful in the case where we can't directly access the directory or compat

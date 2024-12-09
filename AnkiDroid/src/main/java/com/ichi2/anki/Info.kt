@@ -45,7 +45,9 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
 /**
  * Shows an about box, which is a small HTML page.
  */
-class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
+class Info :
+    AnkiActivity(),
+    BaseSnackbarBuilderProvider {
     private lateinit var webView: WebView
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -137,7 +139,8 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                             @Suppress("ktlint:standard:max-line-length")
                             webView.loadUrl(
                                 "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
-                                    "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
+                                    "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor +
+                                    "\";}" +
                                     "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
                                     "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
                                     "document.body.style.setProperty(\"background\", \"" + background + "\");",
@@ -178,14 +181,13 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
         finishWithAnimation()
     }
 
-    private fun canOpenMarketUri(): Boolean {
-        return try {
+    private fun canOpenMarketUri(): Boolean =
+        try {
             canOpenIntent(this, AnkiDroidApp.getMarketIntent(this))
         } catch (e: Exception) {
             Timber.w(e)
             false
         }
-    }
 
     private fun finishWithAnimation() {
         finish()

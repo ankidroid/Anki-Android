@@ -19,7 +19,11 @@ package com.ichi2.anki.cardviewer
 import anki.collection.OpChanges
 
 /** Data for a deferred refresh of the CardViewer */
-data class ViewerRefresh(val queues: Boolean, val note: Boolean, val card: Boolean) {
+data class ViewerRefresh(
+    val queues: Boolean,
+    val note: Boolean,
+    val card: Boolean,
+) {
     companion object {
         /** updates the current state of the ViewerRefresh with additional data */
         fun updateState(

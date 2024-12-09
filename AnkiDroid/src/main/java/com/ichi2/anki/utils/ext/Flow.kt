@@ -25,17 +25,15 @@ import kotlinx.coroutines.launch
 fun <T> Flow<T>.collectLatestIn(
     scope: CoroutineScope,
     action: suspend (value: T) -> Unit,
-): Job {
-    return scope.launch {
+): Job =
+    scope.launch {
         collectLatest(action)
     }
-}
 
 fun <T> Flow<T>.collectIn(
     scope: CoroutineScope,
     collector: FlowCollector<T>,
-): Job {
-    return scope.launch {
+): Job =
+    scope.launch {
         collect(collector)
     }
-}

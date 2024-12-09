@@ -89,8 +89,8 @@ class GestureMapper {
         width: Int,
         posX: Float,
         posY: Float,
-    ): Gesture? {
-        return if (width == 0 || height == 0) {
+    ): Gesture? =
+        if (width == 0 || height == 0) {
             null
         } else {
             when (tapGestureMode) {
@@ -98,7 +98,6 @@ class GestureMapper {
                 TapGestureMode.NINE_POINT -> fromTapCorners(height, width, posX, posY)
             }
         }
-    }
 
     private enum class TriState {
         LOW,

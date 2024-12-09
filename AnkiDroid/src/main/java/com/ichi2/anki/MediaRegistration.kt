@@ -41,7 +41,9 @@ import java.lang.IllegalStateException
  * this class is required in summer note class for paste image event and in visual editor activity for importing media,
  * (extracted code to avoid duplication of code).
  */
-class MediaRegistration(private val context: Context) {
+class MediaRegistration(
+    private val context: Context,
+) {
     // Use the same HTML if the same image is pasted multiple times.
     private val pastedMediaCache = HashMap<String, String?>()
 
@@ -58,7 +60,8 @@ class MediaRegistration(private val context: Context) {
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
         val (fileName, fileExtensionWithDot) =
-            FileNameAndExtension.fromString(filename)
+            FileNameAndExtension
+                .fromString(filename)
                 ?.renameForCreateTempFile()
                 ?: throw IllegalStateException("Unable to determine valid filename")
         var clipCopy: File
@@ -112,9 +115,7 @@ class MediaRegistration(private val context: Context) {
     }
 
     @Throws(FileNotFoundException::class)
-    private fun openInputStreamWithURI(uri: Uri): InputStream {
-        return context.contentResolver.openInputStream(uri)!!
-    }
+    private fun openInputStreamWithURI(uri: Uri): InputStream = context.contentResolver.openInputStream(uri)!!
 
     private fun convertToJPG(file: File): Boolean {
         val bm = BitmapFactory.decodeFile(file.absolutePath)
@@ -158,8 +159,8 @@ class MediaRegistration(private val context: Context) {
     fun onPaste(
         uri: Uri,
         description: ClipDescription,
-    ): String? {
-        return try {
+    ): String? =
+        try {
             // check if cache already holds registered file or not
             if (!pastedMediaCache.containsKey(uri.toString())) {
                 pastedMediaCache[uri.toString()] = loadMediaIntoCollection(uri, description)
@@ -184,7 +185,6 @@ class MediaRegistration(private val context: Context) {
             showThemedToast(context, context.getString(R.string.multimedia_editor_something_wrong), false)
             null
         }
-    }
 
     @CheckResult
     fun registerMediaForWebView(mediaPath: String?): Boolean {

@@ -130,9 +130,10 @@ class ContentProviderTest : InstrumentedTest() {
 
     private fun createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
         val m =
-            BackendUtils.fromJsonBytes(
-                col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
-            ).apply { set("name", name) }
+            BackendUtils
+                .fromJsonBytes(
+                    col.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
+                ).apply { set("name", name) }
         col.addNotetypeLegacy(BackendUtils.toJsonBytes(m))
         return col.notetypes.byName(name)!!
     }
@@ -371,20 +372,21 @@ class ContentProviderTest : InstrumentedTest() {
     fun testQueryDirectSqlQuery() {
         // search for correct mid
         val cr = contentResolver
-        cr.query(
-            FlashCardsContract.Note.CONTENT_URI_V2,
-            null,
-            "mid=$modelId",
-            null,
-            null,
-        ).use { cursor ->
-            assertNotNull(cursor)
-            assertEquals(
-                "Check number of results",
-                createdNotes.size,
-                cursor.count,
-            )
-        }
+        cr
+            .query(
+                FlashCardsContract.Note.CONTENT_URI_V2,
+                null,
+                "mid=$modelId",
+                null,
+                null,
+            ).use { cursor ->
+                assertNotNull(cursor)
+                assertEquals(
+                    "Check number of results",
+                    createdNotes.size,
+                    cursor.count,
+                )
+            }
         // search for bogus mid
         cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=0", null, null).use { cursor ->
             assertNotNull(cursor)
@@ -462,33 +464,34 @@ class ContentProviderTest : InstrumentedTest() {
         // Query all available notes
         for (i in FlashCardsContract.Note.DEFAULT_PROJECTION.indices) {
             val projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i)
-            cr.query(
-                FlashCardsContract.Note.CONTENT_URI,
-                projection,
-                "tag:$TEST_TAG",
-                null,
-                null,
-            ).use { allNotesCursor ->
-                assertNotNull("Check that there is a valid cursor", allNotesCursor)
-                assertEquals(
-                    "Check number of results",
-                    createdNotes.size,
-                    allNotesCursor!!.count,
-                )
-                // Check columns
-                assertEquals(
-                    "Check column count",
-                    projection.size,
-                    allNotesCursor.columnCount,
-                )
-                for (j in projection.indices) {
+            cr
+                .query(
+                    FlashCardsContract.Note.CONTENT_URI,
+                    projection,
+                    "tag:$TEST_TAG",
+                    null,
+                    null,
+                ).use { allNotesCursor ->
+                    assertNotNull("Check that there is a valid cursor", allNotesCursor)
                     assertEquals(
-                        "Check column name $j",
-                        projection[j],
-                        allNotesCursor.getColumnName(j),
+                        "Check number of results",
+                        createdNotes.size,
+                        allNotesCursor!!.count,
                     )
+                    // Check columns
+                    assertEquals(
+                        "Check column count",
+                        projection.size,
+                        allNotesCursor.columnCount,
+                    )
+                    for (j in projection.indices) {
+                        assertEquals(
+                            "Check column name $j",
+                            projection[j],
+                            allNotesCursor.getColumnName(j),
+                        )
+                    }
                 }
-            }
         }
     }
 
@@ -522,7 +525,8 @@ class ContentProviderTest : InstrumentedTest() {
             // Update the flds
             cv.put(FlashCardsContract.Note.FLDS, Utils.joinFields(dummyFields2))
             cr.update(uri, cv, null, null)
-            cr.query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null)
+            cr
+                .query(uri, FlashCardsContract.Note.DEFAULT_PROJECTION, null, null, null)
                 .use { noteCursor ->
                     assertNotNull(
                         "Check that there is a valid cursor for detail data after update",
@@ -816,7 +820,8 @@ class ContentProviderTest : InstrumentedTest() {
                 FlashCardsContract.Note.CONTENT_URI,
                 FlashCardsContract.Model.CONTENT_URI,
                 FlashCardsContract.Deck.CONTENT_ALL_URI,
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .appendPath("cards")
                     .build(),
@@ -835,17 +840,20 @@ class ContentProviderTest : InstrumentedTest() {
         val deleteUris =
             arrayOf(
                 FlashCardsContract.Note.CONTENT_URI,
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .appendPath("cards")
                     .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .appendPath("cards")
                     .appendPath("2345")
                     .build(),
                 FlashCardsContract.Model.CONTENT_URI,
-                FlashCardsContract.Model.CONTENT_URI.buildUpon()
+                FlashCardsContract.Model.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .build(),
             )
@@ -860,19 +868,23 @@ class ContentProviderTest : InstrumentedTest() {
         // Can't do an insert with specific ID on the following tables
         val insertUris =
             arrayOf(
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .appendPath("cards")
                     .build(),
-                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                FlashCardsContract.Note.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .appendPath("cards")
                     .appendPath("2345")
                     .build(),
-                FlashCardsContract.Model.CONTENT_URI.buildUpon()
+                FlashCardsContract.Model.CONTENT_URI
+                    .buildUpon()
                     .appendPath("1234")
                     .build(),
             )
@@ -1308,28 +1320,29 @@ class ContentProviderTest : InstrumentedTest() {
         val cardsUri = Uri.withAppendedPath(noteUri, "cards")
         val specificCardUri = Uri.withAppendedPath(cardsUri, ord.toString())
 
-        contentResolver.query(
-            specificCardUri,
-            // projection
-            arrayOf(FlashCardsContract.Card.QUESTION, FlashCardsContract.Card.ANSWER),
-            // selection is ignored for this URI
-            null,
-            // selectionArgs is ignored for this URI
-            null,
-            // sortOrder is ignored for this URI
-            null,
-        )?.let { cursor ->
-            if (!cursor.moveToFirst()) {
-                fail("no rows in cursor")
-            }
+        contentResolver
+            .query(
+                specificCardUri,
+                // projection
+                arrayOf(FlashCardsContract.Card.QUESTION, FlashCardsContract.Card.ANSWER),
+                // selection is ignored for this URI
+                null,
+                // selectionArgs is ignored for this URI
+                null,
+                // sortOrder is ignored for this URI
+                null,
+            )?.let { cursor ->
+                if (!cursor.moveToFirst()) {
+                    fail("no rows in cursor")
+                }
 
-            fun getString(id: String) = cursor.getString(cursor.getColumnIndex(id))
-            val question = getString(FlashCardsContract.Card.QUESTION)
-            val answer = getString(FlashCardsContract.Card.ANSWER)
+                fun getString(id: String) = cursor.getString(cursor.getColumnIndex(id))
+                val question = getString(FlashCardsContract.Card.QUESTION)
+                val answer = getString(FlashCardsContract.Card.ANSWER)
 
-            assertThat("[sound: tag should remain", question, containsString(sound))
-            assertThat("[sound: tag should remain", answer, containsString(sound))
-        } ?: fail("query returned null")
+                assertThat("[sound: tag should remain", question, containsString(sound))
+                assertThat("[sound: tag should remain", answer, containsString(sound))
+            } ?: fail("query returned null")
     }
 
     private fun reopenCol(): com.ichi2.libanki.Collection {

@@ -55,8 +55,8 @@ class TagsUtilTest {
             // suppressed to have a symmetry in all parameters, listOf(...) should be all you need.
             @JvmStatic // required for Parameters
             @Parameterized.Parameters
-            fun data(): Collection<Array<Any>> {
-                return listOf(
+            fun data(): Collection<Array<Any>> =
+                listOf(
                     arrayOf(
                         listOf<Any>(),
                         listOf<Any>(),
@@ -88,7 +88,6 @@ class TagsUtilTest {
                         listOf("a", "b"),
                     ),
                 )
-            }
         }
     }
 

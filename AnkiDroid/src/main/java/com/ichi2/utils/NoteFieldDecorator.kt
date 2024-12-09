@@ -75,9 +75,7 @@ object NoteFieldDecorator {
         return fieldText
     }
 
-    private fun getRandomIndex(max: Int): Int {
-        return random.nextInt(max)
-    }
+    private fun getRandomIndex(max: Int): Int = random.nextInt(max)
 
     private fun huevoRevuelto(huevo: String?): String? {
         if (huevo.isNullOrEmpty()) {

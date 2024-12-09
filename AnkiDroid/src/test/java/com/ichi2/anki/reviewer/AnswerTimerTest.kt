@@ -204,7 +204,5 @@ class AnswerTimerTest : JvmTest() {
             verify(chronometer, never()).start()
         }
 
-    private fun getTimer(): AnswerTimer {
-        return AnswerTimer(chronometer)
-    }
+    private fun getTimer(): AnswerTimer = AnswerTimer(chronometer)
 }

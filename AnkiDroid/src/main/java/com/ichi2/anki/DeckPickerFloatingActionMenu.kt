@@ -89,7 +89,12 @@ class DeckPickerFloatingActionMenu(
                     // At the end the Image is changed to Add Note Icon
                     fabMain.setImageResource(addNoteIcon)
                     // Shrink back FAB
-                    fabMain.animate().setDuration(70).scaleX(1f).scaleY(1f).start()
+                    fabMain
+                        .animate()
+                        .setDuration(70)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .start()
                 }.start()
             }
 
@@ -155,7 +160,11 @@ class DeckPickerFloatingActionMenu(
                         // At the end the image is changed to Add White Icon
                         fabMain.setImageResource(addWhiteIcon)
                         // Shrink back FAB
-                        fabMain.animate().setDuration(60).scaleX(1f).scaleY(1f)
+                        fabMain
+                            .animate()
+                            .setDuration(60)
+                            .scaleX(1f)
+                            .scaleY(1f)
                             .start()
                     }.start()
                 }
@@ -166,7 +175,10 @@ class DeckPickerFloatingActionMenu(
                 addFilteredDeckLayout.animate().alpha(0f).duration = 100
                 addSharedLayout.animate().translationY(400f).duration = 100
                 addNoteLabel.animate().translationX(180f).duration = 70
-                addDeckLayout.animate().translationY(300f).setDuration(50)
+                addDeckLayout
+                    .animate()
+                    .translationY(300f)
+                    .setDuration(50)
                     .setListener(
                         object : Animator.AnimatorListener {
                             override fun onAnimationStart(animator: Animator) {}
@@ -185,7 +197,10 @@ class DeckPickerFloatingActionMenu(
                             override fun onAnimationRepeat(animator: Animator) {}
                         },
                     )
-                addFilteredDeckLayout.animate().translationY(400f).setDuration(100)
+                addFilteredDeckLayout
+                    .animate()
+                    .translationY(400f)
+                    .setDuration(100)
                     .setListener(
                         object : Animator.AnimatorListener {
                             override fun onAnimationStart(animator: Animator) {}
@@ -237,7 +252,10 @@ class DeckPickerFloatingActionMenu(
                 addNoteLabel.animate().alpha(0f).duration = 50
                 addNoteLabel.animate().translationX(180f).duration = 70
                 addSharedLayout.animate().translationY(600f).duration = 100
-                addDeckLayout.animate().translationY(400f).setDuration(50)
+                addDeckLayout
+                    .animate()
+                    .translationY(400f)
+                    .setDuration(50)
                     .setListener(
                         object : Animator.AnimatorListener {
                             override fun onAnimationStart(animator: Animator) {}
@@ -256,7 +274,10 @@ class DeckPickerFloatingActionMenu(
                             override fun onAnimationRepeat(animator: Animator) {}
                         },
                     )
-                addFilteredDeckLayout.animate().translationY(600f).setDuration(100)
+                addFilteredDeckLayout
+                    .animate()
+                    .translationY(600f)
+                    .setDuration(100)
                     .setListener(
                         object : Animator.AnimatorListener {
                             override fun onAnimationStart(animator: Animator) {}

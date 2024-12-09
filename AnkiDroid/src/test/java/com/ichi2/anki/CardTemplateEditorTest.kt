@@ -54,7 +54,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
-        var templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+        var templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(templateEditorController)
         var testEditor = templateEditorController.get()
         assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
@@ -77,7 +83,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         val outBundle = Bundle()
         templateEditorController.saveInstanceState(outBundle)
         templateEditorController.pause().stop().destroy()
-        templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java).create(outBundle).start().resume().visible()
+        templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java)
+                .create(outBundle)
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(templateEditorController)
         testEditor = templateEditorController.get()
         var shadowTestEditor = shadowOf(testEditor)
@@ -106,7 +118,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertFalse("model change not cleared despite discarding changes?", testEditor.modelHasChanged())
 
         // Get going for content edit assertions again...
-        templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+        templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(templateEditorController)
         testEditor = templateEditorController.get()
         shadowTestEditor = shadowOf(testEditor)
@@ -156,7 +174,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
-        val templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+        val templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(templateEditorController)
         val testEditor = templateEditorController.get()
         assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
@@ -211,7 +235,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
-        val templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+        val templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(templateEditorController)
         val testEditor = templateEditorController.get()
         assertFalse("Ordinal pending add?", testEditor.tempModel.isOrdinalPendingAdd(0))
@@ -284,10 +314,14 @@ class CardTemplateEditorTest : RobolectricTest() {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
             val templateEditorController =
-                Robolectric.buildActivity(
-                    CardTemplateEditor::class.java,
-                    intent,
-                ).create().start().resume().visible()
+                Robolectric
+                    .buildActivity(
+                        CardTemplateEditor::class.java,
+                        intent,
+                    ).create()
+                    .start()
+                    .resume()
+                    .visible()
             saveControllerForCleanup(templateEditorController)
             val testEditor = templateEditorController.get()
             assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
@@ -380,10 +414,14 @@ class CardTemplateEditorTest : RobolectricTest() {
             var intent = Intent(Intent.ACTION_VIEW)
             intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
             var templateEditorController =
-                Robolectric.buildActivity(
-                    CardTemplateEditor::class.java,
-                    intent,
-                ).create().start().resume().visible()
+                Robolectric
+                    .buildActivity(
+                        CardTemplateEditor::class.java,
+                        intent,
+                    ).create()
+                    .start()
+                    .resume()
+                    .visible()
             saveControllerForCleanup(templateEditorController)
             var testEditor = templateEditorController.get()
             assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
@@ -442,7 +480,13 @@ class CardTemplateEditorTest : RobolectricTest() {
             // Start the CardTemplateEditor back up after saving (which closes the thing...)
             intent = Intent(Intent.ACTION_VIEW)
             intent.putExtra("modelId", collectionBasicModelOriginal.id)
-            templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+            templateEditorController =
+                Robolectric
+                    .buildActivity(CardTemplateEditor::class.java, intent)
+                    .create()
+                    .start()
+                    .resume()
+                    .visible()
             testEditor = templateEditorController.get()
             shadowTestEditor = shadowOf(testEditor)
             assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
@@ -553,10 +597,14 @@ class CardTemplateEditorTest : RobolectricTest() {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.putExtra("modelId", collectionBasicModelOriginal.id)
             val templateEditorController =
-                Robolectric.buildActivity(
-                    CardTemplateEditor::class.java,
-                    intent,
-                ).create().start().resume().visible()
+                Robolectric
+                    .buildActivity(
+                        CardTemplateEditor::class.java,
+                        intent,
+                    ).create()
+                    .start()
+                    .resume()
+                    .visible()
             saveControllerForCleanup(templateEditorController)
             val testEditor = templateEditorController.get()
             assertFalse("Model should not have changed yet", testEditor.modelHasChanged())
@@ -665,7 +713,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
         intent.putExtra("modelId", collectionBasicModelOriginal.getLong("id"))
-        val templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+        val templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(templateEditorController)
         val testEditor = templateEditorController.get()
 
@@ -698,7 +752,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val intent = Intent(Intent.ACTION_VIEW)
         intent.putExtra("modelId", collectionBasicModelOriginal.id)
-        val templateEditorController = Robolectric.buildActivity(CardTemplateEditor::class.java, intent).create().start().resume().visible()
+        val templateEditorController =
+            Robolectric
+                .buildActivity(CardTemplateEditor::class.java, intent)
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(templateEditorController)
         val testEditor = templateEditorController.get()
 

@@ -25,9 +25,7 @@ import android.os.IBinder
 class KeepAliveService : Service() {
     @Suppress("RedundantNullableReturnType")
     // follows the super method which marks its return as nullable
-    override fun onBind(intent: Intent): IBinder? {
-        return sBinder
-    }
+    override fun onBind(intent: Intent): IBinder? = sBinder
 
     companion object {
         private val sBinder = Binder()

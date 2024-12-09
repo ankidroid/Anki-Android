@@ -64,9 +64,7 @@ object DebugInfoService {
             """.trimIndent()
     }
 
-    private fun isSendingCrashReports(context: Context): Boolean {
-        return CrashReportService.isAcraEnabled(context, false)
-    }
+    private fun isSendingCrashReports(context: Context): Boolean = CrashReportService.isAcraEnabled(context, false)
 
     private suspend fun getFSRSStatus(): Boolean? =
         try {

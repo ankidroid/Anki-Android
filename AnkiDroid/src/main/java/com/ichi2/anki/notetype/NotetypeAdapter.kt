@@ -51,15 +51,14 @@ internal class NotetypesAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): NotetypeViewHolder {
-        return NotetypeViewHolder(
+    ): NotetypeViewHolder =
+        NotetypeViewHolder(
             rowView = layoutInflater.inflate(R.layout.item_manage_note_type, parent, false),
             onDelete = onDelete,
             onRename = onRename,
             onEditCards = onEditCards,
             onShowFields = onShowFields,
         )
-    }
 
     override fun onBindViewHolder(
         holder: NotetypeViewHolder,

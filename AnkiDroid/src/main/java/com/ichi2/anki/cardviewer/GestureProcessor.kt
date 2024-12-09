@@ -20,7 +20,9 @@ import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.GestureMapper
 import com.ichi2.anki.reviewer.MappableBinding
 
-class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
+class GestureProcessor(
+    private val processor: ViewerCommand.CommandProcessor?,
+) {
     companion object {
         const val PREF_KEY = "gestures"
     }
@@ -95,13 +97,9 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         return execute(gesture)
     }
 
-    fun onDoubleTap(): Boolean? {
-        return execute(Gesture.DOUBLE_TAP)
-    }
+    fun onDoubleTap(): Boolean? = execute(Gesture.DOUBLE_TAP)
 
-    fun onLongTap(): Boolean? {
-        return execute(Gesture.LONG_TAP)
-    }
+    fun onLongTap(): Boolean? = execute(Gesture.LONG_TAP)
 
     fun onFling(
         dx: Float,
@@ -116,17 +114,15 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         return execute(gesture)
     }
 
-    fun onShake(): Boolean? {
-        return execute(Gesture.SHAKE)
-    }
+    fun onShake(): Boolean? = execute(Gesture.SHAKE)
 
     private fun execute(gesture: Gesture?): Boolean? {
         val command = gesture?.let { mapGestureToCommand(it) } ?: return false
         return processor?.executeCommand(command, gesture)
     }
 
-    private fun mapGestureToCommand(gesture: Gesture): ViewerCommand? {
-        return when (gesture) {
+    private fun mapGestureToCommand(gesture: Gesture): ViewerCommand? =
+        when (gesture) {
             Gesture.SWIPE_UP -> gestureSwipeUp
             Gesture.SWIPE_DOWN -> gestureSwipeDown
             Gesture.SWIPE_LEFT -> gestureSwipeLeft
@@ -144,7 +140,6 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
             Gesture.LONG_TAP -> gestureLongclick
             Gesture.SHAKE -> gestureShake
         }
-    }
 
     /**
      * Whether one of the provided gestures is bound

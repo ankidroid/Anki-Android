@@ -54,8 +54,11 @@ import timber.log.Timber
  */
 class GestureDisplay
     @JvmOverloads // fixes: Error inflating class com.ichi2.ui.GestureDisplay
-    constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
-    ConstraintLayout(context, attributeSet, defStyleAttr) {
+    constructor(
+        context: Context,
+        attributeSet: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+    ) : ConstraintLayout(context, attributeSet, defStyleAttr) {
         /** Converts a touch event into a call to [setGesture] */
         private val detector: GestureDetector
 
@@ -159,8 +162,8 @@ class GestureDisplay
         }
 
         /** Maps from a tap gesture to its view Id, or null if the gesture isn't a tap */
-        private fun tapGestureToViewId(gesture: Gesture?): Int? {
-            return when (gesture) {
+        private fun tapGestureToViewId(gesture: Gesture?): Int? =
+            when (gesture) {
                 TAP_TOP_LEFT -> R.id.top_left
                 TAP_TOP -> R.id.top_center
                 TAP_TOP_RIGHT -> R.id.top_right
@@ -172,7 +175,6 @@ class GestureDisplay
                 TAP_BOTTOM_RIGHT -> R.id.bottom_right
                 else -> null
             }
-        }
 
         /**
          * If we are using 4-point (corner to corner) gestures, hide the 9-point (square-based) gestures

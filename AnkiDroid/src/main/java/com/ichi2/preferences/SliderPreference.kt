@@ -55,7 +55,10 @@ import com.ichi2.annotations.NeedsTest
  *       `displayValue` is always true if a `displayFormat` is provided.
  */
 @NeedsTest("onTouchListener is only called once")
-class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preference(context, attrs) {
+class SliderPreference(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : Preference(context, attrs) {
     private var valueFrom: Int = 0
     private var valueTo: Int = 0
     private var stepSize: Float = 1F
@@ -117,9 +120,7 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
     override fun onGetDefaultValue(
         a: TypedArray,
         index: Int,
-    ): Any {
-        return a.getInt(index, valueFrom)
-    }
+    ): Any = a.getInt(index, valueFrom)
 
     override fun onSetInitialValue(defaultValue: Any?) {
         value = getPersistedInt(defaultValue as Int? ?: valueFrom)

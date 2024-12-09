@@ -83,41 +83,51 @@ class TtsVoicesViewModel : ViewModel() {
 
     /** The collection of either a [TtsEngineStatus] with voices, error, or 'loading'  */
     val availableVoicesFlow =
-        ttsEngineStatus.combine(ttsVoiceListStatus) { a, b ->
-            if (a is TtsEngineStatus.Error) {
-                return@combine VoiceLoadingState.Failure(a.exception)
-            }
-            if (b is LoadVoiceStatus.Error) {
-                return@combine VoiceLoadingState.Failure(b.exception)
-            }
-
-            if (a is TtsEngineStatus.Success && b is LoadVoiceStatus.Success) {
-                return@combine VoiceLoadingState.Success(b.voices)
-            }
-            return@combine VoiceLoadingState.Pending
-        }.combine(filterFlow) { state, filter ->
-            if (state is VoiceLoadingState.Success) {
-                // showNotInstalled filters the whole list
-                val voices = state.voices.filter { filter.showNotInstalled == it.unavailable() }
-                if (filter.showNotInstalled) {
-                    return@combine VoiceLoadingState.Success(voices)
+        ttsEngineStatus
+            .combine(ttsVoiceListStatus) { a, b ->
+                if (a is TtsEngineStatus.Error) {
+                    return@combine VoiceLoadingState.Failure(a.exception)
+                }
+                if (b is LoadVoiceStatus.Error) {
+                    return@combine VoiceLoadingState.Failure(b.exception)
                 }
 
-                return@combine VoiceLoadingState.Success(voices.filter { filter.showInternetEnabled || !it.isNetworkConnectionRequired })
+                if (a is TtsEngineStatus.Success && b is LoadVoiceStatus.Success) {
+                    return@combine VoiceLoadingState.Success(b.voices)
+                }
+                return@combine VoiceLoadingState.Pending
+            }.combine(filterFlow) { state, filter ->
+                if (state is VoiceLoadingState.Success) {
+                    // showNotInstalled filters the whole list
+                    val voices = state.voices.filter { filter.showNotInstalled == it.unavailable() }
+                    if (filter.showNotInstalled) {
+                        return@combine VoiceLoadingState.Success(voices)
+                    }
+
+                    return@combine VoiceLoadingState.Success(
+                        voices.filter { filter.showInternetEnabled || !it.isNetworkConnectionRequired },
+                    )
+                }
+                return@combine state
             }
-            return@combine state
-        }
 
     /** Filters which can be applied to the list of TTS Voices */
-    data class Filters(val showInternetEnabled: Boolean, val showNotInstalled: Boolean)
+    data class Filters(
+        val showInternetEnabled: Boolean,
+        val showNotInstalled: Boolean,
+    )
 
     /** The state of loading the screen. When successful, voices are provided */
     interface VoiceLoadingState {
-        data class Success(val voices: List<AndroidTtsVoice>) : VoiceLoadingState
+        data class Success(
+            val voices: List<AndroidTtsVoice>,
+        ) : VoiceLoadingState
 
         data object Pending : VoiceLoadingState
 
-        data class Failure(val exception: Exception) : VoiceLoadingState
+        data class Failure(
+            val exception: Exception,
+        ) : VoiceLoadingState
     }
 
     init {
@@ -127,7 +137,8 @@ class TtsVoicesViewModel : ViewModel() {
                 // sort by language display name:
                 // it's more intuitive to have 'Welsh' at the bottom rather than as 'cy'
                 val voices =
-                    TtsVoices.allTtsVoices()
+                    TtsVoices
+                        .allTtsVoices()
                         .sortedWith(
                             compareBy<AndroidTtsVoice> { it.normalizedLocale.displayName }
                                 .thenBy { it.tryDisplayLocalizedName() },
@@ -148,7 +159,8 @@ class TtsVoicesViewModel : ViewModel() {
             while (true) {
                 TtsVoices.refresh()
                 val voices =
-                    TtsVoices.allTtsVoices()
+                    TtsVoices
+                        .allTtsVoices()
                         .sortedWith(
                             compareBy<AndroidTtsVoice> { it.normalizedLocale.displayName }
                                 .thenBy { it.tryDisplayLocalizedName() },
@@ -211,9 +223,13 @@ class TtsVoicesViewModel : ViewModel() {
     sealed interface LoadVoiceStatus {
         data object Calculating : LoadVoiceStatus
 
-        class Success(val voices: List<AndroidTtsVoice>) : LoadVoiceStatus
+        class Success(
+            val voices: List<AndroidTtsVoice>,
+        ) : LoadVoiceStatus
 
-        class Error(val exception: Exception) : LoadVoiceStatus
+        class Error(
+            val exception: Exception,
+        ) : LoadVoiceStatus
     }
 
     sealed interface TtsEngineStatus {
@@ -221,9 +237,13 @@ class TtsVoicesViewModel : ViewModel() {
 
         data object Loading : TtsEngineStatus
 
-        class Success(val ttsPlayer: TtsPlayer) : TtsEngineStatus
+        class Success(
+            val ttsPlayer: TtsPlayer,
+        ) : TtsEngineStatus
 
-        class Error(val exception: Exception) : TtsEngineStatus
+        class Error(
+            val exception: Exception,
+        ) : TtsEngineStatus
     }
 }
 
@@ -231,6 +251,4 @@ suspend fun TtsPlayer.play(
     textToSpeak: String,
     voice: TtsVoice,
     speed: Float = 1.0f,
-): TtsPlayer.TtsCompletionStatus {
-    return this.play(TTSTag(textToSpeak, voice.lang, listOf(voice.name), speed, listOf()))
-}
+): TtsPlayer.TtsCompletionStatus = this.play(TTSTag(textToSpeak, voice.lang, listOf(voice.name), speed, listOf()))

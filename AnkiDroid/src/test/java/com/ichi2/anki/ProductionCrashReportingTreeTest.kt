@@ -61,8 +61,7 @@ class ProductionCrashReportingTreeTest {
                 .thenThrow(RuntimeException("Debug logging should be ignored"))
             whenever(
                 Log.i(anyString(), anyString(), any()),
-            )
-                .thenThrow(RuntimeException("Info logging should throw!"))
+            ).thenThrow(RuntimeException("Info logging should throw!"))
 
             // now call our wrapper - if it hits the platform logger it will throw
             AnkiAssert.assertDoesNotThrow { Timber.v("verbose") }

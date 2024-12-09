@@ -25,7 +25,8 @@ import org.junit.Assert.assertTrue
 fun Issue.assertXmlStringsNoIssues(
     @Language("XML") xmlFile: String,
 ) {
-    TestLintTask.lint()
+    TestLintTask
+        .lint()
         .allowMissingSdk()
         .allowCompilationErrors()
         .files(TestFiles.xml("res/values/constants.xml", xmlFile))
@@ -39,7 +40,8 @@ fun Issue.assertXmlStringsHasErrorCount(
     expectedErrorCount: Int,
 ) {
     assert(expectedErrorCount > 0) { "Use assertXmlStringsNoIssues" }
-    TestLintTask.lint()
+    TestLintTask
+        .lint()
         .allowMissingSdk()
         .allowCompilationErrors()
         .files(TestFiles.xml("res/values/constants.xml", xmlFile))
@@ -61,7 +63,8 @@ fun Issue.assertXmlStringsHasError(
 ) {
     val languageQualifier = if (androidLanguageFolder != null) "-$androidLanguageFolder" else ""
     val resourceFileName = fileName ?: "constants"
-    TestLintTask.lint()
+    TestLintTask
+        .lint()
         .allowMissingSdk()
         .allowCompilationErrors()
         .files(TestFiles.xml("res/values$languageQualifier/$resourceFileName.xml", xmlFile))

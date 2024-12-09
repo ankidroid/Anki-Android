@@ -36,7 +36,9 @@ import org.w3c.dom.Element
  *
  * `JavaScript`, not `Javascript`, ellipses, empty strings, etc
  */
-class TranslationTypo : ResourceXmlDetector(), XmlScanner {
+class TranslationTypo :
+    ResourceXmlDetector(),
+    XmlScanner {
     companion object {
         @VisibleForTesting
         val ID_TRANSLATION_TYPO = "TranslationTypo"
@@ -106,7 +108,8 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         fun Element.reportIssue(message: String) {
             val elementToReport = this
             val crowdinEditUrl =
-                crowdinContext?.getEditUrl(elementToReport)
+                crowdinContext
+                    ?.getEditUrl(elementToReport)
                     ?.let { url -> "\n$url" } ?: ""
             context.report(
                 issue = ISSUE,

@@ -31,13 +31,17 @@ import java.util.AbstractSet
  *
  */
 @WorkerThread
-class Tags(private val col: Collection) {
+class Tags(
+    private val col: Collection,
+) {
     /** all tags */
     fun all(): List<String> = col.backend.allTags()
 
-    fun byDeck(did: DeckId): List<String> {
-        return col.backend.customStudyDefaults(did).tagsList.map { it.name }
-    }
+    fun byDeck(did: DeckId): List<String> =
+        col.backend
+            .customStudyDefaults(did)
+            .tagsList
+            .map { it.name }
 
     // Legacy signature, used by unit tests.
     fun bulkAdd(
@@ -56,20 +60,17 @@ class Tags(private val col: Collection) {
     fun bulkAdd(
         noteIds: List<NoteId>,
         tags: String,
-    ): OpChangesWithCount {
-        return col.backend.addNoteTags(noteIds = noteIds, tags = tags)
-    }
+    ): OpChangesWithCount = col.backend.addNoteTags(noteIds = noteIds, tags = tags)
 
     // Remove space-separated tags from provided notes.
     fun bulkRemove(
         noteIds: List<Long>,
         tags: String,
-    ): OpChangesWithCount {
-        return col.backend.removeNoteTags(
+    ): OpChangesWithCount =
+        col.backend.removeNoteTags(
             noteIds = noteIds,
             tags = tags,
         )
-    }
 
     /*
      * String-based utilities
@@ -77,12 +78,12 @@ class Tags(private val col: Collection) {
      */
 
     /** Parse a string and return a list of tags. */
-    fun split(tags: String): MutableList<String> {
-        return tags.replace('\u3000', ' ')
+    fun split(tags: String): MutableList<String> =
+        tags
+            .replace('\u3000', ' ')
             .split("\\s".toRegex())
             .filter { it.isNotEmpty() }
             .toMutableList()
-    }
 
     /** Join tags into a single string, with leading and trailing spaces. */
     fun join(tags: kotlin.collections.Collection<String>): String {
@@ -109,11 +110,7 @@ class Tags(private val col: Collection) {
     fun inList(
         tag: String,
         tags: Iterable<String>,
-    ): Boolean {
-        return tags.map { it.lowercase() }.contains(tag.lowercase())
-    }
+    ): Boolean = tags.map { it.lowercase() }.contains(tag.lowercase())
 }
 
-fun Collection.completeTagRaw(input: ByteArray): ByteArray {
-    return backend.completeTagRaw(input)
-}
+fun Collection.completeTagRaw(input: ByteArray): ByteArray = backend.completeTagRaw(input)

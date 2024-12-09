@@ -34,10 +34,13 @@ class CardTemplateTest {
         assertThat(
             result,
             equalTo(
-                data.replace(
-                    "::content::",
-                    content,
-                ).replace("::style::", style).replace("::class::", cardClass).replace("::script::", script),
+                data
+                    .replace(
+                        "::content::",
+                        content,
+                    ).replace("::style::", style)
+                    .replace("::class::", cardClass)
+                    .replace("::script::", script),
             ),
         )
     }

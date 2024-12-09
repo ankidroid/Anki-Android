@@ -45,8 +45,11 @@ import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 
-class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, cardMediaPlayer: CardMediaPlayer) :
-    CardViewerViewModel(cardMediaPlayer),
+class PreviewerViewModel(
+    previewerIdsFile: PreviewerIdsFile,
+    firstIndex: Int,
+    cardMediaPlayer: CardMediaPlayer,
+) : CardViewerViewModel(cardMediaPlayer),
     OnErrorListener {
     val currentIndex = MutableStateFlow(firstIndex)
     val backSideOnly = MutableStateFlow(false)
@@ -233,26 +236,24 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     }
 
     /** From the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L671) */
-    override suspend fun typeAnsFilter(text: String): String {
-        return if (showingAnswer.value) {
+    override suspend fun typeAnsFilter(text: String): String =
+        if (showingAnswer.value) {
             typeAnsAnswerFilter(currentCard.await(), text)
         } else {
             typeAnsQuestionFilter(text)
         }
-    }
 
     companion object {
         fun factory(
             previewerIdsFile: PreviewerIdsFile,
             currentIndex: Int,
             cardMediaPlayer: CardMediaPlayer,
-        ): ViewModelProvider.Factory {
-            return viewModelFactory {
+        ): ViewModelProvider.Factory =
+            viewModelFactory {
                 initializer {
                     PreviewerViewModel(previewerIdsFile, currentIndex, cardMediaPlayer)
                 }
             }
-        }
 
         /** removes `[[type:]]` blocks in questions */
         @VisibleForTesting

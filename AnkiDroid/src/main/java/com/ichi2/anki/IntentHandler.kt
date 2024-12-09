@@ -231,7 +231,8 @@ class IntentHandler : AbstractIntentHandler() {
         val imageOcclusionIntentBuilder = ImageOcclusionIntentBuilder(this)
         val intentImageOcclusion = imageOcclusionIntentBuilder.buildIntent(imageUri)
 
-        TaskStackBuilder.create(this)
+        TaskStackBuilder
+            .create(this)
             .addNextIntentWithParentStack(Intent(this, DeckPicker::class.java))
             .addNextIntent(intentImageOcclusion)
             .startActivities()
@@ -353,8 +354,8 @@ class IntentHandler : AbstractIntentHandler() {
             it.putExtra(CLIPBOARD_INTENT_EXTRA_DATA, textToCopy.trimToLength(25000))
         }
 
-        fun requiresCollectionAccess(launchType: LaunchType): Boolean {
-            return when (launchType) {
+        fun requiresCollectionAccess(launchType: LaunchType): Boolean =
+            when (launchType) {
                 LaunchType.SYNC,
                 LaunchType.REVIEW,
                 LaunchType.DEFAULT_START_APP_IF_NEW,
@@ -364,12 +365,12 @@ class IntentHandler : AbstractIntentHandler() {
                 -> true
                 LaunchType.COPY_DEBUG_INFO -> false
             }
-        }
 
-        class DoSync : DialogHandlerMessage(
-            which = WhichDialogHandler.MSG_DO_SYNC,
-            analyticName = "DoSyncDialog",
-        ) {
+        class DoSync :
+            DialogHandlerMessage(
+                which = WhichDialogHandler.MSG_DO_SYNC,
+                analyticName = "DoSyncDialog",
+            ) {
             override fun handleAsyncMessage(activity: AnkiActivity) {
                 // we may be called via any AnkiActivity but sync is a DeckPicker thing
                 if (activity !is DeckPicker) {

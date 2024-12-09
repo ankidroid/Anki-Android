@@ -58,7 +58,9 @@ sealed interface NoteEditorLauncher {
      * Represents opening the NoteEditor with an image occlusion.
      * @property imageUri The URI of the image to occlude.
      */
-    data class ImageOcclusion(val imageUri: Uri?) : NoteEditorLauncher {
+    data class ImageOcclusion(
+        val imageUri: Uri?,
+    ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.IMG_OCCLUSION.value,
@@ -70,17 +72,19 @@ sealed interface NoteEditorLauncher {
      * Represents opening the NoteEditor with custom arguments.
      * @property arguments The bundle of arguments to pass.
      */
-    data class PassArguments(val arguments: Bundle) : NoteEditorLauncher {
-        override fun toBundle(): Bundle {
-            return arguments
-        }
+    data class PassArguments(
+        val arguments: Bundle,
+    ) : NoteEditorLauncher {
+        override fun toBundle(): Bundle = arguments
     }
 
     /**
      * Represents adding a note to the NoteEditor within a specific deck (Optional).
      * @property deckId The ID of the deck where the note should be added.
      */
-    data class AddNote(val deckId: DeckId? = null) : NoteEditorLauncher {
+    data class AddNote(
+        val deckId: DeckId? = null,
+    ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.DECKPICKER.value,
@@ -93,8 +97,9 @@ sealed interface NoteEditorLauncher {
      * Represents adding a note to the NoteEditor from the card browser.
      * @property viewModel The view model containing data from the card browser.
      */
-    data class AddNoteFromCardBrowser(val viewModel: CardBrowserViewModel) :
-        NoteEditorLauncher {
+    data class AddNoteFromCardBrowser(
+        val viewModel: CardBrowserViewModel,
+    ) : NoteEditorLauncher {
         override fun toBundle(): Bundle {
             val bundle =
                 bundleOf(
@@ -112,8 +117,9 @@ sealed interface NoteEditorLauncher {
      * Represents adding a note to the NoteEditor from the reviewer.
      * @property animation The animation direction to use when transitioning.
      */
-    data class AddNoteFromReviewer(val animation: ActivityTransitionAnimation.Direction? = null) :
-        NoteEditorLauncher {
+    data class AddNoteFromReviewer(
+        val animation: ActivityTransitionAnimation.Direction? = null,
+    ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value,
@@ -132,7 +138,9 @@ sealed interface NoteEditorLauncher {
      *
      * @property sharedText The shared text content for the instant note.
      */
-    data class AddInstantNote(val sharedText: String) : NoteEditorLauncher {
+    data class AddInstantNote(
+        val sharedText: String,
+    ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.INSTANT_NOTE_EDITOR.value,
@@ -145,8 +153,10 @@ sealed interface NoteEditorLauncher {
      * @property cardId The ID of the card to edit.
      * @property animation The animation direction.
      */
-    data class EditCard(val cardId: CardId, val animation: ActivityTransitionAnimation.Direction) :
-        NoteEditorLauncher {
+    data class EditCard(
+        val cardId: CardId,
+        val animation: ActivityTransitionAnimation.Direction,
+    ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
@@ -159,7 +169,9 @@ sealed interface NoteEditorLauncher {
      * Represents editing a note in the NoteEditor from the previewer.
      * @property cardId The ID of the card associated with the note to edit.
      */
-    data class EditNoteFromPreviewer(val cardId: Long) : NoteEditorLauncher {
+    data class EditNoteFromPreviewer(
+        val cardId: Long,
+    ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.PREVIEWER_EDIT.value,

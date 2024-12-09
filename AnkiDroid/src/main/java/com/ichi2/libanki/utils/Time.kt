@@ -32,9 +32,7 @@ abstract class Time {
         get() = UtilDate(intTimeMS())
 
     /**The time in integer seconds.  */
-    fun intTime(): Long {
-        return intTimeMS() / 1000L
-    }
+    fun intTime(): Long = intTimeMS() / 1000L
 
     abstract fun intTimeMS(): Long
 

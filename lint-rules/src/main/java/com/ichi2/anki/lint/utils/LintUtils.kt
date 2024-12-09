@@ -29,7 +29,5 @@ object LintUtils {
     fun isAnAllowedClass(
         classes: List<UClass>,
         vararg allowedClasses: String,
-    ): Boolean {
-        return classes.any { uClass -> uClass.name!! in allowedClasses }
-    }
+    ): Boolean = classes.any { uClass -> uClass.name!! in allowedClasses }
 }

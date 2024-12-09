@@ -43,4 +43,6 @@ package com.ichi2.annotations
 @Repeatable
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class NeedsTest(val value: String)
+annotation class NeedsTest(
+    val value: String,
+)

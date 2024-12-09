@@ -50,9 +50,7 @@ interface TestClass {
     fun addNoteUsingBasicModel(
         front: String = "Front",
         back: String = "Back",
-    ): Note {
-        return addNoteUsingModelName("Basic", front, back)
-    }
+    ): Note = addNoteUsingModelName("Basic", front, back)
 
     fun addRevNoteUsingBasicModelDueToday(
         @Suppress("SameParameterValue") front: String,
@@ -69,16 +67,12 @@ interface TestClass {
     fun addNoteUsingBasicAndReversedModel(
         front: String = "Front",
         back: String = "Back",
-    ): Note {
-        return addNoteUsingModelName("Basic (and reversed card)", front, back)
-    }
+    ): Note = addNoteUsingModelName("Basic (and reversed card)", front, back)
 
     fun addNoteUsingBasicTypedModel(
         @Suppress("SameParameterValue") front: String,
         @Suppress("SameParameterValue") back: String,
-    ): Note {
-        return addNoteUsingModelName("Basic (type in the answer)", front, back)
-    }
+    ): Note = addNoteUsingModelName("Basic (type in the answer)", front, back)
 
     fun addCloseNote(
         text: String,
@@ -154,15 +148,14 @@ interface TestClass {
     fun addDeck(
         deckName: String?,
         setAsSelected: Boolean = false,
-    ): DeckId {
-        return try {
+    ): DeckId =
+        try {
             col.decks.id(deckName!!).also { did ->
                 if (setAsSelected) col.decks.select(did)
             }
         } catch (filteredAncestor: BackendDeckIsFilteredException) {
             throw RuntimeException(filteredAncestor)
         }
-    }
 
     fun addDynamicDeck(
         name: String,

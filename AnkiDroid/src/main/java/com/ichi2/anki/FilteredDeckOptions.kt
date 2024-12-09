@@ -192,9 +192,7 @@ class FilteredDeckOptions :
             }
         }
 
-        override fun edit(): Editor {
-            return Editor()
-        }
+        override fun edit(): Editor = Editor()
 
         init {
             cacheValues()

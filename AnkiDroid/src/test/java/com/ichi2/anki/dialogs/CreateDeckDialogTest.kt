@@ -274,10 +274,9 @@ class CreateDeckDialogTest : RobolectricTest() {
         start: Int,
         end: Int,
         prefix: String,
-    ): String {
-        return List(end - start + 1) { "${prefix}${it + start}" }
+    ): String =
+        List(end - start + 1) { "${prefix}${it + start}" }
             .joinToString("::")
-    }
 }
 
 /** Test of [CreateDeckDialog] */

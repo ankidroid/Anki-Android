@@ -23,7 +23,9 @@ fun isJsonEqual(value: JSONObject) = IsJsonEqual(value)
 
 // TODO: This doesn't describe the inputs in the correct order
 // TODO: This should return the keys which do not match
-class IsJsonEqual(private val expectedValue: JSONObject) : org.hamcrest.BaseMatcher<JSONObject>() {
+class IsJsonEqual(
+    private val expectedValue: JSONObject,
+) : org.hamcrest.BaseMatcher<JSONObject>() {
     override fun describeTo(description: Description?) {
         description?.appendValue(expectedValue)
     }

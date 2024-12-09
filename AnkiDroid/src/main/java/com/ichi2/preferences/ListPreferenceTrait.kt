@@ -67,7 +67,10 @@ interface ListPreferenceTrait : DialogFragmentProvider {
 
     var listValue: String
 
-    data class Entry(val key: String, val value: String)
+    data class Entry(
+        val key: String,
+        val value: String,
+    )
 
     companion object {
         /** to be passed into defStyleAttr in the [Preference] constructor */

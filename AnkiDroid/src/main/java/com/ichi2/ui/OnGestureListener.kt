@@ -32,9 +32,7 @@ class OnGestureListener(
 ) : GestureDetector.SimpleOnGestureListener() {
     fun getTapGestureMode() = gestureMapper.tapGestureMode
 
-    override fun onDown(e: MotionEvent): Boolean {
-        return true
-    }
+    override fun onDown(e: MotionEvent): Boolean = true
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
         consumer.accept(Gesture.DOUBLE_TAP)

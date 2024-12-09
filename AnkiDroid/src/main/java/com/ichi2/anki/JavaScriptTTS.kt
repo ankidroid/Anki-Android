@@ -53,9 +53,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     fun speak(
         text: String?,
         @QueueMode queueMode: Int,
-    ): Int {
-        return mTts.speak(text, queueMode, mTtsParams, "stringId")
-    }
+    ): Int = mTts.speak(text, queueMode, mTtsParams, "stringId")
 
     /**
      * If only a string is given, set QUEUE_FLUSH to the default behavior.
@@ -63,9 +61,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun speak(text: String?): Int {
-        return mTts.speak(text, TextToSpeech.QUEUE_FLUSH, mTtsParams, "stringId")
-    }
+    fun speak(text: String?): Int = mTts.speak(text, TextToSpeech.QUEUE_FLUSH, mTtsParams, "stringId")
 
     /**
      * Sets the text-to-speech language.
@@ -122,9 +118,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
      * @return ERROR(-1) SUCCESS(0)
      */
     @ErrorOrSuccess
-    fun stop(): Int {
-        return mTts.stop()
-    }
+    fun stop(): Int = mTts.stop()
 
     companion object {
         private const val TTS_SUCCESS = TextToSpeech.SUCCESS

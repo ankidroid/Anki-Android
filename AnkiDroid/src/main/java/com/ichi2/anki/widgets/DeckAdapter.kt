@@ -49,7 +49,8 @@ import timber.log.Timber
 class DeckAdapter(
     private val layoutInflater: LayoutInflater,
     context: Context,
-) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(),
+    Filterable {
     private var deckTree: DeckNode? = null
 
     /** The non-collapsed subset of the deck tree that matches the current search. */
@@ -84,7 +85,9 @@ class DeckAdapter(
     private var partiallyTransparentForBackground = false
 
     // ViewHolder class to save inflated views for recycling
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(
+        v: View,
+    ) : RecyclerView.ViewHolder(v) {
         val deckLayout: RelativeLayout
         val countsLayout: LinearLayout
         val deckExpander: ImageButton
@@ -245,13 +248,9 @@ class DeckAdapter(
         view.background = background
     }
 
-    private fun isCurrentlySelectedDeck(node: DeckNode): Boolean {
-        return node.did == currentDeckId
-    }
+    private fun isCurrentlySelectedDeck(node: DeckNode): Boolean = node.did == currentDeckId
 
-    override fun getItemCount(): Int {
-        return filteredDeckList.size
-    }
+    override fun getItemCount(): Int = filteredDeckList.size
 
     private fun setDeckExpander(
         expander: ImageButton,
@@ -307,12 +306,12 @@ class DeckAdapter(
     private val deckList: List<DeckNode>
         get() = filteredDeckList
 
-    override fun getFilter(): Filter? {
-        return deckTree?.let { DeckFilter(it) }
-    }
+    override fun getFilter(): Filter? = deckTree?.let { DeckFilter(it) }
 
     @VisibleForTesting
-    inner class DeckFilter(private val top: DeckNode) : Filter() {
+    inner class DeckFilter(
+        private val top: DeckNode,
+    ) : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val out = top.filterAndFlatten(constraint)
             Timber.i("deck filter: %d (%s)", out.size, constraint)

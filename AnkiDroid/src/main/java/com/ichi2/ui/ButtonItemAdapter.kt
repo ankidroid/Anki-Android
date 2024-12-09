@@ -52,7 +52,8 @@ class ButtonItemAdapter(
         viewType: Int,
     ): ButtonVH {
         val view =
-            LayoutInflater.from(parent.context)
+            LayoutInflater
+                .from(parent.context)
                 .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false)
         return ButtonVH(view, this)
     }
@@ -67,7 +68,11 @@ class ButtonItemAdapter(
 
     override fun getItemCount() = items.size
 
-    inner class ButtonVH(itemView: View, private val adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ButtonVH(
+        itemView: View,
+        private val adapter: ButtonItemAdapter,
+    ) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         val title: TextView = itemView.findViewById(R.id.card_browser_my_search_name_textview)
         val button: ImageButton =
             itemView.findViewById<ImageButton?>(R.id.card_browser_my_search_remove_button).apply {

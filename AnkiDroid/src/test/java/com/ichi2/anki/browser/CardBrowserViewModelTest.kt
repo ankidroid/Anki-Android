@@ -712,7 +712,8 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("previewing a note previews cards", actualCardIds, hasSize(5))
 
                 val firstCardIds =
-                    col.findCards("")
+                    col
+                        .findCards("")
                         .filter { col.getCard(it).ord == 0 }
 
                 assertThat("first card ids", firstCardIds, hasSize(5))

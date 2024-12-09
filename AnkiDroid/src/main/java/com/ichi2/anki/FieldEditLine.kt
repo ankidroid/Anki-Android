@@ -114,9 +114,7 @@ class FieldEditLine : FrameLayout {
 
     private fun getBackgroundImage(
         @DrawableRes idRes: Int,
-    ): Drawable? {
-        return VectorDrawableCompat.create(this.resources, idRes, context.theme)
-    }
+    ): Drawable? = VectorDrawableCompat.create(this.resources, idRes, context.theme)
 
     fun setActionModeCallbacks(callback: ActionMode.Callback?) {
         editText.customSelectionActionModeCallback = callback
@@ -263,17 +261,11 @@ class FieldEditLine : FrameLayout {
                     override fun createFromParcel(
                         source: Parcel,
                         loader: ClassLoader,
-                    ): SavedState {
-                        return SavedState(source, loader)
-                    }
+                    ): SavedState = SavedState(source, loader)
 
-                    override fun createFromParcel(source: Parcel): SavedState {
-                        throw IllegalStateException()
-                    }
+                    override fun createFromParcel(source: Parcel): SavedState = throw IllegalStateException()
 
-                    override fun newArray(size: Int): Array<SavedState?> {
-                        return arrayOfNulls(size)
-                    }
+                    override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
                 }
         }
     }

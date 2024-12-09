@@ -34,7 +34,8 @@ class PreferencesAnalyticsTest : RobolectricTest() {
 
     /** All preference keys besides dev options */
     private val allKeys =
-        PreferenceTestUtils.getAllPreferenceKeys(targetContext)
+        PreferenceTestUtils
+            .getAllPreferenceKeys(targetContext)
             .subtract(devOptionsKeys)
 
     /** Keys of preferences that shouldn't be reported */

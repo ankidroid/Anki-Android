@@ -33,7 +33,9 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer instantiates the [java.util.Date] class directly
  * instead of using a [java.util.Date] provided through the collection's getTime() method.
  */
-class DirectDateInstantiation : Detector(), SourceCodeScanner {
+class DirectDateInstantiation :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectDateInstantiation"

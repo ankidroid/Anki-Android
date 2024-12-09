@@ -37,7 +37,5 @@ class CustomStudyDialogFactory(
         }
     }
 
-    fun newCustomStudyDialog(): CustomStudyDialog {
-        return CustomStudyDialog(collectionSupplier.get(), customStudyListener)
-    }
+    fun newCustomStudyDialog(): CustomStudyDialog = CustomStudyDialog(collectionSupplier.get(), customStudyListener)
 }

@@ -129,9 +129,7 @@ object ResourceLoader {
     fun getTempCollection(
         context: Context,
         name: String,
-    ): String {
-        return getTempFilePath(context, name, "collection.anki2")
-    }
+    ): String = getTempFilePath(context, name, "collection.anki2")
 
     /**
      * @param name An additional suffix to ensure the test directory is only used by a particular resource.

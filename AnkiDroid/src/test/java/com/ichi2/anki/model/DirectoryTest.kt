@@ -57,7 +57,10 @@ class DirectoryTest : Test21And26() {
 
     @Test
     fun fails_if_file() {
-        val dir = kotlin.io.path.createTempFile().pathString
+        val dir =
+            kotlin.io.path
+                .createTempFile()
+                .pathString
         MatcherAssert.assertThat(
             "file should not become a Directory",
             Directory.createInstance(dir),
@@ -131,7 +134,5 @@ class DirectoryTest : Test21And26() {
         permissionDenied.assertThrowsWhenPermissionDenied { permissionDenied.directory.hasFiles() }
     }
 
-    private fun createValidTempDir(): Directory {
-        return Directory.createInstance(createTempDirectory().pathString)!!
-    }
+    private fun createValidTempDir(): Directory = Directory.createInstance(createTempDirectory().pathString)!!
 }

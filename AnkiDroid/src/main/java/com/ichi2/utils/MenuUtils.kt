@@ -44,7 +44,9 @@ private fun Menu.forEachOverflowItemRecursive(block: (MenuItem) -> Unit) {
 fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
     val extraPadding = convertDpToPixel(5f, this).toInt()
 
-    class Wrapper(drawable: Drawable) : DrawableWrapperCompat(drawable) {
+    class Wrapper(
+        drawable: Drawable,
+    ) : DrawableWrapperCompat(drawable) {
         override fun mutate() = drawable!!.mutate() // DrawableWrapperCompat fails to delegate this
 
         override fun getIntrinsicWidth() = super.getIntrinsicWidth() + extraPadding * 2

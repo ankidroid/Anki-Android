@@ -16,14 +16,20 @@ kotlin {
 
 android {
     namespace = "com.ichi2.anki.api"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk =
+        libs.versions.compileSdk
+            .get()
+            .toInt()
 
     buildFeatures {
         buildConfig = true
     }
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
         buildConfigField(
             "String",
             "READ_WRITE_PERMISSION",

@@ -48,9 +48,7 @@ import timber.log.Timber
 /** Wraps [DialogInterface.OnClickListener] as we don't need the `which` parameter */
 typealias DialogInterfaceListener = (DialogInterface) -> Unit
 
-fun DialogInterfaceListener.toClickListener(): OnClickListener {
-    return OnClickListener { dialog: DialogInterface, _ -> this(dialog) }
-}
+fun DialogInterfaceListener.toClickListener(): OnClickListener = OnClickListener { dialog: DialogInterface, _ -> this(dialog) }
 
 /*
  * Allows easier transformations from [MaterialDialog] to [AlertDialog].
@@ -138,9 +136,7 @@ fun AlertDialog.Builder.negativeButton(
     }
 }
 
-fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder {
-    return this.setCancelable(cancelable)
-}
+fun AlertDialog.Builder.cancelable(cancelable: Boolean): AlertDialog.Builder = this.setCancelable(cancelable)
 
 /**
  * Executes the provided block, then creates an [AlertDialog] with the arguments supplied
@@ -347,11 +343,10 @@ val AlertDialog.positiveButton: Button
 fun AlertDialog.Builder.listItems(
     items: List<CharSequence>,
     onClick: (dialog: DialogInterface, index: Int) -> Unit,
-): AlertDialog.Builder {
-    return this.setItems(items.toTypedArray()) { dialog, which ->
+): AlertDialog.Builder =
+    this.setItems(items.toTypedArray()) { dialog, which ->
         onClick(dialog, which)
     }
-}
 
 /**
  * Extension workaround for Displaying ListView & Message Together

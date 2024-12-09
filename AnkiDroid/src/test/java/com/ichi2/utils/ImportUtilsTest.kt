@@ -118,7 +118,9 @@ class ImportUtilsTest : RobolectricTest() {
         return ClipData(description, item)
     }
 
-    class TestFileImporter(private val fileName: String?) : FileImporter() {
+    class TestFileImporter(
+        private val fileName: String?,
+    ) : FileImporter() {
         lateinit var cacheFileName: String
             private set
 
@@ -134,8 +136,6 @@ class ImportUtilsTest : RobolectricTest() {
         override fun getFileNameFromContentProvider(
             context: Context,
             data: Uri,
-        ): String? {
-            return fileName
-        }
+        ): String? = fileName
     }
 }

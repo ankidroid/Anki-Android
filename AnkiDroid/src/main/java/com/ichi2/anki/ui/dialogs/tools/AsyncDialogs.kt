@@ -22,7 +22,9 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
-open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) {
+open class AsyncDialogBuilder(
+    private val alertDialogBuilder: AlertDialog.Builder,
+) {
     lateinit var continuation: Continuation<DialogResult>
 
     var onShowListener: ((AlertDialog) -> Unit)? = null
@@ -51,7 +53,9 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
 
         data object All : CheckedItems
 
-        class Some(val checkedItems: BooleanArray) : CheckedItems
+        class Some(
+            val checkedItems: BooleanArray,
+        ) : CheckedItems
     }
 
     fun setMultiChoiceItems(
@@ -70,8 +74,7 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
             dialog.getButton(BUTTON_POSITIVE).isEnabled = this.checkedItems.contains(true)
         }
 
-        alertDialogBuilder.setMultiChoiceItems(items.toTypedArray(), this.checkedItems) {
-                dialog, position, isChecked ->
+        alertDialogBuilder.setMultiChoiceItems(items.toTypedArray(), this.checkedItems) { dialog, position, isChecked ->
             this.checkedItems[position] = isChecked
             if (disablePositiveButtonIfNoItemsChosen) enableDisablePositiveButton(dialog as AlertDialog)
         }
@@ -92,7 +95,9 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
  *       ...
  *   }
  */
-class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) : AsyncDialogBuilder(alertDialogBuilder) {
+class CompoundDialogBuilder(
+    private val alertDialogBuilder: AlertDialog.Builder,
+) : AsyncDialogBuilder(alertDialogBuilder) {
     /** @see AlertDialog.Builder.setTitle */
     fun setTitle(
         @StringRes titleId: Int,
@@ -116,7 +121,9 @@ sealed interface DialogResult {
     interface Ok : DialogResult {
         object Simple : Ok
 
-        class MultipleChoice(val checkedItems: BooleanArray) : Ok
+        class MultipleChoice(
+            val checkedItems: BooleanArray,
+        ) : Ok
     }
 }
 

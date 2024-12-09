@@ -46,7 +46,8 @@ import timber.log.Timber
  */
 open class AnkiFragment(
     @LayoutRes layout: Int,
-) : Fragment(layout), AnkiActivityProvider {
+) : Fragment(layout),
+    AnkiActivityProvider {
     val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
@@ -104,9 +105,7 @@ open class AnkiFragment(
      */
     fun <T : View> findViewById(
         @IdRes id: Int,
-    ): T {
-        return requireView().findViewById(id)
-    }
+    ): T = requireView().findViewById(id)
 
     /**
      * Unregisters a previously registered broadcast receiver.

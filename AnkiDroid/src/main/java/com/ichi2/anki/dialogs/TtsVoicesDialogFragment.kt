@@ -165,7 +165,8 @@ class TtsVoicesDialogFragment : DialogFragment() {
         viewModel.availableVoicesFlow.observe {
             if (it is TtsVoicesViewModel.VoiceLoadingState.Failure) {
                 progressBar.visibility = View.VISIBLE
-                AlertDialog.Builder(requireContext())
+                AlertDialog
+                    .Builder(requireContext())
                     .setMessage(it.exception.localizedMessage)
                     .setOnDismissListener { this@TtsVoicesDialogFragment.dismiss() }
                     .show()
@@ -230,7 +231,9 @@ class TtsVoicesDialogFragment : DialogFragment() {
 
     // inner allows access to viewModel/openTtsSettings
     inner class TtsVoiceAdapter : ListAdapter<AndroidTtsVoice, TtsVoiceAdapter.TtsViewHolder>(TtsVoiceDiffCallback()) {
-        inner class TtsViewHolder(private val voiceView: View) : RecyclerView.ViewHolder(voiceView) {
+        inner class TtsViewHolder(
+            private val voiceView: View,
+        ) : RecyclerView.ViewHolder(voiceView) {
             private val textViewTop = voiceView.findViewById<TextView>(R.id.mtrl_list_item_secondary_text)
             private val textViewBottom = voiceView.findViewById<TextView>(R.id.mtrl_list_item_text)
             private val actionButton = voiceView.findViewById<MaterialButton>(R.id.action_button)
@@ -297,7 +300,10 @@ fun TtsVoice.tryDisplayLocalizedName(): String {
  * We can remove the network/local suffix as this can be obtained from the TTS Engine
  */
 fun prettyPrintGoogle(voice: AndroidTtsVoice): String {
-    val parts = voice.voice.name.split("-").toMutableList()
+    val parts =
+        voice.voice.name
+            .split("-")
+            .toMutableList()
 
     if (parts.last() == "language") {
         return parts.dropLast(1).joinToString(" ")

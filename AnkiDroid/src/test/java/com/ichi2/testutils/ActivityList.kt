@@ -57,8 +57,8 @@ object ActivityList {
     // TODO: This needs a test to ensure that all activities are valid with the given intents
     // Otherwise, ActivityStartupUnderBackup and other classes could be flaky
     @CheckResult
-    fun allActivitiesAndIntents(): List<ActivityLaunchParam> {
-        return listOf(
+    fun allActivitiesAndIntents(): List<ActivityLaunchParam> =
+        listOf(
             get(DeckPicker::class.java),
             // IntentHandler has unhandled intents
             get(IntentHandler::class.java) { ctx: Context ->
@@ -94,7 +94,6 @@ object ActivityList {
             get(DeckPickerWidgetConfig::class.java),
             get(CardAnalysisWidgetConfig::class.java),
         )
-    }
 
     private fun intentForCardTemplateBrowserAppearanceEditor(): Intent {
         // bundle != null
@@ -104,9 +103,7 @@ object ActivityList {
         }
     }
 
-    private fun intentForCardTemplateEditor(): Intent {
-        return Intent().apply { putExtra("modelId", 1L) }
-    }
+    private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("modelId", 1L) }
 
     class ActivityLaunchParam(
         var activity: Class<out Activity>,

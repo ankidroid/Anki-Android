@@ -93,8 +93,8 @@ class ImageCropper :
                     }
                 }
 
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                    when (menuItem.itemId) {
                         com.canhub.cropper.R.id.crop_image_menu_crop -> {
                             Timber.d("Crop image clicked")
                             cropImageView.croppedImageAsync()
@@ -122,7 +122,6 @@ class ImageCropper :
 
                         else -> false
                     }
-                }
             },
         )
     }

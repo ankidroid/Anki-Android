@@ -56,7 +56,8 @@ class Statistics :
 
         requireActivity().setTransparentStatusBar()
         spinner = view.findViewById(R.id.deck_selector)
-        view.findViewById<AppBarLayout>(R.id.app_bar)
+        view
+            .findViewById<AppBarLayout>(R.id.app_bar)
             .addLiftOnScrollListener { _, backgroundColor ->
                 activity?.window?.statusBarColor = backgroundColor
             }
@@ -168,8 +169,6 @@ class Statistics :
          * Note: the title argument is set to null as the [Statistics] fragment is expected to
          * handle the toolbar content(shows a deck selection spinner).
          */
-        fun getIntent(context: Context): Intent {
-            return getIntent(context, "graphs", null, Statistics::class)
-        }
+        fun getIntent(context: Context): Intent = getIntent(context, "graphs", null, Statistics::class)
     }
 }

@@ -327,20 +327,20 @@ data class DownloadFile(
 ) : Serializable {
     /** @return a filename with the provided extension */
     fun toFileName(extension: String): String =
-        URLUtil.guessFileName(
-            this.url,
-            this.contentDisposition,
-            this.mimeType,
-        ).let { maybeCorruptFileName ->
-            // #17573: https://issuetracker.google.com/issues/382864232
-            // guessFileName may return ".bin" as an extension
-            (
-                FileNameAndExtension.fromString(maybeCorruptFileName)
-                    // default if maybeCorruptFileName doesn't contain a '.'
-                    // Add randomness to avoid file name conflicts between different decks
-                    ?: FileNameAndExtension.fromString("download-${Random.nextInt()}$extension")!!
-            )
-                .replaceExtension(extension = extension) // enforce the provided extension
-                .toString()
-        }
+        URLUtil
+            .guessFileName(
+                this.url,
+                this.contentDisposition,
+                this.mimeType,
+            ).let { maybeCorruptFileName ->
+                // #17573: https://issuetracker.google.com/issues/382864232
+                // guessFileName may return ".bin" as an extension
+                (
+                    FileNameAndExtension.fromString(maybeCorruptFileName)
+                        // default if maybeCorruptFileName doesn't contain a '.'
+                        // Add randomness to avoid file name conflicts between different decks
+                        ?: FileNameAndExtension.fromString("download-${Random.nextInt()}$extension")!!
+                ).replaceExtension(extension = extension) // enforce the provided extension
+                    .toString()
+            }
 }

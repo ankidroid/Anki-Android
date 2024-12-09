@@ -88,9 +88,7 @@ object InitialActivity {
     fun upgradePreferences(
         context: Context,
         previousVersionCode: Long,
-    ): Boolean {
-        return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
-    }
+    ): Boolean = PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
 
     /**
      * @return Whether a fresh install occurred and a "fresh install" setup for preferences was performed
@@ -134,9 +132,7 @@ object InitialActivity {
      * This is not called in the case of performSetupFromFreshInstall returning true.
      * So this should not use the default value
      */
-    fun isLatestVersion(preferences: SharedPreferences): Boolean {
-        return preferences.getString("lastVersion", "") == pkgVersionName
-    }
+    fun isLatestVersion(preferences: SharedPreferences): Boolean = preferences.getString("lastVersion", "") == pkgVersionName
 
     sealed class StartupFailure {
         object SDCardNotMounted : StartupFailure()
@@ -145,7 +141,9 @@ object InitialActivity {
 
         object FutureAnkidroidVersion : StartupFailure()
 
-        class DBError(val exception: Exception) : StartupFailure()
+        class DBError(
+            val exception: Exception,
+        ) : StartupFailure()
 
         object DatabaseLocked : StartupFailure()
 
@@ -155,7 +153,9 @@ object InitialActivity {
     }
 }
 
-sealed class AnkiDroidFolder(val permissionSet: PermissionSet) {
+sealed class AnkiDroidFolder(
+    val permissionSet: PermissionSet,
+) {
     /**
      * AnkiDroid will use the folder ~/AnkiDroid by default
      * To access it, we must first get [permissionSet].permissions.
@@ -163,7 +163,9 @@ sealed class AnkiDroidFolder(val permissionSet: PermissionSet) {
      * but increase the risk of space used on their storage when they don't want to.
      * It can not be used on the play store starting with Sdk 30.
      **/
-    class PublicFolder(requiredPermissions: PermissionSet) : AnkiDroidFolder(requiredPermissions)
+    class PublicFolder(
+        requiredPermissions: PermissionSet,
+    ) : AnkiDroidFolder(requiredPermissions)
 
     /**
      * AnkiDroid will use the app-private folder: `~/Android/data/com.ichi2.anki[.A]/files/AnkiDroid`.
@@ -173,13 +175,14 @@ sealed class AnkiDroidFolder(val permissionSet: PermissionSet) {
      */
     data object AppPrivateFolder : AnkiDroidFolder(PermissionSet.APP_PRIVATE)
 
-    fun hasRequiredPermissions(context: Context): Boolean {
-        return Permissions.hasAllPermissions(context, permissionSet.permissions)
-    }
+    fun hasRequiredPermissions(context: Context): Boolean = Permissions.hasAllPermissions(context, permissionSet.permissions)
 }
 
 @Parcelize
-enum class PermissionSet(val permissions: List<String>, val permissionsFragment: Class<out PermissionsFragment>?) : Parcelable {
+enum class PermissionSet(
+    val permissions: List<String>,
+    val permissionsFragment: Class<out PermissionsFragment>?,
+) : Parcelable {
     LEGACY_ACCESS(Permissions.legacyStorageAccessPermissions, PermissionsUntil29Fragment::class.java),
 
     @RequiresApi(Build.VERSION_CODES.R)

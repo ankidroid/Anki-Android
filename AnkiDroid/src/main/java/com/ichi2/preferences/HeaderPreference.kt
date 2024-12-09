@@ -65,12 +65,11 @@ class HeaderPreference
              * to build a summary string for some preferences categories
              * e.g. `foo`, `bar`, `hi` ->  `foo • bar • hi`
              */
-            fun buildHeaderSummary(vararg entries: CharSequence): String {
-                return if (!LanguageUtils.appLanguageIsRTL()) {
+            fun buildHeaderSummary(vararg entries: CharSequence): String =
+                if (!LanguageUtils.appLanguageIsRTL()) {
                     entries.joinToString(separator = " • ")
                 } else {
                     entries.reversed().joinToString(separator = " • ")
                 }
-            }
         }
     }

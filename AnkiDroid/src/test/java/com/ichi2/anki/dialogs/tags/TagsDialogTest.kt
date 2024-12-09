@@ -252,9 +252,7 @@ class TagsDialogTest : RobolectricTest() {
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
 
-            fun getItem(index: Int): TagsArrayAdapter.ViewHolder {
-                return RecyclerViewUtils.viewHolderAt(recycler, index)
-            }
+            fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
             fun updateLayout() {
                 recycler.measure(0, 0)
@@ -488,9 +486,7 @@ class TagsDialogTest : RobolectricTest() {
 
             val recycler: RecyclerView = dialog!!.findViewById(R.id.tags_dialog_tags_list)!!
 
-            fun getItem(index: Int): TagsArrayAdapter.ViewHolder {
-                return RecyclerViewUtils.viewHolderAt(recycler, index)
-            }
+            fun getItem(index: Int): TagsArrayAdapter.ViewHolder = RecyclerViewUtils.viewHolderAt(recycler, index)
 
             fun updateLayout() {
                 recycler.measure(0, 0)

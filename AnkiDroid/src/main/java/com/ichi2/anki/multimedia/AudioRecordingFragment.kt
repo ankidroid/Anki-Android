@@ -150,12 +150,11 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
-        ): Intent {
-            return MultimediaActivity.getIntent(
+        ): Intent =
+            MultimediaActivity.getIntent(
                 context,
                 AudioRecordingFragment::class,
                 multimediaExtra,
             )
-        }
     }
 }

@@ -37,7 +37,9 @@ sealed interface NoteFieldsCheckResult {
     data object Success : NoteFieldsCheckResult
 
     /** @property localizedMessage user-readable error message */
-    data class Failure(val localizedMessage: String?) : NoteFieldsCheckResult
+    data class Failure(
+        val localizedMessage: String?,
+    ) : NoteFieldsCheckResult
 }
 
 /**

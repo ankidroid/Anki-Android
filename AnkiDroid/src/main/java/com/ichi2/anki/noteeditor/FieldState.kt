@@ -34,7 +34,9 @@ import kotlin.math.min
 /** Responsible for recreating EditFieldLines after NoteEditor operations
  * This primarily exists so we can use saved instance state to repopulate the dynamically created FieldEditLine
  */
-class FieldState private constructor(private val editor: NoteEditor) {
+class FieldState private constructor(
+    private val editor: NoteEditor,
+) {
     private var savedFieldData: List<View.BaseSavedState>? = null
 
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
@@ -128,7 +130,10 @@ class FieldState private constructor(private val editor: NoteEditor) {
     }
 
     /** How fields should be changed when the UI is rebuilt  */
-    class FieldChangeType(val type: Type, val replaceNewlines: Boolean) {
+    class FieldChangeType(
+        val type: Type,
+        val replaceNewlines: Boolean,
+    ) {
         var modelChangeFieldMap: Map<Int, Int>? = null
         var newNotetype: NotetypeJson? = null
 
@@ -144,28 +149,18 @@ class FieldState private constructor(private val editor: NoteEditor) {
                 return typeClass
             }
 
-            fun refresh(replaceNewlines: Boolean): FieldChangeType {
-                return fromType(Type.REFRESH, replaceNewlines)
-            }
+            fun refresh(replaceNewlines: Boolean): FieldChangeType = fromType(Type.REFRESH, replaceNewlines)
 
-            fun refreshWithStickyFields(replaceNewlines: Boolean): FieldChangeType {
-                return fromType(Type.CLEAR_KEEP_STICKY, replaceNewlines)
-            }
+            fun refreshWithStickyFields(replaceNewlines: Boolean): FieldChangeType = fromType(Type.CLEAR_KEEP_STICKY, replaceNewlines)
 
-            fun changeFieldCount(replaceNewlines: Boolean): FieldChangeType {
-                return fromType(Type.CHANGE_FIELD_COUNT, replaceNewlines)
-            }
+            fun changeFieldCount(replaceNewlines: Boolean): FieldChangeType = fromType(Type.CHANGE_FIELD_COUNT, replaceNewlines)
 
-            fun onActivityCreation(replaceNewlines: Boolean): FieldChangeType {
-                return fromType(Type.INIT, replaceNewlines)
-            }
+            fun onActivityCreation(replaceNewlines: Boolean): FieldChangeType = fromType(Type.INIT, replaceNewlines)
 
             private fun fromType(
                 type: Type,
                 replaceNewlines: Boolean,
-            ): FieldChangeType {
-                return FieldChangeType(type, replaceNewlines)
-            }
+            ): FieldChangeType = FieldChangeType(type, replaceNewlines)
         }
     }
 
@@ -178,13 +173,9 @@ class FieldState private constructor(private val editor: NoteEditor) {
     }
 
     companion object {
-        private fun allowFieldRemapping(oldFields: Array<Array<String>>): Boolean {
-            return oldFields.size > 2
-        }
+        private fun allowFieldRemapping(oldFields: Array<Array<String>>): Boolean = oldFields.size > 2
 
-        fun fromEditor(editor: NoteEditor): FieldState {
-            return FieldState(editor)
-        }
+        fun fromEditor(editor: NoteEditor): FieldState = FieldState(editor)
 
         @KotlinCleanup("speed - no need for arrayOfNulls")
         private fun fromFieldMap(

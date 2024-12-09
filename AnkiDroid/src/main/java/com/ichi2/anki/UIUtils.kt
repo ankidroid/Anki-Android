@@ -36,9 +36,7 @@ fun showThemedToast(
 fun getDensityAdjustedValue(
     context: Context,
     value: Float,
-): Float {
-    return context.resources.displayMetrics.density * value
-}
+): Float = context.resources.displayMetrics.density * value
 
 fun getDayStart(time: Time): Long {
     val cal = time.calendar()
@@ -62,6 +60,8 @@ fun getDayStart(time: Time): Long {
 fun convertDpToPixel(
     dp: Float,
     context: Context,
-): Float {
-    return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-}
+): Float =
+    dp * (
+        context.resources.displayMetrics.densityDpi
+            .toFloat() / DisplayMetrics.DENSITY_DEFAULT
+    )

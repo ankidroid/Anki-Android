@@ -620,7 +620,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     private fun requestCrop() {
         val imageUri = viewModel.currentMultimediaUri.value ?: return
         hasStartedImageSelection = true
-        val intent = com.ichi2.imagecropper.ImageCropperLauncher.ImageUri(imageUri).getIntent(requireContext())
+        val intent =
+            com.ichi2.imagecropper.ImageCropperLauncher
+                .ImageUri(imageUri)
+                .getIntent(requireContext())
         imageCropperLauncher.launch(intent)
     }
 
@@ -630,8 +633,8 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
      * @param uri The URI of the SVG file to be loaded.
      * @return The content of the SVG file as a string, or null if an error occurs.
      */
-    private fun loadSvgFromUri(uri: Uri): String? {
-        return try {
+    private fun loadSvgFromUri(uri: Uri): String? =
+        try {
             context?.contentResolver?.openInputStream(uri)?.use { inputStream ->
                 inputStream.convertToString()
             }
@@ -639,7 +642,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             Timber.w(e, "Error reading SVG from URI")
             null
         }
-    }
 
     private fun handleCropResultError(error: Exception) {
         // cropImage can give us more information. Not sure it is actionable so for now just log it.
@@ -762,14 +764,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
             imageOptions: ImageOptions,
-        ): Intent {
-            return MultimediaActivity.getIntent(
+        ): Intent =
+            MultimediaActivity.getIntent(
                 context,
                 MultimediaImageFragment::class,
                 multimediaExtra,
                 imageOptions,
             )
-        }
     }
 
     /** Image options that a user choose from the bottom sheet which [MultimediaImageFragment] uses **/

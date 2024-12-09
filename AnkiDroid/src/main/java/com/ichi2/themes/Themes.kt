@@ -121,9 +121,7 @@ object Themes {
 
     @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
-    fun getColorFromAttr(context: Context, attr: Int): Int {
-        return MaterialColors.getColor(context, attr, 0)
-    }
+    fun getColorFromAttr(context: Context, attr: Int): Int = MaterialColors.getColor(context, attr, 0)
 
     @JvmStatic // tests failed when removing, maybe try later
     @ColorInt
@@ -137,14 +135,12 @@ object Themes {
     /**
      * @return if current selected theme is `Follow system`
      */
-    private fun themeFollowsSystem(sharedPreferences: SharedPreferences): Boolean {
-        return sharedPreferences.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE) == FOLLOW_SYSTEM_MODE
-    }
+    private fun themeFollowsSystem(sharedPreferences: SharedPreferences): Boolean =
+        sharedPreferences.getString(APP_THEME_KEY, FOLLOW_SYSTEM_MODE) == FOLLOW_SYSTEM_MODE
 
-    fun systemIsInNightMode(context: Context): Boolean {
-        return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+    fun systemIsInNightMode(context: Context): Boolean =
+        context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
             Configuration.UI_MODE_NIGHT_YES
-    }
 }
 
 @Suppress("deprecation", "API35 properly handle edge-to-edge")
