@@ -48,7 +48,9 @@ class MultimediaTest : InstrumentedTest() {
     @Parameterized.Parameter(0)
     var intentBuilder: (Context) -> Intent? = { null }
 
-    private var title: Int? = null
+    @JvmField
+    @Parameterized.Parameter(1)
+    var title: Int? = null
 
     @Test
     fun testFragmentTitle() {
