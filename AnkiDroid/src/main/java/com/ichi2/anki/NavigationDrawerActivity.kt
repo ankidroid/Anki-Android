@@ -24,6 +24,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.annotation.VisibleForTesting
@@ -143,6 +144,13 @@ abstract class NavigationDrawerActivity :
             // Decide which action to take when the navigation button is tapped.
             toolbar.setNavigationOnClickListener { onNavigationPressed() }
         }
+        val drawerBackCallback =
+            object : OnBackPressedCallback(isDrawerOpen) {
+                override fun handleOnBackPressed() {
+                    closeDrawer()
+                }
+            }
+        onBackPressedDispatcher.addCallback(drawerBackCallback)
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
         drawerToggle =
@@ -155,7 +163,7 @@ abstract class NavigationDrawerActivity :
                 override fun onDrawerClosed(drawerView: View) {
                     super.onDrawerClosed(drawerView)
                     invalidateOptionsMenu()
-
+                    drawerBackCallback.isEnabled = false
                     // If animations are disabled, this is executed before onNavigationItemSelected is called
                     // PERF: May be able to reduce this delay
                     HandlerUtils.postDelayedOnNewHandler({
@@ -169,6 +177,7 @@ abstract class NavigationDrawerActivity :
                 override fun onDrawerOpened(drawerView: View) {
                     super.onDrawerOpened(drawerView)
                     invalidateOptionsMenu()
+                    drawerBackCallback.isEnabled = true
                 }
             }
         if (drawerLayout is ClosableDrawerLayout) {
@@ -265,17 +274,6 @@ abstract class NavigationDrawerActivity :
                 ActivityCompat.recreate(this)
             }
         }
-
-    @Suppress("deprecation") // onBackPressed
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (isDrawerOpen) {
-            Timber.i("Back key pressed")
-            closeDrawer()
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     /**
      * Called, when navigation button of the action bar is pressed.
