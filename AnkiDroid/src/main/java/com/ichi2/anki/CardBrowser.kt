@@ -531,7 +531,6 @@ open class CardBrowser :
                 }
             }
         }
-
         fun setupColumnSpinners() {
             // Create a spinner for column 1
             findViewById<Spinner>(R.id.browser_column1_spinner).apply {
@@ -591,6 +590,12 @@ open class CardBrowser :
                 adapter.addAll(viewModel.column2Candidates.map { it.getLabel(cardsOrNotes) })
             }
         }
+
+        suspend fun updateColumnLanguageChange(value: String) {
+            viewModel.fetchColumns()
+            setupColumnSpinners()
+        }
+
         viewModel.flowOfIsTruncated.launchCollectionInLifecycleScope(::onIsTruncatedChanged)
         viewModel.flowOfSearchQueryExpanded.launchCollectionInLifecycleScope(::onSearchQueryExpanded)
         viewModel.flowOfSelectedRows.launchCollectionInLifecycleScope(::onSelectedRowsChanged)
@@ -600,6 +605,7 @@ open class CardBrowser :
         viewModel.flowOfDeckId.launchCollectionInLifecycleScope(::onDeckIdChanged)
         viewModel.flowOfCanSearch.launchCollectionInLifecycleScope(::onCanSaveChanged)
         viewModel.flowOfIsInMultiSelectMode.launchCollectionInLifecycleScope(::isInMultiSelectModeChanged)
+        viewModel.flowOfLanguageChanged.launchCollectionInLifecycleScope(::updateColumnLanguageChange)
         viewModel.flowOfCardsUpdated.launchCollectionInLifecycleScope(::cardsUpdatedChanged)
         viewModel.flowOfSearchState.launchCollectionInLifecycleScope(::searchStateChanged)
         viewModel.flowOfInitCompleted.launchCollectionInLifecycleScope(::initCompletedChanged)
@@ -954,6 +960,10 @@ open class CardBrowser :
 
     override fun onResume() {
         super.onResume()
+        // only when viewModel is initiated and columns value has been assigned
+        if (viewModel.flowOfInitCompleted.value) {
+            viewModel.checkLanguageChange()
+        }
         selectNavigationItem(R.id.nav_browser)
         updateNumCardsToRender()
     }
