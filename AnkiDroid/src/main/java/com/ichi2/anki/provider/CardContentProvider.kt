@@ -137,8 +137,11 @@ class CardContentProvider : ContentProvider() {
             return sanitized.toTypedArray()
         }
 
+        private val AUTHORITY = FlashCardsContract.getAuthority(BuildConfig.APPLICATION_ID)
+        private val PERMISSION = FlashCardsContract.getPermission(BuildConfig.APPLICATION_ID)
+
         init {
-            fun addUri(path: String, code: Int) = sUriMatcher.addURI(FlashCardsContract.AUTHORITY, path, code)
+            fun addUri(path: String, code: Int) = sUriMatcher.addURI(AUTHORITY, path, code)
             // Here you can see all the URIs at a glance
             addUri("notes", NOTES)
             addUri("notes_v2", NOTES_V2)
@@ -1238,16 +1241,16 @@ class CardContentProvider : ContentProvider() {
 
     private fun hasReadWritePermission(): Boolean {
         return if (BuildConfig.DEBUG) { // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
-            context!!.checkCallingOrSelfPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+            context!!.checkCallingOrSelfPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED
         } else {
-            context!!.checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+            context!!.checkCallingPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED
         }
     }
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest */
     private fun knownRogueClient(): Boolean =
-        !context!!.arePermissionsDefinedInManifest(callingPackage!!, FlashCardsContract.READ_WRITE_PERMISSION)
+        !context!!.arePermissionsDefinedInManifest(callingPackage!!, PERMISSION)
 }
 
 /** replaces [anki:play...] with [sound:] */
