@@ -52,7 +52,7 @@ class MultimediaTest : InstrumentedTest() {
 
     @Test
     fun testFragmentTitle() {
-        ActivityScenario.launch<MultimediaActivity>(intentBuilder(testContext)).use { scenario ->
+        withMultimediaActivityScenario { scenario ->
             scenario.onActivity { activity ->
                 val fragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as MultimediaFragment
                 val titleString = title?.let { testContext.getString(it) }
@@ -102,16 +102,16 @@ class MultimediaTest : InstrumentedTest() {
         get() = this.supportFragmentManager.findFragmentById(R.id.fragment_container)!!
 
     companion object {
-        @Parameterized.Parameters(name = "{2}")
+        @Parameterized.Parameters(name = "{index}: {1}")
         @JvmStatic
         fun initParameters(): Collection<Array<out Any>> {
             return listOf(
-                arrayOf({ context: Context -> getCameraFragment(context) }, R.string.multimedia_editor_popup_image, "Add image (Camera)"),
-                arrayOf({ context: Context -> getGalleryFragment(context) }, R.string.multimedia_editor_popup_image, "Add image (Gallery)"),
-                arrayOf({ context: Context -> getDrawingFragment(context) }, R.string.multimedia_editor_popup_image, "Add image (Drawing)"),
-                arrayOf({ context: Context -> getAudioFragment(context) }, R.string.multimedia_editor_popup_audio_clip, "Add audio clip"),
-                arrayOf({ context: Context -> getVideoFragment(context) }, R.string.multimedia_editor_popup_video_clip, "Add video clip"),
-                arrayOf({ context: Context -> getAudioRecordingFragment(context) }, R.string.multimedia_editor_field_editing_audio, "Record audio")
+                arrayOf({ context: Context -> getCameraFragment(context) }, R.string.multimedia_editor_popup_image),
+                arrayOf({ context: Context -> getGalleryFragment(context) }, R.string.multimedia_editor_popup_image),
+                arrayOf({ context: Context -> getDrawingFragment(context) }, R.string.multimedia_editor_popup_image),
+                arrayOf({ context: Context -> getAudioFragment(context) }, R.string.multimedia_editor_popup_audio_clip),
+                arrayOf({ context: Context -> getVideoFragment(context) }, R.string.multimedia_editor_popup_video_clip),
+                arrayOf({ context: Context -> getAudioRecordingFragment(context) }, R.string.multimedia_editor_field_editing_audio)
             )
         }
 
