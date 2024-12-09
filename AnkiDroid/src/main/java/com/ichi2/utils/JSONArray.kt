@@ -52,7 +52,7 @@ fun JSONArray.deepClone(): JSONArray {
                 is JSONObject -> getJSONObject(i).deepClone()
                 is JSONArray -> getJSONArray(i).deepClone()
                 else -> get(i)
-            }
+            },
         )
     }
     return clone

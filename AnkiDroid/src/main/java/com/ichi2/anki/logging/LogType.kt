@@ -28,7 +28,7 @@ enum class LogType {
     ROBOLECTRIC,
 
     /** @see ProductionCrashReportingTree */
-    PRODUCTION
+    PRODUCTION,
 
     ;
 

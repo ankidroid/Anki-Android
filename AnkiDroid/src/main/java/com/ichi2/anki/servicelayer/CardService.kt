@@ -28,9 +28,9 @@ object CardService {
      */
     fun selectedNoteIds(
         col: Collection,
-        selectedCardIds: List<CardId>
+        selectedCardIds: List<CardId>,
     ) = CardUtils.getNotes(
         col,
-        selectedCardIds.map { col.getCard(it) }
+        selectedCardIds.map { col.getCard(it) },
     ).map { it.id }
 }

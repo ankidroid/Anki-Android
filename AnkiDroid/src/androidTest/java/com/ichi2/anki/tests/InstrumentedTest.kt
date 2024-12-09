@@ -95,7 +95,7 @@ abstract class InstrumentedTest {
                     Build.PRODUCT.contains("vbox86p") ||
                     Build.PRODUCT.contains("emulator") ||
                     Build.PRODUCT.contains("simulator")
-                )
+            )
         }
     }
 
@@ -158,7 +158,7 @@ abstract class InstrumentedTest {
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     internal fun addNoteUsingBasicModel(
         front: String = "Front",
-        back: String = "Back"
+        back: String = "Back",
     ): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
@@ -166,7 +166,7 @@ abstract class InstrumentedTest {
     @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
     private fun addNoteUsingModelName(
         name: String,
-        vararg fields: String
+        vararg fields: String,
     ): Note {
         val model =
             col.notetypes.byName(name)
@@ -189,12 +189,12 @@ abstract class InstrumentedTest {
 fun ViewInteraction.checkWithTimeout(
     viewAssertion: ViewAssertion,
     retryWaitTimeInMilliseconds: Long = 100,
-    maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
+    maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10),
 ) {
     assertThat(
         "The retry time is greater than the max wait time. You probably gave the argument in the wrong order.",
         retryWaitTimeInMilliseconds,
-        lessThanOrEqualTo(maxWaitTimeInMilliseconds)
+        lessThanOrEqualTo(maxWaitTimeInMilliseconds),
     )
     val startTime = TimeManager.time.intTimeMS()
 

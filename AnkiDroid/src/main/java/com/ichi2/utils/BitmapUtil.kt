@@ -35,7 +35,7 @@ import kotlin.math.roundToInt
 object BitmapUtil {
     fun decodeFile(
         theFile: File,
-        imageMaxSize: Int
+        imageMaxSize: Int,
     ): Bitmap? {
         var bmp: Bitmap? = null
         try {
@@ -56,7 +56,7 @@ object BitmapUtil {
                         (
                             ln(imageMaxSize / o.outHeight.coerceAtLeast(o.outWidth).toDouble()) /
                                 ln(0.5)
-                            ).roundToInt().toDouble()
+                        ).roundToInt().toDouble(),
                     ).toInt()
             }
 

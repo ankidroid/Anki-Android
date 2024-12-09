@@ -347,11 +347,11 @@ abstract class AbstractFlashcardViewer :
                     // nothing was changed by the note editor so just redraw the card
                     redrawCard()
                 }
-            }
+            },
         )
 
     protected inner class FlashCardViewerResultCallback(
-        private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> }
+        private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> },
     ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -387,7 +387,7 @@ abstract class AbstractFlashcardViewer :
 
         override fun onTouch(
             view: View,
-            event: MotionEvent
+            event: MotionEvent,
         ): Boolean {
             if (event.action == MotionEvent.ACTION_DOWN) {
                 // Save states when button pressed
@@ -686,14 +686,14 @@ abstract class AbstractFlashcardViewer :
 
     override fun onKeyDown(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         if (processCardFunction { cardWebView: WebView? ->
-            processHardwareButtonScroll(
+                processHardwareButtonScroll(
                     keyCode,
-                    cardWebView
+                    cardWebView,
                 )
-        }
+            }
         ) {
             return true
         }
@@ -716,7 +716,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         if (webView.handledGamepadKeyUp(keyCode, event)) {
             return true
@@ -728,7 +728,7 @@ abstract class AbstractFlashcardViewer :
 
     private fun processHardwareButtonScroll(
         keyCode: Int,
-        card: WebView?
+        card: WebView?,
     ): Boolean {
         if (keyCode == KeyEvent.KEYCODE_PAGE_UP) {
             card!!.pageUp(false)
@@ -839,15 +839,15 @@ abstract class AbstractFlashcardViewer :
             setIcon(R.drawable.ic_warning)
             message(
                 text =
-                resources.getString(
-                    R.string.delete_note_message,
-                    Utils.stripHTMLAndSpecialFields(currentCard!!.question(getColUnsafe, true)).trim()
-                )
+                    resources.getString(
+                        R.string.delete_note_message,
+                        Utils.stripHTMLAndSpecialFields(currentCard!!.question(getColUnsafe, true)).trim(),
+                    ),
             )
             positiveButton(R.string.dialog_positive_delete) {
                 Timber.i(
                     "AbstractFlashcardViewer:: OK button pressed to delete note %d",
-                    currentCard!!.nid
+                    currentCard!!.nid,
                 )
                 launchCatchingTask { cardMediaPlayer.stopSounds() }
                 deleteNoteWithoutConfirmation()
@@ -870,7 +870,7 @@ abstract class AbstractFlashcardViewer :
                 resources.getQuantityString(
                     R.plurals.card_browser_cards_deleted,
                     noteCount,
-                    noteCount
+                    noteCount,
                 )
             showSnackbar(deletedMessage, Snackbar.LENGTH_LONG) {
                 setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
@@ -924,28 +924,28 @@ abstract class AbstractFlashcardViewer :
                 Ease.AGAIN,
                 findViewById(R.id.flashcard_layout_ease1),
                 findViewById(R.id.ease1),
-                findViewById(R.id.nextTime1)
+                findViewById(R.id.nextTime1),
             ).apply { setListeners(easeHandler) }
         easeButton2 =
             EaseButton(
                 Ease.HARD,
                 findViewById(R.id.flashcard_layout_ease2),
                 findViewById(R.id.ease2),
-                findViewById(R.id.nextTime2)
+                findViewById(R.id.nextTime2),
             ).apply { setListeners(easeHandler) }
         easeButton3 =
             EaseButton(
                 Ease.GOOD,
                 findViewById(R.id.flashcard_layout_ease3),
                 findViewById(R.id.ease3),
-                findViewById(R.id.nextTime3)
+                findViewById(R.id.nextTime3),
             ).apply { setListeners(easeHandler) }
         easeButton4 =
             EaseButton(
                 Ease.EASY,
                 findViewById(R.id.flashcard_layout_ease4),
                 findViewById(R.id.ease4),
-                findViewById(R.id.nextTime4)
+                findViewById(R.id.nextTime4),
             ).apply { setListeners(easeHandler) }
         if (!showNextReviewTime) {
             easeButton1!!.hideNextReviewTime()
@@ -1002,7 +1002,7 @@ abstract class AbstractFlashcardViewer :
         val answerButtonsPosition =
             this.sharedPrefs().getString(
                 getString(R.string.answer_buttons_position_preference),
-                "bottom"
+                "bottom",
             )
         this.answerButtonsPosition = answerButtonsPosition
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
@@ -1023,7 +1023,7 @@ abstract class AbstractFlashcardViewer :
             }
 
             "bottom",
-            "none"
+            "none",
             -> {
                 whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
                 whiteboardContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
@@ -1079,7 +1079,7 @@ abstract class AbstractFlashcardViewer :
         Timber.d(
             "Focusable = %s, Focusable in touch mode = %s",
             webView.isFocusable,
-            webView.isFocusableInTouchMode
+            webView.isFocusableInTouchMode,
         )
 
         // enable third party cookies so that cookies can be used in webview
@@ -1109,7 +1109,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun <T : View?> inflateNewView(
-        @IdRes id: Int
+        @IdRes id: Int,
     ): T {
         val layoutId = getContentViewAttr(fullscreenMode)
         val content =
@@ -1255,9 +1255,9 @@ abstract class AbstractFlashcardViewer :
         }
         if (preferences.getBoolean("timeoutAnswer", false) ||
             preferences.getBoolean(
-                    "keepScreenOn",
-                    false
-                )
+                "keepScreenOn",
+                false,
+            )
         ) {
             this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
@@ -1368,7 +1368,7 @@ abstract class AbstractFlashcardViewer :
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
         Timber.i(
             "AbstractFlashcardViewer:: Question successfully shown for card id %d",
-            currentCard!!.id
+            currentCard!!.id,
         )
     }
 
@@ -1423,7 +1423,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun tapOnCurrentCard(
         x: Int,
-        y: Int
+        y: Int,
     ) {
         // assemble suitable ACTION_DOWN and ACTION_UP events and forward them to the card's handler
         val eDown =
@@ -1439,7 +1439,7 @@ abstract class AbstractFlashcardViewer :
                 1f,
                 1f,
                 0,
-                0
+                0,
             )
         processCardAction { cardWebView: WebView? -> cardWebView!!.dispatchTouchEvent(eDown) }
         val eUp =
@@ -1455,7 +1455,7 @@ abstract class AbstractFlashcardViewer :
                 1f,
                 1f,
                 0,
-                0
+                0,
             )
         processCardAction { cardWebView: WebView? -> cardWebView!!.dispatchTouchEvent(eUp) }
     }
@@ -1549,7 +1549,7 @@ abstract class AbstractFlashcardViewer :
                 getColUnsafe,
                 this,
                 currentCard!!,
-                if (displayAnswer) CardSide.ANSWER else CardSide.QUESTION
+                if (displayAnswer) CardSide.ANSWER else CardSide.QUESTION,
             )
         }
     }
@@ -1569,7 +1569,7 @@ abstract class AbstractFlashcardViewer :
 
     private fun loadContentIntoCard(
         card: WebView?,
-        content: String
+        content: String,
     ) {
         if (card != null) {
             card.settings.mediaPlaybackRequiresUserGesture = !cardMediaPlayer.config.autoplay
@@ -1578,7 +1578,7 @@ abstract class AbstractFlashcardViewer :
                 content,
                 "text/html",
                 null,
-                null
+                null,
             )
         }
     }
@@ -1659,7 +1659,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun executeCommand(
         which: ViewerCommand,
-        fromGesture: Gesture?
+        fromGesture: Gesture?,
     ): Boolean {
         return when (which) {
             ViewerCommand.SHOW_ANSWER -> {
@@ -1800,7 +1800,7 @@ abstract class AbstractFlashcardViewer :
             ViewerCommand.USER_ACTION_6,
             ViewerCommand.USER_ACTION_7,
             ViewerCommand.USER_ACTION_8,
-            ViewerCommand.USER_ACTION_9
+            ViewerCommand.USER_ACTION_9,
             -> {
                 Timber.w("Unknown command requested: %s", which)
                 false
@@ -1884,7 +1884,7 @@ abstract class AbstractFlashcardViewer :
             view: WebView,
             url: String,
             message: String,
-            result: JsResult
+            result: JsResult,
         ): Boolean {
             Timber.i("AbstractFlashcardViewer:: onJsAlert: %s", message)
             result.confirm()
@@ -1908,15 +1908,15 @@ abstract class AbstractFlashcardViewer :
         // to avoid destroying the View if the device is rotated
         override fun onShowCustomView(
             paramView: View,
-            paramCustomViewCallback: CustomViewCallback?
+            paramCustomViewCallback: CustomViewCallback?,
         ) {
             customView = paramView
             (window.decorView as FrameLayout).addView(
                 customView,
                 FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
-                )
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                ),
             )
             // hide system bars
             with(WindowInsetsControllerCompat(window, window.decorView)) {
@@ -1977,7 +1977,7 @@ abstract class AbstractFlashcardViewer :
             hideEaseButtons()
             Timber.i(
                 "AbstractFlashcardViewer:: Question successfully shown for card id %d",
-                currentCard!!.id
+                currentCard!!.id,
             )
         } else {
             displayCardAnswer()
@@ -1991,7 +1991,7 @@ abstract class AbstractFlashcardViewer :
             data: String,
             mimeType: String?,
             encoding: String?,
-            historyUrl: String?
+            historyUrl: String?,
         ) {
             if (!this@AbstractFlashcardViewer.isDestroyed) {
                 super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
@@ -2004,7 +2004,7 @@ abstract class AbstractFlashcardViewer :
             horiz: Int,
             vert: Int,
             oldHoriz: Int,
-            oldVert: Int
+            oldVert: Int,
         ) {
             super.onScrollChanged(horiz, vert, oldHoriz, oldVert)
             if (abs(horiz - oldHoriz) > abs(vert - oldVert)) {
@@ -2030,7 +2030,7 @@ abstract class AbstractFlashcardViewer :
             scrollX: Int,
             scrollY: Int,
             clampedX: Boolean,
-            clampedY: Boolean
+            clampedY: Boolean,
         ) {
             if (clampedX) {
                 val scrollParent = findScrollParent(this)
@@ -2059,7 +2059,7 @@ abstract class AbstractFlashcardViewer :
             e1: MotionEvent?,
             e2: MotionEvent,
             velocityX: Float,
-            velocityY: Float
+            velocityY: Float,
         ): Boolean {
             Timber.d("onFling")
 
@@ -2084,7 +2084,7 @@ abstract class AbstractFlashcardViewer :
                         velocityY,
                         isSelecting,
                         isXScrolling,
-                        isYScrolling
+                        isYScrolling,
                     )
                 } catch (e: Exception) {
                     Timber.e(e, "onFling Exception")
@@ -2274,7 +2274,7 @@ abstract class AbstractFlashcardViewer :
             return (
                 type == HitTestResult.SRC_ANCHOR_TYPE ||
                     type == HitTestResult.SRC_IMAGE_ANCHOR_TYPE
-                )
+            )
         }
     }
 
@@ -2333,7 +2333,7 @@ abstract class AbstractFlashcardViewer :
         ANSWER_ORDINAL_1,
         ANSWER_ORDINAL_2,
         ANSWER_ORDINAL_3,
-        ANSWER_ORDINAL_4
+        ANSWER_ORDINAL_4,
         ;
 
         companion object {
@@ -2359,7 +2359,7 @@ abstract class AbstractFlashcardViewer :
 
     inner class CardViewerWebClient internal constructor(
         private val resourceHandler: ViewerResourceHandler,
-        private val onPageFinishedCallback: OnPageFinishedCallback? = null
+        private val onPageFinishedCallback: OnPageFinishedCallback? = null,
     ) : WebViewClient(), JavascriptEvaluator {
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
@@ -2372,7 +2372,7 @@ abstract class AbstractFlashcardViewer :
 
         override fun shouldOverrideUrlLoading(
             view: WebView,
-            request: WebResourceRequest
+            request: WebResourceRequest,
         ): Boolean {
             val url = request.url.toString()
             Timber.d("Obtained URL from card: '%s'", url)
@@ -2382,7 +2382,7 @@ abstract class AbstractFlashcardViewer :
         override fun onPageStarted(
             view: WebView?,
             url: String?,
-            favicon: Bitmap?
+            favicon: Bitmap?,
         ) {
             pageRenderStopwatch.reset()
             pageFinishedFired = false
@@ -2390,7 +2390,7 @@ abstract class AbstractFlashcardViewer :
 
         override fun shouldInterceptRequest(
             view: WebView,
-            request: WebResourceRequest
+            request: WebResourceRequest,
         ): WebResourceResponse? {
             resourceHandler.shouldInterceptRequest(request)?.let { return it }
             return null
@@ -2399,12 +2399,12 @@ abstract class AbstractFlashcardViewer :
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
-            error: WebResourceError
+            error: WebResourceError,
         ) {
             super.onReceivedError(view, request, error)
             mediaErrorHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
-                    filename
+                    filename,
                 )
             }
         }
@@ -2412,12 +2412,12 @@ abstract class AbstractFlashcardViewer :
         override fun onReceivedHttpError(
             view: WebView,
             request: WebResourceRequest,
-            errorResponse: WebResourceResponse
+            errorResponse: WebResourceResponse,
         ) {
             super.onReceivedHttpError(view, request, errorResponse)
             mediaErrorHandler.processFailure(request) { filename: String ->
                 displayCouldNotFindMediaSnackbar(
-                    filename
+                    filename,
                 )
             }
         }
@@ -2534,29 +2534,29 @@ abstract class AbstractFlashcardViewer :
                 if (intent != null) {
                     if (packageManager.resolveActivityCompat(
                             intent,
-                            ResolveInfoFlagsCompat.EMPTY
+                            ResolveInfoFlagsCompat.EMPTY,
                         ) == null
                     ) {
                         val packageName = intent.getPackage()
                         if (packageName == null) {
                             Timber.d(
                                 "Not using resolved intent uri because not available: %s",
-                                intent
+                                intent,
                             )
                             intent = null
                         } else {
                             Timber.d(
                                 "Resolving intent uri to market uri because not available: %s",
-                                intent
+                                intent,
                             )
                             intent =
                                 Intent(
                                     Intent.ACTION_VIEW,
-                                    Uri.parse("market://details?id=$packageName")
+                                    Uri.parse("market://details?id=$packageName"),
                                 )
                             if (packageManager.resolveActivityCompat(
                                     intent,
-                                    ResolveInfoFlagsCompat.EMPTY
+                                    ResolveInfoFlagsCompat.EMPTY,
                                 ) == null
                             ) {
                                 intent = null
@@ -2605,7 +2605,7 @@ abstract class AbstractFlashcardViewer :
         // Run any post-load events in javascript that rely on the window being completely loaded.
         override fun onPageFinished(
             view: WebView,
-            url: String
+            url: String,
         ) {
             if (pageFinishedFired) {
                 return
@@ -2626,7 +2626,7 @@ abstract class AbstractFlashcardViewer :
         @TargetApi(Build.VERSION_CODES.O)
         override fun onRenderProcessGone(
             view: WebView,
-            detail: RenderProcessGoneDetail
+            detail: RenderProcessGoneDetail,
         ): Boolean {
             return onRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
         }
@@ -2648,7 +2648,7 @@ abstract class AbstractFlashcardViewer :
             showThemedToast(
                 this@AbstractFlashcardViewer,
                 getString(R.string.card_viewer_url_decode_error),
-                true
+                true,
             )
         }
         return ""
@@ -2685,7 +2685,7 @@ abstract class AbstractFlashcardViewer :
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        stateFilter: CardStateFilter,
     ) {
         launchCatchingTask {
             val note = withCol { currentCard!!.note(this@withCol) }
@@ -2700,7 +2700,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         if (handler === this) return
         refreshRequired = ViewerRefresh.updateState(refreshRequired, changes)
@@ -2713,13 +2713,13 @@ abstract class AbstractFlashcardViewer :
 
     override suspend fun handlePostRequest(
         uri: String,
-        bytes: ByteArray
+        bytes: ByteArray,
     ): ByteArray {
         return if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
             jsApi.handleJsApiRequest(
                 uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length),
                 bytes,
-                returnDefaultValues = true
+                returnDefaultValues = true,
             )
         } else {
             throw IllegalArgumentException("unhandled request: $uri")

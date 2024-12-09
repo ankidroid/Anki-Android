@@ -56,7 +56,7 @@ class FilteredDeckOptions :
             "{'search'=\"prop:due<=2\", 'order'=6}",
             "{'search'=\"is:due tag:TAG\", 'order'=6}",
             "{'search'=\"is:due\", 'order'=3}",
-            "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}"
+            "{'search'=\"\", 'steps'=\"1 10 20\", 'order'=0}",
         )
 
     inner class DeckPreferenceHack : AppCompatPreferenceActivity<FilteredDeckOptions.DeckPreferenceHack>.AbstractPreferenceHack() {

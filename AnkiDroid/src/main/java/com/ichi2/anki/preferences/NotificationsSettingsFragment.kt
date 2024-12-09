@@ -58,7 +58,7 @@ class NotificationsSettingsFragment : SettingsFragment() {
                             0,
                             Intent(requireContext(), NotificationService::class.java),
                             0,
-                            false
+                            false,
                         )
                     val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
                     if (intent != null) {

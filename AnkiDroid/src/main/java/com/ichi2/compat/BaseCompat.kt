@@ -59,7 +59,7 @@ open class BaseCompat : Compat {
     // Until API 26 just specify time, after that specify effect also
     override fun vibrate(
         context: Context,
-        duration: Duration
+        duration: Duration,
     ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
         vibratorManager?.vibrate(duration.inWholeMilliseconds)
@@ -69,7 +69,7 @@ open class BaseCompat : Compat {
     @Throws(IOException::class)
     override fun copyFile(
         source: String,
-        target: String
+        target: String,
     ) {
         try {
             FileInputStream(source).use { fileInputStream -> copyFile(fileInputStream, target) }
@@ -83,7 +83,7 @@ open class BaseCompat : Compat {
     @Throws(IOException::class)
     override fun copyFile(
         source: String,
-        target: OutputStream
+        target: OutputStream,
     ): Long {
         var count: Long
         try {
@@ -99,7 +99,7 @@ open class BaseCompat : Compat {
     @Throws(IOException::class)
     override fun copyFile(
         source: InputStream,
-        target: String
+        target: String,
     ): Long {
         var bytesCopied: Long
         try {
@@ -115,7 +115,7 @@ open class BaseCompat : Compat {
     @Throws(IOException::class)
     private fun copyFile(
         source: InputStream,
-        target: OutputStream
+        target: OutputStream,
     ): Long {
         // balance memory and performance, it appears 32k is the best trade-off
         // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
@@ -145,7 +145,7 @@ open class BaseCompat : Compat {
             throw IOException(
                 "Directory " + directory.path + "'s file can not be listed. " +
                     "Probable cause are that it's not a directory " +
-                    "(which violates the method's assumption) or a permission issue."
+                    "(which violates the method's assumption) or a permission issue.",
             )
         }
         val length = paths.size
@@ -199,7 +199,7 @@ open class BaseCompat : Compat {
         baseFileName: String,
         extension: String,
         format: Bitmap.CompressFormat,
-        quality: Int
+        quality: Int,
     ): Uri {
         val pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val ankiDroidDirectory = File(pictures, "AnkiDroid")
@@ -229,7 +229,7 @@ open class BaseCompat : Compat {
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveActivity(intent, flags.value.toInt())
     }
@@ -238,7 +238,7 @@ open class BaseCompat : Compat {
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveService(intent, flags.value.toInt())
     }
@@ -247,7 +247,7 @@ open class BaseCompat : Compat {
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): List<ResolveInfo> {
         return packageManager.queryIntentActivities(intent, flags.value.toInt())
     }
@@ -256,7 +256,7 @@ open class BaseCompat : Compat {
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
-        className: Class<T>
+        className: Class<T>,
     ): T? {
         return try {
             @Suppress("UNCHECKED_CAST")
@@ -270,7 +270,7 @@ open class BaseCompat : Compat {
     override fun getPackageInfo(
         packageManager: PackageManager,
         packageName: String,
-        flags: PackageInfoFlagsCompat
+        flags: PackageInfoFlagsCompat,
     ): PackageInfo? = packageManager.getPackageInfo(packageName, flags.value.toInt())
 
     // Until API 33
@@ -278,7 +278,7 @@ open class BaseCompat : Compat {
     override fun <T : Serializable?> getSerializable(
         bundle: Bundle,
         key: String,
-        clazz: Class<T>
+        clazz: Class<T>,
     ): T? = bundle.getSerializable(key) as? T?
 
     @Suppress("ktlint:standard:property-naming")

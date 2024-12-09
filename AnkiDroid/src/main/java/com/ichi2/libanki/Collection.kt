@@ -75,7 +75,7 @@ class Collection(
      * Operations that work on a closed collection (eg importing), or do not require a collection
      * at all (eg translations) are the exception.
      */
-    val backend: Backend
+    val backend: Backend,
 ) {
     /** Access backend translations */
     val tr = backend.tr
@@ -200,7 +200,7 @@ class Collection(
     @Synchronized
     fun close(
         downgrade: Boolean = false,
-        forFullSync: Boolean = false
+        forFullSync: Boolean = false,
     ) {
         if (!dbClosed) {
             if (!forFullSync) {
@@ -244,7 +244,7 @@ class Collection(
         db.execute(
             "update col set scm=?, mod=?",
             TimeManager.time.intTimeMS(),
-            TimeManager.time.intTimeMS()
+            TimeManager.time.intTimeMS(),
         )
     }
 
@@ -282,14 +282,14 @@ class Collection(
 
     fun updateCards(
         cards: Iterable<Card>,
-        skipUndoEntry: Boolean = false
+        skipUndoEntry: Boolean = false,
     ): OpChanges {
         return backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
     }
 
     fun updateCard(
         card: Card,
-        skipUndoEntry: Boolean = false
+        skipUndoEntry: Boolean = false,
     ): OpChanges {
         return updateCards(listOf(card), skipUndoEntry)
     }
@@ -378,13 +378,13 @@ class Collection(
      */
     fun findCards(
         search: String,
-        order: SortOrder = SortOrder.NoOrdering()
+        order: SortOrder = SortOrder.NoOrdering(),
     ): List<CardId> {
         val adjustedOrder =
             if (order is SortOrder.UseCollectionOrdering) {
                 SortOrder.BuiltinSortKind(
                     config.get("sortType") ?: "noteFld",
-                    config.get("sortBackwards") ?: false
+                    config.get("sortBackwards") ?: false,
                 )
             } else {
                 order
@@ -398,13 +398,13 @@ class Collection(
 
     fun findNotes(
         query: String,
-        order: SortOrder = SortOrder.NoOrdering()
+        order: SortOrder = SortOrder.NoOrdering(),
     ): List<Long> {
         val adjustedOrder =
             if (order is SortOrder.UseCollectionOrdering) {
                 SortOrder.BuiltinSortKind(
                     config.get("noteSortType") ?: "noteFld",
-                    config.get("browserNoteSortBackwards") ?: false
+                    config.get("browserNoteSortBackwards") ?: false,
                 )
             } else {
                 order
@@ -425,7 +425,7 @@ class Collection(
     @NotInLibAnki
     fun findOneCardByNote(
         query: String,
-        order: SortOrder
+        order: SortOrder,
     ): List<CardId> {
         // This function shouldn't exist and CardBrowser should be modified to use Notes,
         // so not much effort was expended here
@@ -444,7 +444,7 @@ class Collection(
       GROUP BY nid
     ) AS card_with_min_ord
     JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord
-                """.trimMargin()
+                """.trimMargin(),
             )
         val resultList = mutableListOf<CardIdToNoteId>()
 
@@ -471,7 +471,7 @@ class Collection(
         dst: String,
         regex: Boolean = false,
         field: String? = null,
-        fold: Boolean = true
+        fold: Boolean = true,
     ): Int {
         return backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
     }
@@ -516,7 +516,7 @@ class Collection(
         val columns =
             config.get<List<String>>(
                 BrowserConfig.ACTIVE_NOTE_COLUMNS_KEY,
-                BrowserDefaults.NOTE_COLUMNS
+                BrowserDefaults.NOTE_COLUMNS,
             )!!
         backend.setActiveBrowserColumns(columns)
         return columns
@@ -558,7 +558,7 @@ class Collection(
         return if (elapsed > limit) {
             TimeboxReached(
                 limit,
-                sched.reps - startReps
+                sched.reps - startReps,
             ).also {
                 startTimebox()
             }
@@ -593,7 +593,7 @@ class Collection(
 
     fun removeNotes(
         nids: Iterable<NoteId> = listOf(),
-        cids: Iterable<CardId> = listOf()
+        cids: Iterable<CardId> = listOf(),
     ): OpChangesWithCount {
         return backend.removeNotes(noteIds = nids, cardIds = cids).also {
             Timber.d("removeNotes: %d changes", it.count)
@@ -606,7 +606,7 @@ class Collection(
 
     fun addNote(
         note: Note,
-        deckId: DeckId
+        deckId: DeckId,
     ): OpChanges {
         val resp = backend.addNote(note.toBackendNote(), deckId)
         note.id = resp.noteId
@@ -635,7 +635,7 @@ class Collection(
         val badNotes =
             db.queryScalar(
                 "select 1 from notes where id not in (select distinct nid from cards) " +
-                    "or mid not in " + ids2str(notetypes.ids()) + " limit 1"
+                    "or mid not in " + ids2str(notetypes.ids()) + " limit 1",
             ) > 0
         // notes without cards or models
         if (badNotes) {
@@ -654,7 +654,7 @@ class Collection(
                     "select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
                         "select id from notes where mid = ?) limit 1",
                     tmpls.length(),
-                    m.getLong("id")
+                    m.getLong("id"),
                 ) > 0
             if (badOrd) {
                 return false
@@ -668,17 +668,17 @@ class Collection(
      */
     fun setUserFlag(
         flag: Flag,
-        cids: List<Long>
+        cids: List<Long>,
     ) {
         db.execute(
             "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " +
                 ids2str(
-                    cids
+                    cids,
                 ),
             7,
             flag.code,
             usn(),
-            TimeManager.time.intTime()
+            TimeManager.time.intTime(),
         )
     }
 
@@ -695,7 +695,7 @@ class Collection(
 
     fun setDeck(
         cids: Iterable<CardId>,
-        did: DeckId
+        did: DeckId,
     ): OpChangesWithCount {
         return backend.setDeck(cardIds = cids, deckId = did)
     }
@@ -725,7 +725,7 @@ class Collection(
     @CheckResult
     fun setUserFlagForCards(
         cids: Iterable<Long>,
-        flag: Flag
+        flag: Flag,
     ): OpChangesWithCount {
         return backend.setFlag(cardIds = cids, flag = flag.code)
     }
@@ -823,14 +823,14 @@ class Collection(
     fun compareAnswer(
         expected: String,
         provided: String,
-        combining: Boolean = true
+        combining: Boolean = true,
     ): String {
         return backend.compareAnswer(expected = expected, provided = provided, combining = combining)
     }
 
     fun extractClozeForTyping(
         text: String,
-        ordinal: Int
+        ordinal: Int,
     ): String {
         return backend.extractClozeForTyping(text = text, ordinal = ordinal)
     }

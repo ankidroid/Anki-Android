@@ -97,10 +97,10 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
             onCreateMenuCondition = { menu ->
                 setMenuItemIcon(
                     menu.findItem(R.id.action_restart),
-                    if (selectedMediaOptions == AUDIO_CLIP) R.drawable.ic_replace_audio else R.drawable.ic_replace_video
+                    if (selectedMediaOptions == AUDIO_CLIP) R.drawable.ic_replace_audio else R.drawable.ic_replace_video,
                 )
                 menu.findItem(R.id.action_crop).isVisible = false
-            }
+            },
         ) { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_restart -> {
@@ -133,7 +133,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -154,7 +154,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                     "audio/*",
                     // #9226: allows ogg on Android 8
                     arrayOf("audio/*", "application/ogg"),
-                    R.string.multimedia_editor_popup_audio_clip
+                    R.string.multimedia_editor_popup_audio_clip,
                 )
             }
 
@@ -163,7 +163,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 openMediaChooser(
                     "video/*",
                     emptyArray(),
-                    R.string.multimedia_editor_popup_video_clip
+                    R.string.multimedia_editor_popup_video_clip,
                 )
             }
         }
@@ -177,9 +177,9 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         mediaPlayer =
             ExoPlayer.Builder(requireContext()).setAudioAttributes(
                 AudioAttributes.Builder().setContentType(
-                    C.AUDIO_CONTENT_TYPE_MUSIC
+                    C.AUDIO_CONTENT_TYPE_MUSIC,
                 ).build(),
-                true
+                true,
             ).build()
         playerView.player = mediaPlayer
         mediaFileSize = requireView().findViewById(R.id.media_size_textview)
@@ -227,7 +227,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     private fun openMediaChooser(
         initialMimeType: String,
         extraMimeTypes: Array<String>,
-        @StringRes prompt: Int
+        @StringRes prompt: Int,
     ) {
         val allowAllFiles =
             sharedPrefs().getBoolean("mediaImportAllowAllFiles", false)
@@ -292,7 +292,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
             arrayOf(
                 MediaStore.MediaColumns.DISPLAY_NAME,
                 MediaStore.MediaColumns.SIZE,
-                MediaStore.MediaColumns.MIME_TYPE
+                MediaStore.MediaColumns.MIME_TYPE,
             )
         var mediaClipFullNameParts: Array<String>
         requireContext().contentResolver.query(selectedMediaClip, queryColumns, null, null, null)
@@ -315,8 +315,8 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                                 e,
                                 "Media Clip addition failed. Name $mediaClipFullName / cursor mime type column type " +
                                     cursor.getType(
-                                        2
-                                    )
+                                        2,
+                                    ),
                             )
                             showSomethingWentWrong()
                             return null
@@ -326,7 +326,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                     mediaClipFullNameParts =
                         arrayOf(
                             mediaClipFullName.substring(0 until lastPointIndex),
-                            mediaClipFullName.substring(lastPointIndex + 1)
+                            mediaClipFullName.substring(lastPointIndex + 1),
                         )
                 }
             }
@@ -344,7 +344,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
             val clipCopy =
                 createCachedFile(
                     "${mediaClipFullNameParts[0]}.${mediaClipFullNameParts[1]}",
-                    ankiCacheDirectory
+                    ankiCacheDirectory,
                 )
             Timber.d("media clip picker file path is: %s", clipCopy.absolutePath)
             clipCopy
@@ -364,7 +364,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      */
     private fun copyMediaFileToTemp(
         selectedMediaClip: Uri,
-        clipCopy: File
+        clipCopy: File,
     ) {
         try {
             requireContext().contentResolver.openInputStream(selectedMediaClip).use { inputStream ->
@@ -397,13 +397,13 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
-            mediaOptions: MediaOption
+            mediaOptions: MediaOption,
         ): Intent {
             return MultimediaActivity.getIntent(
                 context,
                 AudioVideoFragment::class,
                 multimediaExtra,
-                mediaOptions
+                mediaOptions,
             )
         }
     }
@@ -411,7 +411,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     /** The supported media types that a user choose from the bottom sheet which [AudioVideoFragment] uses */
     enum class MediaOption {
         AUDIO_CLIP,
-        VIDEO_CLIP
+        VIDEO_CLIP,
     }
 
     /**
@@ -423,7 +423,7 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      */
     private fun getTitleForFragment(
         mediaOption: MediaOption,
-        context: Context
+        context: Context,
     ): String {
         return when (mediaOption) {
             AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)

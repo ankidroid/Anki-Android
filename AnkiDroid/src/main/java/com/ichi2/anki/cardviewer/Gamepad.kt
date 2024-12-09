@@ -31,7 +31,7 @@ import android.webkit.WebView
  */
 fun WebView?.handledGamepadKeyUp(
     keyCode: Int,
-    keyEvent: KeyEvent
+    keyEvent: KeyEvent,
 ): Boolean {
     if (this == null) return false
     if (!KeyEvent.isGamepadButton(keyCode)) return false
@@ -50,7 +50,7 @@ fun WebView?.handledGamepadKeyUp(
  */
 fun WebView?.handledGamepadKeyDown(
     keyCode: Int,
-    keyEvent: KeyEvent
+    keyEvent: KeyEvent,
 ): Boolean {
     if (this == null) return false
     if (!KeyEvent.isGamepadButton(keyCode)) return false

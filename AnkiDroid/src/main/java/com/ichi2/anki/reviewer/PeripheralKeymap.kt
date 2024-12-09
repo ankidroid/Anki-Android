@@ -46,7 +46,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
 
     private fun add(
         command: ViewerCommand,
-        preferences: SharedPreferences
+        preferences: SharedPreferences,
     ) {
         val bindings =
             fromPreference(preferences, command)
@@ -61,7 +61,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
 
     fun onKeyDown(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         return if (!hasSetup || event.repeatCount > 0) {
             false
@@ -73,7 +73,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
     @Suppress("UNUSED_PARAMETER")
     fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent?
+        event: KeyEvent?,
     ): Boolean {
         return false
     }
@@ -81,14 +81,14 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
     class KeyMap(
         private val processor: ViewerCommand.CommandProcessor,
         private val reviewerUI: ReviewerUi,
-        private val screenBuilder: (CardSide) -> Screen
+        private val screenBuilder: (CardSide) -> Screen,
     ) {
         val bindingMap = HashMap<MappableBinding, ViewerCommand>()
 
         @Suppress("UNUSED_PARAMETER")
         fun onKeyDown(
             keyCode: Int,
-            event: KeyEvent?
+            event: KeyEvent?,
         ): Boolean {
             var ret = false
             val bindings = possibleKeyBindings(event!!)
@@ -103,7 +103,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
 
         operator fun set(
             key: MappableBinding,
-            value: ViewerCommand
+            value: ViewerCommand,
         ) {
             bindingMap[key] = value
         }

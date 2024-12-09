@@ -69,7 +69,7 @@ class TagsDialog : AnalyticsDialogFragment {
         /**
          * A custom study session filtered by tags
          */
-        CUSTOM_STUDY_TAGS
+        CUSTOM_STUDY_TAGS,
     }
 
     private var type: DialogType? = null
@@ -112,7 +112,7 @@ class TagsDialog : AnalyticsDialogFragment {
         context: Context,
         type: DialogType,
         checkedTags: List<String>,
-        allTags: List<String>
+        allTags: List<String>,
     ): TagsDialog {
         return withArguments(context, type, checkedTags, null, allTags)
     }
@@ -131,12 +131,12 @@ class TagsDialog : AnalyticsDialogFragment {
         type: DialogType,
         checkedTags: List<String>,
         uncheckedTags: List<String>?,
-        allTags: List<String>
+        allTags: List<String>,
     ): TagsDialog {
         val data = TagsFile.TagsData(type, checkedTags, uncheckedTags, allTags)
         val file = TagsFile(context.cacheDir, data)
         arguments = this.arguments ?: bundleOf(
-            ARG_TAGS_FILE to file
+            ARG_TAGS_FILE to file,
         )
         return this
     }
@@ -147,7 +147,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
         val tagsFile =
             requireNotNull(
-                BundleCompat.getParcelable(requireArguments(), ARG_TAGS_FILE, TagsFile::class.java)
+                BundleCompat.getParcelable(requireArguments(), ARG_TAGS_FILE, TagsFile::class.java),
             ) {
                 "$ARG_TAGS_FILE is required"
             }
@@ -158,7 +158,7 @@ class TagsDialog : AnalyticsDialogFragment {
             TagsList(
                 allTags = data.allTags,
                 checkedTags = data.checkedTags,
-                uncheckedTags = data.uncheckedTags
+                uncheckedTags = data.uncheckedTags,
             )
         isCancelable = true
     }
@@ -170,7 +170,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
     @NeedsTest(
         "In EDIT_TAGS dialog, long-clicking a tag should open the add tag dialog with the clicked tag" +
-            "filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click."
+            "filled as prefix properly. In other dialog types, long-clicking a tag behaves like a short click.",
     )
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         @SuppressLint("InflateParams")
@@ -215,7 +215,7 @@ class TagsDialog : AnalyticsDialogFragment {
                     tagsDialogListener.onSelectedTags(
                         tags!!.copyOfCheckedTagList(),
                         tags!!.copyOfIndeterminateTagList(),
-                        selectedOption
+                        selectedOption,
                     )
                 }
                 .negativeButton(R.string.dialog_cancel)
@@ -280,7 +280,7 @@ class TagsDialog : AnalyticsDialogFragment {
                     adapter!!.filter.filter(newText)
                     return true
                 }
-            }
+            },
         )
         val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_action_select_all)
         checkAllItem.setOnMenuItemClickListener {
@@ -312,7 +312,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 setView(R.layout.dialog_generic_text_input)
             }.input(
                 hint = getString(R.string.tag_name),
-                inputType = InputType.TYPE_CLASS_TEXT
+                inputType = InputType.TYPE_CLASS_TEXT,
             ) { d: AlertDialog?, input: CharSequence ->
                 addTag(input.toString())
                 d?.dismiss()
@@ -439,7 +439,7 @@ class TagsFile(path: String) : File(path), Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeString(path)
     }
@@ -464,6 +464,6 @@ class TagsFile(path: String) : File(path), Parcelable {
         val type: TagsDialog.DialogType,
         val checkedTags: List<String>,
         val uncheckedTags: List<String>?,
-        val allTags: List<String>
+        val allTags: List<String>,
     )
 }

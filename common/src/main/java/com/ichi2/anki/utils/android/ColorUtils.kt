@@ -30,7 +30,7 @@ import com.ichi2.anki.common.utils.ext.clamp
 @ColorInt
 fun darkenColor(
     @ColorInt argb: Int,
-    factor: Float
+    factor: Float,
 ): Int {
     val hsv = argb.toHSV()
     // https://en.wikipedia.org/wiki/HSL_and_HSV

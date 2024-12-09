@@ -26,7 +26,7 @@ internal class BasicModel {
         |<hr id="answer">
         
         |{{Back}}
-                """.trimMargin()
+                """.trimMargin(),
             )
     }
 }

@@ -26,7 +26,7 @@ class TaskSchedulerRule : TestRule {
 
     override fun apply(
         base: Statement,
-        description: Description
+        description: Description,
     ): Statement {
         runInForeground = description.getAnnotation(RunInBackground::class.java) == null
         return base

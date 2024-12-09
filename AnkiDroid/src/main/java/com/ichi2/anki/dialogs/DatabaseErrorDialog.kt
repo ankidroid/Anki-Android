@@ -253,7 +253,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             if (backups[index].length() > 0) {
                                 // restore the backup if it's valid
                                 requireDeckPicker().restoreFromBackup(
-                                    backups[index].path
+                                    backups[index].path,
                                 )
                                 requireActivity().dismissAllDialogFragments()
                             } else {
@@ -284,7 +284,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         val time = TimeManager.time
                         Timber.i(
                             "closeCollection: %s",
-                            "DatabaseErrorDialog: Before Create New Collection"
+                            "DatabaseErrorDialog: Before Create New Collection",
                         )
                         CollectionManager.closeCollectionBlocking()
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
@@ -363,11 +363,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         when (values[index]) {
                             IncompatibleDbVersionEntries.RESTORE ->
                                 showDatabaseErrorDialog(
-                                    DIALOG_RESTORE_BACKUP
+                                    DIALOG_RESTORE_BACKUP,
                                 )
                             IncompatibleDbVersionEntries.ONE_WAY ->
                                 showDatabaseErrorDialog(
-                                    DIALOG_ONE_WAY_SYNC_FROM_SERVER
+                                    DIALOG_ONE_WAY_SYNC_FROM_SERVER,
                                 )
                         }
                     }
@@ -412,14 +412,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         val combinedInfo =
             listOf(
                 exceptionData?.toHumanReadableString(),
-                DebugInfoService.getDebugInfo(requireContext())
+                DebugInfoService.getDebugInfo(requireContext()),
             )
                 .filterNotNull()
                 .joinToString(separator = "\n")
 
         requireContext().copyToClipboard(
             combinedInfo,
-            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+            failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }
 
@@ -427,14 +427,14 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     enum class UninstallListItem(
         @StringRes val stringRes: Int,
         val dismissesDialog: Boolean,
-        val onClick: (AnkiActivity) -> Unit
+        val onClick: (AnkiActivity) -> Unit,
     ) {
         RESTORE_FROM_ANKIWEB(
             R.string.restore_data_from_ankiweb,
             dismissesDialog = true,
             {
                 this.displayResetToNewDirectoryDialog(it)
-            }
+            },
         ),
         INSTALL_NON_PLAY_APP_RECOMMENDED(
             R.string.install_non_play_store_ankidroid_recommended,
@@ -442,7 +442,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             {
                 val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
                 it.openUrl(restoreUi)
-            }
+            },
         ),
         INSTALL_NON_PLAY_APP_NORMAL(
             R.string.install_non_play_store_ankidroid,
@@ -450,7 +450,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             {
                 val restoreUi = Uri.parse(it.getString(R.string.link_install_non_play_store_install))
                 it.openUrl(restoreUi)
-            }
+            },
         ),
         RESTORE_FROM_BACKUP(
             R.string.restore_data_from_backup,
@@ -468,27 +468,27 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             ImportOptions(
                                 importTextFile = false,
                                 importColpkg = true,
-                                importApkg = false
-                            )
+                                importApkg = false,
+                            ),
                         )
                     }
                 }
-            }
+            },
         ),
         GET_HELP(
             R.string.help_title_get_help,
             dismissesDialog = false,
             {
                 it.openUrl(Uri.parse(it.getString(R.string.link_forum)))
-            }
+            },
         ),
         RECREATE_COLLECTION(
             R.string.create_new_collection,
             dismissesDialog = false,
             {
                 this.displayResetToNewDirectoryDialog(it)
-            }
-        )
+            },
+        ),
         ;
 
         companion object {
@@ -502,7 +502,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         Timber.w("Creating new collection")
                         Timber.i(
                             "closeCollection: %s",
-                            "DatabaseErrorDialog: Before Create New Collection"
+                            "DatabaseErrorDialog: Before Create New Collection",
                         )
                         CollectionManager.closeCollectionBlocking()
                         CollectionHelper.resetAnkiDroidDirectory(context)
@@ -570,7 +570,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     res().getString(
                         R.string.incompatible_database_version_summary,
                         schemaVersion,
-                        databaseVersion
+                        databaseVersion,
                     )
                 }
                 DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> {
@@ -633,7 +633,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         DIALOG_DISK_FULL,
 
         /** If [android.R.attr.preserveLegacyExternalStorage] is no longer active */
-        DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL
+        DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL,
     }
 
     companion object {
@@ -659,7 +659,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         @CheckResult
         fun newInstance(
             dialogType: DatabaseErrorDialogType,
-            exceptionData: CustomExceptionData? = null
+            exceptionData: CustomExceptionData? = null,
         ): DatabaseErrorDialog {
             val f = DatabaseErrorDialog()
             val args = Bundle()
@@ -673,7 +673,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     /** Database error dialog */
     class ShowDatabaseErrorDialog(val dialogType: DatabaseErrorDialogType) : DialogHandlerMessage(
         which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
-        analyticName = "DatabaseErrorDialog"
+        analyticName = "DatabaseErrorDialog",
     ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             activity.showDatabaseErrorDialog(dialogType)
@@ -684,7 +684,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 what = this@ShowDatabaseErrorDialog.what
                 data =
                     bundleOf(
-                        DIALOG_KEY to dialogType
+                        DIALOG_KEY to dialogType,
                     )
             }
 
@@ -698,7 +698,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
     @Parcelize
     class CustomExceptionData(
-        val stackTrace: String
+        val stackTrace: String,
     ) : Parcelable {
         fun toHumanReadableString() = stackTrace
 
@@ -727,10 +727,10 @@ private enum class ErrorHandlingEntries {
     RESTORE,
     ONE_WAY,
     NEW,
-    DEBUG_INFO
+    DEBUG_INFO,
 }
 
 private enum class IncompatibleDbVersionEntries {
     RESTORE,
-    ONE_WAY
+    ONE_WAY,
 }

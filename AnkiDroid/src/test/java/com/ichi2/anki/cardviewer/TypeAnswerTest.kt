@@ -252,10 +252,10 @@ $!"""
     private fun typeAnsAnswerFilter(
         answer: String,
         correctAnswer: String,
-        userAnswer: String
+        userAnswer: String,
     ): String =
         TypeAnswer(
             useInputTag = false,
-            autoFocus = false
+            autoFocus = false,
         ).filterAnswer(answer, correctAnswer, userAnswer)
 }

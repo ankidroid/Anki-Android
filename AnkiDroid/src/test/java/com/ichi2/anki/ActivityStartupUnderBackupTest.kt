@@ -53,15 +53,15 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
         notYetHandled(IntentHandler2::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(
             PreferencesActivity::class.java.simpleName,
-            "Not working (or implemented) - inherits from AppCompatPreferenceActivity"
+            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
         )
         notYetHandled(
             FilteredDeckOptions::class.java.simpleName,
-            "Not working (or implemented) - inherits from AppCompatPreferenceActivity"
+            "Not working (or implemented) - inherits from AppCompatPreferenceActivity",
         )
         notYetHandled(
             SingleFragmentActivity::class.java.simpleName,
-            "Implemented, but the test fails because the activity throws if a specific intent extra isn't set"
+            "Implemented, but the test fails because the activity throws if a specific intent extra isn't set",
         )
         notYetHandled(InstantNoteEditorActivity::class.java.simpleName, "Single instance activity so should be used")
     }
@@ -92,7 +92,7 @@ have the following code snippet at the start:
 if (showedActivityFailedScreen(savedInstanceState)) {
   return;
 }
-$stackTrace"""
+$stackTrace""",
                 )
                 throw npe
             }
@@ -106,13 +106,13 @@ $stackTrace"""
         assertThat(
             "If a backup was taking place, the activity should be destroyed successfully",
             controller.get()!!.isDestroyed,
-            equalTo(true)
+            equalTo(true),
         )
     }
 
     private fun notYetHandled(
         activityName: String,
-        reason: String
+        reason: String,
     ) {
         if (launcher!!.simpleName == activityName) {
             assumeThat("$activityName $reason", true, equalTo(false))

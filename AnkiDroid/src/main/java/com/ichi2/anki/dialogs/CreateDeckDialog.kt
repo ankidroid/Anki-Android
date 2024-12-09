@@ -55,7 +55,7 @@ class CreateDeckDialog(
     private val context: Context,
     private val title: Int,
     private val deckDialogType: DeckDialogType,
-    private val parentId: Long?
+    private val parentId: Long?,
 ) {
     private var previousDeckName: String? = null
     lateinit var onNewDeckCreated: ((DeckId) -> Unit)
@@ -66,7 +66,7 @@ class CreateDeckDialog(
         FILTERED_DECK,
         DECK,
         SUB_DECK,
-        RENAME_DECK
+        RENAME_DECK,
     }
 
     private val getColUnsafe
@@ -112,7 +112,7 @@ class CreateDeckDialog(
                             else -> {
                                 dialog.getInputTextLayout().showSnackbar(
                                     context.getString(R.string.deck_already_exists),
-                                    Snackbar.LENGTH_SHORT
+                                    Snackbar.LENGTH_SHORT,
                                 )
                             }
                         }
@@ -154,7 +154,7 @@ class CreateDeckDialog(
      */
     private fun deckExists(
         col: Collection,
-        name: String
+        name: String,
     ): Boolean = col.decks.byName(name) != null
 
     /**
@@ -170,7 +170,7 @@ class CreateDeckDialog(
 
     fun createSubDeck(
         did: DeckId,
-        deckName: String?
+        deckName: String?,
     ) {
         val deckNameWithParentName = getColUnsafe.decks.getSubdeckName(did, deckName)
         createDeck(deckNameWithParentName!!)
@@ -265,7 +265,7 @@ class CreateDeckDialog(
 
     private fun displayFeedback(
         message: String,
-        duration: Int = Snackbar.LENGTH_SHORT
+        duration: Int = Snackbar.LENGTH_SHORT,
     ) {
         if (context is Activity) {
             context.showSnackbar(message, duration)

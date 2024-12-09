@@ -40,7 +40,7 @@ import java.lang.StringBuilder
 object StringFormatDetector {
     fun addText(
         sb: StringBuilder,
-        node: Node
+        node: Node,
     ) {
         val nodeType = node.nodeType
         if (nodeType == Node.TEXT_NODE || nodeType == Node.CDATA_SECTION_NODE) {

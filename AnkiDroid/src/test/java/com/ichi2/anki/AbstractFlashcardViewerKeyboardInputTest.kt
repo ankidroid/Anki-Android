@@ -62,7 +62,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
 
         assertThat(
             "When text field is focused, space should not display answer",
-            !underTest.didDisplayAnswer()
+            !underTest.didDisplayAnswer(),
         )
     }
 

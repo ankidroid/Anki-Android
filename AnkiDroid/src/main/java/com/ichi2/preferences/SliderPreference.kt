@@ -116,7 +116,7 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
 
     override fun onGetDefaultValue(
         a: TypedArray,
-        index: Int
+        index: Int,
     ): Any {
         return a.getInt(index, valueFrom)
     }

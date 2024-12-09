@@ -33,7 +33,7 @@ import timber.log.Timber
  */
 fun deleteMedia(
     col: Collection,
-    unused: List<String>
+    unused: List<String>,
 ): Int {
     // FIXME: this provides progress info that is not currently used
     col.media.removeFiles(unused)
@@ -46,7 +46,7 @@ suspend fun renderBrowserQA(
     n: Int,
     column1: CardBrowserColumn,
     column2: CardBrowserColumn,
-    onProgressUpdate: (Int) -> Unit
+    onProgressUpdate: (Int) -> Unit,
 ): Pair<List<CardBrowser.CardCache>, MutableList<Long>> =
     withContext(Dispatchers.IO) {
         Timber.d("doInBackgroundRenderBrowserQA")
@@ -100,7 +100,7 @@ suspend fun renderBrowserQA(
 fun saveModel(
     col: Collection,
     notetype: NotetypeJson,
-    templateChanges: ArrayList<Array<Any>>
+    templateChanges: ArrayList<Array<Any>>,
 ) {
     Timber.d("doInBackgroundSaveModel")
     val oldModel = col.notetypes.get(notetype.getLong("id"))

@@ -28,49 +28,49 @@ import com.ichi2.anki.R
  * Preference used on the headers of [com.ichi2.anki.preferences.HeaderFragment]
  */
 class HeaderPreference
-@JvmOverloads // fixes: Error inflating class com.ichi2.preferences.HeaderPreference
-constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
-    defStyleRes: Int = androidx.preference.R.style.Preference
-) : Preference(context, attrs, defStyleAttr, defStyleRes) {
-    private var isHighlighted = false
+    @JvmOverloads // fixes: Error inflating class com.ichi2.preferences.HeaderPreference
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
+        defStyleRes: Int = androidx.preference.R.style.Preference,
+    ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
+        private var isHighlighted = false
 
-    init {
-        context.withStyledAttributes(attrs, R.styleable.HeaderPreference) {
-            val entries = getTextArray(R.styleable.HeaderPreference_summaryEntries)
-            if (entries != null) {
-                summary = buildHeaderSummary(*entries)
+        init {
+            context.withStyledAttributes(attrs, R.styleable.HeaderPreference) {
+                val entries = getTextArray(R.styleable.HeaderPreference_summaryEntries)
+                if (entries != null) {
+                    summary = buildHeaderSummary(*entries)
+                }
+            }
+        }
+
+        override fun onBindViewHolder(holder: PreferenceViewHolder) {
+            super.onBindViewHolder(holder)
+            if (isHighlighted) {
+                val color = ThemeUtils.getThemeAttrColor(context, R.attr.currentDeckBackgroundColor)
+                holder.itemView.setBackgroundColor(color)
+            }
+        }
+
+        fun setHighlighted(highlight: Boolean) {
+            isHighlighted = highlight
+            notifyChanged()
+        }
+
+        companion object {
+            /**
+             * Join [entries] with ` • ` as separator
+             * to build a summary string for some preferences categories
+             * e.g. `foo`, `bar`, `hi` ->  `foo • bar • hi`
+             */
+            fun buildHeaderSummary(vararg entries: CharSequence): String {
+                return if (!LanguageUtils.appLanguageIsRTL()) {
+                    entries.joinToString(separator = " • ")
+                } else {
+                    entries.reversed().joinToString(separator = " • ")
+                }
             }
         }
     }
-
-    override fun onBindViewHolder(holder: PreferenceViewHolder) {
-        super.onBindViewHolder(holder)
-        if (isHighlighted) {
-            val color = ThemeUtils.getThemeAttrColor(context, R.attr.currentDeckBackgroundColor)
-            holder.itemView.setBackgroundColor(color)
-        }
-    }
-
-    fun setHighlighted(highlight: Boolean) {
-        isHighlighted = highlight
-        notifyChanged()
-    }
-
-    companion object {
-        /**
-         * Join [entries] with ` • ` as separator
-         * to build a summary string for some preferences categories
-         * e.g. `foo`, `bar`, `hi` ->  `foo • bar • hi`
-         */
-        fun buildHeaderSummary(vararg entries: CharSequence): String {
-            return if (!LanguageUtils.appLanguageIsRTL()) {
-                entries.joinToString(separator = " • ")
-            } else {
-                entries.reversed().joinToString(separator = " • ")
-            }
-        }
-    }
-}

@@ -54,7 +54,7 @@ class CardMediaPlayerTest : JvmTest() {
     fun `no sounds fires completed listener`() =
         runSoundPlayerTest(
             answers = emptyList(),
-            questions = emptyList()
+            questions = emptyList(),
         ) {
             playAllSoundsAndWait(BACK)
 
@@ -64,7 +64,7 @@ class CardMediaPlayerTest : JvmTest() {
     @Test
     fun singleSoundSuccess() =
         runSoundPlayerTest(
-            questions = listOf(SoundOrVideoTag("abc.mp3"))
+            questions = listOf(SoundOrVideoTag("abc.mp3")),
         ) {
             playAllSoundsAndWait()
 
@@ -76,7 +76,7 @@ class CardMediaPlayerTest : JvmTest() {
     @Test
     fun `back is not played on front`() =
         runSoundPlayerTest(
-            answers = listOf(SoundOrVideoTag("abc.mp3"))
+            answers = listOf(SoundOrVideoTag("abc.mp3")),
         ) {
             playAllSoundsAndWait()
 
@@ -86,7 +86,7 @@ class CardMediaPlayerTest : JvmTest() {
     @Test
     fun `front is not played on back`() =
         runSoundPlayerTest(
-            questions = listOf(SoundOrVideoTag("abc.mp3"))
+            questions = listOf(SoundOrVideoTag("abc.mp3")),
         ) {
             playAllSoundsAndWait(BACK)
 
@@ -98,7 +98,7 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("front.mp3")),
             answers = listOf(SoundOrVideoTag("back.mp3")),
-            replayQuestion = true
+            replayQuestion = true,
         ) {
             replayAllSoundsAndWait(BACK)
 
@@ -113,7 +113,7 @@ class CardMediaPlayerTest : JvmTest() {
         runSoundPlayerTest(
             questions = listOf(SoundOrVideoTag("front.mp3")),
             answers = listOf(SoundOrVideoTag("back.mp3")),
-            replayQuestion = false
+            replayQuestion = false,
         ) {
             replayAllSoundsAndWait(BACK)
 
@@ -125,7 +125,7 @@ class CardMediaPlayerTest : JvmTest() {
     @Test
     fun `onSoundGroupCompleted is called after exception`() =
         runSoundPlayerTest(
-            questions = listOf(SoundOrVideoTag("aa.mp3"))
+            questions = listOf(SoundOrVideoTag("aa.mp3")),
         ) {
             coEvery { tagPlayer.play(any(), any()) } throws TestException("test")
 
@@ -138,7 +138,7 @@ class CardMediaPlayerTest : JvmTest() {
     @Test
     fun `replay calls play twice`() =
         runSoundPlayerTest(
-            questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3"))
+            questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3")),
         ) {
             coEvery { tagPlayer.play(any(), any()) } throws SoundException(RETRY_AUDIO)
 
@@ -157,7 +157,7 @@ class CardMediaPlayerTest : JvmTest() {
     @Test
     fun `stop stops playback and calls completed listener`() =
         runSoundPlayerTest(
-            questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3"))
+            questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3")),
         ) {
             coEvery { tagPlayer.play(any(), any()) } throws SoundException(STOP_AUDIO)
 
@@ -173,7 +173,7 @@ class CardMediaPlayerTest : JvmTest() {
     @Test
     fun `continue continues playback and calls completed listener`() =
         runSoundPlayerTest(
-            questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3"))
+            questions = listOf(SoundOrVideoTag("aa.mp3"), SoundOrVideoTag("bb.mp3")),
         ) {
             coEvery { tagPlayer.play(any(), any()) } throws SoundException(CONTINUE_AUDIO)
 
@@ -226,7 +226,7 @@ class CardMediaPlayerTest : JvmTest() {
         questions: List<AvTag>,
         answers: List<AvTag>,
         replayQuestion: Boolean?,
-        autoplay: Boolean?
+        autoplay: Boolean?,
     ) {
         val card = addNoteUsingBasicModel().firstCard()
         mockkObject(card)
@@ -237,7 +237,7 @@ class CardMediaPlayerTest : JvmTest() {
                 answerText = "",
                 questionAvTags = questions,
                 answerAvTags = answers,
-                css = ""
+                css = "",
             )
         }
 
@@ -266,13 +266,13 @@ fun CardMediaPlayerTest.runSoundPlayerTest(
     answers: List<AvTag> = emptyList(),
     replayQuestion: Boolean? = null,
     autoplay: Boolean? = null,
-    testBody: suspend CardMediaPlayer.() -> Unit
+    testBody: suspend CardMediaPlayer.() -> Unit,
 ) = runTest {
     val cardMediaPlayer =
         CardMediaPlayer(
             soundTagPlayer = tagPlayer,
             ttsPlayer = CompletableDeferred(ttsPlayer),
-            soundErrorListener = mockk()
+            soundErrorListener = mockk(),
         )
     cardMediaPlayer.setOnSoundGroupCompletedListener(onSoundGroupCompleted)
     assertThat("can play sounds", cardMediaPlayer.isEnabled)

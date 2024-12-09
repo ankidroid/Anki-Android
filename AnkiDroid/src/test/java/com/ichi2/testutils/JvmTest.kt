@@ -72,7 +72,7 @@ open class JvmTest : TestClass {
                     priority: Int,
                     tag: String?,
                     message: String,
-                    t: Throwable?
+                    t: Throwable?,
                 ) {
                     // This is noisy in test environments
                     if (tag == "Backend\$checkMainThreadOp") {
@@ -82,7 +82,7 @@ open class JvmTest : TestClass {
                     println("$tag: $message")
                     t?.printStackTrace()
                 }
-            }
+            },
         )
 
         ChangeManager.clearSubscribers()
@@ -116,7 +116,7 @@ open class JvmTest : TestClass {
 
     fun <T> assumeThat(
         actual: T,
-        matcher: Matcher<T>?
+        matcher: Matcher<T>?,
     ) {
         Assume.assumeThat(actual, matcher)
     }

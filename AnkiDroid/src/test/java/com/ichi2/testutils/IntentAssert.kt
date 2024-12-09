@@ -28,7 +28,7 @@ object IntentAssert {
      */
     fun doesNotHaveExtra(
         arguments: Bundle?,
-        extraKey: String?
+        extraKey: String?,
     ) {
         val keySet = assertNotNull(arguments).keySet()
         assertThat("Intent should not have extra '$extraKey'", keySet, not(hasItem(extraKey)))
@@ -40,7 +40,7 @@ object IntentAssert {
     fun hasExtra(
         arguments: Bundle?,
         extraKey: String?,
-        value: Long
+        value: Long,
     ) {
         val keySet = assertNotNull(arguments).keySet()
         assertThat("Intent should have extra '$extraKey'", keySet, hasItem(extraKey))

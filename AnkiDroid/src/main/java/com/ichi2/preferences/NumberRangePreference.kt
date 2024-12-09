@@ -25,7 +25,7 @@ import timber.log.Timber
 
 @Suppress(
     "deprecation",
-    "OVERRIDE_DEPRECATION"
+    "OVERRIDE_DEPRECATION",
 ) // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
 open class NumberRangePreference : android.preference.EditTextPreference, AutoFocusable {
     protected val min: Int

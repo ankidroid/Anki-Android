@@ -37,7 +37,7 @@ import kotlinx.coroutines.withContext
  * @property onDeleteDeck a function to call when a deck is removed
  */
 class WidgetConfigScreenAdapter(
-    private val onDeleteDeck: (SelectableDeck, Int) -> Unit
+    private val onDeleteDeck: (SelectableDeck, Int) -> Unit,
 ) : RecyclerView.Adapter<WidgetConfigScreenAdapter.DeckViewHolder>() {
     private val decks: MutableList<SelectableDeck> = mutableListOf()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -56,7 +56,7 @@ class WidgetConfigScreenAdapter(
      */
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): DeckViewHolder {
         val view =
             LayoutInflater.from(parent.context)
@@ -66,7 +66,7 @@ class WidgetConfigScreenAdapter(
 
     override fun onBindViewHolder(
         holder: DeckViewHolder,
-        position: Int
+        position: Int,
     ) {
         val deck = decks[position]
 
@@ -101,7 +101,7 @@ class WidgetConfigScreenAdapter(
 
     fun moveDeck(
         fromPosition: Int,
-        toPosition: Int
+        toPosition: Int,
     ) {
         val deck = decks.removeAt(fromPosition)
         decks.add(toPosition, deck)

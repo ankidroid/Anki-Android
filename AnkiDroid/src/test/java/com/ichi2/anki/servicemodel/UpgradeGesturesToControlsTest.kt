@@ -75,7 +75,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         assertThat(
             changedKeys,
-            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey)
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey),
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
@@ -107,7 +107,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         assertThat(
             changedKeys,
-            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey)
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey),
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
@@ -149,7 +149,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         assertThat(
             "Binding gestures should not be changed",
             changedKeys,
-            Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey)
+            Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey),
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
@@ -165,7 +165,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         assertThat(
             "Binding gestures should not be changed",
             changedKeys,
-            Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey)
+            Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey),
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
@@ -181,7 +181,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         assertThat(
             "Binding gestures should not be changed",
             changedKeys,
-            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey)
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey),
         )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
@@ -210,7 +210,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
             // pref key, keyCode, opposite key
             return arrayListOf<Array<Any>>(
                 arrayOf(TestData(PREF_KEY_VOLUME_UP, KEYCODE_VOLUME_UP, PREF_KEY_VOLUME_DOWN, volume_up_binding)),
-                arrayOf(TestData(PREF_KEY_VOLUME_DOWN, KEYCODE_VOLUME_DOWN, PREF_KEY_VOLUME_UP, volume_down_binding))
+                arrayOf(TestData(PREF_KEY_VOLUME_DOWN, KEYCODE_VOLUME_DOWN, PREF_KEY_VOLUME_UP, volume_down_binding)),
             ).toList()
         }
 
@@ -218,7 +218,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
             val affectedPreferenceKey: String,
             val keyCode: Int,
             val unaffectedPreferenceKey: String,
-            val binding: MappableBinding
+            val binding: MappableBinding,
         )
     }
 }

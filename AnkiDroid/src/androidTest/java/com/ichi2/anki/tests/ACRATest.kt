@@ -75,7 +75,7 @@ class ACRATest : InstrumentedTest() {
         assertArrayEquals(
             "Debug logcat arguments not set correctly",
             CrashReportService.acraCoreConfigBuilder.build().logcatArguments.toTypedArray(),
-            debugLogcatArguments
+            debugLogcatArguments,
         )
         verifyDebugACRAPreferences()
     }
@@ -84,13 +84,13 @@ class ACRATest : InstrumentedTest() {
         assertTrue(
             "ACRA was not disabled correctly",
             sharedPrefs
-                .getBoolean(ACRA.PREF_DISABLE_ACRA, true)
+                .getBoolean(ACRA.PREF_DISABLE_ACRA, true),
         )
         assertEquals(
             "ACRA feedback was not turned off correctly",
             CrashReportService.FEEDBACK_REPORT_NEVER,
             sharedPrefs
-                .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined")
+                .getString(CrashReportService.FEEDBACK_REPORT_KEY, "undefined"),
         )
     }
 
@@ -142,8 +142,8 @@ class ACRATest : InstrumentedTest() {
                     "Class",
                     "Method" + System.currentTimeMillis().toInt(),
                     "File",
-                    System.currentTimeMillis().toInt()
-                )
+                    System.currentTimeMillis().toInt(),
+                ),
             )
         crash.stackTrace = trace
 
@@ -151,14 +151,14 @@ class ACRATest : InstrumentedTest() {
         val crashData =
             CrashReportDataFactory(
                 testContext,
-                CrashReportService.acraCoreConfigBuilder.build()
+                CrashReportService.acraCoreConfigBuilder.build(),
             ).createCrashData(ReportBuilder().exception(crash))
         assertTrue(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
                 CrashReportService.acraCoreConfigBuilder.build(),
-                crashData
-            )
+                crashData,
+            ),
         )
 
         // A second send should not work
@@ -166,8 +166,8 @@ class ACRATest : InstrumentedTest() {
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
                 CrashReportService.acraCoreConfigBuilder.build(),
-                crashData
-            )
+                crashData,
+            ),
         )
 
         // Now let's clear data
@@ -178,8 +178,8 @@ class ACRATest : InstrumentedTest() {
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
                 CrashReportService.acraCoreConfigBuilder.build(),
-                crashData
-            )
+                crashData,
+            ),
         )
     }
 
@@ -245,14 +245,14 @@ class ACRATest : InstrumentedTest() {
         var secondExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
             "Second handler is AnalyticsLoggingExceptionHandler",
-            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler
+            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler,
         )
         UsageAnalytics.unInstallDefaultExceptionHandler()
         var thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
             "Third handler is neither Analytics nor ThrowableFilter",
             thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler &&
-                thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler
+                thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler,
         )
 
         // chain them again
@@ -268,14 +268,14 @@ class ACRATest : InstrumentedTest() {
         Timber.i("Second handler is a %s", secondExceptionHandler)
         assertThat(
             "Second handler is AnalyticsLoggingExceptionHandler",
-            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler
+            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler,
         )
         UsageAnalytics.unInstallDefaultExceptionHandler()
         thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
             "Third handler is neither Analytics nor ThrowableFilter",
             thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler &&
-                thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler
+                thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler,
         )
     }
 
@@ -286,7 +286,7 @@ class ACRATest : InstrumentedTest() {
     @Throws(ACRAConfigurationException::class)
     private fun assertDialogEnabledStatus(
         message: String,
-        isEnabled: Boolean
+        isEnabled: Boolean,
     ) {
         val config = CrashReportService.acraCoreConfigBuilder.build()
         for (configuration in config.pluginConfigurations) {
@@ -309,14 +309,14 @@ class ACRATest : InstrumentedTest() {
 
     @Throws(ACRAConfigurationException::class)
     private fun assertToastMessage(
-        @StringRes res: Int
+        @StringRes res: Int,
     ) {
         val config = CrashReportService.acraCoreConfigBuilder.build()
         for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {
                 assertEquals(
                     app!!.resources.getString(res),
-                    (configuration as ToastConfiguration).text
+                    (configuration as ToastConfiguration).text,
                 )
                 assertTrue("Toast should be enabled", configuration.enabled())
             }
@@ -326,7 +326,7 @@ class ACRATest : InstrumentedTest() {
     private fun verifyACRANotDisabled() {
         assertFalse(
             "ACRA was not enabled correctly",
-            sharedPrefs.getBoolean(ACRA.PREF_DISABLE_ACRA, false)
+            sharedPrefs.getBoolean(ACRA.PREF_DISABLE_ACRA, false),
         )
     }
 

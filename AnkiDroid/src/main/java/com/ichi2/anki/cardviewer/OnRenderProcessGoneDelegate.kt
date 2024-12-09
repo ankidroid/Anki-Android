@@ -51,7 +51,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
     @RequiresApi(api = Build.VERSION_CODES.O)
     fun onRenderProcessGone(
         view: WebView,
-        detail: RenderProcessGoneDetail
+        detail: RenderProcessGoneDetail,
     ): Boolean {
         Timber.i("Obtaining write lock for card")
         val writeLock = target.writeLock
@@ -135,14 +135,14 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
     @TargetApi(Build.VERSION_CODES.O)
     protected open fun displayRenderLoopDialog(
         currentCardId: CardId,
-        detail: RenderProcessGoneDetail
+        detail: RenderProcessGoneDetail,
     ) {
         val cardInformation = currentCardId.toString()
         val res = target.resources
         val errorDetails =
             if (detail.didCrash()) {
                 res.getString(
-                    R.string.webview_crash_unknwon_detailed
+                    R.string.webview_crash_unknwon_detailed,
                 )
             } else {
                 res.getString(R.string.webview_crash_oom_details)

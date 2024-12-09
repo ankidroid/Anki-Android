@@ -34,7 +34,7 @@ object NoteFieldDecorator {
             "\uD83D\uDC9F",
             "\uD83D\uDCAF",
             "\uD83D\uDE03",
-            "\uD83D\uDE0D"
+            "\uD83D\uDE0D",
         )
     private val huevoOpciones =
         arrayOf(
@@ -61,7 +61,7 @@ object NoteFieldDecorator {
             "unacvatpuvarfr",
             "jro5atnl",
             "FuevquneTbry",
-            "Nxfunl0701"
+            "Nxfunl0701",
         )
 
     fun aplicaHuevo(fieldText: String?): String? {

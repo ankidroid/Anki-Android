@@ -30,7 +30,7 @@ class RenameCardTemplateDialog {
         fun showInstance(
             context: Context,
             prefill: String,
-            block: (result: String) -> Unit
+            block: (result: String) -> Unit,
         ) {
             AlertDialog.Builder(context).show {
                 positiveButton(R.string.dialog_ok) { }
@@ -46,7 +46,7 @@ class RenameCardTemplateDialog {
                     callback = { dialog, result ->
                         block(result.toString())
                         dialog.dismiss()
-                    }
+                    },
                 )
         }
     }

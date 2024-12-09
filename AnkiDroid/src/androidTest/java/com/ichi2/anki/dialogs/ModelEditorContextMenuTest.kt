@@ -38,7 +38,7 @@ class ModelEditorContextMenuTest : InstrumentedTest() {
     fun showsAllOptions() {
         launchFragment(
             fragmentArgs = bundleOf(ModelEditorContextMenu.KEY_LABEL to testDialogTitle),
-            themeResId = R.style.Theme_Light
+            themeResId = R.style.Theme_Light,
         ) { ModelEditorContextMenu() }
         onView(withText(testDialogTitle)).check(matches(isDisplayed()))
         ModelEditorContextMenuAction.entries.forEach {

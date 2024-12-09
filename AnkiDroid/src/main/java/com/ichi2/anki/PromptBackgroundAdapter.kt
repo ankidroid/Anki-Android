@@ -36,7 +36,7 @@ class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackg
     override fun update(
         options: PromptOptions<out PromptOptions<*>>,
         revealModifier: Float,
-        alphaModifier: Float
+        alphaModifier: Float,
     ) {
         promptBackgroundInterface.update(options, revealModifier, alphaModifier)
     }
@@ -47,7 +47,7 @@ class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackg
 
     override fun contains(
         x: Float,
-        y: Float
+        y: Float,
     ): Boolean {
         return promptBackgroundInterface.contains(x, y)
     }
@@ -59,7 +59,7 @@ class PromptBackgroundAdapter(private val promptBackgroundInterface: PromptBackg
     override fun prepare(
         options: PromptOptions<out PromptOptions<*>>,
         clipToBounds: Boolean,
-        clipBounds: Rect
+        clipBounds: Rect,
     ) {
         promptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
     }

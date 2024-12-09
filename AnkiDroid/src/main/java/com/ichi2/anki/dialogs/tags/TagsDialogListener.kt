@@ -38,13 +38,13 @@ interface TagsDialogListener {
     fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        stateFilter: CardStateFilter,
     )
 
     fun <F> F.registerFragmentResultReceiver() where F : Fragment, F : TagsDialogListener {
         parentFragmentManager.setFragmentResultListener(
             ON_SELECTED_TAGS_KEY,
-            this
+            this,
         ) { _: String?, bundle: Bundle ->
             val selectedTags: List<String> =
                 bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
@@ -61,7 +61,7 @@ interface TagsDialogListener {
                 override fun onSelectedTags(
                     selectedTags: List<String>,
                     indeterminateTags: List<String>,
-                    stateFilter: CardStateFilter
+                    stateFilter: CardStateFilter,
                 ) {
                     val bundle =
                         Bundle().apply {

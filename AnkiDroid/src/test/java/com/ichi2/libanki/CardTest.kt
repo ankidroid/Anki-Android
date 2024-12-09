@@ -208,7 +208,7 @@ class CardTest : JvmTest() {
 
     private fun assertNoteOrdinalAre(
         note: Note,
-        ords: Array<Int>
+        ords: Array<Int>,
     ) {
         val cards = note.cards()
         assumeThat(cards.size, equalTo(ords.size))

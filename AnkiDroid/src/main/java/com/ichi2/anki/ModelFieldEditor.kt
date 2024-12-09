@@ -212,7 +212,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     @Throws(ConfirmModSchemaException::class)
     private fun addField(
         fieldName: String?,
-        modSchemaCheck: Boolean
+        modSchemaCheck: Boolean,
     ) {
         fieldName ?: return
         // Name is valid, now field is added
@@ -448,7 +448,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private suspend fun changeSortField(
         notetype: NotetypeJson,
-        idx: Int
+        idx: Int,
     ) {
         withProgress(resources.getString(R.string.model_field_editor_changing)) {
             withCol {

@@ -26,7 +26,7 @@ import com.ichi2.libanki.Collection
  */
 enum class CardsOrNotes {
     CARDS,
-    NOTES
+    NOTES,
     ;
 
     fun saveToCollection(col: Collection) {

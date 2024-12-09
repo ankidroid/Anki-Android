@@ -53,7 +53,7 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
                 Constants.ANKI_XML_CATEGORY,
                 Constants.ANKI_XML_PRIORITY,
                 Constants.ANKI_XML_SEVERITY,
-                implementation
+                implementation,
             )
 
         // copied from tools/localization/src/constants.ts
@@ -74,7 +74,7 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
                 "16-multimedia-editor",
                 "17-model-manager",
                 "18-standard-models",
-                "20-search-preference"
+                "20-search-preference",
             ).map { "$it.xml" }
 
         // CrowdIn strings+ additional string XML which are not translated
@@ -88,7 +88,7 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
 
     override fun visitElement(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         // ignore files not containing strings
         if (!STRING_XML_FILES.contains(context.file.name)) {
@@ -111,7 +111,7 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
             context.report(
                 issue = ISSUE,
                 location = context.getElementLocation(elementToReport),
-                message = message + crowdinEditUrl
+                message = message + crowdinEditUrl,
             )
         }
 

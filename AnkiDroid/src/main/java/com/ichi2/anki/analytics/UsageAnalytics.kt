@@ -91,7 +91,7 @@ object UsageAnalytics {
                             .applicationId(BuildConfig.APPLICATION_ID)
                             .trackingId(getAnalyticsTag(context))
                             .clientId(Installation.id(context))
-                            .anonymizeIp(context.resources.getBoolean(R.bool.ga_anonymizeIp))
+                            .anonymizeIp(context.resources.getBoolean(R.bool.ga_anonymizeIp)),
                     )
                     .withHttpClient(OkHttpClientImpl(gaConfig))
                     .build()
@@ -229,7 +229,7 @@ object UsageAnalytics {
         category: String,
         action: String,
         value: Int? = null,
-        label: String? = null
+        label: String? = null,
     ) {
         Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label)
         if (!optIn) {
@@ -253,7 +253,7 @@ object UsageAnalytics {
      */
     fun sendAnalyticsException(
         t: Throwable,
-        fatal: Boolean
+        fatal: Boolean,
     ) {
         sendAnalyticsException(getCause(t).toString(), fatal)
     }
@@ -276,7 +276,7 @@ object UsageAnalytics {
      */
     fun sendAnalyticsException(
         description: String,
-        fatal: Boolean
+        fatal: Boolean,
     ) {
         Timber.d("sendAnalyticsException() description/fatal: %s/%s", description, fatal)
         if (!sOptIn) {
@@ -614,6 +614,6 @@ object UsageAnalytics {
             "customButtonUserAction6",
             "customButtonUserAction7",
             "customButtonUserAction8",
-            "customButtonUserAction9"
+            "customButtonUserAction9",
         )
 }

@@ -49,14 +49,14 @@ interface TestClass {
 
     fun addNoteUsingBasicModel(
         front: String = "Front",
-        back: String = "Back"
+        back: String = "Back",
     ): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 
     fun addRevNoteUsingBasicModelDueToday(
         @Suppress("SameParameterValue") front: String,
-        @Suppress("SameParameterValue") back: String
+        @Suppress("SameParameterValue") back: String,
     ): Note {
         val note = addNoteUsingBasicModel(front, back)
         val card = note.firstCard()
@@ -68,21 +68,21 @@ interface TestClass {
 
     fun addNoteUsingBasicAndReversedModel(
         front: String = "Front",
-        back: String = "Back"
+        back: String = "Back",
     ): Note {
         return addNoteUsingModelName("Basic (and reversed card)", front, back)
     }
 
     fun addNoteUsingBasicTypedModel(
         @Suppress("SameParameterValue") front: String,
-        @Suppress("SameParameterValue") back: String
+        @Suppress("SameParameterValue") back: String,
     ): Note {
         return addNoteUsingModelName("Basic (type in the answer)", front, back)
     }
 
     fun addCloseNote(
         text: String,
-        extra: String = "Extra"
+        extra: String = "Extra",
     ): Note =
         col.newNote(col.notetypes.byName("Cloze")!!).apply {
             setItem("Text", text)
@@ -91,7 +91,7 @@ interface TestClass {
 
     fun addNoteUsingModelName(
         name: String?,
-        vararg fields: String
+        vararg fields: String,
     ): Note {
         val model =
             col.notetypes.byName((name)!!)
@@ -110,7 +110,7 @@ interface TestClass {
         name: String,
         fields: Array<String>,
         qfmt: String?,
-        afmt: String?
+        afmt: String?,
     ): String {
         val model = col.notetypes.new(name)
         for (field in fields) {
@@ -127,7 +127,7 @@ interface TestClass {
     /** Adds a note with Text to Speech functionality */
     fun addNoteUsingTextToSpeechNoteType(
         front: String,
-        back: String
+        back: String,
     ) {
         addNonClozeModel("TTS", arrayOf("Front", "Back"), "{{Front}}{{tts en_GB:Front}}", "{{tts en_GB:Front}}<br>{{Back}}")
         addNoteUsingModelName("TTS", front, back)
@@ -135,7 +135,7 @@ interface TestClass {
 
     fun addField(
         notetype: NotetypeJson,
-        name: String
+        name: String,
     ) {
         val models = col.notetypes
         try {
@@ -153,7 +153,7 @@ interface TestClass {
 
     fun addDeck(
         deckName: String?,
-        setAsSelected: Boolean = false
+        setAsSelected: Boolean = false,
     ): DeckId {
         return try {
             col.decks.id(deckName!!).also { did ->
@@ -166,7 +166,7 @@ interface TestClass {
 
     fun addDynamicDeck(
         name: String,
-        search: String? = null
+        search: String? = null,
     ): DeckId {
         return try {
             col.decks.newFiltered(name).also { did ->
@@ -195,7 +195,7 @@ interface TestClass {
 
     fun Note.moveToDeck(
         deckName: String,
-        createDeckIfMissing: Boolean = true
+        createDeckIfMissing: Boolean = true,
     ) {
         val deckId: DeckId? =
             if (createDeckIfMissing) {
@@ -211,7 +211,7 @@ interface TestClass {
     /** helper method to update deck config */
     fun updateDeckConfig(
         deckId: DeckId,
-        function: DeckConfig.() -> Unit
+        function: DeckConfig.() -> Unit,
     ) {
         val deckConfig = col.decks.configDictForDeckId(deckId)
         function(deckConfig)
@@ -257,7 +257,7 @@ interface TestClass {
 
     fun Card.question(
         reload: Boolean = false,
-        browser: Boolean = false
+        browser: Boolean = false,
     ) = this.question(col, reload, browser)
 
     fun Card.answer() = this.answer(col)
@@ -299,7 +299,7 @@ interface TestClass {
         context: CoroutineContext = EmptyCoroutineContext,
         dispatchTimeoutMs: Long = 60_000L,
         times: Int = 1,
-        testBody: suspend TestScope.() -> Unit
+        testBody: suspend TestScope.() -> Unit,
     ) {
         val dispatcher = UnconfinedTestDispatcher()
         Dispatchers.setMain(dispatcher)

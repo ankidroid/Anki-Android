@@ -43,17 +43,17 @@ object LaTeX {
     private val STANDARD_PATTERN =
         Pattern.compile(
             "\\[latex](.+?)\\[/latex]",
-            Pattern.DOTALL or Pattern.CASE_INSENSITIVE
+            Pattern.DOTALL or Pattern.CASE_INSENSITIVE,
         )
     private val EXPRESSION_PATTERN =
         Pattern.compile(
             "\\[\\$](.+?)\\[/\\$]",
-            Pattern.DOTALL or Pattern.CASE_INSENSITIVE
+            Pattern.DOTALL or Pattern.CASE_INSENSITIVE,
         )
     private val MATH_PATTERN =
         Pattern.compile(
             "\\[\\$\\$](.+?)\\[/\\$\\$]",
-            Pattern.DOTALL or Pattern.CASE_INSENSITIVE
+            Pattern.DOTALL or Pattern.CASE_INSENSITIVE,
         )
 
     /**
@@ -63,7 +63,7 @@ object LaTeX {
     fun mungeQA(
         html: String,
         col: Collection,
-        svg: Boolean
+        svg: Boolean,
     ): String {
         return mungeQA(html, col.media, svg)
     }
@@ -71,7 +71,7 @@ object LaTeX {
     fun convertHTML(
         html: String,
         media: Media,
-        svg: Boolean
+        svg: Boolean,
     ): String {
         val stringBuffer = StringBuffer()
         STANDARD_PATTERN.matcher(html).run {
@@ -86,7 +86,7 @@ object LaTeX {
     fun convertExpression(
         input: String,
         media: Media,
-        svg: Boolean
+        svg: Boolean,
     ): String {
         val stringBuffer = StringBuffer()
         EXPRESSION_PATTERN.matcher(input).run {
@@ -101,14 +101,14 @@ object LaTeX {
     fun convertMath(
         input: String,
         media: Media,
-        svg: Boolean
+        svg: Boolean,
     ): String {
         val stringBuffer = StringBuffer()
         MATH_PATTERN.matcher(input).run {
             while (find()) {
                 appendReplacement(
                     stringBuffer,
-                    imgLink("\\begin{displaymath}" + group(1) + "\\end{displaymath}", svg, media)
+                    imgLink("\\begin{displaymath}" + group(1) + "\\end{displaymath}", svg, media),
                 )
             }
             appendTail(stringBuffer)
@@ -121,7 +121,7 @@ object LaTeX {
     fun mungeQA(
         html: String,
         m: Media,
-        svg: Boolean
+        svg: Boolean,
     ): String =
         arrayOf(::convertHTML, ::convertExpression, ::convertMath).fold(html) { input, transformer ->
             transformer(input, m, svg)
@@ -134,7 +134,7 @@ object LaTeX {
     internal fun imgLink(
         latex: String,
         svg: Boolean,
-        m: Media
+        m: Media,
     ): String {
         val txt = latexFromHtml(latex)
         val ext = if (svg) "svg" else "png"

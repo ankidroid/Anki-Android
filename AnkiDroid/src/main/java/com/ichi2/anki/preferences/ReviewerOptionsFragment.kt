@@ -28,7 +28,7 @@ import com.ichi2.anki.R
 class ReviewerOptionsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
-        rootKey: String?
+        rootKey: String?,
     ) {
         addPreferencesFromResource(R.xml.preferences_reviewer)
     }

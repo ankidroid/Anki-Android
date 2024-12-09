@@ -26,14 +26,14 @@ data class UndoStatus(
     val undo: String?,
     val redo: String?,
     // not currently used
-    val lastStep: Int
+    val lastStep: Int,
 ) {
     companion object {
         fun from(proto: UndoStatusProto): UndoStatus {
             return UndoStatus(
                 undo = proto.undo.ifEmpty { null },
                 redo = proto.redo.ifEmpty { null },
-                lastStep = proto.lastStep
+                lastStep = proto.lastStep,
             )
         }
     }

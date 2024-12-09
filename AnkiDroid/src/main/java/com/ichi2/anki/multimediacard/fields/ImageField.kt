@@ -68,7 +68,7 @@ class ImageField : FieldBase(), IField {
 
     override fun setFormattedString(
         col: Collection,
-        value: String
+        value: String,
     ) {
         extraImagePathRef = getImageFullPath(col, value)
     }
@@ -90,7 +90,7 @@ class ImageField : FieldBase(), IField {
         @VisibleForTesting
         fun getImageFullPath(
             col: Collection,
-            value: String
+            value: String,
         ): String {
             val path = parseImageSrcFromHtml(value)
 

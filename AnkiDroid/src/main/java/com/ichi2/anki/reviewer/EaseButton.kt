@@ -37,7 +37,7 @@ class EaseButton(
     private val ease: Ease,
     private val layout: LinearLayout,
     private val easeTextView: TextView,
-    private val easeTimeView: TextView
+    private val easeTimeView: TextView,
 ) {
     var height: Int
         get() = layout.layoutParams.height
@@ -136,7 +136,7 @@ class EaseButton(
     fun setup(
         backgroundColor: Int,
         textColor: Int,
-        @StringRes easeStringRes: Int
+        @StringRes easeStringRes: Int,
     ) {
         layout.visibility = View.VISIBLE
         layout.setBackgroundResource(backgroundColor)

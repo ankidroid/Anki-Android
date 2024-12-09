@@ -30,7 +30,7 @@ import com.ichi2.anki.utils.ext.DIALOG_FRAGMENT_TAG
  */
 fun showDialogFragmentImpl(
     manager: FragmentManager,
-    newFragment: DialogFragment
+    newFragment: DialogFragment,
 ) {
     // DialogFragment.show() will take care of adding the fragment
     // in a transaction. We also want to remove any currently showing

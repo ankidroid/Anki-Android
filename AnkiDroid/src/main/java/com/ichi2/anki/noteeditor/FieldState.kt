@@ -118,7 +118,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
             BundleCompat.getSparseParcelableArray(
                 viewHierarchyState,
                 "android:views",
-                View.BaseSavedState::class.java
+                View.BaseSavedState::class.java,
             ) ?: return
         val important: MutableList<View.BaseSavedState> = ArrayList(customViewIds.size)
         for (i in customViewIds) {
@@ -136,7 +136,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
             fun refreshWithMap(
                 newNotetype: NotetypeJson?,
                 modelChangeFieldMap: Map<Int, Int>?,
-                replaceNewlines: Boolean
+                replaceNewlines: Boolean,
             ): FieldChangeType {
                 val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
                 typeClass.newNotetype = newNotetype
@@ -162,7 +162,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
 
             private fun fromType(
                 type: Type,
-                replaceNewlines: Boolean
+                replaceNewlines: Boolean,
             ): FieldChangeType {
                 return FieldChangeType(type, replaceNewlines)
             }
@@ -174,7 +174,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         CLEAR_KEEP_STICKY,
         CHANGE_FIELD_COUNT,
         REFRESH,
-        REFRESH_WITH_MAP
+        REFRESH_WITH_MAP,
     }
 
     companion object {
@@ -191,7 +191,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
             context: Context,
             oldFields: Array<Array<String>>,
             fMapNew: Map<String, Pair<Int, JSONObject>>,
-            modelChangeFieldMap: Map<Int, Int>?
+            modelChangeFieldMap: Map<Int, Int>?,
         ): Array<Array<String>> {
             // Build array of label/values to provide to field EditText views
             val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }

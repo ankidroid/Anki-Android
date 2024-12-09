@@ -42,7 +42,7 @@ class SetDueDateViewModelTest : JvmTest() {
         runViewModelTest {
             fun canSaveWithValue(
                 input: NumberOfDaysInFuture?,
-                expected: Boolean
+                expected: Boolean,
             ) {
                 nextSingleDayDueDate = input
                 assertThat("$input", isValid == expected, equalTo(true))
@@ -61,7 +61,7 @@ class SetDueDateViewModelTest : JvmTest() {
                 start: NumberOfDaysInFuture?,
                 end: NumberOfDaysInFuture?,
                 expected: Boolean,
-                message: String? = null
+                message: String? = null,
             ) {
                 setNextDateRangeStart(start)
                 setNextDateRangeEnd(end)
@@ -113,7 +113,7 @@ class SetDueDateViewModelTest : JvmTest() {
 
     private fun runViewModelTest(
         cardIds: List<CardId> = listOf(1, 2, 3),
-        testBody: suspend SetDueDateViewModel.() -> Unit
+        testBody: suspend SetDueDateViewModel.() -> Unit,
     ) = runTest {
         val viewModel = SetDueDateViewModel()
         viewModel.init(cardIds.toLongArray())

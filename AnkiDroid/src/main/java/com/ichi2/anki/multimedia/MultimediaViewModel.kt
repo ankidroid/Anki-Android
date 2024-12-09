@@ -48,7 +48,7 @@ class MultimediaViewModel : ViewModel() {
 
     fun saveMultimediaForRevert(
         imagePath: String?,
-        imageUri: Uri?
+        imageUri: Uri?,
     ) {
         prevMultimediaPath = imagePath
         prevMultimediaUri = imageUri

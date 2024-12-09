@@ -51,7 +51,7 @@ object HandlerUtils {
      */
     fun postDelayedOnNewHandler(
         r: Runnable,
-        delayMillis: Long
+        delayMillis: Long,
     ): Handler {
         val newHandler = newHandler()
         newHandler.postDelayed(r, delayMillis)
@@ -79,13 +79,13 @@ object HandlerUtils {
      */
     fun executeFunctionWithDelay(
         time: Long,
-        function: () -> Unit
+        function: () -> Unit,
     ) {
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 function()
             },
-            time
+            time,
         )
     }
 }

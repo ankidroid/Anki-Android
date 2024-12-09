@@ -201,7 +201,7 @@ open class Reviewer :
     private val addNoteLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
-            FlashCardViewerResultCallback()
+            FlashCardViewerResultCallback(),
         )
 
     private val flagItemIds = mutableSetOf<Int>()
@@ -258,7 +258,7 @@ open class Reviewer :
             return FlagToDisplay(
                 currentCard!!.userFlag(),
                 actionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton ?: true,
-                prefFullscreenReview
+                prefFullscreenReview,
             ).get()
         }
 
@@ -301,7 +301,7 @@ open class Reviewer :
 
     protected open fun onFlag(
         card: Card?,
-        flag: Flag
+        flag: Flag,
     ) {
         if (card == null) {
             return
@@ -629,7 +629,7 @@ open class Reviewer :
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.RECORD_AUDIO),
-                REQUEST_AUDIO_PERMISSION
+                REQUEST_AUDIO_PERMISSION,
             )
         } else {
             toggleMicToolBar()
@@ -649,7 +649,7 @@ open class Reviewer :
                         this,
                         micToolBarLayer,
                         initialState = RecordingState.ImmediatePlayback.CLEARED,
-                        R.layout.activity_audio_recording_reviewer
+                        R.layout.activity_audio_recording_reviewer,
                     )
                 } catch (e: Exception) {
                     Timber.w(e, "unable to add the audio recorder to toolbar")
@@ -657,7 +657,7 @@ open class Reviewer :
                     showThemedToast(
                         this,
                         this.getText(R.string.multimedia_editor_audio_view_create_failed).toString(),
-                        true
+                        true,
                     )
                 }
                 isAudioUIInitialized = true
@@ -674,7 +674,7 @@ open class Reviewer :
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_AUDIO_PERMISSION &&
@@ -816,7 +816,7 @@ open class Reviewer :
                 VectorDrawableCompat.create(
                     resources,
                     R.drawable.ic_color_lens_white_24dp,
-                    this.theme
+                    this.theme,
                 )!!.mutate()
             if (showWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
@@ -905,7 +905,7 @@ open class Reviewer :
 
     override fun onKeyDown(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         if (answerFieldIsFocused()) {
             return super.onKeyDown(keyCode, event)
@@ -918,7 +918,7 @@ open class Reviewer :
 
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         return if (processor.onKeyUp(keyCode, event)) {
             true
@@ -1161,7 +1161,7 @@ open class Reviewer :
             """
         anki.mutateNextCardStates('$key', async (states, customData, ctx) => { $js })
             .catch(err => { console.log(err); window.location.href = "state-mutation-error:"; });
-"""
+""",
         ) { result ->
             if ("null" == result) {
                 // eval failed, usually a syntax error
@@ -1221,7 +1221,7 @@ open class Reviewer :
 
     override fun executeCommand(
         which: ViewerCommand,
-        fromGesture: Gesture?
+        fromGesture: Gesture?,
     ): Boolean {
         when (which) {
             ViewerCommand.TOGGLE_FLAG_RED -> {
@@ -1325,7 +1325,7 @@ open class Reviewer :
     annotation class UserAction
 
     private fun userAction(
-        @UserAction number: Int
+        @UserAction number: Int,
     ) {
         Timber.v("userAction%d", number)
         loadUrlInViewer("javascript: userAction($number);")
@@ -1407,7 +1407,7 @@ open class Reviewer :
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LOW_PROFILE
                 or View.SYSTEM_UI_FLAG_IMMERSIVE
-            )
+        )
         // Show / hide the Action bar together with the status bar
         val prefs = a.sharedPrefs()
         val fullscreenMode = fromPreference(prefs)
@@ -1455,7 +1455,7 @@ open class Reviewer :
                     override fun onAnimationEnd(animation: Animator) {
                         view.visibility = View.GONE
                     }
-                }
+                },
             )
     }
 
@@ -1466,7 +1466,7 @@ open class Reviewer :
 
     override suspend fun handlePostRequest(
         uri: String,
-        bytes: ByteArray
+        bytes: ByteArray,
     ): ByteArray {
         return if (uri.startsWith(ANKI_PREFIX)) {
             when (val methodName = uri.substring(ANKI_PREFIX.length)) {
@@ -1479,7 +1479,7 @@ open class Reviewer :
             jsApi.handleJsApiRequest(
                 uri.substring(ANKIDROID_JS_PREFIX.length),
                 bytes,
-                returnDefaultValues = false
+                returnDefaultValues = false,
             )
         } else {
             throw IllegalArgumentException("unhandled request: $uri")
@@ -1492,8 +1492,8 @@ open class Reviewer :
             .mergeStates(
                 state.states.toBuilder().mergeCurrent(
                     state.states.current.toBuilder()
-                        .setCustomData(state.topCard.toBackendCard().customData).build()
-                ).build()
+                        .setCustomData(state.topCard.toBackendCard().customData).build(),
+                ).build(),
             )
             .build()
             .toByteArray()
@@ -1527,15 +1527,15 @@ open class Reviewer :
                 override fun onPaintColorChange(color: Int?) {
                     MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
                 }
-            }
+            },
         )
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
             if (event == null) return@setOnTouchListener false
             // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
             if (!whiteboard!!.isCurrentlyDrawing && (
-                !showWhiteboard || (
-                    prefFullscreenReview &&
-                        isImmersiveSystemUiVisible(this@Reviewer)
+                    !showWhiteboard || (
+                        prefFullscreenReview &&
+                            isImmersiveSystemUiVisible(this@Reviewer)
                     )
                 )
             ) {
@@ -1609,7 +1609,7 @@ open class Reviewer :
             getColUnsafe.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
                 currentCard!!.nid,
-                currentCard!!.id
+                currentCard!!.id,
             ) == 1
         }
         // whether there exists a sibling not buried.
@@ -1623,7 +1623,7 @@ open class Reviewer :
             getColUnsafe.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
                 currentCard!!.nid,
-                currentCard!!.id
+                currentCard!!.id,
             ) == 1
         }
         // Whether there exists a sibling which is neither suspended nor buried

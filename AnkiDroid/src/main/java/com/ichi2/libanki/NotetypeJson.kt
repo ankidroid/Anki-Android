@@ -52,7 +52,7 @@ class NotetypeJson : JSONObject {
      * Creates a model object from json string
      */
     constructor(
-        @Language("json") json: String
+        @Language("json") json: String,
     ) : super(json)
 
     @CheckResult

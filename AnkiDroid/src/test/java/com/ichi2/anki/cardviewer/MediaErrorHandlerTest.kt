@@ -97,14 +97,14 @@ class MediaErrorHandlerTest {
 
     private fun processFailure(
         invalidRequest: WebResourceRequest,
-        consumer: (String) -> Unit = defaultHandler()
+        consumer: (String) -> Unit = defaultHandler(),
     ) {
         sut.processFailure(invalidRequest, consumer)
     }
 
     private fun processMissingSound(
         file: File,
-        onFailure: (String) -> Unit
+        onFailure: (String) -> Unit,
     ) {
         sut.processMissingSound(file, onFailure)
     }

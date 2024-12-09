@@ -139,7 +139,7 @@ class CardTemplateNotetypeTest : RobolectricTest() {
     @Suppress("UNCHECKED_CAST")
     private fun assertTemplateChangesEqual(
         expected: Array<Array<Any>>,
-        actual: Serializable?
+        actual: Serializable?,
     ) {
         if (actual !is ArrayList<*>) {
             Assert.fail("actual array null or not the correct type")
@@ -147,7 +147,7 @@ class CardTemplateNotetypeTest : RobolectricTest() {
         Assert.assertEquals(
             "arrays didn't have the same length?",
             expected.size.toLong(),
-            (actual as ArrayList<Array<Any?>?>).size.toLong()
+            (actual as ArrayList<Array<Any?>?>).size.toLong(),
         )
         for (i in expected.indices) {
             if (actual[i] !is Array<Any?>) {

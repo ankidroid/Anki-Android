@@ -68,7 +68,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         fun updateWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
-            appWidgetId: Int
+            appWidgetId: Int,
         ) {
             val deckId = getDeckIdForWidget(context, appWidgetId)
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_card_analysis)
@@ -103,7 +103,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
         private fun getDeckIdForWidget(
             context: Context,
-            appWidgetId: Int
+            appWidgetId: Int,
         ): DeckId {
             val widgetPreferences = CardAnalysisWidgetPreferences(context)
             return widgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: NOT_FOUND_DECK_ID
@@ -113,7 +113,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
-            remoteViews: RemoteViews
+            remoteViews: RemoteViews,
         ) {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
@@ -130,7 +130,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     context,
                     appWidgetId,
                     configIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
@@ -141,7 +141,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
-            remoteViews: RemoteViews
+            remoteViews: RemoteViews,
         ) {
             // Show empty_widget and set click listener to open configuration
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_widget_state))
@@ -159,7 +159,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     context,
                     appWidgetId,
                     configIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
@@ -171,7 +171,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
             remoteViews: RemoteViews,
-            deckData: DeckWidgetData
+            deckData: DeckWidgetData,
         ) {
             remoteViews.setTextViewText(R.id.deckNameCardAnalysis, deckData.name)
             remoteViews.setTextViewText(R.id.deckNew_card_analysis_widget, deckData.newCount.toString())
@@ -196,7 +196,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     context,
                     deckData.deckId.toInt(),
                     intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.deckNameCardAnalysis, pendingIntent)
 
@@ -227,7 +227,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
-        usageAnalytics: UsageAnalytics
+        usageAnalytics: UsageAnalytics,
     ) {
         Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
 
@@ -258,7 +258,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
     override fun onReceive(
         context: Context?,
-        intent: Intent?
+        intent: Intent?,
     ) {
         if (context == null || intent == null) {
             Timber.e("Context or intent is null in onReceive")
@@ -323,7 +323,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
                     Exception("Unexpected action received: ${intent.action}"),
                     "CardAnalysisWidget - onReceive",
                     null,
-                    onlyIfSilent = true
+                    onlyIfSilent = true,
                 )
             }
         }
@@ -331,7 +331,7 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
     override fun onDeleted(
         context: Context?,
-        appWidgetIds: IntArray?
+        appWidgetIds: IntArray?,
     ) {
         if (context == null) {
             Timber.w("Context is null in onDeleted")

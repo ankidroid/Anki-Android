@@ -34,7 +34,7 @@ object LeakCanaryConfiguration {
                 retainedVisibleThreshold = 0,
                 referenceMatchers = AndroidReferenceMatchers.appDefaults,
                 computeRetainedHeapSize = false,
-                maxStoredHeapDumps = 0
+                maxStoredHeapDumps = 0,
             )
     }
 
@@ -44,7 +44,7 @@ object LeakCanaryConfiguration {
      */
     fun setInitialConfigFor(
         application: Application,
-        knownMemoryLeaks: List<ReferenceMatcher> = emptyList()
+        knownMemoryLeaks: List<ReferenceMatcher> = emptyList(),
     ) {
         config = config.copy(referenceMatchers = AndroidReferenceMatchers.appDefaults + knownMemoryLeaks)
         // AppWatcher manual install if not already installed

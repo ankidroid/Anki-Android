@@ -109,14 +109,14 @@ class BrowserOptionsDialog : AppCompatDialogFragment() {
 
         fun newInstance(
             cardsOrNotes: CardsOrNotes,
-            isTruncated: Boolean
+            isTruncated: Boolean,
         ): BrowserOptionsDialog {
             Timber.i("BrowserOptionsDialog::newInstance")
             return BrowserOptionsDialog().apply {
                 arguments =
                     bundleOf(
                         CARDS_OR_NOTES_KEY to (cardsOrNotes == CardsOrNotes.CARDS),
-                        IS_TRUNCATED_KEY to isTruncated
+                        IS_TRUNCATED_KEY to isTruncated,
                     )
             }
         }

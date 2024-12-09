@@ -76,7 +76,7 @@ abstract class NavigationDrawerActivity :
     private var pendingRunnable: Runnable? = null
 
     override fun setContentView(
-        @LayoutRes layoutResID: Int
+        @LayoutRes layoutResID: Int,
     ) {
         val preferences = baseContext.sharedPrefs()
 
@@ -85,7 +85,7 @@ abstract class NavigationDrawerActivity :
             LayoutInflater.from(this).inflate(
                 navigationDrawerLayout,
                 null,
-                false
+                false,
             ) as ClosableDrawerLayout
         // Get CoordinatorLayout using resource ID
         val coordinatorLayout =
@@ -130,8 +130,8 @@ abstract class NavigationDrawerActivity :
             MaterialColors.getColor(
                 this,
                 R.attr.appBarColor,
-                0
-            )
+                0,
+            ),
         )
         // Setup toolbar and hamburger
         navigationView = drawerLayout.findViewById(R.id.navdrawer_items_container)
@@ -153,7 +153,7 @@ abstract class NavigationDrawerActivity :
                 this,
                 drawerLayout,
                 R.string.drawer_open,
-                R.string.drawer_close
+                R.string.drawer_close,
             ) {
                 override fun onDrawerClosed(drawerView: View) {
                     super.onDrawerClosed(drawerView)
@@ -255,7 +255,7 @@ abstract class NavigationDrawerActivity :
             Timber.i(
                 "Handling Activity Result: %d. Result: %d",
                 REQUEST_PREFERENCES_UPDATE,
-                result.resultCode
+                result.resultCode,
             )
             CompatHelper.compat.setupNotificationChannel(applicationContext)
             // Restart the activity on preference change
@@ -428,7 +428,7 @@ abstract class NavigationDrawerActivity :
 
     override fun onKeyDown(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         if (!isDrawerOpen) {
             return super.onKeyDown(keyCode, event)
@@ -501,8 +501,8 @@ abstract class NavigationDrawerActivity :
                 listOf(
                     reviewCardsShortcut,
                     noteEditorShortcut,
-                    cardBrowserShortcut
-                )
+                    cardBrowserShortcut,
+                ),
             )
         }
     }

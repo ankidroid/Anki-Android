@@ -29,7 +29,7 @@ import com.ichi2.annotations.NeedsTest
  */
 fun Resources.getFormattedStringOrPlurals(
     resId: Int,
-    quantity: Int
+    quantity: Int,
 ): String {
     return when (getResourceTypeName(resId)) {
         "string" -> getString(resId, quantity)
@@ -43,7 +43,7 @@ fun Resources.getFormattedStringOrPlurals(
  */
 fun Context.getFormattedStringOrPlurals(
     resId: Int,
-    quantity: Int
+    quantity: Int,
 ): String {
     return resources.getFormattedStringOrPlurals(resId, quantity)
 }

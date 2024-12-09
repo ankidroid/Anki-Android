@@ -103,7 +103,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         override fun executeCommand(
             which: ViewerCommand,
-            fromGesture: Gesture?
+            fromGesture: Gesture?,
         ): Boolean {
             soundGroupCompleted = false
             return super.executeCommand(which, fromGesture).also {
@@ -122,7 +122,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @MethodSource("getSignalFromUrlTest_args")
     fun getSignalFromUrlTest(
         url: String,
-        signal: Signal
+        signal: Signal,
     ) {
         assertEquals(url.toSignal(), signal)
     }
@@ -212,14 +212,14 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 bundleOf(
                     NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
                     NoteEditor.EXTRA_CARD_ID to viewer.currentCard!!.id,
-                    FINISH_ANIMATION_EXTRA to animation as Parcelable
+                    FINISH_ANIMATION_EXTRA to animation as Parcelable,
                 )
             val noteEditor = NoteEditorTest().openNoteEditorWithArgs(bundle)
             val actualInverseAnimation =
                 BundleCompat.getParcelable(
                     noteEditor.requireArguments(),
                     FINISH_ANIMATION_EXTRA,
-                    Direction::class.java
+                    Direction::class.java,
                 )
             assertEquals(expectedInverseAnimation, actualInverseAnimation)
         }
@@ -354,7 +354,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @CheckResult
     private fun getViewer(
         addCard: Boolean,
-        startedWithShortcut: Boolean
+        startedWithShortcut: Boolean,
     ): NonAbstractFlashcardViewer {
         return getViewerController(addCard, startedWithShortcut).get()
     }
@@ -362,7 +362,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @CheckResult
     private fun getViewerController(
         addCard: Boolean,
-        startedWithShortcut: Boolean
+        startedWithShortcut: Boolean,
     ): ActivityController<NonAbstractFlashcardViewer> {
         if (addCard) {
             val n = col.newNote()
@@ -398,7 +398,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 Arguments.of("signal:answer_ease2", Signal.ANSWER_ORDINAL_2),
                 Arguments.of("signal:answer_ease3", Signal.ANSWER_ORDINAL_3),
                 Arguments.of("signal:answer_ease4", Signal.ANSWER_ORDINAL_4),
-                Arguments.of("signal:answer_ease0", Signal.SIGNAL_NOOP)
+                Arguments.of("signal:answer_ease0", Signal.SIGNAL_NOOP),
             )
     }
 }

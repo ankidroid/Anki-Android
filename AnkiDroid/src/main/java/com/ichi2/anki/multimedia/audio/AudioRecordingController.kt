@@ -70,10 +70,10 @@ class AudioRecordingController(
     val context: Context,
     val linearLayout: LinearLayout? = null,
     val viewModel: MultimediaViewModel? = null,
-    val note: IMultimediaEditableNote? = null
+    val note: IMultimediaEditableNote? = null,
 ) :
     AudioTimer.OnTimerTickListener,
-    AudioTimer.OnAudioTickListener {
+        AudioTimer.OnAudioTickListener {
     private lateinit var audioRecorder: AudioRecorder
     private var state: RecordingState = AppendToRecording.CLEARED
 
@@ -121,7 +121,7 @@ class AudioRecordingController(
         context: Context,
         layout: LinearLayout,
         initialState: RecordingState,
-        @LayoutRes controllerLayout: Int
+        @LayoutRes controllerLayout: Int,
     ) {
         this.state = initialState
         audioRecorder = AudioRecorder()
@@ -226,7 +226,7 @@ class AudioRecordingController(
                         saveButton?.performClick()
                     }
                 }
-            }
+            },
         )
 
         playAudioButton.setOnClickListener {
@@ -272,7 +272,7 @@ class AudioRecordingController(
                 object : Application.ActivityLifecycleCallbacks {
                     override fun onActivityCreated(
                         activity: Activity,
-                        savedInstanceState: Bundle?
+                        savedInstanceState: Bundle?,
                     ) {
                         // Not needed
                     }
@@ -297,7 +297,7 @@ class AudioRecordingController(
 
                     override fun onActivitySaveInstanceState(
                         activity: Activity,
-                        outState: Bundle
+                        outState: Bundle,
                     ) {
                         // Not needed
                     }
@@ -305,7 +305,7 @@ class AudioRecordingController(
                     override fun onActivityDestroyed(activity: Activity) {
                         // not needed
                     }
-                }
+                },
             )
         }
     }
@@ -517,7 +517,7 @@ class AudioRecordingController(
             showThemedToast(
                 context,
                 context.resources.getString(R.string.multimedia_editor_audio_permission_denied),
-                true
+                true,
             )
             return
         }
@@ -607,7 +607,7 @@ class AudioRecordingController(
 
     private fun startRecording(
         context: Context,
-        audioPath: String
+        audioPath: String,
     ) {
         Timber.i("starting recording")
         try {
@@ -796,7 +796,7 @@ class AudioRecordingController(
             PLAYBACK_PLAYING,
 
             /** A recording has been completed, and can be listened to */
-            PLAYBACK_ENDED
+            PLAYBACK_ENDED,
         }
 
         /**
@@ -816,7 +816,7 @@ class AudioRecordingController(
             PLAYBACK_ENDED,
 
             /** A completed recording is being listened to */
-            PLAYBACK_PLAYING
+            PLAYBACK_PLAYING,
         }
     }
 }

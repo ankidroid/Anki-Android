@@ -52,7 +52,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
                 Constants.ANKI_TIME_CATEGORY,
                 Constants.ANKI_TIME_PRIORITY,
                 Constants.ANKI_TIME_SEVERITY,
-                implementation
+                implementation,
             )
     }
 
@@ -61,7 +61,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
     override fun visitMethodCall(
         context: JavaContext,
         node: UCallExpression,
-        method: PsiMethod
+        method: PsiMethod,
     ) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
@@ -70,7 +70,7 @@ class DirectSystemCurrentTimeMillisUsage : Detector(), SourceCodeScanner {
             context.report(
                 ISSUE,
                 context.getCallLocation(node, includeReceiver = true, includeArguments = true),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

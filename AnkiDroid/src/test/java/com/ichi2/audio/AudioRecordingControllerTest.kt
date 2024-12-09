@@ -74,7 +74,7 @@ class AudioRecordingControllerAndroidTest : RobolectricTest() {
                 context = targetContext,
                 layout = layout,
                 initialState = RecordingState.ImmediatePlayback.CLEARED,
-                controllerLayout = R.layout.activity_audio_recording_reviewer
+                controllerLayout = R.layout.activity_audio_recording_reviewer,
             )
             block()
         }

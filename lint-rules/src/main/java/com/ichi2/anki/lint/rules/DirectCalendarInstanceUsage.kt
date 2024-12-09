@@ -53,7 +53,7 @@ class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
                 Constants.ANKI_TIME_CATEGORY,
                 Constants.ANKI_TIME_PRIORITY,
                 Constants.ANKI_TIME_SEVERITY,
-                implementation
+                implementation,
             )
     }
 
@@ -64,7 +64,7 @@ class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
     override fun visitMethodCall(
         context: JavaContext,
         node: UCallExpression,
-        method: PsiMethod
+        method: PsiMethod,
     ) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
@@ -73,7 +73,7 @@ class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
             context.report(
                 ISSUE,
                 context.getCallLocation(node, includeReceiver = true, includeArguments = true),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

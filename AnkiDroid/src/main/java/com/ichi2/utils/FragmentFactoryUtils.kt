@@ -25,7 +25,7 @@ object FragmentFactoryUtils {
      */
     inline fun <reified F : Fragment> instantiate(
         activity: FragmentActivity,
-        className: String
+        className: String,
     ): F {
         val factory = activity.supportFragmentManager.fragmentFactory
         return factory.instantiate(activity.classLoader, className) as F
@@ -36,7 +36,7 @@ object FragmentFactoryUtils {
      */
     inline fun <reified F : Fragment> instantiate(
         activity: FragmentActivity,
-        cls: Class<F>
+        cls: Class<F>,
     ): F {
         return instantiate(activity, cls.name)
     }

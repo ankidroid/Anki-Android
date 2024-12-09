@@ -222,7 +222,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         @CheckResult
         fun getIntentFromTemplate(
             context: Context,
-            template: JSONObject
+            template: JSONObject,
         ): Intent {
             val browserQuestionTemplate = template.getString("bqfmt")
             val browserAnswerTemplate = template.getString("bafmt")
@@ -233,7 +233,7 @@ class CardTemplateBrowserAppearanceEditor : AnkiActivity() {
         fun getIntent(
             context: Context,
             questionFormat: String,
-            answerFormat: String
+            answerFormat: String,
         ): Intent {
             return Intent(context, CardTemplateBrowserAppearanceEditor::class.java).apply {
                 putExtra(INTENT_QUESTION_FORMAT, questionFormat)

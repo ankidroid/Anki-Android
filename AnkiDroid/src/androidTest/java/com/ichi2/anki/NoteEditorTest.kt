@@ -37,7 +37,7 @@ abstract class NoteEditorTest protected constructor() {
     @get:Rule
     var activityRule: ActivityScenarioRule<SingleFragmentActivity>? =
         ActivityScenarioRule(
-            noteEditorIntent
+            noteEditorIntent,
         )
 
     private val noteEditorIntent: Intent
@@ -52,8 +52,8 @@ abstract class NoteEditorTest protected constructor() {
                 "Test fails on Travis API $invalid",
                 Build.VERSION.SDK_INT,
                 not(
-                    equalTo(invalid)
-                )
+                    equalTo(invalid),
+                ),
             )
         }
     }

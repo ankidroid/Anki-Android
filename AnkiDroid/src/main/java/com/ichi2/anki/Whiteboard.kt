@@ -235,7 +235,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
 
     private fun createBitmap(
         w: Int,
-        h: Int
+        h: Int,
     ) {
         val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         this.bitmap = bitmap
@@ -258,7 +258,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
         w: Int,
         h: Int,
         oldw: Int,
-        oldh: Int
+        oldh: Int,
     ) {
         super.onSizeChanged(w, h, oldw, oldh)
         // createScaledBitmap requires a width and height > 0; #13972
@@ -273,7 +273,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
 
     private fun drawStart(
         x: Float,
-        y: Float
+        y: Float,
     ) {
         isCurrentlyDrawing = true
         path.reset()
@@ -284,7 +284,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
 
     private fun drawAlong(
         x: Float,
-        y: Float
+        y: Float,
     ) {
         val dx = abs(x - this.x)
         val dy = abs(y - this.y)
@@ -404,7 +404,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
                             override fun onCancel() {
                                 // unused
                             }
-                        }
+                        },
                     )
                     show()
                 }
@@ -478,7 +478,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
         @Suppress("deprecation", "API35 computeBounds - maybe compat, but...new API is Flagged?")
         fun erase(
             x: Int,
-            y: Int
+            y: Int,
         ): Boolean {
             var didErase = false
             val clip = Region(0, 0, displayDimensions.x, displayDimensions.y)
@@ -509,8 +509,8 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
                                     bounds.left.toInt(),
                                     bounds.top.toInt(),
                                     bounds.right.toInt() + 1,
-                                    bounds.bottom.toInt() + 1
-                                )
+                                    bounds.bottom.toInt() + 1,
+                                ),
                             )
                     }
                 } else { // → point
@@ -584,14 +584,14 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
         fun createInstance(
             context: AnkiActivity,
             handleMultiTouch: Boolean,
-            whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?
+            whiteboardMultiTouchMethods: WhiteboardMultiTouchMethods?,
         ): Whiteboard {
             val whiteboard = Whiteboard(context, handleMultiTouch, currentTheme.isNightMode)
             mWhiteboardMultiTouchMethods = whiteboardMultiTouchMethods
             val lp2 =
                 FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                 )
             whiteboard.layoutParams = lp2
             val fl = context.findViewById<FrameLayout>(R.id.whiteboard)

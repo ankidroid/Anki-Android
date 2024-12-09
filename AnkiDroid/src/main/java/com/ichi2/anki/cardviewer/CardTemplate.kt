@@ -44,7 +44,7 @@ class CardTemplate(template: String) {
         content: String,
         style: String,
         script: String,
-        cardClass: String
+        cardClass: String,
     ): RenderedCard {
         val html = preStyle + style + preScript + script + preClass + cardClass + preContent + content + postContent
         return RenderedCard(html)
@@ -82,7 +82,7 @@ class CardTemplate(template: String) {
          */
         fun load(context: Context) =
             CardTemplate(
-                template = context.assets.open(TEMPLATE_FILE).convertToString()
+                template = context.assets.open(TEMPLATE_FILE).convertToString(),
             )
     }
 }

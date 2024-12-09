@@ -42,7 +42,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
         prompt: String?,
         digits: Int,
         content: String? = null,
-        defaultValue: String? = null
+        defaultValue: String? = null,
     ) {
         val args = Bundle()
         args.putString("title", title)
@@ -66,7 +66,7 @@ open class IntegerDialog : AnalyticsDialogFragment() {
             inputType = InputType.TYPE_CLASS_NUMBER,
             maxLength = requireArguments().getInt("digits"),
             prefill = requireArguments().getString("defaultValue"),
-            displayKeyboard = true
+            displayKeyboard = true,
         ) { _, text: CharSequence ->
             consumer!!.accept(text.toString().toInt())
             dismiss()

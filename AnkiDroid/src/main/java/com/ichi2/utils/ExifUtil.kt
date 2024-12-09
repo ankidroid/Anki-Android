@@ -29,7 +29,7 @@ import java.lang.Exception
 object ExifUtil {
     fun rotateFromCamera(
         theFile: File,
-        bitmap: Bitmap
+        bitmap: Bitmap,
     ): Bitmap {
         var bmp = bitmap
         return try {

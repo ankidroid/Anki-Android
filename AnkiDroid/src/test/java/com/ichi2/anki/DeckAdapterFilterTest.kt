@@ -33,7 +33,7 @@ class DeckAdapterFilterTest : RobolectricTest() {
                 "Chanson::Math HW",
                 "Chanson::Math HW::Theory",
                 "Chanson::Important",
-                "Chanson::Important::Math"
+                "Chanson::Important::Math",
             )
         Assert.assertEquals(expected.map { it.fullDeckName }, actual.map { it.fullDeckName })
     }
@@ -57,7 +57,7 @@ class DeckAdapterFilterTest : RobolectricTest() {
                 "Chanson::Important",
                 "Chanson::Important::Stuff",
                 "Chanson::Important::Math",
-                "Chanson::Important::Stuff::Other Stuff"
+                "Chanson::Important::Stuff::Other Stuff",
             )
         names.forEach {
             val did = col.decks.id(it)

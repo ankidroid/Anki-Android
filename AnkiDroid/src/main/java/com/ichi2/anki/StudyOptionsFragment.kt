@@ -150,7 +150,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         Timber.i("onCreateView()")
         val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
@@ -164,7 +164,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -172,7 +172,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
 
     override fun onCreateMenu(
         menu: Menu,
-        menuInflater: MenuInflater
+        menuInflater: MenuInflater,
     ) {
         menuInflater.inflate(R.menu.study_options_fragment, menu)
     }
@@ -405,7 +405,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
 
             Timber.d(
                 "Handling onActivityResult for StudyOptionsFragment (deckOptions/filteredDeckOptions, resultCode = %d)",
-                result.resultCode
+                result.resultCode,
             )
             configureToolbar()
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
@@ -479,7 +479,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         /**
          * Number of cards in this decks and its subdecks.
          */
-        val numberOfCardsInDeck: Int
+        val numberOfCardsInDeck: Int,
     )
 
     /** Open cram deck option if deck is opened for the first time
@@ -521,7 +521,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
      */
     private fun rebuildUi(
         result: DeckStudyData?,
-        refreshDecklist: Boolean
+        refreshDecklist: Boolean,
     ) {
         dismissProgressDialog()
         if (result != null) {
@@ -612,21 +612,21 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
                 requireContext().resources.getQuantityString(
                     R.plurals.studyoptions_buried_count,
                     result.buriedNew,
-                    result.buriedNew
+                    result.buriedNew,
                 )
             newBuryText.isVisible = result.buriedNew != 0
             learningBuryText.text =
                 requireContext().resources.getQuantityString(
                     R.plurals.studyoptions_buried_count,
                     result.buriedLearning,
-                    result.buriedLearning
+                    result.buriedLearning,
                 )
             learningBuryText.isVisible = result.buriedLearning != 0
             reviewBuryText.text =
                 requireContext().resources.getQuantityString(
                     R.plurals.studyoptions_buried_count,
                     result.buriedReview,
-                    result.buriedReview
+                    result.buriedReview,
                 )
             reviewBuryText.isVisible = result.buriedReview != 0
             totalNewCardsCount.text = result.totalNewCards.toString()
@@ -664,7 +664,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
             buriedLearning = buriedLearning,
             buriedReview = buriedReview,
             totalNewCards = sched.totalNewForCurrentDeck(),
-            numberOfCardsInDeck = decks.cardCount(deckId, includeSubdecks = true)
+            numberOfCardsInDeck = decks.cardCount(deckId, includeSubdecks = true),
         )
     }
 
@@ -704,7 +704,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
 
         @VisibleForTesting
         fun formatDescription(
-            @Language("HTML") desc: String
+            @Language("HTML") desc: String,
         ): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
@@ -717,7 +717,7 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
 
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         if (activity != null) {
             refreshInterface(true)

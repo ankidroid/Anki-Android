@@ -49,7 +49,7 @@ class Statistics :
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         webView.isNestedScrollingEnabled = true
@@ -76,7 +76,7 @@ class Statistics :
                 spinner,
                 showAllDecks = false,
                 alwaysShowDefault = false,
-                showFilteredDecks = false
+                showFilteredDecks = false,
             )
         if (savedInstanceState == null) {
             requireActivity().launchCatchingTask {
@@ -107,7 +107,7 @@ class Statistics :
         printManager?.print(
             jobName,
             printAdapter,
-            PrintAttributes.Builder().build()
+            PrintAttributes.Builder().build(),
         )
     }
 

@@ -46,14 +46,14 @@ class RetryRule(i: Int) : TestRule {
 
     override fun apply(
         base: Statement,
-        description: Description
+        description: Description,
     ): Statement {
         return statement(base, description)
     }
 
     private fun statement(
         base: Statement,
-        description: Description
+        description: Description,
     ): Statement {
         return object : Statement() {
             @Throws(Throwable::class)

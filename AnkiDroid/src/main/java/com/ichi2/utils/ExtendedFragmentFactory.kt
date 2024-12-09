@@ -48,7 +48,7 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
     @CallSuper
     override fun instantiate(
         classLoader: ClassLoader,
-        className: String
+        className: String,
     ): Fragment {
         return baseFactory?.instantiate(classLoader, className)
             ?: super.instantiate(classLoader, className)

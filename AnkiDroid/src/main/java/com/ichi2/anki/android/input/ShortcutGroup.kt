@@ -23,7 +23,7 @@ import com.ichi2.anki.AnkiActivity
 
 data class ShortcutGroup(
     val shortcuts: List<Shortcut>,
-    @StringRes val id: Int
+    @StringRes val id: Int,
 ) {
     fun toShortcutGroup(activity: AnkiActivity): KeyboardShortcutGroup {
         val shortcuts = shortcuts.map { it.toShortcutInfo() }

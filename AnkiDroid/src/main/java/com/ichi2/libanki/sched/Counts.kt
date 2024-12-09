@@ -25,7 +25,7 @@ class Counts(var new: Int = 0, var lrn: Int = 0, var rev: Int = 0) {
     enum class Queue {
         NEW,
         LRN,
-        REV
+        REV,
     }
 
     fun addNew(new: Int) {

@@ -220,22 +220,22 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "A checked card should have been removed",
                 browser.viewModel.selectedRowCount(),
-                equalTo(3)
+                equalTo(3),
             )
             assertThat(
                 "Checked card before should not have changed",
                 browser.hasSelectedCardAtPosition(1),
-                equalTo(true)
+                equalTo(true),
             )
             assertThat(
                 "Checked card after should have changed by 2 places",
                 browser.hasSelectedCardAtPosition(3),
-                equalTo(true)
+                equalTo(true),
             )
             assertThat(
                 "Checked card after should have changed by 2 places",
                 browser.hasSelectedCardAtPosition(4),
-                equalTo(true)
+                equalTo(true),
             )
         }
 
@@ -303,7 +303,7 @@ class CardBrowserTest : RobolectricTest() {
                 assertThat(
                     "Deck should have been changed yet",
                     col.getCard(cardId).did,
-                    not(deckIdToChangeTo)
+                    not(deckIdToChangeTo),
                 )
             }
 
@@ -362,7 +362,7 @@ class CardBrowserTest : RobolectricTest() {
             cardBrowser.selectRowsWithPositions(cardPosition)
             assumeTrue(
                 "card at position 60 is selected",
-                cardBrowser.hasSelectedCardAtPosition(cardPosition)
+                cardBrowser.hasSelectedCardAtPosition(cardPosition),
             )
 
             // flag the selected card
@@ -371,7 +371,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Card should be flagged",
                 getCheckedCard(cardBrowser).card.userFlag(),
-                equalTo(Flag.RED)
+                equalTo(Flag.RED),
             )
 
             // unflag the selected card
@@ -380,7 +380,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Card flag should be removed",
                 getCheckedCard(cardBrowser).card.userFlag(),
-                equalTo(Flag.NONE)
+                equalTo(Flag.NONE),
             )
 
             // deselect and select all cards
@@ -393,7 +393,7 @@ class CardBrowserTest : RobolectricTest() {
                 "All cards should be flagged",
                 cardBrowser.viewModel.queryAllCardIds()
                     .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
-                    .all { flag1 -> flag1 == Flag.GREEN }
+                    .all { flag1 -> flag1 == Flag.GREEN },
             )
         }
 
@@ -413,7 +413,7 @@ class CardBrowserTest : RobolectricTest() {
 
     private fun getCardFlagAfterFlagChangeDone(
         cardBrowser: CardBrowser,
-        cardId: CardId
+        cardId: CardId,
     ): Flag {
         return cardBrowser.getPropertiesForCardId(cardId).card.userFlag()
     }
@@ -470,7 +470,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "before: cards",
                 previewIntent.previewerIdsFile.getCardIds(),
-                equalTo(listOf(cid1, cid2))
+                equalTo(listOf(cid1, cid2)),
             )
 
             // reverse
@@ -485,7 +485,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "after: cards",
                 intentAfterReverse.previewerIdsFile.getCardIds(),
-                equalTo(listOf(cid2, cid1))
+                equalTo(listOf(cid2, cid1)),
             )
         }
 
@@ -500,7 +500,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "The target deck should not yet be selected",
                 b.lastDeckId,
-                not(equalTo(targetDid))
+                not(equalTo(targetDid)),
             )
 
             b.viewModel.setDeckId(targetDid)
@@ -538,7 +538,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Initial position of checked card",
                 card.getColumnHeaderText(CardBrowserColumn.DUE),
-                equalTo("1")
+                equalTo("1"),
             )
 
             b.viewModel.repositionSelectedRows(2)
@@ -548,7 +548,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Position of checked card after reposition",
                 card.getColumnHeaderText(CardBrowserColumn.DUE),
-                equalTo("2")
+                equalTo("2"),
             )
         }
 
@@ -575,7 +575,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Initial due of checked card",
                 card.getColumnHeaderText(CardBrowserColumn.DUE),
-                equalTo(expectedDate)
+                equalTo(expectedDate),
             )
 
             // simulate the user using the ForgetCardsDialog to start the cards reset process
@@ -583,8 +583,8 @@ class CardBrowserTest : RobolectricTest() {
                 ForgetCardsDialog.REQUEST_KEY_FORGET,
                 bundleOf(
                     ForgetCardsDialog.ARG_RESTORE_ORIGINAL to true,
-                    ForgetCardsDialog.ARG_RESET_REPETITION to false
-                )
+                    ForgetCardsDialog.ARG_RESET_REPETITION to false,
+                ),
             )
 
             card.reload()
@@ -592,7 +592,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Position of checked card after reset",
                 card.getColumnHeaderText(CardBrowserColumn.DUE),
-                equalTo("2")
+                equalTo("2"),
             )
         }
 
@@ -609,7 +609,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Initial position of checked card",
                 card.getColumnHeaderText(CardBrowserColumn.DUE),
-                equalTo("1")
+                equalTo("1"),
             )
 
             b.repositionCardsNoValidation(2)
@@ -617,7 +617,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Position of checked card after reposition",
                 card.getColumnHeaderText(CardBrowserColumn.DUE),
-                equalTo("2")
+                equalTo("2"),
             )
 
             b.onUndo()
@@ -625,7 +625,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Position of checked card after undo should be reset",
                 card.getColumnHeaderText(CardBrowserColumn.DUE),
-                equalTo("1")
+                equalTo("1"),
             )
         }
 
@@ -660,12 +660,12 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Cardbrowser has Deck 1 as selected deck",
                 cardBrowser.selectedDeckNameForUi,
-                equalTo("Deck 1")
+                equalTo("Deck 1"),
             )
             assertThat(
                 "Results should only be from the selected deck",
                 cardBrowser.viewModel.rowCount,
-                equalTo(1)
+                equalTo(1),
             )
         }
 
@@ -683,7 +683,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(
             "Initially Card Browser has order = noteFld",
             col.config.get<String>("sortType"),
-            equalTo("noteFld")
+            equalTo("noteFld"),
         )
 
         // Change the display order of the card browser
@@ -704,7 +704,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(
             "Card Browser has the new sortType field",
             col.config.get<String>("sortType"),
-            equalTo("cardEase")
+            equalTo("cardEase"),
         )
         assertNotEquals(0, updatedMod)
     }
@@ -732,7 +732,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Card browser should have Test Deck as the selected deck",
                 cardBrowser.selectedDeckNameForUi,
-                equalTo("Test Deck")
+                equalTo("Test Deck"),
             )
             assertThat("Result should be empty", cardBrowser.viewModel.rowCount, equalTo(0))
 
@@ -773,12 +773,12 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(
                 "Card Browser has the new noteSortType field",
                 col.config.get<String>("noteSortType"),
-                equalTo("cardEase")
+                equalTo("cardEase"),
             )
             assertThat(
                 "Card Browser has the new browserNoteSortBackwards field",
                 col.config.get<Boolean>("browserNoteSortBackwards"),
-                equalTo(true)
+                equalTo(true),
             )
         }
     }
@@ -791,7 +791,7 @@ class CardBrowserTest : RobolectricTest() {
 
     private suspend fun deleteCardAtPosition(
         browser: CardBrowser,
-        positionToCorrupt: Int
+        positionToCorrupt: Int,
     ) {
         val id = browser.viewModel.queryCardIdAtPosition(positionToCorrupt)
         removeCardFromCollection(id)
@@ -804,7 +804,7 @@ class CardBrowserTest : RobolectricTest() {
 
     private fun selectOneOfManyCards(
         browser: CardBrowser,
-        position: Int
+        position: Int,
     ) {
         Timber.d("Selecting single card")
         val shadowActivity = shadowOf(browser)
@@ -823,14 +823,14 @@ class CardBrowserTest : RobolectricTest() {
             null,
             childAt,
             position,
-            toSelect.getItemIdAtPosition(position)
+            toSelect.getItemIdAtPosition(position),
         )
         advanceRobolectricUiLooper()
     }
 
     private fun selectMenuItem(
         browser: CardBrowser,
-        actionSelectAll: Int
+        actionSelectAll: Int,
     ) {
         Timber.d("Selecting menu item")
         // select seems to run an infinite loop :/
@@ -848,7 +848,7 @@ class CardBrowserTest : RobolectricTest() {
     /** Returns an instance of [CardBrowser] containing [noteCount] notes */
     private fun getBrowserWithNotes(
         noteCount: Int,
-        reversed: Boolean = false
+        reversed: Boolean = false,
     ): CardBrowser {
         ensureCollectionLoadIsSynchronous()
         if (reversed) {
@@ -1233,7 +1233,7 @@ class CardBrowserTest : RobolectricTest() {
                 "test",
                 arrayOf("Front", "Back"),
                 "[anki:tts lang=de_DE voices=com.google.android.tts-de-DE-language]{{Front}}[/anki:tts]",
-                ""
+                "",
             ).let { name ->
                 col.notetypes.byName(name)!!
             }.addNote("Test", "Blank")
@@ -1262,7 +1262,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     @Ignore(
         "issues with launchCollectionInLifecycleScope - provided value is not current" +
-            "use an integration test"
+            "use an integration test",
     )
     fun `column text is updated - cardsOrNotes and column change`() {
         addNoteUsingBasicAndReversedModel("Hello", "World")
@@ -1287,7 +1287,7 @@ class CardBrowserTest : RobolectricTest() {
 
     fun NotetypeJson.addNote(
         field: String,
-        vararg fields: String
+        vararg fields: String,
     ): Note {
         return addNoteUsingModelName(this.name, field, *fields)
     }
@@ -1295,7 +1295,7 @@ class CardBrowserTest : RobolectricTest() {
     @Suppress("SameParameterValue")
     private fun withBrowser(
         noteCount: Int = 0,
-        block: suspend CardBrowser.() -> Unit
+        block: suspend CardBrowser.() -> Unit,
     ) = runTest {
         getBrowserWithNotes(noteCount).apply {
             block(this)
@@ -1386,7 +1386,7 @@ suspend fun CardBrowserViewModel.setFlagFilterSync(flag: Flag) {
 
 fun TestClass.flagCardForNote(
     n: Note,
-    flag: Flag
+    flag: Flag,
 ) {
     n.firstCard().update {
         setUserFlag(flag)

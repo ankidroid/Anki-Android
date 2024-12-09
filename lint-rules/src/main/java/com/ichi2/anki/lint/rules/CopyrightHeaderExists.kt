@@ -77,7 +77,7 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
                 Constants.ANKI_CODE_STYLE_CATEGORY,
                 Constants.ANKI_CODE_STYLE_PRIORITY,
                 Constants.ANKI_CODE_STYLE_SEVERITY,
-                implementation
+                implementation,
             )
     }
 

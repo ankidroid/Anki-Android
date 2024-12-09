@@ -28,7 +28,7 @@ var Deck.description: String
 
 fun Decks.update(
     did: DeckId,
-    block: Deck.() -> Unit
+    block: Deck.() -> Unit,
 ) {
     val deck = get(did)!!
     block(deck)

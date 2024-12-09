@@ -39,7 +39,7 @@ object ShadowStatFs {
         path: File,
         blockCount: Int,
         freeBlocks: Int,
-        availableBlocks: Int
+        availableBlocks: Int,
     ) {
         RobolectricStats.registerStats(path, blockCount, freeBlocks, availableBlocks)
         // call canonicalFile so this works on macOS

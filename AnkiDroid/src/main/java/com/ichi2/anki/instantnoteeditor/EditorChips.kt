@@ -42,7 +42,7 @@ import timber.log.Timber
 // TODO: single chars have more margin in chip
 fun AnkiActivity.setupChipGroup(
     viewModel: InstantEditorViewModel,
-    clozeChipGroup: ChipGroup
+    clozeChipGroup: ChipGroup,
 ) {
     Timber.d("Setting up chip group view")
     clozeChipGroup.removeAllViews()
@@ -57,7 +57,7 @@ fun AnkiActivity.setupChipGroup(
                 word,
                 Chip(clozeChipGroup.context),
                 createBadgeDrawable(this),
-                clozeNumber
+                clozeNumber,
             )
         }
 
@@ -111,7 +111,7 @@ private fun updateChipData(
     data: ChipData,
     newWord: String,
     chipsData: List<ChipData>,
-    viewModel: InstantEditorViewModel
+    viewModel: InstantEditorViewModel,
 ) {
     data.word = newWord
     val newClozeNumber = viewModel.getWordClozeNumber(newWord)
@@ -129,7 +129,7 @@ private fun updateChipData(
  */
 private fun AnkiActivity.displayUpdateClozeNumberDialog(
     clozeNumber: Int,
-    newClozeNumber: (Int) -> Unit
+    newClozeNumber: (Int) -> Unit,
 ) {
     val repositionDialog =
         IntegerDialog().apply {
@@ -137,7 +137,7 @@ private fun AnkiActivity.displayUpdateClozeNumberDialog(
                 title = this@displayUpdateClozeNumberDialog.getString(R.string.change_cloze_number),
                 prompt = this@displayUpdateClozeNumberDialog.getString(R.string.cloze_number),
                 digits = 2,
-                defaultValue = clozeNumber.toString()
+                defaultValue = clozeNumber.toString(),
             )
             setCallbackRunnable {
                 newClozeNumber(it)
@@ -192,7 +192,7 @@ private fun createBadgeDrawable(context: Context): BadgeDrawable {
 private fun updateBadgeVisibilityOnView(
     view: View,
     badgeDrawable: BadgeDrawable,
-    visible: Boolean
+    visible: Boolean,
 ) {
     view.post {
         if (visible) {
@@ -216,5 +216,5 @@ private data class ChipData(
     var word: String,
     val chip: Chip,
     val badgeDrawable: BadgeDrawable,
-    var clozeNumber: Int?
+    var clozeNumber: Int?,
 )

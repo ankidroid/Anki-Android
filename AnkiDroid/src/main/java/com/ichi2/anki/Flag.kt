@@ -41,7 +41,7 @@ enum class Flag(
      * Flag drawn to represents this flagInTheReviewer if it differs from [drawableRes].
      * @TODO: Checks whether we can use colorControlNormal everywhere.
      */
-    @DrawableRes val drawableReviewerRes: Int? = null
+    @DrawableRes val drawableReviewerRes: Int? = null,
 ) {
     NONE(0, R.id.flag_none, R.drawable.ic_flag_lightgrey, null, R.drawable.ic_flag_transparent),
     RED(1, R.id.flag_red, R.drawable.ic_flag_red, R.color.flag_red),
@@ -49,7 +49,7 @@ enum class Flag(
         2,
         R.id.flag_orange,
         R.drawable.ic_flag_orange,
-        R.color.flag_orange
+        R.color.flag_orange,
     ),
     GREEN(3, R.id.flag_green, R.drawable.ic_flag_green, R.color.flag_green),
     BLUE(4, R.id.flag_blue, R.drawable.ic_flag_blue, R.color.flag_blue),
@@ -58,14 +58,14 @@ enum class Flag(
         6,
         R.id.flag_turquoise,
         R.drawable.ic_flag_turquoise,
-        R.color.flag_turquoise
+        R.color.flag_turquoise,
     ),
     PURPLE(
         7,
         R.id.flag_purple,
         R.drawable.ic_flag_purple,
-        R.color.flag_purple
-    )
+        R.color.flag_purple,
+    ),
     ;
 
     /**
@@ -135,7 +135,7 @@ private value class FlagLabels(val value: JSONObject) {
 
     suspend fun updateName(
         flag: Flag,
-        newName: String
+        newName: String,
     ) {
         value.put(flag.code.toString(), newName)
         withCol {

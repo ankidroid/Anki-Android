@@ -171,7 +171,7 @@ open class CardBrowser :
 
     private enum class TagsDialogListenerAction {
         FILTER,
-        EDIT_TAGS
+        EDIT_TAGS,
     }
 
     lateinit var viewModel: CardBrowserViewModel
@@ -224,7 +224,7 @@ open class CardBrowser :
                 (
                     data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) ||
                         data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false)
-                    )
+                )
             ) {
                 Timber.d("Reloading Card Browser due to activity result")
                 // if reloadRequired or noteChanged flag was sent from note editor then reload card list
@@ -260,7 +260,7 @@ open class CardBrowser :
                 (
                     data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) ||
                         data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false)
-                    )
+                )
             ) {
                 forceRefreshSearch()
                 if (reviewerCardId == currentCardId) {
@@ -320,7 +320,7 @@ open class CardBrowser :
 
             override fun onSaveSearch(
                 searchName: String,
-                searchTerms: String?
+                searchTerms: String?,
             ) {
                 if (searchTerms == null) {
                     return
@@ -328,7 +328,7 @@ open class CardBrowser :
                 if (searchName.isEmpty()) {
                     showSnackbar(
                         R.string.card_browser_list_my_searches_new_search_error_empty_name,
-                        Snackbar.LENGTH_SHORT
+                        Snackbar.LENGTH_SHORT,
                     )
                     return
                 }
@@ -337,7 +337,7 @@ open class CardBrowser :
                         SaveSearchResult.ALREADY_EXISTS ->
                             showSnackbar(
                                 R.string.card_browser_list_my_searches_new_search_error_dup,
-                                Snackbar.LENGTH_SHORT
+                                Snackbar.LENGTH_SHORT,
                             )
                         SaveSearchResult.SUCCESS -> {
                             searchView!!.setQuery("", false)
@@ -404,7 +404,7 @@ open class CardBrowser :
         val columnsContent =
             arrayOf(
                 viewModel.column1,
-                viewModel.column2
+                viewModel.column2,
             )
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter =
@@ -413,7 +413,7 @@ open class CardBrowser :
                 R.layout.card_item_browser,
                 columnsContent,
                 intArrayOf(R.id.card_sfld, R.id.card_column2),
-                sflRelativeFontSize
+                sflRelativeFontSize,
             )
         // link the adapter to the main mCardsListView
         cardsListView.adapter = cardsAdapter
@@ -426,7 +426,7 @@ open class CardBrowser :
                 findViewById(R.id.toolbar_spinner),
                 showAllDecks = true,
                 alwaysShowDefault = false,
-                showFilteredDecks = true
+                showFilteredDecks = true,
             )
 
         updateNumCardsToRender()
@@ -542,7 +542,7 @@ open class CardBrowser :
                     ArrayAdapter(
                         this@CardBrowser,
                         android.R.layout.simple_spinner_item,
-                        viewModel.column1Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                        viewModel.column1Candidates.map { it.getLabel(viewModel.cardsOrNotes) },
                     ).apply {
                         setDropDownViewResource(R.layout.spinner_custom_layout)
                     }
@@ -559,7 +559,7 @@ open class CardBrowser :
                     ArrayAdapter(
                         this@CardBrowser,
                         android.R.layout.simple_spinner_item,
-                        viewModel.column2Candidates.map { it.getLabel(viewModel.cardsOrNotes) }
+                        viewModel.column2Candidates.map { it.getLabel(viewModel.cardsOrNotes) },
                     ).apply {
                         // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
                         setDropDownViewResource(R.layout.spinner_custom_layout)
@@ -663,7 +663,7 @@ open class CardBrowser :
 
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         // This method is called even when the user is typing in the search text field.
         // So we must ensure that all shortcuts uses a modifier.
@@ -899,7 +899,7 @@ open class CardBrowser :
             if (viewModel.rowCount == 0) {
                 showSnackbar(
                     R.string.no_note_to_edit,
-                    Snackbar.LENGTH_LONG
+                    Snackbar.LENGTH_LONG,
                 )
                 return@launchCatchingTask
             }
@@ -911,7 +911,7 @@ open class CardBrowser :
                 Timber.w(e, "Error Opening Note Editor")
                 showSnackbar(
                     R.string.multimedia_editor_something_wrong,
-                    Snackbar.LENGTH_LONG
+                    Snackbar.LENGTH_LONG,
                 )
             }
         }
@@ -999,7 +999,7 @@ open class CardBrowser :
                         searchCards("")
                         return true
                     }
-                }
+                },
             )
             searchView =
                 (searchItem!!.actionView as CardBrowserSearchView).apply {
@@ -1020,7 +1020,7 @@ open class CardBrowser :
                                 searchView!!.clearFocus()
                                 return true
                             }
-                        }
+                        },
                     )
                 }
             // Fixes #6500 - keep the search consistent if coming back from note editor
@@ -1063,12 +1063,12 @@ open class CardBrowser :
      */
     enum class Mode(val value: Int) {
         SINGLE_SELECT(1000),
-        MULTI_SELECT(1001)
+        MULTI_SELECT(1001),
     }
 
     private fun setupFlags(
         subMenu: SubMenu,
-        mode: Mode
+        mode: Mode,
     ) {
         lifecycleScope.launch {
             val groupId =
@@ -1121,12 +1121,12 @@ open class CardBrowser :
                 if (viewModel.cardsOrNotes == CARDS) {
                     resources.getQuantityString(
                         R.plurals.card_browser_export_cards,
-                        viewModel.selectedRowCount()
+                        viewModel.selectedRowCount(),
                     )
                 } else {
                     resources.getQuantityString(
                         R.plurals.card_browser_export_notes,
-                        viewModel.selectedRowCount()
+                        viewModel.selectedRowCount(),
                     )
                 }
         }
@@ -1134,7 +1134,7 @@ open class CardBrowser :
             this.title =
                 resources.getQuantityString(
                     R.plurals.card_browser_delete_notes,
-                    viewModel.selectedNoteCount()
+                    viewModel.selectedNoteCount(),
                 )
         }
         actionBarMenu.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
@@ -1347,7 +1347,7 @@ open class CardBrowser :
             CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
                 changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
-            }
+            },
         )
     }
 
@@ -1359,8 +1359,8 @@ open class CardBrowser :
                     savedFilters,
                     mySearchesDialogListener,
                     "",
-                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST
-                )
+                    CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_LIST,
+                ),
             )
         }
     }
@@ -1372,8 +1372,8 @@ open class CardBrowser :
                 null,
                 mySearchesDialogListener,
                 searchTerms,
-                CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE
-            )
+                CardBrowserMySearchesDialog.CARD_BROWSER_MY_SEARCHES_TYPE_SAVE,
+            ),
         )
     }
 
@@ -1388,8 +1388,8 @@ open class CardBrowser :
                     SimpleMessageDialog.newInstance(
                         title = getString(R.string.vague_error),
                         message = getString(R.string.reposition_card_not_new_error),
-                        reload = false
-                    )
+                        reload = false,
+                    ),
                 )
                 return@launchCatchingTask
             }
@@ -1398,7 +1398,7 @@ open class CardBrowser :
                     setArgs(
                         title = this@CardBrowser.getString(R.string.reposition_card_dialog_title),
                         prompt = this@CardBrowser.getString(R.string.reposition_card_dialog_message),
-                        digits = 5
+                        digits = 5,
                     )
                     setCallbackRunnable(::repositionCardsNoValidation)
                 }
@@ -1454,9 +1454,9 @@ open class CardBrowser :
                 resources.getQuantityString(
                     R.plurals.reposition_card_dialog_acknowledge,
                     count,
-                    count
+                    count,
                 ),
-                Snackbar.LENGTH_SHORT
+                Snackbar.LENGTH_SHORT,
             )
         }
 
@@ -1469,7 +1469,7 @@ open class CardBrowser :
 
     private fun getPreviewIntent(
         index: Int,
-        previewerIdsFile: PreviewerIdsFile
+        previewerIdsFile: PreviewerIdsFile,
     ): Intent {
         return PreviewerDestination(index, previewerIdsFile).toIntent(this)
     }
@@ -1494,7 +1494,7 @@ open class CardBrowser :
                 getString(R.string.move_all_to_deck),
                 null,
                 false,
-                selectableDecks!!
+                selectableDecks!!,
             )
         // Add change deck argument so the dialog can be dismissed
         // after activity recreation, since the selected cards will be gone with it
@@ -1571,7 +1571,7 @@ open class CardBrowser :
                             this@CardBrowser,
                             type = TagsDialog.DialogType.EDIT_TAGS,
                             checkedTags = checkedTags,
-                            allTags = allTags
+                            allTags = allTags,
                         )
                     showDialogFragment(dialog)
                     return@withProgress
@@ -1606,7 +1606,7 @@ open class CardBrowser :
                             type = TagsDialog.DialogType.EDIT_TAGS,
                             checkedTags = checkedTags,
                             uncheckedTags = uncheckedTags,
-                            allTags = allTags
+                            allTags = allTags,
                         )
                     }
                 showDialogFragment(dialog)
@@ -1621,7 +1621,7 @@ open class CardBrowser :
                 context = this@CardBrowser,
                 type = TagsDialog.DialogType.FILTER_BY_TAG,
                 checkedTags = ArrayList(0),
-                allTags = getColUnsafe.tags.all()
+                allTags = getColUnsafe.tags.all(),
             )
         showDialogFragment(dialog)
     }
@@ -1722,7 +1722,7 @@ open class CardBrowser :
             (
                 cardsListView.height /
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics)
-                ).toDouble()
+            ).toDouble(),
         ).toInt() + 5
     }
 
@@ -1759,7 +1759,7 @@ open class CardBrowser :
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        stateFilter: CardStateFilter,
     ) {
         when (tagsDialogListenerAction) {
             TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, stateFilter)
@@ -1779,7 +1779,7 @@ open class CardBrowser :
      */
     private suspend fun editSelectedCardsTags(
         selectedTags: List<String>,
-        indeterminateTags: List<String>
+        indeterminateTags: List<String>,
     ) = withProgress {
         val selectedNoteIds = viewModel.queryAllSelectedNoteIds().distinct()
         undoableOp {
@@ -1797,7 +1797,7 @@ open class CardBrowser :
 
     private fun filterByTags(
         selectedTags: List<String>,
-        cardState: CardStateFilter
+        cardState: CardStateFilter,
     ) = launchCatchingTask {
         viewModel.filterByTags(selectedTags, cardState)
     }
@@ -1832,7 +1832,7 @@ open class CardBrowser :
      */
     private fun removeNotesView(
         cardsIds: List<Long>,
-        reorderCards: Boolean
+        reorderCards: Boolean,
     ) {
         val idToPos = viewModel.cardIdToPositionMap
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
@@ -1944,7 +1944,7 @@ open class CardBrowser :
 
     private fun closeCardBrowser(
         result: Int,
-        data: Intent? = null
+        data: Intent? = null,
     ) {
         // Set result and finish
         setResult(result, data)
@@ -1960,7 +1960,7 @@ open class CardBrowser :
             view: AbsListView,
             firstVisibleItem: Int,
             visibleItemCount: Int,
-            totalItemCount: Int
+            totalItemCount: Int,
         ) {
             // Show the progress bar if scrolling to given position requires rendering of the question / answer
             val lastVisibleItem = firstVisibleItem + visibleItemCount - 1
@@ -1982,7 +1982,7 @@ open class CardBrowser :
                 Timber.w(
                     "CardBrowser Scroll Issue 15441/8821: In a search result of $size " +
                         "cards, with totalItemCount = $totalItemCount, " +
-                        "somehow we got $visibleItemCount elements to display."
+                        "somehow we got $visibleItemCount elements to display.",
                 )
             }
             // In all of those cases, there is nothing to do:
@@ -2008,7 +2008,7 @@ open class CardBrowser :
 
         override fun onScrollStateChanged(
             listView: AbsListView,
-            scrollState: Int
+            scrollState: Int,
         ) {
             // TODO: Try change to RecyclerView as currently gets stuck a lot when using scrollbar on right of ListView
             // Start rendering the question & answer every time the user stops scrolling
@@ -2027,7 +2027,7 @@ open class CardBrowser :
     protected suspend fun renderBrowserQAParams(
         firstVisibleItem: Int,
         visibleItemCount: Int,
-        cards: List<CardCache>
+        cards: List<CardCache>,
     ) {
         Timber.d("Starting Q&A background rendering")
         val result =
@@ -2036,7 +2036,7 @@ open class CardBrowser :
                 firstVisibleItem,
                 visibleItemCount,
                 viewModel.column1,
-                viewModel.column2
+                viewModel.column2,
             ) {
                 // Note: This is called every time a card is rendered.
                 // It blocks the long-click callback while the task is running, so usage of the task should be minimized
@@ -2051,7 +2051,7 @@ open class CardBrowser :
         private val resource: Int,
         private var fromKeys: Array<CardBrowserColumn>,
         private val toIds: IntArray,
-        private val fontSizeScalePcent: Int
+        private val fontSizeScalePcent: Int,
     ) : BaseAdapter() {
         private var originalTextSize = -1.0f
         private val inflater: LayoutInflater
@@ -2059,7 +2059,7 @@ open class CardBrowser :
         override fun getView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup
+            parent: ViewGroup,
         ): View {
             // Get the main container view if it doesn't already exist, and call bindView
             val v: View
@@ -2081,7 +2081,7 @@ open class CardBrowser :
         @KotlinCleanup("Unchecked cast")
         private fun bindView(
             position: Int,
-            v: View
+            v: View,
         ) {
             // Draw the content in the columns
             val card = getItem(position)
@@ -2197,9 +2197,9 @@ open class CardBrowser :
             CardBrowserViewModel.factory(
                 lastDeckIdRepository = AnkiDroidApp.instance.sharedPrefsLastDeckIdRepository,
                 cacheDir = cacheDir,
-                options = launchOptions
+                options = launchOptions,
             ),
-            defaultViewModelCreationExtras
+            defaultViewModelCreationExtras,
         )[CardBrowserViewModel::class.java]
 
     // This could be better: use a wrapper class PositionAware<T> to store the position so it's
@@ -2318,7 +2318,7 @@ open class CardBrowser :
                 }
                 CardBrowserColumn.FSRS_DIFFICULTY,
                 CardBrowserColumn.FSRS_RETRIEVABILITY,
-                CardBrowserColumn.FSRS_STABILITY
+                CardBrowserColumn.FSRS_STABILITY,
                 -> null
             }
         }
@@ -2364,7 +2364,7 @@ open class CardBrowser :
         fun load(
             reload: Boolean,
             column1: CardBrowserColumn,
-            column2: CardBrowserColumn
+            column2: CardBrowserColumn,
         ) {
             if (reload) {
                 reload()
@@ -2394,7 +2394,7 @@ open class CardBrowser :
                     card.renderOutput(
                         col,
                         reload = true,
-                        browser = false
+                        browser = false,
                     )
                 if (qa.questionText.isEmpty()) {
                     qa.questionText = questionText
@@ -2482,17 +2482,17 @@ open class CardBrowser :
 
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         if (handler === this || handler === viewModel) {
             return
         }
 
         if ((
-            changes.browserSidebar ||
-                changes.browserTable ||
-                changes.noteText ||
-                changes.card
+                changes.browserSidebar ||
+                    changes.browserTable ||
+                    changes.noteText ||
+                    changes.card
             )
         ) {
             refreshAfterUndo()
@@ -2531,9 +2531,9 @@ open class CardBrowser :
                     shortcut("Ctrl+4", R.string.gesture_flag_blue),
                     shortcut("Ctrl+5", R.string.gesture_flag_pink),
                     shortcut("Ctrl+6", R.string.gesture_flag_turquoise),
-                    shortcut("Ctrl+7", R.string.gesture_flag_purple)
+                    shortcut("Ctrl+7", R.string.gesture_flag_purple),
                 ),
-                R.string.card_browser_context_menu
+                R.string.card_browser_context_menu,
             )
 
     companion object {
@@ -2556,7 +2556,7 @@ open class CardBrowser :
         @VisibleForTesting
         fun createAddNoteIntent(
             context: Context,
-            viewModel: CardBrowserViewModel
+            viewModel: CardBrowserViewModel,
         ): Intent {
             return NoteEditorLauncher.AddNoteFromCardBrowser(viewModel).getIntent(context)
         }
@@ -2565,7 +2565,7 @@ open class CardBrowser :
         private fun formatQA(
             text: String,
             qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
-            context: Context
+            context: Context,
         ): String {
             val showFilenames =
                 context.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
@@ -2582,7 +2582,7 @@ open class CardBrowser :
         fun formatQAInternal(
             txt: String,
             qa: TemplateManager.TemplateRenderContext.TemplateRenderOutput,
-            showFileNames: Boolean
+            showFileNames: Boolean,
         ): String {
             // Strips all formatting from the string txt for use in displaying question/answer in browser
             var s = txt
@@ -2602,7 +2602,7 @@ open class CardBrowser :
 
         fun dueString(
             col: Collection,
-            card: Card
+            card: Card,
         ): String {
             var t = nextDue(col, card)
             if (card.queue < 0) {
@@ -2614,7 +2614,7 @@ open class CardBrowser :
         @VisibleForTesting
         fun nextDue(
             col: Collection,
-            card: Card
+            card: Card,
         ): String {
             val date: Long
             val due = card.due
@@ -2658,7 +2658,7 @@ open class CardBrowser :
 suspend fun searchForCards(
     query: String,
     order: SortOrder,
-    cardsOrNotes: CardsOrNotes
+    cardsOrNotes: CardsOrNotes,
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query, order)).asSequence()
@@ -2669,7 +2669,7 @@ suspend fun searchForCards(
 
 private fun Sequence<CardId>.toCardCache(
     col: Collection,
-    isInCardMode: CardsOrNotes
+    isInCardMode: CardsOrNotes,
 ): Sequence<CardBrowser.CardCache> {
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
 }

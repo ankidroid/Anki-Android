@@ -32,7 +32,7 @@ interface IMultimediaEditableNote : Serializable {
 
     fun setField(
         index: Int,
-        field: IField?
+        field: IField?,
     ): Boolean
 
     val isModified: Boolean

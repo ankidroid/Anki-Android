@@ -24,7 +24,7 @@ class AnkiCardContextMenu(context: Context) : SystemContextMenu(context) {
     companion object {
         fun ensureConsistentStateWithPreferenceStatus(
             context: Context,
-            preferenceStatus: Boolean
+            preferenceStatus: Boolean,
         ) {
             AnkiCardContextMenu(context).ensureConsistentStateWithPreferenceStatus(preferenceStatus)
         }

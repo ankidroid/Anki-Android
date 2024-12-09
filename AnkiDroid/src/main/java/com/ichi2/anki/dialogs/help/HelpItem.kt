@@ -46,7 +46,7 @@ data class HelpItem(
      * Reference to the action that needs to be done when the user selects this menu item. Can be
      * null, in which case this is a top level item(with or without children).
      */
-    val action: Action? = null
+    val action: Action? = null,
 ) : Parcelable {
     /**
      * Possible actions that could be done if the user selects one on the help/support menu items.
@@ -64,7 +64,7 @@ data class HelpItem(
 
         @Parcelize
         data class OpenUrlResource(
-            @StringRes val urlResourceId: Int
+            @StringRes val urlResourceId: Int,
         ) : Action()
 
         @Parcelize

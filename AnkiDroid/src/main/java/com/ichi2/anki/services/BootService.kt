@@ -25,7 +25,7 @@ class BootService : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         if (!intent.action.equals("android.intent.action.BOOT_COMPLETED")) {
             Timber.w("BootService - unexpected action received, ignoring: %s", intent.action)
@@ -53,7 +53,7 @@ class BootService : BroadcastReceiver() {
 
     private fun catchAlarmManagerErrors(
         context: Context,
-        runnable: Runnable
+        runnable: Runnable,
     ) {
         // #6332 - Too Many Alarms on Samsung Devices - this stops a fatal startup crash.
         // We warn the user if they breach this limit
@@ -98,14 +98,14 @@ class BootService : BroadcastReceiver() {
 
         fun scheduleNotification(
             time: Time,
-            context: Context
+            context: Context,
         ) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val sp = context.sharedPrefs()
             // Don't schedule a notification if the due reminders setting is not enabled
             if (sp.getString(
                     context.getString(R.string.pref_notifications_minimum_cards_due_key),
-                    PENDING_NOTIFICATIONS_ONLY.toString()
+                    PENDING_NOTIFICATIONS_ONLY.toString(),
                 )!!.toInt() >= PENDING_NOTIFICATIONS_ONLY
             ) {
                 return
@@ -122,14 +122,14 @@ class BootService : BroadcastReceiver() {
                     0,
                     Intent(context, NotificationService::class.java),
                     0,
-                    false
+                    false,
                 )
             if (notificationIntent != null) {
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
                     AlarmManager.INTERVAL_DAY,
-                    notificationIntent
+                    notificationIntent,
                 )
             }
         }

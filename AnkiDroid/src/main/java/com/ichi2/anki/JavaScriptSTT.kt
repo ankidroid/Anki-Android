@@ -118,7 +118,7 @@ class JavaScriptSTT(private val context: Context) {
 
             override fun onEvent(
                 eventType: Int,
-                params: Bundle?
+                params: Bundle?,
             ) {}
         }
     }

@@ -59,12 +59,12 @@ object NotificationChannels {
 
 enum class Channel(
     val id: String,
-    @StringRes val nameId: Int
+    @StringRes val nameId: Int,
 ) {
     GENERAL("General Notifications", R.string.app_name),
     SYNC("Synchronization", R.string.sync_title),
     GLOBAL_REMINDERS("Global Reminders", R.string.widget_minimum_cards_due_notification_ticker_title),
-    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders)
+    DECK_REMINDERS("Deck Reminders", R.string.deck_conf_reminders),
     ;
 
     fun getName(res: Resources) = res.getString(nameId)

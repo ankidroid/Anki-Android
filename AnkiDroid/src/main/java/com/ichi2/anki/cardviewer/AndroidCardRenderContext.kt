@@ -37,7 +37,7 @@ class AndroidCardRenderContext(
     private val typeAnswer: TypeAnswer,
     private val cardAppearance: CardAppearance,
     private val cardTemplate: CardTemplate,
-    private val showAudioPlayButtons: Boolean
+    private val showAudioPlayButtons: Boolean,
 ) {
     /**
      * Renders Android-specific functionality to produce a [RenderedCard]
@@ -46,7 +46,7 @@ class AndroidCardRenderContext(
     fun renderCard(
         col: Collection,
         card: Card,
-        side: SingleCardSide
+        side: SingleCardSide,
     ): RenderedCard {
         // obtain the libAnki-rendered card
         var content: String = if (side == SingleCardSide.FRONT) card.question(col) else card.answer(col)
@@ -67,7 +67,7 @@ class AndroidCardRenderContext(
 
     private fun render(
         content: String,
-        ord: Int
+        ord: Int,
     ): RenderedCard {
         val requiresMathjax = MathJax.textContainsMathjax(content)
 
@@ -102,7 +102,7 @@ class AndroidCardRenderContext(
 
     private fun filterTypeAnswer(
         content: String,
-        side: SingleCardSide
+        side: SingleCardSide,
     ): String {
         return when (side) {
             SingleCardSide.FRONT -> typeAnswer.filterQuestion(content)
@@ -113,7 +113,7 @@ class AndroidCardRenderContext(
     private fun expandSounds(
         content: String,
         renderOutput: TemplateRenderOutput,
-        col: Collection
+        col: Collection,
     ): String {
         val mediaDir = col.media.dir
 
@@ -121,7 +121,7 @@ class AndroidCardRenderContext(
             content,
             renderOutput,
             showAudioPlayButtons,
-            mediaDir
+            mediaDir,
         )
     }
 
@@ -129,7 +129,7 @@ class AndroidCardRenderContext(
         fun createInstance(
             context: Context,
             col: Collection,
-            typeAnswer: TypeAnswer
+            typeAnswer: TypeAnswer,
         ): AndroidCardRenderContext {
             val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences)
@@ -139,7 +139,7 @@ class AndroidCardRenderContext(
                 typeAnswer,
                 cardAppearance,
                 cardHtmlTemplate,
-                showAudioPlayButtons
+                showAudioPlayButtons,
             )
         }
     }

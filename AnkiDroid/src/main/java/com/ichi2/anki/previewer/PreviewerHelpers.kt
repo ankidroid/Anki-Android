@@ -32,7 +32,7 @@ import org.intellij.lang.annotations.Language
  */
 fun stdHtml(
     context: Context = AnkiDroidApp.instance,
-    nightMode: Boolean = false
+    nightMode: Boolean = false,
 ): String {
     val languageDirectionality = if (LanguageUtils.appLanguageIsRTL()) "rtl" else "ltr"
 
@@ -52,7 +52,7 @@ fun stdHtml(
                 MaterialColors.getColor(
                     context,
                     android.R.attr.colorBackground,
-                    android.R.color.white
+                    android.R.color.white,
                 ).toRGBHex()
             val fgColor =
                 MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.black).toRGBHex()
@@ -62,7 +62,7 @@ fun stdHtml(
                 MaterialColors.getColor(
                     context,
                     android.R.attr.colorBackground,
-                    android.R.color.black
+                    android.R.color.black,
                 ).toRGBHex()
             val fgColor =
                 MaterialColors.getColor(context, android.R.attr.textColor, android.R.color.white).toRGBHex()
@@ -103,7 +103,7 @@ fun stdHtml(
 /** @return body classes used when showing a card */
 fun bodyClassForCardOrd(
     cardOrd: Int,
-    nightMode: Boolean = Themes.currentTheme.isNightMode
+    nightMode: Boolean = Themes.currentTheme.isNightMode,
 ): String {
     return "card card${cardOrd + 1} ${bodyClass(nightMode)}"
 }

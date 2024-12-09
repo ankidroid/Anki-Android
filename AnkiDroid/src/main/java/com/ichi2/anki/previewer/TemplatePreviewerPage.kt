@@ -39,7 +39,7 @@ import timber.log.Timber
 class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         view.findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -73,7 +73,7 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
                     override fun onTabReselected(tab: TabLayout.Tab) {
                         // do nothing
                     }
-                }
+                },
             )
         }
     }
@@ -81,12 +81,12 @@ class TemplatePreviewerPage : Fragment(R.layout.template_previewer_container) {
     companion object {
         fun getIntent(
             context: Context,
-            arguments: TemplatePreviewerArguments
+            arguments: TemplatePreviewerArguments,
         ): Intent {
             return CardViewerActivity.getIntent(
                 context,
                 TemplatePreviewerPage::class,
-                bundleOf(ARGS_KEY to arguments)
+                bundleOf(ARGS_KEY to arguments),
             )
         }
     }

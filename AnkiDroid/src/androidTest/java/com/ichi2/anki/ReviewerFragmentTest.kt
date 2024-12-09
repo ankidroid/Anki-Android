@@ -75,9 +75,9 @@ class ReviewerFragmentTest : InstrumentedTest() {
         card.moveToReviewQueue()
         col.backend.updateCards(
             listOf(
-                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build()
+                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build(),
             ),
-            true
+            true,
         )
 
         closeGetStartedScreenIfExists()
@@ -134,7 +134,7 @@ class ReviewerFragmentTest : InstrumentedTest() {
             100,
             // Increase to a max of 30 seconds because CI builds can be very
             // slow
-            TimeUnit.SECONDS.toMillis(30)
+            TimeUnit.SECONDS.toMillis(30),
         )
     }
 

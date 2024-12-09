@@ -147,15 +147,15 @@ class ExportDialogFragment : DialogFragment() {
                 mutableListOf(
                     DeckNameId(
                         requireActivity().getString(R.string.card_browser_all_decks),
-                        DeckSpinnerSelection.ALL_DECKS_ID
-                    )
+                        DeckSpinnerSelection.ALL_DECKS_ID,
+                    ),
                 )
             allDecks.addAll(withCol { decks.allNamesAndIds(false) })
             deckSelector.adapter =
                 DeckDisplayAdapter(
                     requireContext(),
                     android.R.layout.simple_spinner_item,
-                    allDecks
+                    allDecks,
                 ).apply {
                     setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
@@ -184,8 +184,8 @@ class ExportDialogFragment : DialogFragment() {
                                 "${exportingAnkiCollectionPackage()} (.colpkg)",
                                 "${exportingAnkiDeckPackage()} (.apkg)",
                                 "${exportingNotesInPlainText()} (.txt)",
-                                "${exportingCardsInPlainText()} (.txt)"
-                            )
+                                "${exportingCardsInPlainText()} (.txt)",
+                            ),
                         ).apply { setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
                     adapter = exportTypesAdapter
                     onItemSelectedListener =
@@ -271,7 +271,7 @@ class ExportDialogFragment : DialogFragment() {
      */
     private fun showExtrasOptionsFor(
         container: View,
-        targetConfig: ExportConfiguration
+        targetConfig: ExportConfiguration,
     ) {
         // if we export as collection there's no deck/selected items to choose from
         if (targetConfig.layoutId == R.id.export_extras_collection) {
@@ -298,7 +298,7 @@ class ExportDialogFragment : DialogFragment() {
         val exportPath =
             File(
                 getExportRootFile(),
-                "${CollectionManager.TR.exportingCollection()}-${getTimestamp(TimeManager.time)}.colpkg"
+                "${CollectionManager.TR.exportingCollection()}-${getTimestamp(TimeManager.time)}.colpkg",
             ).path
         (requireActivity() as AnkiActivity).exportCollectionPackage(exportPath, includeMedia)
     }
@@ -314,14 +314,14 @@ class ExportDialogFragment : DialogFragment() {
         val exportPath =
             File(
                 getExportRootFile(),
-                "$packagePrefix-${getTimestamp(TimeManager.time)}.apkg"
+                "$packagePrefix-${getTimestamp(TimeManager.time)}.apkg",
             ).path
         (requireActivity() as AnkiActivity).exportApkgPackage(
             exportPath = exportPath,
             withScheduling = includeSchedule,
             withDeckConfigs = includeDeckConfigs,
             withMedia = includeMedia,
-            limit = limits
+            limit = limits,
         )
     }
 
@@ -346,7 +346,7 @@ class ExportDialogFragment : DialogFragment() {
         val exportPath =
             File(
                 getExportRootFile(),
-                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt"
+                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
             ).path
         (requireActivity() as AnkiActivity).exportSelectedNotes(
             exportPath = exportPath,
@@ -355,7 +355,7 @@ class ExportDialogFragment : DialogFragment() {
             withDeck = includeDeckName,
             withNotetype = includeNotetype,
             withGuid = includeUniqueIdentifier,
-            limit = exportLimit
+            limit = exportLimit,
         )
     }
 
@@ -365,12 +365,12 @@ class ExportDialogFragment : DialogFragment() {
         val exportPath =
             File(
                 getExportRootFile(),
-                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt"
+                "${getNonCollectionNamePrefix()}-${getTimestamp(TimeManager.time)}.txt",
             ).path
         (requireActivity() as AnkiActivity).exportSelectedCards(
             exportPath = exportPath,
             withHtml = includeHtml,
-            limit = exportLimit
+            limit = exportLimit,
         )
     }
 
@@ -423,14 +423,14 @@ class ExportDialogFragment : DialogFragment() {
     private class DeckDisplayAdapter(
         context: Context,
         @LayoutRes rowLayout: Int,
-        private val decks: List<DeckNameId>
+        private val decks: List<DeckNameId>,
     ) : ArrayAdapter<DeckNameId>(context, rowLayout, decks) {
         override fun getItem(position: Int): DeckNameId = decks[position]
 
         override fun getView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup
+            parent: ViewGroup,
         ): View {
             return super.getView(position, convertView, parent).apply {
                 findViewById<TextView>(android.R.id.text1).text = decks[position].name
@@ -440,7 +440,7 @@ class ExportDialogFragment : DialogFragment() {
         override fun getDropDownView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup
+            parent: ViewGroup,
         ): View {
             return super.getDropDownView(position, convertView, parent).apply {
                 findViewById<TextView>(android.R.id.text1).text = decks[position].name
@@ -456,12 +456,12 @@ class ExportDialogFragment : DialogFragment() {
      */
     private enum class ExportConfiguration(
         val index: Int,
-        @IdRes val layoutId: Int
+        @IdRes val layoutId: Int,
     ) {
         Collection(0, R.id.export_extras_collection),
         Apkg(1, R.id.export_extras_apkg),
         Notes(2, R.id.export_extras_notes),
-        Cards(3, R.id.export_extras_cards)
+        Cards(3, R.id.export_extras_cards),
         ;
 
         companion object {
@@ -475,7 +475,7 @@ class ExportDialogFragment : DialogFragment() {
      */
     enum class ExportType {
         Notes,
-        Cards
+        Cards,
     }
 
     companion object {
@@ -502,12 +502,12 @@ class ExportDialogFragment : DialogFragment() {
          */
         fun newInstance(
             type: ExportType,
-            ids: List<Long>
+            ids: List<Long>,
         ) = ExportDialogFragment().apply {
             arguments =
                 bundleOf(
                     ARG_TYPE to type,
-                    ARG_EXPORTED_IDS to ids
+                    ARG_EXPORTED_IDS to ids,
                 )
         }
     }

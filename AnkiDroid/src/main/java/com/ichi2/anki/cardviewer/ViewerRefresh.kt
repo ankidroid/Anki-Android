@@ -24,13 +24,13 @@ data class ViewerRefresh(val queues: Boolean, val note: Boolean, val card: Boole
         /** updates the current state of the ViewerRefresh with additional data */
         fun updateState(
             currentState: ViewerRefresh?,
-            changes: OpChanges
+            changes: OpChanges,
         ): ViewerRefresh? {
             if (!changes.studyQueues && !changes.noteText && !changes.card) return currentState
             return ViewerRefresh(
                 queues = changes.studyQueues || currentState?.queues == true,
                 note = changes.noteText || currentState?.note == true,
-                card = changes.card || currentState?.card == true
+                card = changes.card || currentState?.card == true,
             )
         }
     }

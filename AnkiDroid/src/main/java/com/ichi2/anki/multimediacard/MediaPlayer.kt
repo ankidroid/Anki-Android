@@ -62,7 +62,7 @@ class MediaPlayer :
 
     override fun setDataSource(
         context: Context,
-        uri: Uri
+        uri: Uri,
     ) {
         super.setDataSource(context, uri)
         if (state == IDLE) {
@@ -74,7 +74,7 @@ class MediaPlayer :
         context: Context,
         uri: Uri,
         headers: MutableMap<String, String>?,
-        cookies: MutableList<HttpCookie>?
+        cookies: MutableList<HttpCookie>?,
     ) {
         super.setDataSource(context, uri, headers, cookies)
         if (state == IDLE) {
@@ -85,7 +85,7 @@ class MediaPlayer :
     override fun setDataSource(
         context: Context,
         uri: Uri,
-        headers: MutableMap<String, String>?
+        headers: MutableMap<String, String>?,
     ) {
         super.setDataSource(context, uri, headers)
         if (state == IDLE) {
@@ -117,7 +117,7 @@ class MediaPlayer :
     override fun setDataSource(
         fd: FileDescriptor?,
         offset: Long,
-        length: Long
+        length: Long,
     ) {
         super.setDataSource(fd, offset, length)
         if (state == IDLE) {
@@ -138,7 +138,7 @@ class MediaPlayer :
             IDLE, INITIALIZED, PREPARED, STARTED, PAUSED, STOPPED, PLAYBACK_COMPLETE, ERROR ->
                 state = IDLE
             PREPARING,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
@@ -159,7 +159,7 @@ class MediaPlayer :
             STARTED,
             PAUSED,
             PLAYBACK_COMPLETE,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
@@ -175,7 +175,7 @@ class MediaPlayer :
             STARTED,
             PAUSED,
             PLAYBACK_COMPLETE,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
@@ -189,14 +189,14 @@ class MediaPlayer :
             INITIALIZED,
             PREPARING,
             STOPPED,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
     override fun seekTo(
         msec: Long,
-        mode: Int
+        mode: Int,
     ) {
         super.seekTo(msec, mode)
         when (state) {
@@ -206,7 +206,7 @@ class MediaPlayer :
             INITIALIZED,
             PREPARING,
             STOPPED,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
@@ -219,7 +219,7 @@ class MediaPlayer :
             IDLE,
             INITIALIZED,
             PREPARING,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
@@ -233,7 +233,7 @@ class MediaPlayer :
             INITIALIZED,
             PREPARING,
             STOPPED,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
@@ -248,7 +248,7 @@ class MediaPlayer :
             PREPARING,
             PREPARED,
             STOPPED,
-            END
+            END,
             -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
@@ -260,7 +260,7 @@ class MediaPlayer :
     override fun onError(
         p0: MediaPlayer?,
         p1: Int,
-        p2: Int
+        p2: Int,
     ): Boolean {
         setStateOnError()
         return false
@@ -314,7 +314,7 @@ class MediaPlayer :
         PAUSED,
         STOPPED,
         PLAYBACK_COMPLETE,
-        END
+        END,
     }
 
     interface MediaPlayerStateListener {

@@ -95,21 +95,21 @@ fun JSONArray.index(jsonObject: JSONObject): Optional<Int> {
 
 operator fun JSONObject.set(
     s: String,
-    value: String
+    value: String,
 ) {
     this.put(s, value)
 }
 
 operator fun JSONObject.set(
     s: String,
-    value: Int
+    value: Int,
 ) {
     this.put(s, value)
 }
 
 operator fun JSONObject.set(
     s: String,
-    value: Double
+    value: Double,
 ) {
     this.put(s, value)
 }
@@ -127,7 +127,7 @@ fun JSONArray.append(jsonObject: JSONObject) {
  */
 fun JSONArray.insert(
     idx: Int,
-    jsonObject: JSONObject
+    jsonObject: JSONObject,
 ) {
     if (idx >= this.length()) {
         this.put(jsonObject)

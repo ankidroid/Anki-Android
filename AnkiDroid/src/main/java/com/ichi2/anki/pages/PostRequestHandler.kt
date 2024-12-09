@@ -53,7 +53,7 @@ import timber.log.Timber
 interface PostRequestHandler {
     suspend fun handlePostRequest(
         uri: String,
-        bytes: ByteArray
+        bytes: ByteArray,
     ): ByteArray
 }
 
@@ -92,12 +92,12 @@ val collectionMethods =
         "importJsonString" to { bytes -> importJsonStringRaw(bytes) },
         "importJsonFile" to { bytes -> importJsonFileRaw(bytes) },
         "congratsInfo" to { bytes -> congratsInfoRaw(bytes) },
-        "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) }
+        "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) },
     )
 
 suspend fun handleCollectionPostRequest(
     methodName: String,
-    bytes: ByteArray
+    bytes: ByteArray,
 ): ByteArray? {
     return collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } } ?: run {
         Timber.w("Unknown TS method called.")
@@ -124,12 +124,12 @@ val uiMethods =
             lifecycleScope.async {
                 withCol { updateImageOcclusionNoteRaw(bytes) }
             }
-        }
+        },
     )
 
 suspend fun FragmentActivity?.handleUiPostRequest(
     methodName: String,
-    bytes: ByteArray
+    bytes: ByteArray,
 ): ByteArray? {
     if (this == null) {
         Timber.w("ignored UI request '%s' due to screen/app being backgrounded", methodName)

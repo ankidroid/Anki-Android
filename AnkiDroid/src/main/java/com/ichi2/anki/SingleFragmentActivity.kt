@@ -102,7 +102,7 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
             context: Context,
             fragmentClass: KClass<out Fragment>,
             arguments: Bundle? = null,
-            intentAction: String? = null
+            intentAction: String? = null,
         ): Intent {
             return Intent(context, SingleFragmentActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)

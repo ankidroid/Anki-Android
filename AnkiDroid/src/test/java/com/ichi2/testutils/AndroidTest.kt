@@ -50,7 +50,7 @@ fun AndroidTest.getString(res: Int): String = targetContext.getString(res)
 fun AndroidTest.getQuantityString(
     res: Int,
     quantity: Int,
-    vararg formatArgs: Any
+    vararg formatArgs: Any,
 ): String = targetContext.resources.getQuantityString(res, quantity, *formatArgs)
 
 /**

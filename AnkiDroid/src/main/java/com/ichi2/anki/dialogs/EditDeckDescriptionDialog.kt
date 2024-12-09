@@ -54,7 +54,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         Themes.setTheme(requireContext())
         return inflater.inflate(R.layout.dialog_deck_description, null).apply {
@@ -86,7 +86,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
         dialog!!.window!!.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT,
         )
     }
 
@@ -129,7 +129,7 @@ class EditDeckDescriptionDialog : DialogFragment() {
             return EditDeckDescriptionDialog().apply {
                 arguments =
                     bundleOf(
-                        ARG_DECK_ID to deckId
+                        ARG_DECK_ID to deckId,
                     )
             }
         }

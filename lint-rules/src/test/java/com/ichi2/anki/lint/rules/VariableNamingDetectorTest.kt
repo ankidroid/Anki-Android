@@ -37,7 +37,7 @@ internal class VariableNamingDetectorTest {
                     "src/com/ichi2/anki/exception/FilteredAncestor.java:22: Error: Variable name should not use field prefixes. [VariableNamingDetector]\n" +
                     "    public static setFilteredAncestorName(String sFilteredAncestorName, String staticMember) {\n" +
                     "                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-                    "2 errors, 0 warnings"
+                    "2 errors, 0 warnings",
             )
     }
 
@@ -70,7 +70,7 @@ internal class VariableNamingDetectorTest {
                         this.sFilteredAncestorName = sFilteredAncestorName;
                     }
                 }
-                """.trimIndent()
+                """.trimIndent(),
             )
     }
 }

@@ -101,7 +101,7 @@ object Themes {
 
     fun getResFromAttr(
         context: Context,
-        resAttr: Int
+        resAttr: Int,
     ): Int {
         val attrs = intArrayOf(resAttr)
         return getResFromAttr(context, attrs)[0]
@@ -109,7 +109,7 @@ object Themes {
 
     fun getResFromAttr(
         context: Context,
-        attrs: IntArray
+        attrs: IntArray,
     ): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
         for (i in attrs.indices) {

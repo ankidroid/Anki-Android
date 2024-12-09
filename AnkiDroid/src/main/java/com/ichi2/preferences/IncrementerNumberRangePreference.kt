@@ -83,14 +83,14 @@ class IncrementerNumberRangePreference : NumberRangePreference {
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                3.0f
+                3.0f,
             )
         // Layout parameters for incrementButton and decrementButton
         val buttonParams =
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
+                1.0f,
             )
         lastValidEntry =
             try {

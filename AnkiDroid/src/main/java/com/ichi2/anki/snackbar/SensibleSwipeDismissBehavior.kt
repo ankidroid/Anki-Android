@@ -51,7 +51,7 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
     override fun onInterceptTouchEvent(
         parent: CoordinatorLayout,
         child: View,
-        event: MotionEvent
+        event: MotionEvent,
     ): Boolean {
         ensureViewDragHelper(parent)
         return viewDragHelper!!.shouldInterceptTouchEvent(event)
@@ -60,7 +60,7 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
     override fun onTouchEvent(
         parent: CoordinatorLayout,
         child: View,
-        event: MotionEvent
+        event: MotionEvent,
     ): Boolean {
         viewDragHelper?.processTouchEvent(event)
         return viewDragHelper != null
@@ -81,13 +81,13 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
         override fun clampViewPositionHorizontal(
             child: View,
             left: Int,
-            dx: Int
+            dx: Int,
         ) = left
 
         override fun clampViewPositionVertical(
             child: View,
             top: Int,
-            dy: Int
+            dy: Int,
         ) = child.top
 
         override fun onViewDragStateChanged(state: Int) {
@@ -96,12 +96,12 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
 
         override fun tryCaptureView(
             child: View,
-            pointerId: Int
+            pointerId: Int,
         ) = child is Snackbar.SnackbarLayout
 
         override fun onViewCaptured(
             child: View,
-            pointerId: Int
+            pointerId: Int,
         ) {
             if (initialChildLeft == Int.MIN_VALUE) {
                 initialChildLeft = child.left
@@ -113,7 +113,7 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
         override fun onViewReleased(
             child: View,
             xvel: Float,
-            yvel: Float
+            yvel: Float,
         ) {
             val dismiss = shouldDismiss(child, xvel)
 
@@ -141,7 +141,7 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
                                 onViewSettled()
                             }
                         }
-                    }
+                    },
                 )
             } else {
                 onViewSettled()
@@ -162,7 +162,7 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
          */
         @VisibleForTesting fun shouldDismiss(
             child: View,
-            xvel: Float
+            xvel: Float,
         ): Dismiss {
             return if (xvel.absoluteValue > FLING_TO_DISMISS_SPEED_THRESHOLD) {
                 if (xvel > 0f) Dismiss.ToTheRight else Dismiss.ToTheLeft

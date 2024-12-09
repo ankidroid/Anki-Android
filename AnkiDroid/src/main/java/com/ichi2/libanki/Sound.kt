@@ -52,7 +52,7 @@ data class TTSTag(
     val voices: List<String>,
     val speed: Float?,
     /** each arg should be in the form 'foo=bar' */
-    val otherArgs: List<String>
+    val otherArgs: List<String>,
 ) : AvTag()
 
 /**
@@ -79,7 +79,7 @@ data class SoundOrVideoTag(val filename: String) : AvTag() {
 
     enum class Type {
         AUDIO,
-        VIDEO
+        VIDEO,
     }
 }
 
@@ -93,7 +93,7 @@ sealed class AvTag
 
 fun stripAvRefs(
     text: String,
-    replacement: String = ""
+    replacement: String = "",
 ) = AvRef.REGEX.replace(text, replacement)
 
 // not in libAnki
@@ -118,7 +118,7 @@ object Sound {
         content: String,
         renderOutput: TemplateRenderOutput,
         showAudioPlayButtons: Boolean,
-        mediaDir: String
+        mediaDir: String,
     ) = replaceAvRefsWith(content, renderOutput) { tag, playTag ->
         fun asAudio(): String {
             if (!showAudioPlayButtons) return ""
@@ -180,7 +180,7 @@ object Sound {
      */
     suspend fun addPlayButtons(
         text: String,
-        renderOutput: TemplateRenderOutput
+        renderOutput: TemplateRenderOutput,
     ): String {
         val mediaDir = CollectionManager.withCol { media.dir }
         val hidePlayButtons = getHidePlayAudioButtons()
@@ -192,7 +192,7 @@ object Sound {
      */
     fun replaceWithSoundTags(
         content: String,
-        renderOutput: TemplateRenderOutput
+        renderOutput: TemplateRenderOutput,
     ): String =
         replaceAvRefsWith(content, renderOutput) { tag, _ ->
             if (tag !is SoundOrVideoTag) null else "[sound:${tag.filename}]"
@@ -203,7 +203,7 @@ object Sound {
      */
     fun replaceWithFileNames(
         content: String,
-        renderOutput: TemplateRenderOutput
+        renderOutput: TemplateRenderOutput,
     ): String =
         replaceAvRefsWith(content, renderOutput) { tag, _ ->
             if (tag !is SoundOrVideoTag) null else " ${tag.filename} "
@@ -219,7 +219,7 @@ object Sound {
     private fun replaceAvRefsWith(
         content: String,
         renderOutput: TemplateRenderOutput,
-        processTag: (AvTag, AvRef) -> String?
+        processTag: (AvTag, AvRef) -> String?,
     ): String {
         return AvRef.REGEX.replace(content) { match ->
             val avRef = AvRef.from(match) ?: return@replace match.value
@@ -238,7 +238,7 @@ object Sound {
     /** Extract av tag from playsound:q:x link */
     suspend fun getAvTag(
         card: Card,
-        url: String
+        url: String,
     ): AvTag? {
         return AV_PLAYLINK_RE.matchEntire(url)?.let {
             val values = it.groupValues

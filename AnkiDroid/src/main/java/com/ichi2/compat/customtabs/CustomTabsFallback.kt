@@ -28,7 +28,7 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper.CustomTabFallback
 class CustomTabsFallback : CustomTabFallback {
     override fun openUri(
         activity: Activity,
-        uri: Uri
+        uri: Uri,
     ) {
         try {
             val intent = Intent(Intent.ACTION_VIEW, uri)

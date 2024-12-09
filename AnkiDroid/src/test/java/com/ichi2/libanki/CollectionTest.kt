@@ -223,8 +223,8 @@ class CollectionTest : JvmTest() {
         assertThat(
             col.loadBrowserCardColumns(),
             equalTo(
-                listOf("noteFld", "template", "cardDue", "deck")
-            )
+                listOf("noteFld", "template", "cardDue", "deck"),
+            ),
         )
     }
 
@@ -233,8 +233,8 @@ class CollectionTest : JvmTest() {
         assertThat(
             col.loadBrowserNoteColumns(),
             equalTo(
-                listOf("noteFld", "note", "template", "noteTags")
-            )
+                listOf("noteFld", "note", "template", "noteTags"),
+            ),
         )
     }
 
@@ -245,8 +245,8 @@ class CollectionTest : JvmTest() {
         assertThat(
             col.loadBrowserNoteColumns(),
             equalTo(
-                listOf("noteFld")
-            )
+                listOf("noteFld"),
+            ),
         )
     }
 
@@ -257,8 +257,8 @@ class CollectionTest : JvmTest() {
         assertThat(
             col.loadBrowserCardColumns(),
             equalTo(
-                listOf("question")
-            )
+                listOf("question"),
+            ),
         )
     }
 

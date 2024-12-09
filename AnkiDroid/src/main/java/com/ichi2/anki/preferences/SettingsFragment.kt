@@ -49,14 +49,14 @@ abstract class SettingsFragment :
         UsageAnalytics.sendAnalyticsEvent(
             category = UsageAnalytics.Category.SETTING,
             action = UsageAnalytics.Actions.TAPPED_SETTING,
-            label = preference.key
+            label = preference.key,
         )
         return super.onPreferenceTreeClick(preference)
     }
 
     override fun onSharedPreferenceChanged(
         sharedPreferences: SharedPreferences,
-        key: String?
+        key: String?,
     ) {
         if (key !in UsageAnalytics.preferencesWhoseChangesShouldBeReported) {
             return
@@ -67,14 +67,14 @@ abstract class SettingsFragment :
                 category = UsageAnalytics.Category.SETTING,
                 action = UsageAnalytics.Actions.CHANGED_SETTING,
                 value = valueToReport,
-                label = key
+                label = key,
             )
         }
     }
 
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
-        rootKey: String?
+        rootKey: String?,
     ) {
         UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
         addPreferencesFromResource(preferenceResource)

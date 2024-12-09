@@ -59,7 +59,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                                 AddNotetypeUiModel(
                                     id = it.number.toLong(),
                                     name = stockNotetype.get("name") as String,
-                                    isStandard = true
+                                    isStandard = true,
                                 )
                             }
                     val foundNotetypes = getNotetypeNames()
@@ -68,7 +68,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                             addAll(standardNotetypesModels)
                             addAll(foundNotetypes.map { it.toUiModel() })
                         },
-                        foundNotetypes.map { it.name }
+                        foundNotetypes.map { it.name },
                     )
                 }
             }
@@ -95,7 +95,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
 
     private fun AlertDialog.initializeViewsWith(
         optionsToDisplay: List<AddNotetypeUiModel>,
-        currentNames: List<String>
+        currentNames: List<String>,
     ) {
         val addPrefixStr = context.resources.getString(R.string.model_browser_add_add)
         val clonePrefixStr = context.resources.getString(R.string.model_browser_add_clone)
@@ -112,7 +112,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                         av: AdapterView<*>?,
                         rv: View?,
                         index: Int,
-                        id: Long
+                        id: Long,
                     ) {
                         val selectedNotetype = optionsToDisplay[index]
                         nameInput.setText(randomizeName(selectedNotetype.name))
@@ -131,9 +131,9 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                     optionsToDisplay.map {
                         String.format(
                             if (it.isStandard) addPrefixStr else clonePrefixStr,
-                            it.name
+                            it.name,
                         )
-                    }
+                    },
                 ).apply {
                     setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
@@ -144,7 +144,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
 
     private fun addStandardNotetype(
         newName: String,
-        selectedOption: AddNotetypeUiModel
+        selectedOption: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
             activity.runAndRefreshAfter {
@@ -160,7 +160,7 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
 
     private fun cloneStandardNotetype(
         newName: String,
-        model: AddNotetypeUiModel
+        model: AddNotetypeUiModel,
     ) {
         activity.launchCatchingTask {
             activity.runAndRefreshAfter {

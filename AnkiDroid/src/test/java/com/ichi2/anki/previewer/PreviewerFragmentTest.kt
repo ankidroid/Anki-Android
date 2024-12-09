@@ -37,7 +37,7 @@ class PreviewerFragmentTest : RobolectricTest() {
             PreviewerFragment.getIntent(
                 targetContext,
                 previewerIdsFile = PreviewerIdsFile(createTransientDirectory(), note.cardIds(col)),
-                currentIndex = 0
+                currentIndex = 0,
             )
 
         ActivityScenario.launch<CardViewerActivity>(intent).use { scenario ->

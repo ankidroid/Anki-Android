@@ -71,7 +71,7 @@ import kotlin.coroutines.cancellation.CancellationException
  */
 class SyncWorker(
     context: Context,
-    parameters: WorkerParameters
+    parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
     private val workManager = WorkManager.getInstance(context)
     private val notificationManager = NotificationManagerCompat.from(context)
@@ -113,7 +113,7 @@ class SyncWorker(
 
     private suspend fun syncCollection(
         auth: SyncAuth,
-        syncMedia: Boolean
+        syncMedia: Boolean,
     ) {
         Timber.v("SyncWorker::syncCollection")
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -163,13 +163,13 @@ class SyncWorker(
             }
             SyncCollectionResponse.ChangesRequired.FULL_SYNC,
             SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD,
-            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD
+            SyncCollectionResponse.ChangesRequired.FULL_UPLOAD,
             -> {
                 Timber.d("One-way sync required: Skipping background sync")
             }
             SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
             SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
-            null
+            null,
             -> {
                 TODO("should never happen")
             }
@@ -181,7 +181,7 @@ class SyncWorker(
         workManager.enqueueUniqueWork(
             UniqueWorkNames.SYNC_MEDIA,
             ExistingWorkPolicy.KEEP,
-            SyncMediaWorker.getWorkRequest(auth)
+            SyncMediaWorker.getWorkRequest(auth),
         )
     }
 
@@ -239,7 +239,7 @@ class SyncWorker(
         fun start(
             context: Context,
             syncAuth: SyncAuth,
-            syncMedia: Boolean
+            syncMedia: Boolean,
         ) {
             val constraints =
                 Constraints.Builder()

@@ -210,7 +210,7 @@ open class RobolectricTest : AndroidTest {
      */
     protected fun clickAlertDialogButton(
         button: Int,
-        @Suppress("SameParameterValue") checkDismissed: Boolean
+        @Suppress("SameParameterValue") checkDismissed: Boolean,
     ) {
         val dialog = getLatestAlertDialog()
 
@@ -231,7 +231,7 @@ open class RobolectricTest : AndroidTest {
      * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
      */
     protected fun getAlertDialogText(
-        @Suppress("SameParameterValue") checkDismissed: Boolean
+        @Suppress("SameParameterValue") checkDismissed: Boolean,
     ): String? {
         val dialog = getLatestAlertDialog()
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
@@ -298,7 +298,7 @@ open class RobolectricTest : AndroidTest {
         protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
             testClass: RobolectricTest,
             clazz: Class<T>?,
-            i: Intent?
+            i: Intent?,
         ): T {
             if (AbstractFlashcardViewer::class.java.isAssignableFrom(clazz!!)) {
                 // fixes 'Don't know what to do with dataSource...' inside Sounds.kt
@@ -334,7 +334,7 @@ open class RobolectricTest : AndroidTest {
     protected fun getQuantityString(
         res: Int,
         quantity: Int,
-        vararg formatArgs: Any
+        vararg formatArgs: Any,
     ): String {
         return targetContext.resources.getQuantityString(res, quantity, *formatArgs)
     }
@@ -373,7 +373,7 @@ open class RobolectricTest : AndroidTest {
 
     internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
         clazz: Class<T>?,
-        i: Intent?
+        i: Intent?,
     ): T {
         return startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
     }
@@ -405,7 +405,7 @@ open class RobolectricTest : AndroidTest {
      */
     fun <T> assumeThat(
         actual: T,
-        matcher: Matcher<T>?
+        matcher: Matcher<T>?,
     ) {
         Assume.assumeThat(actual, matcher)
     }
@@ -430,7 +430,7 @@ open class RobolectricTest : AndroidTest {
     fun <T> assumeThat(
         message: String?,
         actual: T,
-        matcher: Matcher<T>?
+        matcher: Matcher<T>?,
     ) {
         Assume.assumeThat(message, actual, matcher)
     }
@@ -444,14 +444,14 @@ open class RobolectricTest : AndroidTest {
      */
     fun assumeTrue(
         message: String?,
-        b: Boolean
+        b: Boolean,
     ) {
         Assume.assumeTrue(message, b)
     }
 
     fun equalFirstField(
         expected: Card,
-        obtained: Card
+        obtained: Card,
     ) {
         MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
@@ -507,7 +507,7 @@ open class RobolectricTest : AndroidTest {
 * Apple Menu - System Preferences - Security & Privacy - General (tab) - Unlock Settings - Select Allow Anyway". 
     Button is underneath the text: "librsdroid.dylib was blocked from use because it is not from an identified developer"
 * Press "OK" on the "Apple cannot check it for malicious software" prompt
-* Test should execute correctly"""
+* Test should execute correctly""",
                 )
             }
             throw e

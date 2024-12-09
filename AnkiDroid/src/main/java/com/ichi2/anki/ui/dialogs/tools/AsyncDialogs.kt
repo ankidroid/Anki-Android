@@ -41,7 +41,7 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
                 when {
                     ::checkedItems.isInitialized -> DialogResult.Ok.MultipleChoice(checkedItems)
                     else -> DialogResult.Ok.Simple
-                }
+                },
             )
         }
     }
@@ -57,7 +57,7 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
     fun setMultiChoiceItems(
         items: List<CharSequence>,
         checkedItems: CheckedItems,
-        disablePositiveButtonIfNoItemsChosen: Boolean = true
+        disablePositiveButtonIfNoItemsChosen: Boolean = true,
     ) {
         this.checkedItems =
             when (checkedItems) {
@@ -95,7 +95,7 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
 class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) : AsyncDialogBuilder(alertDialogBuilder) {
     /** @see AlertDialog.Builder.setTitle */
     fun setTitle(
-        @StringRes titleId: Int
+        @StringRes titleId: Int,
     ): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
 
     /** @see AlertDialog.Builder.setTitle */
@@ -103,7 +103,7 @@ class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder)
 
     /** @see AlertDialog.Builder.setMessage */
     fun setMessage(
-        @StringRes messageId: Int
+        @StringRes messageId: Int,
     ): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
 
     /** @see AlertDialog.Builder.setMessage */

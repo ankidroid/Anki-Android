@@ -56,6 +56,6 @@ interface IField : Serializable {
      */
     fun setFormattedString(
         col: Collection,
-        value: String
+        value: String,
     )
 }

@@ -52,7 +52,7 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
                 Constants.ANKI_TIME_CATEGORY,
                 Constants.ANKI_TIME_PRIORITY,
                 Constants.ANKI_TIME_SEVERITY,
-                implementation
+                implementation,
             )
     }
 
@@ -65,7 +65,7 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
     override fun visitConstructor(
         context: JavaContext,
         node: UCallExpression,
-        constructor: PsiMethod
+        constructor: PsiMethod,
     ) {
         super.visitConstructor(context, node, constructor)
         val foundClasses = context.uastFile!!.classes
@@ -82,7 +82,7 @@ class DirectDateInstantiation : Detector(), SourceCodeScanner {
                 ISSUE,
                 node,
                 context.getLocation(node),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

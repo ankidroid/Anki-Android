@@ -30,6 +30,6 @@ internal object Basic2Model {
     |<hr id="answer">
     
     |{{Front}}
-            """.trimMargin()
+            """.trimMargin(),
         )
 }

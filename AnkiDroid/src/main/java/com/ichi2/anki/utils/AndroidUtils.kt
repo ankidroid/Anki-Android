@@ -42,7 +42,7 @@ import com.ichi2.utils.copyToClipboard
 inline fun <T> withWakeLock(
     levelAndFlags: Int,
     tag: String,
-    block: () -> T
+    block: () -> T,
 ): T {
     val context = AnkiDroidApp.instance
     val wakeLock =
@@ -86,5 +86,5 @@ fun Fragment.openUrl(uri: Uri) {
 }
 
 fun Fragment.openUrl(
-    @StringRes stringRes: Int
+    @StringRes stringRes: Int,
 ) = openUrl(Uri.parse(requireContext().getString(stringRes)))

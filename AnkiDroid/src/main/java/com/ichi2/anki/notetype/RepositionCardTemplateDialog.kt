@@ -32,7 +32,7 @@ class RepositionCardTemplateDialog {
         fun showInstance(
             context: Context,
             numberOfTemplates: Int,
-            result: (Int) -> Unit
+            result: (Int) -> Unit,
         ) {
             var displayedDialog: AlertDialog? = null
 
@@ -45,7 +45,7 @@ class RepositionCardTemplateDialog {
                 }.input(
                     inputType = InputType.TYPE_CLASS_NUMBER,
                     displayKeyboard = true,
-                    waitForPositiveButton = false
+                    waitForPositiveButton = false,
                 ) { dialog, text: CharSequence ->
                     val number = text.toString().toIntOrNull()
                     if (number == null || number < 1 || number > numberOfTemplates) {

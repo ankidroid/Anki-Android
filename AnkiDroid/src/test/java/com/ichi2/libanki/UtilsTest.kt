@@ -38,13 +38,13 @@ class UtilsTest {
                 "<foo>",
                 "<\n>",
                 "<\\qwq>",
-                "<aa\nsd\nas\n?\n>"
+                "<aa\nsd\nas\n?\n>",
             )
         for (s in strings) {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",
                 "",
-                Utils.stripHTML(s)
+                Utils.stripHTML(s),
             )
         }
     }
@@ -58,13 +58,13 @@ class UtilsTest {
                 "<!--asd asd asd-->",
                 "<!--\n-->",
                 "<!--\nsd-->",
-                "<!--lkl\nklk\n-->"
+                "<!--lkl\nklk\n-->",
             )
         for (s in strings) {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",
                 "",
-                Utils.stripHTML(s)
+                Utils.stripHTML(s),
             )
         }
     }
@@ -76,7 +76,7 @@ class UtilsTest {
         assertEquals(
             "type field should be removed",
             "test\n\n",
-            output
+            output,
         )
     }
 
@@ -87,7 +87,7 @@ class UtilsTest {
         assertEquals(
             "avRef field should be removed",
             "test\n\n",
-            output
+            output,
         )
     }
 }

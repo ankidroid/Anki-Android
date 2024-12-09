@@ -27,7 +27,7 @@ android {
         buildConfigField(
             "String",
             "READ_WRITE_PERMISSION",
-            "\"com.ichi2.anki.permission.READ_WRITE_DATABASE\""
+            "\"com.ichi2.anki.permission.READ_WRITE_DATABASE\"",
         )
         buildConfigField("String", "AUTHORITY", "\"com.ichi2.anki.flashcards\"")
     }
@@ -36,7 +36,7 @@ android {
             buildConfigField(
                 "String",
                 "READ_WRITE_PERMISSION",
-                "\"com.ichi2.anki.debug.permission.READ_WRITE_DATABASE\""
+                "\"com.ichi2.anki.debug.permission.READ_WRITE_DATABASE\"",
             )
             buildConfigField("String", "AUTHORITY", "\"com.ichi2.anki.debug.flashcards\"")
         }
@@ -114,7 +114,7 @@ afterEvaluate {
                 val snapshotsRepoUrl = layout.buildDirectory.dir("repos/snapshots")
                 url =
                     uri(
-                        if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+                        if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl,
                     )
             }
         }

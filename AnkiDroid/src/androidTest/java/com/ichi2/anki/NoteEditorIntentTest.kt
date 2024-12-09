@@ -44,7 +44,7 @@ class NoteEditorIntentTest : InstrumentedTest() {
     @get:Rule
     var activityRuleIntent: ActivityScenarioRule<SingleFragmentActivity>? =
         ActivityScenarioRule(
-            noteEditorTextIntent
+            noteEditorTextIntent,
         )
 
     @Test

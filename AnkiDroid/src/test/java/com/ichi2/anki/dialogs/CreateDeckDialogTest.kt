@@ -127,7 +127,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         testDialog(DeckDialogType.DECK) {
             fun assertHelperText(
                 reason: String?,
-                matcher: Matcher<in CharSequence?>
+                matcher: Matcher<in CharSequence?>,
             ) = assertThat(reason, getInputTextLayout().helperText, matcher)
 
             input = "test"
@@ -137,7 +137,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             input = "10. Cheese"
             assertHelperText(
                 "Number suggestion if number is greater than or equal to 10",
-                equalTo(expectedText)
+                equalTo(expectedText),
             )
             input = "1. Cheese"
             assertHelperText("hint is removed if the number is removed", nullValue())
@@ -175,7 +175,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                         deckPicker,
                         R.string.new_deck,
                         DeckDialogType.DECK,
-                        null
+                        null,
                     )
                 val did =
                     suspendCoroutine { coro ->
@@ -191,7 +191,7 @@ class CreateDeckDialogTest : RobolectricTest() {
                 updateSearchDecksIcon(deckPicker)
                 assertEquals(
                     deckPicker.optionsMenuState?.searchIcon,
-                    decksCount() >= 10
+                    decksCount() >= 10,
                 )
 
                 // After the last deck was created, delete a deck
@@ -243,7 +243,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun testDialog(
         deckDialogType: DeckDialogType,
         parentId: DeckId? = null,
-        callback: (AlertDialog.() -> Unit)
+        callback: (AlertDialog.() -> Unit),
     ) {
         activityScenario.onActivity { activity: DeckPicker ->
             val dialog = CreateDeckDialog(activity, R.string.new_deck, deckDialogType, parentId).showDialog()
@@ -258,7 +258,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun ensureExecutionOfScenario(
         deckDialogType: DeckDialogType,
         parentId: DeckId? = null,
-        callback: ((CreateDeckDialog, (() -> Unit)) -> Unit)
+        callback: ((CreateDeckDialog, (() -> Unit)) -> Unit),
     ) {
         activityScenario.onActivity { activity: DeckPicker ->
             val assertionCalled = AtomicReference(false)
@@ -273,7 +273,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     private fun deckTreeName(
         start: Int,
         end: Int,
-        prefix: String
+        prefix: String,
     ): String {
         return List(end - start + 1) { "${prefix}${it + start}" }
             .joinToString("::")
@@ -287,7 +287,7 @@ class CreateDeckDialogNonAndroidTest {
         fun assertLargerThanNine(
             reason: String?,
             input: String,
-            result: Boolean
+            result: Boolean,
         ) = assertThat(reason, input.containsNumberLargerThanNine(), equalTo(result))
 
         assertLargerThanNine("empty string", "", false)

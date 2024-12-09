@@ -49,7 +49,7 @@ class InsertFieldDialog : DialogFragment() {
             object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 override fun onCreateViewHolder(
                     parent: ViewGroup,
-                    viewType: Int
+                    viewType: Int,
                 ): RecyclerView.ViewHolder {
                     val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
                     return object : RecyclerView.ViewHolder(root) {}
@@ -57,7 +57,7 @@ class InsertFieldDialog : DialogFragment() {
 
                 override fun onBindViewHolder(
                     holder: RecyclerView.ViewHolder,
-                    position: Int
+                    position: Int,
                 ) {
                     val textView = holder.itemView as TextView
                     textView.text = fieldList[position]
@@ -78,7 +78,7 @@ class InsertFieldDialog : DialogFragment() {
     private fun selectFieldAndClose(textView: TextView) {
         parentFragmentManager.setFragmentResult(
             REQUEST_FIELD_INSERT,
-            bundleOf(KEY_INSERTED_FIELD to textView.text.toString())
+            bundleOf(KEY_INSERTED_FIELD to textView.text.toString()),
         )
         dismiss()
     }

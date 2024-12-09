@@ -86,13 +86,13 @@ class DecksTest : JvmTest() {
         assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
-                "filtered::child"
+                "filtered::child",
             )
         }
         assertThrows(BackendDeckIsFilteredException::class.java) {
             col.decks.rename(
                 child,
-                "FILTERED::child"
+                "FILTERED::child",
             )
         }
     }
@@ -153,7 +153,7 @@ class DecksTest : JvmTest() {
         addDeck("test", setAsSelected = true)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
             col.config.get<DeckId>(
-                CURRENT_DECK
+                CURRENT_DECK,
             )
         }
     }

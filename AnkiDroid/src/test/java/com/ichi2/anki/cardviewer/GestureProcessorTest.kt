@@ -38,7 +38,7 @@ class GestureProcessorTest : ViewerCommand.CommandProcessor {
 
     override fun executeCommand(
         which: ViewerCommand,
-        fromGesture: Gesture?
+        fromGesture: Gesture?,
     ): Boolean {
         executedCommands.add(which)
         return true

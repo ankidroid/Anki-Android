@@ -95,7 +95,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     override fun onSelectionChanged(
         selStart: Int,
-        selEnd: Int
+        selEnd: Int,
     ) {
         if (selectionChangeListener != null) {
             try {
@@ -128,7 +128,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     fun setContent(
         content: String?,
-        replaceNewLine: Boolean
+        replaceNewLine: Boolean,
     ) {
         val text =
             if (content == null) {
@@ -164,7 +164,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
             val start = min(selectionStart, selectionEnd)
             val end = max(selectionStart, selectionEnd)
             setText(
-                text!!.substring(0, start) + pasted + text!!.substring(end)
+                text!!.substring(0, start) + pasted + text!!.substring(end),
             )
             setSelection(start + pasted.length)
             return true
@@ -174,7 +174,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     private fun onPaste(
         mediaUri: Uri?,
-        description: ClipDescription?
+        description: ClipDescription?,
     ): Boolean {
         return if (mediaUri == null) {
             false
@@ -217,7 +217,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     interface TextSelectionListener {
         fun onSelectionChanged(
             selStart: Int,
-            selEnd: Int
+            selEnd: Int,
         )
     }
 
@@ -225,7 +225,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         fun onPaste(
             editText: EditText,
             uri: Uri?,
-            description: ClipDescription?
+            description: ClipDescription?,
         ): Boolean
     }
 

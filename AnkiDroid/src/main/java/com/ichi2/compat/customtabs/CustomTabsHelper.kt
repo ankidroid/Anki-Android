@@ -39,12 +39,12 @@ object CustomTabsHelper {
 
     fun addKeepAliveExtra(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         val keepAliveIntent =
             Intent().setClassName(
                 context.packageName,
-                KeepAliveService::class.java.canonicalName!!
+                KeepAliveService::class.java.canonicalName!!,
             )
         intent.putExtra(EXTRA_CUSTOM_TABS_KEEP_ALIVE, keepAliveIntent)
     }
@@ -112,14 +112,14 @@ object CustomTabsHelper {
      */
     private fun hasSpecializedHandlerIntents(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ): Boolean {
         try {
             val pm = context.packageManager
             val handlers =
                 pm.queryIntentActivitiesCompat(
                     intent,
-                    ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER.toLong())
+                    ResolveInfoFlagsCompat.of(GET_RESOLVED_FILTER.toLong()),
                 )
             if (handlers.isEmpty()) {
                 return false

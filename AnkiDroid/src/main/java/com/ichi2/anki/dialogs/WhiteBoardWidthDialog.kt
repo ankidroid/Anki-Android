@@ -38,7 +38,7 @@ class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWi
             override fun onProgressChanged(
                 seekBar: SeekBar,
                 value: Int,
-                b: Boolean
+                b: Boolean,
             ) {
                 wbStrokeWidth = value
                 strokeWidthText!!.text = "" + value
@@ -70,8 +70,8 @@ class WhiteBoardWidthDialog(private val context: Context, private var wbStrokeWi
             seekBar,
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+            ),
         )
         AlertDialog.Builder(context).show {
             title(R.string.whiteboard_stroke_width)

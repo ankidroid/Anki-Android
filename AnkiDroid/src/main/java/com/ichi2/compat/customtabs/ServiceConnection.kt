@@ -29,7 +29,7 @@ class ServiceConnection(connectionCallback: ServiceConnectionCallback) : CustomT
 
     override fun onCustomTabsServiceConnected(
         name: ComponentName,
-        client: CustomTabsClient
+        client: CustomTabsClient,
     ) {
         val connectionCallback = connectionCallback.get()
         connectionCallback?.onServiceConnected(client)

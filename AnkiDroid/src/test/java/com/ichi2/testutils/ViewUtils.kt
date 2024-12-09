@@ -31,7 +31,7 @@ private val uptime = SystemClock.uptimeMillis()
 fun View.simulateDoubleTap() {
     fun simulateEvent(
         action: Int,
-        delta: Int = 0
+        delta: Int = 0,
     ) = simulateEvent(this, action, delta)
     simulateEvent(MotionEvent.ACTION_DOWN)
     simulateEvent(MotionEvent.ACTION_UP)
@@ -56,7 +56,7 @@ fun View.simulateUnconfirmedSingleTap() {
 private fun simulateEvent(
     target: View,
     action: Int,
-    delta: Int = 0
+    delta: Int = 0,
 ) {
     val event =
         obtainMotionEvent(
@@ -65,7 +65,7 @@ private fun simulateEvent(
             action = action,
             x = 0.0f,
             y = 0.0f,
-            metaState = 0
+            metaState = 0,
         )
 
     Shadows.shadowOf(target).onTouchListener.onTouch(target, event)
@@ -82,7 +82,7 @@ private fun obtainMotionEvent(
     action: Int,
     x: Float,
     y: Float,
-    metaState: Int
+    metaState: Int,
 ): MotionEvent {
     return MotionEvent.obtain(
         downTime,
@@ -90,6 +90,6 @@ private fun obtainMotionEvent(
         action,
         x,
         y,
-        metaState
+        metaState,
     )!!
 }

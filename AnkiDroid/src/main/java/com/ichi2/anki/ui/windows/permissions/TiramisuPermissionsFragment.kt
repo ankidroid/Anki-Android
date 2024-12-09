@@ -38,7 +38,7 @@ import com.ichi2.utils.Permissions.canManageExternalStorage
 class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tiramisu) {
     private val accessAllFilesLauncher =
         registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
+            ActivityResultContracts.StartActivityForResult(),
         ) {
             if (hasAllPermissions()) {
                 requireActivity().finish()
@@ -47,7 +47,7 @@ class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tir
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
             accessAllFilesLauncher.showManageAllFilesScreen()

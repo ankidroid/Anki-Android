@@ -106,7 +106,7 @@ class IntentHandlerTest {
         data: String,
         type: String,
         expected: LaunchType,
-        action: String = Intent.ACTION_VIEW
+        action: String = Intent.ACTION_VIEW,
     ) {
         val intent = Intent(action)
         intent.setDataAndType(Uri.parse(data), type)

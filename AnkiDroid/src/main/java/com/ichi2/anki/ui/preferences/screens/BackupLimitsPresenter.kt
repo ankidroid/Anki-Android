@@ -73,7 +73,7 @@ class BackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
                     throw e
                 } catch (e: Exception) {
                     State.Error.Exception(e)
-                }
+                },
             )
         }
 
@@ -132,7 +132,7 @@ class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : De
             minutesBetweenAutomaticBackupsPreference,
             dailyBackupsToKeepPreference,
             weeklyBackupsToKeepPreference,
-            monthlyBackupsToKeepPreference
+            monthlyBackupsToKeepPreference,
         ).forEach { preference ->
             preference.summaryProvider =
                 Preference.SummaryProvider<EditTextPreference> {
@@ -150,7 +150,7 @@ class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : De
                     is State.Error.NoCollection -> fragment.showSnackbar(R.string.pref__etc__snackbar__no_collection)
                     is State.Error.Exception ->
                         fragment.showSnackbar(
-                            text = fragment.requireContext().getUserFriendlyErrorText(state.exception)
+                            text = fragment.requireContext().getUserFriendlyErrorText(state.exception),
                         )
                     is State.Fetched -> return@listener ShouldShowDialog.Yes
                 }

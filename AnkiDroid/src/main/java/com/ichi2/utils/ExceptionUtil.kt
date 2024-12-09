@@ -32,7 +32,7 @@ object ExceptionUtil {
     @CheckResult
     fun getExceptionMessage(
         e: Throwable?,
-        separator: String?
+        separator: String?,
     ): String {
         val ret = StringBuilder()
         var cause: Throwable? = e
@@ -58,7 +58,7 @@ object ExceptionUtil {
     fun executeSafe(
         context: Context,
         origin: String,
-        runnable: (() -> Unit)
+        runnable: (() -> Unit),
     ) {
         try {
             runnable.invoke()
@@ -67,7 +67,7 @@ object ExceptionUtil {
             showThemedToast(
                 context,
                 context.getString(R.string.multimedia_editor_something_wrong),
-                true
+                true,
             )
         }
     }

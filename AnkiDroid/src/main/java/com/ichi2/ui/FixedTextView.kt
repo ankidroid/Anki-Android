@@ -55,7 +55,7 @@ open class FixedTextView : AppCompatTextView {
 
     override fun onMeasure(
         widthMeasureSpec: Int,
-        heightMeasureSpec: Int
+        heightMeasureSpec: Int,
     ) {
         try {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -147,7 +147,7 @@ open class FixedTextView : AppCompatTextView {
     override fun onFocusChanged(
         focused: Boolean,
         direction: Int,
-        previouslyFocusedRect: Rect?
+        previouslyFocusedRect: Rect?,
     ) {
         try {
             super.onFocusChanged(focused, direction, previouslyFocusedRect)
@@ -194,7 +194,7 @@ open class FixedTextView : AppCompatTextView {
 
     override fun onKeyDown(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         return try {
             super.onKeyDown(keyCode, event)
@@ -229,7 +229,7 @@ open class FixedTextView : AppCompatTextView {
 
     override fun setText(
         text: CharSequence?,
-        type: BufferType
+        type: BufferType,
     ) {
         try {
             super.setText(text, type)

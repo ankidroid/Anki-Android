@@ -171,12 +171,12 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
             this,
             preferences.getBoolean(
                 getString(R.string.card_browser_external_context_menu_key),
-                false
-            )
+                false,
+            ),
         )
         AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(
             this,
-            preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true)
+            preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true),
         )
         CompatHelper.compat.setupNotificationChannel(applicationContext)
 
@@ -218,14 +218,14 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
             object : ActivityLifecycleCallbacks {
                 override fun onActivityCreated(
                     activity: Activity,
-                    savedInstanceState: Bundle?
+                    savedInstanceState: Bundle?,
                 ) {
                     Timber.i("${activity::class.simpleName}::onCreate")
                     (activity as? FragmentActivity)
                         ?.supportFragmentManager
                         ?.registerFragmentLifecycleCallbacks(
                             FragmentLifecycleLogger(activity),
-                            true
+                            true,
                         )
                 }
 
@@ -247,7 +247,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
 
                 override fun onActivitySaveInstanceState(
                     activity: Activity,
-                    outState: Bundle
+                    outState: Bundle,
                 ) {
                     Timber.i("${activity::class.simpleName}::onSaveInstanceState")
                 }
@@ -255,7 +255,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
                 override fun onActivityDestroyed(activity: Activity) {
                     Timber.i("${activity::class.simpleName}::onDestroy")
                 }
-            }
+            },
         )
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
@@ -275,7 +275,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
             "android:%s:%s:%s",
             BuildConfig.VERSION_NAME,
             Build.VERSION.RELEASE,
-            model
+            model,
         )
     }
 
@@ -309,7 +309,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
      */
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         Timber.d("ChangeSubscriber - opExecuted called with changes: $changes")
         if (changes.studyQueues) {

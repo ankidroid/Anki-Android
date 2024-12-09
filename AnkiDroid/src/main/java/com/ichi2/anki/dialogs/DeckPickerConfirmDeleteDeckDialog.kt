@@ -42,7 +42,7 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
                     R.plurals.delete_deck_message,
                     totalCards,
                     "<b>$deckName</b>",
-                    totalCards
+                    totalCards,
                 )
             }
         super.onCreate(savedInstanceState)
@@ -51,8 +51,8 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
             .setMessage(
                 HtmlCompat.fromHtml(
                     message,
-                    HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
+                    HtmlCompat.FROM_HTML_MODE_LEGACY,
+                ),
             )
             .setIcon(R.drawable.ic_warning)
             .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
@@ -70,7 +70,7 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
             deckName: String,
             deckId: DeckId,
             totalCards: Int,
-            isFilteredDeck: Boolean
+            isFilteredDeck: Boolean,
         ): DeckPickerConfirmDeleteDeckDialog {
             val f = DeckPickerConfirmDeleteDeckDialog()
             val args = Bundle()

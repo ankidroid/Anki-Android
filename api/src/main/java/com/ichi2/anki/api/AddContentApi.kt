@@ -63,7 +63,7 @@ public class AddContentApi(context: Context) {
         modelId: Long,
         deckId: Long,
         fields: Array<String>,
-        tags: Set<String>?
+        tags: Set<String>?,
     ): Long? {
         val noteUri = addNoteInternal(modelId, deckId, fields, tags) ?: return null
         return noteUri.lastPathSegment!!.toLong()
@@ -73,7 +73,7 @@ public class AddContentApi(context: Context) {
         modelId: Long,
         deckId: Long,
         fields: Array<String>,
-        tags: Set<String>?
+        tags: Set<String>?,
     ): Uri? {
         val values =
             ContentValues().apply {
@@ -86,7 +86,7 @@ public class AddContentApi(context: Context) {
 
     private fun addNoteForContentValues(
         deckId: Long,
-        values: ContentValues
+        values: ContentValues,
     ): Uri? {
         val newNoteUri = resolver.insert(Note.CONTENT_URI, values) ?: return null
         // Move cards to specified deck
@@ -116,7 +116,7 @@ public class AddContentApi(context: Context) {
         modelId: Long,
         deckId: Long,
         fieldsList: List<Array<String>>,
-        tagsList: List<Set<String>?>?
+        tagsList: List<Set<String>?>?,
     ): Int {
         require(!(tagsList != null && fieldsList.size != tagsList.size)) { "fieldsList and tagsList different length" }
         val newNoteValuesList: MutableList<ContentValues> = ArrayList(fieldsList.size)
@@ -171,7 +171,7 @@ public class AddContentApi(context: Context) {
     public fun addMediaFromUri(
         fileUri: Uri,
         preferredName: String,
-        mimeType: String
+        mimeType: String,
     ): String? {
         val contentValues =
             ContentValues().apply {
@@ -190,7 +190,7 @@ public class AddContentApi(context: Context) {
 
     private fun formatMediaName(
         fname: String,
-        mimeType: String
+        mimeType: String,
     ): String? =
         when (mimeType) {
             "audio" -> "[sound:${fname.substring(1)}]" // first character in the path is "/"
@@ -206,7 +206,7 @@ public class AddContentApi(context: Context) {
      */
     public fun findDuplicateNotes(
         mid: Long,
-        key: String
+        key: String,
     ): List<NoteInfo?> {
         val notes = compat.findDuplicateNotes(mid, listOf(key))
         return if (notes!!.size() == 0) {
@@ -225,7 +225,7 @@ public class AddContentApi(context: Context) {
      */
     public fun findDuplicateNotes(
         mid: Long,
-        keys: List<String>
+        keys: List<String>,
     ): SparseArray<MutableList<NoteInfo?>>? {
         return compat.findDuplicateNotes(mid, keys)
     }
@@ -246,7 +246,7 @@ public class AddContentApi(context: Context) {
      */
     public fun updateNoteTags(
         noteId: Long,
-        tags: Set<String>
+        tags: Set<String>,
     ): Boolean {
         return updateNote(noteId, null, tags)
     }
@@ -260,7 +260,7 @@ public class AddContentApi(context: Context) {
      */
     public fun updateNoteFields(
         noteId: Long,
-        fields: Array<String>
+        fields: Array<String>,
     ): Boolean {
         return updateNote(noteId, fields, null)
     }
@@ -285,7 +285,7 @@ public class AddContentApi(context: Context) {
     private fun updateNote(
         noteId: Long,
         fields: Array<String>?,
-        tags: Set<String?>?
+        tags: Set<String?>?,
     ): Boolean {
         val contentUri = Note.CONTENT_URI.buildUpon().appendPath(noteId.toString()).build()
         val values =
@@ -307,7 +307,7 @@ public class AddContentApi(context: Context) {
      */
     public fun previewNewNote(
         mid: Long,
-        flds: Array<String>
+        flds: Array<String>,
     ): Map<String, Map<String, String>>? {
         if (!hasReadWritePermission()) {
             // avoid situation where addNote will pass, but deleteNote will fail
@@ -327,7 +327,7 @@ public class AddContentApi(context: Context) {
                 cards[n] =
                     hashMapOf(
                         "q" to q,
-                        "a" to a
+                        "a" to a,
                     )
             }
         }
@@ -350,7 +350,7 @@ public class AddContentApi(context: Context) {
             BasicModel.AFMT,
             null,
             null,
-            null
+            null,
         )
     }
 
@@ -369,7 +369,7 @@ public class AddContentApi(context: Context) {
             Basic2Model.AFMT,
             null,
             null,
-            null
+            null,
         )
     }
 
@@ -395,7 +395,7 @@ public class AddContentApi(context: Context) {
         afmt: Array<String>,
         css: String?,
         did: Long?,
-        sortf: Int?
+        sortf: Int?,
     ): Long? {
         // Check that size of arrays are consistent
         require(!(qfmt.size != cards.size || afmt.size != cards.size)) { "cards, qfmt, and afmt arrays must all be same length" }
@@ -455,7 +455,7 @@ public class AddContentApi(context: Context) {
             if (modelCursor.moveToNext()) {
                 splitFlds =
                     Utils.splitFields(
-                        modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES))
+                        modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES)),
                     )
             }
         }
@@ -530,7 +530,7 @@ public class AddContentApi(context: Context) {
                     null,
                     null,
                     null,
-                    null
+                    null,
                 ) ?: return null
             return selectedDeckQuery.use { selectedDeckCursor ->
                 if (selectedDeckCursor.moveToNext()) {
@@ -592,13 +592,13 @@ public class AddContentApi(context: Context) {
                     context.packageManager.resolveContentProvider(
                         FlashCardsContract.AUTHORITY,
                         PackageManager.ComponentInfoFlags.of(
-                            PackageManager.GET_META_DATA.toLong()
-                        )
+                            PackageManager.GET_META_DATA.toLong(),
+                        ),
                     )
                 } else {
                     context.packageManager.resolveContentProvider(
                         FlashCardsContract.AUTHORITY,
-                        PackageManager.GET_META_DATA
+                        PackageManager.GET_META_DATA,
                     )
                 }
 
@@ -615,7 +615,7 @@ public class AddContentApi(context: Context) {
         context.checkPermission(
             READ_WRITE_PERMISSION,
             Process.myPid(),
-            Process.myUid()
+            Process.myUid(),
         ) == PackageManager.PERMISSION_GRANTED
 
     /**
@@ -640,7 +640,7 @@ public class AddContentApi(context: Context) {
          */
         fun insertNotes(
             deckId: Long,
-            valuesArr: Array<ContentValues>
+            valuesArr: Array<ContentValues>,
         ): Int
 
         /**
@@ -651,7 +651,7 @@ public class AddContentApi(context: Context) {
          */
         fun findDuplicateNotes(
             modelId: Long,
-            keys: List<String?>
+            keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>?
     }
 
@@ -664,18 +664,18 @@ public class AddContentApi(context: Context) {
                 PROJECTION,
                 queryFormat,
                 null,
-                null
+                null,
             )
         }
 
         override fun insertNotes(
             deckId: Long,
-            valuesArr: Array<ContentValues>
+            valuesArr: Array<ContentValues>,
         ): Int = valuesArr.count { addNoteForContentValues(deckId, it) != null }
 
         override fun findDuplicateNotes(
             modelId: Long,
-            keys: List<String?>
+            keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>? {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
             val modelName = getModelName(modelId) ?: return null
@@ -691,14 +691,14 @@ public class AddContentApi(context: Context) {
                         PROJECTION,
                         selection,
                         null,
-                        null
+                        null,
                     ) ?: continue
                 query.use { cursor ->
                     while (cursor.moveToNext()) {
                         addNoteToDuplicatesArray(
                             NoteInfo.buildFromCursor(cursor),
                             duplicates,
-                            outputPos
+                            outputPos,
                         )
                     }
                 }
@@ -710,7 +710,7 @@ public class AddContentApi(context: Context) {
         protected fun addNoteToDuplicatesArray(
             note: NoteInfo?,
             duplicates: SparseArray<MutableList<NoteInfo?>>,
-            position: Int
+            position: Int,
         ) {
             val sparseArrayIndex = duplicates.indexOfKey(position)
             if (sparseArrayIndex < 0) {
@@ -729,25 +729,25 @@ public class AddContentApi(context: Context) {
                 PROJECTION,
                 String.format(Locale.US, "%s=%d", Note.MID, modelId),
                 null,
-                null
+                null,
             )
         }
 
         override fun insertNotes(
             deckId: Long,
-            valuesArr: Array<ContentValues>
+            valuesArr: Array<ContentValues>,
         ): Int {
             val builder =
                 Note.CONTENT_URI.buildUpon().appendQueryParameter(
                     Note.DECK_ID_QUERY_PARAM,
-                    deckId.toString()
+                    deckId.toString(),
                 )
             return resolver.bulkInsert(builder.build(), valuesArr)
         }
 
         override fun findDuplicateNotes(
             modelId: Long,
-            keys: List<String?>
+            keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>? {
             // Build set of checksums and a HashMap from the key (first field) back to the original index in fieldsArray
             val csums: MutableSet<Long?> = HashSet(keys.size)
@@ -768,7 +768,7 @@ public class AddContentApi(context: Context) {
                     Note.MID,
                     modelId,
                     Note.CSUM,
-                    csums.joinToString(separator = ",")
+                    csums.joinToString(separator = ","),
                 )
             val notesTableQuery =
                 resolver.query(
@@ -776,7 +776,7 @@ public class AddContentApi(context: Context) {
                     PROJECTION,
                     sel,
                     null,
-                    null
+                    null,
                 ) ?: return null
             // Loop through each note in the cursor, building the result array of duplicates
             val duplicates = SparseArray<MutableList<NoteInfo?>>()
@@ -790,7 +790,7 @@ public class AddContentApi(context: Context) {
                             addNoteToDuplicatesArray(
                                 if (i > 0) NoteInfo(note) else note,
                                 duplicates,
-                                outputPos[i]
+                                outputPos[i],
                             )
                         }
                     }
@@ -810,7 +810,7 @@ public class AddContentApi(context: Context) {
             arrayOf(
                 Note._ID,
                 Note.FLDS,
-                Note.TAGS
+                Note.TAGS,
             )
 
         /**
@@ -826,7 +826,7 @@ public class AddContentApi(context: Context) {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 manager.resolveContentProvider(
                     FlashCardsContract.AUTHORITY,
-                    PackageManager.ComponentInfoFlags.of(0L)
+                    PackageManager.ComponentInfoFlags.of(0L),
                 )?.packageName
             } else {
                 manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)?.packageName

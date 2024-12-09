@@ -47,7 +47,7 @@ class HardcodedPreferenceKey : ResourceXmlDetector() {
                 Constants.ANKI_XML_CATEGORY,
                 Constants.ANKI_XML_PRIORITY,
                 Constants.ANKI_XML_SEVERITY,
-                implementation
+                implementation,
             )
     }
 
@@ -57,7 +57,7 @@ class HardcodedPreferenceKey : ResourceXmlDetector() {
 
     override fun visitElement(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         reportAttributeIfHardcoded(context, element, "android:key")
         reportAttributeIfHardcoded(context, element, "android:dependency")
@@ -66,7 +66,7 @@ class HardcodedPreferenceKey : ResourceXmlDetector() {
     private fun reportAttributeIfHardcoded(
         context: XmlContext,
         element: Element,
-        attributeName: String
+        attributeName: String,
     ) {
         val attrNode = element.getAttributeNode(attributeName) ?: return
 

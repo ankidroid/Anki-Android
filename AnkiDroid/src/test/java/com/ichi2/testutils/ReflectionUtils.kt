@@ -31,7 +31,7 @@ inline fun <reified T> KCallable<*>.isType() = returnType == T::class.createType
  */
 fun getJavaFieldAsAccessible(
     clazz: Class<*>,
-    fieldName: String
+    fieldName: String,
 ): Field {
     return clazz.getDeclaredField(fieldName).apply {
         isAccessible = true
@@ -46,7 +46,7 @@ fun getJavaFieldAsAccessible(
 fun getJavaMethodAsAccessible(
     clazz: Class<*>,
     methodName: String,
-    vararg parameterTypes: Class<*>
+    vararg parameterTypes: Class<*>,
 ): Method {
     return clazz.getDeclaredMethod(methodName, *parameterTypes).apply {
         isAccessible = true

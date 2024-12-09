@@ -56,7 +56,7 @@ data class DeckWidgetData(
     val name: String,
     val reviewCount: Int,
     val learnCount: Int,
-    val newCount: Int
+    val newCount: Int,
 )
 
 /**
@@ -92,7 +92,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            deckIds: LongArray?
+            deckIds: LongArray?,
         ) {
             val remoteViews = RemoteViews(context.packageName, R.layout.widget_deck_picker_large)
             if (deckIds == null || deckIds.isEmpty()) {
@@ -122,7 +122,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
             remoteViews: RemoteViews,
-            deckIds: LongArray
+            deckIds: LongArray,
         ) {
             remoteViews.removeAllViews(R.id.deckCollection)
             val deckData = getDeckNamesAndStats(deckIds.toList())
@@ -150,7 +150,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                         context,
                         deck.deckId.toInt(),
                         intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                     )
 
                 deckView.setOnClickPendingIntent(R.id.deckName, pendingIntent)
@@ -164,7 +164,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews
+            remoteViews: RemoteViews,
         ) {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_collection_state_in_widget))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
@@ -180,7 +180,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     context,
                     appWidgetId,
                     configIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
@@ -191,7 +191,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: AppWidgetId,
-            remoteViews: RemoteViews
+            remoteViews: RemoteViews,
         ) {
             remoteViews.setTextViewText(R.id.empty_widget, context.getString(R.string.empty_widget_state))
             remoteViews.setViewVisibility(R.id.empty_widget, View.VISIBLE)
@@ -207,7 +207,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     context,
                     appWidgetId,
                     configIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
@@ -239,7 +239,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
-        usageAnalytics: UsageAnalytics
+        usageAnalytics: UsageAnalytics,
     ) {
         Timber.d("Performing widget update for appWidgetIds: %s", appWidgetIds)
 
@@ -268,7 +268,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
     override fun onReceive(
         context: Context?,
-        intent: Intent?
+        intent: Intent?,
     ) {
         if (context == null || intent == null) {
             Timber.e("Context or intent is null in onReceive")
@@ -288,8 +288,8 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
                 Timber.d(
                     "Received ACTION_APPWIDGET_UPDATE with widget ID: $appWidgetId and selectedDeckIds: ${selectedDeckIds?.joinToString(
-                        ", "
-                    )}"
+                        ", ",
+                    )}",
                 )
 
                 if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID && selectedDeckIds != null) {
@@ -332,7 +332,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
                     Exception("Unexpected action received: ${intent.action}"),
                     "DeckPickerWidget - onReceive",
                     null,
-                    onlyIfSilent = true
+                    onlyIfSilent = true,
                 )
             }
         }
@@ -340,7 +340,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
 
     override fun onDeleted(
         context: Context?,
-        appWidgetIds: IntArray?
+        appWidgetIds: IntArray?,
     ) {
         if (context == null) {
             Timber.w("Context is null in onDeleted")
@@ -381,8 +381,8 @@ suspend fun getDeckNamesAndStats(deckIds: List<DeckId>): List<DeckWidgetData> {
                 name = node.lastDeckNameComponent,
                 reviewCount = node.revCount,
                 learnCount = node.lrnCount,
-                newCount = node.newCount
-            )
+                newCount = node.newCount,
+            ),
         )
     }
 

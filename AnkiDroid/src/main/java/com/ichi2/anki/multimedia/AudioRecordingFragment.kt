@@ -55,7 +55,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
 
     private val requestPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+            ActivityResultContracts.RequestPermission(),
         ) { isGranted ->
             if (isGranted) {
                 Timber.d("Audio permission granted")
@@ -69,7 +69,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -127,7 +127,7 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
                     context = requireActivity(),
                     linearLayout = view?.findViewById(R.id.audio_recorder_layout)!!,
                     viewModel = viewModel,
-                    note = note
+                    note = note,
                 )
         } catch (e: Exception) {
             Timber.w(e, "unable to add the audio recorder to toolbar")
@@ -149,12 +149,12 @@ class AudioRecordingFragment : MultimediaFragment(R.layout.fragment_audio_record
     companion object {
         fun getIntent(
             context: Context,
-            multimediaExtra: MultimediaActivityExtra
+            multimediaExtra: MultimediaActivityExtra,
         ): Intent {
             return MultimediaActivity.getIntent(
                 context,
                 AudioRecordingFragment::class,
-                multimediaExtra
+                multimediaExtra,
             )
         }
     }

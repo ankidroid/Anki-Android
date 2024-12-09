@@ -65,7 +65,7 @@ class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackg
     override fun prepare(
         options: PromptOptions<*>,
         clipToBounds: Boolean,
-        clipBounds: Rect
+        clipBounds: Rect,
     ) {
         promptBackgroundInterface.prepare(options, clipToBounds, clipBounds)
         val metrics = Resources.getSystem().displayMetrics
@@ -77,7 +77,7 @@ class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackg
     override fun update(
         options: PromptOptions<*>,
         revealModifier: Float,
-        alphaModifier: Float
+        alphaModifier: Float,
     ) {
         promptBackgroundInterface.update(options, revealModifier, alphaModifier)
         // Allow for the dimmed background to fade in and out.
@@ -93,7 +93,7 @@ class DimmedPromptBackgroundDecorator(val promptBackgroundInterface: PromptBackg
 
     override fun contains(
         x: Float,
-        y: Float
+        y: Float,
     ): Boolean {
         return promptBackgroundInterface.contains(x, y)
     }

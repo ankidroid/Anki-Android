@@ -47,7 +47,7 @@ object LanguageHintService {
         notetypes: Notetypes,
         notetype: NotetypeJson,
         fieldPos: Int,
-        selectedLocale: Locale
+        selectedLocale: Locale,
     ) {
         val field = notetype.getField(fieldPos)
         field.put("ad-hint-locale", selectedLocale.toLanguageTag())

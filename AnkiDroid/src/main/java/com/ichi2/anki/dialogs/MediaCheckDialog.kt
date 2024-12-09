@@ -26,7 +26,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
         fun showMediaCheckDialog(
             dialogType: Int,
-            checkList: MediaCheckResult
+            checkList: MediaCheckResult,
         )
 
         fun mediaCheck()
@@ -164,7 +164,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
         // TODO Extract keys to constants
         fun newInstance(
             dialogType: Int,
-            checkList: MediaCheckResult
+            checkList: MediaCheckResult,
         ): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
@@ -181,7 +181,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
         private val dialogType: Int,
         private val noHave: ArrayList<String>?,
         private val unused: ArrayList<String>?,
-        private val invalid: ArrayList<String>?
+        private val invalid: ArrayList<String>?,
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG, "MediaCheckCompleteDialog") {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Media check results
@@ -193,7 +193,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                         activity,
                         activity.getString(R.string.something_wrong),
                         ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
-                        true
+                        true,
                     )
                     return
                 }
@@ -210,7 +210,7 @@ class MediaCheckDialog : AsyncDialogFragment() {
                         "nohave" to noHave,
                         "unused" to unused,
                         "invalid" to invalid,
-                        "dialogType" to dialogType
+                        "dialogType" to dialogType,
                     )
             }
 

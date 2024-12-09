@@ -40,7 +40,7 @@ class ConfirmationDialog : DialogFragment() {
 
     fun setArgs(
         title: String?,
-        message: String?
+        message: String?,
     ) {
         val args = Bundle()
         args.putString("message", message)

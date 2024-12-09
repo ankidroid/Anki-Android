@@ -51,12 +51,12 @@ object AndroidPermanentlyRevokedPermissionsDialog {
             context.getString(
                 R.string.directory_revoked_after_inactivity,
                 "WRITE_EXTERNAL_STORAGE",
-                getCurrentAnkiDroidDirectory(context)
+                getCurrentAnkiDroidDirectory(context),
             )
         AlertDialog.Builder(context).show {
             listItemsAndMessage(
                 message = message,
-                listItemData.map { context.getString(it.stringRes) }
+                listItemData.map { context.getString(it.stringRes) },
             ) { dialog: DialogInterface, index: Int ->
                 val listItem = listItemData[index]
                 listItem.onClick(context)

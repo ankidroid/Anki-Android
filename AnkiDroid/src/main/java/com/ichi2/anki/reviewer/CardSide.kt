@@ -22,7 +22,7 @@ package com.ichi2.anki.reviewer
 enum class CardSide(val int: Int) {
     QUESTION(0),
     ANSWER(1),
-    BOTH(2)
+    BOTH(2),
     ;
 
     companion object {

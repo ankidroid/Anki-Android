@@ -34,7 +34,7 @@ import timber.log.Timber
  * @see PermissionsActivity
  */
 abstract class PermissionsFragment(
-    @LayoutRes contentLayoutId: Int
+    @LayoutRes contentLayoutId: Int,
 ) : Fragment(contentLayoutId) {
     /**
      * All the [PermissionItem]s in the fragment.
@@ -49,7 +49,7 @@ abstract class PermissionsFragment(
         super.onResume()
         permissionItems.forEach { it.updateSwitchCheckedStatus() }
         (activity as? PermissionsActivity)?.setContinueButtonEnabled(
-            hasAllPermissions()
+            hasAllPermissions(),
         )
     }
 
@@ -62,13 +62,13 @@ abstract class PermissionsFragment(
         startActivity(
             Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", requireActivity().packageName, null)
-            )
+                Uri.fromParts("package", requireActivity().packageName, null),
+            ),
         )
     }
 
     protected fun showToastAndOpenAppSettingsScreen(
-        @StringRes message: Int
+        @StringRes message: Int,
     ) {
         showThemedToast(requireContext(), message, false)
         openAppSettingsScreen()
@@ -80,7 +80,7 @@ abstract class PermissionsFragment(
         val intent =
             Intent(
                 Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-                Uri.fromParts("package", requireActivity().packageName, null)
+                Uri.fromParts("package", requireActivity().packageName, null),
             )
 
         // From the docs: [ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION]

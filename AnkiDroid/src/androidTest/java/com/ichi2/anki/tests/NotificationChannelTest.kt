@@ -85,12 +85,12 @@ class NotificationChannelTest : InstrumentedTest() {
         assertThat(
             "Not as many channels as expected.",
             expectedChannels,
-            greaterThanOrEqualTo(channels.size)
+            greaterThanOrEqualTo(channels.size),
         )
         for (channel in Channel.entries) {
             assertNotNull(
                 "There should be a reminder channel",
-                manager.getNotificationChannel(channel.id)
+                manager.getNotificationChannel(channel.id),
             )
         }
     }

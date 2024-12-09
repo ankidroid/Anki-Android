@@ -130,7 +130,7 @@ class TtsVoicesViewModel : ViewModel() {
                     TtsVoices.allTtsVoices()
                         .sortedWith(
                             compareBy<AndroidTtsVoice> { it.normalizedLocale.displayName }
-                                .thenBy { it.tryDisplayLocalizedName() }
+                                .thenBy { it.tryDisplayLocalizedName() },
                         )
 
                 ttsVoiceListStatus.emit(LoadVoiceStatus.Success(voices))
@@ -151,7 +151,7 @@ class TtsVoicesViewModel : ViewModel() {
                     TtsVoices.allTtsVoices()
                         .sortedWith(
                             compareBy<AndroidTtsVoice> { it.normalizedLocale.displayName }
-                                .thenBy { it.tryDisplayLocalizedName() }
+                                .thenBy { it.tryDisplayLocalizedName() },
                         )
 
                 // COULD_BE_BETTER: Handle the changes in DiffUtils in the adapter
@@ -186,13 +186,13 @@ class TtsVoicesViewModel : ViewModel() {
         // At least in API 33, we do not need to display a snackbar, as the Android OS already
         // displays the copied text
         AnkiDroidApp.instance.copyToClipboard(
-            text = voice.toString()
+            text = voice.toString(),
         )
     }
 
     private suspend fun playTts(
         textToSpeak: String,
-        voice: TtsVoice
+        voice: TtsVoice,
     ) {
         val currentState = ttsEngineStatus.value
         if (currentState !is TtsEngineStatus.Success) {
@@ -230,7 +230,7 @@ class TtsVoicesViewModel : ViewModel() {
 suspend fun TtsPlayer.play(
     textToSpeak: String,
     voice: TtsVoice,
-    speed: Float = 1.0f
+    speed: Float = 1.0f,
 ): TtsPlayer.TtsCompletionStatus {
     return this.play(TTSTag(textToSpeak, voice.lang, listOf(voice.name), speed, listOf()))
 }

@@ -94,9 +94,9 @@ class ReviewerTest : InstrumentedTest() {
         card.moveToReviewQueue()
         col.backend.updateCards(
             listOf(
-                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build()
+                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build(),
             ),
-            true
+            true,
         )
 
         closeGetStartedScreenIfExists()
@@ -148,8 +148,8 @@ class ReviewerTest : InstrumentedTest() {
         onView(withId(R.id.decks)).perform(
             RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
                 hasDescendant(withText(deckName)),
-                click()
-            )
+                click(),
+            ),
         )
     }
 
@@ -201,13 +201,13 @@ class ReviewerTest : InstrumentedTest() {
             // ...on the command line it has resource name "good_button"...
             onView(withResourceName("good_button")).checkWithTimeout(
                 matches(isDisplayed()),
-                100
+                100,
             )
         } catch (e: AssertionError) {
             // ...but in Android Studio it has resource name "flashcard_layout_ease3" !?
             onView(withResourceName("flashcard_layout_ease3")).checkWithTimeout(
                 matches(isDisplayed()),
-                100
+                100,
             )
         }
     }

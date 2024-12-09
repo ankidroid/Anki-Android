@@ -54,7 +54,7 @@ class ImageCropper :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         cropImageView = findViewById(com.ichi2.anki.R.id.cropImageView)
@@ -75,7 +75,7 @@ class ImageCropper :
             object : MenuProvider {
                 override fun onCreateMenu(
                     menu: Menu,
-                    menuInflater: MenuInflater
+                    menuInflater: MenuInflater,
                 ) {
                     menu.clear()
                     menuInflater.inflate(com.canhub.cropper.R.menu.crop_image_menu, menu)
@@ -87,8 +87,8 @@ class ImageCropper :
                             MaterialColors.getColor(
                                 requireContext(),
                                 com.ichi2.anki.R.attr.toolbarIconColor,
-                                0
-                            )
+                                0,
+                            ),
                         )
                     }
                 }
@@ -123,14 +123,14 @@ class ImageCropper :
                         else -> false
                     }
                 }
-            }
+            },
         )
     }
 
     override fun onSetImageUriComplete(
         view: CropImageView,
         uri: Uri,
-        error: Exception?
+        error: Exception?,
     ) {
         if (error != null) {
             Timber.e(error, "Failed to load image by URI")
@@ -140,7 +140,7 @@ class ImageCropper :
 
     override fun onCropImageComplete(
         view: CropImageView,
-        result: CropImageView.CropResult
+        result: CropImageView.CropResult,
     ) {
         if (result.error == null) {
             sendCropResult(result)
@@ -159,7 +159,7 @@ class ImageCropper :
             Intent().apply {
                 putExtra(
                     CROP_IMAGE_RESULT,
-                    CropResultData(error = result.error, uriContent = result.uriContent, uriPath = result.getUriFilePath(ankiActivity))
+                    CropResultData(error = result.error, uriContent = result.uriContent, uriPath = result.getUriFilePath(ankiActivity)),
                 )
             }
         activity?.setResult(Activity.RESULT_OK, resultIntent)
@@ -188,6 +188,6 @@ class ImageCropper :
     data class CropResultData(
         val error: Exception? = null,
         val uriContent: Uri? = null,
-        val uriPath: String? = null
+        val uriPath: String? = null,
     ) : Parcelable
 }

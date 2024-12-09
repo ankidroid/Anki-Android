@@ -65,7 +65,7 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
      */
     suspend fun play(
         tag: SoundOrVideoTag,
-        soundErrorListener: SoundErrorListener?
+        soundErrorListener: SoundErrorListener?,
     ) {
         val tagType = tag.getType()
         return suspendCancellableCoroutine { continuation ->
@@ -80,7 +80,7 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun playVideo(
         continuation: CancellableContinuation<Unit>,
-        tag: SoundOrVideoTag
+        tag: SoundOrVideoTag,
     ) {
         Timber.d("Playing video")
         videoPlayer.playVideo(continuation, tag)
@@ -89,7 +89,7 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
     private fun playSound(
         continuation: CancellableContinuation<Unit>,
         tag: SoundOrVideoTag,
-        soundErrorListener: SoundErrorListener?
+        soundErrorListener: SoundErrorListener?,
     ) {
         requireNewMediaPlayer().apply {
             continuation.invokeOnCancellation {

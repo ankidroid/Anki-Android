@@ -82,7 +82,7 @@ fun checkWebViewVersionComponents(
     packageName: String,
     webviewVersion: String,
     versionCode: Long,
-    userAgent: String?
+    userAgent: String?,
 ): Int? {
     // Checking the version code works for most webview packages
     if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION_CODE) {
@@ -90,7 +90,7 @@ fun checkWebViewVersionComponents(
             "WebView is up to date. %s: %s(%s)",
             packageName,
             webviewVersion,
-            versionCode.toString()
+            versionCode.toString(),
         )
         return null
     }
@@ -116,7 +116,7 @@ fun checkWebViewVersionComponents(
 private fun showOutdatedWebViewDialog(
     activity: AnkiActivity,
     installedVersion: Int,
-    learnMoreUrl: String
+    learnMoreUrl: String,
 ) {
     AlertDialog.Builder(activity).show {
         setMessage(activity.getString(R.string.webview_update_message, installedVersion, OLDEST_WORKING_WEBVIEW_VERSION))

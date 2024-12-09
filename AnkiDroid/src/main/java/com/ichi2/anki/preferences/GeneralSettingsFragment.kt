@@ -74,7 +74,7 @@ class GeneralSettingsFragment : SettingsFragment() {
             summary =
                 getString(
                     R.string.card_browser_enable_external_context_menu_summary,
-                    getString(R.string.context_menu_anki_card_label)
+                    getString(R.string.context_menu_anki_card_label),
                 )
             setOnPreferenceChangeListener { newValue ->
                 AnkiCardContextMenu.ensureConsistentStateWithPreferenceStatus(requireContext(), newValue as Boolean)

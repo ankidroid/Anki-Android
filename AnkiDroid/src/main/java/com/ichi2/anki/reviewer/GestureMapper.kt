@@ -60,7 +60,7 @@ class GestureMapper {
         velocityY: Float,
         isSelecting: Boolean,
         isXScrolling: Boolean,
-        isYScrolling: Boolean
+        isYScrolling: Boolean,
     ): Gesture? {
         try {
             if (abs(dx) > abs(dy)) {
@@ -88,7 +88,7 @@ class GestureMapper {
         height: Int,
         width: Int,
         posX: Float,
-        posY: Float
+        posY: Float,
     ): Gesture? {
         return if (width == 0 || height == 0) {
             null
@@ -103,7 +103,7 @@ class GestureMapper {
     private enum class TriState {
         LOW,
         MID,
-        HIGH
+        HIGH,
     }
 
     companion object {
@@ -120,7 +120,7 @@ class GestureMapper {
             height: Int,
             width: Int,
             posX: Float,
-            posY: Float
+            posY: Float,
         ): Gesture {
             val gestureIsRight = posY > height * (1 - posX / width)
             return if (posX > posY / height * width) {
@@ -142,7 +142,7 @@ class GestureMapper {
             height: Int,
             width: Int,
             posX: Float,
-            posY: Float
+            posY: Float,
         ): Gesture {
             val heightSegment = height / 3.0
             val widthSegment = width / 3.0

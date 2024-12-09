@@ -28,7 +28,7 @@ object ContentResolverUtil {
     @CheckResult
     fun getFileName(
         contentResolver: ContentResolver,
-        uri: Uri
+        uri: Uri,
     ): String {
         try {
             val filename = getFilenameViaDisplayName(contentResolver, uri)
@@ -50,7 +50,7 @@ object ContentResolverUtil {
     @CheckResult
     private fun getFilenameViaMimeType(
         contentResolver: ContentResolver,
-        uri: Uri
+        uri: Uri,
     ): String? {
         // value: "png" when testing
         var extension: String? = null
@@ -77,7 +77,7 @@ object ContentResolverUtil {
     @CheckResult
     private fun getFilenameViaDisplayName(
         contentResolver: ContentResolver,
-        uri: Uri
+        uri: Uri,
     ): String? {
         // 7748: android.database.sqlite.SQLiteException: no such column: _display_name (code 1 SQLITE_ERROR[1]): ...
         try {

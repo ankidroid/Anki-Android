@@ -37,7 +37,7 @@ import com.ichi2.utils.Permissions.canManageExternalStorage
 class Full30and31PermissionsFragment : PermissionsFragment(R.layout.permissions_full_30_and_31) {
     private val accessAllFilesLauncher =
         registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
+            ActivityResultContracts.StartActivityForResult(),
         ) {
             if (hasAllPermissions()) {
                 requireActivity().finish()
@@ -46,7 +46,7 @@ class Full30and31PermissionsFragment : PermissionsFragment(R.layout.permissions_
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
             accessAllFilesLauncher.showManageAllFilesScreen()

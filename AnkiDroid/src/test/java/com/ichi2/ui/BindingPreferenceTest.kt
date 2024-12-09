@@ -54,6 +54,6 @@ class BindingPreferenceTest {
             // this one is important: ensure that "|" as a unicode char can't be used
             MappableBinding(Binding.unicode(Binding.FORBIDDEN_UNICODE_CHAR), Reviewer(CardSide.QUESTION)),
             MappableBinding(Binding.gesture(Gesture.LONG_TAP), Reviewer(CardSide.BOTH)),
-            MappableBinding(Binding.keyCode(12), Reviewer(CardSide.BOTH))
+            MappableBinding(Binding.keyCode(12), Reviewer(CardSide.BOTH)),
         )
 }

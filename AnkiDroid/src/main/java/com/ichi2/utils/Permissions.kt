@@ -39,7 +39,7 @@ object Permissions {
     val tiramisuPhotosAndVideosPermissions =
         listOf(
             Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.READ_MEDIA_VIDEO
+            Manifest.permission.READ_MEDIA_VIDEO,
         )
 
     val postNotification =
@@ -55,7 +55,7 @@ object Permissions {
     val legacyStorageAccessPermissions =
         listOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
         )
 
     fun canRecordAudio(context: Context): Boolean {
@@ -64,7 +64,7 @@ object Permissions {
 
     fun hasPermission(
         context: Context,
-        permission: String
+        permission: String,
     ): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permission == MANAGE_EXTERNAL_STORAGE) {
             // checkSelfPermission doesn't return PERMISSION_GRANTED, even if it's granted.
@@ -76,7 +76,7 @@ object Permissions {
 
     fun hasAllPermissions(
         context: Context,
-        permissions: Collection<String>
+        permissions: Collection<String>,
     ): Boolean {
         return permissions.all { hasPermission(context, it) }
     }
@@ -150,7 +150,7 @@ object Permissions {
      */
     fun Context.arePermissionsDefinedInManifest(
         packageName: String,
-        vararg permissions: String
+        vararg permissions: String,
     ): Boolean {
         try {
             val permissionsInManifest = getPermissionsDefinedInManifest(packageName) ?: return false

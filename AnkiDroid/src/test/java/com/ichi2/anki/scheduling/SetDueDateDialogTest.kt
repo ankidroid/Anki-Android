@@ -118,12 +118,12 @@ class SetDueDateDialogTest : RobolectricTest() {
 
     private fun testDialog(
         cards: List<CardId> = listOf(1),
-        action: SetDueDateDialog.() -> Unit
+        action: SetDueDateDialog.() -> Unit,
     ) = runTest {
         val dialog = SetDueDateDialog.newInstance(cards)
         launchFragment(
             themeResId = R.style.Base_Theme_Light,
-            fragmentArgs = dialog.arguments
+            fragmentArgs = dialog.arguments,
         ) {
             return@launchFragment dialog
         }.apply {

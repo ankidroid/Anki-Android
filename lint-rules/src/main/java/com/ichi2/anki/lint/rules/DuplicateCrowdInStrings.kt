@@ -74,7 +74,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
 
     override fun visitElement(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         // Only check the golden copy - not the translated sources.
         // We currently do not have the ability to do a 'per file'
@@ -97,7 +97,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
                     checkTextNode(
                         context,
                         element,
-                        StringFormatDetector.stripQuotes(child.nodeValue)
+                        StringFormatDetector.stripQuotes(child.nodeValue),
                     )
                 }
             } else {
@@ -113,7 +113,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
     private fun checkTextNode(
         context: XmlContext,
         element: Element,
-        text: String
+        text: String,
     ) {
         if (VALUE_FALSE == element.getAttribute(ATTR_TRANSLATABLE)) {
             return
@@ -123,7 +123,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             if (locale != null) {
                 Pair.of(
                     locale.full,
-                    text.lowercase(Locale.forLanguageTag(locale.tag))
+                    text.lowercase(Locale.forLanguageTag(locale.tag)),
                 )
             } else {
                 Pair.of("default", text.lowercase(Locale.US))
@@ -146,9 +146,9 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
             var caseVaries = false
             val names: MutableList<String> = ArrayList()
             if (duplicates.all { x: StringDeclaration ->
-                val el = x.location.clientData as Element
-                el.hasAttribute("comment")
-            }
+                    val el = x.location.clientData as Element
+                    el.hasAttribute("comment")
+                }
             ) {
                 // skipping as all instances have a comment
                 continue
@@ -211,7 +211,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
                 Constants.ANKI_CROWDIN_CATEGORY,
                 Constants.ANKI_CROWDIN_PRIORITY,
                 Constants.ANKI_CROWDIN_SEVERITY,
-                IMPLEMENTATION_XML
+                IMPLEMENTATION_XML,
             )
     }
 }

@@ -41,7 +41,7 @@ object FileUtil {
     /** Gets the free disk space given a file  */
     fun getFreeDiskSpace(
         file: File,
-        defaultValue: Long
+        defaultValue: Long,
     ): Long {
         return try {
             StatFs(file.parentFile?.path).availableBytes
@@ -66,7 +66,7 @@ object FileUtil {
      */
     fun getAnkiCacheDirectory(
         context: Context,
-        subdirectoryName: String? = null
+        subdirectoryName: String? = null,
     ): String? {
         val cacheDirRoot = context.cacheDir
         if (cacheDirRoot == null) {
@@ -96,7 +96,7 @@ object FileUtil {
     fun internalizeUri(
         uri: Uri,
         internalFile: File,
-        contentResolver: ContentResolver
+        contentResolver: ContentResolver,
     ): File {
         // If we got a real file name, do a copy from it
         val inputStream: InputStream =
@@ -155,7 +155,7 @@ object FileUtil {
 @ConsistentCopyVisibility
 data class FileNameAndExtension private constructor(
     val fileName: String,
-    val extensionWithDot: String
+    val extensionWithDot: String,
 ) {
     init {
         require(extensionWithDot.startsWith('.')) { "extension must start with '.'" }
@@ -187,7 +187,7 @@ data class FileNameAndExtension private constructor(
             } else {
                 FileNameAndExtension(
                     fileName = fileName.substring(0, index),
-                    extensionWithDot = fileName.substring(index)
+                    extensionWithDot = fileName.substring(index),
                 )
             }
         }

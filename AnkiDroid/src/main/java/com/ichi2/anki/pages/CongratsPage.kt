@@ -67,7 +67,7 @@ class CongratsPage :
 
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         // typically due to 'day rollover'
         if (changes.studyQueues) {
@@ -81,7 +81,7 @@ class CongratsPage :
             client.onPageFinishedCallback =
                 OnPageFinishedCallback { webView ->
                     webView.evaluateJavascript(
-                        "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };"
+                        "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };",
                     ) {}
                 }
         }
@@ -89,7 +89,7 @@ class CongratsPage :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -151,7 +151,7 @@ class CongratsPage :
         val col = CollectionManager.getColUnsafe()
         val dialogFragment =
             CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
-                col.decks.selected()
+                col.decks.selected(),
             )
         dialogFragment.show(childFragmentManager, null)
     }
@@ -187,7 +187,7 @@ class CongratsPage :
 
         fun onReviewsCompleted(
             activity: FragmentActivity,
-            cardsInDeck: Boolean
+            cardsInDeck: Boolean,
         ) {
             if (displayNewCongratsScreen(activity)) {
                 activity.startActivity(getIntent(activity))

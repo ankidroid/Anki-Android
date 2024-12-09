@@ -38,7 +38,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
         fun showSyncErrorDialog(
             dialogType: Int,
-            message: String?
+            message: String?,
         )
 
         fun loginToSyncServer()
@@ -172,7 +172,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 DIALOG_USER_NOT_LOGGED_IN_SYNC -> res().getString(R.string.not_logged_in_title)
                 DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE ->
                     res().getString(
-                        R.string.sync_conflict_replace_title
+                        R.string.sync_conflict_replace_title,
                     )
                 DIALOG_SYNC_CONFLICT_RESOLUTION -> res().getString(R.string.sync_conflict_title_new)
                 else -> res().getString(R.string.sync_error)
@@ -200,11 +200,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 DIALOG_SYNC_CONFLICT_RESOLUTION -> res().getString(R.string.sync_conflict_message_new)
                 DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_LOCAL, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_LOCAL ->
                     res().getString(
-                        R.string.sync_conflict_local_confirm_new
+                        R.string.sync_conflict_local_confirm_new,
                     )
                 DIALOG_SYNC_CONFLICT_CONFIRM_KEEP_REMOTE, DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE ->
                     res().getString(
-                        R.string.sync_conflict_remote_confirm_new
+                        R.string.sync_conflict_remote_confirm_new,
                     )
                 DIALOG_SYNC_CORRUPT_COLLECTION -> {
                     val syncMessage = requireArguments().getString("dialogMessage")
@@ -270,7 +270,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 DIALOG_SYNC_SANITY_ERROR_CONFIRM_KEEP_REMOTE,
                 DIALOG_MEDIA_SYNC_ERROR,
                 DIALOG_SYNC_CORRUPT_COLLECTION,
-                DIALOG_SYNC_BASIC_CHECK_ERROR
+                DIALOG_SYNC_BASIC_CHECK_ERROR,
             )
 
         /**
@@ -282,7 +282,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
         @CheckResult
         fun newInstance(
             dialogType: Int,
-            dialogMessage: String?
+            dialogMessage: String?,
         ): SyncErrorDialog {
             val f = SyncErrorDialog()
             val args = Bundle()
@@ -295,7 +295,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
 
     class SyncErrorDialogMessageHandler(
         private val dialogType: Int,
-        private val dialogMessage: String?
+        private val dialogMessage: String?,
     ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // we may be called via any AnkiActivity but media check is a DeckPicker thing
@@ -304,7 +304,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                     activity,
                     activity.getString(R.string.something_wrong),
                     ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
-                    true
+                    true,
                 )
                 return
             }
@@ -317,7 +317,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 data =
                     bundleOf(
                         "dialogType" to dialogType,
-                        "dialogMessage" to dialogMessage
+                        "dialogMessage" to dialogMessage,
                     )
             }
 

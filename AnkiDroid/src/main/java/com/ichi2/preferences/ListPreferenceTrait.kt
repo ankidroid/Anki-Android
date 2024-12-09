@@ -114,7 +114,7 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         super.onPrepareDialogBuilder(builder)
         builder.setSingleChoiceItems(
             entries,
-            clickedDialogEntryIndex
+            clickedDialogEntryIndex,
         ) { dialog, which ->
             clickedDialogEntryIndex = which
 
@@ -122,7 +122,7 @@ class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             // the dialog.
             this.onClick(
                 dialog,
-                DialogInterface.BUTTON_POSITIVE
+                DialogInterface.BUTTON_POSITIVE,
             )
             dialog.dismiss()
         }

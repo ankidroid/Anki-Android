@@ -38,7 +38,7 @@ object Consts {
         QUEUE_TYPE_LRN,
         QUEUE_TYPE_REV,
         QUEUE_TYPE_DAY_LEARN_RELEARN,
-        QUEUE_TYPE_PREVIEW
+        QUEUE_TYPE_PREVIEW,
     )
     annotation class CardQueue
 

@@ -25,7 +25,7 @@ class RobolectricDebugTree : Timber.DebugTree() {
         priority: Int,
         tag: String?,
         message: String,
-        t: Throwable?
+        t: Throwable?,
     ) {
         // This is noisy in test environments
         when (tag) {

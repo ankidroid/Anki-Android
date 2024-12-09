@@ -72,9 +72,9 @@ class TemplateManager {
                                 TemplateReplacement(
                                     fieldName = node.replacement.fieldName,
                                     currentText = node.replacement.currentText,
-                                    filters = node.replacement.filtersList
-                                )
-                            )
+                                    filters = node.replacement.filtersList,
+                                ),
+                            ),
                         )
                     }
                 }
@@ -95,7 +95,7 @@ class TemplateManager {
                         // The backend currently sends speed = 1, even when undefined.
                         // We agreed that '1' should be classed as 'use system' and ignored
                         // https://github.com/ankidroid/Anki-Android/issues/15598#issuecomment-1953653639
-                        speed = tag.tts.speed.let { if (it == 1f) null else it }
+                        speed = tag.tts.speed.let { if (it == 1f) null else it },
                     )
                 }
             }
@@ -118,7 +118,7 @@ class TemplateManager {
         browser: Boolean = false,
         notetype: NotetypeJson? = null,
         template: JSONObject? = null,
-        private var fillEmpty: Boolean = false
+        private var fillEmpty: Boolean = false,
     ) {
         private var _card: Card = card
         private var _note: Note = note
@@ -131,7 +131,7 @@ class TemplateManager {
             fun fromExistingCard(
                 col: Collection,
                 card: Card,
-                browser: Boolean
+                browser: Boolean,
             ): TemplateRenderContext {
                 return TemplateRenderContext(card, card.note(col), browser)
             }
@@ -141,14 +141,14 @@ class TemplateManager {
                 card: Card,
                 notetype: NotetypeJson,
                 template: JSONObject,
-                fillEmpty: Boolean
+                fillEmpty: Boolean,
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     card,
                     note,
                     notetype = notetype,
                     template = template,
-                    fillEmpty = fillEmpty
+                    fillEmpty = fillEmpty,
                 )
             }
         }
@@ -165,7 +165,7 @@ class TemplateManager {
         fun noteType() = noteType
 
         @NeedsTest(
-            "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme"
+            "TTS tags `fieldText` is correctly extracted when sources are parsed to file scheme",
         )
         fun render(col: Collection): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
@@ -176,7 +176,7 @@ class TemplateManager {
                     questionText = e.localizedMessage ?: e.toString(),
                     answerText = e.localizedMessage ?: e.toString(),
                     questionAvTags = emptyList(),
-                    answerAvTags = emptyList()
+                    answerAvTags = emptyList(),
                 )
             }
 
@@ -199,7 +199,7 @@ class TemplateManager {
                 answerText = aoutText,
                 questionAvTags = avTagsToNative(qout.avTagsList),
                 answerAvTags = avTagsToNative(aout.avTagsList),
-                css = noteType().getString("css")
+                css = noteType().getString("css"),
             )
         }
 
@@ -213,7 +213,7 @@ class TemplateManager {
                             _card.ord,
                             BackendUtils.toJsonBytes(_template!!.deepClone()),
                             fillEmpty,
-                            true
+                            true,
                         )
                     } else {
                         // existing card (eg study mode)
@@ -229,7 +229,7 @@ class TemplateManager {
             var answerText: String,
             val questionAvTags: List<AvTag>,
             val answerAvTags: List<AvTag>,
-            val css: String = ""
+            val css: String = "",
         ) {
             fun questionAndStyle() = "<style>$css</style>$questionText"
 
@@ -240,7 +240,7 @@ class TemplateManager {
         fun applyCustomFilters(
             rendered: TemplateReplacementList,
             ctx: TemplateRenderContext,
-            frontSide: String?
+            frontSide: String?,
         ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
@@ -283,7 +283,7 @@ class TemplateManager {
             fieldText: String,
             fieldName: String,
             filterName: String,
-            ctx: TemplateRenderContext
+            ctx: TemplateRenderContext,
         ): String
     }
 

@@ -45,7 +45,7 @@ import org.json.JSONObject
 import timber.log.Timber
 
 abstract class CardViewerViewModel(
-    cardMediaPlayer: CardMediaPlayer
+    cardMediaPlayer: CardMediaPlayer,
 ) : ViewModel(),
     OnErrorListener,
     PostRequestHandler {
@@ -118,7 +118,7 @@ abstract class CardViewerViewModel(
     private suspend fun prepareCardTextForDisplay(text: String): String {
         return Sound.addPlayButtons(
             text = withCol { media.escapeMediaFilenames(text) },
-            renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } }
+            renderOutput = currentCard.await().let { card -> withCol { card.renderOutput(this) } },
         )
     }
 
@@ -167,7 +167,7 @@ abstract class CardViewerViewModel(
                 mp: MediaPlayer?,
                 which: Int,
                 extra: Int,
-                uri: Uri
+                uri: Uri,
             ): SoundErrorBehavior {
                 Timber.w("Media Error: (%d, %d)", which, extra)
                 return onError(uri)
@@ -175,7 +175,7 @@ abstract class CardViewerViewModel(
 
             override fun onTtsError(
                 error: TtsPlayer.TtsError,
-                isAutomaticPlayback: Boolean
+                isAutomaticPlayback: Boolean,
             ) {
                 mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
                     viewModelScope.launch { onTtsError.emit(error) }
@@ -186,7 +186,7 @@ abstract class CardViewerViewModel(
 
     override suspend fun handlePostRequest(
         uri: String,
-        bytes: ByteArray
+        bytes: ByteArray,
     ): ByteArray {
         return if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
             when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
@@ -206,7 +206,7 @@ abstract class CardViewerViewModel(
 
         suspend fun getTypeAnswerField(
             card: Card,
-            text: String
+            text: String,
         ): JSONObject? {
             val match = typeAnsRe.find(text) ?: return null
 
@@ -231,7 +231,7 @@ abstract class CardViewerViewModel(
 
         suspend fun getExpectedTypeInAnswer(
             card: Card,
-            field: JSONObject
+            field: JSONObject,
         ): String? {
             val fieldName = field.getString("name")
             val expected = withCol { card.note(this@withCol).getItem(fieldName) }

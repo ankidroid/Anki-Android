@@ -71,7 +71,7 @@ open class FixedEditText : AppCompatEditText {
 
     override fun setSelection(
         start: Int,
-        stop: Int
+        stop: Int,
     ) {
         try {
             super.setSelection(start, stop)

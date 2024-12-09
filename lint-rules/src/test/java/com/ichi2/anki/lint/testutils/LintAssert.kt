@@ -23,7 +23,7 @@ import org.intellij.lang.annotations.Language
 import org.junit.Assert.assertTrue
 
 fun Issue.assertXmlStringsNoIssues(
-    @Language("XML") xmlFile: String
+    @Language("XML") xmlFile: String,
 ) {
     TestLintTask.lint()
         .allowMissingSdk()
@@ -36,7 +36,7 @@ fun Issue.assertXmlStringsNoIssues(
 
 fun Issue.assertXmlStringsHasErrorCount(
     @Language("XML") xmlFile: String,
-    expectedErrorCount: Int
+    expectedErrorCount: Int,
 ) {
     assert(expectedErrorCount > 0) { "Use assertXmlStringsNoIssues" }
     TestLintTask.lint()
@@ -57,7 +57,7 @@ fun Issue.assertXmlStringsHasError(
     @Language("XML") xmlFile: String,
     expectedError: String,
     androidLanguageFolder: String? = null,
-    fileName: String? = null
+    fileName: String? = null,
 ) {
     val languageQualifier = if (androidLanguageFolder != null) "-$androidLanguageFolder" else ""
     val resourceFileName = fileName ?: "constants"
@@ -71,7 +71,7 @@ fun Issue.assertXmlStringsHasError(
         .check({ output: String ->
             assertTrue(
                 "check should fail with '$expectedError', but was '$output'",
-                output.contains(expectedError)
+                output.contains(expectedError),
             )
         })
 }

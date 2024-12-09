@@ -60,7 +60,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                 ANKI_XML_CATEGORY,
                 ANKI_XML_PRIORITY,
                 ANKI_XML_SEVERITY,
-                IMPLEMENTATION_XML
+                IMPLEMENTATION_XML,
             )
 
         private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
@@ -80,7 +80,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
 
     override fun visitElement(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         val childNodes = element.childNodes
         if (childNodes.length <= 0) return
@@ -95,7 +95,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                         (
                             TAG_STRING_ARRAY == element.localName ||
                                 TAG_PLURALS == element.localName
-                            )
+                        )
 
                 if (isStringResource) {
                     checkText(context, element, child.nodeValue)
@@ -112,7 +112,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
     private fun checkText(
         context: XmlContext,
         element: Element,
-        text: String
+        text: String,
     ) {
         text.split(" ").forEach {
             if (it.matches(INVALID_FORMAT_PATTERN) && it != "XXX%") {
@@ -123,7 +123,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                     "You have specified the string in wrong format" +
                         "Please check that '%' sign been applied only to valid parameters. " +
                         "Your string might be having a regular word with '%' sign after it. " +
-                        "eg: 'I have completed% %s cards.' "
+                        "eg: 'I have completed% %s cards.' ",
                 )
             }
 
@@ -136,7 +136,7 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                         "eg: %D, %1D, %9D, %-9D, %1\$D, " +
                         "%F, %1F, %9F, %-9F, %1\$F, " +
                         "%N, %O, %G, %C " +
-                        "should all be in lowercase."
+                        "should all be in lowercase.",
                 )
             }
         }

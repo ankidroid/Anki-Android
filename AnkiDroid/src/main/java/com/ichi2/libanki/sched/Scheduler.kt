@@ -85,7 +85,7 @@ data class CurrentQueueState(
     val counts: Counts,
     val timeboxReached: Collection.TimeboxReached?,
     val learnAheadSecs: Int,
-    val customSchedulingJs: String
+    val customSchedulingJs: String,
 ) {
     fun schedulingStatesWithContext(): SchedulingStatesWithContext {
         return anki.frontend.schedulingStatesWithContext {
@@ -110,18 +110,18 @@ open class Scheduler(val col: Collection) {
             CurrentQueueState(
                 topCard = Card(it.card).apply { startTimer() },
                 countsIndex =
-                when (it.queue) {
-                    QueuedCards.Queue.NEW -> Counts.Queue.NEW
-                    QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
-                    QueuedCards.Queue.REVIEW -> Counts.Queue.REV
-                    QueuedCards.Queue.UNRECOGNIZED, null -> TODO("unrecognized queue")
-                },
+                    when (it.queue) {
+                        QueuedCards.Queue.NEW -> Counts.Queue.NEW
+                        QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
+                        QueuedCards.Queue.REVIEW -> Counts.Queue.REV
+                        QueuedCards.Queue.UNRECOGNIZED, null -> TODO("unrecognized queue")
+                    },
                 states = it.states,
                 context = it.context,
                 counts = Counts(queue.newCount, queue.learningCount, queue.reviewCount),
                 timeboxReached = col.timeboxReached(),
                 learnAheadSecs = learnAheadSeconds(),
-                customSchedulingJs = col.config.get("cardStateCustomizer") ?: ""
+                customSchedulingJs = col.config.get("cardStateCustomizer") ?: "",
             )
         }
     }
@@ -137,7 +137,7 @@ open class Scheduler(val col: Collection) {
 
     open fun answerCard(
         info: CurrentQueueState,
-        ease: Ease
+        ease: Ease,
     ): OpChanges {
         return col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
             reps += 1
@@ -147,7 +147,7 @@ open class Scheduler(val col: Collection) {
     /** Legacy path, used by tests. */
     open fun answerCard(
         card: Card,
-        ease: Ease
+        ease: Ease,
     ) {
         val top = queuedCards.cardsList.first()
         val answer = buildAnswer(card, top.states, ease)
@@ -166,7 +166,7 @@ open class Scheduler(val col: Collection) {
     fun buildAnswer(
         card: Card,
         states: SchedulingStates,
-        ease: Ease
+        ease: Ease,
     ): CardAnswer {
         return cardAnswer {
             cardId = card.id
@@ -228,7 +228,7 @@ open class Scheduler(val col: Collection) {
     /** Only provided for legacy unit tests. */
     fun nextIvl(
         card: Card,
-        ease: Ease
+        ease: Ease,
     ): Long {
         val states = col.backend.getSchedulingStates(card.id)
         val state = stateFromEase(states, ease)
@@ -265,7 +265,7 @@ open class Scheduler(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = cids,
             noteIds = listOf(),
-            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
+            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND,
         )
     }
 
@@ -273,7 +273,7 @@ open class Scheduler(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = ids,
-            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
+            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND,
         )
     }
 
@@ -284,7 +284,7 @@ open class Scheduler(val col: Collection) {
         val cids = ids.toList()
         Timber.i("unsuspending %d card(s)", cids.size)
         return col.backend.restoreBuriedAndSuspendedCards(
-            cids = cids
+            cids = cids,
         )
     }
 
@@ -295,7 +295,7 @@ open class Scheduler(val col: Collection) {
     @VisibleForTesting
     open fun buryCards(
         cids: Iterable<CardId>,
-        manual: Boolean
+        manual: Boolean,
     ): OpChangesWithCount {
         val mode =
             if (manual) {
@@ -306,7 +306,7 @@ open class Scheduler(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = cids,
             noteIds = listOf(),
-            mode = mode
+            mode = mode,
         )
     }
 
@@ -318,14 +318,14 @@ open class Scheduler(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = nids,
-            mode = BuryOrSuspendCardsRequest.Mode.BURY_USER
+            mode = BuryOrSuspendCardsRequest.Mode.BURY_USER,
         )
     }
 
     @RustCleanup("check if callers use the correct UnburyDeckRequest.Mode for their cases")
     fun unburyDeck(
         deckId: DeckId,
-        mode: UnburyDeckRequest.Mode = UnburyDeckRequest.Mode.ALL
+        mode: UnburyDeckRequest.Mode = UnburyDeckRequest.Mode.ALL,
     ): OpChanges {
         return col.backend.unburyDeck(deckId, mode)
     }
@@ -351,7 +351,7 @@ open class Scheduler(val col: Collection) {
     open fun forgetCards(
         ids: List<CardId>,
         restorePosition: Boolean = false,
-        resetCounts: Boolean = false
+        resetCounts: Boolean = false,
     ): OpChanges {
         val request =
             scheduleCardsAsNewRequest {
@@ -373,7 +373,7 @@ open class Scheduler(val col: Collection) {
     open fun reschedCards(
         ids: List<CardId>,
         imin: Int,
-        imax: Int
+        imax: Int,
     ): OpChanges {
         return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
     }
@@ -386,7 +386,7 @@ open class Scheduler(val col: Collection) {
     fun setDueDate(
         cardIds: List<CardId>,
         days: SetDueDateDays,
-        configKey: ConfigKey.String? = null
+        configKey: ConfigKey.String? = null,
     ): OpChanges {
         val key: OptionalStringConfigKey?
         if (configKey != null) {
@@ -401,7 +401,7 @@ open class Scheduler(val col: Collection) {
             cardIds = cardIds,
             days = days.value,
             // this value is optional; the auto-generated typing is wrong
-            configKey = key ?: OptionalStringConfigKey.getDefaultInstance()
+            configKey = key ?: OptionalStringConfigKey.getDefaultInstance(),
         )
     }
 
@@ -417,14 +417,14 @@ open class Scheduler(val col: Collection) {
         start: Int,
         step: Int = 1,
         shuffle: Boolean = false,
-        shift: Boolean = false
+        shift: Boolean = false,
     ): OpChangesWithCount {
         return col.backend.sortCards(
             cardIds = cids,
             startingFrom = start,
             stepSize = step,
             randomize = shuffle,
-            shiftExisting = shift
+            shiftExisting = shift,
         )
     }
 
@@ -450,12 +450,12 @@ open class Scheduler(val col: Collection) {
      */
     open fun extendLimits(
         newc: Int,
-        rev: Int
+        rev: Int,
     ) {
         col.backend.extendLimits(
             deckId = col.decks.selected(),
             newDelta = newc,
-            reviewDelta = rev
+            reviewDelta = rev,
         )
     }
 
@@ -532,7 +532,7 @@ open class Scheduler(val col: Collection) {
     fun totalNewForCurrentDeck(): Int {
         return col.db.queryScalar(
             "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-            REPORT_LIMIT
+            REPORT_LIMIT,
         )
     }
 
@@ -543,7 +543,7 @@ open class Scheduler(val col: Collection) {
         return col.db.queryScalar(
             "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
             today,
-            REPORT_LIMIT
+            REPORT_LIMIT,
         )
     }
 
@@ -574,7 +574,7 @@ open class Scheduler(val col: Collection) {
             .queryScalar(
                 "SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
                     " LIMIT 1",
-                today
+                today,
             ) != 0
     }
 
@@ -606,7 +606,7 @@ open class Scheduler(val col: Collection) {
     @Suppress("ktlint:standard:max-line-length")
     fun eta(
         counts: Counts,
-        reload: Boolean = true
+        reload: Boolean = true,
     ): Int {
         var newRate: Double
         var newTime: Double
@@ -624,7 +624,7 @@ open class Scheduler(val col: Collection) {
                         "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime " +
                         "from revlog where id > " +
                         "?",
-                    (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000
+                    (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000,
                 ).use { cur ->
                     if (!cur.moveToFirst()) {
                         return -1
@@ -718,7 +718,7 @@ open class Scheduler(val col: Collection) {
      */
     open fun nextIvlStr(
         card: Card,
-        ease: Ease
+        ease: Ease,
     ): String {
         val secs = nextIvl(card, ease)
         return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
@@ -737,7 +737,7 @@ const val REPORT_LIMIT = 99999
 
 private fun stateFromEase(
     states: SchedulingStates,
-    ease: Ease
+    ease: Ease,
 ): SchedulingState {
     return when (ease) {
         Ease.AGAIN -> states.again

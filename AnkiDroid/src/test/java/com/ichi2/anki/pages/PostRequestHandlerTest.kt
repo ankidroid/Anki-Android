@@ -35,7 +35,7 @@ class PostRequestHandlerTest : RobolectricTest() {
             "Mapping exists for every TS backend function call",
             typescriptFunctionsUsedByBackend,
             // this matcher asserts equality in everything but order, no extras, nothing missing
-            containsInAnyOrder((collectionMethods + uiMethods).keys)
+            containsInAnyOrder((collectionMethods + uiMethods).keys),
         )
     }
 

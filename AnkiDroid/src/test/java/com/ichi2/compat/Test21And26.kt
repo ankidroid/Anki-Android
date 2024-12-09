@@ -98,7 +98,7 @@ abstract class Test21And26 {
         /** Runs a provided action having [CompatHelper.compat] return the provided compat */
         private fun <T> runUsingCompat(
             compatOverride: Compat,
-            test: () -> T
+            test: () -> T,
         ): T {
             val originalValue = staticCompat
             staticCompat = compatOverride

@@ -85,7 +85,7 @@ enum class ViewerCommand(val resourceId: Int) {
     USER_ACTION_6(R.string.user_action_6),
     USER_ACTION_7(R.string.user_action_7),
     USER_ACTION_8(R.string.user_action_8),
-    USER_ACTION_9(R.string.user_action_9)
+    USER_ACTION_9(R.string.user_action_9),
     ;
 
     companion object {
@@ -103,7 +103,7 @@ enum class ViewerCommand(val resourceId: Int) {
 
     fun addBinding(
         preferences: SharedPreferences,
-        binding: MappableBinding
+        binding: MappableBinding,
     ) {
         val addAtStart =
             BiFunction { collection: MutableList<MappableBinding>, element: MappableBinding ->
@@ -117,7 +117,7 @@ enum class ViewerCommand(val resourceId: Int) {
 
     fun addBindingAtEnd(
         preferences: SharedPreferences,
-        binding: MappableBinding
+        binding: MappableBinding,
     ) {
         val addAtEnd =
             BiFunction { collection: MutableList<MappableBinding>, element: MappableBinding ->
@@ -134,7 +134,7 @@ enum class ViewerCommand(val resourceId: Int) {
     private fun addBindingInternal(
         preferences: SharedPreferences,
         binding: MappableBinding,
-        performAdd: BiFunction<MutableList<MappableBinding>, MappableBinding, Boolean>
+        performAdd: BiFunction<MutableList<MappableBinding>, MappableBinding, Boolean>,
     ) {
         val bindings: MutableList<MappableBinding> = fromPreference(preferences, this)
         performAdd.apply(bindings, binding)
@@ -144,7 +144,7 @@ enum class ViewerCommand(val resourceId: Int) {
 
     fun removeBinding(
         prefs: SharedPreferences,
-        binding: MappableBinding
+        binding: MappableBinding,
     ) {
         val bindings: MutableList<MappableBinding> = MappableBinding.fromPreferenceString(preferenceKey)
         bindings.remove(binding)
@@ -160,25 +160,25 @@ enum class ViewerCommand(val resourceId: Int) {
             fun keyCode(
                 keycode: Int,
                 side: CardSide,
-                modifierKeys: ModifierKeys = ModifierKeys.none()
+                modifierKeys: ModifierKeys = ModifierKeys.none(),
             ) = keyCode(keycode, Screen.Reviewer(side), modifierKeys)
 
             fun unicode(
                 c: Char,
-                side: CardSide
+                side: CardSide,
             ) = unicode(c, Screen.Reviewer(side))
             return when (this) {
                 FLIP_OR_ANSWER_EASE1 ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_BUTTON_Y, CardSide.BOTH),
                         keyCode(KeyEvent.KEYCODE_1, CardSide.ANSWER),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER)
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.ANSWER),
                     )
                 FLIP_OR_ANSWER_EASE2 ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_BUTTON_X, CardSide.BOTH),
                         keyCode(KeyEvent.KEYCODE_2, CardSide.ANSWER),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER)
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.ANSWER),
                     )
                 FLIP_OR_ANSWER_EASE3 ->
                     listOf(
@@ -188,13 +188,13 @@ enum class ViewerCommand(val resourceId: Int) {
                         keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH),
                         keyCode(KeyEvent.KEYCODE_SPACE, CardSide.ANSWER),
                         keyCode(KeyEvent.KEYCODE_ENTER, CardSide.ANSWER),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER)
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER),
                     )
                 FLIP_OR_ANSWER_EASE4 ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH),
                         keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER)
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER),
                     )
                 EDIT -> listOf(keyCode(KeyEvent.KEYCODE_E, CardSide.BOTH))
                 MARK -> listOf(unicode('*', CardSide.BOTH))
@@ -211,37 +211,37 @@ enum class ViewerCommand(val resourceId: Int) {
                 TOGGLE_FLAG_RED ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ctrl())
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ctrl()),
                     )
                 TOGGLE_FLAG_ORANGE ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_2, CardSide.BOTH, ctrl()),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.BOTH, ctrl())
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.BOTH, ctrl()),
                     )
                 TOGGLE_FLAG_GREEN ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_3, CardSide.BOTH, ctrl()),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.BOTH, ctrl())
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.BOTH, ctrl()),
                     )
                 TOGGLE_FLAG_BLUE ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_4, CardSide.BOTH, ctrl()),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.BOTH, ctrl())
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.BOTH, ctrl()),
                     )
                 TOGGLE_FLAG_PINK ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_5, CardSide.BOTH, ctrl()),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_5, CardSide.BOTH, ctrl())
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_5, CardSide.BOTH, ctrl()),
                     )
                 TOGGLE_FLAG_TURQUOISE ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_6, CardSide.BOTH, ctrl()),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_6, CardSide.BOTH, ctrl())
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_6, CardSide.BOTH, ctrl()),
                     )
                 TOGGLE_FLAG_PURPLE ->
                     listOf(
                         keyCode(KeyEvent.KEYCODE_7, CardSide.BOTH, ctrl()),
-                        keyCode(KeyEvent.KEYCODE_NUMPAD_7, CardSide.BOTH, ctrl())
+                        keyCode(KeyEvent.KEYCODE_NUMPAD_7, CardSide.BOTH, ctrl()),
                     )
                 TOGGLE_AUTO_ADVANCE -> listOf(keyCode(KeyEvent.KEYCODE_A, CardSide.BOTH, shift()))
                 SHOW_HINT -> listOf(keyCode(KeyEvent.KEYCODE_H, CardSide.BOTH))
@@ -268,7 +268,7 @@ enum class ViewerCommand(val resourceId: Int) {
                 USER_ACTION_6,
                 USER_ACTION_7,
                 USER_ACTION_8,
-                USER_ACTION_9
+                USER_ACTION_9,
                 -> emptyList()
             }
         }
@@ -276,14 +276,14 @@ enum class ViewerCommand(val resourceId: Int) {
     private fun keyCode(
         keycode: Int,
         screen: Screen,
-        keys: ModifierKeys = ModifierKeys.none()
+        keys: ModifierKeys = ModifierKeys.none(),
     ): MappableBinding {
         return MappableBinding(keyCode(keys, keycode), screen)
     }
 
     private fun unicode(
         c: Char,
-        screen: Screen
+        screen: Screen,
     ): MappableBinding {
         return MappableBinding(unicode(c), screen)
     }
@@ -294,7 +294,7 @@ enum class ViewerCommand(val resourceId: Int) {
          */
         fun executeCommand(
             which: ViewerCommand,
-            fromGesture: Gesture?
+            fromGesture: Gesture?,
         ): Boolean
     }
 }

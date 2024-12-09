@@ -69,7 +69,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             CustomStudyDialog(mock(), ParametersUtils.whatever())
                 .withArguments(
                     1,
-                    contextMenuAttribute = CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
+                    contextMenuAttribute = CustomStudyDialog.ContextMenuOption.STUDY_AHEAD,
                 )
                 .arguments
         val factory = CustomStudyDialogFactory({ this.col }, mockListener)

@@ -48,7 +48,7 @@ fun FragmentActivity.dismissAllDialogFragments() {
     if (!supportFragmentManager.isStateSaved) {
         supportFragmentManager.popBackStack(
             DIALOG_FRAGMENT_TAG,
-            FragmentManager.POP_BACK_STACK_INCLUSIVE
+            FragmentManager.POP_BACK_STACK_INCLUSIVE,
         )
     }
 }

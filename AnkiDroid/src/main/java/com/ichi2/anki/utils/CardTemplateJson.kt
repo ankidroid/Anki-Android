@@ -42,7 +42,7 @@ class CardTemplateJson : JSONObject {
      * Creates a model object form json string
      */
     constructor(
-        @Language("json") json: String
+        @Language("json") json: String,
     ) : super(json)
 
     val name: String

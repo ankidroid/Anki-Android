@@ -68,7 +68,7 @@ class DeckConfig
          */
         fun parseTimerOpt(
             config: JSONObject,
-            defaultValue: Boolean
+            defaultValue: Boolean,
         ): Boolean = parseTimer(config) ?: defaultValue
     }
 

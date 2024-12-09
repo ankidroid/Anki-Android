@@ -25,7 +25,7 @@ object MapUtil {
      */
     fun <T, E> getKeyByValue(
         map: Map<T, E>,
-        value: E
+        value: E,
     ): T? {
         for ((key, value1) in map) {
             if (value == value1) {

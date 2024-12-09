@@ -71,12 +71,12 @@ class ActionButtonStatus {
         preferences: SharedPreferences,
         @IdRes resourceId: Int,
         preferenceName: String,
-        showAsActionType: Int
+        showAsActionType: Int,
     ) {
         customButtons[resourceId] =
             preferences.getString(
                 preferenceName,
-                showAsActionType.toString()
+                showAsActionType.toString(),
             )!!.toInt()
     }
 

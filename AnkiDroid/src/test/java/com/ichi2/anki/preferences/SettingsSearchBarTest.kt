@@ -70,7 +70,7 @@ class SettingsSearchBarTest : RobolectricTest() {
             assertThat(
                 "${targetContext.resources.getResourceName(resId)} should match the preferenceResource of ${fragment::class.simpleName}",
                 fragment.preferenceResource,
-                equalTo(resId)
+                equalTo(resId),
             )
         }
     }

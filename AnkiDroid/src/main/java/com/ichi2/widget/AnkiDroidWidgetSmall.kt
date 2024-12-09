@@ -51,7 +51,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
-        usageAnalytics: UsageAnalytics
+        usageAnalytics: UsageAnalytics,
     ) {
         WidgetStatus.updateInBackground(context)
     }
@@ -70,7 +70,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         if (intent.action.contentEquals("com.sec.android.widgetapp.APPWIDGET_RESIZE")) {
             updateWidgetDimensions(context, RemoteViews(context.packageName, R.layout.widget_small), AnkiDroidWidgetSmall::class.java)
@@ -100,7 +100,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
         @Suppress("SameParameterValue")
         private fun buildUpdate(
             context: Context,
-            updateDueDecksNow: Boolean
+            updateDueDecksNow: Boolean,
         ): RemoteViews {
             Timber.d("buildUpdate")
             val updateViews = RemoteViews(context.packageName, R.layout.widget_small)
@@ -115,7 +115,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                             @KotlinCleanup("Change parameter context name below, should not be used")
                             override fun onReceive(
                                 context: Context,
-                                intent: Intent
+                                intent: Intent,
                             ) {
                                 // baseContext() is null, applicationContext() throws a NPE,
                                 // context may not have the locale override from AnkiDroidApp
@@ -160,7 +160,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         updateViews.setTextViewText(R.id.widget_due, dueCardsCount.toString())
                         updateViews.setContentDescription(
                             R.id.widget_due,
-                            context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount)
+                            context.resources.getQuantityString(R.plurals.widget_cards_due, dueCardsCount, dueCardsCount),
                         )
                     }
                     if (eta <= 0 || dueCardsCount <= 0) {
@@ -170,7 +170,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         updateViews.setTextViewText(R.id.widget_eta, eta.toString())
                         updateViews.setContentDescription(
                             R.id.widget_eta,
-                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta)
+                            context.resources.getQuantityString(R.plurals.widget_eta, eta, eta),
                         )
                     }
                 }
@@ -187,7 +187,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                     0,
                     ankiDroidIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT,
-                    false
+                    false,
                 )
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent)
             updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall::class.java)
@@ -207,7 +207,7 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
         private fun updateWidgetDimensions(
             context: Context,
             updateViews: RemoteViews,
-            cls: Class<*>
+            cls: Class<*>,
         ) {
             val manager = getAppWidgetManager(context) ?: return
             val ids = manager.getAppWidgetIds(ComponentName(context, cls))

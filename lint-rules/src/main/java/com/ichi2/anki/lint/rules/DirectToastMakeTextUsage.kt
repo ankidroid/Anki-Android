@@ -52,7 +52,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
                 Constants.ANKI_CODE_STYLE_CATEGORY,
                 Constants.ANKI_CODE_STYLE_PRIORITY,
                 Constants.ANKI_CODE_STYLE_SEVERITY,
-                implementation
+                implementation,
             )
     }
 
@@ -61,7 +61,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
     override fun visitMethodCall(
         context: JavaContext,
         node: UCallExpression,
-        method: PsiMethod
+        method: PsiMethod,
     ) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
@@ -71,7 +71,7 @@ class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
                 ISSUE,
                 node,
                 context.getCallLocation(node, includeReceiver = true, includeArguments = true),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

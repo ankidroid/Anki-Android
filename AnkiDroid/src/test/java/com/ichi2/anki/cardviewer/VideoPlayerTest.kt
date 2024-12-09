@@ -102,7 +102,7 @@ class VideoPlayerTest : RobolectricTest() {
         override fun <R : Unit> tryResume(
             value: R,
             idempotent: Any?,
-            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?
+            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?,
         ): Any? {
             TODO("Not yet implemented")
         }
@@ -110,7 +110,7 @@ class VideoPlayerTest : RobolectricTest() {
         @InternalCoroutinesApi
         override fun tryResume(
             value: Unit,
-            idempotent: Any?
+            idempotent: Any?,
         ): Any? {
             TODO("Not yet implemented")
         }
@@ -118,19 +118,19 @@ class VideoPlayerTest : RobolectricTest() {
         @Deprecated(
             "Use the overload that also accepts the `value` and the coroutine context in lambda",
             replaceWith = ReplaceWith("resume(value) { cause, _, _ -> onCancellation(cause) }"),
-            level = DeprecationLevel.WARNING
+            level = DeprecationLevel.WARNING,
         )
         @ExperimentalCoroutinesApi
         override fun resume(
             value: Unit,
-            onCancellation: ((cause: Throwable) -> Unit)?
+            onCancellation: ((cause: Throwable) -> Unit)?,
         ) {
             TODO("Not yet implemented")
         }
 
         override fun <R : Unit> resume(
             value: R,
-            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?
+            onCancellation: ((cause: Throwable, value: R, context: CoroutineContext) -> Unit)?,
         ) {
             TODO("Not yet implemented")
         }

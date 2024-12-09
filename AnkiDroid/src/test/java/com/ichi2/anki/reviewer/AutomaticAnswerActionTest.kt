@@ -52,7 +52,7 @@ class AutomaticAnswerActionTest {
 
     private fun assertExecuteReturns(
         action: AutomaticAnswerAction,
-        expectedCommand: ViewerCommand
+        expectedCommand: ViewerCommand,
     ) {
         val captor = argumentCaptor<ViewerCommand>()
         val mock: Reviewer =

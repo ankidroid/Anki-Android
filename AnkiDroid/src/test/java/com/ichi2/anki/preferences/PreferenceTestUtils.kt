@@ -28,7 +28,7 @@ object PreferenceTestUtils {
         context: Context,
         @XmlRes xml: Int,
         attrName: String,
-        namespace: String = AnkiDroidApp.ANDROID_NAMESPACE
+        namespace: String = AnkiDroidApp.ANDROID_NAMESPACE,
     ): List<String> {
         val occurrences = mutableListOf<String>()
 
@@ -54,7 +54,7 @@ object PreferenceTestUtils {
         context: Context,
         @XmlRes xml: Int,
         attrNames: List<String>,
-        namespace: String = AnkiDroidApp.ANDROID_NAMESPACE
+        namespace: String = AnkiDroidApp.ANDROID_NAMESPACE,
     ): List<Map<String, String>> {
         val occurrences = mutableListOf<Map<String, String>>()
 
@@ -77,7 +77,7 @@ object PreferenceTestUtils {
     /** @return fragments found on [xml] */
     private fun getFragmentsFromXml(
         context: Context,
-        @XmlRes xml: Int
+        @XmlRes xml: Int,
     ): List<Fragment> {
         return getAttrFromXml(context, xml, "fragment").map { getInstanceFromClassName(it) }
     }
@@ -85,7 +85,7 @@ object PreferenceTestUtils {
     /** @return recursively fragments found on [xml] and on their children **/
     private fun getFragmentsFromXmlRecursively(
         context: Context,
-        @XmlRes xml: Int
+        @XmlRes xml: Int,
     ): List<Fragment> {
         val fragments = getFragmentsFromXml(context, xml).toMutableList()
         for (fragment in fragments.filterIsInstance<SettingsFragment>()) {
@@ -102,7 +102,7 @@ object PreferenceTestUtils {
 
     private fun attrValueToString(
         value: String,
-        context: Context
+        context: Context,
     ): String {
         return if (value.startsWith("@")) {
             context.getString(value.substring(1).toInt())
@@ -113,7 +113,7 @@ object PreferenceTestUtils {
 
     fun getKeysFromXml(
         context: Context,
-        @XmlRes xml: Int
+        @XmlRes xml: Int,
     ): List<String> {
         return getAttrFromXml(context, xml, "key").map { attrValueToString(it, context) }
     }

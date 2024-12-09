@@ -78,7 +78,7 @@ class PreviewerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val slider = view.findViewById<Slider>(R.id.slider)
@@ -149,7 +149,7 @@ class PreviewerFragment :
                     override fun onStopTrackingTouch(slider: Slider) {
                         viewModel.onSliderChange(slider.value.toInt())
                     }
-                }
+                },
             )
         }
 
@@ -212,7 +212,7 @@ class PreviewerFragment :
 
     private fun setBackSideOnlyButtonIcon(
         menu: Menu,
-        isBackSideOnly: Boolean
+        isBackSideOnly: Boolean,
     ) {
         menu.findItem(R.id.action_back_side_only).apply {
             if (isBackSideOnly) {
@@ -284,12 +284,12 @@ class PreviewerFragment :
         fun getIntent(
             context: Context,
             previewerIdsFile: PreviewerIdsFile,
-            currentIndex: Int
+            currentIndex: Int,
         ): Intent {
             val arguments =
                 bundleOf(
                     CURRENT_INDEX_ARG to currentIndex,
-                    CARD_IDS_FILE_ARG to previewerIdsFile
+                    CARD_IDS_FILE_ARG to previewerIdsFile,
                 )
             return CardViewerActivity.getIntent(context, PreviewerFragment::class, arguments)
         }

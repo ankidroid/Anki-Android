@@ -28,7 +28,7 @@ class ShortcutTest {
     @Test
     fun `single number is not a shortcut hint`() {
         assertFalse(
-            Shortcut.isPotentialShortcutCombination(keyEventWithNoModifiers, KeyEvent.KEYCODE_NUMPAD_1)
+            Shortcut.isPotentialShortcutCombination(keyEventWithNoModifiers, KeyEvent.KEYCODE_NUMPAD_1),
         )
     }
 }

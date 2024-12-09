@@ -24,7 +24,7 @@ object DbUtils {
     /** performs a query on an unopened collection  */
     fun performQuery(
         context: Context,
-        query: String
+        query: String,
     ) {
         check(!Storage.isInMemory) { "cannot use performQuery in memory" }
         var db: DB? = null

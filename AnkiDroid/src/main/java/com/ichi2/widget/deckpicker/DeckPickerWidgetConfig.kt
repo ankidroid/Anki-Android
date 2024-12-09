@@ -89,7 +89,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
         appWidgetId = intent.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID
+            AppWidgetManager.INVALID_APPWIDGET_ID,
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
@@ -106,7 +106,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
                     showThemedToast(
                         this@DeckPickerWidgetConfig,
                         R.string.app_not_initialized_new,
-                        false
+                        false,
                     )
                     finish()
                     return@launch
@@ -119,7 +119,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     fun showSnackbar(message: CharSequence) {
         showSnackbar(
             message,
-            Snackbar.LENGTH_LONG
+            Snackbar.LENGTH_LONG,
         )
     }
 
@@ -171,7 +171,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
                                 // Set flag to indicate that changes are discarded
                                 hasUnsavedChanges = false
                                 finish()
-                            }
+                            },
                         )
                     } else {
                         finish()
@@ -188,7 +188,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
                     override fun onChanged() {
                         updateDoneButtonVisibility() // Update visibility when data changes
                     }
-                }
+                },
             )
             isAdapterObserverRegistered = true
         }
@@ -319,7 +319,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
                 title = getString(R.string.select_decks_title),
                 summaryMessage = null,
                 keepRestoreDefaultButton = false,
-                decks = decks
+                decks = decks,
             )
         dialog.show(supportFragmentManager, "DeckSelectionDialog")
     }
@@ -379,11 +379,11 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     private val itemTouchHelperCallback =
         object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            0
+            0,
         ) {
             override fun getDragDirs(
                 recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
+                viewHolder: RecyclerView.ViewHolder,
             ): Int {
                 val selectedDeckCount = deckAdapter.itemCount
                 return if (selectedDeckCount > 1) {
@@ -396,7 +396,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
+                target: RecyclerView.ViewHolder,
             ): Boolean {
                 val fromPosition = viewHolder.bindingAdapterPosition
                 val toPosition = target.bindingAdapterPosition
@@ -408,7 +408,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
             override fun onSwiped(
                 viewHolder: RecyclerView.ViewHolder,
-                direction: Int
+                direction: Int,
             ) {
                 // No swipe action
             }
@@ -441,7 +441,7 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         object : BroadcastReceiver() {
             override fun onReceive(
                 context: Context?,
-                intent: Intent?
+                intent: Intent?,
             ) {
                 if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
                     return

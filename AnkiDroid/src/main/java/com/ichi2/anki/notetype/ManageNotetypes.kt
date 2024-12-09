@@ -69,13 +69,13 @@ class ManageNotetypes : AnkiActivity() {
                 launchForChanges<ModelFieldEditor>(
                     mapOf(
                         "title" to it.name,
-                        "noteTypeID" to it.id
-                    )
+                        "noteTypeID" to it.id,
+                    ),
                 )
             },
             onEditCards = { launchForChanges<CardTemplateEditor>(mapOf("modelId" to it.id)) },
             onRename = ::renameNotetype,
-            onDelete = ::deleteNotetype
+            onDelete = ::deleteNotetype,
         )
     }
     private val outsideChangesLauncher =
@@ -126,7 +126,7 @@ class ManageNotetypes : AnkiActivity() {
                     filterNoteTypes(searchQuery)
                     return true
                 }
-            }
+            },
         )
         return true
     }
@@ -154,7 +154,7 @@ class ManageNotetypes : AnkiActivity() {
             allNotetypes.addAll(
                 withProgress {
                     withCol { getNotetypeNames().map { it.toUiModel() } }
-                }
+                },
             )
             val dialog =
                 AlertDialog.Builder(this@ManageNotetypes).show {
@@ -182,7 +182,7 @@ class ManageNotetypes : AnkiActivity() {
                             text.isNotEmpty() &&
                             !allNotetypes.map { it.name }
                                 .contains(text.toString())
-                    }
+                    },
                 )
             // start with the button disabled as dialog shows the initial name
             dialog.positiveButton.isEnabled = false
@@ -243,7 +243,7 @@ class ManageNotetypes : AnkiActivity() {
             resources.getQuantityString(
                 R.plurals.model_browser_types_available,
                 updatedNotetypes.size,
-                updatedNotetypes.size
+                updatedNotetypes.size,
             )
     }
 

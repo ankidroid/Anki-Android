@@ -22,7 +22,7 @@ import timber.log.Timber
 abstract class UtteranceProgressListenerCompat : UtteranceProgressListener() {
     abstract override fun onError(
         utteranceId: String?,
-        errorCode: Int
+        errorCode: Int,
     )
 
     @Suppress("DeprecatedCallableAddReplaceWith")

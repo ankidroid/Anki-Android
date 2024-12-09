@@ -52,7 +52,7 @@ class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
         @CheckResult
         fun load(
             prefs: SharedPreferences,
-            mode: CardsOrNotes
+            mode: CardsOrNotes,
         ): BrowserColumnCollection {
             val key = mode.toPreferenceKey()
             val columns =
@@ -77,7 +77,7 @@ class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
         fun update(
             prefs: SharedPreferences,
             mode: CardsOrNotes,
-            block: (MutableList<CardBrowserColumn?>) -> Boolean
+            block: (MutableList<CardBrowserColumn?>) -> Boolean,
         ): BrowserColumnCollection? {
             val valuesToUpdate: MutableList<CardBrowserColumn?> = load(prefs, mode).columns.toMutableList()
             if (!block(valuesToUpdate)) {
@@ -94,7 +94,7 @@ class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
         fun save(
             prefs: SharedPreferences,
             mode: CardsOrNotes,
-            value: BrowserColumnCollection
+            value: BrowserColumnCollection,
         ) {
             val key = mode.toPreferenceKey()
             val preferenceValue =

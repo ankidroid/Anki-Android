@@ -39,11 +39,11 @@ import android.os.UserManager
 import androidx.annotation.LongDef
 
 class ResolveInfoFlagsCompat private constructor(
-    @ResolveInfoFlagsBitsCompat value: Long
+    @ResolveInfoFlagsBitsCompat value: Long,
 ) : Flags(value) {
     companion object {
         fun of(
-            @ResolveInfoFlagsBitsCompat value: Long
+            @ResolveInfoFlagsBitsCompat value: Long,
         ): ResolveInfoFlagsCompat {
             return ResolveInfoFlagsCompat(value)
         }
@@ -169,13 +169,13 @@ const val MATCH_DIRECT_BOOT_UNAWARE = 0x00040000
         MATCH_DIRECT_BOOT_AWARE.toLong(),
         MATCH_DIRECT_BOOT_UNAWARE.toLong(),
         MATCH_SYSTEM_ONLY.toLong(),
-        MATCH_UNINSTALLED_PACKAGES.toLong()
+        MATCH_UNINSTALLED_PACKAGES.toLong(),
         // PackageManager.MATCH_INSTANT, // @SystemApi
         // PackageManager.MATCH_DEBUG_TRIAGED_MISSING, // deprecated
         // PackageManager.GET_DISABLED_COMPONENTS, // deprecated
         // PackageManager.GET_DISABLED_UNTIL_USED_COMPONENTS, // deprecated
         // PackageManager.GET_UNINSTALLED_PACKAGES.toLong() // deprecated
-    ]
+    ],
 )
 @Retention(AnnotationRetention.SOURCE)
 annotation class ResolveInfoFlagsBitsCompat

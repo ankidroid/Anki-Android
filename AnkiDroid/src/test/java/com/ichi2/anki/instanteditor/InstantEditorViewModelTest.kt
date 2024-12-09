@@ -52,7 +52,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
             runViewModelTest({ InstantEditorViewModel() }) {
                 assertEquals(
                     InstantNoteEditorActivity.DialogType.NO_CLOZE_NOTE_TYPES_DIALOG,
-                    dialogType.value
+                    dialogType.value,
                 )
             }
         }
@@ -172,7 +172,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
                     "{{c2::another}}" to "another",
                     "{{c4::help}}!!" to "help!!",
                     "no cloze" to "no cloze",
-                    "[{{c6::word}}]" to "[word]"
+                    "[{{c6::word}}]" to "[word]",
                 )
 
             testCases.forEach { (input, expected) ->
@@ -215,7 +215,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
 
     private fun runViewModelTest(
         initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
-        testBody: suspend InstantEditorViewModel.() -> Unit
+        testBody: suspend InstantEditorViewModel.() -> Unit,
     ) = runInstantEditorViewModelTest(initViewModel, testBody)
 
     private fun saveNoteResult(result: SaveNoteResult): String? {
@@ -234,7 +234,7 @@ class InstantEditorViewModelTest : RobolectricTest() {
     companion object {
         fun TestClass.runInstantEditorViewModelTest(
             initViewModel: () -> InstantEditorViewModel = { InstantEditorViewModel() },
-            testBody: suspend InstantEditorViewModel.() -> Unit
+            testBody: suspend InstantEditorViewModel.() -> Unit,
         ) = runTest {
             val viewModel = initViewModel()
             testBody(viewModel)
@@ -251,7 +251,7 @@ private fun InstantEditorViewModel.toggleAllClozeDeletions(words: MutableList<St
 @Suppress("SameParameterValue")
 private fun InstantEditorViewModel.toggleClozeDeletions(
     words: MutableList<String>,
-    vararg indices: Int
+    vararg indices: Int,
 ) {
     for (index in indices) {
         words[index] = buildClozeText(words[index])
@@ -261,7 +261,7 @@ private fun InstantEditorViewModel.toggleClozeDeletions(
 @Suppress("SameParameterValue")
 private fun InstantEditorViewModel.toggleClozeDeletion(
     words: MutableList<String>,
-    index: Int
+    index: Int,
 ) {
     words[index] = buildClozeText(words[index])
 }

@@ -28,7 +28,7 @@ class DummyScheduler(col: Collection) : Scheduler(col) {
 
     override fun answerCard(
         card: Card,
-        ease: Ease
+        ease: Ease,
     ) {
         throw Exception("v1/v2 scheduler not supported")
     }

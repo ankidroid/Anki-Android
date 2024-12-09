@@ -31,7 +31,7 @@ object AnimationUtil {
 
     fun collapseView(
         view: View,
-        animationEnabled: Boolean
+        animationEnabled: Boolean,
     ) {
         view.animate().cancel()
         if (!animationEnabled) {
@@ -44,7 +44,7 @@ object AnimationUtil {
                 1f,
                 1f,
                 1f,
-                0.5f
+                0.5f,
             )
         expandAnimation.duration = DURATION_MILLIS.toLong()
         expandAnimation.setAnimationListener(
@@ -56,7 +56,7 @@ object AnimationUtil {
                 }
 
                 override fun onAnimationRepeat(animation: Animation) {}
-            }
+            },
         )
         val alphaAnimation = AlphaAnimation(1.0f, 0f)
         alphaAnimation.duration = DURATION_MILLIS.toLong()
@@ -68,7 +68,7 @@ object AnimationUtil {
 
     fun expandView(
         view: View,
-        enableAnimation: Boolean
+        enableAnimation: Boolean,
     ) {
         view.animate().cancel()
         if (!enableAnimation) {
@@ -85,7 +85,7 @@ object AnimationUtil {
                 1f,
                 1f,
                 1f,
-                1f
+                1f,
             )
         resetEditTextScale.duration = DURATION_MILLIS.toLong()
         val alphaAnimation = AlphaAnimation(0.0f, 1.0f)

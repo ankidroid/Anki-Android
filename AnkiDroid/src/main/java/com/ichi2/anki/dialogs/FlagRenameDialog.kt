@@ -63,7 +63,7 @@ class FlagRenameDialog : DialogFragment() {
         super.onStart()
         dialog?.window?.clearFlags(
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+                or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
         )
     }
 
@@ -84,7 +84,7 @@ class FlagRenameDialog : DialogFragment() {
                 FlagItem(
                     flag = flag,
                     title = displayName,
-                    icon = flag.drawableRes
+                    icon = flag.drawableRes,
                 )
             }
     }

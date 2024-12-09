@@ -32,7 +32,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
     enum class State {
         INDETERMINATE,
         UNCHECKED,
-        CHECKED
+        CHECKED,
     }
 
     private var _state: State = State.UNCHECKED
@@ -149,7 +149,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
     private fun init(
         context: Context,
-        attrs: AttributeSet?
+        attrs: AttributeSet?,
     ) {
         cycleCheckedToIndeterminate = true
         cycleIndeterminateToChecked = false
@@ -159,17 +159,17 @@ class CheckBoxTriStates : AppCompatCheckBox {
                     attrs,
                     R.styleable.CheckBoxTriStates,
                     0,
-                    0
+                    0,
                 )
             cycleCheckedToIndeterminate =
                 a.getBoolean(
                     R.styleable.CheckBoxTriStates_cycle_checked_to_indeterminate,
-                    cycleCheckedToIndeterminate
+                    cycleCheckedToIndeterminate,
                 )
             cycleIndeterminateToChecked =
                 a.getBoolean(
                     R.styleable.CheckBoxTriStates_cycle_indeterminate_to_checked,
-                    cycleIndeterminateToChecked
+                    cycleIndeterminateToChecked,
                 )
         }
         updateBtn()
@@ -201,7 +201,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
         override fun writeToParcel(
             out: Parcel,
-            flags: Int
+            flags: Int,
         ) {
             super.writeToParcel(out, flags)
             out.writeValue(state)
@@ -216,7 +216,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
                     " state=" + state +
                     " cycleCheckedToIndeterminate=" + cycleCheckedToIndeterminate +
                     " cycleIndeterminateToChecked=" + cycleIndeterminateToChecked + "}"
-                )
+            )
         }
 
         companion object {

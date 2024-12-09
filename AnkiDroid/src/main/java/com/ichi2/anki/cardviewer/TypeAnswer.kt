@@ -38,7 +38,7 @@ import java.util.regex.Pattern
  */
 class TypeAnswer(
     val useInputTag: Boolean,
-    val autoFocus: Boolean
+    val autoFocus: Boolean,
 ) {
     /** The correct answer in the compare to field if answer should be given by learner. `null` if no answer is expected. */
     var correct: String? = null
@@ -89,7 +89,7 @@ class TypeAnswer(
     fun updateInfo(
         col: Collection,
         card: Card,
-        res: Resources
+        res: Resources,
     ) {
         combining = true
         correct = null
@@ -160,7 +160,7 @@ class TypeAnswer(
         val sb = java.lang.StringBuilder()
 
         fun append(
-            @Language("HTML") html: String
+            @Language("HTML") html: String,
         ) = sb.append(html)
         if (useInputTag) {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
@@ -168,7 +168,7 @@ class TypeAnswer(
 
             append(
                 """<center>
-<input type="text" name="typed" id="typeans" data-focus="$autoFocus" onfocus="taFocus();" oninput='taChange(this);' onKeyPress="return taKey(this, event)" autocomplete="off" """
+<input type="text" name="typed" id="typeans" data-focus="$autoFocus" onfocus="taFocus();" oninput='taChange(this);' onKeyPress="return taKey(this, event)" autocomplete="off" """,
             )
             // We have to watch out. For the preview we don’t know the font or font size. Skip those there. (Anki
             // desktop just doesn't show the input tag there. Do it with standard values here instead.)
@@ -212,13 +212,13 @@ class TypeAnswer(
     fun filterAnswer(
         answer: String,
         userAnswer: String,
-        correctAnswer: String
+        correctAnswer: String,
     ): String {
         val m: Matcher = PATTERN.matcher(answer)
         val sb = StringBuilder()
 
         fun append(
-            @Language("HTML") html: String
+            @Language("HTML") html: String,
         ) = sb.append(html)
 
         val comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer, combining)
@@ -233,7 +233,7 @@ class TypeAnswer(
         fun createInstance(preferences: SharedPreferences): TypeAnswer {
             return TypeAnswer(
                 useInputTag = preferences.getBoolean("useInputTag", false),
-                autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", true)
+                autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", true),
             )
         }
 
@@ -248,7 +248,7 @@ class TypeAnswer(
         @VisibleForTesting
         fun contentForCloze(
             txt: String,
-            idx: Int
+            idx: Int,
         ): String? {
             // In Android, } should be escaped
             val re = Pattern.compile("\\{\\{c$idx::(.+?)\\}\\}")

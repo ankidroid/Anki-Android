@@ -29,7 +29,7 @@ abstract class AsyncOperation {
 
 fun DeckPicker.sendNotificationForAsyncOperation(
     operation: AsyncOperation,
-    channel: Channel
+    channel: Channel,
 ) {
     // Store a persistent message instructing AnkiDroid to perform the operation
     DialogHandler.storeMessage(operation.handlerMessage.toMessage())
@@ -42,7 +42,7 @@ fun DeckPicker.sendNotificationForAsyncOperation(
 @Suppress("unused")
 fun DeckPicker.performAsyncOperation(
     operation: AsyncOperation,
-    channel: Channel
+    channel: Channel,
 ) {
     if (activityPaused) {
         sendNotificationForAsyncOperation(operation, channel)

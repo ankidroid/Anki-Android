@@ -56,7 +56,7 @@ class InstantEditorViewModelParameterizedTest : RobolectricTest() {
                 arrayOf("[hello]", "[{{c1::hello}}]"),
                 arrayOf("{hello}", "{{{c1::hello}}}"),
                 arrayOf("test,", "{{c1::test}},"),
-                arrayOf("{{c1::test}},", "test,")
+                arrayOf("{{c1::test}},", "test,"),
             )
         }
     }

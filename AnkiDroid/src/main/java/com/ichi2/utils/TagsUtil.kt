@@ -22,7 +22,7 @@ object TagsUtil {
     fun getUpdatedTags(
         previous: List<String>,
         selected: List<String>,
-        indeterminate: List<String>
+        indeterminate: List<String>,
     ): List<String> {
         if (indeterminate.isEmpty()) {
             return selected
@@ -89,7 +89,7 @@ object TagsUtil {
      */
     fun compareTag(
         lhs: String,
-        rhs: String
+        rhs: String,
     ): Int {
         val lhsIt = lhs.split("::").asSequence().iterator()
         val rhsIt = rhs.split("::").asSequence().iterator()

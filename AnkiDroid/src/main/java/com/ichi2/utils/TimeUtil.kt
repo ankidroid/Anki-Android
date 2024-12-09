@@ -30,7 +30,7 @@ import timber.log.Timber
  */
 fun <T> measureTime(
     functionName: String? = "",
-    function: () -> T
+    function: () -> T,
 ): T {
     val startTime = TimeManager.time.intTimeMS()
     val result = function()
@@ -38,7 +38,7 @@ fun <T> measureTime(
     Timber.d(
         "executed %sin %dms",
         if (functionName.isNullOrEmpty()) "" else "$functionName ",
-        endTime - startTime
+        endTime - startTime,
     )
     return result
 }
@@ -55,7 +55,7 @@ fun <T> measureTime(
  */
 suspend fun <T> coMeasureTime(
     functionName: String? = "",
-    function: suspend () -> T
+    function: suspend () -> T,
 ): T {
     val startTime = TimeManager.time.intTimeMS()
     val result = function()
@@ -63,7 +63,7 @@ suspend fun <T> coMeasureTime(
     Timber.d(
         "executed %sin %dms",
         if (functionName.isNullOrEmpty()) "" else "$functionName ",
-        endTime - startTime
+        endTime - startTime,
     )
     return result
 }
@@ -93,7 +93,7 @@ class Stopwatch(private val executionName: String?) {
         Timber.d(
             "executed %sin %dms",
             if (executionName.isNullOrEmpty()) "" else "$executionName ",
-            endTime - startTime
+            endTime - startTime,
         )
     }
 

@@ -26,5 +26,5 @@ package com.ichi2.anki.common.utils.ext
  */
 fun Float.clamp(
     min: Float,
-    max: Float
+    max: Float,
 ) = this.coerceIn(minimumValue = min, maximumValue = max)

@@ -53,8 +53,8 @@ class DBTest : InstrumentedTest() {
                 AnkiSupportSQLiteDatabase.withFramework(
                     testContext,
                     illFatedDBFile.canonicalPath,
-                    callback
-                )
+                    callback,
+                ),
             )
         Assert.assertFalse("database should not be corrupt yet", callback.databaseIsCorrupt)
 

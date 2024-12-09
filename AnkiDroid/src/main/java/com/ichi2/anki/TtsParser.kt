@@ -24,7 +24,7 @@ object TtsParser {
      */
     fun getTextsToRead(
         html: String,
-        clozeReplacement: String
+        clozeReplacement: String,
     ): List<TTSTag> {
         val textsToRead: MutableList<TTSTag> = ArrayList()
         val elem = Jsoup.parseBodyFragment(html).body()
@@ -39,13 +39,13 @@ object TtsParser {
     private fun parseTtsElements(
         element: Element,
         textsToRead: MutableList<TTSTag>,
-        clozeReplacement: String
+        clozeReplacement: String,
     ) {
         if ("tts".equals(element.tagName(), ignoreCase = true) &&
             "android".equals(element.attr("service"), ignoreCase = true)
         ) {
             textsToRead.add(
-                localisedText(element.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement), element.attr("voice"))
+                localisedText(element.text().replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement), element.attr("voice")),
             )
             return // ignore any children
         }
@@ -59,6 +59,6 @@ object TtsParser {
 
     private fun localisedText(
         text: String,
-        locale: String
+        locale: String,
     ): TTSTag = TTSTag(text, locale, emptyList(), 1.0f, emptyList())
 }

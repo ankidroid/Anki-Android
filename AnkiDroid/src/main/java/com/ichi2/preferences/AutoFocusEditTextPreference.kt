@@ -33,7 +33,7 @@ interface AutoFocusable {
 @Suppress("deprecation", "unused")
 open class AutoFocusEditTextPreference(
     context: Context?,
-    attrs: AttributeSet?
+    attrs: AttributeSet?,
 ) : android.preference.EditTextPreference(context, attrs), AutoFocusable {
     @Suppress("OVERRIDE_DEPRECATION") // TODO: Why?
     override fun onBindDialogView(view: View?) {

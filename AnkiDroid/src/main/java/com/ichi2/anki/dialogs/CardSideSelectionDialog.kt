@@ -29,13 +29,13 @@ class CardSideSelectionDialog {
         @SuppressLint("CheckResult")
         fun displayInstance(
             ctx: Context,
-            callback: (c: CardSide) -> Unit
+            callback: (c: CardSide) -> Unit,
         ) {
             val items =
                 listOf(
                     R.string.card_side_both,
                     R.string.card_side_question,
-                    R.string.card_side_answer
+                    R.string.card_side_answer,
                 )
 
             AlertDialog.Builder(ctx).show {

@@ -38,7 +38,7 @@ import timber.log.Timber
 class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTransparentStatusBar()
@@ -88,7 +88,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
         return object : PageWebViewClient() {
             override fun onPageFinished(
                 view: WebView?,
-                url: String?
+                url: String?,
             ) {
                 super.onPageFinished(view, url)
 
@@ -126,7 +126,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
             kind: String,
             noteOrNotetypeId: Long,
             imagePath: String?,
-            editorWorkingDeckId: DeckId
+            editorWorkingDeckId: DeckId,
         ): Intent {
             val suffix =
                 if (kind == "edit") {
@@ -140,7 +140,7 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
                     ARG_KEY_ID to noteOrNotetypeId,
                     ARG_KEY_PATH to imagePath,
                     PATH_ARG_KEY to "image-occlusion$suffix",
-                    ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId
+                    ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId,
                 )
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
         }

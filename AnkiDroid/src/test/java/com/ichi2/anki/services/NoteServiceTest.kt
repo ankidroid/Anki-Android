@@ -85,7 +85,7 @@ class NoteServiceTest : RobolectricTest() {
         val noteWithID45 = Note.fromNotetypeId(col, testNotetype.id)
         val expectedException: Throwable =
             assertThrows(
-                RuntimeException::class.java
+                RuntimeException::class.java,
             ) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
@@ -108,7 +108,7 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             outFile,
-            aFileWithAbsolutePath(equalTo(audioField.mediaPath))
+            aFileWithAbsolutePath(equalTo(audioField.mediaPath)),
         )
     }
 
@@ -131,7 +131,7 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             outFile,
-            aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef))
+            aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef)),
         )
     }
 
@@ -178,17 +178,17 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld1.mediaPath))
+            aFileWithAbsolutePath(equalTo(fld1.mediaPath)),
         )
         assertThat(
             "path should be different to new file made in NoteService.importMediaToDirectory",
             o2,
-            aFileWithAbsolutePath(not(fld2.mediaPath))
+            aFileWithAbsolutePath(not(fld2.mediaPath)),
         )
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld3.mediaPath))
+            aFileWithAbsolutePath(equalTo(fld3.mediaPath)),
         )
     }
 
@@ -226,17 +226,17 @@ class NoteServiceTest : RobolectricTest() {
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld1.extraImagePathRef))
+            aFileWithAbsolutePath(equalTo(fld1.extraImagePathRef)),
         )
         assertThat(
             "path should be different to new file made in NoteService.importMediaToDirectory",
             o2,
-            aFileWithAbsolutePath(not(fld2.extraImagePathRef))
+            aFileWithAbsolutePath(not(fld2.extraImagePathRef)),
         )
         assertThat(
             "path should be equal to new file made in NoteService.importMediaToDirectory",
             o1,
-            aFileWithAbsolutePath(equalTo(fld3.extraImagePathRef))
+            aFileWithAbsolutePath(equalTo(fld3.extraImagePathRef)),
         )
     }
 

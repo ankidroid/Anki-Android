@@ -134,7 +134,7 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_SHOW_DATABASE_ERROR_DIALOG(6),
         MSG_SHOW_ONE_WAY_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
-        MSG_EXPORT_READY(10)
+        MSG_EXPORT_READY(10),
         ;
 
         companion object {

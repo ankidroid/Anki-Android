@@ -68,7 +68,7 @@ class DB(val database: SupportSQLiteDatabase) {
             sendExceptionReport(
                 RuntimeException("Database corrupted"),
                 "DB.MyDbErrorHandler.onCorruption",
-                "Db has been corrupted: " + db.path
+                "Db has been corrupted: " + db.path,
             )
             Timber.i("closeCollection: %s", "Database corrupted")
             CollectionManager.closeCollectionBlocking()
@@ -93,7 +93,7 @@ class DB(val database: SupportSQLiteDatabase) {
     // Allows to avoid using new Object[]
     fun query(
         @Language("SQL") query: String,
-        vararg selectionArgs: Any
+        vararg selectionArgs: Any,
     ): Cursor {
         return database.query(query, selectionArgs)
     }
@@ -106,7 +106,7 @@ class DB(val database: SupportSQLiteDatabase) {
      */
     fun queryScalar(
         @Language("SQL") query: String,
-        vararg selectionArgs: Any
+        vararg selectionArgs: Any,
     ): Int {
         val scalar: Int
         database.query(query, selectionArgs).use { cursor ->
@@ -121,7 +121,7 @@ class DB(val database: SupportSQLiteDatabase) {
     @Throws(SQLException::class)
     fun queryString(
         @Language("SQL") query: String,
-        vararg bindArgs: Any
+        vararg bindArgs: Any,
     ): String {
         database.query(query, bindArgs).use { cursor ->
             if (!cursor.moveToNext()) {
@@ -133,7 +133,7 @@ class DB(val database: SupportSQLiteDatabase) {
 
     fun queryLongScalar(
         @Language("SQL") query: String,
-        vararg bindArgs: Any
+        vararg bindArgs: Any,
     ): Long {
         var scalar: Long
         database.query(query, bindArgs).use { cursor ->
@@ -153,7 +153,7 @@ class DB(val database: SupportSQLiteDatabase) {
      */
     fun queryLongList(
         @Language("SQL") query: String,
-        vararg bindArgs: Any
+        vararg bindArgs: Any,
     ): ArrayList<Long> {
         val results = ArrayList<Long>()
         database.query(query, bindArgs).use { cursor ->
@@ -172,7 +172,7 @@ class DB(val database: SupportSQLiteDatabase) {
      */
     fun queryStringList(
         @Language("SQL") query: String,
-        vararg bindArgs: Any
+        vararg bindArgs: Any,
     ): ArrayList<String> {
         val results = ArrayList<String>()
         database.query(query, bindArgs).use { cursor ->
@@ -185,7 +185,7 @@ class DB(val database: SupportSQLiteDatabase) {
 
     fun execute(
         @Language("SQL") sql: String,
-        vararg `object`: Any?
+        vararg `object`: Any?,
     ) {
         val s = sql.trim { it <= ' ' }.lowercase()
         // mark modified?
@@ -204,7 +204,7 @@ class DB(val database: SupportSQLiteDatabase) {
      */
     @KotlinCleanup("""Use Kotlin string. Change split so that there is no empty string after last ";".""")
     fun executeScript(
-        @Language("SQL") sql: String
+        @Language("SQL") sql: String,
     ) {
         val queries = java.lang.String(sql).split(";")
         for (query in queries) {
@@ -217,7 +217,7 @@ class DB(val database: SupportSQLiteDatabase) {
         table: String,
         values: ContentValues,
         whereClause: String? = null,
-        whereArgs: Array<String>? = null
+        whereArgs: Array<String>? = null,
     ): Int {
         return database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
     }
@@ -225,7 +225,7 @@ class DB(val database: SupportSQLiteDatabase) {
     /** insert must always be called via DB in order to mark the db as changed  */
     fun insert(
         table: String,
-        values: ContentValues
+        values: ContentValues,
     ): Long {
         return database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
     }
@@ -244,13 +244,13 @@ class DB(val database: SupportSQLiteDatabase) {
          */
         fun withAndroidFramework(
             context: Context,
-            path: String
+            path: String,
         ): DB {
             val db =
                 AnkiSupportSQLiteDatabase.withFramework(
                     context,
                     path,
-                    SupportSQLiteOpenHelperCallback(1)
+                    SupportSQLiteOpenHelperCallback(1),
                 )
             db.disableWriteAheadLogging()
             db.query("PRAGMA synchronous = 2")

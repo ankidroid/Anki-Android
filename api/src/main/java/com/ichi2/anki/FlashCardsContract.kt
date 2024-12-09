@@ -264,7 +264,7 @@ public object FlashCardsContract {
                 SFLD,
                 CSUM,
                 FLAGS,
-                DATA
+                DATA,
             )
 
         /**
@@ -393,7 +393,7 @@ public object FlashCardsContract {
                 SORT_FIELD_INDEX,
                 TYPE,
                 LATEX_POST,
-                LATEX_PRE
+                LATEX_PRE,
             )
 
         /**
@@ -478,7 +478,7 @@ public object FlashCardsContract {
                 ORD,
                 NAME,
                 QUESTION_FORMAT,
-                ANSWER_FORMAT
+                ANSWER_FORMAT,
             )
     }
 
@@ -626,7 +626,7 @@ public object FlashCardsContract {
                 CARD_NAME,
                 DECK_ID,
                 QUESTION,
-                ANSWER
+                ANSWER,
             )
 
         /**
@@ -805,7 +805,7 @@ public object FlashCardsContract {
                 CARD_ORD,
                 BUTTON_COUNT,
                 NEXT_REVIEW_TIMES,
-                MEDIA_FILES
+                MEDIA_FILES,
             )
 
         /**
@@ -951,7 +951,7 @@ public object FlashCardsContract {
                 DECK_COUNTS,
                 OPTIONS,
                 DECK_DYN,
-                DECK_DESC
+                DECK_DESC,
             )
 
         /**

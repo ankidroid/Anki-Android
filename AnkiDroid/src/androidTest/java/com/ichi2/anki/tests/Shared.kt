@@ -61,7 +61,7 @@ object Shared {
      */
     private fun getTestDir(
         context: Context,
-        name: String
+        name: String,
     ): File {
         val suffix =
             if (name.isNotEmpty()) {
@@ -96,7 +96,7 @@ object Shared {
     @Throws(IOException::class)
     fun getTestFile(
         context: Context,
-        name: String
+        name: String,
     ): File {
         assertThat("folders are not yet supported", name, not(containsString("/")))
         val inputStream =
@@ -118,7 +118,7 @@ object Shared {
     @Throws(IOException::class)
     fun writeToFile(
         source: InputStream,
-        destination: String
+        destination: String,
     ) {
         // sometimes this fails and works on retries (hardware issue?)
         val retries = 5
@@ -151,7 +151,7 @@ object Shared {
     @Throws(IOException::class)
     private fun writeToFileImpl(
         source: InputStream,
-        destination: String
+        destination: String,
     ) {
         val f = File(destination)
         try {
@@ -176,7 +176,7 @@ object Shared {
                 "Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s",
                 sizeKb,
                 durationSeconds,
-                speedKbSec
+                speedKbSec,
             )
         } catch (e: IOException) {
             throw IOException(f.name + ": " + e.localizedMessage, e)

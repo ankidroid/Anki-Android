@@ -89,7 +89,7 @@ class AxisValueDisplay(context: Context, attrs: AttributeSet? = null) : View(con
 
     override fun onMeasure(
         widthMeasureSpec: Int,
-        heightMeasureSpec: Int
+        heightMeasureSpec: Int,
     ) {
         val width = widthMeasureSpec.constrainTo(suggestedMinimumWidth)
         val height = heightMeasureSpec.constrainTo(controlHeight)
@@ -142,5 +142,5 @@ private fun MeasureSpecValue.constrainTo(desiredValue: Int): Int {
  */
 private fun Rect.updateAsTextBounds(
     paint: Paint,
-    text: String
+    text: String,
 ) = paint.getTextBounds(text, 0, text.length, this)

@@ -30,7 +30,7 @@ object AndroidUiUtils {
      */
     fun setFocusAndOpenKeyboard(
         view: View,
-        window: Window
+        window: Window,
     ) {
         view.requestFocus()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
@@ -43,7 +43,7 @@ object AndroidUiUtils {
      */
     fun setFocusAndOpenKeyboard(
         view: View,
-        runnable: Runnable? = null
+        runnable: Runnable? = null,
     ) {
         //  Required on some Android 9, 10 devices to show keyboard: https://stackoverflow.com/a/7784904
         view.postDelayed({

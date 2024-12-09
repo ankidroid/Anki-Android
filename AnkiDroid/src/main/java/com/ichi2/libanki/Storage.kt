@@ -34,7 +34,7 @@ object Storage {
      * */
     fun collection(
         path: String,
-        backend: Backend? = null
+        backend: Backend? = null,
     ): Collection {
         val backend2 = backend ?: BackendFactory.getBackend()
         return Collection(path, backend2)
@@ -46,7 +46,7 @@ object Storage {
     internal fun openDB(
         path: String,
         backend: Backend,
-        afterFullSync: Boolean
+        afterFullSync: Boolean,
     ): Pair<DB, Boolean> {
         val dbFile = File(path)
         var create = !dbFile.exists()
@@ -66,7 +66,7 @@ object Storage {
 
     private fun createDB(
         db: DB,
-        time: Time
+        time: Time,
     ) {
         // This line is required for testing - otherwise Rust will override a mocked time.
         db.execute("update col set crt = ?", getDayStart(time) / 1000)

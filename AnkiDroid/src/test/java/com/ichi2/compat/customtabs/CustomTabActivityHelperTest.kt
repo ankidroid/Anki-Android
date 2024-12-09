@@ -65,7 +65,7 @@ class CustomTabActivityHelperTest {
                 on {
                     it.queryIntentActivitiesCompat(
                         Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com")),
-                        ResolveInfoFlagsCompat.EMPTY
+                        ResolveInfoFlagsCompat.EMPTY,
                     )
                 } doReturn emptyList()
             }

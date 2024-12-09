@@ -80,7 +80,7 @@ class PermissionsActivity : AnkiActivity() {
 
         fun getIntent(
             context: Context,
-            permissionsSet: PermissionSet
+            permissionsSet: PermissionSet,
         ): Intent {
             return Intent(context, PermissionsActivity::class.java).apply {
                 putExtra(PERMISSIONS_SET_EXTRA, permissionsSet as Parcelable)

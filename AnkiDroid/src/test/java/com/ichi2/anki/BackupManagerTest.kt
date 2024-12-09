@@ -101,7 +101,7 @@ open class BackupManagerTest {
 
     private fun performBackup(
         bm: BackupManager,
-        time: Time = MockTime(100000000)
+        time: Time = MockTime(100000000),
     ): Boolean {
         return bm.performBackupInBackground("/AnkiDroid/", time)
     }

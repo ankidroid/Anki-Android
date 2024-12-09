@@ -54,7 +54,7 @@ open class CompatV29 : CompatV26() {
         baseFileName: String,
         extension: String,
         format: Bitmap.CompressFormat,
-        quality: Int
+        quality: Int,
     ): Uri {
         val imagesCollection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
         val destDir = File(Environment.DIRECTORY_PICTURES, "AnkiDroid")

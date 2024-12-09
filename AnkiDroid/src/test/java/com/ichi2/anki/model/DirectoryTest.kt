@@ -41,7 +41,7 @@ class DirectoryTest : Test21And26() {
         MatcherAssert.assertThat(
             "Directory should work with valid directory",
             Directory.createInstance(path),
-            not(nullValue())
+            not(nullValue()),
         )
     }
 
@@ -51,7 +51,7 @@ class DirectoryTest : Test21And26() {
         MatcherAssert.assertThat(
             "Directory requires an existing directory",
             Directory.createInstance(subdirectory),
-            nullValue()
+            nullValue(),
         )
     }
 
@@ -61,7 +61,7 @@ class DirectoryTest : Test21And26() {
         MatcherAssert.assertThat(
             "file should not become a Directory",
             Directory.createInstance(dir),
-            nullValue()
+            nullValue(),
         )
     }
 
@@ -78,7 +78,7 @@ class DirectoryTest : Test21And26() {
         MatcherAssert.assertThat(
             "Directory should contain only three files",
             files.toList(),
-            containsInAnyOrder(listOf("foo.txt", "bar.xtx", "baz.xtx").map { File(dir.directory, it) })
+            containsInAnyOrder(listOf("foo.txt", "bar.xtx", "baz.xtx").map { File(dir.directory, it) }),
         )
     }
 
@@ -88,7 +88,7 @@ class DirectoryTest : Test21And26() {
         MatcherAssert.assertThat(
             "empty directory should not have files",
             dir.hasFiles(),
-            equalTo(false)
+            equalTo(false),
         )
     }
 
@@ -106,7 +106,7 @@ class DirectoryTest : Test21And26() {
         MatcherAssert.assertThat(
             "non-empty directory should have files",
             dir.hasFiles(),
-            equalTo(true)
+            equalTo(true),
         )
     }
 

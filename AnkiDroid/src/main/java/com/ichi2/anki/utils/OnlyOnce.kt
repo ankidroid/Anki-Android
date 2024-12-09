@@ -27,7 +27,7 @@ object OnlyOnce {
 
     enum class Method {
         ANSWER_CARD,
-        UNIT_TEST
+        UNIT_TEST,
     }
 
     /**
@@ -38,7 +38,7 @@ object OnlyOnce {
      */
     fun preventSimultaneousExecutions(
         name: Method,
-        function: () -> Job
+        function: () -> Job,
     ) {
         if (!blockedFunctions.add(name)) {
             Timber.w("simultaneously executions of $name blocked")

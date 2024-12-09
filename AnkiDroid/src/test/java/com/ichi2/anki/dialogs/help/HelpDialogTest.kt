@@ -51,13 +51,13 @@ class HelpDialogTest {
         val itemsWithoutRate = HelpDialog.newSupportInstance(false).requireArgsHelpEntries()
         assertFalse(
             itemsWithoutRate.any { it.action == Rate },
-            "Found help menu item for Rate but system can't handle it"
+            "Found help menu item for Rate but system can't handle it",
         )
         // if the system has an app to handle rate intents, show rate menu item
         val itemsWithRate = HelpDialog.newSupportInstance(true).requireArgsHelpEntries()
         assertTrue(
             itemsWithRate.any { it.action == Rate },
-            "Missing help menu item for Rate when system can handle it"
+            "Missing help menu item for Rate when system can handle it",
         )
     }
 
@@ -71,14 +71,14 @@ class HelpDialogTest {
                 R.string.help_item_support_develop_ankidroid,
                 R.string.help_item_support_rate_ankidroid,
                 R.string.help_item_support_other_ankidroid,
-                R.string.send_feedback
+                R.string.send_feedback,
             )
         val actualSupportItems =
             HelpDialog.newSupportInstance(true).requireArgsHelpEntries().map { it.titleResId }
         assertEquals(
             expectedSupportItems,
             actualSupportItems,
-            "Unexpected support menu item at start"
+            "Unexpected support menu item at start",
         )
         // checking the help menu
         val expectedHelpItems =
@@ -86,14 +86,14 @@ class HelpDialogTest {
                 R.string.help_title_using_ankidroid,
                 R.string.help_title_get_help,
                 R.string.help_title_community,
-                R.string.help_title_privacy
+                R.string.help_title_privacy,
             )
         val actualHelpItems =
             HelpDialog.newHelpInstance().requireArgsHelpEntries().map { it.titleResId }
         assertEquals(
             expectedHelpItems,
             actualHelpItems,
-            "Unexpected help menu item at start"
+            "Unexpected help menu item at start",
         )
     }
 
@@ -103,20 +103,20 @@ class HelpDialogTest {
         assertEquals(
             supportMenuItems.size,
             supportMenuItems.map { it.id }.toSet().size,
-            "Support menu has items with the same id"
+            "Support menu has items with the same id",
         )
         // main help menu items have unique ids
         assertEquals(
             mainHelpMenuItems.size,
             mainHelpMenuItems.map { it.id }.toSet().size,
-            "Main help menu has items with the same id"
+            "Main help menu has items with the same id",
         )
         // help menu child items have a non-null valid parent id
         val allFoundParentIds = childHelpMenuItems.map { it.parentId }
         assertFalse(
             allFoundParentIds
                 .any { it == null || !mainHelpMenuItems.map { entry -> entry.id }.contains(it) },
-            "Help item has an invalid parentId"
+            "Help item has an invalid parentId",
         )
     }
 
@@ -125,12 +125,12 @@ class HelpDialogTest {
         // simulate a help menu start
         launchFragment<HelpDialog>(
             fragmentArgs =
-            bundleOf(
-                HelpDialog.ARG_MENU_TITLE to R.string.help,
-                ARG_MENU_ITEMS to mainHelpMenuItems
-            ),
+                bundleOf(
+                    HelpDialog.ARG_MENU_TITLE to R.string.help,
+                    ARG_MENU_ITEMS to mainHelpMenuItems,
+                ),
             themeResId = R.style.Theme_Light,
-            initialState = Lifecycle.State.RESUMED
+            initialState = Lifecycle.State.RESUMED,
         ).onFragment {
             onView(withText(R.string.help_title_community)).inRoot(isDialog()).perform(click())
             // check that the expected six children are shown
@@ -165,12 +165,12 @@ class HelpDialogTest {
         // simulate a help menu start
         launchFragment<HelpDialog>(
             fragmentArgs =
-            bundleOf(
-                HelpDialog.ARG_MENU_TITLE to R.string.help,
-                ARG_MENU_ITEMS to mainHelpMenuItems
-            ),
+                bundleOf(
+                    HelpDialog.ARG_MENU_TITLE to R.string.help,
+                    ARG_MENU_ITEMS to mainHelpMenuItems,
+                ),
             themeResId = R.style.Theme_Light,
-            initialState = Lifecycle.State.RESUMED
+            initialState = Lifecycle.State.RESUMED,
         ).onFragment { fragment ->
             fragment.actionsDispatcher = mockActionDispatcher
             // start the first submenu

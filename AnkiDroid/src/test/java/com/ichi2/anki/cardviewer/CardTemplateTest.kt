@@ -36,9 +36,9 @@ class CardTemplateTest {
             equalTo(
                 data.replace(
                     "::content::",
-                    content
-                ).replace("::style::", style).replace("::class::", cardClass).replace("::script::", script)
-            )
+                    content,
+                ).replace("::style::", style).replace("::class::", cardClass).replace("::script::", script),
+            ),
         )
     }
 
