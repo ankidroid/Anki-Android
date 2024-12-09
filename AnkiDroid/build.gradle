@@ -281,6 +281,11 @@ tasks.register('copyTestLibIntoAndroidTest', Copy) {
 tasks.named('preBuild').configure { dependsOn('copyTestLibIntoAndroidTest') }
 tasks.named('runKtlintCheckOverAndroidTestSourceSet').configure { mustRunAfter('copyTestLibIntoAndroidTest') }
 
+// to run manually: `./gradlew :testlib:assemblePlayDebugAndroidTest`
+tasks.named("assemblePlayDebugAndroidTest") {
+    dependsOn(":testlib:assemblePlayDebugAndroidTest")
+}
+
 // Issue 11078 - some emulators run, but run zero tests, and still report success
 tasks.register('assertNonzeroAndroidTests') {
     doLast {
