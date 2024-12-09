@@ -432,6 +432,7 @@ open class DeckPicker :
     private val deckContextAndLongClickListener = OnContextAndLongClickListener { v ->
         val deckId = v.tag as DeckId
         showDeckPickerContextMenu(deckId)
+        Timber.v("Long press on deck %d", deckId)
         true
     }
 

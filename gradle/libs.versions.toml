@@ -43,6 +43,8 @@ androidxSqlite = "2.4.0"
 androidxSwipeRefreshLayout = "1.1.0"
 # https://developer.android.com/jetpack/androidx/releases/test
 androidxTest = "1.6.1"
+# https://developer.android.com/training/testing/espresso/web
+androidxTestEspressoWeb = "3.6.1"
 # https://developer.android.com/jetpack/androidx/releases/test-uiautomator
 androidxTestUiAutomator = "2.3.0"
 # https://developer.android.com/jetpack/androidx/releases/viewpager2
@@ -168,6 +170,7 @@ androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", ve
 #testing libs
 androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+androidx-espresso-web = { module = "androidx.test.espresso:espresso-web", version.ref = "androidxTestEspressoWeb" }
 androidx-fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "androidxFragmentKtx" }
 androidx-fragment-testing-manifest = { module = "androidx.fragment:fragment-testing-manifest", version.ref = "androidxFragmentKtx" }
 androidx-test-junit = { module = "androidx.test.ext:junit", version.ref = "androidTestJunit" }
