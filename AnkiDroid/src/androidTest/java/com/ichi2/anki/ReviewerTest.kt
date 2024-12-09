@@ -52,7 +52,6 @@ import java.lang.AssertionError
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : InstrumentedTest() {
-
     // Launch IntroductionActivity instead of DeckPicker activity because in CI
     // builds, it seems to create IntroductionActivity after the DeckPicker,
     // causing the DeckPicker activity to be destroyed. As a consequence, this
@@ -228,4 +227,6 @@ class ReviewerTest : InstrumentedTest() {
 
 private var Collection.cardStateCustomizer: String?
     get() = config.get("cardStateCustomizer")
-    set(value) { config.set("cardStateCustomizer", value) }
+    set(value) {
+        config.set("cardStateCustomizer", value)
+    }

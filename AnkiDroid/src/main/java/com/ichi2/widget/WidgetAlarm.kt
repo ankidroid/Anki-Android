@@ -57,10 +57,11 @@ private fun getPendingIntent(
     widgetClass: Class<out AnalyticsWidgetProvider>,
     create: Boolean
 ): PendingIntent? {
-    val intent = Intent(context, widgetClass).apply {
-        action = ACTION_UPDATE_WIDGET
-        putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-    }
+    val intent =
+        Intent(context, widgetClass).apply {
+            action = ACTION_UPDATE_WIDGET
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        }
     return PendingIntent.getBroadcast(
         context,
         appWidgetId,

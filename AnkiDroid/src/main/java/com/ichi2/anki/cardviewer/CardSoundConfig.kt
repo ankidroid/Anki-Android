@@ -38,7 +38,10 @@ class CardSoundConfig(val replayQuestion: Boolean, val autoplay: Boolean, val de
 
     companion object {
         @CheckResult
-        fun create(col: Collection, card: Card): CardSoundConfig {
+        fun create(
+            col: Collection,
+            card: Card
+        ): CardSoundConfig {
             Timber.v("start loading SoundConfig")
 
             val autoPlay = card.autoplay(col)

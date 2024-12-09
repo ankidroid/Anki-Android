@@ -20,7 +20,6 @@ class FlagToDisplay(
     private val isOnAppBar: Boolean,
     private val isFullscreen: Boolean
 ) {
-
     fun get(): Flag {
         return when {
             !isOnAppBar -> actualFlag

@@ -47,14 +47,15 @@ class SyncActionProvider(context: Context) : ActionProviderCompat(context) {
         val view = inflater.inflate(R.layout.sync_progress_layout, null)
 
         progressIndicator = view.findViewById(R.id.progress_indicator)
-        syncButton = view.findViewById<AppCompatImageButton?>(R.id.button).apply {
-            setOnClickListener {
-                if (!forItem.isEnabled) {
-                    return@setOnClickListener
+        syncButton =
+            view.findViewById<AppCompatImageButton?>(R.id.button).apply {
+                setOnClickListener {
+                    if (!forItem.isEnabled) {
+                        return@setOnClickListener
+                    }
+                    activity.onOptionsItemSelected(forItem)
                 }
-                activity.onOptionsItemSelected(forItem)
             }
-        }
 
         return view
     }

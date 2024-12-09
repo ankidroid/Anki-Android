@@ -48,7 +48,9 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
 
     sealed interface CheckedItems {
         data object None : CheckedItems
+
         data object All : CheckedItems
+
         class Some(val checkedItems: BooleanArray) : CheckedItems
     }
 
@@ -57,11 +59,12 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
         checkedItems: CheckedItems,
         disablePositiveButtonIfNoItemsChosen: Boolean = true
     ) {
-        this.checkedItems = when (checkedItems) {
-            is CheckedItems.All -> BooleanArray(items.size) { true }
-            is CheckedItems.None -> BooleanArray(items.size) { false }
-            is CheckedItems.Some -> checkedItems.checkedItems.clone()
-        }
+        this.checkedItems =
+            when (checkedItems) {
+                is CheckedItems.All -> BooleanArray(items.size) { true }
+                is CheckedItems.None -> BooleanArray(items.size) { false }
+                is CheckedItems.Some -> checkedItems.checkedItems.clone()
+            }
 
         fun enableDisablePositiveButton(dialog: AlertDialog) {
             dialog.getButton(BUTTON_POSITIVE).isEnabled = this.checkedItems.contains(true)
@@ -91,13 +94,17 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
  */
 class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder) : AsyncDialogBuilder(alertDialogBuilder) {
     /** @see AlertDialog.Builder.setTitle */
-    fun setTitle(@StringRes titleId: Int): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
+    fun setTitle(
+        @StringRes titleId: Int
+    ): AlertDialog.Builder = alertDialogBuilder.setTitle(titleId)
 
     /** @see AlertDialog.Builder.setTitle */
     fun setTitle(title: CharSequence): AlertDialog.Builder = alertDialogBuilder.setTitle(title)
 
     /** @see AlertDialog.Builder.setMessage */
-    fun setMessage(@StringRes messageId: Int): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
+    fun setMessage(
+        @StringRes messageId: Int
+    ): AlertDialog.Builder = alertDialogBuilder.setMessage(messageId)
 
     /** @see AlertDialog.Builder.setMessage */
     fun setMessage(message: CharSequence): AlertDialog.Builder = alertDialogBuilder.setMessage(message)
@@ -108,6 +115,7 @@ sealed interface DialogResult {
 
     interface Ok : DialogResult {
         object Simple : Ok
+
         class MultipleChoice(val checkedItems: BooleanArray) : Ok
     }
 }

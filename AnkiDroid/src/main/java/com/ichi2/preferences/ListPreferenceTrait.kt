@@ -82,8 +82,7 @@ interface ListPreferenceTrait : DialogFragmentProvider {
  * @see ListPreferenceDialogFragmentCompat
  */
 class ListPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
-
-    /* synthetic access */
+    // synthetic access
     private var clickedDialogEntryIndex = 0
     private lateinit var entries: Array<CharSequence>
     private lateinit var entryValues: Array<CharSequence>

@@ -47,7 +47,7 @@ import java.net.URLEncoder
 import java.util.Locale
 
 object ImportUtils {
-    /* A filename should be shortened if over this threshold */
+    // A filename should be shortened if over this threshold
     private const val FILE_NAME_SHORTENING_THRESHOLD = 100
 
     /**
@@ -57,22 +57,35 @@ object ImportUtils {
      * @param intent contains the file to import
      * @return null if successful, otherwise error message
      */
-    fun handleFileImport(context: Context, intent: Intent): ImportResult {
+    fun handleFileImport(
+        context: Context,
+        intent: Intent
+    ): ImportResult {
         return FileImporter().handleFileImport(context, intent)
     }
 
     /**
      * Makes a cached copy of the file selected on [intent] and returns its path
      */
-    fun getFileCachedCopy(context: Context, intent: Intent): String? {
+    fun getFileCachedCopy(
+        context: Context,
+        intent: Intent
+    ): String? {
         return FileImporter().getFileCachedCopy(context, intent)
     }
 
-    fun getFileCachedCopy(context: Context, uri: Uri): String? {
+    fun getFileCachedCopy(
+        context: Context,
+        uri: Uri
+    ): String? {
         return FileImporter().getFileCachedCopy(context, uri)
     }
 
-    fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
+    fun showImportUnsuccessfulDialog(
+        activity: Activity,
+        errorMessage: String?,
+        exitActivity: Boolean
+    ) {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
 
@@ -107,7 +120,10 @@ object ImportUtils {
          * @param intent contains the file to import
          * @return null if successful, otherwise error message
          */
-        fun handleFileImport(context: Context, intent: Intent): ImportResult {
+        fun handleFileImport(
+            context: Context,
+            intent: Intent
+        ): ImportResult {
             // This intent is used for opening apkg package files
             // We want to go immediately to DeckPicker, clearing any history in the process
             Timber.i("IntentHandler/ User requested to view a file")
@@ -122,7 +138,10 @@ object ImportUtils {
             }
         }
 
-        private fun handleFileImportInternal(context: Context, intent: Intent): ImportResult {
+        private fun handleFileImportInternal(
+            context: Context,
+            intent: Intent
+        ): ImportResult {
             val importPathUri = getDataUri(intent)
             return if (importPathUri != null) {
                 handleContentProviderFile(context, importPathUri, intent)
@@ -132,7 +151,10 @@ object ImportUtils {
         }
 
         @NeedsTest("Check file name is absolute")
-        fun getFileCachedCopy(context: Context, uri: Uri): String? {
+        fun getFileCachedCopy(
+            context: Context,
+            uri: Uri
+        ): String? {
             val filename = ensureValidLength(getFileNameFromContentProvider(context, uri) ?: return null)
             val tempFile = File(context.cacheDir, filename)
             return if (copyFileToCache(context, uri, tempFile.absolutePath).first) {
@@ -145,7 +167,10 @@ object ImportUtils {
         /**
          * Makes a cached copy of the file selected on [intent] and returns its path
          */
-        fun getFileCachedCopy(context: Context, intent: Intent): String? {
+        fun getFileCachedCopy(
+            context: Context,
+            intent: Intent
+        ): String? {
             val uri = getDataUri(intent) ?: return null
             return getFileCachedCopy(context, uri)
         }
@@ -201,11 +226,12 @@ object ImportUtils {
                 filename = ensureValidLength(filename)
                 tempOutDir = Uri.fromFile(File(context.cacheDir, filename)).encodedPath!!
                 val cachingResult = copyFileToCache(context, importPathUri, tempOutDir)
-                val errorMessage = if (cachingResult.first) {
-                    null
-                } else {
-                    context.getString(R.string.import_error_copy_to_cache)
-                }
+                val errorMessage =
+                    if (cachingResult.first) {
+                        null
+                    } else {
+                        context.getString(R.string.import_error_copy_to_cache)
+                    }
                 // Show import dialog
                 if (errorMessage != null) {
                     CrashReportService.sendExceptionReport(
@@ -220,7 +246,10 @@ object ImportUtils {
             return ImportResult.fromSuccess()
         }
 
-        fun isValidImportType(context: Context, importPathUri: Uri): Boolean {
+        fun isValidImportType(
+            context: Context,
+            importPathUri: Uri
+        ): Boolean {
             val fileName = getFileNameFromContentProvider(context, importPathUri)
             return when {
                 isDeckPackage(fileName) -> true
@@ -261,7 +290,10 @@ object ImportUtils {
             return AssetHelper.getFileExtensionFromFilePath(file.toString())
         }
 
-        protected open fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
+        protected open fun getFileNameFromContentProvider(
+            context: Context,
+            data: Uri
+        ): String? {
             var filename: String? = null
             try {
                 context.contentResolver.query(
@@ -283,7 +315,11 @@ object ImportUtils {
             return filename
         }
 
-        fun showImportUnsuccessfulDialog(activity: Activity, errorMessage: String?, exitActivity: Boolean) {
+        fun showImportUnsuccessfulDialog(
+            activity: Activity,
+            errorMessage: String?,
+            exitActivity: Boolean
+        ) {
             Timber.e("showImportUnsuccessfulDialog() message %s", errorMessage)
             val title = activity.resources.getString(R.string.import_title_error)
             AlertDialog.Builder(activity).show {
@@ -311,12 +347,13 @@ object ImportUtils {
             tempPath: String
         ): Pair<Boolean, String?> {
             // Get an input stream to the data in ContentProvider
-            val inputStream: InputStream = try {
-                context.contentResolver.openInputStream(data!!)
-            } catch (e: FileNotFoundException) {
-                Timber.e(e, "Could not open input stream to intent data")
-                return Pair(false, "copyFileToCache: FileNotFoundException when accessing ContentProvider")
-            } ?: return Pair(false, "copyFileToCache: provider recently crashed")
+            val inputStream: InputStream =
+                try {
+                    context.contentResolver.openInputStream(data!!)
+                } catch (e: FileNotFoundException) {
+                    Timber.e(e, "Could not open input stream to intent data")
+                    return Pair(false, "copyFileToCache: FileNotFoundException when accessing ContentProvider")
+                } ?: return Pair(false, "copyFileToCache: provider recently crashed")
             // Check non-null
             try {
                 CompatHelper.compat.copyFile(inputStream, tempPath)
@@ -347,7 +384,8 @@ object ImportUtils {
                 return when (intentUriScheme) {
                     ContentResolver.SCHEME_CONTENT,
                     ContentResolver.SCHEME_FILE,
-                    ContentResolver.SCHEME_ANDROID_RESOURCE -> {
+                    ContentResolver.SCHEME_ANDROID_RESOURCE
+                    -> {
                         Timber.i("Attempting to read data from intent.")
                         intent.data
                     }
@@ -363,11 +401,12 @@ object ImportUtils {
                 // Get the filename from the path
                 val filename = File(importPath).name
 
-                val dialogMessage = if (isCollectionPackage(filename)) {
-                    CollectionImportReplace(importPath)
-                } else {
-                    CollectionImportAdd(importPath)
-                }
+                val dialogMessage =
+                    if (isCollectionPackage(filename)) {
+                        CollectionImportReplace(importPath)
+                    } else {
+                        CollectionImportAdd(importPath)
+                    }
                 // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
                 DialogHandler.storeMessage(dialogMessage.toMessage())
             }
@@ -376,7 +415,10 @@ object ImportUtils {
                 return filename != null && filename.lowercase(Locale.ROOT).endsWith(".apkg") && "collection.apkg" != filename
             }
 
-            fun hasExtension(filename: String, extension: String?): Boolean {
+            fun hasExtension(
+                filename: String,
+                extension: String?
+            ): Boolean {
                 val fileParts = filename.split("\\.".toRegex()).toTypedArray()
                 if (fileParts.size < 2) {
                     return false
@@ -414,14 +456,14 @@ object ImportUtils {
             activity.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            data = bundleOf("importPath" to importPath)
-            what = this@CollectionImportReplace.what
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                data = bundleOf("importPath" to importPath)
+                what = this@CollectionImportReplace.what
+            }
 
         companion object {
-            fun fromMessage(message: Message): CollectionImportReplace =
-                CollectionImportReplace(message.data.getString("importPath")!!)
+            fun fromMessage(message: Message): CollectionImportReplace = CollectionImportReplace(message.data.getString("importPath")!!)
         }
     }
 
@@ -435,14 +477,14 @@ object ImportUtils {
             activity.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, importPath)
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            data = bundleOf("importPath" to importPath)
-            what = this@CollectionImportAdd.what
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                data = bundleOf("importPath" to importPath)
+                what = this@CollectionImportAdd.what
+            }
 
         companion object {
-            fun fromMessage(message: Message): CollectionImportAdd =
-                CollectionImportAdd(message.data.getString("importPath")!!)
+            fun fromMessage(message: Message): CollectionImportAdd = CollectionImportAdd(message.data.getString("importPath")!!)
         }
     }
 }

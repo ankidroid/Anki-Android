@@ -34,11 +34,17 @@ class CustomActionModeCallback(
 ) : ActionMode.Callback {
     private val setLanguageId = View.generateViewId()
 
-    override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+    override fun onCreateActionMode(
+        mode: ActionMode,
+        menu: Menu
+    ): Boolean {
         return true
     }
 
-    override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+    override fun onPrepareActionMode(
+        mode: ActionMode,
+        menu: Menu
+    ): Boolean {
         // Adding the cloze deletion floating context menu item, but only once.
         if (menu.findItem(clozeMenuId) != null) {
             return false
@@ -65,7 +71,10 @@ class CustomActionModeCallback(
         return initialSize != menu.size()
     }
 
-    override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+    override fun onActionItemClicked(
+        mode: ActionMode,
+        item: MenuItem
+    ): Boolean {
         return onActionItemSelected(mode, item)
     }
 

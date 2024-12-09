@@ -99,16 +99,18 @@ data class CurrentQueueState(
 open class Scheduler(val col: Collection) {
     /** Legacy API */
     open val card: Card?
-        get() = queuedCards.cardsList.firstOrNull()?.card?.let {
-            Card(it).apply { startTimer() }
-        }
+        get() =
+            queuedCards.cardsList.firstOrNull()?.card?.let {
+                Card(it).apply { startTimer() }
+            }
 
     fun currentQueueState(): CurrentQueueState? {
         val queue = queuedCards
         return queue.cardsList.firstOrNull()?.let {
             CurrentQueueState(
                 topCard = Card(it.card).apply { startTimer() },
-                countsIndex = when (it.queue) {
+                countsIndex =
+                when (it.queue) {
                     QueuedCards.Queue.NEW -> Counts.Queue.NEW
                     QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
                     QueuedCards.Queue.REVIEW -> Counts.Queue.REV
@@ -133,14 +135,20 @@ open class Scheduler(val col: Collection) {
     private val queuedCards: QueuedCards
         get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
 
-    open fun answerCard(info: CurrentQueueState, ease: Ease): OpChanges {
+    open fun answerCard(
+        info: CurrentQueueState,
+        ease: Ease
+    ): OpChanges {
         return col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
             reps += 1
         }
     }
 
     /** Legacy path, used by tests. */
-    open fun answerCard(card: Card, ease: Ease) {
+    open fun answerCard(
+        card: Card,
+        ease: Ease
+    ) {
         val top = queuedCards.cardsList.first()
         val answer = buildAnswer(card, top.states, ease)
         col.backend.answerCard(answer)
@@ -155,7 +163,11 @@ open class Scheduler(val col: Collection) {
         return col.backend.stateIsLeech(state)
     }
 
-    fun buildAnswer(card: Card, states: SchedulingStates, ease: Ease): CardAnswer {
+    fun buildAnswer(
+        card: Card,
+        states: SchedulingStates,
+        ease: Ease
+    ): CardAnswer {
         return cardAnswer {
             cardId = card.id
             currentState = states.current
@@ -214,7 +226,10 @@ open class Scheduler(val col: Collection) {
     var reps: Int = 0
 
     /** Only provided for legacy unit tests. */
-    fun nextIvl(card: Card, ease: Ease): Long {
+    fun nextIvl(
+        card: Card,
+        ease: Ease
+    ): Long {
         val states = col.backend.getSchedulingStates(card.id)
         val state = stateFromEase(states, ease)
         return intervalForState(state)
@@ -278,12 +293,16 @@ open class Scheduler(val col: Collection) {
      * @param manual Whether bury is made manually or not. Only useful for sched v2.
      */
     @VisibleForTesting
-    open fun buryCards(cids: Iterable<CardId>, manual: Boolean): OpChangesWithCount {
-        val mode = if (manual) {
-            BuryOrSuspendCardsRequest.Mode.BURY_USER
-        } else {
-            BuryOrSuspendCardsRequest.Mode.BURY_SCHED
-        }
+    open fun buryCards(
+        cids: Iterable<CardId>,
+        manual: Boolean
+    ): OpChangesWithCount {
+        val mode =
+            if (manual) {
+                BuryOrSuspendCardsRequest.Mode.BURY_USER
+            } else {
+                BuryOrSuspendCardsRequest.Mode.BURY_SCHED
+            }
         return col.backend.buryOrSuspendCards(
             cardIds = cids,
             noteIds = listOf(),
@@ -334,12 +353,13 @@ open class Scheduler(val col: Collection) {
         restorePosition: Boolean = false,
         resetCounts: Boolean = false
     ): OpChanges {
-        val request = scheduleCardsAsNewRequest {
-            cardIds.addAll(ids)
-            log = true
-            this.restorePosition = restorePosition
-            this.resetCounts = resetCounts
-        }
+        val request =
+            scheduleCardsAsNewRequest {
+                cardIds.addAll(ids)
+                log = true
+                this.restorePosition = restorePosition
+                this.resetCounts = resetCounts
+            }
         return col.backend.scheduleCardsAsNew(request)
     }
 
@@ -350,7 +370,11 @@ open class Scheduler(val col: Collection) {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    open fun reschedCards(ids: List<CardId>, imin: Int, imax: Int): OpChanges {
+    open fun reschedCards(
+        ids: List<CardId>,
+        imin: Int,
+        imax: Int
+    ): OpChanges {
         return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
     }
 
@@ -359,7 +383,11 @@ open class Scheduler(val col: Collection) {
      * `days` can be of the form '5' or '5..7'. See [SetDueDateDays]
      * If `config_key` is provided, provided days will be remembered in config.
      */
-    fun setDueDate(cardIds: List<CardId>, days: SetDueDateDays, configKey: ConfigKey.String? = null): OpChanges {
+    fun setDueDate(
+        cardIds: List<CardId>,
+        days: SetDueDateDays,
+        configKey: ConfigKey.String? = null
+    ): OpChanges {
         val key: OptionalStringConfigKey?
         if (configKey != null) {
             key = optionalStringConfigKey { this.key = configKey }
@@ -420,7 +448,10 @@ open class Scheduler(val col: Collection) {
      * @param newc Extra number of NEW cards to see today in selected deck
      * @param rev Extra number of REV cards to see today in selected deck
      */
-    open fun extendLimits(newc: Int, rev: Int) {
+    open fun extendLimits(
+        newc: Int,
+        rev: Int
+    ) {
         col.backend.extendLimits(
             deckId = col.decks.selected(),
             newDelta = newc,
@@ -573,7 +604,10 @@ open class Scheduler(val col: Collection) {
      * @param reload Force rebuild of estimator rates using the revlog.
      */
     @Suppress("ktlint:standard:max-line-length")
-    fun eta(counts: Counts, reload: Boolean = true): Int {
+    fun eta(
+        counts: Counts,
+        reload: Boolean = true
+    ): Int {
         var newRate: Double
         var newTime: Double
         var revRate: Double
@@ -667,7 +701,7 @@ open class Scheduler(val col: Collection) {
 
     /*
       Next time reports ********************************************************
-      ***************************************
+     ***************************************
      */
 
     /**
@@ -682,7 +716,10 @@ open class Scheduler(val col: Collection) {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    open fun nextIvlStr(card: Card, ease: Ease): String {
+    open fun nextIvlStr(
+        card: Card,
+        ease: Ease
+    ): String {
         val secs = nextIvl(card, ease)
         return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
     }
@@ -698,7 +735,10 @@ open class Scheduler(val col: Collection) {
 
 const val REPORT_LIMIT = 99999
 
-private fun stateFromEase(states: SchedulingStates, ease: Ease): SchedulingState {
+private fun stateFromEase(
+    states: SchedulingStates,
+    ease: Ease
+): SchedulingState {
     return when (ease) {
         Ease.AGAIN -> states.again
         Ease.HARD -> states.hard
@@ -736,12 +776,15 @@ private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
 fun Collection.computeFsrsParamsRaw(input: ByteArray): ByteArray {
     return backend.computeFsrsParamsRaw(input = input)
 }
+
 fun Collection.computeOptimalRetentionRaw(input: ByteArray): ByteArray {
     return backend.computeOptimalRetentionRaw(input = input)
 }
+
 fun Collection.evaluateParamsRaw(input: ByteArray): ByteArray {
     return backend.evaluateParamsRaw(input = input)
 }
+
 fun Collection.simulateFsrsReviewRaw(input: ByteArray): ByteArray {
     return backend.simulateFsrsReviewRaw(input = input)
 }

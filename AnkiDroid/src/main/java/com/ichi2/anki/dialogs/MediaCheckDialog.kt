@@ -23,15 +23,22 @@ import com.ichi2.libanki.MediaCheckResult
 class MediaCheckDialog : AsyncDialogFragment() {
     interface MediaCheckDialogListener {
         fun showMediaCheckDialog(dialogType: Int)
-        fun showMediaCheckDialog(dialogType: Int, checkList: MediaCheckResult)
+
+        fun showMediaCheckDialog(
+            dialogType: Int,
+            checkList: MediaCheckResult
+        )
+
         fun mediaCheck()
+
         fun deleteUnused(unused: List<String>)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle(notificationTitle)
+        val dialog =
+            AlertDialog.Builder(requireContext())
+                .setTitle(notificationTitle)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
                 dialog.setMessage(notificationMessage)
@@ -71,11 +78,12 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
                 // We also prefix the report with a message about the media db being rebuilt, since
                 // we do a full media scan and update the db on each media check on AnkiDroid.
-                val reportStr = """
+                val reportStr =
+                    """
                     |${res().getString(R.string.check_media_db_updated)}
                     
                     |$report
-                """.trimMargin().trimIndent()
+                    """.trimMargin().trimIndent()
                 val dialogBody = layoutInflater.inflate(R.layout.media_check_dialog_body, null) as LinearLayout
                 val reportTextView = dialogBody.findViewById<TextView>(R.id.reportTextView)
                 val fileListTextView = dialogBody.findViewById<TextView>(R.id.fileListTextView)
@@ -154,7 +162,10 @@ class MediaCheckDialog : AsyncDialogFragment() {
         // TODO Instead of putting string arrays into the bundle,
         //   make MediaCheckResult parcelable with @Parcelize and put it instead.
         // TODO Extract keys to constants
-        fun newInstance(dialogType: Int, checkList: MediaCheckResult): MediaCheckDialog {
+        fun newInstance(
+            dialogType: Int,
+            checkList: MediaCheckResult
+        ): MediaCheckDialog {
             val f = MediaCheckDialog()
             val args = Bundle()
             args.putStringArrayList("nohave", ArrayList(checkList.missingFileNames))
@@ -191,15 +202,17 @@ class MediaCheckDialog : AsyncDialogFragment() {
             }
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            what = this@MediaCheckCompleteDialog.what
-            data = bundleOf(
-                "nohave" to noHave,
-                "unused" to unused,
-                "invalid" to invalid,
-                "dialogType" to dialogType
-            )
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                what = this@MediaCheckCompleteDialog.what
+                data =
+                    bundleOf(
+                        "nohave" to noHave,
+                        "unused" to unused,
+                        "invalid" to invalid,
+                        "dialogType" to dialogType
+                    )
+            }
 
         companion object {
             fun fromMessage(message: Message): MediaCheckCompleteDialog {

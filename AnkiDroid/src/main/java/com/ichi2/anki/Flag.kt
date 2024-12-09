@@ -65,7 +65,8 @@ enum class Flag(
         R.id.flag_purple,
         R.drawable.ic_flag_purple,
         R.color.flag_purple
-    );
+    )
+    ;
 
     /**
      * Flag drawn to represents this flagInTheReviewer.
@@ -83,16 +84,17 @@ enum class Flag(
         return labels.getLabel(this) ?: defaultDisplayName()
     }
 
-    private fun defaultDisplayName(): String = when (this) {
-        NONE -> TR.browsingNoFlag()
-        RED -> TR.actionsFlagRed()
-        ORANGE -> TR.actionsFlagOrange()
-        GREEN -> TR.actionsFlagGreen()
-        BLUE -> TR.actionsFlagBlue()
-        PINK -> TR.actionsFlagPink()
-        TURQUOISE -> TR.actionsFlagTurquoise()
-        PURPLE -> TR.actionsFlagPurple()
-    }
+    private fun defaultDisplayName(): String =
+        when (this) {
+            NONE -> TR.browsingNoFlag()
+            RED -> TR.actionsFlagRed()
+            ORANGE -> TR.actionsFlagOrange()
+            GREEN -> TR.actionsFlagGreen()
+            BLUE -> TR.actionsFlagBlue()
+            PINK -> TR.actionsFlagPink()
+            TURQUOISE -> TR.actionsFlagTurquoise()
+            PURPLE -> TR.actionsFlagPurple()
+        }
 
     /**
      * Renames the flag
@@ -130,7 +132,11 @@ private value class FlagLabels(val value: JSONObject) {
      * This is not supported for [Flag.NONE] and is validated outside this method
      */
     fun getLabel(flag: Flag): String? = value.getStringOrNull(flag.code.toString())
-    suspend fun updateName(flag: Flag, newName: String) {
+
+    suspend fun updateName(
+        flag: Flag,
+        newName: String
+    ) {
         value.put(flag.code.toString(), newName)
         withCol {
             config.set("flagLabels", value)
@@ -138,7 +144,6 @@ private value class FlagLabels(val value: JSONObject) {
     }
 
     companion object {
-        suspend fun loadFromColConfig() =
-            FlagLabels(withCol { config.getObject("flagLabels", JSONObject()) })
+        suspend fun loadFromColConfig() = FlagLabels(withCol { config.getObject("flagLabels", JSONObject()) })
     }
 }

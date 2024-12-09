@@ -58,7 +58,6 @@ import com.drakeet.drawer.FullDraggableContainer
 
 class FullDraggableContainerFix(context: Context, attrs: AttributeSet? = null) :
     FullDraggableContainer(context, attrs) {
-
     private var childRequestedNoTouchInterception = false
     private var lastWeWantToIntercept = false
 

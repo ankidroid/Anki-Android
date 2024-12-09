@@ -21,7 +21,10 @@ import android.view.KeyboardShortcutGroup
 import androidx.annotation.StringRes
 import com.ichi2.anki.AnkiActivity
 
-data class ShortcutGroup(val shortcuts: List<Shortcut>, @StringRes val id: Int) {
+data class ShortcutGroup(
+    val shortcuts: List<Shortcut>,
+    @StringRes val id: Int
+) {
     fun toShortcutGroup(activity: AnkiActivity): KeyboardShortcutGroup {
         val shortcuts = shortcuts.map { it.toShortcutInfo() }
         val groupLabel = activity.getString(id)

@@ -25,7 +25,10 @@ import com.ichi2.anki.withProgress
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 
-suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int) {
+suspend fun FragmentActivity.rescheduleCards(
+    cardIds: List<CardId>,
+    newDays: Int
+) {
     withProgress {
         undoableOp {
             sched.reschedCards(cardIds, newDays, newDays)

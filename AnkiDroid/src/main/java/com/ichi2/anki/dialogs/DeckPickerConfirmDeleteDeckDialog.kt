@@ -34,16 +34,17 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     private val isFilteredDeck get() = requireArguments().getBoolean("isFilteredDeck")
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val message = if (isFilteredDeck) {
-            resources.getString(R.string.delete_cram_deck_message, "<b>$deckName</b>")
-        } else {
-            resources.getQuantityString(
-                R.plurals.delete_deck_message,
-                totalCards,
-                "<b>$deckName</b>",
-                totalCards
-            )
-        }
+        val message =
+            if (isFilteredDeck) {
+                resources.getString(R.string.delete_cram_deck_message, "<b>$deckName</b>")
+            } else {
+                resources.getQuantityString(
+                    R.plurals.delete_deck_message,
+                    totalCards,
+                    "<b>$deckName</b>",
+                    totalCards
+                )
+            }
         super.onCreate(savedInstanceState)
         return AlertDialog.Builder(requireActivity())
             .setTitle(R.string.delete_deck_title)
@@ -65,7 +66,12 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        fun newInstance(deckName: String, deckId: DeckId, totalCards: Int, isFilteredDeck: Boolean): DeckPickerConfirmDeleteDeckDialog {
+        fun newInstance(
+            deckName: String,
+            deckId: DeckId,
+            totalCards: Int,
+            isFilteredDeck: Boolean
+        ): DeckPickerConfirmDeleteDeckDialog {
             val f = DeckPickerConfirmDeleteDeckDialog()
             val args = Bundle()
             args.putString("deckName", deckName)

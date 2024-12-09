@@ -47,11 +47,12 @@ class AnalyticsTest {
     @Mock
     private lateinit var mockResources: Resources
 
-    private val sharedPreferences = SPMockBuilder().createSharedPreferences().apply {
-        edit {
-            putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true)
+    private val sharedPreferences =
+        SPMockBuilder().createSharedPreferences().apply {
+            edit {
+                putBoolean(UsageAnalytics.ANALYTICS_OPTIN_KEY, true)
+            }
         }
-    }
 
     @Before
     fun setUp() {

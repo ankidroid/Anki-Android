@@ -77,43 +77,47 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                 "it fixes translated string length"
 
         private val implementation = Implementation(FixedPreferencesTitleLength::class.java, Scope.RESOURCE_FILE_SCOPE)
-        val PREFERENCES_ISSUE_TITLE_LENGTH: Issue = Issue.create(
-            PREFERENCES_ID_TITLE_LENGTH,
-            PREFERENCES_DESCRIPTION_TITLE_LENGTH,
-            PREFERENCES_EXPLANATION_TITLE_LENGTH,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
-        val MENU_ISSUE_TITLE_LENGTH: Issue = Issue.create(
-            MENU_ID_TITLE_LENGTH,
-            MENU_DESCRIPTION_TITLE_LENGTH,
-            MENU_EXPLANATION_TITLE_LENGTH,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
+        val PREFERENCES_ISSUE_TITLE_LENGTH: Issue =
+            Issue.create(
+                PREFERENCES_ID_TITLE_LENGTH,
+                PREFERENCES_DESCRIPTION_TITLE_LENGTH,
+                PREFERENCES_EXPLANATION_TITLE_LENGTH,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation
+            )
+        val MENU_ISSUE_TITLE_LENGTH: Issue =
+            Issue.create(
+                MENU_ID_TITLE_LENGTH,
+                MENU_DESCRIPTION_TITLE_LENGTH,
+                MENU_EXPLANATION_TITLE_LENGTH,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation
+            )
 
-        val PREFERENCES_ISSUE_MAX_LENGTH: Issue = Issue.create(
-            PREFERENCES_ID_MAX_LENGTH,
-            PREFERENCES_DESCRIPTION_MAX_LENGTH,
-            PREFERENCES_EXPLANATION_MAX_LENGTH,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
-        val MENU_ISSUE_MAX_LENGTH: Issue = Issue.create(
-            MENU_ID_MAX_LENGTH,
-            MENU_DESCRIPTION_MAX_LENGTH,
-            MENU_EXPLANATION_MAX_LENGTH,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
+        val PREFERENCES_ISSUE_MAX_LENGTH: Issue =
+            Issue.create(
+                PREFERENCES_ID_MAX_LENGTH,
+                PREFERENCES_DESCRIPTION_MAX_LENGTH,
+                PREFERENCES_EXPLANATION_MAX_LENGTH,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation
+            )
+        val MENU_ISSUE_MAX_LENGTH: Issue =
+            Issue.create(
+                MENU_ID_MAX_LENGTH,
+                MENU_DESCRIPTION_MAX_LENGTH,
+                MENU_EXPLANATION_MAX_LENGTH,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation
+            )
         private const val ATTR_TITLE = "android:title"
         private const val ATTR_NAME = "name"
         private const val ATTR_MAX_LENGTH = "maxLength"
@@ -141,11 +145,15 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
      * of src/main/res/values/10-preferences.xml, and its handle.
      */
     private val stringResources: MutableMap<String, Handle> = HashMap()
+
     override fun getApplicableElements(): Collection<String>? {
         return ALL
     }
 
-    override fun visitElement(context: XmlContext, element: Element) {
+    override fun visitElement(
+        context: XmlContext,
+        element: Element
+    ) {
         if (element.hasAttribute(ATTR_TITLE)) {
             val folderName = context.file.parentFile.name
             val titlesToHandle =
@@ -177,11 +185,35 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
     }
 
     override fun afterCheckEachProject(context: Context) {
-        checkFolder(context, titlesOfPreferenceScreens, PREFERENCES_ISSUE_MAX_LENGTH, PREFERENCES_ISSUE_MAX_LENGTH, PREFERENCES_ISSUE_TITLE_LENGTH, "Preference", PREFERENCES_TITLE_MAX_LENGTH)
-        checkFolder(context, titlesOfMenuScreens, MENU_ISSUE_MAX_LENGTH, MENU_ISSUE_MAX_LENGTH, MENU_ISSUE_TITLE_LENGTH, "Menu", MENU_TITLE_MAX_LENGTH)
+        checkFolder(
+            context,
+            titlesOfPreferenceScreens,
+            PREFERENCES_ISSUE_MAX_LENGTH,
+            PREFERENCES_ISSUE_MAX_LENGTH,
+            PREFERENCES_ISSUE_TITLE_LENGTH,
+            "Preference",
+            PREFERENCES_TITLE_MAX_LENGTH
+        )
+        checkFolder(
+            context,
+            titlesOfMenuScreens,
+            MENU_ISSUE_MAX_LENGTH,
+            MENU_ISSUE_MAX_LENGTH,
+            MENU_ISSUE_TITLE_LENGTH,
+            "Menu",
+            MENU_TITLE_MAX_LENGTH
+        )
     }
 
-    fun checkFolder(context: Context, titles: Set<String>, missingMaxLengthIssueIssue: Issue, wrongMaxLengthIssue: Issue, stringTooLongIssue: Issue, folder: String, maxLength: Int) {
+    fun checkFolder(
+        context: Context,
+        titles: Set<String>,
+        missingMaxLengthIssueIssue: Issue,
+        wrongMaxLengthIssue: Issue,
+        stringTooLongIssue: Issue,
+        folder: String,
+        maxLength: Int
+    ) {
         for (title in titles) {
             val stringHandle = stringResources[title] ?: throw IllegalArgumentException(title)
             val stringElement: Element = stringHandle.clientData as Element
@@ -189,11 +221,25 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                 val message = String.format(Locale.ENGLISH, "$folder title '%s' is missing maxLength=\"%d\" attribute.", title, maxLength)
                 context.report(missingMaxLengthIssueIssue, stringHandle.resolve(), message)
             } else if (stringElement.getAttribute(ATTR_MAX_LENGTH).toInt() > maxLength) {
-                val message = String.format(Locale.ENGLISH, "$folder title '%s' has maxLength=\"%s\". Its max length should be at most %d.", title, stringElement.getAttribute(ATTR_MAX_LENGTH), maxLength)
+                val message =
+                    String.format(
+                        Locale.ENGLISH,
+                        "$folder title '%s' has maxLength=\"%s\". Its max length should be at most %d.",
+                        title,
+                        stringElement.getAttribute(ATTR_MAX_LENGTH),
+                        maxLength
+                    )
                 context.report(wrongMaxLengthIssue, stringHandle.resolve(), message)
             }
             if (stringElement.textContent.length > maxLength) {
-                val message = String.format(Locale.ENGLISH, "$folder title '%s' must be less than %d characters (currently %d).", title, maxLength, stringElement.textContent.length)
+                val message =
+                    String.format(
+                        Locale.ENGLISH,
+                        "$folder title '%s' must be less than %d characters (currently %d).",
+                        title,
+                        maxLength,
+                        stringElement.textContent.length
+                    )
                 context.report(stringTooLongIssue, stringHandle.resolve(), message)
             }
         }

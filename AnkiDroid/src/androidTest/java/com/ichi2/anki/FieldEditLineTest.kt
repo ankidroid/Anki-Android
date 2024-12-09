@@ -26,11 +26,12 @@ import java.util.concurrent.atomic.AtomicReference
 class FieldEditLineTest : NoteEditorTest() {
     @Test
     fun testSetters() {
-        val line = fieldEditLine().apply {
-            setContent("Hello", true)
-            name = "Name"
-            setOrd(5)
-        }
+        val line =
+            fieldEditLine().apply {
+                setContent("Hello", true)
+                name = "Name"
+                setOrd(5)
+            }
         val text = line.editText
         assertThat(text.ord, equalTo(5))
         assertThat(text.text.toString(), equalTo("Hello"))
@@ -39,11 +40,12 @@ class FieldEditLineTest : NoteEditorTest() {
 
     @Test
     fun testSaveRestore() {
-        val toSave = fieldEditLine().apply {
-            setContent("Hello", true)
-            name = "Name"
-            setOrd(5)
-        }
+        val toSave =
+            fieldEditLine().apply {
+                setContent("Hello", true)
+                name = "Name"
+                setOrd(5)
+            }
         val b = toSave.onSaveInstanceState()
 
         val restored = fieldEditLine()

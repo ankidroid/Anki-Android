@@ -81,7 +81,6 @@ import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentB
 @UiThread
 @KotlinCleanup("set activityName")
 open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivityProvider {
-
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
      *
@@ -103,7 +102,9 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         activityName = javaClass.simpleName
     }
 
-    constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId) {
+    constructor(
+        @LayoutRes contentLayoutId: Int
+    ) : super(contentLayoutId) {
         activityName = javaClass.simpleName
     }
 
@@ -185,9 +186,10 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
      * By default it handles [SdCardReceiver.MEDIA_EJECT], and shows/dismisses dialogs when an SD
      * card is ejected/remounted (collection is saved beforehand by [SdCardReceiver])
      */
-    protected open val broadcastsActions = mapOf(
-        SdCardReceiver.MEDIA_EJECT to { onSdCardNotMounted() }
-    )
+    protected open val broadcastsActions =
+        mapOf(
+            SdCardReceiver.MEDIA_EJECT to { onSdCardNotMounted() }
+        )
 
     /**
      * Register a broadcast receiver, associating an intent to an action as in [broadcastsActions].
@@ -198,15 +200,19 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
             // Receiver already registered
             return
         }
-        broadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                broadcastsActions[intent.action]?.invoke()
+        broadcastReceiver =
+            object : BroadcastReceiver() {
+                override fun onReceive(
+                    context: Context,
+                    intent: Intent
+                ) {
+                    broadcastsActions[intent.action]?.invoke()
+                }
+            }.also {
+                val iFilter = IntentFilter()
+                broadcastsActions.keys.map(iFilter::addAction)
+                registerReceiverCompat(it, iFilter, ContextCompat.RECEIVER_EXPORTED)
             }
-        }.also {
-            val iFilter = IntentFilter()
-            broadcastsActions.keys.map(iFilter::addAction)
-            registerReceiverCompat(it, iFilter, ContextCompat.RECEIVER_EXPORTED)
-        }
     }
 
     protected fun onSdCardNotMounted() {
@@ -253,14 +259,20 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         super.setContentView(view)
     }
 
-    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
+    override fun setContentView(
+        view: View?,
+        params: ViewGroup.LayoutParams?
+    ) {
         if (animationDisabled()) {
             view?.clearAnimation()
         }
         super.setContentView(view, params)
     }
 
-    override fun addContentView(view: View?, params: ViewGroup.LayoutParams?) {
+    override fun addContentView(
+        view: View?,
+        params: ViewGroup.LayoutParams?
+    ) {
         if (animationDisabled()) {
             view?.clearAnimation()
         }
@@ -317,7 +329,10 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         view.clearAnimation()
     }
 
-    protected fun enableViewAnimation(view: View, animation: Animation?) {
+    protected fun enableViewAnimation(
+        view: View,
+        animation: Animation?
+    ) {
         if (animationDisabled()) {
             disableViewAnimation(view)
         } else {
@@ -416,22 +431,24 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         }
         val toolbarColor = MaterialColors.getColor(this, R.attr.appBarColor, 0)
         val navBarColor = MaterialColors.getColor(this, R.attr.customTabNavBarColor, 0)
-        val colorSchemeParams = CustomTabColorSchemeParams.Builder()
-            .setToolbarColor(toolbarColor)
-            .setNavigationBarColor(navBarColor)
-            .build()
-        val builder = CustomTabsIntentBuilder(customTabActivityHelper.session)
-            .setShowTitle(true)
-            .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
-            .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
-            .setCloseButtonIcon(
-                BitmapFactory.decodeResource(
-                    this.resources,
-                    R.drawable.ic_back_arrow_custom_tab
+        val colorSchemeParams =
+            CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(toolbarColor)
+                .setNavigationBarColor(navBarColor)
+                .build()
+        val builder =
+            CustomTabsIntentBuilder(customTabActivityHelper.session)
+                .setShowTitle(true)
+                .setStartAnimations(this, R.anim.slide_right_in, R.anim.slide_left_out)
+                .setExitAnimations(this, R.anim.slide_left_in, R.anim.slide_right_out)
+                .setCloseButtonIcon(
+                    BitmapFactory.decodeResource(
+                        this.resources,
+                        R.drawable.ic_back_arrow_custom_tab
+                    )
                 )
-            )
-            .setColorScheme(customTabsColorScheme)
-            .setDefaultColorSchemeParams(colorSchemeParams)
+                .setColorScheme(customTabsColorScheme)
+                .setDefaultColorSchemeParams(colorSchemeParams)
         val customTabsIntent = builder.build()
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent)
         CustomTabActivityHelper.openCustomTab(this, customTabsIntent, url, CustomTabsFallback())
@@ -441,18 +458,21 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         openUrl(Uri.parse(urlString))
     }
 
-    fun openUrl(@StringRes url: Int) {
+    fun openUrl(
+        @StringRes url: Int
+    ) {
         openUrl(getString(url))
     }
 
     private val customTabsColorScheme: Int
-        get() = if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
-            COLOR_SCHEME_SYSTEM
-        } else if (Themes.currentTheme.isNightMode) {
-            COLOR_SCHEME_DARK
-        } else {
-            COLOR_SCHEME_LIGHT
-        }
+        get() =
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
+                COLOR_SCHEME_SYSTEM
+            } else if (Themes.currentTheme.isNightMode) {
+                COLOR_SCHEME_DARK
+            } else {
+                COLOR_SCHEME_LIGHT
+            }
 
     /**
      * Calls [.showAsyncDialogFragment] internally, using the channel
@@ -518,23 +538,25 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
             .toInt() <= PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
-            val ticker: String? = if (title == resources.getString(R.string.app_name)) {
-                message
-            } else {
-                title
-            }
+            val ticker: String? =
+                if (title == resources.getString(R.string.app_name)) {
+                    message
+                } else {
+                    title
+                }
             // Build basic notification
-            val builder = NotificationCompat.Builder(
-                this,
-                channel.id
-            )
-                .setSmallIcon(R.drawable.ic_star_notify)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setColor(this.getColor(R.color.material_light_blue_500))
-                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setTicker(ticker)
+            val builder =
+                NotificationCompat.Builder(
+                    this,
+                    channel.id
+                )
+                    .setSmallIcon(R.drawable.ic_star_notify)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setColor(this.getColor(R.color.material_light_blue_500))
+                    .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .setTicker(ticker)
             // Enable vibrate and blink if set in preferences
             if (prefs.getBoolean("widgetVibrate", false)) {
                 builder.setVibrate(longArrayOf(1000, 1000, 1000))
@@ -545,13 +567,14 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
             // Creates an explicit intent for an Activity in your app
             val resultIntent = Intent(this, DeckPicker::class.java)
             resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val resultPendingIntent = PendingIntentCompat.getActivity(
-                this,
-                0,
-                resultIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT,
-                false
-            )
+            val resultPendingIntent =
+                PendingIntentCompat.getActivity(
+                    this,
+                    0,
+                    resultIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT,
+                    false
+                )
             builder.setContentIntent(resultPendingIntent)
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             // mId allows you to update the notification later on.
@@ -560,7 +583,10 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     }
 
     // Show dialogs to deal with database loading issues etc
-    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType, exceptionData: CustomExceptionData? = null) {
+    open fun showDatabaseErrorDialog(
+        errorDialogType: DatabaseErrorDialogType,
+        exceptionData: CustomExceptionData? = null
+    ) {
         val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType, exceptionData)
         showAsyncDialogFragment(newFragment)
     }
@@ -571,9 +597,10 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
      * @throws IllegalStateException if the bar could not be enabled
      */
     protected fun enableToolbar(): ActionBar {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-            ?: // likely missing "<include layout="@layout/toolbar" />"
-            throw IllegalStateException("Unable to find toolbar")
+        val toolbar =
+            findViewById<Toolbar>(R.id.toolbar)
+                ?: // likely missing "<include layout="@layout/toolbar" />"
+                throw IllegalStateException("Unable to find toolbar")
         setSupportActionBar(toolbar)
         return supportActionBar!!
     }
@@ -585,9 +612,10 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
      * @throws IllegalStateException if the bar could not be enabled
      */
     protected fun enableToolbar(view: View): ActionBar {
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-            ?: // likely missing "<include layout="@layout/toolbar" />"
-            throw IllegalStateException("Unable to find toolbar: $view")
+        val toolbar =
+            view.findViewById<Toolbar>(R.id.toolbar)
+                ?: // likely missing "<include layout="@layout/toolbar" />"
+                throw IllegalStateException("Unable to find toolbar: $view")
         setSupportActionBar(toolbar)
         return supportActionBar!!
     }
@@ -600,7 +628,9 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
 
     /** @see Window.setNavigationBarColor */
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
-    fun setNavigationBarColor(@AttrRes attr: Int) {
+    fun setNavigationBarColor(
+        @AttrRes attr: Int
+    ) {
         window.navigationBarColor = Themes.getColorFromAttr(this, attr)
     }
 
@@ -637,18 +667,22 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
      * Get current activity keyboard shortcuts
      */
     fun getShortcuts(): List<KeyboardShortcutGroup> {
-        val generalShortcutGroup = ShortcutGroup(
-            listOf(
-                shortcut("Alt+K", R.string.show_keyboard_shortcuts_dialog),
-                shortcut("Ctrl+Z", R.string.undo)
-            ),
-            R.string.pref_cat_general
-        ).toShortcutGroup(this)
+        val generalShortcutGroup =
+            ShortcutGroup(
+                listOf(
+                    shortcut("Alt+K", R.string.show_keyboard_shortcuts_dialog),
+                    shortcut("Ctrl+Z", R.string.undo)
+                ),
+                R.string.pref_cat_general
+            ).toShortcutGroup(this)
 
         return listOfNotNull(shortcuts?.toShortcutGroup(this), generalShortcutGroup)
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent
+    ): Boolean {
         if (event.isAltPressed && keyCode == KeyEvent.KEYCODE_K) {
             showKeyboardShortcutsDialog()
             return true
@@ -687,7 +721,6 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         get(): ShortcutGroup? = null
 
     companion object {
-
         /** Extra key to set the finish animation of an activity  */
         const val FINISH_ANIMATION_EXTRA = "finishAnimation"
 

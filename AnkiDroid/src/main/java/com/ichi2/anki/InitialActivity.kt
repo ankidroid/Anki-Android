@@ -50,28 +50,29 @@ object InitialActivity {
             return StartupFailure.WebviewFailed
         }
 
-        val failure = try {
-            CollectionManager.getColUnsafe()
-            return null
-        } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
-            Timber.w(e)
-            StartupFailure.DatabaseLocked
-        } catch (e: BackendException.BackendDbException.BackendDbFileTooNewException) {
-            Timber.w(e)
-            StartupFailure.FutureAnkidroidVersion
-        } catch (e: SQLiteFullException) {
-            Timber.w(e)
-            StartupFailure.DiskFull
-        } catch (e: StorageAccessException) {
-            // Same handling as the fall through, but without the exception report
-            // These are now handled with a dialog and don't generate actionable reports
-            Timber.w(e)
-            StartupFailure.DBError(e)
-        } catch (e: Exception) {
-            Timber.w(e)
-            CrashReportService.sendExceptionReport(e, "InitialActivity::getStartupFailureType")
-            StartupFailure.DBError(e)
-        }
+        val failure =
+            try {
+                CollectionManager.getColUnsafe()
+                return null
+            } catch (e: BackendException.BackendDbException.BackendDbLockedException) {
+                Timber.w(e)
+                StartupFailure.DatabaseLocked
+            } catch (e: BackendException.BackendDbException.BackendDbFileTooNewException) {
+                Timber.w(e)
+                StartupFailure.FutureAnkidroidVersion
+            } catch (e: SQLiteFullException) {
+                Timber.w(e)
+                StartupFailure.DiskFull
+            } catch (e: StorageAccessException) {
+                // Same handling as the fall through, but without the exception report
+                // These are now handled with a dialog and don't generate actionable reports
+                Timber.w(e)
+                StartupFailure.DBError(e)
+            } catch (e: Exception) {
+                Timber.w(e)
+                CrashReportService.sendExceptionReport(e, "InitialActivity::getStartupFailureType")
+                StartupFailure.DBError(e)
+            }
 
         if (!AnkiDroidApp.isSdCardMounted) {
             return StartupFailure.SDCardNotMounted
@@ -84,7 +85,10 @@ object InitialActivity {
 
     /** @return Whether any preferences were upgraded
      */
-    fun upgradePreferences(context: Context, previousVersionCode: Long): Boolean {
+    fun upgradePreferences(
+        context: Context,
+        previousVersionCode: Long
+    ): Boolean {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
     }
 
@@ -117,8 +121,7 @@ object InitialActivity {
      * false if the app was launched for the second time after a successful initialisation
      * false if the app was launched after an update
      */
-    fun wasFreshInstall(preferences: SharedPreferences) =
-        "" == preferences.getString("lastVersion", "")
+    fun wasFreshInstall(preferences: SharedPreferences) = "" == preferences.getString("lastVersion", "")
 
     /** Sets the preference stating that the latest version has been applied  */
     fun setUpgradedToLatestVersion(preferences: SharedPreferences) {
@@ -137,11 +140,17 @@ object InitialActivity {
 
     sealed class StartupFailure {
         object SDCardNotMounted : StartupFailure()
+
         object DirectoryNotAccessible : StartupFailure()
+
         object FutureAnkidroidVersion : StartupFailure()
+
         class DBError(val exception: Exception) : StartupFailure()
+
         object DatabaseLocked : StartupFailure()
+
         object WebviewFailed : StartupFailure()
+
         object DiskFull : StartupFailure()
     }
 }
@@ -182,7 +191,7 @@ enum class PermissionSet(val permissions: List<String>, val permissionsFragment:
         permissionsFragment = TiramisuPermissionsFragment::class.java
     ),
 
-    APP_PRIVATE(emptyList(), null);
+    APP_PRIVATE(emptyList(), null)
 }
 
 /**

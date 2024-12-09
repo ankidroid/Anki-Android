@@ -42,7 +42,6 @@ import kotlinx.coroutines.launch
  */
 class FlagAdapter(private val lifecycleScope: CoroutineScope) :
     ListAdapter<FlagItem, FlagAdapter.FlagViewHolder>(FlagItemDiffCallback()) {
-
     inner class FlagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val flagImageView: ImageView = itemView.findViewById(R.id.ic_flag)
         val flagNameText: TextView = itemView.findViewById(R.id.flag_name)
@@ -55,13 +54,19 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
         val flagNameEditLayout: LinearLayout = itemView.findViewById(R.id.edit_flag_name_layout)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlagViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): FlagViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.edit_flag_item, parent, false)
         return FlagViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: FlagViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FlagViewHolder,
+        position: Int
+    ) {
         val flagItem = getItem(position)
 
         holder.flagImageView.setImageResource(flagItem.icon)
@@ -103,11 +108,17 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
     }
 
     class FlagItemDiffCallback : DiffUtil.ItemCallback<FlagItem>() {
-        override fun areItemsTheSame(oldItem: FlagItem, newItem: FlagItem): Boolean {
+        override fun areItemsTheSame(
+            oldItem: FlagItem,
+            newItem: FlagItem
+        ): Boolean {
             return oldItem.flag == newItem.flag
         }
 
-        override fun areContentsTheSame(oldItem: FlagItem, newItem: FlagItem): Boolean {
+        override fun areContentsTheSame(
+            oldItem: FlagItem,
+            newItem: FlagItem
+        ): Boolean {
             return oldItem.title == newItem.title
         }
     }

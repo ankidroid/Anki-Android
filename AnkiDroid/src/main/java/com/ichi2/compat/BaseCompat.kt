@@ -48,7 +48,7 @@ import kotlin.time.Duration
 @Suppress("Deprecation")
 open class BaseCompat : Compat {
     // Until API26, ignore notification channels
-    override fun setupNotificationChannel(context: Context) { /* pre-API26, do nothing */
+    override fun setupNotificationChannel(context: Context) { // pre-API26, do nothing
     }
 
     // Until API26, tooltips cannot be defined declaratively in layouts
@@ -57,14 +57,20 @@ open class BaseCompat : Compat {
     }
 
     // Until API 26 just specify time, after that specify effect also
-    override fun vibrate(context: Context, duration: Duration) {
+    override fun vibrate(
+        context: Context,
+        duration: Duration
+    ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
         vibratorManager?.vibrate(duration.inWholeMilliseconds)
     }
 
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
-    override fun copyFile(source: String, target: String) {
+    override fun copyFile(
+        source: String,
+        target: String
+    ) {
         try {
             FileInputStream(source).use { fileInputStream -> copyFile(fileInputStream, target) }
         } catch (e: IOException) {
@@ -75,7 +81,10 @@ open class BaseCompat : Compat {
 
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
-    override fun copyFile(source: String, target: OutputStream): Long {
+    override fun copyFile(
+        source: String,
+        target: OutputStream
+    ): Long {
         var count: Long
         try {
             FileInputStream(source).use { fileInputStream -> count = copyFile(fileInputStream, target) }
@@ -88,7 +97,10 @@ open class BaseCompat : Compat {
 
     // Until API 26 do the copy using streams
     @Throws(IOException::class)
-    override fun copyFile(source: InputStream, target: String): Long {
+    override fun copyFile(
+        source: InputStream,
+        target: String
+    ): Long {
         var bytesCopied: Long
         try {
             FileOutputStream(target).use { targetStream -> bytesCopied = copyFile(source, targetStream) }
@@ -101,7 +113,10 @@ open class BaseCompat : Compat {
 
     // Internal implementation under the API26 copyFile APIs
     @Throws(IOException::class)
-    private fun copyFile(source: InputStream, target: OutputStream): Long {
+    private fun copyFile(
+        source: InputStream,
+        target: OutputStream
+    ): Long {
         // balance memory and performance, it appears 32k is the best trade-off
         // https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
         val buffer = ByteArray(1024 * 32)
@@ -118,8 +133,8 @@ open class BaseCompat : Compat {
 
     // Until API 26
     /* This method actually read the full content of the directory.
-    * It is linear in time and space in the number of file and directory in the directory.
-    * However, hasNext and next should be constant in time and space. */
+     * It is linear in time and space in the number of file and directory in the directory.
+     * However, hasNext and next should be constant in time and space. */
     @Throws(IOException::class)
     override fun contentOfDirectory(directory: File): FileStream {
         val paths = directory.listFiles()
@@ -140,6 +155,7 @@ open class BaseCompat : Compat {
             }
 
             private var mOrd = 0
+
             override operator fun hasNext(): Boolean {
                 return mOrd < length
             }
@@ -177,7 +193,14 @@ open class BaseCompat : Compat {
 
     // Until API 29
     @Throws(FileNotFoundException::class)
-    override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: Bitmap.CompressFormat, quality: Int): Uri {
+    override fun saveImage(
+        context: Context,
+        bitmap: Bitmap,
+        baseFileName: String,
+        extension: String,
+        format: Bitmap.CompressFormat,
+        quality: Int
+    ): Uri {
         val pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val ankiDroidDirectory = File(pictures, "AnkiDroid")
         if (!ankiDroidDirectory.exists()) {
@@ -244,8 +267,11 @@ open class BaseCompat : Compat {
     }
 
     // Until API 33
-    override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
-        packageManager.getPackageInfo(packageName, flags.value.toInt())
+    override fun getPackageInfo(
+        packageManager: PackageManager,
+        packageName: String,
+        flags: PackageInfoFlagsCompat
+    ): PackageInfo? = packageManager.getPackageInfo(packageName, flags.value.toInt())
 
     // Until API 33
     @Suppress("UNCHECKED_CAST")

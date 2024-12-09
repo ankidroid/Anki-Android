@@ -21,12 +21,12 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ClipboardUtilTest {
-
     private lateinit var clipboardManager: ClipboardManager
 
     @Before
     fun setUp() {
-        clipboardManager = ApplicationProvider.getApplicationContext<Context>()
+        clipboardManager =
+            ApplicationProvider.getApplicationContext<Context>()
             .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 

@@ -41,7 +41,6 @@ import timber.log.Timber
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment : DialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val entries = buildImportEntries()
         return AlertDialog.Builder(requireActivity())
@@ -98,7 +97,8 @@ class ImportFileSelectionFragment : DialogFragment() {
                             ImportFileType.CSV,
                             multiple = false,
                             mimeType = "*/*",
-                            extraMimes = arrayOf(
+                            extraMimes =
+                            arrayOf(
                                 TEXT_PLAIN,
                                 "text/comma-separated-values",
                                 "text/csv",
@@ -130,7 +130,9 @@ class ImportFileSelectionFragment : DialogFragment() {
     ) : Parcelable
 
     enum class ImportFileType {
-        APKG, COLPKG, CSV
+        APKG,
+        COLPKG,
+        CSV
     }
 
     interface ApkgImportResultLauncherProvider {
@@ -144,9 +146,10 @@ class ImportFileSelectionFragment : DialogFragment() {
     companion object {
         private const val ARG_IMPORT_OPTIONS = "arg_import_options"
 
-        fun newInstance(options: ImportOptions) = ImportFileSelectionFragment().apply {
-            arguments = bundleOf(ARG_IMPORT_OPTIONS to options)
-        }
+        fun newInstance(options: ImportOptions) =
+            ImportFileSelectionFragment().apply {
+                arguments = bundleOf(ARG_IMPORT_OPTIONS to options)
+            }
 
         /**
          * Calls through the system with an [Intent] to pick a file to be imported.

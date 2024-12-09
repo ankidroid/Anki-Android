@@ -35,7 +35,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerWidgetConfigTest : RobolectricTest() {
-
     private lateinit var activity: DeckPickerWidgetConfig
     private val widgetPreferences = DeckPickerWidgetPreferences(targetContext)
 
@@ -50,9 +49,10 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
         super.setUp()
         ensureNonEmptyCollection()
 
-        val intent = Intent(targetContext, DeckPickerWidgetConfig::class.java).apply {
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1)
-        }
+        val intent =
+            Intent(targetContext, DeckPickerWidgetConfig::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 1)
+            }
 
         activity = startActivityNormallyOpenCollectionWithIntent(DeckPickerWidgetConfig::class.java, intent)
 
@@ -87,21 +87,22 @@ class DeckPickerWidgetConfigTest : RobolectricTest() {
      * `RecyclerView` displays the correct number of items based on the saved preferences.
      */
     @Test
-    fun testLoadSavedPreferences() = runTest {
-        // Save decks to preferences
-        val deckIds = listOf(1L)
-        widgetPreferences.saveSelectedDecks(1, deckIds.map { it.toString() })
+    fun testLoadSavedPreferences() =
+        runTest {
+            // Save decks to preferences
+            val deckIds = listOf(1L)
+            widgetPreferences.saveSelectedDecks(1, deckIds.map { it.toString() })
 
-        // Load preferences
-        activity.updateViewWithSavedPreferences()
+            // Load preferences
+            activity.updateViewWithSavedPreferences()
 
-        // Get the RecyclerView and its adapter
-        val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks)
-        val adapter = recyclerView.adapter
+            // Get the RecyclerView and its adapter
+            val recyclerView = activity.findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks)
+            val adapter = recyclerView.adapter
 
-        // Verify the adapter has the correct item count
-        assertThat(adapter?.itemCount, equalTo(deckIds.size))
-    }
+            // Verify the adapter has the correct item count
+            assertThat(adapter?.itemCount, equalTo(deckIds.size))
+        }
 
     /**
      * Tests the visibility of different views based on the selected decks.

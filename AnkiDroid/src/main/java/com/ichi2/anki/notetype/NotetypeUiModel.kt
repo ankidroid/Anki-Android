@@ -31,8 +31,7 @@ internal data class ManageNoteTypeUiModel(
     val useCount: Int
 )
 
-internal fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel =
-    ManageNoteTypeUiModel(id, name, useCount)
+internal fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel = ManageNoteTypeUiModel(id, name, useCount)
 
 /**
  * Data holder class which contains the data to display a single note type in [AddNewNotesType]'s
@@ -51,5 +50,4 @@ internal data class AddNotetypeUiModel(
 /**
  * A note type from current collection as a [AddNotetypeUiModel].
  */
-internal fun NotetypeNameId.toUiModel(): AddNotetypeUiModel =
-    AddNotetypeUiModel(id, name, false)
+internal fun NotetypeNameId.toUiModel(): AddNotetypeUiModel = AddNotetypeUiModel(id, name, false)

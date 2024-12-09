@@ -40,51 +40,53 @@ import timber.log.Timber
 
 @NeedsTest("15130: pressing back: icon + button should return to options if the manual is open")
 class DeckOptions : PageFragment() {
-
     // handle going back from the manual
-    private val onBackCallback = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {
-            Timber.v("webView: navigating back")
-            webView.goBack()
-        }
-    }
-
-    // HACK: this is enabled unconditionally as we currently cannot get the 'changed' status
-    private val onBackSaveCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            Timber.v("DeckOptions: showing 'discard changes'")
-            DiscardChangesDialog.showDialog(requireContext()) {
-                Timber.i("OK button pressed to confirm discard changes")
-                this.isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+    private val onBackCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                Timber.v("webView: navigating back")
+                webView.goBack()
             }
         }
-    }
+
+    // HACK: this is enabled unconditionally as we currently cannot get the 'changed' status
+    private val onBackSaveCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Timber.v("DeckOptions: showing 'discard changes'")
+                DiscardChangesDialog.showDialog(requireContext()) {
+                    Timber.i("OK button pressed to confirm discard changes")
+                    this.isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
 
     @NeedsTest("disabled by default")
     @NeedsTest("enabled if a modal is displayed")
     @NeedsTest("disabled if a modal is hidden")
     @NeedsTest("disabled if back button is pressed: no error")
     @NeedsTest("disabled if back button is pressed: with error closing modal")
-    private val onCloseBootstrapModalCallback = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {
-            Timber.i("back button: closing displayed modal")
-            try {
-                webView.evaluateJavascript(
-                    """
-                document.getElementsByClassName("modal show")[0]
-                .getElementsByClassName("btn-close")[0].click()
-                    """.trimIndent(),
-                    {}
-                )
-            } catch (e: Exception) {
-                CrashReportService.sendExceptionReport(e, "DeckOptions:onCloseBootstrapModalCallback")
-            } finally {
-                // Even if we fail, disable the callback so the next call succeeds
-                this.isEnabled = false
+    private val onCloseBootstrapModalCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                Timber.i("back button: closing displayed modal")
+                try {
+                    webView.evaluateJavascript(
+                        """
+                        document.getElementsByClassName("modal show")[0]
+                        .getElementsByClassName("btn-close")[0].click()
+                        """.trimIndent(),
+                        {}
+                    )
+                } catch (e: Exception) {
+                    CrashReportService.sendExceptionReport(e, "DeckOptions:onCloseBootstrapModalCallback")
+                } finally {
+                    // Even if we fail, disable the callback so the next call succeeds
+                    this.isEnabled = false
+                }
             }
         }
-    }
 
     /**
      * Listens to bootstrap open and close events
@@ -136,14 +138,15 @@ class DeckOptions : PageFragment() {
                 }
             }
         }.apply {
-            onPageFinishedCallback = OnPageFinishedCallback { view ->
-                Timber.v("canGoBack: %b", view.canGoBack())
-                onBackCallback.isEnabled = view.canGoBack()
-                // reset the modal state on page load
-                // clicking a link to the online manual closes the modal and reloads the page
-                onCloseBootstrapModalCallback.isEnabled = false
-                listenToModalShowHideEvents()
-            }
+            onPageFinishedCallback =
+                OnPageFinishedCallback { view ->
+                    Timber.v("canGoBack: %b", view.canGoBack())
+                    onBackCallback.isEnabled = view.canGoBack()
+                    // reset the modal state on page load
+                    // clicking a link to the online manual closes the modal and reloads the page
+                    onCloseBootstrapModalCallback.isEnabled = false
+                    listenToModalShowHideEvents()
+                }
         }
     }
 
@@ -153,7 +156,10 @@ class DeckOptions : PageFragment() {
     private fun listenToModalShowHideEvents() {
         // this function is called multiple times on one document, only register the listener once
         // we use the command name as this is a valid identifier
-        fun getListenerJs(event: String, command: String): String =
+        fun getListenerJs(
+            event: String,
+            command: String
+        ): String =
             """
             if (!document.added$command) {
                 console.log("listening to '$command'");
@@ -171,7 +177,10 @@ class DeckOptions : PageFragment() {
     }
 
     companion object {
-        fun getIntent(context: Context, deckId: Long): Intent {
+        fun getIntent(
+            context: Context,
+            deckId: Long
+        ): Intent {
             val title = context.getString(R.string.menu__deck_options)
             return getIntent(context, "deck-options/$deckId", title, DeckOptions::class)
         }
@@ -179,29 +188,32 @@ class DeckOptions : PageFragment() {
 }
 
 suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
-    val output = withContext(Dispatchers.Main) {
-        withProgress(
-            extractProgress = {
-                text = if (progress.hasComputeParams()) {
-                    val tr = CollectionManager.TR
-                    val value = progress.computeParams
-                    val label = tr.deckConfigOptimizingPreset(
-                        currentCount = value.currentPreset,
-                        totalCount = value.totalPresets
-                    )
-                    val pct = if (value.total > 0) (value.current / value.total * 100) else 0
-                    val reviewsLabel = tr.deckConfigPercentOfReviews(pct = pct.toString(), reviews = value.reviews)
-                    label + "\n" + reviewsLabel
-                } else {
-                    getString(R.string.dialog_processing)
+    val output =
+        withContext(Dispatchers.Main) {
+            withProgress(
+                extractProgress = {
+                    text =
+                        if (progress.hasComputeParams()) {
+                            val tr = CollectionManager.TR
+                            val value = progress.computeParams
+                            val label =
+                                tr.deckConfigOptimizingPreset(
+                                    currentCount = value.currentPreset,
+                                    totalCount = value.totalPresets
+                                )
+                            val pct = if (value.total > 0) (value.current / value.total * 100) else 0
+                            val reviewsLabel = tr.deckConfigPercentOfReviews(pct = pct.toString(), reviews = value.reviews)
+                            label + "\n" + reviewsLabel
+                        } else {
+                            getString(R.string.dialog_processing)
+                        }
+                }
+            ) {
+                withContext(Dispatchers.IO) {
+                    CollectionManager.withCol { updateDeckConfigsRaw(input) }
                 }
             }
-        ) {
-            withContext(Dispatchers.IO) {
-                CollectionManager.withCol { updateDeckConfigsRaw(input) }
-            }
         }
-    }
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) { finish() }
     return output

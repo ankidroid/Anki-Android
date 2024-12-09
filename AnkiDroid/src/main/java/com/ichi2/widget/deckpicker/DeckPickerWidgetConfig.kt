@@ -60,7 +60,6 @@ import timber.log.Timber
  * User Can remove, reorder decks and reconfigure by holding the widget.
  */
 class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackbarBuilderProvider {
-
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var deckPickerWidgetPreferences: DeckPickerWidgetPreferences
@@ -100,20 +99,21 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         }
 
         // Check if the collection is empty before proceeding and if the collection is empty, show a toast instead of the configuration view.
-        this.initTask = lifecycleScope.launch {
-            if (isCollectionEmpty()) {
-                Timber.w("Closing: Collection is empty")
-                showThemedToast(
-                    this@DeckPickerWidgetConfig,
-                    R.string.app_not_initialized_new,
-                    false
-                )
-                finish()
-                return@launch
-            }
+        this.initTask =
+            lifecycleScope.launch {
+                if (isCollectionEmpty()) {
+                    Timber.w("Closing: Collection is empty")
+                    showThemedToast(
+                        this@DeckPickerWidgetConfig,
+                        R.string.app_not_initialized_new,
+                        false
+                    )
+                    finish()
+                    return@launch
+                }
 
-            initializeUIComponents()
-        }
+                initializeUIComponents()
+            }
     }
 
     fun showSnackbar(message: CharSequence) {
@@ -128,15 +128,16 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     }
 
     private fun initializeUIComponents() {
-        deckAdapter = WidgetConfigScreenAdapter { deck, position ->
-            deckAdapter.removeDeck(deck.deckId)
-            showSnackbar(R.string.deck_removed_from_widget)
-            updateViewVisibility()
-            updateFabVisibility()
-            updateDoneButtonVisibility()
-            hasUnsavedChanges = true
-            setUnsavedChanges(true)
-        }
+        deckAdapter =
+            WidgetConfigScreenAdapter { deck, position ->
+                deckAdapter.removeDeck(deck.deckId)
+                showSnackbar(R.string.deck_removed_from_widget)
+                updateViewVisibility()
+                updateFabVisibility()
+                updateDoneButtonVisibility()
+                hasUnsavedChanges = true
+                setUnsavedChanges(true)
+            }
 
         findViewById<RecyclerView>(R.id.recyclerViewSelectedDecks).apply {
             layoutManager = LinearLayoutManager(context)
@@ -160,32 +161,35 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
         registerReceiver(widgetRemovedReceiver, IntentFilter(AppWidgetManager.ACTION_APPWIDGET_DELETED))
 
-        onBackPressedCallback = object : OnBackPressedCallback(false) {
-            override fun handleOnBackPressed() {
-                if (hasUnsavedChanges) {
-                    DiscardChangesDialog.showDialog(
-                        context = this@DeckPickerWidgetConfig,
-                        positiveMethod = {
-                            // Set flag to indicate that changes are discarded
-                            hasUnsavedChanges = false
-                            finish()
-                        }
-                    )
-                } else {
-                    finish()
+        onBackPressedCallback =
+            object : OnBackPressedCallback(false) {
+                override fun handleOnBackPressed() {
+                    if (hasUnsavedChanges) {
+                        DiscardChangesDialog.showDialog(
+                            context = this@DeckPickerWidgetConfig,
+                            positiveMethod = {
+                                // Set flag to indicate that changes are discarded
+                                hasUnsavedChanges = false
+                                finish()
+                            }
+                        )
+                    } else {
+                        finish()
+                    }
                 }
             }
-        }
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         // Register the AdapterDataObserver if not already registered
         if (!isAdapterObserverRegistered) {
-            deckAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onChanged() {
-                    updateDoneButtonVisibility() // Update visibility when data changes
+            deckAdapter.registerAdapterDataObserver(
+                object : RecyclerView.AdapterDataObserver() {
+                    override fun onChanged() {
+                        updateDoneButtonVisibility() // Update visibility when data changes
+                    }
                 }
-            })
+            )
             isAdapterObserverRegistered = true
         }
     }
@@ -310,12 +314,13 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
 
     /** Displays the deck selection dialog with the provided list of decks. */
     private fun displayDeckSelectionDialog(decks: List<SelectableDeck>) {
-        val dialog = DeckSelectionDialog.newInstance(
-            title = getString(R.string.select_decks_title),
-            summaryMessage = null,
-            keepRestoreDefaultButton = false,
-            decks = decks
-        )
+        val dialog =
+            DeckSelectionDialog.newInstance(
+                title = getString(R.string.select_decks_title),
+                summaryMessage = null,
+                keepRestoreDefaultButton = false,
+                decks = decks
+            )
         dialog.show(supportFragmentManager, "DeckSelectionDialog")
     }
 
@@ -371,36 +376,43 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     }
 
     /** ItemTouchHelper callback for handling drag and drop of decks. */
-    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-        0
-    ) {
-        override fun getDragDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-            val selectedDeckCount = deckAdapter.itemCount
-            return if (selectedDeckCount > 1) {
-                super.getDragDirs(recyclerView, viewHolder)
-            } else {
-                0 // Disable drag if there's only one item
+    private val itemTouchHelperCallback =
+        object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            0
+        ) {
+            override fun getDragDirs(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
+                val selectedDeckCount = deckAdapter.itemCount
+                return if (selectedDeckCount > 1) {
+                    super.getDragDirs(recyclerView, viewHolder)
+                } else {
+                    0 // Disable drag if there's only one item
+                }
+            }
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.bindingAdapterPosition
+                val toPosition = target.bindingAdapterPosition
+                deckAdapter.moveDeck(fromPosition, toPosition)
+                hasUnsavedChanges = true
+                setUnsavedChanges(true)
+                return true
+            }
+
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
+            ) {
+                // No swipe action
             }
         }
-
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            val fromPosition = viewHolder.bindingAdapterPosition
-            val toPosition = target.bindingAdapterPosition
-            deckAdapter.moveDeck(fromPosition, toPosition)
-            hasUnsavedChanges = true
-            setUnsavedChanges(true)
-            return true
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            // No swipe action
-        }
-    }
 
     /**
      * Saves the selected deck IDs to SharedPreferences and triggers a widget update.
@@ -413,31 +425,37 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
         val selectedDecks = deckAdapter.deckIds.map { it }
         deckPickerWidgetPreferences.saveSelectedDecks(appWidgetId, selectedDecks.map { it.toString() })
 
-        val updateIntent = Intent(this, DeckPickerWidget::class.java).apply {
-            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
+        val updateIntent =
+            Intent(this, DeckPickerWidget::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(appWidgetId))
 
-            putExtra("deck_picker_widget_selected_deck_ids", selectedDecks.toList().toLongArray())
-        }
+                putExtra("deck_picker_widget_selected_deck_ids", selectedDecks.toList().toLongArray())
+            }
 
         sendBroadcast(updateIntent)
     }
 
     /** BroadcastReceiver to handle widget removal. */
-    private val widgetRemovedReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
-                return
-            }
+    private val widgetRemovedReceiver =
+        object : BroadcastReceiver() {
+            override fun onReceive(
+                context: Context?,
+                intent: Intent?
+            ) {
+                if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
+                    return
+                }
 
-            val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-            if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-                return
-            }
+                val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+                if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+                    return
+                }
 
-            context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
+                context?.let { deckPickerWidgetPreferences.deleteDeckData(appWidgetId) }
+            }
         }
-    }
+
     companion object {
         /**
          * Maximum number of decks allowed in the widget.

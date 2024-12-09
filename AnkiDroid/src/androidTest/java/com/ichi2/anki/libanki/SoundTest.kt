@@ -27,7 +27,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class SoundTest : InstrumentedTest() {
-
     @Test
     fun mp4IsDetected() {
         val mp4 = Shared.getTestFile(testContext, "anki-15872-valid-1.mp4")

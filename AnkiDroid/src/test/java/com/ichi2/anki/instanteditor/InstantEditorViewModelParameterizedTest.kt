@@ -34,12 +34,13 @@ class InstantEditorViewModelParameterizedTest : RobolectricTest() {
     var expected: String? = null
 
     @Test
-    fun `buildClozeText punctuation handling`() = runInstantEditorViewModelTest {
-        val result = buildClozeText(input!!)
-        assertEquals(expected, result)
-        val undone = buildClozeText(result)
-        assertEquals("applying buildClozeText twice should not change the input", input, undone)
-    }
+    fun `buildClozeText punctuation handling`() =
+        runInstantEditorViewModelTest {
+            val result = buildClozeText(input!!)
+            assertEquals(expected, result)
+            val undone = buildClozeText(result)
+            assertEquals("applying buildClozeText twice should not change the input", input, undone)
+        }
 
     companion object {
         @Parameterized.Parameters(name = "{0} -> {1}")

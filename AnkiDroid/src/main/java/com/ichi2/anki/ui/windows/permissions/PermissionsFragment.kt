@@ -33,7 +33,9 @@ import timber.log.Timber
  *
  * @see PermissionsActivity
  */
-abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
+abstract class PermissionsFragment(
+    @LayoutRes contentLayoutId: Int
+) : Fragment(contentLayoutId) {
     /**
      * All the [PermissionItem]s in the fragment.
      * Must be called ONLY AFTER [onCreateView]
@@ -65,7 +67,9 @@ abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(c
         )
     }
 
-    protected fun showToastAndOpenAppSettingsScreen(@StringRes message: Int) {
+    protected fun showToastAndOpenAppSettingsScreen(
+        @StringRes message: Int
+    ) {
         showThemedToast(requireContext(), message, false)
         openAppSettingsScreen()
     }
@@ -73,10 +77,11 @@ abstract class PermissionsFragment(@LayoutRes contentLayoutId: Int) : Fragment(c
     /** Opens the Android 'MANAGE_ALL_FILES' page if the device provides this feature */
     @RequiresApi(Build.VERSION_CODES.R)
     protected fun ActivityResultLauncher<Intent>.showManageAllFilesScreen() {
-        val intent = Intent(
-            Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-            Uri.fromParts("package", requireActivity().packageName, null)
-        )
+        val intent =
+            Intent(
+                Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                Uri.fromParts("package", requireActivity().packageName, null)
+            )
 
         // From the docs: [ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION]
         // In some cases, a matching Activity may not exist, so ensure you safeguard against this.

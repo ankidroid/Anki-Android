@@ -45,35 +45,37 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         val EXPLANATION_TRANSLATION_TYPO = "Typo in translation"
 
         private val implementation = Implementation(TranslationTypo::class.java, Scope.RESOURCE_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID_TRANSLATION_TYPO,
-            EXPLANATION_TRANSLATION_TYPO,
-            EXPLANATION_TRANSLATION_TYPO,
-            Constants.ANKI_XML_CATEGORY,
-            Constants.ANKI_XML_PRIORITY,
-            Constants.ANKI_XML_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID_TRANSLATION_TYPO,
+                EXPLANATION_TRANSLATION_TYPO,
+                EXPLANATION_TRANSLATION_TYPO,
+                Constants.ANKI_XML_CATEGORY,
+                Constants.ANKI_XML_PRIORITY,
+                Constants.ANKI_XML_SEVERITY,
+                implementation
+            )
 
         // copied from tools/localization/src/constants.ts
         // excludes marketdescription as it is .txt
-        private val I18N_FILES = listOf(
-            "01-core",
-            "02-strings",
-            "03-dialogs",
-            "04-network",
-            "05-feedback",
-            "06-statistics",
-            "07-cardbrowser",
-            "08-widget",
-            "09-backup",
-            "10-preferences",
-            "11-arrays",
-            "16-multimedia-editor",
-            "17-model-manager",
-            "18-standard-models",
-            "20-search-preference"
-        ).map { "$it.xml" }
+        private val I18N_FILES =
+            listOf(
+                "01-core",
+                "02-strings",
+                "03-dialogs",
+                "04-network",
+                "05-feedback",
+                "06-statistics",
+                "07-cardbrowser",
+                "08-widget",
+                "09-backup",
+                "10-preferences",
+                "11-arrays",
+                "16-multimedia-editor",
+                "17-model-manager",
+                "18-standard-models",
+                "20-search-preference"
+            ).map { "$it.xml" }
 
         // CrowdIn strings+ additional string XML which are not translated
         val STRING_XML_FILES = I18N_FILES + listOf("constants.xml", "sentence-case.xml")
@@ -84,7 +86,10 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
     override fun appliesTo(folderType: ResourceFolderType): Boolean =
         folderType == ResourceFolderType.XML || folderType == ResourceFolderType.VALUES
 
-    override fun visitElement(context: XmlContext, element: Element) {
+    override fun visitElement(
+        context: XmlContext,
+        element: Element
+    ) {
         // ignore files not containing strings
         if (!STRING_XML_FILES.contains(context.file.name)) {
             return
@@ -100,8 +105,9 @@ class TranslationTypo : ResourceXmlDetector(), XmlScanner {
         /** Helper function to report 'TranslationTypo' issues */
         fun Element.reportIssue(message: String) {
             val elementToReport = this
-            val crowdinEditUrl = crowdinContext?.getEditUrl(elementToReport)
-                ?.let { url -> "\n$url" } ?: ""
+            val crowdinEditUrl =
+                crowdinContext?.getEditUrl(elementToReport)
+                    ?.let { url -> "\n$url" } ?: ""
             context.report(
                 issue = ISSUE,
                 location = context.getElementLocation(elementToReport),

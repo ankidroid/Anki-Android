@@ -54,7 +54,6 @@ data class HelpItem(
      * @see [HelpDialog]
      */
     sealed class Action : Parcelable {
-
         /**
          * Action to open an url. Used to show the url for feedback or the manual.
          *
@@ -64,7 +63,9 @@ data class HelpItem(
         data class OpenUrl(val url: String) : Action()
 
         @Parcelize
-        data class OpenUrlResource(@StringRes val urlResourceId: Int) : Action()
+        data class OpenUrlResource(
+            @StringRes val urlResourceId: Int
+        ) : Action()
 
         @Parcelize
         data object SendReport : Action()

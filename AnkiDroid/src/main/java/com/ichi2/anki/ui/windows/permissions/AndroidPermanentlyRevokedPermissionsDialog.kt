@@ -47,13 +47,17 @@ object AndroidPermanentlyRevokedPermissionsDialog {
     fun show(context: AnkiActivity) {
         val listItemData = createNoStorageList()
 
-        val message = context.getString(
-            R.string.directory_revoked_after_inactivity,
-            "WRITE_EXTERNAL_STORAGE",
-            getCurrentAnkiDroidDirectory(context)
-        )
+        val message =
+            context.getString(
+                R.string.directory_revoked_after_inactivity,
+                "WRITE_EXTERNAL_STORAGE",
+                getCurrentAnkiDroidDirectory(context)
+            )
         AlertDialog.Builder(context).show {
-            listItemsAndMessage(message = message, listItemData.map { context.getString(it.stringRes) }) { dialog: DialogInterface, index: Int ->
+            listItemsAndMessage(
+                message = message,
+                listItemData.map { context.getString(it.stringRes) }
+            ) { dialog: DialogInterface, index: Int ->
                 val listItem = listItemData[index]
                 listItem.onClick(context)
                 if (listItem.dismissesDialog) {
@@ -64,10 +68,11 @@ object AndroidPermanentlyRevokedPermissionsDialog {
         }
     }
 
-    private fun getCurrentAnkiDroidDirectory(context: Context): String = try {
-        CollectionHelper.getCurrentAnkiDroidDirectory(context)
-    } catch (e: Exception) {
-        Timber.w(e)
-        context.getString(R.string.card_browser_unknown_deck_name)
-    }
+    private fun getCurrentAnkiDroidDirectory(context: Context): String =
+        try {
+            CollectionHelper.getCurrentAnkiDroidDirectory(context)
+        } catch (e: Exception) {
+            Timber.w(e)
+            context.getString(R.string.card_browser_unknown_deck_name)
+        }
 }

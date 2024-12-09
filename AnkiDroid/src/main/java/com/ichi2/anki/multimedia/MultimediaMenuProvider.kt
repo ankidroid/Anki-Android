@@ -36,8 +36,10 @@ class MultimediaMenuProvider(
     private val onCreateMenuCondition: ((Menu) -> Unit)? = null,
     private val onMenuItemClicked: (menuItem: MenuItem) -> Boolean
 ) : MenuProvider {
-
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater
+    ) {
         menu.clear()
         menuInflater.inflate(menuResId, menu)
 

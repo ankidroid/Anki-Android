@@ -94,7 +94,10 @@ fun Collection.exportCollectionPackage(
     reopen()
 }
 
-fun Collection.importAnkiPackage(packagePath: String, options: ImportAnkiPackageOptions): ImportResponse {
+fun Collection.importAnkiPackage(
+    packagePath: String,
+    options: ImportAnkiPackageOptions
+): ImportResponse {
     return backend.importAnkiPackage(packagePath, options)
 }
 
@@ -119,12 +122,13 @@ fun Collection.exportAnkiPackage(
     limit: ExportLimit,
     legacy: Boolean = true
 ) {
-    val options = exportAnkiPackageOptions {
-        this.withScheduling = withScheduling
-        this.withMedia = withMedia
-        this.legacy = legacy
-        this.withDeckConfigs = withDeckConfigs
-    }
+    val options =
+        exportAnkiPackageOptions {
+            this.withScheduling = withScheduling
+            this.withMedia = withMedia
+            this.legacy = legacy
+            this.withDeckConfigs = withDeckConfigs
+        }
     backend.exportAnkiPackage(outPath, options, limit)
 }
 
@@ -140,7 +144,11 @@ fun Collection.exportNotesCsv(
     backend.exportNoteCsv(outPath, withHtml, withTags, withDeck, withNotetype, withGuid, limit)
 }
 
-fun Collection.exportCardsCsv(outPath: String, withHtml: Boolean, limit: ExportLimit) {
+fun Collection.exportCardsCsv(
+    outPath: String,
+    withHtml: Boolean,
+    limit: ExportLimit
+) {
     backend.exportCardCsv(outPath, withHtml, limit)
 }
 

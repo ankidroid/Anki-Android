@@ -40,10 +40,11 @@ class CompatDeleteFileTest(
     companion object {
         @JvmStatic // required for Parameters
         @Parameterized.Parameters(name = "{1}")
-        fun data(): Iterable<Array<Any>> = sequence {
-            yield(arrayOf(BaseCompat(), "BaseCompat"))
-            yield(arrayOf(CompatV26(), "CompatV26"))
-        }.asIterable()
+        fun data(): Iterable<Array<Any>> =
+            sequence {
+                yield(arrayOf(BaseCompat(), "BaseCompat"))
+                yield(arrayOf(CompatV26(), "CompatV26"))
+            }.asIterable()
     }
 
     @Test

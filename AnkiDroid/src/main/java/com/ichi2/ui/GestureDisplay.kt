@@ -56,7 +56,6 @@ class GestureDisplay
 @JvmOverloads // fixes: Error inflating class com.ichi2.ui.GestureDisplay
 constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(context, attributeSet, defStyleAttr) {
-
     /** Converts a touch event into a call to [setGesture] */
     private val detector: GestureDetector
 
@@ -85,9 +84,10 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
     }
 
     /** Lists all selectable gestures from this view (excludes null) */
-    fun availableValues(): List<Gesture> = entries.filter {
-        (tapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
-    }
+    fun availableValues(): List<Gesture> =
+        entries.filter {
+            (tapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
+        }
 
     /** Sets a callback which is called when the gesture is changed, and non-null */
     fun setGestureChangedListener(listener: GestureListener) {
@@ -125,20 +125,24 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
      * Only works on API 25+ due to issues with layer-list
      */
     private fun handleSwipeChange(gesture: Gesture?) {
-        val level = when (gesture) {
-            SWIPE_UP -> 1
-            SWIPE_DOWN -> 2
-            SWIPE_LEFT -> 3
-            SWIPE_RIGHT -> 4
-            else -> 0
-        }
+        val level =
+            when (gesture) {
+                SWIPE_UP -> 1
+                SWIPE_DOWN -> 2
+                SWIPE_LEFT -> 3
+                SWIPE_RIGHT -> 4
+                else -> 0
+            }
         swipeView.setImageLevel(level)
     }
 
     /**
      * Updates the tap UI (via <selector> and android_selected)
      */
-    private fun handleTapChange(gesture: Gesture?, oldGesture: Gesture?) {
+    private fun handleTapChange(
+        gesture: Gesture?,
+        oldGesture: Gesture?
+    ) {
         // revert the old change, and implement the new change
         // does nothing if neither are taps
         tapGestureToView(oldGesture)?.isSelected = false
@@ -174,10 +178,11 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
      * If we are using 4-point (corner to corner) gestures, hide the 9-point (square-based) gestures
      */
     private fun setTapGestureMode(tapGestureMode: TapGestureMode) {
-        val ninePointVisibility = when (tapGestureMode) {
-            TapGestureMode.FOUR_POINT -> View.GONE
-            TapGestureMode.NINE_POINT -> View.VISIBLE
-        }
+        val ninePointVisibility =
+            when (tapGestureMode) {
+                TapGestureMode.FOUR_POINT -> View.GONE
+                TapGestureMode.NINE_POINT -> View.VISIBLE
+            }
 
         NINE_POINT_TAP_GESTURES.forEach {
             val id = tapGestureToViewId(it) ?: return

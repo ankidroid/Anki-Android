@@ -32,12 +32,13 @@ class DownloadFileTest : InstrumentedTest() {
         // https://github.com/ankidroid/Anki-Android/issues/17573
         // https://issuetracker.google.com/issues/382864232
 
-        val downloadFile = DownloadFile(
-            url = "https://ankiweb.net/svc/shared/download-deck/293204297?t=token",
-            userAgent = "unused",
-            contentDisposition = "attachment; filename=Goethe_Institute_A1_Wordlist.apkg",
-            mimeType = "application/octet-stream"
-        )
+        val downloadFile =
+            DownloadFile(
+                url = "https://ankiweb.net/svc/shared/download-deck/293204297?t=token",
+                userAgent = "unused",
+                contentDisposition = "attachment; filename=Goethe_Institute_A1_Wordlist.apkg",
+                mimeType = "application/octet-stream"
+            )
 
         assertThat(
             downloadFile.toFileName(extension = "apkg"),

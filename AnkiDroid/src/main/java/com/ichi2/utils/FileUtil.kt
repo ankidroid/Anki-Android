@@ -28,7 +28,6 @@ import java.io.IOException
 import java.io.InputStream
 
 object FileUtil {
-
     /**
      * Determine available storage space
      *
@@ -40,7 +39,10 @@ object FileUtil {
     }
 
     /** Gets the free disk space given a file  */
-    fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
+    fun getFreeDiskSpace(
+        file: File,
+        defaultValue: Long
+    ): Long {
         return try {
             StatFs(file.parentFile?.path).availableBytes
         } catch (e: IllegalArgumentException) {
@@ -62,7 +64,10 @@ object FileUtil {
      * @param subdirectoryName  if the caller wants a sub-directory instead of the main directory
      * @return String file path to cache directory or null if error
      */
-    fun getAnkiCacheDirectory(context: Context, subdirectoryName: String? = null): String? {
+    fun getAnkiCacheDirectory(
+        context: Context,
+        subdirectoryName: String? = null
+    ): String? {
         val cacheDirRoot = context.cacheDir
         if (cacheDirRoot == null) {
             Timber.e("createUI() unable to get cache directory")
@@ -88,14 +93,19 @@ object FileUtil {
      * @throws IOException
      */
     @Throws(IOException::class)
-    fun internalizeUri(uri: Uri, internalFile: File, contentResolver: ContentResolver): File {
+    fun internalizeUri(
+        uri: Uri,
+        internalFile: File,
+        contentResolver: ContentResolver
+    ): File {
         // If we got a real file name, do a copy from it
-        val inputStream: InputStream = try {
-            contentResolver.openInputStream(uri)!!
-        } catch (e: Exception) {
-            Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
-            throw e
-        }
+        val inputStream: InputStream =
+            try {
+                contentResolver.openInputStream(uri)!!
+            } catch (e: Exception) {
+                Timber.w(e, "internalizeUri() unable to open input stream from content resolver for Uri %s", uri)
+                throw e
+            }
         try {
             CompatHelper.compat.copyFile(inputStream, internalFile.absolutePath)
         } catch (e: Exception) {
@@ -124,13 +134,14 @@ object FileUtil {
      * Returns a sequence containing the provided file, and its parents
      * up to the root of the filesystem.
      */
-    fun File.getParentsAndSelfRecursive() = sequence {
-        var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
-        while (currentPath != null) {
-            yield(currentPath)
-            currentPath = currentPath.parentFile?.canonicalFile
+    fun File.getParentsAndSelfRecursive() =
+        sequence {
+            var currentPath: File? = this@getParentsAndSelfRecursive.canonicalFile
+            while (currentPath != null) {
+                yield(currentPath)
+                currentPath = currentPath.parentFile?.canonicalFile
+            }
         }
-    }
 
     fun File.isDescendantOf(ancestor: File) = this.getParentsAndSelfRecursive().drop(1).contains(ancestor)
 }
@@ -153,8 +164,7 @@ data class FileNameAndExtension private constructor(
     /**
      * Ensures the filename is valid for [File.createTempFile], which requires `name.length() >= 3`
      */
-    fun renameForCreateTempFile(): FileNameAndExtension =
-        if (fileName.length >= 3) this else this.copy(fileName = "$fileName-name")
+    fun renameForCreateTempFile(): FileNameAndExtension = if (fileName.length >= 3) this else this.copy(fileName = "$fileName-name")
 
     /**
      * Returns a [FileNameAndExtension] with a custom extension
@@ -167,7 +177,6 @@ data class FileNameAndExtension private constructor(
     override fun toString() = "$fileName$extensionWithDot"
 
     companion object {
-
         /**
          * @return a valid [FileNameAndExtension]. `null` if [fileName] does not contain '.'
          */

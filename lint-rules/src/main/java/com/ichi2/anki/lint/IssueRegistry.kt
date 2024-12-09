@@ -72,10 +72,11 @@ class IssueRegistry : IssueRegistry() {
     override val api: Int
         get() = CURRENT_API
     override val vendor: Vendor
-        get() = Vendor(
-            "AnkiDroid",
-            "com.ichi2.anki:lint-rules",
-            "https://github.com/ankidroid/Anki-Android/issues",
-            "https://github.com/ankidroid/Anki-Android"
-        )
+        get() =
+            Vendor(
+                "AnkiDroid",
+                "com.ichi2.anki:lint-rules",
+                "https://github.com/ankidroid/Anki-Android/issues",
+                "https://github.com/ankidroid/Anki-Android"
+            )
 }

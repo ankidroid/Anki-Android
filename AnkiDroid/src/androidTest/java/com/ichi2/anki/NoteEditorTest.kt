@@ -35,9 +35,10 @@ abstract class NoteEditorTest protected constructor() {
     var runtimePermissionRule: TestRule? = GrantStoragePermission.instance
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<SingleFragmentActivity>? = ActivityScenarioRule(
-        noteEditorIntent
-    )
+    var activityRule: ActivityScenarioRule<SingleFragmentActivity>? =
+        ActivityScenarioRule(
+            noteEditorIntent
+        )
 
     private val noteEditorIntent: Intent
         get() {

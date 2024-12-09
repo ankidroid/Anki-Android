@@ -47,11 +47,12 @@ class PreferencesTest : RobolectricTest() {
     override fun setUp() {
         super.setUp()
         preferences = PreferencesActivity()
-        val attachBaseContext = getJavaMethodAsAccessible(
-            AppCompatActivity::class.java,
-            "attachBaseContext",
-            Context::class.java
-        )
+        val attachBaseContext =
+            getJavaMethodAsAccessible(
+                AppCompatActivity::class.java,
+                "attachBaseContext",
+                Context::class.java
+            )
         attachBaseContext.invoke(preferences, targetContext)
     }
 
@@ -92,8 +93,9 @@ class PreferencesTest : RobolectricTest() {
 
     @Test
     fun `All preferences fragments are TitleProvider`() {
-        val fragments = PreferenceTestUtils.getAllPreferencesFragments(targetContext)
-            .filter { it !is ReviewerOptionsFragment } // WIP dev options
+        val fragments =
+            PreferenceTestUtils.getAllPreferencesFragments(targetContext)
+                .filter { it !is ReviewerOptionsFragment } // WIP dev options
 
         fragments.forEach { fragment ->
             assertThat(
@@ -106,15 +108,19 @@ class PreferencesTest : RobolectricTest() {
 
     @Test
     fun `All preferences fragments highlight the correct header`() {
-        val headers = PreferenceTestUtils.getAttrsFromXml(
-            targetContext,
-            R.xml.preference_headers,
-            listOf("key", "fragment")
-        ).filter { it["fragment"] != null }
+        val headers =
+            PreferenceTestUtils.getAttrsFromXml(
+                targetContext,
+                R.xml.preference_headers,
+                listOf("key", "fragment")
+            ).filter { it["fragment"] != null }
 
         assertTrue(headers.all { it["key"] != null })
 
-        fun assertThatFragmentLeadsToHeaderKey(fragmentClass: String, parentFragmentClass: String? = null) {
+        fun assertThatFragmentLeadsToHeaderKey(
+            fragmentClass: String,
+            parentFragmentClass: String? = null
+        ) {
             val fragment = getInstanceFromClassName<Fragment>(fragmentClass)
             val headerFragmentClass = parentFragmentClass ?: fragmentClass
             val expectedKey = headers.first { it["fragment"] == headerFragmentClass }["key"]!!.removePrefix("@").toInt()

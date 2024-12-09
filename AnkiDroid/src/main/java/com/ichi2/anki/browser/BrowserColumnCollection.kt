@@ -43,22 +43,27 @@ import timber.log.Timber
 class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
     val backendKeys: Iterable<String> get() = columns.map { it.ankiColumnKey }
     val count = columns.size
+
     operator fun get(index: Int) = columns[index]
 
     companion object {
         private const val SEPARATOR_CHAR = '|'
 
         @CheckResult
-        fun load(prefs: SharedPreferences, mode: CardsOrNotes): BrowserColumnCollection {
+        fun load(
+            prefs: SharedPreferences,
+            mode: CardsOrNotes
+        ): BrowserColumnCollection {
             val key = mode.toPreferenceKey()
-            val columns = try {
-                val value = prefs.getString(key, mode.defaultColumns())!!
-                value.split(SEPARATOR_CHAR).map { CardBrowserColumn.fromColumnKey(it) }
-            } catch (e: Exception) {
-                Timber.w(e, "error loading columns, returning default")
-                val value = mode.defaultColumns()
-                value.split(SEPARATOR_CHAR).map { CardBrowserColumn.fromColumnKey(it) }
-            }
+            val columns =
+                try {
+                    val value = prefs.getString(key, mode.defaultColumns())!!
+                    value.split(SEPARATOR_CHAR).map { CardBrowserColumn.fromColumnKey(it) }
+                } catch (e: Exception) {
+                    Timber.w(e, "error loading columns, returning default")
+                    val value = mode.defaultColumns()
+                    value.split(SEPARATOR_CHAR).map { CardBrowserColumn.fromColumnKey(it) }
+                }
             return BrowserColumnCollection(columns)
         }
 
@@ -86,16 +91,20 @@ class BrowserColumnCollection(val columns: List<CardBrowserColumn>) {
             }
         }
 
-        fun save(prefs: SharedPreferences, mode: CardsOrNotes, value: BrowserColumnCollection) {
+        fun save(
+            prefs: SharedPreferences,
+            mode: CardsOrNotes,
+            value: BrowserColumnCollection
+        ) {
             val key = mode.toPreferenceKey()
-            val preferenceValue = value.columns
-                .joinToString(separator = SEPARATOR_CHAR.toString()) { it.ankiColumnKey }
+            val preferenceValue =
+                value.columns
+                    .joinToString(separator = SEPARATOR_CHAR.toString()) { it.ankiColumnKey }
             Timber.d("updating '%s' [%s] to '%s'", key, mode, preferenceValue)
             prefs.edit { putString(key, preferenceValue) }
         }
 
-        private fun CardsOrNotes.toPreferenceKey() =
-            BrowserConfig.activeColumnsKey(isNotesMode = this == NOTES)
+        private fun CardsOrNotes.toPreferenceKey() = BrowserConfig.activeColumnsKey(isNotesMode = this == NOTES)
 
         private fun CardsOrNotes.defaultColumns() =
             (if (this == CARDS) BrowserDefaults.CARD_COLUMNS else BrowserDefaults.NOTE_COLUMNS)

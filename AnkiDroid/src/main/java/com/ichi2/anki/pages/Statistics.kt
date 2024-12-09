@@ -43,12 +43,14 @@ import com.ichi2.utils.BundleUtils.getNullableLong
 class Statistics :
     PageFragment(R.layout.statistics),
     DeckSelectionDialog.DeckSelectionListener {
-
     private lateinit var deckSpinnerSelection: DeckSpinnerSelection
     private lateinit var spinner: Spinner
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
         webView.isNestedScrollingEnabled = true
 
@@ -68,13 +70,14 @@ class Statistics :
                 true
             }
         }
-        deckSpinnerSelection = DeckSpinnerSelection(
-            requireAnkiActivity(),
-            spinner,
-            showAllDecks = false,
-            alwaysShowDefault = false,
-            showFilteredDecks = false
-        )
+        deckSpinnerSelection =
+            DeckSpinnerSelection(
+                requireAnkiActivity(),
+                spinner,
+                showAllDecks = false,
+                alwaysShowDefault = false,
+                showFilteredDecks = false
+            )
         if (savedInstanceState == null) {
             requireActivity().launchCatchingTask {
                 deckSpinnerSelection.initializeStatsBarDeckSpinner()
@@ -125,11 +128,12 @@ class Statistics :
     }
 
     private val decksAdapterSequence
-        get() = sequence {
-            for (i in 0 until spinner.adapter.count) {
-                yield(spinner.adapter.getItem(i) as DeckNameId)
+        get() =
+            sequence {
+                for (i in 0 until spinner.adapter.count) {
+                    yield(spinner.adapter.getItem(i) as DeckNameId)
+                }
             }
-        }
 
     /**
      * Given the [deckId] look in the decks adapter for its position and select it if found.
@@ -146,12 +150,13 @@ class Statistics :
      * See issue #3394 in the Anki repository
      **/
     private fun changeDeck(selectedDeckName: String) {
-        val javascriptCode = """
-        var textBox = document.getElementById("statisticsSearchText");
-        textBox.value = "deck:\"$selectedDeckName\"";
-        textBox.dispatchEvent(new Event("input", { bubbles: true }));
-        textBox.dispatchEvent(new Event("change"));
-        """.trimIndent()
+        val javascriptCode =
+            """
+            var textBox = document.getElementById("statisticsSearchText");
+            textBox.value = "deck:\"$selectedDeckName\"";
+            textBox.dispatchEvent(new Event("input", { bubbles: true }));
+            textBox.dispatchEvent(new Event("change"));
+            """.trimIndent()
         webView.evaluateJavascript(javascriptCode, null)
     }
 

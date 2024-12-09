@@ -26,5 +26,5 @@ public enum class Ease(public val value: Int) {
     EASE_1(1),
     EASE_2(2),
     EASE_3(3),
-    EASE_4(4);
+    EASE_4(4)
 }

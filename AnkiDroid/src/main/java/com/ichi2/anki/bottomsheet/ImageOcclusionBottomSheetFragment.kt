@@ -26,11 +26,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.R
 
 class ImageOcclusionBottomSheetFragment : BottomSheetDialogFragment() {
-
     var listener: ImagePickerListener? = null
 
     interface ImagePickerListener {
         fun onCameraClicked()
+
         fun onGalleryClicked()
     }
 

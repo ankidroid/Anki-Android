@@ -41,7 +41,10 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
 
     private var highlightedPreferenceKey: String = ""
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?
+    ) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
         requirePreference<HeaderPreference>(R.string.pref_backup_limits_screen_key)
@@ -68,8 +71,9 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
             }
 
             parentFragmentManager.addOnBackStackChangedListener {
-                val fragment = parentFragmentManager.findFragmentById(R.id.settings_container)
-                    ?: return@addOnBackStackChangedListener
+                val fragment =
+                    parentFragmentManager.findFragmentById(R.id.settings_container)
+                        ?: return@addOnBackStackChangedListener
 
                 val key = getHeaderKeyForFragment(fragment) ?: return@addOnBackStackChangedListener
                 highlightPreference(key)
@@ -77,14 +81,19 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
         }
     }
 
-    private fun highlightPreference(@StringRes keyRes: Int) {
+    private fun highlightPreference(
+        @StringRes keyRes: Int
+    ) {
         val key = getString(keyRes)
         findPreference<HeaderPreference>(highlightedPreferenceKey)?.setHighlighted(false)
         findPreference<HeaderPreference>(key)?.setHighlighted(true)
         highlightedPreferenceKey = key
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
         // use the same fragment container to search in case there is a navigation container
         requirePreference<SearchPreference>(R.string.search_preference_key)
@@ -93,7 +102,10 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
     }
 
     companion object {
-        fun configureSearchBar(activity: AppCompatActivity, searchConfiguration: SearchConfiguration) {
+        fun configureSearchBar(
+            activity: AppCompatActivity,
+            searchConfiguration: SearchConfiguration
+        ) {
             val setDuePreferenceTitle = TR.actionsSetDueDate().toSentenceCase(activity, R.string.sentence_set_due_date)
             with(searchConfiguration) {
                 setActivity(activity)

@@ -67,10 +67,11 @@ class DirectoryTest : Test21And26() {
 
     @Test
     fun list_files_returns_valid_paths() {
-        val dir = createValidTempDir()
-            .withTempFile("foo.txt")
-            .withTempFile("bar.xtx")
-            .withTempFile("baz.xtx")
+        val dir =
+            createValidTempDir()
+                .withTempFile("foo.txt")
+                .withTempFile("bar.xtx")
+                .withTempFile("baz.xtx")
 
         val files = dir.listFiles()
 

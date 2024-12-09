@@ -71,7 +71,10 @@ class ListUtil {
          * @param actuals Object list or list of arrays (multi-dimensional array) with
          * actual values
          */
-        fun assertListEquals(expected: List<Any?>?, actuals: List<Any?>?) {
+        fun assertListEquals(
+            expected: List<Any?>?,
+            actuals: List<Any?>?
+        ) {
             assertListEquals(null, expected, actuals)
         }
     }

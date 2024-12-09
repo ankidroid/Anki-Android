@@ -40,7 +40,6 @@ import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
 class PreferenceUpgradeServiceTest : RobolectricTest() {
-
     private lateinit var prefs: SharedPreferences
 
     @Before

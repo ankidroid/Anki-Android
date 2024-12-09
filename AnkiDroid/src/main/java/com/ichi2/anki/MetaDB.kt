@@ -42,13 +42,14 @@ object MetaDB {
     @KotlinCleanup("scope function or lateinit db")
     private fun openDB(context: Context) {
         try {
-            mMetaDb = context.openOrCreateDatabase(DATABASE_NAME, 0, null).let {
-                if (it.needUpgrade(DATABASE_VERSION)) {
-                    upgradeDB(it, DATABASE_VERSION)
-                } else {
-                    it
+            mMetaDb =
+                context.openOrCreateDatabase(DATABASE_NAME, 0, null).let {
+                    if (it.needUpgrade(DATABASE_VERSION)) {
+                        upgradeDB(it, DATABASE_VERSION)
+                    } else {
+                        it
+                    }
                 }
-            }
             Timber.v("Opening MetaDB")
         } catch (e: Exception) {
             Timber.e(e, "Error opening MetaDB ")
@@ -56,7 +57,10 @@ object MetaDB {
     }
 
     /** Creating any table that missing and upgrading necessary tables.  */
-    private fun upgradeDB(metaDb: SQLiteDatabase, databaseVersion: Int): SQLiteDatabase {
+    private fun upgradeDB(
+        metaDb: SQLiteDatabase,
+        databaseVersion: Int
+    ): SQLiteDatabase {
         Timber.i("MetaDB:: Upgrading Internal Database..")
         // if (mMetaDb.getVersion() == 0) {
         Timber.i("MetaDB:: Applying changes for version: 0")
@@ -210,7 +214,13 @@ object MetaDB {
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED]
      * @param language the language to associate, as a two-characters, lowercase string
      */
-    fun storeLanguage(context: Context, did: DeckId, ord: Int, qa: CardSide, language: String) {
+    fun storeLanguage(
+        context: Context,
+        did: DeckId,
+        ord: Int,
+        qa: CardSide,
+        language: String
+    ) {
         openDBIfClosed(context)
         try {
             if ("" == getLanguage(context, did, ord, qa)) {
@@ -248,7 +258,12 @@ object MetaDB {
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED] return the language associate with
      * the type, as a two-characters, lowercase string, or the empty string if no association is defined
      */
-    fun getLanguage(context: Context, did: DeckId, ord: Int, qa: CardSide): String {
+    fun getLanguage(
+        context: Context,
+        did: DeckId,
+        ord: Int,
+        qa: CardSide
+    ): String {
         openDBIfClosed(context)
         var language = ""
         val query = "SELECT language FROM languages WHERE did = ? AND ord = ? AND qa = ? LIMIT 1"
@@ -277,7 +292,10 @@ object MetaDB {
      *
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
-    fun getWhiteboardState(context: Context, did: DeckId): Boolean {
+    fun getWhiteboardState(
+        context: Context,
+        did: DeckId
+    ): Boolean {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -296,7 +314,11 @@ object MetaDB {
      * @param did deck id to store whiteboard state for
      * @param whiteboardState `true` if the whiteboard should be shown, `false` otherwise
      */
-    fun storeWhiteboardState(context: Context, did: DeckId, whiteboardState: Boolean) {
+    fun storeWhiteboardState(
+        context: Context,
+        did: DeckId,
+        whiteboardState: Boolean
+    ) {
         val state = if (whiteboardState) 1 else 0
         openDBIfClosed(context)
         try {
@@ -329,7 +351,10 @@ object MetaDB {
      *
      * @return true if the whiteboard stylus mode should be enabled, false otherwise
      */
-    fun getWhiteboardStylusState(context: Context, did: DeckId): Boolean {
+    fun getWhiteboardStylusState(
+        context: Context,
+        did: DeckId
+    ): Boolean {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -348,7 +373,11 @@ object MetaDB {
      * @param did deck id to store whiteboard stylus mode state for
      * @param whiteboardStylusState true if the whiteboard stylus mode should be enabled, false otherwise
      */
-    fun storeWhiteboardStylusState(context: Context, did: DeckId, whiteboardStylusState: Boolean) {
+    fun storeWhiteboardStylusState(
+        context: Context,
+        did: DeckId,
+        whiteboardStylusState: Boolean
+    ) {
         val state = if (whiteboardStylusState) 1 else 0
         openDBIfClosed(context)
         try {
@@ -381,7 +410,10 @@ object MetaDB {
      *
      * @return 1 if the whiteboard should be shown, 0 otherwise
      */
-    fun getWhiteboardVisibility(context: Context, did: DeckId): Boolean {
+    fun getWhiteboardVisibility(
+        context: Context,
+        did: DeckId
+    ): Boolean {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -400,7 +432,11 @@ object MetaDB {
      * @param did deck id to store whiteboard state for
      * @param isVisible `true` if the whiteboard should be shown, `false` otherwise
      */
-    fun storeWhiteboardVisibility(context: Context, did: DeckId, isVisible: Boolean) {
+    fun storeWhiteboardVisibility(
+        context: Context,
+        did: DeckId,
+        isVisible: Boolean
+    ) {
         val isVisibleState = if (isVisible) 1 else 0
         openDBIfClosed(context)
         try {
@@ -431,7 +467,10 @@ object MetaDB {
     /**
      * Returns the pen color of the whiteboard for the given deck.
      */
-    fun getWhiteboardPenColor(context: Context, did: DeckId): WhiteboardPenColor {
+    fun getWhiteboardPenColor(
+        context: Context,
+        did: DeckId
+    ): WhiteboardPenColor {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -456,7 +495,12 @@ object MetaDB {
      * @param isLight if dark mode is disabled
      * @param value The new color code to store
      */
-    fun storeWhiteboardPenColor(context: Context, did: DeckId, isLight: Boolean, value: Int?) {
+    fun storeWhiteboardPenColor(
+        context: Context,
+        did: DeckId,
+        isLight: Boolean,
+        value: Int?
+    ) {
         openDBIfClosed(context)
         val columnName = if (isLight) "lightpencolor" else "darkpencolor"
         try {
@@ -488,7 +532,10 @@ object MetaDB {
      *
      * @return `true` if the toolbar should be shown, `false` otherwise
      */
-    fun getMicToolbarState(context: Context, did: DeckId): Boolean {
+    fun getMicToolbarState(
+        context: Context,
+        did: DeckId
+    ): Boolean {
         openDBIfClosed(context)
         try {
             mMetaDb!!.rawQuery(
@@ -507,7 +554,11 @@ object MetaDB {
      * @param did deck id to store mic toolbar state for
      * @param micToolbarState `true` if the toolbar should be shown, `false` otherwise
      */
-    fun storeMicToolbarState(context: Context, did: DeckId, isEnabled: Boolean) {
+    fun storeMicToolbarState(
+        context: Context,
+        did: DeckId,
+        isEnabled: Boolean
+    ) {
         val state = if (isEnabled) 1 else 0
         openDBIfClosed(context)
         try {
@@ -576,7 +627,10 @@ object MetaDB {
         return due
     }
 
-    fun storeSmallWidgetStatus(context: Context, status: SmallWidgetStatus) {
+    fun storeSmallWidgetStatus(
+        context: Context,
+        status: SmallWidgetStatus
+    ) {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
@@ -621,12 +675,17 @@ object MetaDB {
         }
 
         // API LEVEL
-        fun getTableColumnCount(metaDb: SQLiteDatabase, tableName: String) =
-            metaDb.rawQuery("PRAGMA table_info($tableName)", null).use { c ->
-                c.count
-            }
+        fun getTableColumnCount(
+            metaDb: SQLiteDatabase,
+            tableName: String
+        ) = metaDb.rawQuery("PRAGMA table_info($tableName)", null).use { c ->
+            c.count
+        }
 
-        fun getInteger(cur: Cursor, columnIndex: Int): Int? {
+        fun getInteger(
+            cur: Cursor,
+            columnIndex: Int
+        ): Int? {
             return if (cur.isNull(columnIndex)) null else cur.getInt(columnIndex)
         }
     }

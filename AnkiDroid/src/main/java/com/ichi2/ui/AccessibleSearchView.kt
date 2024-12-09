@@ -31,6 +31,7 @@ open class AccessibleSearchView : androidx.appcompat.widget.SearchView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
     init {
         // close_btn is the cross that deletes the search field content. It does not close the search view.
         findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)

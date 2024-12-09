@@ -35,25 +35,26 @@ import org.jetbrains.uast.UImportStatement
  * This custom Lint rule raises a warning if a developer uses the `android.app.AlertDialog` class.
  */
 class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
-
     companion object {
         @VisibleForTesting
         const val ID = "AvoidAlertDialogUsage"
 
         @VisibleForTesting
         const val DESCRIPTION = "Use androidx.appcompat.app.AlertDialog instead of android.app.AlertDialog"
-        private const val EXPLANATION = "Using `android.app.AlertDialog` is discouraged. " +
-            "Please use `androidx.appcompat.app.AlertDialog` instead for better compatibility and features."
+        private const val EXPLANATION =
+            "Using `android.app.AlertDialog` is discouraged. " +
+                "Please use `androidx.appcompat.app.AlertDialog` instead for better compatibility and features."
         private val implementation = Implementation(AvoidAlertDialogUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_TIME_CATEGORY,
-            Constants.ANKI_TIME_PRIORITY,
-            Constants.ANKI_TIME_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_TIME_CATEGORY,
+                Constants.ANKI_TIME_PRIORITY,
+                Constants.ANKI_TIME_SEVERITY,
+                implementation
+            )
     }
 
     override fun getApplicableUastTypes(): List<Class<out UElement>> {

@@ -28,10 +28,14 @@ import com.ichi2.utils.IntentUtil
  * Help/Support menus. Used for testing.
  */
 interface HelpItemActionsDispatcher {
-
     fun onOpenUrl(url: String)
-    fun onOpenUrlResource(@StringRes url: Int)
+
+    fun onOpenUrlResource(
+        @StringRes url: Int
+    )
+
     fun onRate()
+
     fun onSendReport()
 }
 

@@ -26,6 +26,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import org.junit.runner.RunWith
+
 @RunWith(AndroidJUnit4::class)
 class PeripheralKeymapTest : InstrumentedTest() {
     @Test

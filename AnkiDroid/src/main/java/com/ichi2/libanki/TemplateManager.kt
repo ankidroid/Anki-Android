@@ -50,6 +50,7 @@ private typealias TemplateReplacementList = MutableList<Union<String?, TemplateM
  */
 class TemplateManager {
     data class TemplateReplacement(val fieldName: String, var currentText: String, val filters: List<String>)
+
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
@@ -127,7 +128,11 @@ class TemplateManager {
         private var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
-            fun fromExistingCard(col: Collection, card: Card, browser: Boolean): TemplateRenderContext {
+            fun fromExistingCard(
+                col: Collection,
+                card: Card,
+                browser: Boolean
+            ): TemplateRenderContext {
                 return TemplateRenderContext(card, card.note(col), browser)
             }
 
@@ -156,6 +161,7 @@ class TemplateManager {
         fun card() = _card
 
         fun note() = _note
+
         fun noteType() = noteType
 
         @NeedsTest(
@@ -198,21 +204,22 @@ class TemplateManager {
         }
 
         fun partiallyRender(col: Collection): PartiallyRenderedCard {
-            val proto = col.run {
-                if (_template != null) {
-                    // card layout screen
-                    backend.renderUncommittedCardLegacy(
-                        _note.toBackendNote(),
-                        _card.ord,
-                        BackendUtils.toJsonBytes(_template!!.deepClone()),
-                        fillEmpty,
-                        true
-                    )
-                } else {
-                    // existing card (eg study mode)
-                    backend.renderExistingCard(_card.id, _browser, true)
+            val proto =
+                col.run {
+                    if (_template != null) {
+                        // card layout screen
+                        backend.renderUncommittedCardLegacy(
+                            _note.toBackendNote(),
+                            _card.ord,
+                            BackendUtils.toJsonBytes(_template!!.deepClone()),
+                            fillEmpty,
+                            true
+                        )
+                    } else {
+                        // existing card (eg study mode)
+                        backend.renderExistingCard(_card.id, _browser, true)
+                    }
                 }
-            }
             return PartiallyRenderedCard.fromProto(proto)
         }
 
@@ -224,8 +231,8 @@ class TemplateManager {
             val answerAvTags: List<AvTag>,
             val css: String = ""
         ) {
-
             fun questionAndStyle() = "<style>$css</style>$questionText"
+
             fun answerAndStyle() = "<style>$css</style>$answerText"
         }
 
@@ -279,6 +286,7 @@ class TemplateManager {
             ctx: TemplateRenderContext
         ): String
     }
+
     companion object {
         val fieldFilters: MutableMap<String, FieldFilter> = mutableMapOf()
     }

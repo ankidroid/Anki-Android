@@ -122,12 +122,19 @@ class ImportUtilsTest : RobolectricTest() {
         lateinit var cacheFileName: String
             private set
 
-        override fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Pair<Boolean, String?> {
+        override fun copyFileToCache(
+            context: Context,
+            data: Uri?,
+            tempPath: String
+        ): Pair<Boolean, String?> {
             cacheFileName = tempPath
             return Pair(true, null)
         }
 
-        override fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
+        override fun getFileNameFromContentProvider(
+            context: Context,
+            data: Uri
+        ): String? {
             return fileName
         }
     }

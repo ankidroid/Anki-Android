@@ -31,14 +31,12 @@ private val notetypeNamesAndCountDiff =
         override fun areItemsTheSame(
             oldItem: ManageNoteTypeUiModel,
             newItem: ManageNoteTypeUiModel
-        ): Boolean =
-            oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
+        ): Boolean = oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
 
         override fun areContentsTheSame(
             oldItem: ManageNoteTypeUiModel,
             newItem: ManageNoteTypeUiModel
-        ): Boolean =
-            oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
+        ): Boolean = oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.useCount == newItem.useCount
     }
 
 internal class NotetypesAdapter(
@@ -50,7 +48,10 @@ internal class NotetypesAdapter(
 ) : ListAdapter<ManageNoteTypeUiModel, NotetypeViewHolder>(notetypeNamesAndCountDiff) {
     private val layoutInflater = LayoutInflater.from(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotetypeViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): NotetypeViewHolder {
         return NotetypeViewHolder(
             rowView = layoutInflater.inflate(R.layout.item_manage_note_type, parent, false),
             onDelete = onDelete,
@@ -60,7 +61,10 @@ internal class NotetypesAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: NotetypeViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: NotetypeViewHolder,
+        position: Int
+    ) {
         holder.bind(getItem(position))
     }
 }
@@ -90,10 +94,11 @@ internal class NotetypeViewHolder(
     fun bind(manageNoteTypeUiModel: ManageNoteTypeUiModel) {
         this.mManageNoteTypeUiModel = manageNoteTypeUiModel
         name.text = manageNoteTypeUiModel.name
-        useCount.text = resources.getQuantityString(
-            R.plurals.model_browser_of_type,
-            manageNoteTypeUiModel.useCount,
-            manageNoteTypeUiModel.useCount
-        )
+        useCount.text =
+            resources.getQuantityString(
+                R.plurals.model_browser_of_type,
+                manageNoteTypeUiModel.useCount,
+                manageNoteTypeUiModel.useCount
+            )
     }
 }

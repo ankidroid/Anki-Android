@@ -27,7 +27,6 @@ import androidx.test.runner.lifecycle.Stage
 import org.hamcrest.Matcher
 
 object TestUtils {
-
     /**
      * Get instance of current activity
      */
@@ -52,11 +51,12 @@ object TestUtils {
      * so test for that screen layout in our resources configuration
      */
     val isTablet: Boolean
-        get() = (
-            activityInstance!!.resources.configuration.screenLayout and
-                Configuration.SCREENLAYOUT_SIZE_MASK
-            ) ==
-            Configuration.SCREENLAYOUT_SIZE_XLARGE
+        get() =
+            (
+                activityInstance!!.resources.configuration.screenLayout and
+                    Configuration.SCREENLAYOUT_SIZE_MASK
+                ) ==
+                Configuration.SCREENLAYOUT_SIZE_XLARGE
 
     /**
      * Click on a view using its ID inside a RecyclerView item
@@ -71,7 +71,10 @@ object TestUtils {
                 return "Click on a child view with specified id."
             }
 
-            override fun perform(uiController: UiController, view: View) {
+            override fun perform(
+                uiController: UiController,
+                view: View
+            ) {
                 val v = view.findViewById<View>(id)
                 v.performClick()
             }

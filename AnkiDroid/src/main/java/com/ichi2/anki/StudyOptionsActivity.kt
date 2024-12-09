@@ -39,7 +39,6 @@ class StudyOptionsActivity :
     StudyOptionsListener,
     CustomStudyListener,
     ChangeManager.Subscriber {
-
     private var undoState = UndoState()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,18 +144,22 @@ class StudyOptionsActivity :
         currentFragment!!.refreshInterface()
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?
+    ) {
         refreshUndoState()
     }
 
     private fun refreshUndoState() {
         lifecycleScope.launch {
-            val newUndoState = withCol {
-                UndoState(
-                    hasAction = undoAvailable(),
-                    label = undoLabel()
-                )
-            }
+            val newUndoState =
+                withCol {
+                    UndoState(
+                        hasAction = undoAvailable(),
+                        label = undoLabel()
+                    )
+                }
             if (undoState != newUndoState) {
                 undoState = newUndoState
                 invalidateOptionsMenu()

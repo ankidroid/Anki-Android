@@ -24,14 +24,15 @@ import org.junit.rules.TestRule
 
 object GrantStoragePermission {
     private val targetSdkVersion = InstrumentationRegistry.getInstrumentation().targetContext.applicationInfo.targetSdkVersion
-    val storagePermission = if (
-        targetSdkVersion >= Build.VERSION_CODES.R &&
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
-    ) {
-        null
-    } else {
-        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-    }
+    val storagePermission =
+        if (
+            targetSdkVersion >= Build.VERSION_CODES.R &&
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+        ) {
+            null
+        } else {
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        }
 
     /**
      * Storage is longer necessary for API 30+
@@ -40,11 +41,12 @@ object GrantStoragePermission {
     val instance: TestRule = grantPermissions(storagePermission)
 }
 
-val notificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-    android.Manifest.permission.POST_NOTIFICATIONS
-} else {
-    null
-}
+val notificationPermission =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        android.Manifest.permission.POST_NOTIFICATIONS
+    } else {
+        null
+    }
 
 /** Grants permissions, given some may be invalid */
 fun grantPermissions(vararg permissions: String?): TestRule {

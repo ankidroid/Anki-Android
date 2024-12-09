@@ -198,10 +198,11 @@ open class Reviewer :
     @VisibleForTesting
     protected val processor = PeripheralKeymap(this, this)
 
-    private val addNoteLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult(),
-        FlashCardViewerResultCallback()
-    )
+    private val addNoteLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            FlashCardViewerResultCallback()
+        )
 
     private val flagItemIds = mutableSetOf<Int>()
 
@@ -298,7 +299,10 @@ open class Reviewer :
         cardMarker!!.displayMark(shouldDisplayMark())
     }
 
-    protected open fun onFlag(card: Card?, flag: Flag) {
+    protected open fun onFlag(
+        card: Card?,
+        flag: Flag
+    ) {
         if (card == null) {
             return
         }
@@ -667,7 +671,11 @@ open class Reviewer :
         refreshActionBar()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_AUDIO_PERMISSION &&
             permissions.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
@@ -804,7 +812,12 @@ open class Reviewer :
             }
             val whiteboardIcon = ContextCompat.getDrawable(applicationContext, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
-            val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, this.theme)!!.mutate()
+            val whiteboardColorPaletteIcon =
+                VectorDrawableCompat.create(
+                    resources,
+                    R.drawable.ic_color_lens_white_24dp,
+                    this.theme
+                )!!.mutate()
             if (showWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
@@ -865,8 +878,9 @@ open class Reviewer :
     private fun setupFlags(subMenu: SubMenu) {
         lifecycleScope.launch {
             for ((flag, displayName) in Flag.queryDisplayNames()) {
-                val menuItem = subMenu.add(Menu.NONE, flag.code, Menu.NONE, displayName)
-                    .setIcon(flag.drawableRes)
+                val menuItem =
+                    subMenu.add(Menu.NONE, flag.code, Menu.NONE, displayName)
+                        .setIcon(flag.drawableRes)
                 flagItemIds.add(menuItem.itemId)
             }
         }
@@ -889,7 +903,10 @@ open class Reviewer :
         return flagItemIds.contains(menuItem.itemId)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent
+    ): Boolean {
         if (answerFieldIsFocused()) {
             return super.onKeyDown(keyCode, event)
         }
@@ -899,7 +916,10 @@ open class Reviewer :
         return false
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent
+    ): Boolean {
         return if (processor.onKeyUp(keyCode, event)) {
             true
         } else {
@@ -976,8 +996,9 @@ open class Reviewer :
     }
 
     private fun updateWhiteboardEditorPosition() {
-        answerButtonsPosition = this.sharedPrefs()
-            .getString("answerButtonPosition", "bottom")
+        answerButtonsPosition =
+            this.sharedPrefs()
+                .getString("answerButtonPosition", "bottom")
         val layoutParams: RelativeLayout.LayoutParams
         when (answerButtonsPosition) {
             "none", "top" -> {
@@ -1046,11 +1067,12 @@ open class Reviewer :
     }
 
     override suspend fun updateCurrentCard() {
-        val state = withCol {
-            sched.currentQueueState()?.apply {
-                topCard.renderOutput(this@withCol, reload = true)
+        val state =
+            withCol {
+                sched.currentQueueState()?.apply {
+                    topCard.renderOutput(this@withCol, reload = true)
+                }
             }
-        }
         state?.timeboxReached?.let { dealWithTimeBox(it) }
         currentCard = state?.topCard
         queueState = state
@@ -1067,11 +1089,12 @@ open class Reviewer :
         }.also {
             if (ease == Ease.AGAIN && wasLeech) {
                 state.topCard.load(getColUnsafe)
-                val leechMessage: String = if (state.topCard.queue < 0) {
-                    resources.getString(R.string.leech_suspend_notification)
-                } else {
-                    resources.getString(R.string.leech_notification)
-                }
+                val leechMessage: String =
+                    if (state.topCard.queue < 0) {
+                        resources.getString(R.string.leech_suspend_notification)
+                    } else {
+                        resources.getString(R.string.leech_notification)
+                    }
                 showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
             }
         }
@@ -1196,7 +1219,10 @@ open class Reviewer :
         }
     }
 
-    override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {
+    override fun executeCommand(
+        which: ViewerCommand,
+        fromGesture: Gesture?
+    ): Boolean {
         when (which) {
             ViewerCommand.TOGGLE_FLAG_RED -> {
                 toggleFlag(Flag.RED)
@@ -1298,7 +1324,9 @@ open class Reviewer :
     @IntDef(1, 2, 3, 4, 5, 6, 7, 8, 9)
     annotation class UserAction
 
-    private fun userAction(@UserAction number: Int) {
+    private fun userAction(
+        @UserAction number: Int
+    ) {
         Timber.v("userAction%d", number)
         loadUrlInViewer("javascript: userAction($number);")
     }
@@ -1345,13 +1373,14 @@ open class Reviewer :
         }
     }
 
-    private val fullScreenHandler: Handler = object : Handler(getDefaultLooper()) {
-        override fun handleMessage(msg: Message) {
-            if (prefFullscreenReview) {
-                setFullScreen(this@Reviewer)
+    private val fullScreenHandler: Handler =
+        object : Handler(getDefaultLooper()) {
+            override fun handleMessage(msg: Message) {
+                if (prefFullscreenReview) {
+                    setFullScreen(this@Reviewer)
+                }
             }
         }
-    }
 
     /** Hide the navigation if in full-screen mode after a given period of time  */
     protected open fun delayedHide(delayMillis: Int) {
@@ -1421,11 +1450,13 @@ open class Reviewer :
         view.animate()
             .alpha(0f)
             .setDuration(ANIMATION_DURATION.toLong())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    view.visibility = View.GONE
+            .setListener(
+                object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = View.GONE
+                    }
                 }
-            })
+            )
     }
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
@@ -1433,7 +1464,10 @@ open class Reviewer :
         return activity.window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+    override suspend fun handlePostRequest(
+        uri: String,
+        bytes: ByteArray
+    ): ByteArray {
         return if (uri.startsWith(ANKI_PREFIX)) {
             when (val methodName = uri.substring(ANKI_PREFIX.length)) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
@@ -1488,11 +1522,13 @@ open class Reviewer :
         if (whiteboardPenColor != null) {
             whiteboard!!.penColor = whiteboardPenColor
         }
-        whiteboard!!.setOnPaintColorChangeListener(object : OnPaintColorChangeListener {
-            override fun onPaintColorChange(color: Int?) {
-                MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
+        whiteboard!!.setOnPaintColorChangeListener(
+            object : OnPaintColorChangeListener {
+                override fun onPaintColorChange(color: Int?) {
+                    MetaDB.storeWhiteboardPenColor(this@Reviewer, parentDid, !currentTheme.isNightMode, color)
+                }
             }
-        })
+        )
         whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
             if (event == null) return@setOnTouchListener false
             // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
@@ -1599,16 +1635,17 @@ open class Reviewer :
     }
 
     override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
-        val cardDataForJsAPI = AnkiDroidJsAPI.CardDataForJsApi().apply {
-            newCardCount = queueState?.counts?.new ?: -1
-            lrnCardCount = queueState?.counts?.lrn ?: -1
-            revCardCount = queueState?.counts?.rev ?: -1
-            nextTime1 = easeButton1!!.nextTime
-            nextTime2 = easeButton2!!.nextTime
-            nextTime3 = easeButton3!!.nextTime
-            nextTime4 = easeButton4!!.nextTime
-            eta = this@Reviewer.eta
-        }
+        val cardDataForJsAPI =
+            AnkiDroidJsAPI.CardDataForJsApi().apply {
+                newCardCount = queueState?.counts?.new ?: -1
+                lrnCardCount = queueState?.counts?.lrn ?: -1
+                revCardCount = queueState?.counts?.rev ?: -1
+                nextTime1 = easeButton1!!.nextTime
+                nextTime2 = easeButton2!!.nextTime
+                nextTime3 = easeButton3!!.nextTime
+                nextTime4 = easeButton4!!.nextTime
+                eta = this@Reviewer.eta
+            }
         return cardDataForJsAPI
     }
 

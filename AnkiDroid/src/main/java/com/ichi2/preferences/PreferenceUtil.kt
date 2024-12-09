@@ -33,7 +33,6 @@ import kotlin.contracts.contract
  * see [PreferenceFragmentCompat.onDisplayPreferenceDialog].
  */
 interface DialogFragmentProvider {
-
     /**
      * @return A DialogFragment to show or `null` to use the parent fragment
      *   The dialog must have a zero-parameter constructor.

@@ -51,12 +51,16 @@ class MediaRegistration(private val context: Context) {
      * @return HTML referring to the loaded image
      */
     @Throws(IOException::class)
-    fun loadMediaIntoCollection(uri: Uri, description: ClipDescription): String? {
+    fun loadMediaIntoCollection(
+        uri: Uri,
+        description: ClipDescription
+    ): String? {
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
-        val (fileName, fileExtensionWithDot) = FileNameAndExtension.fromString(filename)
-            ?.renameForCreateTempFile()
-            ?: throw IllegalStateException("Unable to determine valid filename")
+        val (fileName, fileExtensionWithDot) =
+            FileNameAndExtension.fromString(filename)
+                ?.renameForCreateTempFile()
+                ?: throw IllegalStateException("Unable to determine valid filename")
         var clipCopy: File
         var bytesWritten: Long
         val isImage = ClipboardUtil.hasImage(description)
@@ -84,22 +88,24 @@ class MediaRegistration(private val context: Context) {
         Timber.d("File was %d bytes", bytesWritten)
         if (bytesWritten > MEDIA_MAX_SIZE) {
             Timber.w("File was too large: %d bytes", bytesWritten)
-            val message = if (isImage) {
-                context.getString(R.string.note_editor_image_too_large)
-            } else if (isVideo) {
-                context.getString(R.string.note_editor_video_too_large)
-            } else {
-                context.getString(R.string.note_editor_audio_too_large)
-            }
+            val message =
+                if (isImage) {
+                    context.getString(R.string.note_editor_image_too_large)
+                } else if (isVideo) {
+                    context.getString(R.string.note_editor_video_too_large)
+                } else {
+                    context.getString(R.string.note_editor_audio_too_large)
+                }
             showThemedToast(context, message, false)
             File(tempFilePath).delete()
             return null
         }
-        val field = if (isImage) {
-            ImageField()
-        } else {
-            MediaClipField()
-        }
+        val field =
+            if (isImage) {
+                ImageField()
+            } else {
+                MediaClipField()
+            }
         field.hasTemporaryMedia = true
         field.mediaPath = tempFilePath
         return field.formattedValue
@@ -126,7 +132,11 @@ class MediaRegistration(private val context: Context) {
         return true // successful conversion to jpg.
     }
 
-    private fun shouldConvertToJPG(fileNameExtension: String, fileStream: InputStream, isImage: Boolean): Boolean {
+    private fun shouldConvertToJPG(
+        fileNameExtension: String,
+        fileStream: InputStream,
+        isImage: Boolean
+    ): Boolean {
         if (!isImage) {
             return false
         }
@@ -145,7 +155,10 @@ class MediaRegistration(private val context: Context) {
         return true
     }
 
-    fun onPaste(uri: Uri, description: ClipDescription): String? {
+    fun onPaste(
+        uri: Uri,
+        description: ClipDescription
+    ): String? {
         return try {
             // check if cache already holds registered file or not
             if (!pastedMediaCache.containsKey(uri.toString())) {

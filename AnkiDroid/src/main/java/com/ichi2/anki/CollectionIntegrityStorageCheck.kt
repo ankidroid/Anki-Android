@@ -71,22 +71,23 @@ class CollectionIntegrityStorageCheck {
             )
         }
         val required = Formatter.formatShortFileSize(context, requiredSpace)
-        val insufficientSpace = context.resources.getString(
-            R.string.integrity_check_insufficient_space,
-            required
-        )
+        val insufficientSpace =
+            context.resources.getString(
+                R.string.integrity_check_insufficient_space,
+                required
+            )
 
         // Also concat in the extra content showing the current free space.
         val currentFree = Formatter.formatShortFileSize(context, freeSpace)
-        val insufficientSpaceCurrentFree = context.resources.getString(
-            R.string.integrity_check_insufficient_space_extra_content,
-            currentFree
-        )
+        val insufficientSpaceCurrentFree =
+            context.resources.getString(
+                R.string.integrity_check_insufficient_space_extra_content,
+                currentFree
+            )
         return insufficientSpace + insufficientSpaceCurrentFree
     }
 
     companion object {
-
         private fun fromError(errorMessage: String): CollectionIntegrityStorageCheck {
             return CollectionIntegrityStorageCheck(errorMessage)
         }

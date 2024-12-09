@@ -82,9 +82,9 @@ class CustomStudyDialog(
     private val collection: Collection,
     private val customStudyListener: CustomStudyListener?
 ) : AnalyticsDialogFragment(), TagsDialogListener {
-
     interface CustomStudyListener {
         fun onCreateCustomStudySession()
+
         fun onExtendStudyLimits()
     }
 
@@ -139,12 +139,13 @@ class CustomStudyDialog(
                          */
                         val currentDeck = requireArguments().getLong(DID)
 
-                        val dialogFragment = TagsDialog().withArguments(
-                            context = requireContext(),
-                            type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
-                            checkedTags = ArrayList(),
-                            allTags = ArrayList(collection.tags.byDeck(currentDeck))
-                        )
+                        val dialogFragment =
+                            TagsDialog().withArguments(
+                                context = requireContext(),
+                                type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
+                                checkedTags = ArrayList(),
+                                allTags = ArrayList(collection.tags.byDeck(currentDeck))
+                            )
                         requireActivity().showDialogFragment(dialogFragment)
                     }
                     STUDY_NEW,
@@ -152,13 +153,15 @@ class CustomStudyDialog(
                     STUDY_FORGOT,
                     STUDY_AHEAD,
                     STUDY_RANDOM,
-                    STUDY_PREVIEW -> {
+                    STUDY_PREVIEW
+                    -> {
                         // User asked for a standard custom study option
-                        val d = CustomStudyDialog(collection, customStudyListener)
-                            .withArguments(
-                                requireArguments().getLong(DID),
-                                listIds[index]
-                            )
+                        val d =
+                            CustomStudyDialog(collection, customStudyListener)
+                                .withArguments(
+                                    requireArguments().getLong(DID),
+                                    listIds[index]
+                                )
                         requireActivity().showDialogFragment(d)
                     }
                 }
@@ -173,7 +176,7 @@ class CustomStudyDialog(
         /*
             TODO: Try to change to a standard input dialog (currently the thing holding us back is having the extra
             TODO: hint line for the number of cards available, and having the pre-filled text selected by default)
-        */
+         */
         // Input dialogs
         // Show input dialog for an individual custom study dialog
         @SuppressLint("InflateParams")
@@ -194,101 +197,117 @@ class CustomStudyDialog(
         // deck id
         val did = requireArguments().getLong(DID)
         // Set material dialog parameters
-        val dialog = AlertDialog.Builder(requireActivity())
-            .customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
-            .positiveButton(R.string.dialog_ok) {
-                // Get the value selected by user
-                val n: Int = try {
-                    editText.text.toString().toInt()
-                } catch (e: Exception) {
-                    Timber.w(e)
-                    // This should never happen because we disable positive button for non-parsable inputs
-                    return@positiveButton
-                }
-                when (contextMenuOption) {
-                    STUDY_NEW -> {
-                        requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
-                        val deck = collection.decks.get(did)!!
-                        deck.put("extendNew", n)
-                        collection.decks.save(deck)
-                        collection.sched.extendLimits(n, 0)
-                        onLimitsExtended()
-                    }
-                    STUDY_REV -> {
-                        requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
-                        val deck = collection.decks.get(did)!!
-                        deck.put("extendRev", n)
-                        collection.decks.save(deck)
-                        collection.sched.extendLimits(0, n)
-                        onLimitsExtended()
-                    }
-                    STUDY_FORGOT -> {
-                        val ar = JSONArray()
-                        ar.put(0, 1)
-                        createCustomStudySession(
-                            ar,
-                            arrayOf(
-                                String.format(
-                                    Locale.US,
-                                    "rated:%d:1",
-                                    n
+        val dialog =
+            AlertDialog.Builder(requireActivity())
+                .customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
+                .positiveButton(R.string.dialog_ok) {
+                    // Get the value selected by user
+                    val n: Int =
+                        try {
+                            editText.text.toString().toInt()
+                        } catch (e: Exception) {
+                            Timber.w(e)
+                            // This should never happen because we disable positive button for non-parsable inputs
+                            return@positiveButton
+                        }
+                    when (contextMenuOption) {
+                        STUDY_NEW -> {
+                            requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
+                            val deck = collection.decks.get(did)!!
+                            deck.put("extendNew", n)
+                            collection.decks.save(deck)
+                            collection.sched.extendLimits(n, 0)
+                            onLimitsExtended()
+                        }
+                        STUDY_REV -> {
+                            requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
+                            val deck = collection.decks.get(did)!!
+                            deck.put("extendRev", n)
+                            collection.decks.save(deck)
+                            collection.sched.extendLimits(0, n)
+                            onLimitsExtended()
+                        }
+                        STUDY_FORGOT -> {
+                            val ar = JSONArray()
+                            ar.put(0, 1)
+                            createCustomStudySession(
+                                ar,
+                                arrayOf(
+                                    String.format(
+                                        Locale.US,
+                                        "rated:%d:1",
+                                        n
+                                    ),
+                                    Consts.DYN_MAX_SIZE,
+                                    Consts.DYN_RANDOM
                                 ),
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_RANDOM
-                            ),
-                            false
-                        )
-                    }
-                    STUDY_AHEAD -> {
-                        createCustomStudySession(
-                            JSONArray(),
-                            arrayOf(
-                                String.format(
-                                    Locale.US,
-                                    "prop:due<=%d",
-                                    n
+                                false
+                            )
+                        }
+                        STUDY_AHEAD -> {
+                            createCustomStudySession(
+                                JSONArray(),
+                                arrayOf(
+                                    String.format(
+                                        Locale.US,
+                                        "prop:due<=%d",
+                                        n
+                                    ),
+                                    Consts.DYN_MAX_SIZE,
+                                    Consts.DYN_DUE
                                 ),
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_DUE
-                            ),
-                            true
-                        )
+                                true
+                            )
+                        }
+                        STUDY_RANDOM -> {
+                            createCustomStudySession(JSONArray(), arrayOf("", n, Consts.DYN_RANDOM), true)
+                        }
+                        STUDY_PREVIEW -> {
+                            createCustomStudySession(
+                                JSONArray(),
+                                arrayOf(
+                                    "is:new added:" +
+                                        n,
+                                    Consts.DYN_MAX_SIZE,
+                                    Consts.DYN_OLDEST
+                                ),
+                                false
+                            )
+                        }
+                        STUDY_TAGS -> TODO("This branch has not been covered before")
                     }
-                    STUDY_RANDOM -> {
-                        createCustomStudySession(JSONArray(), arrayOf("", n, Consts.DYN_RANDOM), true)
+                }
+                .negativeButton(R.string.dialog_cancel) {
+                    requireActivity().dismissAllDialogFragments()
+                }
+                .create() // Added .create() because we wanted to access alertDialog positive button enable state
+        editText.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    charSequence: CharSequence,
+                    i: Int,
+                    i1: Int,
+                    i2: Int
+                ) {}
+
+                override fun onTextChanged(
+                    charSequence: CharSequence,
+                    i: Int,
+                    i1: Int,
+                    i2: Int
+                ) {}
+
+                override fun afterTextChanged(editable: Editable) {
+                    try {
+                        editText.text.toString().toInt()
+                        dialog.positiveButton.isEnabled = true
+                    } catch (e: Exception) {
+                        Timber.w(e)
+                        dialog.positiveButton.isEnabled = false
                     }
-                    STUDY_PREVIEW -> {
-                        createCustomStudySession(
-                            JSONArray(),
-                            arrayOf(
-                                "is:new added:" +
-                                    n,
-                                Consts.DYN_MAX_SIZE,
-                                Consts.DYN_OLDEST
-                            ),
-                            false
-                        )
-                    }
-                    STUDY_TAGS -> TODO("This branch has not been covered before")
                 }
             }
-            .negativeButton(R.string.dialog_cancel) {
-                requireActivity().dismissAllDialogFragments()
-            }
-            .create() // Added .create() because we wanted to access alertDialog positive button enable state
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun afterTextChanged(editable: Editable) {
-                try {
-                    editText.text.toString().toInt()
-                    dialog.positiveButton.isEnabled = true
-                } catch (e: Exception) {
-                    Timber.w(e)
-                    dialog.positiveButton.isEnabled = false
-                }
-            }
-        })
+        )
 
         // Show soft keyboard
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
@@ -300,7 +319,11 @@ class CustomStudyDialog(
      * Generates the search screen for the custom study deck.
      */
     @NeedsTest("14537: limit to particular tags")
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
+    override fun onSelectedTags(
+        selectedTags: List<String>,
+        indeterminateTags: List<String>,
+        stateFilter: CardStateFilter
+    ) {
         val sb = StringBuilder(stateFilter.toSearch)
         val arr: MutableList<String?> = ArrayList(selectedTags.size)
         if (selectedTags.isNotEmpty()) {
@@ -350,7 +373,8 @@ class CustomStudyDialog(
                 STUDY_RANDOM,
                 STUDY_PREVIEW,
                 STUDY_TAGS,
-                null -> ""
+                null
+                -> ""
             }
         }
     private val text2: String
@@ -364,7 +388,8 @@ class CustomStudyDialog(
                 STUDY_RANDOM -> res.getString(R.string.custom_study_random)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
                 STUDY_TAGS,
-                null -> ""
+                null
+                -> ""
             }
         }
     private val defaultValue: String
@@ -378,7 +403,8 @@ class CustomStudyDialog(
                 STUDY_RANDOM -> prefs.getInt("randomCards", 100).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
                 STUDY_TAGS,
-                null -> ""
+                null
+                -> ""
             }
         }
 
@@ -388,7 +414,11 @@ class CustomStudyDialog(
      * @param terms search terms
      * @param resched whether to reschedule the cards based on the answers given (or ignore them if false)
      */
-    private fun createCustomStudySession(delays: JSONArray, terms: Array<Any>, resched: Boolean) {
+    private fun createCustomStudySession(
+        delays: JSONArray,
+        terms: Array<Any>,
+        resched: Boolean
+    ) {
         val dyn: Deck
         val did = requireArguments().getLong(DID)
 
@@ -412,12 +442,13 @@ class CustomStudyDialog(
             }
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
-            dyn = try {
-                decks.get(decks.newFiltered(customStudyDeck))!!
-            } catch (ex: BackendDeckIsFilteredException) {
-                showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
-                return
-            }
+            dyn =
+                try {
+                    decks.get(decks.newFiltered(customStudyDeck))!!
+                } catch (ex: BackendDeckIsFilteredException) {
+                    showThemedToast(requireActivity(), ex.localizedMessage ?: ex.message ?: "", true)
+                    return
+                }
         }
         if (!dyn.has("terms")) {
             // #5959 - temp code to diagnose why terms doesn't exist.

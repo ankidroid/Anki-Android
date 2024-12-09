@@ -75,18 +75,22 @@ abstract class NavigationDrawerActivity :
      */
     private var pendingRunnable: Runnable? = null
 
-    override fun setContentView(@LayoutRes layoutResID: Int) {
+    override fun setContentView(
+        @LayoutRes layoutResID: Int
+    ) {
         val preferences = baseContext.sharedPrefs()
 
         // Using ClosableDrawerLayout as a parent view.
-        val closableDrawerLayout = LayoutInflater.from(this).inflate(
-            navigationDrawerLayout,
-            null,
-            false
-        ) as ClosableDrawerLayout
+        val closableDrawerLayout =
+            LayoutInflater.from(this).inflate(
+                navigationDrawerLayout,
+                null,
+                false
+            ) as ClosableDrawerLayout
         // Get CoordinatorLayout using resource ID
-        val coordinatorLayout = LayoutInflater.from(this)
-            .inflate(layoutResID, closableDrawerLayout, false) as CoordinatorLayout
+        val coordinatorLayout =
+            LayoutInflater.from(this)
+                .inflate(layoutResID, closableDrawerLayout, false) as CoordinatorLayout
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
             // Then add coordinatorLayout as a child view of fullDraggableContainer.
@@ -144,32 +148,32 @@ abstract class NavigationDrawerActivity :
         }
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
-        drawerToggle = object : ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            R.string.drawer_open,
-            R.string.drawer_close
-        ) {
+        drawerToggle =
+            object : ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.drawer_open,
+                R.string.drawer_close
+            ) {
+                override fun onDrawerClosed(drawerView: View) {
+                    super.onDrawerClosed(drawerView)
+                    invalidateOptionsMenu()
 
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
-                invalidateOptionsMenu()
+                    // If animations are disabled, this is executed before onNavigationItemSelected is called
+                    // PERF: May be able to reduce this delay
+                    HandlerUtils.postDelayedOnNewHandler({
+                        if (pendingRunnable != null) {
+                            HandlerUtils.postOnNewHandler(pendingRunnable!!) // TODO: See if we can use the same handler here
+                            pendingRunnable = null
+                        }
+                    }, 100)
+                }
 
-                // If animations are disabled, this is executed before onNavigationItemSelected is called
-                // PERF: May be able to reduce this delay
-                HandlerUtils.postDelayedOnNewHandler({
-                    if (pendingRunnable != null) {
-                        HandlerUtils.postOnNewHandler(pendingRunnable!!) // TODO: See if we can use the same handler here
-                        pendingRunnable = null
-                    }
-                }, 100)
+                override fun onDrawerOpened(drawerView: View) {
+                    super.onDrawerOpened(drawerView)
+                    invalidateOptionsMenu()
+                }
             }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-                invalidateOptionsMenu()
-            }
-        }
         if (drawerLayout is ClosableDrawerLayout) {
             (drawerLayout as ClosableDrawerLayout).setAnimationEnabled(animationEnabled())
         } else {
@@ -299,44 +303,45 @@ abstract class NavigationDrawerActivity :
          * This runnable will be executed in onDrawerClosed(...)
          * to make the animation more fluid on older devices.
          */
-        pendingRunnable = Runnable {
-            // Take action if a different item selected
-            when (item.itemId) {
-                R.id.nav_decks -> {
-                    Timber.i("Navigating to decks")
-                    val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
-                    // opening DeckPicker should use the instance on the back stack & clear back history
-                    deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    startActivity(deckPicker)
-                }
+        pendingRunnable =
+            Runnable {
+                // Take action if a different item selected
+                when (item.itemId) {
+                    R.id.nav_decks -> {
+                        Timber.i("Navigating to decks")
+                        val deckPicker = Intent(this@NavigationDrawerActivity, DeckPicker::class.java)
+                        // opening DeckPicker should use the instance on the back stack & clear back history
+                        deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        startActivity(deckPicker)
+                    }
 
-                R.id.nav_browser -> {
-                    Timber.i("Navigating to card browser")
-                    openCardBrowser()
-                }
+                    R.id.nav_browser -> {
+                        Timber.i("Navigating to card browser")
+                        openCardBrowser()
+                    }
 
-                R.id.nav_stats -> {
-                    Timber.i("Navigating to stats")
-                    openStatistics()
-                }
+                    R.id.nav_stats -> {
+                        Timber.i("Navigating to stats")
+                        openStatistics()
+                    }
 
-                R.id.nav_settings -> {
-                    Timber.i("Navigating to settings")
-                    openSettings()
-                }
+                    R.id.nav_settings -> {
+                        Timber.i("Navigating to settings")
+                        openSettings()
+                    }
 
-                R.id.nav_help -> {
-                    Timber.i("Navigating to help")
-                    showDialogFragment(HelpDialog.newHelpInstance())
-                }
+                    R.id.nav_help -> {
+                        Timber.i("Navigating to help")
+                        showDialogFragment(HelpDialog.newHelpInstance())
+                    }
 
-                R.id.support_ankidroid -> {
-                    Timber.i("Navigating to support AnkiDroid")
-                    val canRateApp = IntentUtil.canOpenIntent(this, AnkiDroidApp.getMarketIntent(this))
-                    showDialogFragment(HelpDialog.newSupportInstance(canRateApp))
+                    R.id.support_ankidroid -> {
+                        Timber.i("Navigating to support AnkiDroid")
+                        val canRateApp = IntentUtil.canOpenIntent(this, AnkiDroidApp.getMarketIntent(this))
+                        showDialogFragment(HelpDialog.newSupportInstance(canRateApp))
+                    }
                 }
             }
-        }
         closeDrawer()
         return true
     }
@@ -421,7 +426,10 @@ abstract class NavigationDrawerActivity :
         navigationView!!.requestFocus()
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent
+    ): Boolean {
         if (!isDrawerOpen) {
             return super.onKeyDown(keyCode, event)
         }
@@ -456,35 +464,38 @@ abstract class NavigationDrawerActivity :
             intentReviewCards.action = Intent.ACTION_VIEW
             intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
-            val reviewCardsShortcut = ShortcutInfoCompat.Builder(context, "reviewCardsShortcutId")
-                .setShortLabel(context.getString(R.string.studyoptions_start))
-                .setLongLabel(context.getString(R.string.studyoptions_start))
-                .setIcon(IconCompat.createWithResource(context, R.drawable.review_shortcut))
-                .setIntent(intentReviewCards)
-                .build()
+            val reviewCardsShortcut =
+                ShortcutInfoCompat.Builder(context, "reviewCardsShortcutId")
+                    .setShortLabel(context.getString(R.string.studyoptions_start))
+                    .setLongLabel(context.getString(R.string.studyoptions_start))
+                    .setIcon(IconCompat.createWithResource(context, R.drawable.review_shortcut))
+                    .setIntent(intentReviewCards)
+                    .build()
 
             // Add Shortcut
             val intentAddNote = Intent(context, IntentHandler2::class.java)
             intentAddNote.action = Intent.ACTION_VIEW
             intentAddNote.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentAddNote.putExtra(NoteEditor.EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value)
-            val noteEditorShortcut = ShortcutInfoCompat.Builder(context, "noteEditorShortcutId")
-                .setShortLabel(context.getString(R.string.menu_add))
-                .setLongLabel(context.getString(R.string.menu_add))
-                .setIcon(IconCompat.createWithResource(context, R.drawable.add_shortcut))
-                .setIntent(intentAddNote)
-                .build()
+            val noteEditorShortcut =
+                ShortcutInfoCompat.Builder(context, "noteEditorShortcutId")
+                    .setShortLabel(context.getString(R.string.menu_add))
+                    .setLongLabel(context.getString(R.string.menu_add))
+                    .setIcon(IconCompat.createWithResource(context, R.drawable.add_shortcut))
+                    .setIntent(intentAddNote)
+                    .build()
 
             // CardBrowser Shortcut
             val intentCardBrowser = Intent(context, CardBrowser::class.java)
             intentCardBrowser.action = Intent.ACTION_VIEW
             intentCardBrowser.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val cardBrowserShortcut = ShortcutInfoCompat.Builder(context, "cardBrowserShortcutId")
-                .setShortLabel(context.getString(R.string.card_browser))
-                .setLongLabel(context.getString(R.string.card_browser))
-                .setIcon(IconCompat.createWithResource(context, R.drawable.browse_shortcut))
-                .setIntent(intentCardBrowser)
-                .build()
+            val cardBrowserShortcut =
+                ShortcutInfoCompat.Builder(context, "cardBrowserShortcutId")
+                    .setShortLabel(context.getString(R.string.card_browser))
+                    .setLongLabel(context.getString(R.string.card_browser))
+                    .setIcon(IconCompat.createWithResource(context, R.drawable.browse_shortcut))
+                    .setIntent(intentCardBrowser)
+                    .build()
             ShortcutManagerCompat.addDynamicShortcuts(
                 context,
                 listOf(

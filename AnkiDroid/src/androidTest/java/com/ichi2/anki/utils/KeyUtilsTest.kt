@@ -27,7 +27,6 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class KeyUtilsTest {
-
     @Test
     fun testIsDigitWithValidDigitShouldReturnTrue() {
         val keyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_5)

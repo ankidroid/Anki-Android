@@ -48,10 +48,11 @@ class ViewerResourceHandler(context: Context) {
 
         try {
             if (path.startsWith(MATHJAX_PATH_PREFIX)) {
-                val mathjaxAssetPath = Paths.get(
-                    "backend/js/vendor/mathjax",
-                    path.removePrefix(MATHJAX_PATH_PREFIX)
-                ).pathString
+                val mathjaxAssetPath =
+                    Paths.get(
+                        "backend/js/vendor/mathjax",
+                        path.removePrefix(MATHJAX_PATH_PREFIX)
+                    ).pathString
                 val inputStream = assetManager.open(mathjaxAssetPath)
                 return WebResourceResponse(guessMimeType(path), null, inputStream)
             }
@@ -73,15 +74,19 @@ class ViewerResourceHandler(context: Context) {
     }
 
     @NeedsTest("seeking audio - 16513")
-    private fun handlePartialContent(file: File, range: String): WebResourceResponse {
+    private fun handlePartialContent(
+        file: File,
+        range: String
+    ): WebResourceResponse {
         val rangeHeader = RangeHeader.from(range, defaultEnd = file.length() - 1)
 
         val mimeType = guessMimeType(file.path)
         val (start, end) = rangeHeader
-        val responseHeaders = mapOf(
-            "Content-Range" to "bytes $start-$end/${file.length()}",
-            "Accept-Ranges" to "bytes"
-        )
+        val responseHeaders =
+            mapOf(
+                "Content-Range" to "bytes $start-$end/${file.length()}",
+                "Accept-Ranges" to "bytes"
+            )
         // WARN: WebResourceResponse appears to handle truncating the stream internally
         // This is NOT the same as NanoHTTPD
 
@@ -111,7 +116,10 @@ class ViewerResourceHandler(context: Context) {
  */
 data class RangeHeader(val start: Long, val end: Long) {
     companion object {
-        fun from(range: String, defaultEnd: Long): RangeHeader {
+        fun from(
+            range: String,
+            defaultEnd: Long
+        ): RangeHeader {
             val numbers = range.substring("bytes=".length).split('-')
             val unspecifiedEnd = numbers.getOrNull(1).isNullOrEmpty()
             return RangeHeader(

@@ -44,8 +44,9 @@ import timber.log.Timber
  *
  * @param layout Resource ID of the layout to be used for this fragment.
  */
-open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivityProvider {
-
+open class AnkiFragment(
+    @LayoutRes layout: Int
+) : Fragment(layout), AnkiActivityProvider {
     val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
@@ -58,7 +59,10 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     // Open function: These can be overridden to react to specific parts of the lifecycle
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
     }
@@ -87,7 +91,9 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     protected suspend fun userAcceptsSchemaChange() = ankiActivity.userAcceptsSchemaChange()
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
-    fun setNavigationBarColor(@AttrRes attr: Int) {
+    fun setNavigationBarColor(
+        @AttrRes attr: Int
+    ) {
         requireActivity().window.navigationBarColor =
             Themes.getColorFromAttr(requireContext(), attr)
     }
@@ -96,7 +102,9 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
      * Finds a view in the fragment's layout by the specified ID.
      *
      */
-    fun <T : View> findViewById(@IdRes id: Int): T {
+    fun <T : View> findViewById(
+        @IdRes id: Int
+    ): T {
         return requireView().findViewById(id)
     }
 
@@ -138,7 +146,9 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
      * Sets the title of the toolbar.
      *
      */
-    protected fun setTitle(@StringRes title: Int) {
+    protected fun setTitle(
+        @StringRes title: Int
+    ) {
         mainToolbar.setTitle(title)
     }
 
@@ -149,8 +159,7 @@ open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivity
     protected suspend fun <T> Fragment.withProgress(
         message: String = resources.getString(R.string.dialog_processing),
         block: suspend () -> T
-    ): T =
-        requireActivity().withProgress(message, block)
+    ): T = requireActivity().withProgress(message, block)
 
     /**
      * If storage permissions are not granted, shows a toast message and finishes the activity.

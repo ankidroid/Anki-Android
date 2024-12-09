@@ -21,7 +21,6 @@ import org.intellij.lang.annotations.Language
 import org.junit.Test
 
 class FixedPreferencesTitleLengthTest {
-
     companion object {
         @Language("XML")
         val strings1XmlValid = """<resources>

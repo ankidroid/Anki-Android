@@ -34,9 +34,10 @@ class IsJsonEqual(private val expectedValue: JSONObject) : org.hamcrest.BaseMatc
         val expectedMap = expectedValue.keys().asSequence().associateWith { item[it] }
 
         val itemKeys = item.keys().asSequence().toList()
-        val differentKeys = itemKeys
-            .associateWith { item[it] }
-            .filter { expectedMap[it.key].toString() != it.value.toString() }
+        val differentKeys =
+            itemKeys
+                .associateWith { item[it] }
+                .filter { expectedMap[it.key].toString() != it.value.toString() }
 
         return differentKeys.isEmpty() && expectedMap.size == itemKeys.size
     }

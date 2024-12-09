@@ -33,16 +33,13 @@ object BrowserConfig {
     const val NOTES_SORT_BACKWARDS_KEY = "browserNoteSortBackwards"
 
     @LibAnkiAlias("active_columns_key")
-    fun activeColumnsKey(isNotesMode: Boolean): String =
-        if (isNotesMode) ACTIVE_NOTE_COLUMNS_KEY else ACTIVE_CARD_COLUMNS_KEY
+    fun activeColumnsKey(isNotesMode: Boolean): String = if (isNotesMode) ACTIVE_NOTE_COLUMNS_KEY else ACTIVE_CARD_COLUMNS_KEY
 
     @LibAnkiAlias("sort_column_key")
-    fun sortColumnKey(isNotesMode: Boolean): String =
-        if (isNotesMode) NOTES_SORT_COLUMN_KEY else CARDS_SORT_COLUMN_KEY
+    fun sortColumnKey(isNotesMode: Boolean): String = if (isNotesMode) NOTES_SORT_COLUMN_KEY else CARDS_SORT_COLUMN_KEY
 
     @LibAnkiAlias("sort_backwards_key")
-    fun sortBackwardsKey(isNotesMode: Boolean): String =
-        if (isNotesMode) NOTES_SORT_BACKWARDS_KEY else CARDS_SORT_BACKWARDS_KEY
+    fun sortBackwardsKey(isNotesMode: Boolean): String = if (isNotesMode) NOTES_SORT_BACKWARDS_KEY else CARDS_SORT_BACKWARDS_KEY
 }
 
 object BrowserDefaults {

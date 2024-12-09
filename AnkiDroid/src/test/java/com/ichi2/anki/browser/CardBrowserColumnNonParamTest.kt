@@ -26,7 +26,6 @@ import kotlin.test.assertContentEquals
 /** @see CardBrowserColumn */
 @RunWith(AndroidJUnit4::class)
 class CardBrowserColumnNonParamTest : JvmTest() {
-
     @Test
     fun `all keys are documented`() {
         // meta test - the column keys aren't documented well

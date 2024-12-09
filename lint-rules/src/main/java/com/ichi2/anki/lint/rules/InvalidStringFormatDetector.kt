@@ -52,15 +52,16 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         /**
          * Whether the string or plural resource that is being used has all the translations
          * **/
-        val ISSUE = Issue.create(
-            "InvalidStringFormat",
-            "The String format is invalid",
-            "The String format used is invalid, Make sure to use a valid string format",
-            ANKI_XML_CATEGORY,
-            ANKI_XML_PRIORITY,
-            ANKI_XML_SEVERITY,
-            IMPLEMENTATION_XML
-        )
+        val ISSUE =
+            Issue.create(
+                "InvalidStringFormat",
+                "The String format is invalid",
+                "The String format used is invalid, Make sure to use a valid string format",
+                ANKI_XML_CATEGORY,
+                ANKI_XML_PRIORITY,
+                ANKI_XML_SEVERITY,
+                IMPLEMENTATION_XML
+            )
 
         private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
 
@@ -73,24 +74,28 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         private val INVALID_CAPITALIZATION = Pattern.compile("(?<!%)%[^%a-zA-Z]*[DFNOGC].*").toRegex()
     }
 
-    override fun appliesTo(folderType: ResourceFolderType): Boolean =
-        EnumSet.of(ResourceFolderType.VALUES).contains(folderType)
+    override fun appliesTo(folderType: ResourceFolderType): Boolean = EnumSet.of(ResourceFolderType.VALUES).contains(folderType)
 
     override fun getApplicableElements() = listOf(TAG_STRING, TAG_PLURALS)
 
-    override fun visitElement(context: XmlContext, element: Element) {
+    override fun visitElement(
+        context: XmlContext,
+        element: Element
+    ) {
         val childNodes = element.childNodes
         if (childNodes.length <= 0) return
 
         element.childNodes
             .forEach { child ->
-                val isStringResource = (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) &&
-                    TAG_STRING == element.localName
-                val isStringArrayOrPlurals = child.nodeType == Node.ELEMENT_NODE &&
-                    (
-                        TAG_STRING_ARRAY == element.localName ||
-                            TAG_PLURALS == element.localName
-                        )
+                val isStringResource =
+                    (child.nodeType == Node.TEXT_NODE || child.nodeType == Node.CDATA_SECTION_NODE) &&
+                        TAG_STRING == element.localName
+                val isStringArrayOrPlurals =
+                    child.nodeType == Node.ELEMENT_NODE &&
+                        (
+                            TAG_STRING_ARRAY == element.localName ||
+                                TAG_PLURALS == element.localName
+                            )
 
                 if (isStringResource) {
                     checkText(context, element, child.nodeValue)
@@ -104,7 +109,11 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
             }
     }
 
-    private fun checkText(context: XmlContext, element: Element, text: String) {
+    private fun checkText(
+        context: XmlContext,
+        element: Element,
+        text: String
+    ) {
         text.split(" ").forEach {
             if (it.matches(INVALID_FORMAT_PATTERN) && it != "XXX%") {
                 val location = context.createLocationHandle(element).resolve()

@@ -66,13 +66,15 @@ fun JSONArray.jsonObjectIterable(): Iterable<JSONObject> {
 fun JSONArray.jsonObjectIterator(): Iterator<JSONObject> {
     return object : Iterator<JSONObject> {
         private var index = 0
+
         override fun hasNext(): Boolean {
             return index < length()
         }
 
-        override fun next() = getJSONObject(index).also {
-            index++
-        }
+        override fun next() =
+            getJSONObject(index).also {
+                index++
+            }
     }
 }
 
@@ -83,6 +85,7 @@ fun JSONArray.stringIterable(): Iterable<String> {
 fun JSONArray.stringIterator(): Iterator<String> {
     return object : Iterator<String> {
         private var index = 0
+
         override fun hasNext(): Boolean {
             return index < length()
         }
@@ -99,5 +102,4 @@ fun JSONArray.stringIterator(): Iterator<String> {
  * @return Given an array of objects, return the array of the value with `key`, assuming that they are String.
  * E.g. templates, fields are a JSONArray whose objects have name
  */
-fun JSONArray.toStringList(key: String): List<String> =
-    jsonObjectIterable().map { it.getString(key) }
+fun JSONArray.toStringList(key: String): List<String> = jsonObjectIterable().map { it.getString(key) }

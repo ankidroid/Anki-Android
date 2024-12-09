@@ -40,7 +40,6 @@ import kotlin.test.assertNotNull
 /** @see CardBrowserColumn */
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class CardBrowserColumnTest : JvmTest() {
-
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters(name = "{0}")
         @JvmStatic // required for initParameters
@@ -95,20 +94,23 @@ class CardBrowserColumnTest : JvmTest() {
         val cid = note.cids()[0]
         val nid = note.id
 
-        var oldData = CardBrowser.CardCache(cid, col, 0, cardsOrNotes)
-            .getColumnHeaderText(column)
+        var oldData =
+            CardBrowser.CardCache(cid, col, 0, cardsOrNotes)
+                .getColumnHeaderText(column)
 
-        val newData = column.let {
-            col.backend.setActiveBrowserColumns(listOf(it.ankiColumnKey))
-            val rowId = if (cardsOrNotes == CardsOrNotes.CARDS) cid else nid
-            col.backend.browserRowForId(rowId).getCells(0).text
-        }
+        val newData =
+            column.let {
+                col.backend.setActiveBrowserColumns(listOf(it.ankiColumnKey))
+                val rowId = if (cardsOrNotes == CardsOrNotes.CARDS) cid else nid
+                col.backend.browserRowForId(rowId).getCells(0).text
+            }
 
         if (column == DUE) {
-            oldData = when (cardsOrNotes) {
-                CardsOrNotes.CARDS -> "New #\u2068${oldData}\u2069"
-                CardsOrNotes.NOTES -> ""
-            }
+            oldData =
+                when (cardsOrNotes) {
+                    CardsOrNotes.CARDS -> "New #\u2068${oldData}\u2069"
+                    CardsOrNotes.NOTES -> ""
+                }
         } else if (column == ORIGINAL_POSITION) {
             // original position is generated in the backend.
             // should be "1" since this is our first card.

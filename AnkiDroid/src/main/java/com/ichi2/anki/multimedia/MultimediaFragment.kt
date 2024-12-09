@@ -58,8 +58,9 @@ import java.io.File
  *
  * @see MultimediaActivity
  */
-abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
-
+abstract class MultimediaFragment(
+    @LayoutRes layout: Int
+) : Fragment(layout) {
     abstract val title: String
 
     val viewModel: MultimediaViewModel by viewModels()
@@ -72,14 +73,20 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
     protected var imageUri: Uri? = null
 
     @NeedsTest("test discard dialog shown in case there are changes")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AnkiActivity).setToolbarTitle(title)
 
         if (arguments != null) {
             Timber.d("Getting MultimediaActivityExtra values from arguments")
-            val multimediaActivityExtra = arguments?.getSerializableCompat(MultimediaActivity.MULTIMEDIA_ARGS_EXTRA) as? MultimediaActivityExtra
+            val multimediaActivityExtra =
+                arguments?.getSerializableCompat(
+                    MultimediaActivity.MULTIMEDIA_ARGS_EXTRA
+                ) as? MultimediaActivityExtra
 
             if (multimediaActivityExtra != null) {
                 indexValue = multimediaActivityExtra.index
@@ -91,17 +98,18 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
             }
         }
 
-        val backCallback = object : OnBackPressedCallback(
-            enabled = viewModel.currentMultimediaPath.value != null
-        ) {
-            override fun handleOnBackPressed() {
-                DiscardChangesDialog.showDialog(requireContext()) {
-                    Timber.i("MultimediaFragment:: OK button pressed to confirm discard changes")
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+        val backCallback =
+            object : OnBackPressedCallback(
+                enabled = viewModel.currentMultimediaPath.value != null
+            ) {
+                override fun handleOnBackPressed() {
+                    DiscardChangesDialog.showDialog(requireContext()) {
+                        Timber.i("MultimediaFragment:: OK button pressed to confirm discard changes")
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
                 }
             }
-        }
 
         lifecycleScope.launch {
             viewModel.currentMultimediaPath.collectLatest { value ->
@@ -134,7 +142,10 @@ abstract class MultimediaFragment(@LayoutRes layout: Int) : Fragment(layout) {
         return Uri.fromFile(file)
     }
 
-    fun setMenuItemIcon(menuItem: MenuItem, @DrawableRes icon: Int) {
+    fun setMenuItemIcon(
+        menuItem: MenuItem,
+        @DrawableRes icon: Int
+    ) {
         menuItem.icon = ContextCompat.getDrawable(requireContext(), icon)
     }
 

@@ -33,7 +33,6 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class ThrowableFilterServiceTest : JvmTest() {
-
     @Test
     fun `Normal exceptions are flagged as PII-safe`() {
         val exception = BackendDeckIsFilteredException(BackendError.newBuilder().build())

@@ -35,13 +35,15 @@ import timber.log.Timber
  * use case where `exceptionHandler` is null
  */
 class FailOnUnhandledExceptionRule : TestRule {
-
     private var uncaughtException: Throwable? = null
     private var exceptionHandler: Thread.UncaughtExceptionHandler? = null
 
     var isEnabled = true
 
-    override fun apply(base: Statement, description: Description): Statement {
+    override fun apply(
+        base: Statement,
+        description: Description
+    ): Statement {
         return object : Statement() {
             override fun evaluate() {
                 if (!isEnabled) return base.evaluate()

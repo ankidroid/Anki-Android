@@ -55,11 +55,12 @@ class SetDueDateViewModel : ViewModel() {
     /** The number of days in the future if we are on [Tab.SINGLE_DAY] */
     var nextSingleDayDueDate: NumberOfDaysInFuture? = null
         set(value) {
-            field = if (value != null && value >= 0) {
-                value
-            } else {
-                null
-            }
+            field =
+                if (value != null && value >= 0) {
+                    value
+                } else {
+                    null
+                }
             Timber.d("update SINGLE_DAY to %s", field)
             refreshIsValid()
         }
@@ -98,18 +99,20 @@ class SetDueDateViewModel : ViewModel() {
     }
 
     private fun refreshIsValid() {
-        val isValid = when (currentTab) {
-            Tab.SINGLE_DAY -> nextSingleDayDueDate.let { it != null && it >= 0 }
-            Tab.DATE_RANGE -> dateRange.isValid()
-        }
+        val isValid =
+            when (currentTab) {
+                Tab.SINGLE_DAY -> nextSingleDayDueDate.let { it != null && it >= 0 }
+                Tab.DATE_RANGE -> dateRange.isValid()
+            }
         isValidFlow.update { isValid }
     }
 
     fun calculateDaysParameter(): SetDueDateDays? {
-        val dateRange = when (currentTab) {
-            Tab.SINGLE_DAY -> nextSingleDayDueDate?.let { "$it" }
-            Tab.DATE_RANGE -> dateRange.toDaysParameter()
-        } ?: return null
+        val dateRange =
+            when (currentTab) {
+                Tab.SINGLE_DAY -> nextSingleDayDueDate?.let { "$it" }
+                Tab.DATE_RANGE -> dateRange.toDaysParameter()
+            } ?: return null
 
         // add a "!" suffix if necessary
         val param = if (this.updateIntervalToMatchDueDate) "$dateRange!" else dateRange
@@ -120,15 +123,19 @@ class SetDueDateViewModel : ViewModel() {
      * Updates the due date of [cardIds] based on the current state.
      * @return The number of cards affected, or `null` if an error occurred
      */
-    fun updateDueDateAsync() = viewModelScope.async {
-        val days = calculateDaysParameter() ?: return@async null
-        // TODO: Provide a config parameter - we can use this to set a 'last used value' in the UI
-        // when the screen is opened
-        undoableOp { sched.setDueDate(cardIds, days) }
-        return@async cardIds.size
-    }
+    fun updateDueDateAsync() =
+        viewModelScope.async {
+            val days = calculateDaysParameter() ?: return@async null
+            // TODO: Provide a config parameter - we can use this to set a 'last used value' in the UI
+            // when the screen is opened
+            undoableOp { sched.setDueDate(cardIds, days) }
+            return@async cardIds.size
+        }
 
-    enum class Tab(val position: Int, @DrawableRes val icon: Int) {
+    enum class Tab(
+        val position: Int,
+        @DrawableRes val icon: Int
+    ) {
         /** Set the due date to a single day */
         SINGLE_DAY(0, R.drawable.calendar_single_day),
 

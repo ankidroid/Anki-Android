@@ -214,41 +214,49 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
         // listen for day rollover: time + timezone changes
         DayRolloverHandler.listenForRolloverEvents(this)
 
-        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                Timber.i("${activity::class.simpleName}::onCreate")
-                (activity as? FragmentActivity)
-                    ?.supportFragmentManager
-                    ?.registerFragmentLifecycleCallbacks(
-                        FragmentLifecycleLogger(activity),
-                        true
-                    )
-            }
+        registerActivityLifecycleCallbacks(
+            object : ActivityLifecycleCallbacks {
+                override fun onActivityCreated(
+                    activity: Activity,
+                    savedInstanceState: Bundle?
+                ) {
+                    Timber.i("${activity::class.simpleName}::onCreate")
+                    (activity as? FragmentActivity)
+                        ?.supportFragmentManager
+                        ?.registerFragmentLifecycleCallbacks(
+                            FragmentLifecycleLogger(activity),
+                            true
+                        )
+                }
 
-            override fun onActivityStarted(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onStart")
-            }
+                override fun onActivityStarted(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onStart")
+                }
 
-            override fun onActivityResumed(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onResume")
-            }
+                override fun onActivityResumed(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onResume")
+                }
 
-            override fun onActivityPaused(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onPause")
-            }
+                override fun onActivityPaused(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onPause")
+                }
 
-            override fun onActivityStopped(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onStop")
-            }
+                override fun onActivityStopped(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onStop")
+                }
 
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-                Timber.i("${activity::class.simpleName}::onSaveInstanceState")
-            }
+                override fun onActivitySaveInstanceState(
+                    activity: Activity,
+                    outState: Bundle
+                ) {
+                    Timber.i("${activity::class.simpleName}::onSaveInstanceState")
+                }
 
-            override fun onActivityDestroyed(activity: Activity) {
-                Timber.i("${activity::class.simpleName}::onDestroy")
+                override fun onActivityDestroyed(activity: Activity) {
+                    Timber.i("${activity::class.simpleName}::onDestroy")
+                }
             }
-        })
+        )
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
         TtsVoices.launchBuildLocalesJob()
@@ -299,7 +307,10 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
      * @param changes The set of changes that occurred.
      * @param handler An optional handler that can be used for custom processing (unused here).
      */
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?
+    ) {
         Timber.d("ChangeSubscriber - opExecuted called with changes: $changes")
         if (changes.studyQueues) {
             DeckPickerWidget.updateDeckPickerWidgets(this)
@@ -310,7 +321,6 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
     }
 
     companion object {
-
         /**
          * [CoroutineScope] tied to the [Application], allowing executing of tasks which should
          * execute as long as the app is running

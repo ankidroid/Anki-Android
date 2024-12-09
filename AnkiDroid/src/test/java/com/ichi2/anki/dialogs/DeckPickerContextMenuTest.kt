@@ -42,7 +42,6 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class DeckPickerContextMenuTest {
-
     private val scenariosForCleanup = ArrayList<FragmentScenario<*>>()
 
     @Before
@@ -83,20 +82,21 @@ class DeckPickerContextMenuTest {
      * bundle. See source code for [DeckPickerContextMenu] for options meaning.
      */
     private fun startContextMenuWithMissingArgument(excluded: String) {
-        val arguments = Bundle().apply {
-            if (excluded != "id") {
-                DeckPickerContextMenu.ARG_DECK_ID to 1000L
+        val arguments =
+            Bundle().apply {
+                if (excluded != "id") {
+                    DeckPickerContextMenu.ARG_DECK_ID to 1000L
+                }
+                if (excluded != "name") {
+                    DeckPickerContextMenu.ARG_DECK_NAME to "Deck"
+                }
+                if (excluded != "dynamic") {
+                    DeckPickerContextMenu.ARG_DECK_IS_DYN to false
+                }
+                if (excluded != "hasBuried") {
+                    DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false
+                }
             }
-            if (excluded != "name") {
-                DeckPickerContextMenu.ARG_DECK_NAME to "Deck"
-            }
-            if (excluded != "dynamic") {
-                DeckPickerContextMenu.ARG_DECK_IS_DYN to false
-            }
-            if (excluded != "hasBuried") {
-                DeckPickerContextMenu.ARG_DECK_HAS_BURIED_IN_DECK to false
-            }
-        }
         launch(arguments)
     }
 
@@ -168,9 +168,10 @@ class DeckPickerContextMenuTest {
         }
     }
 
-    private fun launch(arguments: Bundle) = launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light).also {
-        scenariosForCleanup.add(it)
-    }
+    private fun launch(arguments: Bundle) =
+        launch(DeckPickerContextMenu::class.java, arguments, R.style.Theme_Light).also {
+            scenariosForCleanup.add(it)
+        }
 
     private fun DeckPickerContextMenu.foundOptions(): List<String> {
         val foundOptions = mutableListOf<String>()

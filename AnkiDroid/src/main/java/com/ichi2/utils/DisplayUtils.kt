@@ -24,7 +24,6 @@ import com.ichi2.anki.AnkiDroidApp
 import kotlin.math.roundToInt
 
 object DisplayUtils {
-
     @Suppress("DEPRECATION") // #9333: defaultDisplay & getSize
     fun getDisplayDimensions(wm: WindowManager): Point {
         val display = wm.defaultDisplay

@@ -30,7 +30,6 @@ import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
 
 class PrintStackTraceUsage : Detector(), SourceCodeScanner {
-
     companion object {
         @VisibleForTesting
         const val ID = "PrintStackTraceUsage"
@@ -41,20 +40,25 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
             "AnkiDroid exclusively uses Timber for logging exceptions. " +
                 "See: https://github.com/ankidroid/Anki-Android/wiki/Code-style#logging"
         private val implementation = Implementation(PrintStackTraceUsage::class.java, Scope.JAVA_FILE_SCOPE)
-        val ISSUE: Issue = Issue.create(
-            ID,
-            DESCRIPTION,
-            EXPLANATION,
-            Constants.ANKI_CODE_STYLE_CATEGORY,
-            Constants.ANKI_CODE_STYLE_PRIORITY,
-            Constants.ANKI_CODE_STYLE_SEVERITY,
-            implementation
-        )
+        val ISSUE: Issue =
+            Issue.create(
+                ID,
+                DESCRIPTION,
+                EXPLANATION,
+                Constants.ANKI_CODE_STYLE_CATEGORY,
+                Constants.ANKI_CODE_STYLE_PRIORITY,
+                Constants.ANKI_CODE_STYLE_SEVERITY,
+                implementation
+            )
     }
 
     override fun getApplicableMethodNames() = mutableListOf("printStackTrace")
 
-    override fun visitMethodCall(context: JavaContext, node: UCallExpression, method: PsiMethod) {
+    override fun visitMethodCall(
+        context: JavaContext,
+        node: UCallExpression,
+        method: PsiMethod
+    ) {
         super.visitMethodCall(context, node, method)
         val evaluator = context.evaluator
 
@@ -63,12 +67,13 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
         if (hasArguments || !evaluator.isMemberInSubClassOf(method, "java.lang.Throwable", false)) {
             return
         }
-        val fix = LintFix.create()
-            .replace()
-            .select(node.asSourceString())
-            .with("Timber.w(" + node.receiver!!.asSourceString() + ")")
-            .autoFix()
-            .build()
+        val fix =
+            LintFix.create()
+                .replace()
+                .select(node.asSourceString())
+                .with("Timber.w(" + node.receiver!!.asSourceString() + ")")
+                .autoFix()
+                .build()
         context.report(
             ISSUE,
             context.getCallLocation(node, includeReceiver = true, includeArguments = true),

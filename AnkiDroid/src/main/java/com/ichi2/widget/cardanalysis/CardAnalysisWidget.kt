@@ -49,9 +49,7 @@ import timber.log.Timber
  * It can be configured and reconfigured by holding the widget.
  */
 class CardAnalysisWidget : AnalyticsWidgetProvider() {
-
     companion object {
-
         /**
          * Key used for passing the selected deck ID in the intent extras.
          */
@@ -103,7 +101,10 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             }
         }
 
-        private fun getDeckIdForWidget(context: Context, appWidgetId: Int): DeckId {
+        private fun getDeckIdForWidget(
+            context: Context,
+            appWidgetId: Int
+        ): DeckId {
             val widgetPreferences = CardAnalysisWidgetPreferences(context)
             return widgetPreferences.getSelectedDeckIdFromPreferences(appWidgetId) ?: NOT_FOUND_DECK_ID
         }
@@ -119,16 +120,18 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
 
-            val configIntent = Intent(context, CardAnalysisWidgetConfig::class.java).apply {
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val configPendingIntent = PendingIntent.getActivity(
-                context,
-                appWidgetId,
-                configIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+            val configIntent =
+                Intent(context, CardAnalysisWidgetConfig::class.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+            val configPendingIntent =
+                PendingIntent.getActivity(
+                    context,
+                    appWidgetId,
+                    configIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
@@ -146,16 +149,18 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
             remoteViews.setViewVisibility(R.id.cardAnalysisDataHolder, View.GONE)
             remoteViews.setViewVisibility(R.id.deckNameCardAnalysis, View.GONE)
 
-            val configIntent = Intent(context, CardAnalysisWidgetConfig::class.java).apply {
-                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val configPendingIntent = PendingIntent.getActivity(
-                context,
-                appWidgetId,
-                configIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+            val configIntent =
+                Intent(context, CardAnalysisWidgetConfig::class.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+            val configPendingIntent =
+                PendingIntent.getActivity(
+                    context,
+                    appWidgetId,
+                    configIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
             remoteViews.setOnClickPendingIntent(R.id.empty_widget, configPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
@@ -180,17 +185,19 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
 
             val isEmptyDeck = deckData.newCount == 0 && deckData.reviewCount == 0 && deckData.learnCount == 0
 
-            val intent = if (!isEmptyDeck) {
-                intentToReviewDeckFromShorcuts(context, deckData.deckId)
-            } else {
-                DeckOptions.getIntent(context, deckData.deckId)
-            }
-            val pendingIntent = PendingIntent.getActivity(
-                context,
-                deckData.deckId.toInt(),
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+            val intent =
+                if (!isEmptyDeck) {
+                    intentToReviewDeckFromShorcuts(context, deckData.deckId)
+                } else {
+                    DeckOptions.getIntent(context, deckData.deckId)
+                }
+            val pendingIntent =
+                PendingIntent.getActivity(
+                    context,
+                    deckData.deckId.toInt(),
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
             remoteViews.setOnClickPendingIntent(R.id.deckNameCardAnalysis, pendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
@@ -249,7 +256,10 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         Timber.d("Widget update process completed for appWidgetIds: ${appWidgetIds.joinToString(", ")}")
     }
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(
+        context: Context?,
+        intent: Intent?
+    ) {
         if (context == null || intent == null) {
             Timber.e("Context or intent is null in onReceive")
             return
@@ -319,7 +329,10 @@ class CardAnalysisWidget : AnalyticsWidgetProvider() {
         }
     }
 
-    override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
+    override fun onDeleted(
+        context: Context?,
+        appWidgetIds: IntArray?
+    ) {
         if (context == null) {
             Timber.w("Context is null in onDeleted")
             return

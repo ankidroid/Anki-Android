@@ -53,7 +53,10 @@ object ChangeManager {
          * has modified the collection. Subscriber should inspect the changes, and update
          * the UI if necessary.
          */
-        fun opExecuted(changes: OpChanges, handler: Any?)
+        fun opExecuted(
+            changes: OpChanges,
+            handler: Any?
+        )
     }
 
     // Maybe fixes #16217 - CopyOnWriteArrayList makes this object thread-safe
@@ -65,15 +68,19 @@ object ChangeManager {
         subscribers.add(WeakReference(subscriber))
     }
 
-    private fun notifySubscribers(changes: OpChanges, handler: Any?) {
+    private fun notifySubscribers(
+        changes: OpChanges,
+        handler: Any?
+    ) {
         val expired = mutableListOf<WeakReference<Subscriber>>()
         for (subscriber in subscribers) {
-            val ref = try {
-                subscriber.get()
-            } catch (e: Exception) {
-                CrashReportService.sendExceptionReport(e, "notifySubscribers", "16217: invalid subscriber")
-                null
-            }
+            val ref =
+                try {
+                    subscriber.get()
+                } catch (e: Exception) {
+                    CrashReportService.sendExceptionReport(e, "notifySubscribers", "16217: invalid subscriber")
+                    null
+                }
             if (ref == null) {
                 expired.add(subscriber)
             } else {
@@ -92,16 +99,20 @@ object ChangeManager {
         subscribers.clear()
     }
 
-    internal fun <T> notifySubscribers(changes: T, initiator: Any?) {
-        val opChanges = when (changes) {
-            is OpChanges -> changes
-            is OpChangesWithCount -> changes.changes
-            is OpChangesWithId -> changes.changes
-            is OpChangesAfterUndo -> changes.changes
-            is OpChangesOnly -> changes.changes
-            is ImportResponse -> changes.changes
-            else -> TODO("unhandled change type")
-        }
+    internal fun <T> notifySubscribers(
+        changes: T,
+        initiator: Any?
+    ) {
+        val opChanges =
+            when (changes) {
+                is OpChanges -> changes
+                is OpChangesWithCount -> changes.changes
+                is OpChangesWithId -> changes.changes
+                is OpChangesAfterUndo -> changes.changes
+                is OpChangesOnly -> changes.changes
+                is ImportResponse -> changes.changes
+                else -> TODO("unhandled change type")
+            }
         notifySubscribers(opChanges, initiator)
     }
 
@@ -113,25 +124,29 @@ object ChangeManager {
      * An OpChanges that ensures that all data should be considered as potentially changed.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    internal val ALL = opChanges {
-        card = true
-        note = true
-        deck = true
-        tag = true
-        notetype = true
-        config = true
-        deckConfig = true
-        mtime = true
-        browserTable = true
-        browserSidebar = true
-        noteText = true
-        studyQueues = true
-    }
+    internal val ALL =
+        opChanges {
+            card = true
+            note = true
+            deck = true
+            tag = true
+            notetype = true
+            config = true
+            deckConfig = true
+            mtime = true
+            browserTable = true
+            browserSidebar = true
+            noteText = true
+            studyQueues = true
+        }
 }
 
 /** Wrap a routine that returns OpChanges* or similar undo info with this
  * to notify change subscribers of the changes. */
-suspend fun <T> undoableOp(handler: Any? = null, block: Collection.() -> T): T {
+suspend fun <T> undoableOp(
+    handler: Any? = null,
+    block: Collection.() -> T
+): T {
     return withCol {
         block()
     }.also {

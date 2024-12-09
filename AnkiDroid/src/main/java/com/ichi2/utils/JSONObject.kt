@@ -67,11 +67,12 @@ fun JSONObject.deepClone(): JSONObject = deepClonedInto(JSONObject())
 @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
 fun <T : JSONObject> JSONObject.deepClonedInto(clone: T): T {
     for (key in this.keys()) {
-        val value = when (get(key)) {
-            is JSONObject -> getJSONObject(key).deepClone()
-            is JSONArray -> getJSONArray(key).deepClone()
-            else -> get(key)
-        }
+        val value =
+            when (get(key)) {
+                is JSONObject -> getJSONObject(key).deepClone()
+                is JSONArray -> getJSONArray(key).deepClone()
+                else -> get(key)
+            }
         clone.put(key, value)
     }
     return clone
@@ -90,6 +91,7 @@ fun <T : JSONObject> JSONObject.deepClonedInto(clone: T): T {
  * @return Exactly the same object, with a different type.
  */
 
-fun fromMap(map: Map<String, Any>): JSONObject = JSONObject().apply {
-    map.forEach { (k, v) -> put(k, v) }
-}
+fun fromMap(map: Map<String, Any>): JSONObject =
+    JSONObject().apply {
+        map.forEach { (k, v) -> put(k, v) }
+    }

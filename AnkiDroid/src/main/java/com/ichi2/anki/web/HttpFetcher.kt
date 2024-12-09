@@ -78,7 +78,10 @@ object HttpFetcher {
         return clientBuilder
     }
 
-    fun fetchThroughHttp(address: String?, encoding: String? = "utf-8"): String {
+    fun fetchThroughHttp(
+        address: String?,
+        encoding: String? = "utf-8"
+    ): String {
         Timber.d("fetching %s", address)
         return try {
             val requestBuilder = Request.Builder()
@@ -90,12 +93,13 @@ object HttpFetcher {
                     Timber.d("Response code was %s, returning failure", response.code)
                     return "FAILED"
                 }
-                val reader = BufferedReader(
-                    InputStreamReader(
-                        response.body!!.byteStream(),
-                        Charset.forName(encoding)
+                val reader =
+                    BufferedReader(
+                        InputStreamReader(
+                            response.body!!.byteStream(),
+                            Charset.forName(encoding)
+                        )
                     )
-                )
 
                 val stringBuilder = StringBuilder()
                 var line: String?

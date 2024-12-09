@@ -39,7 +39,6 @@ import kotlinx.coroutines.withContext
 class WidgetConfigScreenAdapter(
     private val onDeleteDeck: (SelectableDeck, Int) -> Unit
 ) : RecyclerView.Adapter<WidgetConfigScreenAdapter.DeckViewHolder>() {
-
     private val decks: MutableList<SelectableDeck> = mutableListOf()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
@@ -55,19 +54,27 @@ class WidgetConfigScreenAdapter(
      * @param parent the parent ViewGroup
      * @param viewType the type of the view
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeckViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.widget_item_deck_config, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): DeckViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.widget_item_deck_config, parent, false)
         return DeckViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: DeckViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: DeckViewHolder,
+        position: Int
+    ) {
         val deck = decks[position]
 
         coroutineScope.launch {
-            val deckName = withContext(Dispatchers.IO) {
-                withCol { decks.get(deck.deckId)!!.name }
-            }
+            val deckName =
+                withContext(Dispatchers.IO) {
+                    withCol { decks.get(deck.deckId)!!.name }
+                }
             holder.deckNameTextView.text = deckName
         }
 
@@ -92,7 +99,10 @@ class WidgetConfigScreenAdapter(
         }
     }
 
-    fun moveDeck(fromPosition: Int, toPosition: Int) {
+    fun moveDeck(
+        fromPosition: Int,
+        toPosition: Int
+    ) {
         val deck = decks.removeAt(fromPosition)
         decks.add(toPosition, deck)
         notifyItemMoved(fromPosition, toPosition)

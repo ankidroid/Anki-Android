@@ -67,16 +67,17 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
     // flyweight pattern: all listeners for an instance of the class as the same
     // We also need to avoid any method-level closures: this callback is unused
     // the second time `onBindViewHolder` is called
-    private val onTouchListener = object : Slider.OnSliderTouchListener {
-        override fun onStartTrackingTouch(slider: Slider) {}
+    private val onTouchListener =
+        object : Slider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: Slider) {}
 
-        override fun onStopTrackingTouch(slider: Slider) {
-            val sliderValue = slider.value.toInt()
-            if (sliderValue != value && callChangeListener(sliderValue)) {
-                value = sliderValue
+            override fun onStopTrackingTouch(slider: Slider) {
+                val sliderValue = slider.value.toInt()
+                if (sliderValue != value && callChangeListener(sliderValue)) {
+                    value = sliderValue
+                }
             }
         }
-    }
 
     var value: Int = valueFrom
         set(value) {
@@ -101,8 +102,9 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
         }
 
         context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
-            summaryFormatResource = getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
-                .takeIf { it != 0 }
+            summaryFormatResource =
+                getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
+                    .takeIf { it != 0 }
         }
 
         context.withStyledAttributes(attrs, R.styleable.SliderPreference) {
@@ -112,9 +114,13 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
         }
     }
 
-    override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
+    override fun onGetDefaultValue(
+        a: TypedArray,
+        index: Int
+    ): Any {
         return a.getInt(index, valueFrom)
     }
+
     override fun onSetInitialValue(defaultValue: Any?) {
         value = getPersistedInt(defaultValue as Int? ?: valueFrom)
     }

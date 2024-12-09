@@ -55,9 +55,10 @@ class CollectionTest : JvmTest() {
     @Test
     fun `clozeNumbersInNote is deterministic`() {
         val cloze = col.notetypes.byName("Cloze")!!
-        val note = col.newNote(cloze).apply {
-            setField(0, "{{c1::Hello}} {{c3::World}}")
-        }
+        val note =
+            col.newNote(cloze).apply {
+                setField(0, "{{c1::Hello}} {{c3::World}}")
+            }
 
         repeat(5) {
             assertThat(col.clozeNumbersInNote(note)[0], equalTo(1))

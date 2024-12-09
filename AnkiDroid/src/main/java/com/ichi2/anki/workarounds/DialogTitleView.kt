@@ -59,7 +59,10 @@ class DialogTitleView : FixedTextView {
 
     constructor(context: Context) : super(context)
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onMeasure(
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int
+    ) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         val layout = layout ?: return
@@ -72,12 +75,13 @@ class DialogTitleView : FixedTextView {
         setSingleLine(false)
         setMaxLines(2)
 
-        val a = context.obtainStyledAttributes(
-            null,
-            R.styleable.TextAppearance,
-            android.R.attr.textAppearanceMedium,
-            android.R.style.TextAppearance_Medium
-        )
+        val a =
+            context.obtainStyledAttributes(
+                null,
+                R.styleable.TextAppearance,
+                android.R.attr.textAppearanceMedium,
+                android.R.style.TextAppearance_Medium
+            )
         val textSize = a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, 0)
         if (textSize != 0) {
             // textSize is already expressed in pixels

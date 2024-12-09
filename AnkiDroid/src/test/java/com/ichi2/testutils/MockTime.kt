@@ -87,7 +87,15 @@ open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
          * @return the time stamp of this instant in GMT calendar
          */
         @SuppressLint("DirectGregorianInstantiation")
-        fun timeStamp(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int, second: Int, milliseconds: Int = 0): Long {
+        fun timeStamp(
+            year: Int,
+            month: Int,
+            date: Int,
+            hourOfDay: Int,
+            minute: Int,
+            second: Int,
+            milliseconds: Int = 0
+        ): Long {
             val timeZone = TimeZone.getTimeZone("GMT")
             val gregorianCalendar: Calendar = GregorianCalendar(year, month, date, hourOfDay, minute, second)
             gregorianCalendar.timeZone = timeZone

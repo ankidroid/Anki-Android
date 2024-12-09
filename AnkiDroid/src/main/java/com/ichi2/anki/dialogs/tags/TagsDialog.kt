@@ -108,7 +108,12 @@ class TagsDialog : AnalyticsDialogFragment {
      * @param allTags all possible tags in the collection
      * @return Initialized instance of [TagsDialog]
      */
-    fun withArguments(context: Context, type: DialogType, checkedTags: List<String>, allTags: List<String>): TagsDialog {
+    fun withArguments(
+        context: Context,
+        type: DialogType,
+        checkedTags: List<String>,
+        allTags: List<String>
+    ): TagsDialog {
         return withArguments(context, type, checkedTags, null, allTags)
     }
 
@@ -140,25 +145,28 @@ class TagsDialog : AnalyticsDialogFragment {
         super.onCreate(savedInstanceState)
         resizeWhenSoftInputShown(requireActivity().window)
 
-        val tagsFile = requireNotNull(
-            BundleCompat.getParcelable(requireArguments(), ARG_TAGS_FILE, TagsFile::class.java)
-        ) {
-            "$ARG_TAGS_FILE is required"
-        }
+        val tagsFile =
+            requireNotNull(
+                BundleCompat.getParcelable(requireArguments(), ARG_TAGS_FILE, TagsFile::class.java)
+            ) {
+                "$ARG_TAGS_FILE is required"
+            }
 
         val data = tagsFile.getData()
         type = data.type
-        tags = TagsList(
-            allTags = data.allTags,
-            checkedTags = data.checkedTags,
-            uncheckedTags = data.uncheckedTags
-        )
+        tags =
+            TagsList(
+                allTags = data.allTags,
+                checkedTags = data.checkedTags,
+                uncheckedTags = data.uncheckedTags
+            )
         isCancelable = true
     }
 
     private val tagsDialogListener: TagsDialogListener
-        get() = listener
-            ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
+        get() =
+            listener
+                ?: TagsDialogListener.createFragmentResultSender(parentFragmentManager)
 
     @NeedsTest(
         "In EDIT_TAGS dialog, long-clicking a tag should open the add tag dialog with the clicked tag" +
@@ -201,17 +209,18 @@ class TagsDialog : AnalyticsDialogFragment {
             tagsArrayAdapter!!.tagContextAndLongClickListener = OnContextAndLongClickListener { false }
         }
         adjustToolbar(tagsDialogView)
-        dialog = AlertDialog.Builder(requireActivity())
-            .positiveButton(text = positiveText!!) {
-                tagsDialogListener.onSelectedTags(
-                    tags!!.copyOfCheckedTagList(),
-                    tags!!.copyOfIndeterminateTagList(),
-                    selectedOption
-                )
-            }
-            .negativeButton(R.string.dialog_cancel)
-            .customView(view = tagsDialogView)
-            .create()
+        dialog =
+            AlertDialog.Builder(requireActivity())
+                .positiveButton(text = positiveText!!) {
+                    tagsDialogListener.onSelectedTags(
+                        tags!!.copyOfCheckedTagList(),
+                        tags!!.copyOfIndeterminateTagList(),
+                        selectedOption
+                    )
+                }
+                .negativeButton(R.string.dialog_cancel)
+                .customView(view = tagsDialogView)
+                .create()
         val dialog: AlertDialog? = dialog
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
@@ -259,18 +268,20 @@ class TagsDialog : AnalyticsDialogFragment {
         val queryET = toolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         toolbarSearchView!!.queryHint = getString(R.string.filter_tags)
-        toolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                toolbarSearchView!!.clearFocus()
-                return true
-            }
+        toolbarSearchView!!.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    toolbarSearchView!!.clearFocus()
+                    return true
+                }
 
-            override fun onQueryTextChange(newText: String): Boolean {
-                val adapter = tagsListRecyclerView!!.adapter as TagsArrayAdapter?
-                adapter!!.filter.filter(newText)
-                return true
+                override fun onQueryTextChange(newText: String): Boolean {
+                    val adapter = tagsListRecyclerView!!.adapter as TagsArrayAdapter?
+                    adapter!!.filter.filter(newText)
+                    return true
+                }
             }
-        })
+        )
         val checkAllItem = toolbar.menu.findItem(R.id.tags_dialog_action_select_all)
         checkAllItem.setOnMenuItemClickListener {
             val didChange = tags!!.toggleAllCheckedStatuses()
@@ -293,18 +304,19 @@ class TagsDialog : AnalyticsDialogFragment {
      */
     @NeedsTest("The prefixTag should be prefilled properly")
     private fun createAddTagDialog(prefixTag: String?) {
-        val addTagDialog = AlertDialog.Builder(requireActivity()).show {
-            title(text = getString(R.string.add_tag))
-            positiveButton(R.string.dialog_ok)
-            negativeButton(R.string.dialog_cancel)
-            setView(R.layout.dialog_generic_text_input)
-        }.input(
-            hint = getString(R.string.tag_name),
-            inputType = InputType.TYPE_CLASS_TEXT
-        ) { d: AlertDialog?, input: CharSequence ->
-            addTag(input.toString())
-            d?.dismiss()
-        }
+        val addTagDialog =
+            AlertDialog.Builder(requireActivity()).show {
+                title(text = getString(R.string.add_tag))
+                positiveButton(R.string.dialog_ok)
+                negativeButton(R.string.dialog_cancel)
+                setView(R.layout.dialog_generic_text_input)
+            }.input(
+                hint = getString(R.string.tag_name),
+                inputType = InputType.TYPE_CLASS_TEXT
+            ) { d: AlertDialog?, input: CharSequence ->
+                addTag(input.toString())
+                d?.dismiss()
+            }
         val inputET = addTagDialog.getInputField()
         inputET.filters = arrayOf(addTagFilter)
         if (!prefixTag.isNullOrEmpty()) {
@@ -360,38 +372,40 @@ class TagsDialog : AnalyticsDialogFragment {
          *   "tag:"  -- input a space --> "tag::"
          *   "tag::" -- input a space --> "tag::"
          */
-        private val addTagFilter = InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
-            if (!source.subSequence(start, end).contains(' ')) {
-                return@InputFilter null
-            }
-            var previousColonsCnt = 0
-            if (dest != null) {
-                val previousPart = dest.substring(0, destStart)
-                if (previousPart.endsWith("::")) {
-                    previousColonsCnt = 2
-                } else if (previousPart.endsWith(":")) {
-                    previousColonsCnt = 1
+        private val addTagFilter =
+            InputFilter { source: CharSequence, start: Int, end: Int, dest: Spanned?, destStart: Int, _: Int ->
+                if (!source.subSequence(start, end).contains(' ')) {
+                    return@InputFilter null
                 }
-            }
-            val sb = StringBuilder()
-            for (char in source.subSequence(start, end)) {
-                if (char == ' ') {
-                    if (previousColonsCnt == 0) {
-                        sb.append("::")
-                    } else if (previousColonsCnt == 1) {
-                        sb.append(":")
+                var previousColonsCnt = 0
+                if (dest != null) {
+                    val previousPart = dest.substring(0, destStart)
+                    if (previousPart.endsWith("::")) {
+                        previousColonsCnt = 2
+                    } else if (previousPart.endsWith(":")) {
+                        previousColonsCnt = 1
                     }
-                } else {
-                    sb.append(char)
                 }
-                previousColonsCnt = if (char == ':') {
-                    previousColonsCnt + 1
-                } else {
-                    0
+                val sb = StringBuilder()
+                for (char in source.subSequence(start, end)) {
+                    if (char == ' ') {
+                        if (previousColonsCnt == 0) {
+                            sb.append("::")
+                        } else if (previousColonsCnt == 1) {
+                            sb.append(":")
+                        }
+                    } else {
+                        sb.append(char)
+                    }
+                    previousColonsCnt =
+                        if (char == ':') {
+                            previousColonsCnt + 1
+                        } else {
+                            0
+                        }
                 }
+                sb
             }
-            sb
-        }
     }
 }
 
@@ -403,7 +417,6 @@ class TagsDialog : AnalyticsDialogFragment {
  */
 @WorkerThread
 class TagsFile(path: String) : File(path), Parcelable {
-
     /**
      * @param directory parent directory of the file. Generally it should be the cache directory
      * @param data data for the dialog to display. Typically [Context.getCacheDir]
@@ -424,22 +437,26 @@ class TagsFile(path: String) : File(path), Parcelable {
 
     override fun describeContents(): Int = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    override fun writeToParcel(
+        dest: Parcel,
+        flags: Int
+    ) {
         dest.writeString(path)
     }
 
     companion object {
         @JvmField
         @Suppress("unused")
-        val CREATOR = object : Parcelable.Creator<TagsFile> {
-            override fun createFromParcel(source: Parcel?): TagsFile {
-                return TagsFile(source!!.readString()!!)
-            }
+        val CREATOR =
+            object : Parcelable.Creator<TagsFile> {
+                override fun createFromParcel(source: Parcel?): TagsFile {
+                    return TagsFile(source!!.readString()!!)
+                }
 
-            override fun newArray(size: Int): Array<TagsFile> {
-                return arrayOf()
+                override fun newArray(size: Int): Array<TagsFile> {
+                    return arrayOf()
+                }
             }
-        }
     }
 
     @Serializable

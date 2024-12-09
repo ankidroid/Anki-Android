@@ -93,7 +93,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         this.pasteListener = pasteListener
     }
 
-    override fun onSelectionChanged(selStart: Int, selEnd: Int) {
+    override fun onSelectionChanged(
+        selStart: Int,
+        selEnd: Int
+    ) {
         if (selectionChangeListener != null) {
             try {
                 selectionChangeListener!!.onSelectionChanged(selStart, selEnd)
@@ -123,14 +126,18 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         background = origBackground
     }
 
-    fun setContent(content: String?, replaceNewLine: Boolean) {
-        val text = if (content == null) {
-            ""
-        } else if (replaceNewLine) {
-            content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
-        } else {
-            content
-        }
+    fun setContent(
+        content: String?,
+        replaceNewLine: Boolean
+    ) {
+        val text =
+            if (content == null) {
+                ""
+            } else if (replaceNewLine) {
+                content.replace("<br(\\s*/*)>".toRegex(), NEW_LINE)
+            } else {
+                content
+            }
         setText(text)
     }
 
@@ -165,7 +172,10 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         return false
     }
 
-    private fun onPaste(mediaUri: Uri?, description: ClipDescription?): Boolean {
+    private fun onPaste(
+        mediaUri: Uri?,
+        description: ClipDescription?
+    ): Boolean {
         return if (mediaUri == null) {
             false
         } else {
@@ -190,11 +200,12 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
 
     fun setCapitalize(value: Boolean) {
         val inputType = this.inputType
-        this.inputType = if (value) {
-            inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        } else {
-            inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
-        }
+        this.inputType =
+            if (value) {
+                inputType or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            } else {
+                inputType and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv()
+            }
     }
 
     val isCapitalized: Boolean
@@ -204,11 +215,18 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     internal class SavedState(val state: Parcelable?, val ord: Int) : BaseSavedState(state)
 
     interface TextSelectionListener {
-        fun onSelectionChanged(selStart: Int, selEnd: Int)
+        fun onSelectionChanged(
+            selStart: Int,
+            selEnd: Int
+        )
     }
 
     fun interface PasteListener {
-        fun onPaste(editText: EditText, uri: Uri?, description: ClipDescription?): Boolean
+        fun onPaste(
+            editText: EditText,
+            uri: Uri?,
+            description: ClipDescription?
+        ): Boolean
     }
 
     companion object {

@@ -28,7 +28,10 @@ import timber.log.Timber
  * ```
  * -> `D/TimeUtilKt executed mHtmlGenerator in 23ms`
  */
-fun <T> measureTime(functionName: String? = "", function: () -> T): T {
+fun <T> measureTime(
+    functionName: String? = "",
+    function: () -> T
+): T {
     val startTime = TimeManager.time.intTimeMS()
     val result = function()
     val endTime = TimeManager.time.intTimeMS()
@@ -50,7 +53,10 @@ fun <T> measureTime(functionName: String? = "", function: () -> T): T {
  * ```
  * -> `D/TimeUtilKt executed mHtmlGenerator in 23ms`
  */
-suspend fun <T> coMeasureTime(functionName: String? = "", function: suspend () -> T): T {
+suspend fun <T> coMeasureTime(
+    functionName: String? = "",
+    function: suspend () -> T
+): T {
     val startTime = TimeManager.time.intTimeMS()
     val result = function()
     val endTime = TimeManager.time.intTimeMS()
@@ -94,8 +100,8 @@ class Stopwatch(private val executionName: String?) {
     fun reset() {
         startTime = TimeManager.time.intTimeMS()
     }
-    companion object {
 
+    companion object {
         /** initializes the stopwatch to ensure `stop()` before `start()` won't crash */
         @CheckResult
         fun init(executionName: String? = null) = Stopwatch(executionName)

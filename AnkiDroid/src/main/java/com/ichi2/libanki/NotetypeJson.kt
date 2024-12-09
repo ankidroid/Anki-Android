@@ -51,7 +51,9 @@ class NotetypeJson : JSONObject {
     /**
      * Creates a model object from json string
      */
-    constructor(@Language("json") json: String) : super(json)
+    constructor(
+        @Language("json") json: String
+    ) : super(json)
 
     @CheckResult
     fun deepClone(): NotetypeJson {

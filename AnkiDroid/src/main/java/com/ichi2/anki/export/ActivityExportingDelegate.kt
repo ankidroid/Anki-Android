@@ -57,7 +57,10 @@ import java.util.function.Supplier
  * @param activity the calling activity (must implement [ExportReadyDialogListener])
  * @param collectionSupplier a predicate that supplies a collection instance
 */
-class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportReadyDialogListener {
+class ActivityExportingDelegate(
+    private val activity: AnkiActivity,
+    private val collectionSupplier: Supplier<Collection>
+) : ExportReadyDialogListener {
     val dialogsFactory: ExportDialogsFactory
     private val saveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var fileExportPath: String
@@ -77,32 +80,35 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val authority = "${activity.packageName}.apkgfileprovider"
 
         // Get a URI for the file to be shared via the FileProvider API
-        val uri: Uri = try {
-            FileProvider.getUriForFile(activity, authority, attachment)
-        } catch (e: IllegalArgumentException) {
-            Timber.e("Could not generate a valid URI for the apkg file")
-            showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
-            return
-        }
-        val sendIntent = ShareCompat.IntentBuilder(activity)
-            .setType("application/apkg")
-            .setStream(uri)
-            .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
-            .setHtmlText(
-                activity.getString(
-                    R.string.export_email_text,
-                    activity.getString(R.string.link_manual),
-                    activity.getString(R.string.link_distributions)
-                )
-            )
-            .intent.apply {
-                clipData = ClipData.newUri(activity.contentResolver, attachment.name, uri)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        val uri: Uri =
+            try {
+                FileProvider.getUriForFile(activity, authority, attachment)
+            } catch (e: IllegalArgumentException) {
+                Timber.e("Could not generate a valid URI for the apkg file")
+                showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
+                return
             }
-        val shareFileIntent = Intent.createChooser(
-            sendIntent,
-            activity.getString(R.string.export_share_title)
-        )
+        val sendIntent =
+            ShareCompat.IntentBuilder(activity)
+                .setType("application/apkg")
+                .setStream(uri)
+                .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
+                .setHtmlText(
+                    activity.getString(
+                        R.string.export_email_text,
+                        activity.getString(R.string.link_manual),
+                        activity.getString(R.string.link_distributions)
+                    )
+                )
+                .intent.apply {
+                    clipData = ClipData.newUri(activity.contentResolver, attachment.name, uri)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                }
+        val shareFileIntent =
+            Intent.createChooser(
+                sendIntent,
+                activity.getString(R.string.export_share_title)
+            )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivity(shareFileIntent)
             // TODO: find if there is a way to check whether the activity successfully shared the collection.
@@ -126,14 +132,15 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         fileExportPath = exportPath
 
         // Send the user to the standard Android file picker via Intent
-        val saveIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "application/apkg"
-            putExtra(Intent.EXTRA_TITLE, attachment.name)
-            putExtra("android.content.extra.SHOW_ADVANCED", true)
-            putExtra("android.content.extra.FANCY", true)
-            putExtra("android.content.extra.SHOW_FILESIZE", true)
-        }
+        val saveIntent =
+            Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "application/apkg"
+                putExtra(Intent.EXTRA_TITLE, attachment.name)
+                putExtra("android.content.extra.SHOW_ADVANCED", true)
+                putExtra("android.content.extra.FANCY", true)
+                putExtra("android.content.extra.SHOW_FILESIZE", true)
+            }
         try {
             saveFileLauncher.launch(saveIntent)
         } catch (ex: ActivityNotFoundException) {
@@ -156,9 +163,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private fun saveFileCallback(result: ActivityResult) {
         activity.launchCatchingTask {
             activity.withProgress(activity.getString(R.string.export_saving_exported_collection)) {
-                val isSuccessful = withContext(Dispatchers.IO) {
-                    exportToProvider(result.data!!)
-                }
+                val isSuccessful =
+                    withContext(Dispatchers.IO) {
+                        exportToProvider(result.data!!)
+                    }
 
                 if (isSuccessful) {
                     activity.showSnackbar(R.string.export_save_apkg_successful, Snackbar.LENGTH_SHORT)
@@ -170,7 +178,10 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
-    private fun exportToProvider(intent: Intent, deleteAfterExport: Boolean = true): Boolean {
+    private fun exportToProvider(
+        intent: Intent,
+        deleteAfterExport: Boolean = true
+    ): Boolean {
         if (intent.data == null) {
             Timber.e("exportToProvider() provided with insufficient intent data %s", intent)
             return false
@@ -205,15 +216,16 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         val fragmentManager = activity.supportFragmentManager
         dialogsFactory = ExportDialogsFactory(this).attachToActivity(activity)
         fragmentManager.fragmentFactory = dialogsFactory
-        saveFileLauncher = activity.registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                saveFileCallback(result)
-            } else {
-                Timber.i("The file selection for the exported collection was cancelled")
+        saveFileLauncher =
+            activity.registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result: ActivityResult ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    saveFileCallback(result)
+                } else {
+                    Timber.i("The file selection for the exported collection was cancelled")
+                }
             }
-        }
     }
 
     /**

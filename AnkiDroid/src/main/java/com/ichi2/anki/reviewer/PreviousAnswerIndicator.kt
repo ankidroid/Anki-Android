@@ -29,7 +29,6 @@ import com.ichi2.utils.HandlerUtils.newHandler
  * This is hidden after a timer ([CHOSEN_ANSWER_DURATION_MS])
  */
 class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
-
     /** After the indicator is displayed, it is hidden after a timeout */
     private val timerHandler = newHandler()
 

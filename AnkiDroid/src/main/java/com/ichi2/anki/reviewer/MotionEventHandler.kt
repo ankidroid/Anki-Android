@@ -70,8 +70,12 @@ class MotionEventHandler(
             // TODO: We may need to handle historical events as well
             val value = ev.getAxisValue(axis.motionEventValue)
             when {
-                threshold > 0 -> { if (value >= threshold) return debouncedCommand }
-                threshold < 0 -> { if (value <= threshold) return debouncedCommand }
+                threshold > 0 -> {
+                    if (value >= threshold) return debouncedCommand
+                }
+                threshold < 0 -> {
+                    if (value <= threshold) return debouncedCommand
+                }
             }
             sentCommand = false
             return null
@@ -104,13 +108,14 @@ class MotionEventHandler(
             return MotionEventHandler(viewer, handlers)
         }
 
-        private fun getAxisButtonBindings(context: Context) = sequence {
-            for ((command, bindings) in MappableBinding.allMappings(context.sharedPrefs())) {
-                for (binding in bindings.map { it.binding }.filterIsInstance<Binding.AxisButtonBinding>()) {
-                    yield(SingleAxisDetector(command, binding))
+        private fun getAxisButtonBindings(context: Context) =
+            sequence {
+                for ((command, bindings) in MappableBinding.allMappings(context.sharedPrefs())) {
+                    for (binding in bindings.map { it.binding }.filterIsInstance<Binding.AxisButtonBinding>()) {
+                        yield(SingleAxisDetector(command, binding))
+                    }
                 }
             }
-        }
     }
 }
 
@@ -240,7 +245,6 @@ enum class Axis(val motionEventValue: Int) {
 
     /** @see MotionEvent.AXIS_GESTURE_SCROLL_Y_DISTANCE */
     AXIS_GESTURE_SCROLL_Y_DISTANCE(CompatHelper.compat.AXIS_GESTURE_SCROLL_Y_DISTANCE)
-
     ;
 
     /**

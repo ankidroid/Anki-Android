@@ -25,8 +25,7 @@ import androidx.appcompat.app.AlertDialog
 /* As far as understood, making links clickable should be done on the Alert before being shown.
  * So it must be the last call on the builder.
  */
-fun AlertDialog.Builder.makeLinksClickable() =
-    create().makeLinksClickable()
+fun AlertDialog.Builder.makeLinksClickable() = create().makeLinksClickable()
 
 fun AlertDialog.makeLinksClickable() =
     apply {

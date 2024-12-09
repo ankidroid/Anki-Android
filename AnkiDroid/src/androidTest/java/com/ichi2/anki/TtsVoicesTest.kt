@@ -28,7 +28,10 @@ import java.util.Locale
 class TtsVoicesTest : InstrumentedTest() {
     @Test
     fun normalize() {
-        fun assertEqual(l: Locale, str: String) {
+        fun assertEqual(
+            l: Locale,
+            str: String
+        ) {
             val normalized = AndroidTtsVoice.normalize(l)
             assertThat(normalized.toLanguageTag(), equalTo(str))
         }

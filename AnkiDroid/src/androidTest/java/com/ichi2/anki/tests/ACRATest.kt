@@ -136,21 +136,23 @@ class ACRATest : InstrumentedTest() {
 
         // The same class/method combo is only sent once, so we face a new method each time (should test that system later)
         val crash = Exception("testCrashReportSend at " + System.currentTimeMillis())
-        val trace = arrayOf(
-            StackTraceElement(
-                "Class",
-                "Method" + System.currentTimeMillis().toInt(),
-                "File",
-                System.currentTimeMillis().toInt()
+        val trace =
+            arrayOf(
+                StackTraceElement(
+                    "Class",
+                    "Method" + System.currentTimeMillis().toInt(),
+                    "File",
+                    System.currentTimeMillis().toInt()
+                )
             )
-        )
         crash.stackTrace = trace
 
         // one send should work
-        val crashData = CrashReportDataFactory(
-            testContext,
-            CrashReportService.acraCoreConfigBuilder.build()
-        ).createCrashData(ReportBuilder().exception(crash))
+        val crashData =
+            CrashReportDataFactory(
+                testContext,
+                CrashReportService.acraCoreConfigBuilder.build()
+            ).createCrashData(ReportBuilder().exception(crash))
         assertTrue(
             LimitingReportAdministrator().shouldSendReport(
                 testContext,
@@ -241,7 +243,10 @@ class ACRATest : InstrumentedTest() {
         assertThat("First handler is ThrowableFilterService", firstExceptionHandler is ThrowableFilterService.FilteringExceptionHandler)
         ThrowableFilterService.unInstallDefaultExceptionHandler()
         var secondExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-        assertThat("Second handler is AnalyticsLoggingExceptionHandler", secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler)
+        assertThat(
+            "Second handler is AnalyticsLoggingExceptionHandler",
+            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler
+        )
         UsageAnalytics.unInstallDefaultExceptionHandler()
         var thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
@@ -261,7 +266,10 @@ class ACRATest : InstrumentedTest() {
         ThrowableFilterService.unInstallDefaultExceptionHandler()
         secondExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Timber.i("Second handler is a %s", secondExceptionHandler)
-        assertThat("Second handler is AnalyticsLoggingExceptionHandler", secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler)
+        assertThat(
+            "Second handler is AnalyticsLoggingExceptionHandler",
+            secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler
+        )
         UsageAnalytics.unInstallDefaultExceptionHandler()
         thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         assertThat(
@@ -276,7 +284,10 @@ class ACRATest : InstrumentedTest() {
     }
 
     @Throws(ACRAConfigurationException::class)
-    private fun assertDialogEnabledStatus(message: String, isEnabled: Boolean) {
+    private fun assertDialogEnabledStatus(
+        message: String,
+        isEnabled: Boolean
+    ) {
         val config = CrashReportService.acraCoreConfigBuilder.build()
         for (configuration in config.pluginConfigurations) {
             // Make sure the dialog is set to pop up
@@ -297,7 +308,9 @@ class ACRATest : InstrumentedTest() {
     }
 
     @Throws(ACRAConfigurationException::class)
-    private fun assertToastMessage(@StringRes res: Int) {
+    private fun assertToastMessage(
+        @StringRes res: Int
+    ) {
         val config = CrashReportService.acraCoreConfigBuilder.build()
         for (configuration in config.pluginConfigurations) {
             if (configuration.javaClass.toString().contains("Toast")) {

@@ -51,10 +51,14 @@ class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
     override val title: CharSequence
         get() = getString(R.string.pref_cat_about_title)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         // Version date
-        val apkBuildDate = SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))
-            .format(Date(BuildConfig.BUILD_TIME))
+        val apkBuildDate =
+            SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))
+                .format(Date(BuildConfig.BUILD_TIME))
         view.findViewById<TextView>(R.id.about_build_date).text = apkBuildDate
 
         // Version text
@@ -103,9 +107,10 @@ class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
 
         // Open changelog button
         view.findViewById<Button>(R.id.about_open_changelog).setOnClickListener {
-            val openChangelogIntent = Intent(requireContext(), Info::class.java).apply {
-                putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-            }
+            val openChangelogIntent =
+                Intent(requireContext(), Info::class.java).apply {
+                    putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
+                }
             startActivity(openChangelogIntent)
         }
 
@@ -120,9 +125,10 @@ class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
      */
     private fun copyDebugInfo() {
         launchCatchingTask {
-            val debugInfo = withContext(Dispatchers.IO) {
-                DebugInfoService.getDebugInfo(requireContext())
-            }
+            val debugInfo =
+                withContext(Dispatchers.IO) {
+                    DebugInfoService.getDebugInfo(requireContext())
+                }
             requireContext().copyToClipboard(
                 debugInfo,
                 failureMessageId = R.string.about_ankidroid_error_copy_debug_info

@@ -35,7 +35,6 @@ import kotlin.test.assertNull
 @RunWith(AndroidJUnit4::class)
 @InternalForInheritanceCoroutinesApi
 class VideoPlayerTest : RobolectricTest() {
-
     @Test
     fun `stops audio playback when paused`() {
         val v = VideoPlayer { JavascriptEvaluator { } }
@@ -109,7 +108,10 @@ class VideoPlayerTest : RobolectricTest() {
         }
 
         @InternalCoroutinesApi
-        override fun tryResume(value: Unit, idempotent: Any?): Any? {
+        override fun tryResume(
+            value: Unit,
+            idempotent: Any?
+        ): Any? {
             TODO("Not yet implemented")
         }
 
@@ -119,7 +121,10 @@ class VideoPlayerTest : RobolectricTest() {
             level = DeprecationLevel.WARNING
         )
         @ExperimentalCoroutinesApi
-        override fun resume(value: Unit, onCancellation: ((cause: Throwable) -> Unit)?) {
+        override fun resume(
+            value: Unit,
+            onCancellation: ((cause: Throwable) -> Unit)?
+        ) {
             TODO("Not yet implemented")
         }
 

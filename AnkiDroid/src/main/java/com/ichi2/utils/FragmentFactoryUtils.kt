@@ -23,7 +23,10 @@ object FragmentFactoryUtils {
     /**
      * A convenience util method that instantiate a fragment using the passed activity [FragmentFactory]
      */
-    inline fun <reified F : Fragment> instantiate(activity: FragmentActivity, className: String): F {
+    inline fun <reified F : Fragment> instantiate(
+        activity: FragmentActivity,
+        className: String
+    ): F {
         val factory = activity.supportFragmentManager.fragmentFactory
         return factory.instantiate(activity.classLoader, className) as F
     }
@@ -31,7 +34,10 @@ object FragmentFactoryUtils {
     /**
      * A convenience util method that instantiate a fragment using the passed activity [FragmentFactory]
      */
-    inline fun <reified F : Fragment> instantiate(activity: FragmentActivity, cls: Class<F>): F {
+    inline fun <reified F : Fragment> instantiate(
+        activity: FragmentActivity,
+        cls: Class<F>
+    ): F {
         return instantiate(activity, cls.name)
     }
 }

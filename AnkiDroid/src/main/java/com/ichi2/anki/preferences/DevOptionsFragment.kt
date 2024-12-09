@@ -111,8 +111,10 @@ class DevOptionsFragment : SettingsFragment() {
             false
         }
 
-        val sizePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_size_file_key))
-        val numberOfFilePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file_key))
+        val sizePreference =
+            requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_size_file_key))
+        val numberOfFilePreference =
+            requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file_key))
 
         /*
          * Create fake media section
@@ -136,15 +138,19 @@ class DevOptionsFragment : SettingsFragment() {
         }
     }
 
-    private fun generateFiles(size: Int, numberOfFiles: Int) {
+    private fun generateFiles(
+        size: Int,
+        numberOfFiles: Int
+    ) {
         Timber.d("numberOf files: $numberOfFiles, size: $size")
         launchCatchingTask {
             withProgress("Generating $numberOfFiles files of size $size bytes") {
                 val suffix = ".$size"
                 for (i in 1..numberOfFiles) {
-                    val f = withContext(Dispatchers.IO) {
-                        File.createTempFile("00$i", suffix)
-                    }
+                    val f =
+                        withContext(Dispatchers.IO) {
+                            File.createTempFile("00$i", suffix)
+                        }
                     f.appendBytes(ByteArray(size))
 
                     CollectionManager.withCol {
@@ -191,8 +197,9 @@ class DevOptionsFragment : SettingsFragment() {
          * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
          */
         fun isEnabled(context: Context): Boolean {
-            return BuildConfig.DEBUG || context.sharedPrefs()
-                .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
+            return BuildConfig.DEBUG ||
+                context.sharedPrefs()
+                    .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
         }
     }
 }

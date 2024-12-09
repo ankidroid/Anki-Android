@@ -23,7 +23,10 @@ import android.view.View
 import com.ichi2.anki.AnkiDroidApp
 import timber.log.Timber
 
-@Suppress("deprecation", "OVERRIDE_DEPRECATION") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
+@Suppress(
+    "deprecation",
+    "OVERRIDE_DEPRECATION"
+) // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 : use NumberRangePreferenceCompat
 open class NumberRangePreference : android.preference.EditTextPreference, AutoFocusable {
     protected val min: Int
     private val max: Int
@@ -143,6 +146,7 @@ open class NumberRangePreference : android.preference.EditTextPreference, AutoFo
         // Set max number of digits
         editText.filters += LengthFilter(max.toString().length)
     }
+
     var value: Int
         /**
          * Get the persisted value held by this preference.

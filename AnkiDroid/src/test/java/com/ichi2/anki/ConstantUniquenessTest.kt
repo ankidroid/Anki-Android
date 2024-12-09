@@ -26,7 +26,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
 class ConstantUniquenessTest {
-
     @Test
     fun testConstantUniqueness() {
         assertConstantUniqueness(NotificationId::class)
@@ -34,7 +33,6 @@ class ConstantUniquenessTest {
     }
 
     companion object {
-
         /**
          * To check whether all PUBLIC CONST values in an object are unique.
          */

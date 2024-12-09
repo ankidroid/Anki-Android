@@ -35,7 +35,6 @@ import com.ichi2.libanki.DeckId
  * Defines various configurations for opening the NoteEditor fragment with specific data or actions.
  */
 sealed interface NoteEditorLauncher {
-
     /**
      * Generates an intent to open the NoteEditor fragment with the configured parameters.
      *
@@ -43,8 +42,10 @@ sealed interface NoteEditorLauncher {
      * @param action Optional action string for the intent.
      * @return Intent configured to launch the NoteEditor fragment.
      */
-    fun getIntent(context: Context, action: String? = null) =
-        SingleFragmentActivity.getIntent(context, NoteEditor::class, toBundle(), action)
+    fun getIntent(
+        context: Context,
+        action: String? = null
+    ) = SingleFragmentActivity.getIntent(context, NoteEditor::class, toBundle(), action)
 
     /**
      * Converts the configuration into a Bundle to pass arguments to the NoteEditor fragment.
@@ -58,10 +59,11 @@ sealed interface NoteEditorLauncher {
      * @property imageUri The URI of the image to occlude.
      */
     data class ImageOcclusion(val imageUri: Uri?) : NoteEditorLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditorCaller.IMG_OCCLUSION.value,
-            NoteEditor.EXTRA_IMG_OCCLUSION to imageUri
-        )
+        override fun toBundle(): Bundle =
+            bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.IMG_OCCLUSION.value,
+                NoteEditor.EXTRA_IMG_OCCLUSION to imageUri
+            )
     }
 
     /**
@@ -79,11 +81,12 @@ sealed interface NoteEditorLauncher {
      * @property deckId The ID of the deck where the note should be added.
      */
     data class AddNote(val deckId: DeckId? = null) : NoteEditorLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditorCaller.DECKPICKER.value
-        ).also { bundle ->
-            deckId?.let { deckId -> bundle.putLong(NoteEditor.EXTRA_DID, deckId) }
-        }
+        override fun toBundle(): Bundle =
+            bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.DECKPICKER.value
+            ).also { bundle ->
+                deckId?.let { deckId -> bundle.putLong(NoteEditor.EXTRA_DID, deckId) }
+            }
     }
 
     /**
@@ -93,10 +96,11 @@ sealed interface NoteEditorLauncher {
     data class AddNoteFromCardBrowser(val viewModel: CardBrowserViewModel) :
         NoteEditorLauncher {
         override fun toBundle(): Bundle {
-            val bundle = bundleOf(
-                NoteEditor.EXTRA_CALLER to NoteEditorCaller.CARDBROWSER_ADD.value,
-                NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms
-            )
+            val bundle =
+                bundleOf(
+                    NoteEditor.EXTRA_CALLER to NoteEditorCaller.CARDBROWSER_ADD.value,
+                    NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms
+                )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 bundle.putLong(NoteEditor.EXTRA_DID, viewModel.lastDeckId!!)
             }
@@ -110,16 +114,17 @@ sealed interface NoteEditorLauncher {
      */
     data class AddNoteFromReviewer(val animation: ActivityTransitionAnimation.Direction? = null) :
         NoteEditorLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value
-        ).also { bundle ->
-            animation?.let { animation ->
-                bundle.putParcelable(
-                    AnkiActivity.FINISH_ANIMATION_EXTRA,
-                    animation as Parcelable
-                )
+        override fun toBundle(): Bundle =
+            bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value
+            ).also { bundle ->
+                animation?.let { animation ->
+                    bundle.putParcelable(
+                        AnkiActivity.FINISH_ANIMATION_EXTRA,
+                        animation as Parcelable
+                    )
+                }
             }
-        }
     }
 
     /**
@@ -128,10 +133,11 @@ sealed interface NoteEditorLauncher {
      * @property sharedText The shared text content for the instant note.
      */
     data class AddInstantNote(val sharedText: String) : NoteEditorLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditorCaller.INSTANT_NOTE_EDITOR.value,
-            Intent.EXTRA_TEXT to sharedText
-        )
+        override fun toBundle(): Bundle =
+            bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.INSTANT_NOTE_EDITOR.value,
+                Intent.EXTRA_TEXT to sharedText
+            )
     }
 
     /**
@@ -141,11 +147,12 @@ sealed interface NoteEditorLauncher {
      */
     data class EditCard(val cardId: CardId, val animation: ActivityTransitionAnimation.Direction) :
         NoteEditorLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
-            NoteEditor.EXTRA_CARD_ID to cardId,
-            AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable
-        )
+        override fun toBundle(): Bundle =
+            bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
+                NoteEditor.EXTRA_CARD_ID to cardId,
+                AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable
+            )
     }
 
     /**
@@ -153,10 +160,11 @@ sealed interface NoteEditorLauncher {
      * @property cardId The ID of the card associated with the note to edit.
      */
     data class EditNoteFromPreviewer(val cardId: Long) : NoteEditorLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditorCaller.PREVIEWER_EDIT.value,
-            NoteEditor.EXTRA_EDIT_FROM_CARD_ID to cardId
-        )
+        override fun toBundle(): Bundle =
+            bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.PREVIEWER_EDIT.value,
+                NoteEditor.EXTRA_EDIT_FROM_CARD_ID to cardId
+            )
     }
 
     /**
@@ -170,12 +178,13 @@ sealed interface NoteEditorLauncher {
         val fieldsText: String,
         val tags: List<String>? = null
     ) : NoteEditorLauncher {
-        override fun toBundle(): Bundle = bundleOf(
-            NoteEditor.EXTRA_CALLER to NoteEditorCaller.NOTEEDITOR.value,
-            NoteEditor.EXTRA_DID to deckId,
-            NoteEditor.EXTRA_CONTENTS to fieldsText
-        ).also { bundle ->
-            tags?.let { tags -> bundle.putStringArray(NoteEditor.EXTRA_TAGS, tags.toTypedArray()) }
-        }
+        override fun toBundle(): Bundle =
+            bundleOf(
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.NOTEEDITOR.value,
+                NoteEditor.EXTRA_DID to deckId,
+                NoteEditor.EXTRA_CONTENTS to fieldsText
+            ).also { bundle ->
+                tags?.let { tags -> bundle.putStringArray(NoteEditor.EXTRA_TAGS, tags.toTypedArray()) }
+            }
     }
 }

@@ -63,41 +63,46 @@ class TemplatePreviewerViewModel(
     override val server = AnkiServer(this).also { it.start() }
 
     init {
-        note = asyncIO {
-            withCol {
-                if (arguments.id != 0L) {
-                    Note(this, arguments.id)
-                } else {
-                    Note.fromNotetypeId(this@withCol, arguments.notetype.id)
+        note =
+            asyncIO {
+                withCol {
+                    if (arguments.id != 0L) {
+                        Note(this, arguments.id)
+                    } else {
+                        Note.fromNotetypeId(this@withCol, arguments.notetype.id)
+                    }
+                }.apply {
+                    fields = arguments.fields
+                    tags = arguments.tags
                 }
-            }.apply {
-                fields = arguments.fields
-                tags = arguments.tags
             }
-        }
-        currentCard = asyncIO {
-            val note = note.await()
-            withCol {
-                note.ephemeralCard(
-                    col = this,
-                    ord = ordFlow.value,
-                    customNoteType = notetype,
-                    fillEmpty = fillEmpty
-                )
-            }
-        }
-        if (isCloze) {
-            val clozeNumbers = asyncIO {
+        currentCard =
+            asyncIO {
                 val note = note.await()
-                withCol { clozeNumbersInNote(note) }
+                withCol {
+                    note.ephemeralCard(
+                        col = this,
+                        ord = ordFlow.value,
+                        customNoteType = notetype,
+                        fillEmpty = fillEmpty
+                    )
+                }
             }
-            clozeOrds = asyncIO {
-                clozeNumbers.await().map { it - 1 }
-            }
-            templateNames = asyncIO {
-                val tr = CollectionManager.TR
-                clozeNumbers.await().map { tr.cardTemplatesCard(it) }
-            }
+        if (isCloze) {
+            val clozeNumbers =
+                asyncIO {
+                    val note = note.await()
+                    withCol { clozeNumbersInNote(note) }
+                }
+            clozeOrds =
+                asyncIO {
+                    clozeNumbers.await().map { it - 1 }
+                }
+            templateNames =
+                asyncIO {
+                    val tr = CollectionManager.TR
+                    clozeNumbers.await().map { tr.cardTemplatesCard(it) }
+                }
         } else {
             clozeOrds = null
             templateNames = CompletableDeferred(notetype.templatesNames)
@@ -105,8 +110,8 @@ class TemplatePreviewerViewModel(
     }
 
     /* *********************************************************************************************
-    ************************ Public methods: meant to be used by the View **************************
-    ********************************************************************************************* */
+     ************************ Public methods: meant to be used by the View **************************
+     ********************************************************************************************* */
 
     override fun onPageFinished(isAfterRecreation: Boolean) {
         if (isAfterRecreation) {
@@ -118,17 +123,18 @@ class TemplatePreviewerViewModel(
         }
         launchCatchingIO {
             ordFlow.collectLatest { ord ->
-                currentCard = asyncIO {
-                    val note = note.await()
-                    withCol {
-                        note.ephemeralCard(
-                            col = this,
-                            ord = ord,
-                            customNoteType = notetype,
-                            fillEmpty = fillEmpty
-                        )
+                currentCard =
+                    asyncIO {
+                        val note = note.await()
+                        withCol {
+                            note.ephemeralCard(
+                                col = this,
+                                ord = ord,
+                                customNoteType = notetype,
+                                fillEmpty = fillEmpty
+                            )
+                        }
                     }
-                }
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             }
@@ -154,11 +160,12 @@ class TemplatePreviewerViewModel(
 
     fun onTabSelected(position: Int) {
         launchCatchingIO {
-            val ord = if (isCloze) {
-                clozeOrds!!.await()[position]
-            } else {
-                position
-            }
+            val ord =
+                if (isCloze) {
+                    clozeOrds!!.await()[position]
+                } else {
+                    position
+                }
             ordFlow.emit(ord)
         }
     }
@@ -173,8 +180,8 @@ class TemplatePreviewerViewModel(
     }
 
     /* *********************************************************************************************
-    *************************************** Internal methods ***************************************
-    ********************************************************************************************* */
+     *************************************** Internal methods ***************************************
+     ********************************************************************************************* */
 
     private suspend fun loadAndPlaySounds(side: CardSide) {
         cardMediaPlayer.loadCardSounds(currentCard.await())
@@ -184,34 +191,40 @@ class TemplatePreviewerViewModel(
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
     override suspend fun typeAnsFilter(text: String): String {
         val typeAnswerField = getTypeAnswerField(currentCard.await(), text)
-        val expectedAnswer = typeAnswerField?.let {
-            getExpectedTypeInAnswer(currentCard.await(), typeAnswerField)
-        }.ifNullOrEmpty { "sample" }
+        val expectedAnswer =
+            typeAnswerField?.let {
+                getExpectedTypeInAnswer(currentCard.await(), typeAnswerField)
+            }.ifNullOrEmpty { "sample" }
 
-        val repl = if (showingAnswer.value) {
-            withCol { compareAnswer(expectedAnswer, "example") }
-        } else {
-            "<center><input id='typeans' type=text value='example' readonly='readonly'></center>"
-        }
+        val repl =
+            if (showingAnswer.value) {
+                withCol { compareAnswer(expectedAnswer, "example") }
+            } else {
+                "<center><input id='typeans' type=text value='example' readonly='readonly'></center>"
+            }
         // Anki doesn't set the font size of the type answer field in the template previewer,
         // but it does in the reviewer. To get a more accurate preview of what people are going
         // to study, the font size is being set here.
-        val out = if (typeAnswerField != null) {
-            val fontSize = getFontSize(typeAnswerField)
+        val out =
+            if (typeAnswerField != null) {
+                val fontSize = getFontSize(typeAnswerField)
 
-            @Language("HTML")
-            val replWithFontSize = """<div style="font-size: ${fontSize}px">$repl</div>"""
-            typeAnsRe.replaceFirst(text, replWithFontSize)
-        } else {
-            typeAnsRe.replaceFirst(text, repl)
-        }
+                @Language("HTML")
+                val replWithFontSize = """<div style="font-size: ${fontSize}px">$repl</div>"""
+                typeAnsRe.replaceFirst(text, replWithFontSize)
+            } else {
+                typeAnsRe.replaceFirst(text, repl)
+            }
 
         val warning = "<center><b>${CollectionManager.TR.cardTemplatesTypeBoxesWarning()}</b></center>"
         return typeAnsRe.replace(out, warning)
     }
 
     companion object {
-        fun factory(arguments: TemplatePreviewerArguments, cardMediaPlayer: CardMediaPlayer): ViewModelProvider.Factory {
+        fun factory(
+            arguments: TemplatePreviewerArguments,
+            cardMediaPlayer: CardMediaPlayer
+        ): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
                     TemplatePreviewerViewModel(arguments, cardMediaPlayer)

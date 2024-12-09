@@ -28,7 +28,6 @@ open class TtsVoice(
     val name: String,
     val lang: String
 ) {
-
     override fun toString(): String {
         var out = "{{tts $lang voices=$name}}"
         if (unavailable()) {
@@ -54,7 +53,9 @@ abstract class TtsPlayer : Closeable {
     data class TtsCompletionStatus(val success: Boolean?, val error: TtsError? = null) {
         companion object {
             fun success() = TtsCompletionStatus(success = true)
+
             fun stopped() = TtsCompletionStatus(success = null)
+
             fun failure(errorCode: TtsError) = TtsCompletionStatus(success = false, errorCode)
         }
     }

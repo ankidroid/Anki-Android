@@ -25,7 +25,10 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class EnsureAllFilesAccessRule : TestRule {
-    override fun apply(base: Statement, description: Description): Statement {
+    override fun apply(
+        base: Statement,
+        description: Description
+    ): Statement {
         ensureAllFilesAccess()
         return base
     }

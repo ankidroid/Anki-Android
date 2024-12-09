@@ -22,7 +22,10 @@ import anki.collection.OpChanges
 data class ViewerRefresh(val queues: Boolean, val note: Boolean, val card: Boolean) {
     companion object {
         /** updates the current state of the ViewerRefresh with additional data */
-        fun updateState(currentState: ViewerRefresh?, changes: OpChanges): ViewerRefresh? {
+        fun updateState(
+            currentState: ViewerRefresh?,
+            changes: OpChanges
+        ): ViewerRefresh? {
             if (!changes.studyQueues && !changes.noteText && !changes.card) return currentState
             return ViewerRefresh(
                 queues = changes.studyQueues || currentState?.queues == true,

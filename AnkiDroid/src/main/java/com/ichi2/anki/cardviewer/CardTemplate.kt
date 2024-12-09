@@ -40,7 +40,12 @@ class CardTemplate(template: String) {
     private var postContent: String? = null
 
     @CheckResult
-    fun render(content: String, style: String, script: String, cardClass: String): RenderedCard {
+    fun render(
+        content: String,
+        style: String,
+        script: String,
+        cardClass: String
+    ): RenderedCard {
         val html = preStyle + style + preScript + script + preClass + cardClass + preContent + content + postContent
         return RenderedCard(html)
     }
@@ -75,8 +80,9 @@ class CardTemplate(template: String) {
          *
          * @throws IOException failure to read [TEMPLATE_FILE]
          */
-        fun load(context: Context) = CardTemplate(
-            template = context.assets.open(TEMPLATE_FILE).convertToString()
-        )
+        fun load(context: Context) =
+            CardTemplate(
+                template = context.assets.open(TEMPLATE_FILE).convertToString()
+            )
     }
 }

@@ -45,22 +45,29 @@ class InsertFieldDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         super.onCreate(savedInstanceState)
         fieldList = requireArguments().getStringArrayList(KEY_FIELD_ITEMS)!!
-        val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
-                return object : RecyclerView.ViewHolder(root) {}
-            }
+        val adapter: RecyclerView.Adapter<*> =
+            object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                override fun onCreateViewHolder(
+                    parent: ViewGroup,
+                    viewType: Int
+                ): RecyclerView.ViewHolder {
+                    val root = layoutInflater.inflate(R.layout.material_dialog_list_item, parent, false)
+                    return object : RecyclerView.ViewHolder(root) {}
+                }
 
-            override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                val textView = holder.itemView as TextView
-                textView.text = fieldList[position]
-                textView.setOnClickListener { selectFieldAndClose(textView) }
-            }
+                override fun onBindViewHolder(
+                    holder: RecyclerView.ViewHolder,
+                    position: Int
+                ) {
+                    val textView = holder.itemView as TextView
+                    textView.text = fieldList[position]
+                    textView.setOnClickListener { selectFieldAndClose(textView) }
+                }
 
-            override fun getItemCount(): Int {
-                return fieldList.size
+                override fun getItemCount(): Int {
+                    return fieldList.size
+                }
             }
-        }
         return AlertDialog.Builder(requireContext()).create {
             title(R.string.card_template_editor_select_field)
             negativeButton(R.string.dialog_cancel)
@@ -89,8 +96,9 @@ class InsertFieldDialog : DialogFragment() {
         const val KEY_INSERTED_FIELD = "key_inserted_field"
         private const val KEY_FIELD_ITEMS = "key_field_items"
 
-        fun newInstance(fieldItems: List<String>): InsertFieldDialog = InsertFieldDialog().apply {
-            arguments = bundleOf(KEY_FIELD_ITEMS to ArrayList(fieldItems))
-        }
+        fun newInstance(fieldItems: List<String>): InsertFieldDialog =
+            InsertFieldDialog().apply {
+                arguments = bundleOf(KEY_FIELD_ITEMS to ArrayList(fieldItems))
+            }
     }
 }

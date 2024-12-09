@@ -50,6 +50,7 @@ import kotlin.test.assertNotNull
 @RunWith(AndroidJUnit4::class)
 class CustomStudyDialogTest : RobolectricTest() {
     private var mockListener: CustomStudyListener? = null
+
     override fun setUp() {
         super.setUp()
         mockListener = Mockito.mock(CustomStudyListener::class.java)
@@ -64,12 +65,13 @@ class CustomStudyDialogTest : RobolectricTest() {
     @Test
     fun learnAheadCardsRegressionTest() {
         // #6289 - Regression Test
-        val args = CustomStudyDialog(mock(), ParametersUtils.whatever())
-            .withArguments(
-                1,
-                contextMenuAttribute = CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
-            )
-            .arguments
+        val args =
+            CustomStudyDialog(mock(), ParametersUtils.whatever())
+                .withArguments(
+                    1,
+                    contextMenuAttribute = CustomStudyDialog.ContextMenuOption.STUDY_AHEAD
+                )
+                .arguments
         val factory = CustomStudyDialogFactory({ this.col }, mockListener)
         AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.RESUMED)
@@ -83,23 +85,24 @@ class CustomStudyDialogTest : RobolectricTest() {
             customStudy.remove("id")
             customStudy.remove("mod")
             customStudy.remove("name")
-            val expected = "{" +
-                "\"browserCollapsed\":false," +
-                "\"collapsed\":false," +
-                "\"delays\":null," +
-                "\"desc\":\"\"," +
-                "\"dyn\":1," +
-                "\"lrnToday\":[0,0]," +
-                "\"newToday\":[0,0]," +
-                "\"previewDelay\":0," +
-                "\"previewAgainSecs\":60,\"previewHardSecs\":600,\"previewGoodSecs\":0," +
-                "\"resched\":true," +
-                "\"revToday\":[0,0]," +
-                "\"separate\":true," +
-                "\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]]," +
-                "\"timeToday\":[0,0]," +
-                "\"usn\":-1" +
-                "}"
+            val expected =
+                "{" +
+                    "\"browserCollapsed\":false," +
+                    "\"collapsed\":false," +
+                    "\"delays\":null," +
+                    "\"desc\":\"\"," +
+                    "\"dyn\":1," +
+                    "\"lrnToday\":[0,0]," +
+                    "\"newToday\":[0,0]," +
+                    "\"previewDelay\":0," +
+                    "\"previewAgainSecs\":60,\"previewHardSecs\":600,\"previewGoodSecs\":0," +
+                    "\"resched\":true," +
+                    "\"revToday\":[0,0]," +
+                    "\"separate\":true," +
+                    "\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]]," +
+                    "\"timeToday\":[0,0]," +
+                    "\"usn\":-1" +
+                    "}"
             MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
         }
     }
@@ -109,9 +112,10 @@ class CustomStudyDialogTest : RobolectricTest() {
     @KotlinCleanup("Use kotlin based Mockito extensions")
     fun increaseNewCardLimitRegressionTest() {
         // #8338 - Regression Test
-        val args = CustomStudyDialog(mock(), ParametersUtils.whatever())
-            .withArguments(1)
-            .arguments
+        val args =
+            CustomStudyDialog(mock(), ParametersUtils.whatever())
+                .withArguments(1)
+                .arguments
 
         // we are using mock collection for the CustomStudyDialog but still other parts of the code
         // access a real collection, so we must ensure that collection is loaded first

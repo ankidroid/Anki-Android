@@ -64,7 +64,6 @@ class ReviewerFragment :
     CardViewerFragment(R.layout.reviewer2),
     BaseSnackbarBuilderProvider,
     Toolbar.OnMenuItemClickListener {
-
     override val viewModel: ReviewerViewModel by viewModels {
         ReviewerViewModel.factory(CardMediaPlayer())
     }
@@ -83,7 +82,10 @@ class ReviewerFragment :
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         setupImmersiveMode(view)
@@ -164,23 +166,30 @@ class ReviewerFragment :
             return
         }
 
-        fun MaterialButton.setAnswerButtonNextTime(@StringRes title: Int, nextTime: String?) {
+        fun MaterialButton.setAnswerButtonNextTime(
+            @StringRes title: Int,
+            nextTime: String?
+        ) {
             val titleString = context.getString(title)
             text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
         }
 
-        val againButton = view.findViewById<MaterialButton>(R.id.again_button).apply {
-            setOnClickListener { viewModel.answerAgain() }
-        }
-        val hardButton = view.findViewById<MaterialButton>(R.id.hard_button).apply {
-            setOnClickListener { viewModel.answerHard() }
-        }
-        val goodButton = view.findViewById<MaterialButton>(R.id.good_button).apply {
-            setOnClickListener { viewModel.answerGood() }
-        }
-        val easyButton = view.findViewById<MaterialButton>(R.id.easy_button).apply {
-            setOnClickListener { viewModel.answerEasy() }
-        }
+        val againButton =
+            view.findViewById<MaterialButton>(R.id.again_button).apply {
+                setOnClickListener { viewModel.answerAgain() }
+            }
+        val hardButton =
+            view.findViewById<MaterialButton>(R.id.hard_button).apply {
+                setOnClickListener { viewModel.answerHard() }
+            }
+        val goodButton =
+            view.findViewById<MaterialButton>(R.id.good_button).apply {
+                setOnClickListener { viewModel.answerGood() }
+            }
+        val easyButton =
+            view.findViewById<MaterialButton>(R.id.easy_button).apply {
+                setOnClickListener { viewModel.answerEasy() }
+            }
 
         viewModel.answerButtonsNextTimeFlow.flowWithLifecycle(lifecycle)
             .collectIn(lifecycleScope) { times ->
@@ -190,11 +199,12 @@ class ReviewerFragment :
                 easyButton.setAnswerButtonNextTime(R.string.ease_button_easy, times?.easy)
             }
 
-        val showAnswerButton = view.findViewById<MaterialButton>(R.id.show_answer).apply {
-            setOnClickListener {
-                viewModel.showAnswer()
+        val showAnswerButton =
+            view.findViewById<MaterialButton>(R.id.show_answer).apply {
+                setOnClickListener {
+                    viewModel.showAnswer()
+                }
             }
-        }
         val answerButtonsLayout = view.findViewById<ConstraintLayout>(R.id.answer_buttons)
 
         // TODO add some kind of feedback/animation after tapping show answer or the answer buttons
@@ -225,11 +235,12 @@ class ReviewerFragment :
                 learnCount.text = counts.lrn.toString()
                 reviewCount.text = counts.rev.toString()
 
-                val currentCount = when (countsType) {
-                    Counts.Queue.NEW -> newCount
-                    Counts.Queue.LRN -> learnCount
-                    Counts.Queue.REV -> reviewCount
-                }
+                val currentCount =
+                    when (countsType) {
+                        Counts.Queue.NEW -> newCount
+                        Counts.Queue.LRN -> learnCount
+                        Counts.Queue.REV -> reviewCount
+                    }
                 val spannableString = SpannableString(currentCount.text)
                 spannableString.setSpan(UnderlineSpan(), 0, currentCount.text.length, 0)
                 currentCount.text = spannableString
@@ -310,12 +321,13 @@ class ReviewerFragment :
 
     private fun setupImmersiveMode(view: View) {
         val hideSystemBarsSetting = HideSystemBars.from(requireContext())
-        val barsToHide = when (hideSystemBarsSetting) {
-            HideSystemBars.NONE -> return
-            HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.statusBars()
-            HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.navigationBars()
-            HideSystemBars.ALL -> WindowInsetsCompat.Type.systemBars()
-        }
+        val barsToHide =
+            when (hideSystemBarsSetting) {
+                HideSystemBars.NONE -> return
+                HideSystemBars.STATUS_BAR -> WindowInsetsCompat.Type.statusBars()
+                HideSystemBars.NAVIGATION_BAR -> WindowInsetsCompat.Type.navigationBars()
+                HideSystemBars.ALL -> WindowInsetsCompat.Type.systemBars()
+            }
 
         val window = requireActivity().window
         with(WindowInsetsControllerCompat(window, window.decorView)) {
@@ -325,11 +337,12 @@ class ReviewerFragment :
 
         val ignoreDisplayCutout = sharedPrefs().getBoolean(getString(R.string.ignore_display_cutout_key), false)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
-            val typeMask = if (ignoreDisplayCutout) {
-                WindowInsetsCompat.Type.systemBars()
-            } else {
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-            }
+            val typeMask =
+                if (ignoreDisplayCutout) {
+                    WindowInsetsCompat.Type.systemBars()
+                } else {
+                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+                }
             val bars = insets.getInsets(typeMask)
             v.updatePadding(
                 left = bars.left,
@@ -369,9 +382,10 @@ class ReviewerFragment :
         }
     }
 
-    private val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        viewModel.refreshCard()
-    }
+    private val deckOptionsLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            viewModel.refreshCard()
+        }
 
     private fun launchDeckOptions() {
         lifecycleScope.launch {

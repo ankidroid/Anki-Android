@@ -28,13 +28,17 @@ import java.util.function.Supplier
 
 // Unknown issue: @CheckResult should provide warnings on this class when return value is unused, but doesn't.
 class PreferenceExtensionsTest {
-    private val mockPreferences: SharedPreferences = SPMockBuilder().createSharedPreferences().apply {
-        edit {
-            putString(VALID_KEY, VALID_RESULT)
+    private val mockPreferences: SharedPreferences =
+        SPMockBuilder().createSharedPreferences().apply {
+            edit {
+                putString(VALID_KEY, VALID_RESULT)
+            }
         }
-    }
 
-    private fun getOrSetString(key: String, supplier: Supplier<String>): String {
+    private fun getOrSetString(
+        key: String,
+        supplier: Supplier<String>
+    ): String {
         return mockPreferences.getOrSetString(key, supplier)
     }
 
@@ -68,7 +72,9 @@ class PreferenceExtensionsTest {
     }
 
     private class ExpectedException : RuntimeException()
+
     private class UnexpectedException : RuntimeException()
+
     companion object {
         private val UNUSED_SUPPLIER = Supplier<String> { throw UnexpectedException() }
         private val EXCEPTION_SUPPLIER = Supplier<String> { throw ExpectedException() }

@@ -83,14 +83,20 @@ class FinderTest : JvmTest() {
         col.decks.save(config)
     }
 
-    private fun burySiblings(sched: Scheduler, toManuallyBury: Card): Card {
+    private fun burySiblings(
+        sched: Scheduler,
+        toManuallyBury: Card
+    ): Card {
         sched.answerCard(toManuallyBury, Ease.AGAIN)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
         assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
     }
 
-    private fun buryManually(sched: Scheduler, id: Long): Card {
+    private fun buryManually(
+        sched: Scheduler,
+        id: Long
+    ): Card {
         sched.buryCards(listOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(
@@ -173,11 +179,12 @@ class FinderTest : JvmTest() {
         assertEquals(0, col.findCards("\"are goats\"").size)
         assertEquals(1, col.findCards("\"goats are\"").size)
         // card states
-        var c = note.cards()[0].apply {
-            due = 999999
-            queue = QUEUE_TYPE_REV
-            type = CARD_TYPE_REV
-        }
+        var c =
+            note.cards()[0].apply {
+                due = 999999
+                queue = QUEUE_TYPE_REV
+                type = CARD_TYPE_REV
+            }
         assertEquals(0, col.findCards("is:review").size)
         col.updateCard(c, skipUndoEntry = true)
         AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:review"))
@@ -260,7 +267,7 @@ class FinderTest : JvmTest() {
            );
            assertNotEquals(firstCardId,
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=true).get(0));
-        */
+         */
 
         // model
         assertEquals(3, col.findCards("note:basic").size)

@@ -24,7 +24,6 @@ import org.junit.Test
  * Test of [TranslationTypo]
  */
 class TranslationTypoTest {
-
     @Test
     fun `JavaScript is valid casing`() {
         val validCasing = """<resources>

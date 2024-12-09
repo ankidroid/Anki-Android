@@ -38,7 +38,6 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class HelpDialogTest {
-
     private lateinit var mockActionDispatcher: HelpItemActionsDispatcher
 
     @Before
@@ -65,14 +64,15 @@ class HelpDialogTest {
     @Test
     fun `Help contains the expected items at start`() {
         // checking the support menu
-        val expectedSupportItems = listOf(
-            R.string.help_item_support_opencollective_donate,
-            R.string.multimedia_editor_trans_translate,
-            R.string.help_item_support_develop_ankidroid,
-            R.string.help_item_support_rate_ankidroid,
-            R.string.help_item_support_other_ankidroid,
-            R.string.send_feedback
-        )
+        val expectedSupportItems =
+            listOf(
+                R.string.help_item_support_opencollective_donate,
+                R.string.multimedia_editor_trans_translate,
+                R.string.help_item_support_develop_ankidroid,
+                R.string.help_item_support_rate_ankidroid,
+                R.string.help_item_support_other_ankidroid,
+                R.string.send_feedback
+            )
         val actualSupportItems =
             HelpDialog.newSupportInstance(true).requireArgsHelpEntries().map { it.titleResId }
         assertEquals(
@@ -81,12 +81,13 @@ class HelpDialogTest {
             "Unexpected support menu item at start"
         )
         // checking the help menu
-        val expectedHelpItems = listOf(
-            R.string.help_title_using_ankidroid,
-            R.string.help_title_get_help,
-            R.string.help_title_community,
-            R.string.help_title_privacy
-        )
+        val expectedHelpItems =
+            listOf(
+                R.string.help_title_using_ankidroid,
+                R.string.help_title_get_help,
+                R.string.help_title_community,
+                R.string.help_title_privacy
+            )
         val actualHelpItems =
             HelpDialog.newHelpInstance().requireArgsHelpEntries().map { it.titleResId }
         assertEquals(
@@ -123,7 +124,8 @@ class HelpDialogTest {
     fun `Help menu handles submenus correctly`() {
         // simulate a help menu start
         launchFragment<HelpDialog>(
-            fragmentArgs = bundleOf(
+            fragmentArgs =
+            bundleOf(
                 HelpDialog.ARG_MENU_TITLE to R.string.help,
                 ARG_MENU_ITEMS to mainHelpMenuItems
             ),
@@ -162,7 +164,8 @@ class HelpDialogTest {
     fun `Help menu item executes expected action on menu item selection`() {
         // simulate a help menu start
         launchFragment<HelpDialog>(
-            fragmentArgs = bundleOf(
+            fragmentArgs =
+            bundleOf(
                 HelpDialog.ARG_MENU_TITLE to R.string.help,
                 ARG_MENU_ITEMS to mainHelpMenuItems
             ),

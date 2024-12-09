@@ -26,7 +26,9 @@ import kotlin.properties.Delegates.observable
  * A preference that shows text in a small box on the end, as set via [widgetText].
  */
 class TextWidgetPreference(context: Context, attrs: AttributeSet?) : Preference(context, attrs) {
-    init { widgetLayoutResource = R.layout.preference_widget_text }
+    init {
+        widgetLayoutResource = R.layout.preference_widget_text
+    }
 
     private var widget: TextView? = null
 

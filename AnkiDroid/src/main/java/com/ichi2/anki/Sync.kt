@@ -67,10 +67,11 @@ object SyncPreferences {
 
 enum class ConflictResolution {
     FULL_DOWNLOAD,
-    FULL_UPLOAD;
+    FULL_UPLOAD
 }
 
 data class SyncCompletion(val isSuccess: Boolean)
+
 interface SyncCompletionListener {
     fun onMediaSyncCompleted(data: SyncCompletion)
 }
@@ -97,11 +98,12 @@ fun DeckPicker.syncAuth(): SyncAuth? {
 fun getEndpoint(context: Context): String? {
     val preferences = context.sharedPrefs()
     val currentEndpoint = preferences.getString(SyncPreferences.CURRENT_SYNC_URI, null)
-    val customEndpoint = if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
-        preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
-    } else {
-        null
-    }
+    val customEndpoint =
+        if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+            preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
+        } else {
+            null
+        }
     return currentEndpoint ?: customEndpoint
 }
 
@@ -136,8 +138,7 @@ suspend fun syncLogout(context: Context) {
  * Returning true does not guarantee that the user actually synced recently,
  * or even that the ankiweb account is still valid.
  */
-fun isLoggedIn() =
-    AnkiDroidApp.instance.sharedPrefs().getString(SyncPreferences.HKEY, "")!!.isNotEmpty()
+fun isLoggedIn() = AnkiDroidApp.instance.sharedPrefs().getString(SyncPreferences.HKEY, "")!!.isNotEmpty()
 
 fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
 
@@ -168,25 +169,30 @@ fun DeckPicker.handleNewSync(
     }
 }
 
-fun MyAccount.handleNewLogin(username: String, password: String, resultLauncher: ActivityResultLauncher<String>) {
+fun MyAccount.handleNewLogin(
+    username: String,
+    password: String,
+    resultLauncher: ActivityResultLauncher<String>
+) {
     val endpoint = getEndpoint(this)
     launchCatchingTask {
-        val auth = try {
-            withProgress(
-                extractProgress = {
-                    text = getString(R.string.sign_in)
-                },
-                onCancel = ::cancelSync
-            ) {
-                withCol {
-                    syncLogin(username, password, endpoint)
+        val auth =
+            try {
+                withProgress(
+                    extractProgress = {
+                        text = getString(R.string.sign_in)
+                    },
+                    onCancel = ::cancelSync
+                ) {
+                    withCol {
+                        syncLogin(username, password, endpoint)
+                    }
                 }
+            } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
+                // auth failed; clear out login details
+                updateLogin(baseContext, "", "")
+                throw exc
             }
-        } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
-            // auth failed; clear out login details
-            updateLogin(baseContext, "", "")
-            throw exc
-        }
         updateLogin(baseContext, username, auth.hkey)
         setResult(RESULT_OK)
         MyAccount.checkNotificationPermission(this@handleNewLogin, resultLauncher)
@@ -194,7 +200,11 @@ fun MyAccount.handleNewLogin(username: String, password: String, resultLauncher:
     }
 }
 
-private fun updateLogin(context: Context, username: String, hkey: String?) {
+private fun updateLogin(
+    context: Context,
+    username: String,
+    hkey: String?
+) {
     val preferences = context.sharedPrefs()
     preferences.edit {
         putString(SyncPreferences.USERNAME, username)
@@ -214,28 +224,38 @@ private suspend fun handleNormalSync(
 ) {
     Timber.i("Sync: Normal collection sync")
     var auth2 = auth
-    val output = deckPicker.withProgress(
-        extractProgress = {
-            if (progress.hasNormalSync()) {
-                text = progress.normalSync.run { "$added\n$removed" }
+    val output =
+        deckPicker.withProgress(
+            extractProgress = {
+                if (progress.hasNormalSync()) {
+                    text = progress.normalSync.run { "$added\n$removed" }
+                }
+            },
+            onCancel = ::cancelSync,
+            manualCancelButton = R.string.dialog_cancel
+        ) {
+            withCol {
+                syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
             }
-        },
-        onCancel = ::cancelSync,
-        manualCancelButton = R.string.dialog_cancel
-    ) {
-        withCol {
-            syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
         }
-    }
 
     if (output.hasNewEndpoint()) {
         Timber.i("sync endpoint updated")
         deckPicker.sharedPrefs().edit {
             putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
         }
-        auth2 = syncAuth { this.hkey = auth.hkey; endpoint = output.newEndpoint }
+        auth2 =
+            syncAuth {
+                this.hkey = auth.hkey
+                endpoint = output.newEndpoint
+            }
     }
-    val mediaUsn = if (syncMedia) { output.serverMediaUsn } else { null }
+    val mediaUsn =
+        if (syncMedia) {
+            output.serverMediaUsn
+        } else {
+            null
+        }
 
     Timber.i("sync result: ${output.required}")
     when (output.required) {
@@ -266,7 +286,8 @@ private suspend fun handleNormalSync(
 
         SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
         SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
-        null -> {
+        null
+        -> {
             TODO("should never happen")
         }
     }
@@ -360,26 +381,25 @@ fun DeckPicker.shouldFetchMedia(preferences: SharedPreferences): Boolean {
         (shouldFetchMedia == onlyIfUnmetered && !NetworkUtils.isActiveNetworkMetered())
 }
 
-suspend fun monitorMediaSync(
-    deckPicker: DeckPicker
-) {
+suspend fun monitorMediaSync(deckPicker: DeckPicker) {
     val backend = CollectionManager.getBackend()
     val scope = CoroutineScope(Dispatchers.IO)
     var isAborted = false
 
-    val dialog = withContext(Dispatchers.Main) {
-        AlertDialog.Builder(deckPicker)
-            .setTitle(TR.syncMediaLogTitle())
-            .setMessage("")
-            .setPositiveButton(R.string.dialog_continue) { _, _ ->
-                scope.cancel()
-            }
-            .setNegativeButton(TR.syncAbortButton()) { _, _ ->
-                isAborted = true
-                cancelMediaSync(backend)
-            }
-            .show()
-    }
+    val dialog =
+        withContext(Dispatchers.Main) {
+            AlertDialog.Builder(deckPicker)
+                .setTitle(TR.syncMediaLogTitle())
+                .setMessage("")
+                .setPositiveButton(R.string.dialog_continue) { _, _ ->
+                    scope.cancel()
+                }
+                .setNegativeButton(TR.syncAbortButton()) { _, _ ->
+                    isAborted = true
+                    cancelMediaSync(backend)
+                }
+                .show()
+        }
 
     fun showMessage(msg: String) = deckPicker.showSnackbar(msg, Snackbar.LENGTH_SHORT)
 
@@ -412,7 +432,10 @@ suspend fun monitorMediaSync(
  * Show a simple snackbar message or notification if the activity is not in foreground
  * @param messageResource String resource for message
  */
-fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
+fun DeckPicker.showSyncLogMessage(
+    @StringRes messageResource: Int,
+    syncMessage: String?
+) {
     if (activityPaused) {
         val res = AnkiDroidApp.appResources
         showSimpleNotification(
@@ -436,13 +459,16 @@ fun Context.setLastSyncTimeToNow() {
     }
 }
 
-fun joinSyncMessages(dialogMessage: String?, syncMessage: String?): String? {
+fun joinSyncMessages(
+    dialogMessage: String?,
+    syncMessage: String?
+): String? {
     // If both strings have text, separate them by a new line, otherwise return whichever has text
     return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {
         """
-     $dialogMessage
-     
-     $syncMessage
+        $dialogMessage
+        
+        $syncMessage
         """.trimIndent()
     } else if (!dialogMessage.isNullOrEmpty()) {
         dialogMessage
