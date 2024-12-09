@@ -48,24 +48,15 @@ class MultimediaTest : InstrumentedTest() {
     @Parameterized.Parameter(0)
     var intentBuilder: (Context) -> Intent? = { null }
 
-    @JvmField
-    @Parameterized.Parameter(1)
-    var expectedTitleRes: Int? = null
-
-    @Suppress("unused") // used by "{2}"
-    @JvmField
-    @Parameterized.Parameter(2)
-    var testName: String = ""
-
-    private val expectedTitle
-        get() = testContext.getString(expectedTitleRes!!)
+    private var title: Int? = null
 
     @Test
     fun testFragmentTitle() {
-        withMultimediaActivityScenario { scenario ->
+        ActivityScenario.launch<MultimediaActivity>(intentBuilder(testContext)).use { scenario ->
             scenario.onActivity { activity ->
-                val actualFragmentTitle = (activity.fragmentContainer as MultimediaFragment).title
-                assertEquals(expectedTitle, actualFragmentTitle, message = "title")
+                val fragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container) as MultimediaFragment
+                val titleString = title?.let { testContext.getString(it) }
+                assertEquals(titleString, fragment.title)
             }
         }
     }
