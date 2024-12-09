@@ -33,6 +33,7 @@ import android.webkit.CookieManager
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -82,6 +83,12 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
     var isDownloadInProgress = false
 
     private var downloadCancelConfirmationDialog: AlertDialog? = null
+    private val onBackPressedCallback =
+        object : OnBackPressedCallback(isDownloadInProgress) {
+            override fun handleOnBackPressed() {
+                showCancelConfirmationDialog()
+            }
+        }
 
     companion object {
         const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
@@ -136,6 +143,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
             cancelButton.visibility = View.VISIBLE
             tryAgainButton.visibility = View.GONE
         }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
     /**
@@ -172,6 +180,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         downloadId = downloadManager.enqueue(downloadRequest)
         fileName = currentFileName
         isDownloadInProgress = true
+        onBackPressedCallback.isEnabled = isDownloadInProgress
         Timber.d("Download ID -> $downloadId")
         Timber.d("File name -> $fileName")
         view?.findViewById<TextView>(R.id.downloading_title)?.text = getString(R.string.downloading_file, fileName)
@@ -484,13 +493,13 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
         unregisterReceiver()
         isDownloadInProgress = false
+        onBackPressedCallback.isEnabled = isDownloadInProgress
 
         // If the cancel confirmation dialog is being shown and the download is no longer in progress, then remove the dialog.
         removeCancelConfirmationDialog()
     }
 
-    @Suppress("deprecation") // onBackPressed
-    fun showCancelConfirmationDialog() {
+    private fun showCancelConfirmationDialog() {
         downloadCancelConfirmationDialog =
             AlertDialog.Builder(requireContext()).create {
                 setTitle(R.string.cancel_download_question_title)
@@ -498,7 +507,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                     downloadManager.remove(downloadId)
                     unregisterReceiver()
                     isDownloadInProgress = false
-                    activity?.onBackPressed()
+                    onBackPressedCallback.isEnabled = isDownloadInProgress
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                 }
                 setNegativeButton(R.string.dialog_no) { _, _ ->
                     downloadCancelConfirmationDialog?.dismiss()

@@ -259,44 +259,6 @@ class SharedDecksActivity : AnkiActivity() {
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
-    /**
-     * If download screen is open:
-     *      If download is in progress: Show download cancellation dialog
-     *      If download is not in progress: Close the download screen
-     * Otherwise, close the WebView.
-     */
-    @Deprecated("Deprecated in Java")
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
-        when {
-            sharedDecksDownloadFragmentExists() -> {
-                supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT)?.let {
-                    if ((it as SharedDecksDownloadFragment).isDownloadInProgress) {
-                        Timber.i("Back pressed when download is in progress, show cancellation confirmation dialog")
-                        // Show cancel confirmation dialog if download is in progress
-                        it.showCancelConfirmationDialog()
-                    } else {
-                        Timber.i("Back pressed when download is not in progress but download screen is open, close fragment")
-                        // Remove fragment
-                        supportFragmentManager.commit {
-                            remove(it)
-                        }
-                    }
-                }
-                supportFragmentManager.popBackStackImmediate()
-            }
-            else -> {
-                Timber.i("Back pressed which would lead to closing of the WebView")
-                super.onBackPressed()
-            }
-        }
-    }
-
-    private fun sharedDecksDownloadFragmentExists(): Boolean {
-        val sharedDecksDownloadFragment = supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT)
-        return sharedDecksDownloadFragment != null && sharedDecksDownloadFragment.isAdded
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.download_shared_decks_menu, menu)
 
