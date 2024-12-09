@@ -345,7 +345,8 @@ open class MyAccount : AnkiActivity() {
                 return
             }
             val permission = Permissions.postNotification
-            if (permission != null && ContextCompat.checkSelfPermission(
+            if (permission != null &&
+                ContextCompat.checkSelfPermission(
                     context,
                     permission,
                 ) != PackageManager.PERMISSION_GRANTED

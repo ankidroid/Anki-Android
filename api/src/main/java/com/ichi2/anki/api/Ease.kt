@@ -22,7 +22,9 @@ package com.ichi2.anki.api
  * param value The so called value of the button. For the sake of consistency with upstream and our API
  * the buttons are numbered from 1 to 4.
  */
-public enum class Ease(public val value: Int) {
+public enum class Ease(
+    public val value: Int,
+) {
     EASE_1(1),
     EASE_2(2),
     EASE_3(3),

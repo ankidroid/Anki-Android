@@ -23,7 +23,10 @@ import java.util.TimeZone
 
 /** @param [step] Number of milliseconds between each call.
  * @param [initTime]: Time since epoch in MS. */
-open class MockTime(initTime: Long, private val step: Int = 0) : Time() {
+open class MockTime(
+    initTime: Long,
+    private val step: Int = 0,
+) : Time() {
     protected var time = initTime
         private set
 

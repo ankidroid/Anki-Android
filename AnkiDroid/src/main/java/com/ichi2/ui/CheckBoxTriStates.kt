@@ -123,9 +123,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
             }
     }
 
-    override fun isChecked(): Boolean {
-        return _state != State.UNCHECKED
-    }
+    override fun isChecked(): Boolean = _state != State.UNCHECKED
 
     override fun onSaveInstanceState(): Parcelable {
         val superState = super.onSaveInstanceState()
@@ -209,28 +207,23 @@ class CheckBoxTriStates : AppCompatCheckBox {
             out.writeInt(if (cycleIndeterminateToChecked) 1 else 0)
         }
 
-        override fun toString(): String {
-            return (
+        override fun toString(): String =
+            (
                 "CheckboxTriState.SavedState{" +
                     Integer.toHexString(System.identityHashCode(this)) +
                     " state=" + state +
                     " cycleCheckedToIndeterminate=" + cycleCheckedToIndeterminate +
                     " cycleIndeterminateToChecked=" + cycleIndeterminateToChecked + "}"
             )
-        }
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
             @Suppress("unused")
             val CREATOR: Parcelable.Creator<SavedState> =
                 object : Parcelable.Creator<SavedState> {
-                    override fun createFromParcel(source: Parcel): SavedState {
-                        return SavedState(source)
-                    }
+                    override fun createFromParcel(source: Parcel): SavedState = SavedState(source)
 
-                    override fun newArray(size: Int): Array<SavedState?> {
-                        return arrayOfNulls(size)
-                    }
+                    override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
                 }
         }
     }

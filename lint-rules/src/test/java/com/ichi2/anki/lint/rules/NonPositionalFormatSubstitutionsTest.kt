@@ -97,7 +97,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun errors_if_ambiguous() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", invalid))
@@ -108,7 +109,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun no_errors_if_valid() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", valid))
@@ -119,7 +121,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun no_errors_if_unambiguous() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", unambiguous))
@@ -130,7 +133,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun no_errors_if_encoded() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", encoded))
@@ -141,7 +145,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun valid_plural_passed() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", pluralPass))
@@ -153,7 +158,8 @@ class NonPositionalFormatSubstitutionsTest {
     @Test
     fun plural_partial_flags() {
         // If one plural has $1, $2 etc... the other should as well
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", pluralPartial))
@@ -164,7 +170,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun errors_on_plural_issue() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", pluralFail))
@@ -175,7 +182,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun plural_integration_test() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", pluralMultiple))
@@ -186,7 +194,8 @@ class NonPositionalFormatSubstitutionsTest {
 
     @Test
     fun plural_integration_test_positional_and_nothing() {
-        TestLintTask.lint()
+        TestLintTask
+            .lint()
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(TestFiles.xml("res/values/string.xml", pluralMultipleTwo))

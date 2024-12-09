@@ -85,9 +85,7 @@ open class RobolectricTest : AndroidTest {
         controllersForCleanup.add(controller)
     }
 
-    protected open fun useInMemoryDatabase(): Boolean {
-        return true
-    }
+    protected open fun useInMemoryDatabase(): Boolean = true
 
     @get:Rule
     val taskScheduler = TaskSchedulerRule()
@@ -125,7 +123,8 @@ open class RobolectricTest : AndroidTest {
         validateRunWithAnnotationPresent()
 
         val config =
-            Configuration.Builder()
+            Configuration
+                .Builder()
                 .setExecutor(SynchronousExecutor())
                 .build()
 
@@ -148,9 +147,7 @@ open class RobolectricTest : AndroidTest {
         MetaDB.closeDB()
     }
 
-    protected open fun useLegacyHelper(): Boolean {
-        return false
-    }
+    protected open fun useLegacyHelper(): Boolean = false
 
     protected fun getHelperFactory(): SupportSQLiteOpenHelper.Factory =
         if (useInMemoryDatabase()) {
@@ -308,8 +305,12 @@ open class RobolectricTest : AndroidTest {
                 }
             }
             val controller =
-                Robolectric.buildActivity(clazz, i)
-                    .create().start().resume().visible()
+                Robolectric
+                    .buildActivity(clazz, i)
+                    .create()
+                    .start()
+                    .resume()
+                    .visible()
             advanceRobolectricLooperWithSleep()
             testClass.saveControllerForCleanup(controller)
             return controller.get()
@@ -323,21 +324,15 @@ open class RobolectricTest : AndroidTest {
      * Returns an instance of [SharedPreferences] using the test context
      * @see [editPreferences] for editing
      */
-    fun getPreferences(): SharedPreferences {
-        return targetContext.sharedPrefs()
-    }
+    fun getPreferences(): SharedPreferences = targetContext.sharedPrefs()
 
-    protected fun getResourceString(res: Int): String {
-        return targetContext.getString(res)
-    }
+    protected fun getResourceString(res: Int): String = targetContext.getString(res)
 
     protected fun getQuantityString(
         res: Int,
         quantity: Int,
         vararg formatArgs: Any,
-    ): String {
-        return targetContext.resources.getQuantityString(res, quantity, *formatArgs)
-    }
+    ): String = targetContext.resources.getQuantityString(res, quantity, *formatArgs)
 
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
@@ -374,17 +369,12 @@ open class RobolectricTest : AndroidTest {
     internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
         clazz: Class<T>?,
         i: Intent?,
-    ): T {
-        return startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
-    }
+    ): T = startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(): T {
-        return startRegularActivity(null)
-    }
+    internal inline fun <reified T : AnkiActivity?> startRegularActivity(): T = startRegularActivity(null)
 
-    internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T {
-        return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
-    }
+    internal inline fun <reified T : AnkiActivity?> startRegularActivity(i: Intent? = null): T =
+        startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
 
     /**
      * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.

@@ -25,7 +25,10 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 
 /** Adapts a RecyclerView.OnItemTouchListener to provide a click listener  */
 
-class RecyclerSingleTouchAdapter(val context: Context, val listener: OnItemClickListener) : OnItemTouchListener {
+class RecyclerSingleTouchAdapter(
+    val context: Context,
+    val listener: OnItemClickListener,
+) : OnItemTouchListener {
     private val gestureDetector =
         GestureDetector(
             context,

@@ -103,12 +103,11 @@ class AndroidCardRenderContext(
     private fun filterTypeAnswer(
         content: String,
         side: SingleCardSide,
-    ): String {
-        return when (side) {
+    ): String =
+        when (side) {
             SingleCardSide.FRONT -> typeAnswer.filterQuestion(content)
             SingleCardSide.BACK -> typeAnswer.filterAnswer(content)
         }
-    }
 
     private fun expandSounds(
         content: String,

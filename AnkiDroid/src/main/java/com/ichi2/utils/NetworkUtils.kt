@@ -33,11 +33,11 @@ object NetworkUtils {
      * @return whether the active network is metered
      * or false in case internet cannot be accessed
      */
-    fun isActiveNetworkMetered(): Boolean {
-        return isOnline && connectivityManager
-            ?.isActiveNetworkMetered
-            ?: true
-    }
+    fun isActiveNetworkMetered(): Boolean =
+        isOnline &&
+            connectivityManager
+                ?.isActiveNetworkMetered
+                ?: true
 
     /**
      * @return whether is possible to access the internet

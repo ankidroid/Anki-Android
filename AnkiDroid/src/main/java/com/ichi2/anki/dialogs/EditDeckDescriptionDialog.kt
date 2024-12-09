@@ -62,22 +62,23 @@ class EditDeckDescriptionDialog : DialogFragment() {
             launchCatchingTask {
                 currentDescription = getDescription()
             }
-            findViewById<MaterialToolbar>(R.id.topAppBar).apply {
-                setNavigationOnClickListener {
-                    onBack()
-                }
-
-                setOnMenuItemClickListener { menuItem ->
-                    if (menuItem.itemId == R.id.action_save) {
-                        saveAndExit()
-                        true
-                    } else {
-                        false
+            findViewById<MaterialToolbar>(R.id.topAppBar)
+                .apply {
+                    setNavigationOnClickListener {
+                        onBack()
                     }
+
+                    setOnMenuItemClickListener { menuItem ->
+                        if (menuItem.itemId == R.id.action_save) {
+                            saveAndExit()
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                }.also { toolbar ->
+                    launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
                 }
-            }.also { toolbar ->
-                launchCatchingTask { toolbar.title = withCol { decks.get(deckId)!!.name } }
-            }
         }
     }
 
@@ -125,13 +126,12 @@ class EditDeckDescriptionDialog : DialogFragment() {
     companion object {
         private const val ARG_DECK_ID = "deckId"
 
-        fun newInstance(deckId: DeckId): EditDeckDescriptionDialog {
-            return EditDeckDescriptionDialog().apply {
+        fun newInstance(deckId: DeckId): EditDeckDescriptionDialog =
+            EditDeckDescriptionDialog().apply {
                 arguments =
                     bundleOf(
                         ARG_DECK_ID to deckId,
                     )
             }
-        }
     }
 }

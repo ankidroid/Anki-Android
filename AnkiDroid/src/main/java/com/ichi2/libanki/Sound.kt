@@ -58,7 +58,9 @@ data class TTSTag(
 /**
  * Contains the filename inside a `[sound:...]` tag.
  */
-data class SoundOrVideoTag(val filename: String) : AvTag() {
+data class SoundOrVideoTag(
+    val filename: String,
+) : AvTag() {
     @NotInLibAnki
     fun getType(mediaDir: String): Type {
         val extension = filename.substringAfterLast(".", "")
@@ -239,8 +241,8 @@ object Sound {
     suspend fun getAvTag(
         card: Card,
         url: String,
-    ): AvTag? {
-        return AV_PLAYLINK_RE.matchEntire(url)?.let {
+    ): AvTag? =
+        AV_PLAYLINK_RE.matchEntire(url)?.let {
             val values = it.groupValues
             val questionSide = values[1] == "q"
             val index = values[2].toInt()
@@ -258,13 +260,15 @@ object Sound {
                 null
             }
         }
-    }
 }
 
 /**
  * An [AvTag] partially rendered as `[anki:play:q:100]`
  */
-data class AvRef(val side: String, val index: Int) {
+data class AvRef(
+    val side: String,
+    val index: Int,
+) {
     companion object {
         fun from(match: MatchResult): AvRef? {
             val groups = match.groupValues

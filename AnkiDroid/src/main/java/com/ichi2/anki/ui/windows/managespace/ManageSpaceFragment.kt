@@ -55,9 +55,14 @@ import kotlin.system.exitProcess
 sealed interface Size {
     data object Calculating : Size
 
-    class Bytes(val totalSize: Long) : Size
+    class Bytes(
+        val totalSize: Long,
+    ) : Size
 
-    class FilesAndBytes(val files: Collection<File>, val totalSize: Long) : Size
+    class FilesAndBytes(
+        val files: Collection<File>,
+        val totalSize: Long,
+    ) : Size
 
     class Error(
         val exception: Exception,
@@ -69,7 +74,10 @@ sealed interface Size {
  ********************************************* Model **********************************************
  **************************************************************************************************/
 
-class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), CollectionDirectoryProvider {
+class ManageSpaceViewModel(
+    val app: Application,
+) : AndroidViewModel(app),
+    CollectionDirectoryProvider {
     override val collectionDirectory = CollectionManager.getCollectionDirectory()
 
     val flowOfDeleteUnusedMediaSize = MutableStateFlow<Size>(Size.Calculating)
@@ -379,8 +387,10 @@ class ManageSpaceFragment : SettingsFragment() {
 
         isEnabled =
             !(
-                size is Size.Bytes && size.totalSize == 0L ||
-                    size is Size.FilesAndBytes && size.files.isEmpty()
+                size is Size.Bytes &&
+                    size.totalSize == 0L ||
+                    size is Size.FilesAndBytes &&
+                    size.files.isEmpty()
             )
     }
 

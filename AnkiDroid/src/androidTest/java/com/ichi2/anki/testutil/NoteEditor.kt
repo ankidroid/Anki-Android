@@ -50,6 +50,4 @@ fun ActivityScenario<SingleFragmentActivity>.onNoteEditor(block: (NoteEditor) ->
 /**
  * Extension function for SingleFragmentActivity to find the NoteEditor fragment
  */
-fun SingleFragmentActivity.getEditor(): NoteEditor {
-    return supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor
-}
+fun SingleFragmentActivity.getEditor(): NoteEditor = supportFragmentManager.findFragmentById(R.id.fragment_container) as NoteEditor

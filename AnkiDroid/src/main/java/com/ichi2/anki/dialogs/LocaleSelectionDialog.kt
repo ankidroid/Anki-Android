@@ -68,9 +68,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.locale_selection_dialog, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.locale_selection_dialog, container, false)
 
     override fun onViewCreated(
         view: View,
@@ -117,9 +115,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
                 imeOptions = EditorInfo.IME_ACTION_DONE
                 setOnQueryTextListener(
                     object : SearchView.OnQueryTextListener {
-                        override fun onQueryTextSubmit(query: String): Boolean {
-                            return false
-                        }
+                        override fun onQueryTextSubmit(query: String): Boolean = false
 
                         override fun onQueryTextChange(newText: String): Boolean {
                             adapter.filter.filter(newText)
@@ -131,11 +127,16 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         }
     }
 
-    class LocaleListAdapter(locales: Array<Locale>) : RecyclerView.Adapter<TextViewHolder>(), Filterable {
+    class LocaleListAdapter(
+        locales: Array<Locale>,
+    ) : RecyclerView.Adapter<TextViewHolder>(),
+        Filterable {
         private val currentlyVisibleLocales: MutableList<Locale> = locales.toMutableList()
         private val selectableLocales: List<Locale> = locales.toList()
 
-        class TextViewHolder(private val textView: TextView) : RecyclerView.ViewHolder(textView) {
+        class TextViewHolder(
+            private val textView: TextView,
+        ) : RecyclerView.ViewHolder(textView) {
             fun setText(text: String) {
                 textView.text = text
             }
@@ -151,7 +152,8 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
             viewType: Int,
         ): TextViewHolder {
             val v =
-                LayoutInflater.from(parent.context)
+                LayoutInflater
+                    .from(parent.context)
                     .inflate(R.layout.locale_dialog_fragment_textview, parent, false) as TextView
             return TextViewHolder(v)
         }
@@ -202,11 +204,10 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         /**
          * @param handler Marker interface to enforce the convention the caller implementing LocaleSelectionDialogHandler
          */
-        fun newInstance(handler: LocaleSelectionDialogHandler): LocaleSelectionDialog {
-            return LocaleSelectionDialog().apply {
+        fun newInstance(handler: LocaleSelectionDialogHandler): LocaleSelectionDialog =
+            LocaleSelectionDialog().apply {
                 dialogHandler = handler
                 arguments = Bundle()
             }
-        }
     }
 }

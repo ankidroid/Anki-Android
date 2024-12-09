@@ -40,9 +40,8 @@ import kotlin.reflect.KClass
 @Suppress("LeakingThis")
 open class PageFragment(
     @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
-) :
-    Fragment(contentLayoutId),
-        PostRequestHandler {
+) : Fragment(contentLayoutId),
+    PostRequestHandler {
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
 

@@ -38,9 +38,7 @@ const val ACTION_UPDATE_WIDGET = "com.ichi2.widget.ACTION_UPDATE_WIDGET"
  * @param context the context of the application
  * @return the AlarmManager instance
  */
-private fun alarmManager(context: Context): AlarmManager {
-    return context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-}
+private fun alarmManager(context: Context): AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
 /**
  * Retrieves or creates a PendingIntent for the widget.

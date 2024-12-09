@@ -38,11 +38,15 @@ import kotlin.coroutines.resumeWithException
 
 /** Player for the sounds of [SoundOrVideoTag] */
 @NeedsTest("CardSoundConfig.autoplay should mean that video also isn't played automatically")
-class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPlayer) {
+class SoundTagPlayer(
+    private val soundUriBase: String,
+    val videoPlayer: VideoPlayer,
+) {
     private var mediaPlayer: MediaPlayer? = null
 
     private val music =
-        AudioAttributes.Builder()
+        AudioAttributes
+            .Builder()
             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
             .build()
 
@@ -54,7 +58,8 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
 
     // the same instance of an AudioFocusRequestCompat must be used to cancel focus
     private val audioFocusRequest: AudioFocusRequestCompat by lazy {
-        AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+        AudioFocusRequestCompat
+            .Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
             .setOnAudioFocusChangeListener { }
             .build()
     }

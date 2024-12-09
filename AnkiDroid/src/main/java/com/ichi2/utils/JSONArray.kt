@@ -58,37 +58,28 @@ fun JSONArray.deepClone(): JSONArray {
     return clone
 }
 
-fun JSONArray.jsonObjectIterable(): Iterable<JSONObject> {
-    return Iterable { jsonObjectIterator() }
-}
+fun JSONArray.jsonObjectIterable(): Iterable<JSONObject> = Iterable { jsonObjectIterator() }
 
 @KotlinCleanup("see if jsonObject/string/longIterator() methods can be combined into one")
-fun JSONArray.jsonObjectIterator(): Iterator<JSONObject> {
-    return object : Iterator<JSONObject> {
+fun JSONArray.jsonObjectIterator(): Iterator<JSONObject> =
+    object : Iterator<JSONObject> {
         private var index = 0
 
-        override fun hasNext(): Boolean {
-            return index < length()
-        }
+        override fun hasNext(): Boolean = index < length()
 
         override fun next() =
             getJSONObject(index).also {
                 index++
             }
     }
-}
 
-fun JSONArray.stringIterable(): Iterable<String> {
-    return Iterable { stringIterator() }
-}
+fun JSONArray.stringIterable(): Iterable<String> = Iterable { stringIterator() }
 
 fun JSONArray.stringIterator(): Iterator<String> {
     return object : Iterator<String> {
         private var index = 0
 
-        override fun hasNext(): Boolean {
-            return index < length()
-        }
+        override fun hasNext(): Boolean = index < length()
 
         override fun next(): String {
             val string = getString(index)

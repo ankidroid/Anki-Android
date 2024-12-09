@@ -37,7 +37,10 @@ import org.acra.dialog.CrashReportDialogHelper
  * See [AnkiDroid Wiki: Crash-Reports](https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports)
  */
 @SuppressLint("Registered") // we are sufficiently registered in this special case
-class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
+class AnkiDroidCrashReportDialog :
+    CrashReportDialog(),
+    DialogInterface.OnClickListener,
+    DialogInterface.OnDismissListener {
     private var alwaysReportCheckBox: CheckBox? = null
     private var userComment: EditText? = null
     private var helper: CrashReportDialogHelper? = null

@@ -48,7 +48,10 @@ import timber.log.Timber
  *
  * @see R.layout.permission_item
  */
-class PermissionItem(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+class PermissionItem(
+    context: Context,
+    attrs: AttributeSet,
+) : FrameLayout(context, attrs) {
     private val switch: SwitchCompat
     val permissions: List<String>
     val isGranted get() = Permissions.hasAllPermissions(context, permissions)

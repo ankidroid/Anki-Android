@@ -368,9 +368,7 @@ class ReviewerNoParamTest : RobolectricTest() {
             ?: throw IllegalStateException("Could not get whiteboard")
     }
 
-    private fun startReviewer(): Reviewer {
-        return ReviewerTest.startReviewer(this)
-    }
+    private fun startReviewer(): Reviewer = ReviewerTest.startReviewer(this)
 
     private class ReviewerExt : Reviewer() {
         var delayedHideCount = 0

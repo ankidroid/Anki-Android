@@ -27,7 +27,9 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.compat.setTooltipTextCompat
 import com.ichi2.ui.RtlCompliantActionProvider.Companion.unwrapContext
 
-class SyncActionProvider(context: Context) : ActionProviderCompat(context) {
+class SyncActionProvider(
+    context: Context,
+) : ActionProviderCompat(context) {
     val activity: Activity = unwrapContext(context)
 
     private var progressIndicator: LinearProgressIndicator? = null

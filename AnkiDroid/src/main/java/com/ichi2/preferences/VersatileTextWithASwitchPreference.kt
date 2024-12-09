@@ -41,8 +41,11 @@ import com.ichi2.anki.R
  * The preference inherits from [VersatileTextPreference] and supports any attributes it does,
  * including the regular [EditTextPreference] attributes.
  */
-class VersatileTextWithASwitchPreference(context: Context, attrs: AttributeSet?) :
-    VersatileTextPreference(context, attrs), DialogFragmentProvider {
+class VersatileTextWithASwitchPreference(
+    context: Context,
+    attrs: AttributeSet?,
+) : VersatileTextPreference(context, attrs),
+    DialogFragmentProvider {
     init {
         widgetLayoutResource = R.layout.preference_widget_switch_with_separator
     }

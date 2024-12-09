@@ -46,7 +46,9 @@ import java.util.Locale
  * this may be extended to all operations at a later date.
  */
 @Suppress("unused")
-public class AddContentApi(context: Context) {
+public class AddContentApi(
+    context: Context,
+) {
     private val context: Context = context.applicationContext
     private val resolver: ContentResolver = this.context.contentResolver
 
@@ -226,9 +228,7 @@ public class AddContentApi(context: Context) {
     public fun findDuplicateNotes(
         mid: Long,
         keys: List<String>,
-    ): SparseArray<MutableList<NoteInfo?>>? {
-        return compat.findDuplicateNotes(mid, keys)
-    }
+    ): SparseArray<MutableList<NoteInfo?>>? = compat.findDuplicateNotes(mid, keys)
 
     /**
      * Get the number of notes that exist for the specified model ID
@@ -247,9 +247,7 @@ public class AddContentApi(context: Context) {
     public fun updateNoteTags(
         noteId: Long,
         tags: Set<String>,
-    ): Boolean {
-        return updateNote(noteId, null, tags)
-    }
+    ): Boolean = updateNote(noteId, null, tags)
 
     /**
      * Set the fields for a given note
@@ -261,9 +259,7 @@ public class AddContentApi(context: Context) {
     public fun updateNoteFields(
         noteId: Long,
         fields: Array<String>,
-    ): Boolean {
-        return updateNote(noteId, fields, null)
-    }
+    ): Boolean = updateNote(noteId, fields, null)
 
     /**
      * Get the contents of a note with known ID
@@ -287,7 +283,11 @@ public class AddContentApi(context: Context) {
         fields: Array<String>?,
         tags: Set<String?>?,
     ): Boolean {
-        val contentUri = Note.CONTENT_URI.buildUpon().appendPath(noteId.toString()).build()
+        val contentUri =
+            Note.CONTENT_URI
+                .buildUpon()
+                .appendPath(noteId.toString())
+                .build()
         val values =
             ContentValues().apply {
                 if (fields != null) put(Note.FLDS, Utils.joinFields(fields))
@@ -341,8 +341,8 @@ public class AddContentApi(context: Context) {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public fun addNewBasicModel(name: String): Long? {
-        return addNewCustomModel(
+    public fun addNewBasicModel(name: String): Long? =
+        addNewCustomModel(
             name,
             BasicModel.FIELDS,
             BasicModel.CARD_NAMES,
@@ -352,7 +352,6 @@ public class AddContentApi(context: Context) {
             null,
             null,
         )
-    }
 
     /**
      * Insert a new basic front/back model with two fields and TWO cards
@@ -360,8 +359,8 @@ public class AddContentApi(context: Context) {
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
-    public fun addNewBasic2Model(name: String): Long? {
-        return addNewCustomModel(
+    public fun addNewBasic2Model(name: String): Long? =
+        addNewCustomModel(
             name,
             Basic2Model.FIELDS,
             Basic2Model.CARD_NAMES,
@@ -371,7 +370,6 @@ public class AddContentApi(context: Context) {
             null,
             null,
         )
-    }
 
     /**
      * Insert a new model into AnkiDroid.
@@ -723,15 +721,14 @@ public class AddContentApi(context: Context) {
     }
 
     private inner class CompatV2 : CompatV1() {
-        override fun queryNotes(modelId: Long): Cursor? {
-            return resolver.query(
+        override fun queryNotes(modelId: Long): Cursor? =
+            resolver.query(
                 Note.CONTENT_URI_V2,
                 PROJECTION,
                 String.format(Locale.US, "%s=%d", Note.MID, modelId),
                 null,
                 null,
             )
-        }
 
         override fun insertNotes(
             deckId: Long,
@@ -824,10 +821,11 @@ public class AddContentApi(context: Context) {
         public fun getAnkiDroidPackageName(context: Context): String? {
             val manager = context.packageManager
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                manager.resolveContentProvider(
-                    FlashCardsContract.AUTHORITY,
-                    PackageManager.ComponentInfoFlags.of(0L),
-                )?.packageName
+                manager
+                    .resolveContentProvider(
+                        FlashCardsContract.AUTHORITY,
+                        PackageManager.ComponentInfoFlags.of(0L),
+                    )?.packageName
             } else {
                 manager.resolveContentProvider(FlashCardsContract.AUTHORITY, 0)?.packageName
             }

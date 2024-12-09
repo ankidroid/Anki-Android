@@ -75,7 +75,11 @@ class ReviewerFragmentTest : InstrumentedTest() {
         card.moveToReviewQueue()
         col.backend.updateCards(
             listOf(
-                card.toBackendCard().toBuilder().setCustomData("""{"c":1}""").build(),
+                card
+                    .toBackendCard()
+                    .toBuilder()
+                    .setCustomData("""{"c":1}""")
+                    .build(),
             ),
             true,
         )

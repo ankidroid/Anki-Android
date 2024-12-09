@@ -154,9 +154,7 @@ class TemplatePreviewerViewModel(
     }
 
     @CheckResult
-    suspend fun getTemplateNames(): List<String> {
-        return templateNames.await()
-    }
+    suspend fun getTemplateNames(): List<String> = templateNames.await()
 
     fun onTabSelected(position: Int) {
         launchCatchingIO {
@@ -171,13 +169,12 @@ class TemplatePreviewerViewModel(
     }
 
     @CheckResult
-    suspend fun getCurrentTabIndex(): Int {
-        return if (isCloze) {
+    suspend fun getCurrentTabIndex(): Int =
+        if (isCloze) {
             clozeOrds!!.await().indexOf(ordFlow.value)
         } else {
             ordFlow.value
         }
-    }
 
     /* *********************************************************************************************
      *************************************** Internal methods ***************************************
@@ -192,9 +189,10 @@ class TemplatePreviewerViewModel(
     override suspend fun typeAnsFilter(text: String): String {
         val typeAnswerField = getTypeAnswerField(currentCard.await(), text)
         val expectedAnswer =
-            typeAnswerField?.let {
-                getExpectedTypeInAnswer(currentCard.await(), typeAnswerField)
-            }.ifNullOrEmpty { "sample" }
+            typeAnswerField
+                ?.let {
+                    getExpectedTypeInAnswer(currentCard.await(), typeAnswerField)
+                }.ifNullOrEmpty { "sample" }
 
         val repl =
             if (showingAnswer.value) {
@@ -224,13 +222,12 @@ class TemplatePreviewerViewModel(
         fun factory(
             arguments: TemplatePreviewerArguments,
             cardMediaPlayer: CardMediaPlayer,
-        ): ViewModelProvider.Factory {
-            return viewModelFactory {
+        ): ViewModelProvider.Factory =
+            viewModelFactory {
                 initializer {
                     TemplatePreviewerViewModel(arguments, cardMediaPlayer)
                 }
             }
-        }
     }
 }
 

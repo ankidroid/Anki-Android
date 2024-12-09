@@ -37,45 +37,38 @@ object ClipboardUtil {
     val IMPORT_MIME_TYPES = arrayOf("application/*", "text/*")
     val MEDIA_MIME_TYPES = arrayOf(*IMAGE_MIME_TYPES, *AUDIO_MIME_TYPES, *VIDEO_MIME_TYPES)
 
-    fun hasImage(clipboard: ClipboardManager?): Boolean {
-        return clipboard?.primaryClip
+    fun hasImage(clipboard: ClipboardManager?): Boolean =
+        clipboard
+            ?.primaryClip
             ?.let { hasImage(it.description) }
             ?: false
-    }
 
-    fun hasImage(description: ClipDescription?): Boolean {
-        return description
+    fun hasImage(description: ClipDescription?): Boolean =
+        description
             ?.run { IMAGE_MIME_TYPES.any { hasMimeType(it) } }
             ?: false
-    }
 
-    fun hasVideo(description: ClipDescription?): Boolean {
-        return description
+    fun hasVideo(description: ClipDescription?): Boolean =
+        description
             ?.run { VIDEO_MIME_TYPES.any { hasMimeType(it) } }
             ?: false
-    }
 
     private fun ClipboardManager.getFirstItem() = primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)
 
-    fun getUri(clipboard: ClipboardManager?): Uri? {
-        return clipboard?.getFirstItem()?.uri
-    }
+    fun getUri(clipboard: ClipboardManager?): Uri? = clipboard?.getFirstItem()?.uri
 
-    fun hasSVG(description: ClipDescription): Boolean {
-        return description.hasMimeType("image/svg+xml")
-    }
+    fun hasSVG(description: ClipDescription): Boolean = description.hasMimeType("image/svg+xml")
 
-    fun hasMedia(clipboard: ClipboardManager?): Boolean {
-        return clipboard?.primaryClip
+    fun hasMedia(clipboard: ClipboardManager?): Boolean =
+        clipboard
+            ?.primaryClip
             ?.let { hasMedia(it.description) }
             ?: false
-    }
 
-    fun hasMedia(description: ClipDescription?): Boolean {
-        return description
+    fun hasMedia(description: ClipDescription?): Boolean =
+        description
             ?.run { MEDIA_MIME_TYPES.any { hasMimeType(it) } }
             ?: false
-    }
 
     fun ClipData.items() =
         sequence {
@@ -84,22 +77,16 @@ object ClipboardUtil {
             }
         }
 
-    fun getDescription(clipboard: ClipboardManager?): ClipDescription? {
-        return clipboard?.primaryClip?.description
-    }
+    fun getDescription(clipboard: ClipboardManager?): ClipDescription? = clipboard?.primaryClip?.description
 
     @CheckResult
-    fun getText(clipboard: ClipboardManager?): CharSequence? {
-        return clipboard?.getFirstItem()?.text
-    }
+    fun getText(clipboard: ClipboardManager?): CharSequence? = clipboard?.getFirstItem()?.text
 
     @CheckResult
     fun getPlainText(
         clipboard: ClipboardManager?,
         context: Context,
-    ): CharSequence? {
-        return clipboard?.getFirstItem()?.coerceToText(context)
-    }
+    ): CharSequence? = clipboard?.getFirstItem()?.coerceToText(context)
 }
 
 /**

@@ -39,7 +39,8 @@ open class NumberRangePreferenceCompat
         attrs: AttributeSet? = null,
         defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
         defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference,
-    ) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
+    ) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes),
+        DialogFragmentProvider {
         var defaultValue: String? = null
 
         var min = 0
@@ -54,7 +55,8 @@ open class NumberRangePreferenceCompat
 
             context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
                 getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
-                    .takeIf { it != 0 }?.let { redId ->
+                    .takeIf { it != 0 }
+                    ?.let { redId ->
                         setSummaryProvider {
                             if (text == null) {
                                 return@setSummaryProvider ""
@@ -74,13 +76,9 @@ open class NumberRangePreferenceCompat
      * type. The two methods below intercept the persistence and retrieval methods for Strings and replaces them with
      * their Integer equivalents.
      */
-        override fun getPersistedString(defaultReturnValue: String?): String? {
-            return getPersistedInt(getDefaultValue()).toString()
-        }
+        override fun getPersistedString(defaultReturnValue: String?): String? = getPersistedInt(getDefaultValue()).toString()
 
-        override fun persistString(value: String): Boolean {
-            return persistInt(value.toInt())
-        }
+        override fun persistString(value: String): Boolean = persistInt(value.toInt())
 
         /**
          * Return the integer rounded to the nearest bound if it is outside of the acceptable range.
@@ -104,8 +102,8 @@ open class NumberRangePreferenceCompat
          * @param input User input in text editor.
          * @return The input value within acceptable range.
          */
-        fun getValidatedRangeFromString(input: String): Int {
-            return if (input.isEmpty()) {
+        fun getValidatedRangeFromString(input: String): Int =
+            if (input.isEmpty()) {
                 min
             } else {
                 try {
@@ -115,16 +113,13 @@ open class NumberRangePreferenceCompat
                     min
                 }
             }
-        }
 
         /**
          * Get the persisted value held by this preference.
          *
          * @return the persisted value.
          */
-        fun getValue(): Int {
-            return getPersistedInt(getDefaultValue())
-        }
+        fun getValue(): Int = getPersistedInt(getDefaultValue())
 
         private fun getDefaultValue(): Int {
             return try {

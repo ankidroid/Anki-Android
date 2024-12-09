@@ -43,7 +43,9 @@ import timber.log.Timber
  */
 @KotlinCleanup("Improve documentation")
 @WorkerThread
-class DB(val database: SupportSQLiteDatabase) {
+class DB(
+    val database: SupportSQLiteDatabase,
+) {
     var mod = false
 
     /**
@@ -58,7 +60,9 @@ class DB(val database: SupportSQLiteDatabase) {
      *
      * Note: this does not apply when using the Rust backend (ie for Collection)
      */
-    class SupportSQLiteOpenHelperCallback(version: Int) : AnkiSupportSQLiteDatabase.DefaultDbCallback(version) {
+    class SupportSQLiteOpenHelperCallback(
+        version: Int,
+    ) : AnkiSupportSQLiteDatabase.DefaultDbCallback(version) {
         /** Send error message when corruption is encountered. We don't call super() as we don't accidentally
          * want to opt-in to the standard Android behaviour of removing the corrupted file, but as we're
          * inheriting from DefaultDbCallback which does not call super either, it would be technically safe
@@ -94,9 +98,7 @@ class DB(val database: SupportSQLiteDatabase) {
     fun query(
         @Language("SQL") query: String,
         vararg selectionArgs: Any,
-    ): Cursor {
-        return database.query(query, selectionArgs)
-    }
+    ): Cursor = database.query(query, selectionArgs)
 
     /**
      * Convenience method for querying the database for a single integer result.
@@ -218,17 +220,13 @@ class DB(val database: SupportSQLiteDatabase) {
         values: ContentValues,
         whereClause: String? = null,
         whereArgs: Array<String>? = null,
-    ): Int {
-        return database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
-    }
+    ): Int = database.update(table, SQLiteDatabase.CONFLICT_NONE, values, whereClause, whereArgs)
 
     /** insert must always be called via DB in order to mark the db as changed  */
     fun insert(
         table: String,
         values: ContentValues,
-    ): Long {
-        return database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
-    }
+    ): Long = database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
 
     /**
      * @return The full path to this database file.
@@ -261,8 +259,6 @@ class DB(val database: SupportSQLiteDatabase) {
          * Wrap a Rust backend connection (which provides an SQL interface).
          * Caller is responsible for opening&closing the database.
          */
-        fun withRustBackend(backend: Backend): DB {
-            return DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
-        }
+        fun withRustBackend(backend: Backend): DB = DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
     }
 }

@@ -122,8 +122,8 @@ fun roundedTimeSpanUnformatted(
 fun roundedTimeSpan(
     context: Context,
     time_s: Long,
-): String {
-    return if (abs(time_s) < TIME_DAY) {
+): String =
+    if (abs(time_s) < TIME_DAY) {
         context.resources.getString(
             R.string.stats_overview_hours,
             time_s / TIME_HOUR,
@@ -144,11 +144,8 @@ fun roundedTimeSpan(
             time_s / TIME_YEAR,
         )
     }
-}
 
-fun getTimestamp(time: Time): String {
-    return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
-}
+fun getTimestamp(time: Time): String = SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
 
 /** @see Handler.postDelayed */
 fun Handler.postDelayed(

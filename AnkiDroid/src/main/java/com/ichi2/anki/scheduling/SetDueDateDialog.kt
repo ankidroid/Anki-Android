@@ -107,56 +107,57 @@ class SetDueDateDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialAlertDialogBuilder(requireContext()).create {
-            title(text = CollectionManager.TR.actionsSetDueDate().toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date))
-            positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
-            negativeButton(R.string.dialog_cancel)
-            neutralButton(R.string.help)
-            setView(R.layout.dialog_set_due_date)
-        }.apply {
-            show()
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        MaterialAlertDialogBuilder(requireContext())
+            .create {
+                title(text = CollectionManager.TR.actionsSetDueDate().toSentenceCase(this@SetDueDateDialog, R.string.sentence_set_due_date))
+                positiveButton(R.string.dialog_ok) { launchUpdateDueDate() }
+                negativeButton(R.string.dialog_cancel)
+                neutralButton(R.string.help)
+                setView(R.layout.dialog_set_due_date)
+            }.apply {
+                show()
 
-            // This onClickListener stops the dialog from closing when the button is clicked.
-            getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener {
-                openUrl(R.string.link_set_due_date_help)
-            }
+                // This onClickListener stops the dialog from closing when the button is clicked.
+                getButton(Dialog.BUTTON_NEUTRAL).setOnClickListener {
+                    openUrl(R.string.link_set_due_date_help)
+                }
 
-            lifecycleScope.launch {
-                viewModel.isValidFlow.collect { isValid -> positiveButton.isEnabled = isValid }
-            }
-            // setup viewpager + tabs
-            val viewPager = findViewById<ViewPager2>(R.id.set_due_date_pager)!!
-            viewPager.adapter = DueDateStateAdapter(this@SetDueDateDialog)
-            val tabLayout = findViewById<TabLayout>(R.id.tab_layout)!!
-            TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
-                SetDueDateViewModel.Tab.entries.first { it.position == position }
-                    .let { selectedTab ->
-                        tab.setIcon(selectedTab.icon)
-                    }
-            }.attach()
-            tabLayout.selectTab(tabLayout.getTabAt(0))
-
-            viewPager.registerOnPageChangeCallback(
-                object : ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        SetDueDateViewModel.Tab.entries.first { it.position == position }.let { selectedTab ->
-                            viewModel.currentTab = selectedTab
+                lifecycleScope.launch {
+                    viewModel.isValidFlow.collect { isValid -> positiveButton.isEnabled = isValid }
+                }
+                // setup viewpager + tabs
+                val viewPager = findViewById<ViewPager2>(R.id.set_due_date_pager)!!
+                viewPager.adapter = DueDateStateAdapter(this@SetDueDateDialog)
+                val tabLayout = findViewById<TabLayout>(R.id.tab_layout)!!
+                TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
+                    SetDueDateViewModel.Tab.entries
+                        .first { it.position == position }
+                        .let { selectedTab ->
+                            tab.setIcon(selectedTab.icon)
                         }
-                        super.onPageSelected(position)
-                    }
-                },
-            )
+                }.attach()
+                tabLayout.selectTab(tabLayout.getTabAt(0))
 
-            // setup 'set interval to same value' checkbox
-            findViewById<MaterialCheckBox>(R.id.change_interval)!!.apply {
-                isChecked = viewModel.updateIntervalToMatchDueDate
-                setOnCheckedChangeListener { _, isChecked ->
-                    viewModel.updateIntervalToMatchDueDate = isChecked
+                viewPager.registerOnPageChangeCallback(
+                    object : ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            SetDueDateViewModel.Tab.entries.first { it.position == position }.let { selectedTab ->
+                                viewModel.currentTab = selectedTab
+                            }
+                            super.onPageSelected(position)
+                        }
+                    },
+                )
+
+                // setup 'set interval to same value' checkbox
+                findViewById<MaterialCheckBox>(R.id.change_interval)!!.apply {
+                    isChecked = viewModel.updateIntervalToMatchDueDate
+                    setOnCheckedChangeListener { _, isChecked ->
+                        viewModel.updateIntervalToMatchDueDate = isChecked
+                    }
                 }
             }
-        }
-    }
 
     override fun setupDialog(
         dialog: Dialog,
@@ -193,14 +194,15 @@ class SetDueDateDialog : DialogFragment() {
             }
     }
 
-    class DueDateStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
+    class DueDateStateAdapter(
+        fragment: Fragment,
+    ) : FragmentStateAdapter(fragment) {
+        override fun createFragment(position: Int): Fragment =
+            when (position) {
                 0 -> SelectSingleDateFragment()
                 1 -> SelectDateRangeFragment()
                 else -> throw IllegalStateException("invalid position: $position")
             }
-        }
 
         override fun getItemCount() = 2
     }

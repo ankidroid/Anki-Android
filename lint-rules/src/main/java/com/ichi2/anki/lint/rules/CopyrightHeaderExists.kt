@@ -40,7 +40,9 @@ import java.util.regex.Pattern
  * @see .EXPLANATION
  */
 @Beta
-class CopyrightHeaderExists : Detector(), SourceCodeScanner {
+class CopyrightHeaderExists :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         /** This string matches GPLv3 under all current circumstances. It does not currently work if split over two lines  */
         private val COPYRIGHT_PATTERN = Pattern.compile("version 3 of the License, or \\(at")
@@ -81,13 +83,12 @@ class CopyrightHeaderExists : Detector(), SourceCodeScanner {
             )
     }
 
-    override fun getApplicableUastTypes(): List<Class<out UElement?>> {
-        return listOf(UClass::class.java)
-    }
+    override fun getApplicableUastTypes(): List<Class<out UElement?>> = listOf(UClass::class.java)
 
     override fun afterCheckFile(context: Context) {
         val contents = context.getContents()
-        if (contents == null || COPYRIGHT_PATTERN.matcher(contents).find() ||
+        if (contents == null ||
+            COPYRIGHT_PATTERN.matcher(contents).find() ||
             IGNORE_CHECK_PATTERN.matcher(contents).find()
         ) {
             return

@@ -45,7 +45,9 @@ class WidgetConfigScreenAdapter(
     // Property to get the list of deck IDs
     val deckIds: List<Long> get() = decks.map { it.deckId }
 
-    class DeckViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class DeckViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         val deckNameTextView: TextView = itemView.findViewById(R.id.deck_name)
         val removeButton: ImageButton = itemView.findViewById(R.id.action_button_remove_deck)
     }
@@ -59,7 +61,8 @@ class WidgetConfigScreenAdapter(
         viewType: Int,
     ): DeckViewHolder {
         val view =
-            LayoutInflater.from(parent.context)
+            LayoutInflater
+                .from(parent.context)
                 .inflate(R.layout.widget_item_deck_config, parent, false)
         return DeckViewHolder(view)
     }

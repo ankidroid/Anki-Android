@@ -126,7 +126,9 @@ enum class Flag(
  * [Flag.NONE] does not have a label
  */
 @JvmInline
-private value class FlagLabels(val value: JSONObject) {
+private value class FlagLabels(
+    val value: JSONObject,
+) {
     /**
      * @return the user-defined label for the provided flag, or null if undefined
      * This is not supported for [Flag.NONE] and is validated outside this method

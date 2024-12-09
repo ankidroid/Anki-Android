@@ -80,9 +80,7 @@ class JSONObjectTest {
         /**
          * Sample overridden function
          */
-        override fun toString(): String {
-            return removeQuotes(super.toString())
-        }
+        override fun toString(): String = removeQuotes(super.toString())
     }
 
     @Test
@@ -119,8 +117,6 @@ class JSONObjectTest {
         /**
          * Wraps all the alphanumeric words in a string in quotes
          */
-        private fun removeQuotes(string: String): String {
-            return string.replace("\"([a-zA-Z0-9]+)\"".toRegex(), "$1")
-        }
+        private fun removeQuotes(string: String): String = string.replace("\"([a-zA-Z0-9]+)\"".toRegex(), "$1")
     }
 }

@@ -28,13 +28,12 @@ object BundleUtils {
      * @param key the key to use
      * @return the long value, or null if not found
      */
-    fun Bundle.getNullableLong(key: String): Long? {
-        return if (!containsKey(key)) {
+    fun Bundle.getNullableLong(key: String): Long? =
+        if (!containsKey(key)) {
             null
         } else {
             getLong(key)
         }
-    }
 
     /**
      * Retrieves a [Long] value from a [Bundle] using a key, throws if not found
@@ -57,11 +56,10 @@ object BundleUtils {
      * @param key the key to use
      * @return the int value, or null if not found
      */
-    fun Bundle.getNullableInt(key: String): Int? {
-        return if (!containsKey(key)) {
+    fun Bundle.getNullableInt(key: String): Int? =
+        if (!containsKey(key)) {
             null
         } else {
             getInt(key)
         }
-    }
 }

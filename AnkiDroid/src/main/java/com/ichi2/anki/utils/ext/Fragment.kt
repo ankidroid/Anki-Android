@@ -22,9 +22,7 @@ import androidx.fragment.app.Fragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.utils.showDialogFragmentImpl
 
-fun Fragment.sharedPrefs(): SharedPreferences {
-    return requireContext().sharedPrefs()
-}
+fun Fragment.sharedPrefs(): SharedPreferences = requireContext().sharedPrefs()
 
 val Fragment.packageManager: PackageManager
     get() = requireContext().packageManager

@@ -31,8 +31,7 @@ object ThrowableFilterService {
     var originalUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
 
     var uncaughtExceptionHandler =
-        FilteringExceptionHandler {
-                thread: Thread?, throwable: Throwable ->
+        FilteringExceptionHandler { thread: Thread?, throwable: Throwable ->
             if (thread == null) {
                 Timber.w("unexpected: thread was null")
                 return@FilteringExceptionHandler

@@ -53,15 +53,14 @@ object CollectionHelper {
      */
     const val PREF_COLLECTION_PATH = "deckPath"
 
-    fun getCollectionSize(context: Context): Long? {
-        return try {
+    fun getCollectionSize(context: Context): Long? =
+        try {
             val path = getCollectionPath(context)
             File(path).length()
         } catch (e: Exception) {
             Timber.e(e, "Error getting collection Length")
             null
         }
-    }
 
     /**
      * Create the AnkiDroid directory if it doesn't exist and add a .nomedia file to it if needed.
@@ -105,15 +104,14 @@ object CollectionHelper {
      * @return whether or not dir is accessible
      * @param context to get directory with
      */
-    fun isCurrentAnkiDroidDirAccessible(context: Context): Boolean {
-        return try {
+    fun isCurrentAnkiDroidDirAccessible(context: Context): Boolean =
+        try {
             initializeAnkiDroidDirectory(getCurrentAnkiDroidDirectory(context))
             true
         } catch (e: StorageAccessException) {
             Timber.w(e)
             false
         }
-    }
 
     /**
      * Get the absolute path to a directory that is suitable to be the default starting location
@@ -240,9 +238,7 @@ object CollectionHelper {
      * @return Returns an array of [File]s reflecting the directories that AnkiDroid can access without storage permissions
      * @see android.content.Context.getExternalFilesDirs
      */
-    fun getAppSpecificExternalDirectories(context: Context): List<File> {
-        return context.getExternalFilesDirs(null)?.filterNotNull() ?: listOf()
-    }
+    fun getAppSpecificExternalDirectories(context: Context): List<File> = context.getExternalFilesDirs(null)?.filterNotNull() ?: listOf()
 
     /**
      * Returns the absolute path to the private AnkiDroid directory under the app-specific, internal storage directory.
@@ -254,17 +250,13 @@ object CollectionHelper {
      * @param context Used to get the Internal App-Specific directory for AnkiDroid
      * @return Returns the absolute path to the App-Specific Internal AnkiDroid Directory
      */
-    fun getAppSpecificInternalAnkiDroidDirectory(context: Context): String {
-        return context.filesDir.absolutePath
-    }
+    fun getAppSpecificInternalAnkiDroidDirectory(context: Context): String = context.filesDir.absolutePath
 
     /**
      *
      * @return the path to the actual [Collection] file
      */
-    fun getCollectionPath(context: Context): String {
-        return File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).absolutePath
-    }
+    fun getCollectionPath(context: Context): String = File(getCurrentAnkiDroidDirectory(context), COLLECTION_FILENAME).absolutePath
 
     /** A temporary override for [getCurrentAnkiDroidDirectory] */
     var ankiDroidDirectoryOverride: String? = null
@@ -272,13 +264,10 @@ object CollectionHelper {
     /**
      * @return the absolute path to the AnkiDroid directory.
      */
-    fun getCurrentAnkiDroidDirectory(context: Context): String {
-        return getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
-    }
+    fun getCurrentAnkiDroidDirectory(context: Context): String =
+        getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
 
-    fun getMediaDirectory(context: Context): File {
-        return File(getCurrentAnkiDroidDirectory(context), "collection.media")
-    }
+    fun getMediaDirectory(context: Context): File = File(getCurrentAnkiDroidDirectory(context), "collection.media")
 
     /**
      * An accessor which makes [Context] optional in the case that [PREF_COLLECTION_PATH] is set
@@ -291,8 +280,8 @@ object CollectionHelper {
     internal fun getCurrentAnkiDroidDirectoryOptionalContext(
         preferences: SharedPreferences,
         context: () -> Context,
-    ): String {
-        return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
+    ): String =
+        if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
             // create an "androidTest" directory inside the current collection directory which contains the test data
             // "/AnkiDroid/androidTest" would be a new collection path
             val currentCollectionDirectory =
@@ -312,7 +301,6 @@ object CollectionHelper {
                 )
             }
         }
-    }
 
     /**
      * Resets the AnkiDroid directory to the [getDefaultAnkiDroidDirectory]

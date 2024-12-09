@@ -77,9 +77,7 @@ class BindingAndroidTest : RobolectricTest() {
         assertEquals("${BindingTest.GESTURE_PREFIX} Touch top", Binding.gesture(Gesture.TAP_TOP).toDisplayString())
     }
 
-    private fun Binding.toDisplayString(): String {
-        return this.toDisplayString(targetContext)
-    }
+    private fun Binding.toDisplayString(): String = this.toDisplayString(targetContext)
 
     private fun assertBindingEquals(
         fst: Binding,

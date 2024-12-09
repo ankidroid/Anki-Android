@@ -75,7 +75,9 @@ import timber.log.Timber
  * Single instance Activity for instantly editing and adding cloze card/s without actually opening the app,
  * uses a custom dialog layout and a transparent activity theme to achieve the functionality.
  **/
-class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelectionListener {
+class InstantNoteEditorActivity :
+    AnkiActivity(),
+    DeckSelectionDialog.DeckSelectionListener {
     private val viewModel: InstantEditorViewModel by viewModels()
 
     private var deckSpinnerSelection: DeckSpinnerSelection? = null
@@ -469,27 +471,33 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     private fun setupErrorListeners() {
         Timber.d("Setting up error listeners")
-        viewModel.onError.flowWithLifecycle(lifecycle).onEach { errorMessage ->
-            AlertDialog.Builder(this).setTitle(R.string.vague_error).setMessage(errorMessage)
-                .show()
-        }.launchIn(lifecycleScope)
+        viewModel.onError
+            .flowWithLifecycle(lifecycle)
+            .onEach { errorMessage ->
+                AlertDialog
+                    .Builder(this)
+                    .setTitle(R.string.vague_error)
+                    .setMessage(errorMessage)
+                    .show()
+            }.launchIn(lifecycleScope)
 
-        viewModel.instantEditorError.onEach { errorMessage ->
-            when (errorMessage) {
-                null -> {
-                    warningTextField.visibility = View.INVISIBLE
-                }
+        viewModel.instantEditorError
+            .onEach { errorMessage ->
+                when (errorMessage) {
+                    null -> {
+                        warningTextField.visibility = View.INVISIBLE
+                    }
 
-                TR.addingYouHaveAClozeDeletionNote() -> {
-                    noClozeDialog(errorMessage)
-                }
+                    TR.addingYouHaveAClozeDeletionNote() -> {
+                        noClozeDialog(errorMessage)
+                    }
 
-                else -> {
-                    warningTextField.visibility = View.VISIBLE
-                    warningTextField.text = errorMessage
+                    else -> {
+                        warningTextField.visibility = View.VISIBLE
+                        warningTextField.text = errorMessage
+                    }
                 }
-            }
-        }.launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
     }
 
     /** In case saving the note fails we, want to allow user to cancel and try again, or exist the activity **/
@@ -546,8 +554,8 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     private fun getActionModeCallback(
         textBox: TextInputEditText,
         clozeMenuId: Int,
-    ): ActionMode.Callback {
-        return CustomActionModeCallback(
+    ): ActionMode.Callback =
+        CustomActionModeCallback(
             // we always have cloze type notes here
             isClozeType = true,
             getString(R.string.multimedia_editor_popup_cloze),
@@ -573,7 +581,6 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                 }
             },
         )
-    }
 
     private fun View.userClickOutsideDialog(exclude: View) {
         setOnTouchListener { _, event ->

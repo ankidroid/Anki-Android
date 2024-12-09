@@ -29,7 +29,9 @@ import net.ankiweb.rsdroid.Backend
  *
  * @param ankiColumnKey The key used in [Backend.setActiveBrowserColumns]
  */
-enum class CardBrowserColumn(val ankiColumnKey: String) {
+enum class CardBrowserColumn(
+    val ankiColumnKey: String,
+) {
     /** Rendered front side of the first card of the note */
     QUESTION("question"),
 

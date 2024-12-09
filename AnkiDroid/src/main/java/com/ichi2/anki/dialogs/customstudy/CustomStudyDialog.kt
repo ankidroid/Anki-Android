@@ -81,7 +81,8 @@ private const val DID = "did"
 class CustomStudyDialog(
     private val collection: Collection,
     private val customStudyListener: CustomStudyListener?,
-) : AnalyticsDialogFragment(), TagsDialogListener {
+) : AnalyticsDialogFragment(),
+    TagsDialogListener {
     interface CustomStudyListener {
         fun onCreateCustomStudySession()
 
@@ -126,7 +127,8 @@ class CustomStudyDialog(
         val listIds = getListIds()
         val titles = listIds.map { resources.getString(it.stringResource) }
 
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .title(R.string.custom_study)
             .cancelable(true)
             .listItems(items = titles) { _, index ->
@@ -198,7 +200,8 @@ class CustomStudyDialog(
         val did = requireArguments().getLong(DID)
         // Set material dialog parameters
         val dialog =
-            AlertDialog.Builder(requireActivity())
+            AlertDialog
+                .Builder(requireActivity())
                 .customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
                 .positiveButton(R.string.dialog_ok) {
                     // Get the value selected by user
@@ -276,11 +279,9 @@ class CustomStudyDialog(
                         }
                         STUDY_TAGS -> TODO("This branch has not been covered before")
                     }
-                }
-                .negativeButton(R.string.dialog_cancel) {
+                }.negativeButton(R.string.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
-                }
-                .create() // Added .create() because we wanted to access alertDialog positive button enable state
+                }.create() // Added .create() because we wanted to access alertDialog positive button enable state
         editText.addTextChangedListener(
             object : TextWatcher {
                 override fun beforeTextChanged(
@@ -498,7 +499,9 @@ class CustomStudyDialog(
      * Possible context menu options that could be shown in the custom study dialog.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    enum class ContextMenuOption(val stringResource: Int) {
+    enum class ContextMenuOption(
+        val stringResource: Int,
+    ) {
         STUDY_NEW(R.string.custom_study_increase_new_limit),
         STUDY_REV(R.string.custom_study_increase_review_limit),
         STUDY_FORGOT(R.string.custom_study_review_forgotten),

@@ -89,7 +89,8 @@ class ActivityExportingDelegate(
                 return
             }
         val sendIntent =
-            ShareCompat.IntentBuilder(activity)
+            ShareCompat
+                .IntentBuilder(activity)
                 .setType("application/apkg")
                 .setStream(uri)
                 .setSubject(activity.getString(R.string.export_email_subject, attachment.name))
@@ -99,8 +100,8 @@ class ActivityExportingDelegate(
                         activity.getString(R.string.link_manual),
                         activity.getString(R.string.link_distributions),
                     ),
-                )
-                .intent.apply {
+                ).intent
+                .apply {
                     clipData = ClipData.newUri(activity.contentResolver, attachment.name, uri)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 }

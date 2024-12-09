@@ -60,7 +60,9 @@ data class HelpItem(
          * @see [com.ichi2.anki.AnkiDroidApp]
          */
         @Parcelize
-        data class OpenUrl(val url: String) : Action()
+        data class OpenUrl(
+            val url: String,
+        ) : Action()
 
         @Parcelize
         data class OpenUrlResource(

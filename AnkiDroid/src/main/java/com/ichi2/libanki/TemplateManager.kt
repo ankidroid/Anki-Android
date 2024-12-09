@@ -49,9 +49,16 @@ private typealias TemplateReplacementList = MutableList<Union<String?, TemplateM
  * the filter is skipped.
  */
 class TemplateManager {
-    data class TemplateReplacement(val fieldName: String, var currentText: String, val filters: List<String>)
+    data class TemplateReplacement(
+        val fieldName: String,
+        var currentText: String,
+        val filters: List<String>,
+    )
 
-    data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
+    data class PartiallyRenderedCard(
+        val qnodes: TemplateReplacementList,
+        val anodes: TemplateReplacementList,
+    ) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
                 val qnodes = nodesFromProto(out.questionNodesList)
@@ -100,9 +107,7 @@ class TemplateManager {
                 }
             }
 
-            fun avTagsToNative(tags: List<anki.card_rendering.AVTag>): List<AvTag> {
-                return tags.map { avTagToNative(it) }.toList()
-            }
+            fun avTagsToNative(tags: List<anki.card_rendering.AVTag>): List<AvTag> = tags.map { avTagToNative(it) }.toList()
         }
     }
 
@@ -132,9 +137,7 @@ class TemplateManager {
                 col: Collection,
                 card: Card,
                 browser: Boolean,
-            ): TemplateRenderContext {
-                return TemplateRenderContext(card, card.note(col), browser)
-            }
+            ): TemplateRenderContext = TemplateRenderContext(card, card.note(col), browser)
 
             fun fromCardLayout(
                 note: Note,
@@ -142,15 +145,14 @@ class TemplateManager {
                 notetype: NotetypeJson,
                 template: JSONObject,
                 fillEmpty: Boolean,
-            ): TemplateRenderContext {
-                return TemplateRenderContext(
+            ): TemplateRenderContext =
+                TemplateRenderContext(
                     card,
                     note,
                     notetype = notetype,
                     template = template,
                     fillEmpty = fillEmpty,
                 )
-            }
         }
 
         /**

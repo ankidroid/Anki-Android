@@ -379,7 +379,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     // Event handler for eases (answer buttons)
-    inner class SelectEaseHandler : View.OnClickListener, OnTouchListener {
+    inner class SelectEaseHandler :
+        View.OnClickListener,
+        OnTouchListener {
         private var prevCard: Card? = null
         private var hasBeenTouched = false
         private var touchX = 0f
@@ -572,9 +574,7 @@ abstract class AbstractFlashcardViewer :
         TtsVoicesFieldFilter.ensureApplied()
     }
 
-    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
-        return R.layout.reviewer
-    }
+    protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int = R.layout.reviewer
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val isFullscreen: Boolean
@@ -747,13 +747,9 @@ abstract class AbstractFlashcardViewer :
         return false
     }
 
-    protected open fun answerFieldIsFocused(): Boolean {
-        return answerField != null && answerField!!.isFocused
-    }
+    protected open fun answerFieldIsFocused(): Boolean = answerField != null && answerField!!.isFocused
 
-    protected fun clipboardHasText(): Boolean {
-        return !getText(clipboard).isNullOrEmpty()
-    }
+    protected fun clipboardHasText(): Boolean = !getText(clipboard).isNullOrEmpty()
 
     /**
      * Returns the text stored in the clipboard or the empty string if the clipboard is empty or contains something that
@@ -781,9 +777,7 @@ abstract class AbstractFlashcardViewer :
      * Currently, this is used for note edits - in a reviewing context, this should show the next card.
      * In a previewing context, the card should not change.
      */
-    open fun canAccessScheduler(): Boolean {
-        return false
-    }
+    open fun canAccessScheduler(): Boolean = false
 
     protected open fun onEditedNoteChanged() {}
 
@@ -808,15 +802,12 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Whether the callback to onCollectionLoaded has loaded card content  */
-    private fun hasLoadedCardContent(): Boolean {
-        return cardContent != null
-    }
+    private fun hasLoadedCardContent(): Boolean = cardContent != null
 
-    open fun undo(): Job {
-        return launchCatchingTask {
+    open fun undo(): Job =
+        launchCatchingTask {
             undoAndShowSnackbar(duration = Reviewer.ACTION_SNACKBAR_TIME)
         }
-    }
 
     private fun finishNoStorageAvailable() {
         this@AbstractFlashcardViewer.setResult(DeckPicker.RESULT_MEDIA_EJECTED)
@@ -1113,7 +1104,8 @@ abstract class AbstractFlashcardViewer :
     ): T {
         val layoutId = getContentViewAttr(fullscreenMode)
         val content =
-            LayoutInflater.from(this@AbstractFlashcardViewer)
+            LayoutInflater
+                .from(this@AbstractFlashcardViewer)
                 .inflate(layoutId, null, false) as ViewGroup
         val ret: T = content.findViewById(id)
         (ret!!.parent as ViewGroup).removeView(ret) // detach the view from its parent
@@ -1133,9 +1125,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected fun shouldShowNextReviewTime(): Boolean {
-        return showNextReviewTime
-    }
+    protected fun shouldShowNextReviewTime(): Boolean = showNextReviewTime
 
     protected open fun displayAnswerBottomBar() {
         flipCardLayout!!.isClickable = false
@@ -1165,7 +1155,10 @@ abstract class AbstractFlashcardViewer :
             after.run()
         } else {
             flipCardLayout!!.alpha = 1f
-            flipCardLayout!!.animate().alpha(0f).setDuration(shortAnimDuration.toLong())
+            flipCardLayout!!
+                .animate()
+                .alpha(0f)
+                .setDuration(shortAnimDuration.toLong())
                 .withEndAction(after)
         }
     }
@@ -1179,7 +1172,10 @@ abstract class AbstractFlashcardViewer :
             after.run()
         } else {
             flipCardLayout?.alpha = 0f
-            flipCardLayout?.animate()?.alpha(1f)?.setDuration(shortAnimDuration.toLong())
+            flipCardLayout
+                ?.animate()
+                ?.alpha(1f)
+                ?.setDuration(shortAnimDuration.toLong())
                 ?.withEndAction(after)
         }
         focusAnswerCompletionField()
@@ -1329,11 +1325,10 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean {
-        return withCol {
+    private suspend fun automaticAnswerShouldWaitForAudio(): Boolean =
+        withCol {
             decks.configDictForDeckId(currentCard!!.did).optBoolean("waitForAudio", true)
         }
-    }
 
     internal inner class ReadTextListener : ReadText.ReadTextListener {
         override fun onDone(playedSide: CardSide?) {
@@ -1808,9 +1803,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    fun executeCommand(which: ViewerCommand): Boolean {
-        return executeCommand(which, fromGesture = null)
-    }
+    fun executeCommand(which: ViewerCommand): Boolean = executeCommand(which, fromGesture = null)
 
     protected open fun replayVoice() {
         // intentionally blank
@@ -1985,7 +1978,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** Fixing bug 720: <input></input> focus, thanks to pablomouzo on android issue 7189  */
-    internal inner class MyWebView(context: Context?) : WebView(context!!) {
+    internal inner class MyWebView(
+        context: Context?,
+    ) : WebView(context!!) {
         override fun loadDataWithBaseURL(
             baseUrl: String?,
             data: String,
@@ -2107,9 +2102,7 @@ abstract class AbstractFlashcardViewer :
             return true
         }
 
-        override fun onSingleTapUp(e: MotionEvent): Boolean {
-            return false
-        }
+        override fun onSingleTapUp(e: MotionEvent): Boolean = false
 
         override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
             // Go back to immersive mode if the user had temporarily exited it (and ignore the tap gesture)
@@ -2139,9 +2132,7 @@ abstract class AbstractFlashcardViewer :
             // intentionally blank
         }
 
-        open fun eventCanBeSentToWebView(event: MotionEvent): Boolean {
-            return true
-        }
+        open fun eventCanBeSentToWebView(event: MotionEvent): Boolean = true
 
         open fun startShakeDetector() {
             // intentionally blank
@@ -2152,16 +2143,15 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected open fun onSingleTap(): Boolean {
-        return false
-    }
+    protected open fun onSingleTap(): Boolean = false
 
     protected open fun onFling() {}
 
     /** #6141 - blocks clicking links from executing "touch" gestures.
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer  */
     internal inner class LinkDetectingGestureDetector :
-        MyGestureDetector(), ShakeDetector.Listener {
+        MyGestureDetector(),
+        ShakeDetector.Listener {
         private var shakeDetector: ShakeDetector? = null
 
         init {
@@ -2286,9 +2276,7 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))
-    }
+    protected open fun shouldDisplayMark(): Boolean = isMarked(getColUnsafe, currentCard!!.note(getColUnsafe))
 
     val writeLock: Lock
         get() = cardLock.writeLock()
@@ -2360,7 +2348,8 @@ abstract class AbstractFlashcardViewer :
     inner class CardViewerWebClient internal constructor(
         private val resourceHandler: ViewerResourceHandler,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null,
-    ) : WebViewClient(), JavascriptEvaluator {
+    ) : WebViewClient(),
+        JavascriptEvaluator {
         private var pageFinishedFired = true
         private val pageRenderStopwatch = Stopwatch.init("page render")
 
@@ -2627,9 +2616,7 @@ abstract class AbstractFlashcardViewer :
         override fun onRenderProcessGone(
             view: WebView,
             detail: RenderProcessGoneDetail,
-        ): Boolean {
-            return onRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
-        }
+        ): Boolean = onRenderProcessGoneDelegate.onRenderProcessGone(view, detail)
 
         override fun eval(js: String) {
             // WARNING: it is not guaranteed that card.js has loaded at this point
@@ -2677,7 +2664,8 @@ abstract class AbstractFlashcardViewer :
         val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(currentCard!!.note(getColUnsafe).tags)
         val dialog =
-            tagsDialogFactory!!.newTagsDialog()
+            tagsDialogFactory!!
+                .newTagsDialog()
                 .withArguments(this, TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
     }
@@ -2707,15 +2695,13 @@ abstract class AbstractFlashcardViewer :
         refreshIfRequired()
     }
 
-    open fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
-        return AnkiDroidJsAPI.CardDataForJsApi()
-    }
+    open fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi = AnkiDroidJsAPI.CardDataForJsApi()
 
     override suspend fun handlePostRequest(
         uri: String,
         bytes: ByteArray,
-    ): ByteArray {
-        return if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
+    ): ByteArray =
+        if (uri.startsWith(AnkiServer.ANKIDROID_JS_PREFIX)) {
             jsApi.handleJsApiRequest(
                 uri.substring(AnkiServer.ANKIDROID_JS_PREFIX.length),
                 bytes,
@@ -2724,7 +2710,6 @@ abstract class AbstractFlashcardViewer :
         } else {
             throw IllegalArgumentException("unhandled request: $uri")
         }
-    }
 
     companion object {
         /**
@@ -2759,15 +2744,14 @@ abstract class AbstractFlashcardViewer :
          * @return if [gesture] is a swipe, a transition to the same direction of the swipe
          * else return [ActivityTransitionAnimation.Direction.FADE]
          */
-        fun getAnimationTransitionFromGesture(gesture: Gesture?): ActivityTransitionAnimation.Direction {
-            return when (gesture) {
+        fun getAnimationTransitionFromGesture(gesture: Gesture?): ActivityTransitionAnimation.Direction =
+            when (gesture) {
                 Gesture.SWIPE_UP -> ActivityTransitionAnimation.Direction.UP
                 Gesture.SWIPE_DOWN -> ActivityTransitionAnimation.Direction.DOWN
                 Gesture.SWIPE_RIGHT -> ActivityTransitionAnimation.Direction.RIGHT
                 Gesture.SWIPE_LEFT -> ActivityTransitionAnimation.Direction.LEFT
                 else -> ActivityTransitionAnimation.Direction.FADE
             }
-        }
 
         fun Gesture?.toAnimationTransition() = getAnimationTransitionFromGesture(this)
 

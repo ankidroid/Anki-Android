@@ -74,7 +74,10 @@ class ACRATest : InstrumentedTest() {
         CrashReportService.setDebugACRAConfig(sharedPrefs)
         assertArrayEquals(
             "Debug logcat arguments not set correctly",
-            CrashReportService.acraCoreConfigBuilder.build().logcatArguments.toTypedArray(),
+            CrashReportService.acraCoreConfigBuilder
+                .build()
+                .logcatArguments
+                .toTypedArray(),
             debugLogcatArguments,
         )
         verifyDebugACRAPreferences()

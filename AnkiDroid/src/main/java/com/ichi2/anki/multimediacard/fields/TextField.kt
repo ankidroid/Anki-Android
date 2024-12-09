@@ -24,7 +24,9 @@ import com.ichi2.libanki.Collection
 /**
  * Text Field implementation.
  */
-class TextField : FieldBase(), IField {
+class TextField :
+    FieldBase(),
+    IField {
     private var _text = ""
     private var _name: String? = null
 

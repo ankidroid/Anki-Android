@@ -350,9 +350,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             assertThat(sched.cardCount(), equalTo(1))
         }
 
-    private fun startReviewer(): Reviewer {
-        return ReviewerTest.startReviewer(this)
-    }
+    private fun startReviewer(): Reviewer = ReviewerTest.startReviewer(this)
 
     @Test
     fun ankiSetCardDueTest() =
@@ -420,19 +418,21 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         }
 
     companion object {
-        fun jsApiContract(data: String = ""): ByteArray {
-            return JSONObject().apply {
-                put("version", "0.0.3")
-                put("developer", "test@example.com")
-                put("data", data)
-            }.toString().toByteArray()
-        }
+        fun jsApiContract(data: String = ""): ByteArray =
+            JSONObject()
+                .apply {
+                    put("version", "0.0.3")
+                    put("developer", "test@example.com")
+                    put("data", data)
+                }.toString()
+                .toByteArray()
 
         private inline fun formatSuccessfulApiResult(block: JSONObject.() -> Unit) =
-            JSONObject().apply {
-                put(SUCCESS_KEY, true)
-                block(this)
-            }.toString()
+            JSONObject()
+                .apply {
+                    put(SUCCESS_KEY, true)
+                    block(this)
+                }.toString()
 
         fun formatApiResult(res: Boolean) = formatSuccessfulApiResult { put(VALUE_KEY, res) }
 
@@ -446,9 +446,9 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             methodName: String,
             jsAPI: AnkiDroidJsAPI,
             apiData: String = "",
-        ): String {
-            return jsAPI.handleJsApiRequest(methodName, jsApiContract(apiData), false)
+        ): String =
+            jsAPI
+                .handleJsApiRequest(methodName, jsApiContract(apiData), false)
                 .decodeToString()
-        }
     }
 }

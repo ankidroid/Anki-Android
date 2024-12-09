@@ -39,14 +39,13 @@ suspend fun importAnkiPackageUndoable(input: ByteArray): ByteArray {
     }
 }
 
-suspend fun importCsvRaw(input: ByteArray): ByteArray {
-    return withContext(Dispatchers.Main) {
+suspend fun importCsvRaw(input: ByteArray): ByteArray =
+    withContext(Dispatchers.Main) {
         val output = withCol { importCsvRaw(input) }
         val changes = OpChangesOnly.parseFrom(output)
         undoableOp { changes }
         output
     }
-}
 
 /**
  * Css to hide the "Show" button from the final backend import page. As the user could import a lot

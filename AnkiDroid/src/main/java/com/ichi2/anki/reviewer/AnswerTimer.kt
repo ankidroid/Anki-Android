@@ -41,7 +41,9 @@ import kotlinx.coroutines.withContext
  *
  * @see [Card.timeTaken] - used by the scheduler
  */
-class AnswerTimer(private val cardTimer: Chronometer) {
+class AnswerTimer(
+    private val cardTimer: Chronometer,
+) {
     @VisibleForTesting
     var limit: Int = 0
         private set

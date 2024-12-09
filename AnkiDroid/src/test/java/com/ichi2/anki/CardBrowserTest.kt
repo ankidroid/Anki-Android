@@ -391,7 +391,8 @@ class CardBrowserTest : RobolectricTest() {
             // check if all card flags turned green
             assertThat(
                 "All cards should be flagged",
-                cardBrowser.viewModel.queryAllCardIds()
+                cardBrowser.viewModel
+                    .queryAllCardIds()
                     .map { cardId -> getCardFlagAfterFlagChangeDone(cardBrowser, cardId) }
                     .all { flag1 -> flag1 == Flag.GREEN },
             )
@@ -414,9 +415,7 @@ class CardBrowserTest : RobolectricTest() {
     private fun getCardFlagAfterFlagChangeDone(
         cardBrowser: CardBrowser,
         cardId: CardId,
-    ): Flag {
-        return cardBrowser.getPropertiesForCardId(cardId).card.userFlag()
-    }
+    ): Flag = cardBrowser.getPropertiesForCardId(cardId).card.userFlag()
 
     @Test
     fun startupFromCardBrowserActionItemShouldEndActivityIfNoPermissions() {
@@ -675,8 +674,12 @@ class CardBrowserTest : RobolectricTest() {
         // Start the Card Browser with Basic Model
         ensureCollectionLoadIsSynchronous()
         var cardBrowserController =
-            Robolectric.buildActivity(CardBrowser::class.java, Intent())
-                .create().start().resume().visible()
+            Robolectric
+                .buildActivity(CardBrowser::class.java, Intent())
+                .create()
+                .start()
+                .resume()
+                .visible()
         saveControllerForCleanup(cardBrowserController)
 
         // Make sure card has default value in sortType field
@@ -694,7 +697,11 @@ class CardBrowserTest : RobolectricTest() {
         cardBrowserController.saveInstanceState(outBundle)
         cardBrowserController.pause().stop().destroy()
         cardBrowserController =
-            Robolectric.buildActivity(CardBrowser::class.java).create(outBundle).start().resume()
+            Robolectric
+                .buildActivity(CardBrowser::class.java)
+                .create(outBundle)
+                .start()
+                .resume()
                 .visible()
         saveControllerForCleanup(cardBrowserController)
 
@@ -1288,9 +1295,7 @@ class CardBrowserTest : RobolectricTest() {
     fun NotetypeJson.addNote(
         field: String,
         vararg fields: String,
-    ): Note {
-        return addNoteUsingModelName(this.name, field, *fields)
-    }
+    ): Note = addNoteUsingModelName(this.name, field, *fields)
 
     @Suppress("SameParameterValue")
     private fun withBrowser(
@@ -1316,7 +1321,8 @@ fun CardBrowser.replaceSelectionWith(positions: IntArray) {
 private val CardBrowser.column2TitleText: String
     get() =
         findViewById<Spinner>(R.id.browser_column2_spinner)
-            .selectedItem.toString()
+            .selectedItem
+            .toString()
 
 private fun CardBrowser.setColumn2(col: CardBrowserColumn) {
     findViewById<Spinner>(R.id.browser_column2_spinner)

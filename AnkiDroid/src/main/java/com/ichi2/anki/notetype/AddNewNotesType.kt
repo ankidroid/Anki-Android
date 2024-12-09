@@ -43,7 +43,9 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
 
-class AddNewNotesType(private val activity: ManageNotetypes) {
+class AddNewNotesType(
+    private val activity: ManageNotetypes,
+) {
     private lateinit var dialogView: View
 
     suspend fun showAddNewNotetypeDialog() {
@@ -73,23 +75,25 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
                 }
             }
         val dialog =
-            AlertDialog.Builder(activity).apply {
-                customView(dialogView, paddingLeft = 32, paddingRight = 32, paddingTop = 64, paddingBottom = 64)
-                positiveButton(R.string.dialog_ok) { _ ->
-                    val newName =
-                        dialogView.findViewById<EditText>(R.id.notetype_new_name).text.toString()
-                    val selectedPosition =
-                        dialogView.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
-                    if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
-                    val selectedOption = allOptions[selectedPosition]
-                    if (selectedOption.isStandard) {
-                        addStandardNotetype(newName, selectedOption)
-                    } else {
-                        cloneStandardNotetype(newName, selectedOption)
+            AlertDialog
+                .Builder(activity)
+                .apply {
+                    customView(dialogView, paddingLeft = 32, paddingRight = 32, paddingTop = 64, paddingBottom = 64)
+                    positiveButton(R.string.dialog_ok) { _ ->
+                        val newName =
+                            dialogView.findViewById<EditText>(R.id.notetype_new_name).text.toString()
+                        val selectedPosition =
+                            dialogView.findViewById<Spinner>(R.id.notetype_new_type).selectedItemPosition
+                        if (selectedPosition == AdapterView.INVALID_POSITION) return@positiveButton
+                        val selectedOption = allOptions[selectedPosition]
+                        if (selectedOption.isStandard) {
+                            addStandardNotetype(newName, selectedOption)
+                        } else {
+                            cloneStandardNotetype(newName, selectedOption)
+                        }
                     }
-                }
-                negativeButton(R.string.dialog_cancel)
-            }.show()
+                    negativeButton(R.string.dialog_cancel)
+                }.show()
         dialog.initializeViewsWith(allOptions, currentNames)
     }
 
@@ -103,7 +107,8 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
         nameInput.addTextChangedListener { editableText ->
             val currentName = editableText?.toString() ?: ""
             positiveButton.isEnabled =
-                currentName.isNotEmpty() && !currentNames.contains(currentName)
+                currentName.isNotEmpty() &&
+                !currentNames.contains(currentName)
         }
         dialogView.findViewById<Spinner>(R.id.notetype_new_type).apply {
             onItemSelectedListener =
@@ -179,7 +184,6 @@ class AddNewNotesType(private val activity: ManageNotetypes) {
      * Takes the current timestamp from [Collection] and appends it to the end of the new note
      * type to dissuade the user from reusing names(which are technically not unique however).
      */
-    private fun randomizeName(currentName: String): String {
-        return "$currentName-${Utils.checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)}"
-    }
+    private fun randomizeName(currentName: String): String =
+        "$currentName-${Utils.checksum(TimeManager.time.intTimeMS().toString()).substring(0, 5)}"
 }

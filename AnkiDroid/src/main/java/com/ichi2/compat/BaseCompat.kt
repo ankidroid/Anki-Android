@@ -156,13 +156,9 @@ open class BaseCompat : Compat {
 
             private var mOrd = 0
 
-            override operator fun hasNext(): Boolean {
-                return mOrd < length
-            }
+            override operator fun hasNext(): Boolean = mOrd < length
 
-            override operator fun next(): File {
-                return paths[mOrd++]
-            }
+            override operator fun next(): File = paths[mOrd++]
         }
     }
 
@@ -212,45 +208,36 @@ open class BaseCompat : Compat {
     }
 
     // Until API 29
-    override fun hasVideoThumbnail(path: String): Boolean? {
-        return try {
+    override fun hasVideoThumbnail(path: String): Boolean? =
+        try {
             ThumbnailUtils.createVideoThumbnail(path, MediaStore.Images.Thumbnails.MINI_KIND) != null
         } catch (e: Exception) {
             null
         }
-    }
 
     // Until API31 the MediaRecorder constructor was default, ignoring the Context
-    override fun getMediaRecorder(context: Context): MediaRecorder {
-        return MediaRecorder()
-    }
+    override fun getMediaRecorder(context: Context): MediaRecorder = MediaRecorder()
 
     // Until API 33
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
         flags: ResolveInfoFlagsCompat,
-    ): ResolveInfo? {
-        return packageManager.resolveActivity(intent, flags.value.toInt())
-    }
+    ): ResolveInfo? = packageManager.resolveActivity(intent, flags.value.toInt())
 
     // Until API 33
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
         flags: ResolveInfoFlagsCompat,
-    ): ResolveInfo? {
-        return packageManager.resolveService(intent, flags.value.toInt())
-    }
+    ): ResolveInfo? = packageManager.resolveService(intent, flags.value.toInt())
 
     // Until API 33
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
         flags: ResolveInfoFlagsCompat,
-    ): List<ResolveInfo> {
-        return packageManager.queryIntentActivities(intent, flags.value.toInt())
-    }
+    ): List<ResolveInfo> = packageManager.queryIntentActivities(intent, flags.value.toInt())
 
     // Until API 33
     override fun <T : Serializable?> getSerializableExtra(

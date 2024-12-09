@@ -199,8 +199,18 @@ class TagsListTest {
         list.sort()
         assertEquals(
             listOf(
-                "cat1", "cat1::aa", "cat1::bb", "cat2", "cat2::aa", "cat2::bb", "cat2::bb::aa",
-                "cat2::bb::bb", "cat3", "cat3::aa", "cat3::aa::bb", "cat3::aa::bb::cc",
+                "cat1",
+                "cat1::aa",
+                "cat1::bb",
+                "cat2",
+                "cat2::aa",
+                "cat2::bb",
+                "cat2::bb::aa",
+                "cat2::bb::bb",
+                "cat3",
+                "cat3::aa",
+                "cat3::aa::bb",
+                "cat3::aa::bb::cc",
                 "cat3::aa::bb::cc::dd",
             ),
             list.copyOfAllTagList(),

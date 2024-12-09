@@ -63,7 +63,8 @@ class PreferencesFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        view.findViewById<MaterialToolbar>(R.id.toolbar)
+        view
+            .findViewById<MaterialToolbar>(R.id.toolbar)
             .setNavigationOnClickListener { onBackPressedCallback.handleOnBackPressed() }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
@@ -165,7 +166,9 @@ class PreferencesFragment :
  * Only necessary because [SearchConfiguration] demands an activity that implements
  * [SearchPreferenceResultListener].
  */
-class PreferencesActivity : SingleFragmentActivity(), SearchPreferenceResultListener {
+class PreferencesActivity :
+    SingleFragmentActivity(),
+    SearchPreferenceResultListener {
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
         val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
         if (fragment is SearchPreferenceResultListener) {
@@ -202,8 +205,8 @@ const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
  */
 fun getFragmentFromXmlRes(
     @XmlRes screen: Int,
-): SettingsFragment? {
-    return when (screen) {
+): SettingsFragment? =
+    when (screen) {
         R.xml.preferences_general -> GeneralSettingsFragment()
         R.xml.preferences_reviewing -> ReviewingSettingsFragment()
         R.xml.preferences_sync -> SyncSettingsFragment()
@@ -218,4 +221,3 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
         else -> null
     }
-}

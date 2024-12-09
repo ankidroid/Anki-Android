@@ -38,7 +38,9 @@ import timber.log.Timber
  * #5780 - WebView Renderer OOM crashes reviewer
  * #8459 - WebView Renderer crash dialog displays when app is minimised (Android 11 - Google Pixel 3A)
  */
-open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
+open class OnRenderProcessGoneDelegate(
+    val target: AbstractFlashcardViewer,
+) {
     lateinit var lifecycle: Lifecycle
 
     /**

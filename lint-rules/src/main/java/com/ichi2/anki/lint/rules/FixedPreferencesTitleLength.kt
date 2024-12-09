@@ -39,7 +39,9 @@ import java.util.Locale
  *
  * Recall that `title` here is not the title of the preference screen, but the title of the preference entry. That is the text in bold that appears on a single line.
  */
-class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
+class FixedPreferencesTitleLength :
+    ResourceXmlDetector(),
+    XmlScanner {
     companion object {
         private const val PREFERENCES_ID_TITLE_LENGTH = "FixedPreferencesTitleLength"
         private const val MENU_ID_TITLE_LENGTH = "FixedMenuTitleLength"
@@ -146,9 +148,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
      */
     private val stringResources: MutableMap<String, Handle> = HashMap()
 
-    override fun getApplicableElements(): Collection<String>? {
-        return ALL
-    }
+    override fun getApplicableElements(): Collection<String>? = ALL
 
     override fun visitElement(
         context: XmlContext,
@@ -180,9 +180,8 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
         }
     }
 
-    override fun appliesTo(folderType: ResourceFolderType): Boolean {
-        return folderType == ResourceFolderType.XML || folderType == ResourceFolderType.VALUES || folderType == ResourceFolderType.MENU
-    }
+    override fun appliesTo(folderType: ResourceFolderType): Boolean =
+        folderType == ResourceFolderType.XML || folderType == ResourceFolderType.VALUES || folderType == ResourceFolderType.MENU
 
     override fun afterCheckEachProject(context: Context) {
         checkFolder(

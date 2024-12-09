@@ -64,8 +64,7 @@ class TemplatePreviewerFragment :
                     } else {
                         getString(R.string.show_answer)
                     }
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         if (sharedPrefs().getBoolean("safeDisplay", false)) {
             view.findViewById<MaterialCardView>(R.id.webview_container).elevation = 0F
@@ -87,12 +86,11 @@ class TemplatePreviewerFragment :
         fun newInstance(
             arguments: TemplatePreviewerArguments,
             backgroundOverrideColor: Int? = null,
-        ): TemplatePreviewerFragment {
-            return TemplatePreviewerFragment().apply {
+        ): TemplatePreviewerFragment =
+            TemplatePreviewerFragment().apply {
                 val args = bundleOf(ARGS_KEY to arguments)
                 backgroundOverrideColor?.let { args.putInt(ARG_BACKGROUND_OVERRIDE_COLOR, backgroundOverrideColor) }
                 this.arguments = args
             }
-        }
     }
 }

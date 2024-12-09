@@ -308,8 +308,8 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
      * @param columnIndex The index of the column from which to retrieve the integer value.
      * @return The integer value from the cursor at the specified column index, or null if invalid or undefined.
      */
-    private fun Cursor?.getIntOrNull(columnIndex: Int): Int? {
-        return try {
+    private fun Cursor?.getIntOrNull(columnIndex: Int): Int? =
+        try {
             if (columnIndex != -1) {
                 this?.getInt(columnIndex)
             } else {
@@ -318,7 +318,6 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         } catch (e: Exception) {
             null
         }
-    }
 
     /**
      * Unregister the mOnComplete broadcast receiver.

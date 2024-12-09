@@ -35,8 +35,8 @@ public class NoteInfo {
          * @return a NoteInfo object or null if the cursor was not valid
          */
         @JvmStatic // API Project
-        internal fun buildFromCursor(cursor: Cursor): NoteInfo? {
-            return try {
+        internal fun buildFromCursor(cursor: Cursor): NoteInfo? =
+            try {
                 val idIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note._ID)
                 val fldsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.FLDS)
                 val tagsIndex = cursor.getColumnIndexOrThrow(FlashCardsContract.Note.TAGS)
@@ -47,7 +47,6 @@ public class NoteInfo {
             } catch (e: Exception) {
                 null
             }
-        }
     }
 
     private constructor(id: Long, fields: Array<String>, tags: Set<String>) {
@@ -67,22 +66,14 @@ public class NoteInfo {
     }
 
     /** Note ID  */
-    public fun getId(): Long {
-        return id
-    }
+    public fun getId(): Long = id
 
     /** The array of fields  */
-    public fun getFields(): Array<String> {
-        return fields
-    }
+    public fun getFields(): Array<String> = fields
 
     /** The set of tags  */
-    public fun getTags(): Set<String> {
-        return tags
-    }
+    public fun getTags(): Set<String> = tags
 
     /** The first field  */
-    public fun getKey(): String {
-        return getFields()[0]
-    }
+    public fun getKey(): String = getFields()[0]
 }

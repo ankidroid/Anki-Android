@@ -210,9 +210,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         assertThat(command.toString(), viewer.lastFlag, equalTo(Flag.NONE))
     }
 
-    private fun createViewer(): CommandTestCardViewer {
-        return CommandTestCardViewer(cardWith(Flag.NONE))
-    }
+    private fun createViewer(): CommandTestCardViewer = CommandTestCardViewer(cardWith(Flag.NONE))
 
     private fun cardWith(
         @Suppress("SameParameterValue") flag: Flag,
@@ -226,7 +224,9 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         return c
     }
 
-    private class CommandTestCardViewer(private var currentCardOverride: Card?) : Reviewer() {
+    private class CommandTestCardViewer(
+        private var currentCardOverride: Card?,
+    ) : Reviewer() {
         var lastFlag = Flag.NONE
             private set
 

@@ -135,16 +135,17 @@ class SyncMediaWorker(
         notify(buildNotification(builder))
     }
 
-    private fun buildNotification(block: NotificationCompat.Builder.() -> Unit): Notification {
-        return NotificationCompat.Builder(applicationContext, Channel.SYNC.id).apply {
-            priority = NotificationCompat.PRIORITY_LOW
-            setSmallIcon(R.drawable.ic_star_notify)
-            setCategory(NotificationCompat.CATEGORY_PROGRESS)
-            setSilent(true)
-            contentView
-            block()
-        }.build()
-    }
+    private fun buildNotification(block: NotificationCompat.Builder.() -> Unit): Notification =
+        NotificationCompat
+            .Builder(applicationContext, Channel.SYNC.id)
+            .apply {
+                priority = NotificationCompat.PRIORITY_LOW
+                setSmallIcon(R.drawable.ic_star_notify)
+                setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                setSilent(true)
+                contentView
+                block()
+            }.build()
 
     private fun getProgressNotification(progress: CharSequence): Notification {
         val title = applicationContext.getString(R.string.syncing_media)
@@ -164,12 +165,14 @@ class SyncMediaWorker(
 
         fun getWorkRequest(auth: SyncAuth): OneTimeWorkRequest {
             val constraints =
-                Constraints.Builder()
+                Constraints
+                    .Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED)
                     .build()
 
             val data =
-                Data.Builder()
+                Data
+                    .Builder()
                     .putString(HKEY_KEY, auth.hkey)
                     .putString(ENDPOINT_KEY, auth.endpoint)
                     .build()
@@ -188,7 +191,8 @@ class SyncMediaWorker(
             Timber.i("Launching background media sync")
             val request = getWorkRequest(auth)
 
-            WorkManager.getInstance(context)
+            WorkManager
+                .getInstance(context)
                 .enqueueUniqueWork(UniqueWorkNames.SYNC_MEDIA, ExistingWorkPolicy.KEEP, request)
         }
     }

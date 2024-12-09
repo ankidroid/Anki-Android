@@ -59,7 +59,11 @@ import kotlin.math.max
  */
 @SuppressLint("ViewConstructor")
 @NeedsTest("15176 ensure whiteboard drawing works")
-class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, inverted: Boolean) : View(activity, null) {
+class Whiteboard(
+    activity: AnkiActivity,
+    private val handleMultiTouch: Boolean,
+    inverted: Boolean,
+) : View(activity, null) {
     private val paint: Paint
     private val undo = UndoList()
     private lateinit var bitmap: Bitmap
@@ -103,9 +107,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
      * @param event The motion event.
      * @return True if the event was handled, false otherwise
      */
-    fun handleTouchEvent(event: MotionEvent): Boolean {
-        return handleDrawEvent(event) || handleMultiTouchEvent(event)
-    }
+    fun handleTouchEvent(event: MotionEvent): Boolean = handleDrawEvent(event) || handleMultiTouchEvent(event)
 
     /**
      * Handle motion events to draw using the touch screen. Only simple touch events are processed,
@@ -175,8 +177,8 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
     }
 
     // Parse multitouch input to scroll the card behind the whiteboard or click on elements
-    private fun handleMultiTouchEvent(event: MotionEvent): Boolean {
-        return if (handleMultiTouch && event.pointerCount == 2) {
+    private fun handleMultiTouchEvent(event: MotionEvent): Boolean =
+        if (handleMultiTouch && event.pointerCount == 2) {
             when (event.actionMasked) {
                 MotionEvent.ACTION_POINTER_DOWN -> {
                     reinitializeSecondFinger(event)
@@ -189,7 +191,6 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
         } else {
             false
         }
-    }
 
     /**
      * Erase with stylus pen.(By using the eraser button on the stylus pen or by using the digital eraser)
@@ -229,9 +230,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
 
     /** @return Whether there are strokes to undo
      */
-    fun undoEmpty(): Boolean {
-        return undo.empty()
-    }
+    fun undoEmpty(): Boolean = undo.empty()
 
     private fun createBitmap(
         w: Int,
@@ -459,9 +458,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
             list.clear()
         }
 
-        fun size(): Int {
-            return list.size
-        }
+        fun size(): Int = list.size
 
         fun pop() {
             list.removeAt(list.size - 1)
@@ -525,9 +522,7 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
             return didErase
         }
 
-        fun empty(): Boolean {
-            return list.isEmpty()
-        }
+        fun empty(): Boolean = list.isEmpty()
     }
 
     private interface WhiteboardAction {
@@ -537,7 +532,11 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
         val point: Point?
     }
 
-    private class DrawPoint(private val x: Float, private val y: Float, private val paint: Paint) : WhiteboardAction {
+    private class DrawPoint(
+        private val x: Float,
+        private val y: Float,
+        private val paint: Paint,
+    ) : WhiteboardAction {
         override fun apply(canvas: Canvas) {
             canvas.drawPoint(x, y, paint)
         }
@@ -549,7 +548,10 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
             get() = Point(x.toInt(), y.toInt())
     }
 
-    private class DrawPath(override val path: Path, private val paint: Paint) : WhiteboardAction {
+    private class DrawPath(
+        override val path: Path,
+        private val paint: Paint,
+    ) : WhiteboardAction {
         override fun apply(canvas: Canvas) {
             canvas.drawPath(path, paint)
         }

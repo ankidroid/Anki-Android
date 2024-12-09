@@ -78,9 +78,7 @@ object PreferenceTestUtils {
     private fun getFragmentsFromXml(
         context: Context,
         @XmlRes xml: Int,
-    ): List<Fragment> {
-        return getAttrFromXml(context, xml, "fragment").map { getInstanceFromClassName(it) }
-    }
+    ): List<Fragment> = getAttrFromXml(context, xml, "fragment").map { getInstanceFromClassName(it) }
 
     /** @return recursively fragments found on [xml] and on their children **/
     private fun getFragmentsFromXmlRecursively(
@@ -103,27 +101,23 @@ object PreferenceTestUtils {
     private fun attrValueToString(
         value: String,
         context: Context,
-    ): String {
-        return if (value.startsWith("@")) {
+    ): String =
+        if (value.startsWith("@")) {
             context.getString(value.substring(1).toInt())
         } else {
             value
         }
-    }
 
     fun getKeysFromXml(
         context: Context,
         @XmlRes xml: Int,
-    ): List<String> {
-        return getAttrFromXml(context, xml, "key").map { attrValueToString(it, context) }
-    }
+    ): List<String> = getAttrFromXml(context, xml, "key").map { attrValueToString(it, context) }
 
-    fun getAllPreferenceKeys(context: Context): Set<String> {
-        return getAllPreferencesFragments(context)
+    fun getAllPreferenceKeys(context: Context): Set<String> =
+        getAllPreferencesFragments(context)
             .filterIsInstance<SettingsFragment>()
             .map { it.preferenceResource }
             .flatMapTo(hashSetOf()) { getKeysFromXml(context, it) }
-    }
 
     fun getAllCustomButtonKeys(context: Context): Set<String> {
         val keys = getKeysFromXml(context, R.xml.preferences_custom_buttons).toMutableSet()

@@ -83,27 +83,28 @@ class PagesTest : InstrumentedTest() {
     }
 }
 
-fun PagesTest.getStatistics(context: Context): Intent {
-    return Statistics.getIntent(context)
-}
+fun PagesTest.getStatistics(context: Context): Intent = Statistics.getIntent(context)
 
-fun PagesTest.getCardInfo(context: Context): Intent {
-    return addNoteUsingBasicModel().firstCard(col).let { card ->
+fun PagesTest.getCardInfo(context: Context): Intent =
+    addNoteUsingBasicModel().firstCard(col).let { card ->
         this.card = card
         CardInfoDestination(card.id).toIntent(context)
     }
-}
 
-fun PagesTest.getCongratsPage(context: Context): Intent {
-    return addNoteUsingBasicModel().firstCard(col).let { card ->
+fun PagesTest.getCongratsPage(context: Context): Intent =
+    addNoteUsingBasicModel().firstCard(col).let { card ->
         this.card = card
         CardInfoDestination(card.id).toIntent(context)
     }
-}
 
-fun PagesTest.getDeckOptions(context: Context): Intent {
-    return DeckOptions.getIntent(context, col.decks.allNamesAndIds().first().id)
-}
+fun PagesTest.getDeckOptions(context: Context): Intent =
+    DeckOptions.getIntent(
+        context,
+        col.decks
+            .allNamesAndIds()
+            .first()
+            .id,
+    )
 
 fun PagesTest.needsPath(
     @Suppress("UNUSED_PARAMETER") context: Context,

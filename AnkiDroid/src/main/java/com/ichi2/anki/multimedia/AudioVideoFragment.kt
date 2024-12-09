@@ -175,12 +175,16 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         Timber.d("Setting up media player")
         playerView = requireView().findViewById(R.id.player_view)
         mediaPlayer =
-            ExoPlayer.Builder(requireContext()).setAudioAttributes(
-                AudioAttributes.Builder().setContentType(
-                    C.AUDIO_CONTENT_TYPE_MUSIC,
-                ).build(),
-                true,
-            ).build()
+            ExoPlayer
+                .Builder(requireContext())
+                .setAudioAttributes(
+                    AudioAttributes
+                        .Builder()
+                        .setContentType(
+                            C.AUDIO_CONTENT_TYPE_MUSIC,
+                        ).build(),
+                    true,
+                ).build()
         playerView.player = mediaPlayer
         mediaFileSize = requireView().findViewById(R.id.media_size_textview)
         playerView.setControllerAnimationEnabled(true)
@@ -295,7 +299,9 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 MediaStore.MediaColumns.MIME_TYPE,
             )
         var mediaClipFullNameParts: Array<String>
-        requireContext().contentResolver.query(selectedMediaClip, queryColumns, null, null, null)
+        requireContext()
+            .contentResolver
+            .query(selectedMediaClip, queryColumns, null, null, null)
             .use { cursor ->
                 if (cursor == null) {
                     showSomethingWentWrong()
@@ -339,8 +345,8 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      * @param mediaClipFullNameParts An array of strings containing the filename and extension of the media clip.
      * @return A File object representing the created temporary media file, or null on error.
      */
-    private fun createTempMediaFile(mediaClipFullNameParts: Array<String>): File? {
-        return try {
+    private fun createTempMediaFile(mediaClipFullNameParts: Array<String>): File? =
+        try {
             val clipCopy =
                 createCachedFile(
                     "${mediaClipFullNameParts[0]}.${mediaClipFullNameParts[1]}",
@@ -354,7 +360,6 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
             showSomethingWentWrong()
             null
         }
-    }
 
     /**
      * Copies a selected media clip to a temporary file.
@@ -398,14 +403,13 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
             mediaOptions: MediaOption,
-        ): Intent {
-            return MultimediaActivity.getIntent(
+        ): Intent =
+            MultimediaActivity.getIntent(
                 context,
                 AudioVideoFragment::class,
                 multimediaExtra,
                 mediaOptions,
             )
-        }
     }
 
     /** The supported media types that a user choose from the bottom sheet which [AudioVideoFragment] uses */
@@ -424,10 +428,9 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     private fun getTitleForFragment(
         mediaOption: MediaOption,
         context: Context,
-    ): String {
-        return when (mediaOption) {
+    ): String =
+        when (mediaOption) {
             AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)
             VIDEO_CLIP -> context.getString(R.string.multimedia_editor_popup_video_clip)
         }
-    }
 }

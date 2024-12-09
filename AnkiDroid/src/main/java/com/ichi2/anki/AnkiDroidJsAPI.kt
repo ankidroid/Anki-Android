@@ -61,7 +61,9 @@ typealias JvmFloat = Float
 typealias JvmLong = Long
 typealias JvmString = String
 
-open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
+open class AnkiDroidJsAPI(
+    private val activity: AbstractFlashcardViewer,
+) {
     private val currentCard: Card
         get() = activity.currentCard!!
 
@@ -84,30 +86,22 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     open fun convertToByteArray(
         apiContract: ApiContract,
         boolean: Boolean,
-    ): ByteArray {
-        return ApiResult.Boolean(apiContract.isValid, boolean).toString().toByteArray()
-    }
+    ): ByteArray = ApiResult.Boolean(apiContract.isValid, boolean).toString().toByteArray()
 
     open fun convertToByteArray(
         apiContract: ApiContract,
         int: Int,
-    ): ByteArray {
-        return ApiResult.Integer(apiContract.isValid, int).toString().toByteArray()
-    }
+    ): ByteArray = ApiResult.Integer(apiContract.isValid, int).toString().toByteArray()
 
     open fun convertToByteArray(
         apiContract: ApiContract,
         long: Long,
-    ): ByteArray {
-        return ApiResult.Long(apiContract.isValid, long).toString().toByteArray()
-    }
+    ): ByteArray = ApiResult.Long(apiContract.isValid, long).toString().toByteArray()
 
     open fun convertToByteArray(
         apiContract: ApiContract,
         string: String,
-    ): ByteArray {
-        return ApiResult.String(apiContract.isValid, string).toString().toByteArray()
-    }
+    ): ByteArray = ApiResult.String(apiContract.isValid, string).toString().toByteArray()
 
     /**
      * The method parse json data and return api contract object
@@ -473,32 +467,49 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var nextTime4 = ""
     }
 
-    sealed class ApiResult protected constructor(private val status: JvmBoolean) {
-        class Boolean(status: JvmBoolean, val value: JvmBoolean) : ApiResult(status) {
+    sealed class ApiResult protected constructor(
+        private val status: JvmBoolean,
+    ) {
+        class Boolean(
+            status: JvmBoolean,
+            val value: JvmBoolean,
+        ) : ApiResult(status) {
             override fun putValue(o: JSONObject) {
                 o.put(VALUE_KEY, value)
             }
         }
 
-        class Integer(status: JvmBoolean, val value: JvmInt) : ApiResult(status) {
+        class Integer(
+            status: JvmBoolean,
+            val value: JvmInt,
+        ) : ApiResult(status) {
             override fun putValue(o: JSONObject) {
                 o.put(VALUE_KEY, value)
             }
         }
 
-        class Float(status: JvmBoolean, val value: JvmFloat) : ApiResult(status) {
+        class Float(
+            status: JvmBoolean,
+            val value: JvmFloat,
+        ) : ApiResult(status) {
             override fun putValue(o: JSONObject) {
                 o.put(VALUE_KEY, value)
             }
         }
 
-        class Long(status: JvmBoolean, val value: JvmLong) : ApiResult(status) {
+        class Long(
+            status: JvmBoolean,
+            val value: JvmLong,
+        ) : ApiResult(status) {
             override fun putValue(o: JSONObject) {
                 o.put(VALUE_KEY, value)
             }
         }
 
-        class String(status: JvmBoolean, val value: JvmString) : ApiResult(status) {
+        class String(
+            status: JvmBoolean,
+            val value: JvmString,
+        ) : ApiResult(status) {
             override fun putValue(o: JSONObject) {
                 o.put(VALUE_KEY, value)
             }
@@ -507,10 +518,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         abstract fun putValue(o: JSONObject)
 
         override fun toString() =
-            JSONObject().apply {
-                put(SUCCESS_KEY, status)
-                putValue(this)
-            }.toString()
+            JSONObject()
+                .apply {
+                    put(SUCCESS_KEY, status)
+                    putValue(this)
+                }.toString()
 
         @Suppress("RemoveRedundantQualifierName") // we don't want `String(true, value)`
         companion object {
@@ -520,7 +532,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
-    class ApiContract(val isValid: Boolean, val cardSuppliedDeveloperContact: String, val cardSuppliedData: String)
+    class ApiContract(
+        val isValid: Boolean,
+        val cardSuppliedDeveloperContact: String,
+        val cardSuppliedData: String,
+    )
 
     companion object {
         /**

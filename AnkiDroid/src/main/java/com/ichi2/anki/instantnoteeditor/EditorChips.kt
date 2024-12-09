@@ -169,14 +169,13 @@ private fun updateChipAndBadge(data: ChipData) {
  * @param context The context used to create the BadgeDrawable.
  * @return A configured BadgeDrawable instance.
  */
-private fun createBadgeDrawable(context: Context): BadgeDrawable {
-    return BadgeDrawable.create(context).apply {
+private fun createBadgeDrawable(context: Context): BadgeDrawable =
+    BadgeDrawable.create(context).apply {
         badgeGravity = BadgeDrawable.TOP_END
         verticalPadding = 0
         horizontalPadding = 0
         verticalOffset = 50
     }
-}
 
 /**
  * Attaches or detaches a BadgeDrawable to/from a view based on visibility.

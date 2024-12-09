@@ -37,23 +37,33 @@ class RepositionCardTemplateDialog {
             var displayedDialog: AlertDialog? = null
 
             displayedDialog =
-                AlertDialog.Builder(context).show {
-                    positiveButton(R.string.dialog_ok) { result(displayedDialog!!.getInputField().text.toString().toInt()) }
-                    negativeButton(R.string.dialog_cancel)
-                    setMessage(CollectionManager.TR.cardTemplatesEnterNewCardPosition1(numberOfTemplates))
-                    setView(R.layout.dialog_generic_text_input)
-                }.input(
-                    inputType = InputType.TYPE_CLASS_NUMBER,
-                    displayKeyboard = true,
-                    waitForPositiveButton = false,
-                ) { dialog, text: CharSequence ->
-                    val number = text.toString().toIntOrNull()
-                    if (number == null || number < 1 || number > numberOfTemplates) {
-                        dialog.positiveButton.isEnabled = false
-                        return@input
+                AlertDialog
+                    .Builder(context)
+                    .show {
+                        positiveButton(R.string.dialog_ok) {
+                            result(
+                                displayedDialog!!
+                                    .getInputField()
+                                    .text
+                                    .toString()
+                                    .toInt(),
+                            )
+                        }
+                        negativeButton(R.string.dialog_cancel)
+                        setMessage(CollectionManager.TR.cardTemplatesEnterNewCardPosition1(numberOfTemplates))
+                        setView(R.layout.dialog_generic_text_input)
+                    }.input(
+                        inputType = InputType.TYPE_CLASS_NUMBER,
+                        displayKeyboard = true,
+                        waitForPositiveButton = false,
+                    ) { dialog, text: CharSequence ->
+                        val number = text.toString().toIntOrNull()
+                        if (number == null || number < 1 || number > numberOfTemplates) {
+                            dialog.positiveButton.isEnabled = false
+                            return@input
+                        }
+                        dialog.positiveButton.isEnabled = true
                     }
-                    dialog.positiveButton.isEnabled = true
-                }
         }
     }
 }

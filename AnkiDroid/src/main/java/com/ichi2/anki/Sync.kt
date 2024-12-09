@@ -70,7 +70,9 @@ enum class ConflictResolution {
     FULL_UPLOAD,
 }
 
-data class SyncCompletion(val isSuccess: Boolean)
+data class SyncCompletion(
+    val isSuccess: Boolean,
+)
 
 interface SyncCompletionListener {
     fun onMediaSyncCompleted(data: SyncCompletion)
@@ -107,8 +109,8 @@ fun getEndpoint(context: Context): String? {
     return currentEndpoint ?: customEndpoint
 }
 
-fun customSyncBase(preferences: SharedPreferences): String? {
-    return if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
+fun customSyncBase(preferences: SharedPreferences): String? =
+    if (preferences.getBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, false)) {
         val uri = preferences.getString(SyncPreferences.CUSTOM_SYNC_URI, null)
         if (uri.isNullOrEmpty()) {
             null
@@ -118,7 +120,6 @@ fun customSyncBase(preferences: SharedPreferences): String? {
     } else {
         null
     }
-}
 
 suspend fun syncLogout(context: Context) {
     val preferences = context.sharedPrefs()
@@ -138,7 +139,11 @@ suspend fun syncLogout(context: Context) {
  * Returning true does not guarantee that the user actually synced recently,
  * or even that the ankiweb account is still valid.
  */
-fun isLoggedIn() = AnkiDroidApp.instance.sharedPrefs().getString(SyncPreferences.HKEY, "")!!.isNotEmpty()
+fun isLoggedIn() =
+    AnkiDroidApp.instance
+        .sharedPrefs()
+        .getString(SyncPreferences.HKEY, "")!!
+        .isNotEmpty()
 
 fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
 
@@ -293,14 +298,13 @@ private suspend fun handleNormalSync(
     }
 }
 
-private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
-    return {
+private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit =
+    {
         if (progress.hasFullSync()) {
             text = title
             amount = progress.fullSync.run { Pair(transferred, total) }
         }
     }
-}
 
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
@@ -388,17 +392,16 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
 
     val dialog =
         withContext(Dispatchers.Main) {
-            AlertDialog.Builder(deckPicker)
+            AlertDialog
+                .Builder(deckPicker)
                 .setTitle(TR.syncMediaLogTitle())
                 .setMessage("")
                 .setPositiveButton(R.string.dialog_continue) { _, _ ->
                     scope.cancel()
-                }
-                .setNegativeButton(TR.syncAbortButton()) { _, _ ->
+                }.setNegativeButton(TR.syncAbortButton()) { _, _ ->
                     isAborted = true
                     cancelMediaSync(backend)
-                }
-                .show()
+                }.show()
         }
 
     fun showMessage(msg: String) = deckPicker.showSnackbar(msg, Snackbar.LENGTH_SHORT)

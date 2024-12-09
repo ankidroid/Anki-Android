@@ -205,12 +205,11 @@ class InitialActivityTest : RobolectricTest() {
     private fun selectAnkiDroidFolder(
         canManageExternalStorage: Boolean,
         currentFolderIsAccessibleAndLegacy: Boolean = false,
-    ): AnkiDroidFolder {
-        return com.ichi2.anki.selectAnkiDroidFolder(
+    ): AnkiDroidFolder =
+        com.ichi2.anki.selectAnkiDroidFolder(
             canManageExternalStorage = canManageExternalStorage,
             currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,
         )
-    }
 
     companion object {
         const val BEFORE_Q = Build.VERSION_CODES.Q - 1

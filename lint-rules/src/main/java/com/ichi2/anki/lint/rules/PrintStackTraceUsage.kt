@@ -29,7 +29,9 @@ import com.ichi2.anki.lint.utils.Constants
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
 
-class PrintStackTraceUsage : Detector(), SourceCodeScanner {
+class PrintStackTraceUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "PrintStackTraceUsage"
@@ -68,7 +70,8 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
             return
         }
         val fix =
-            LintFix.create()
+            LintFix
+                .create()
                 .replace()
                 .select(node.asSourceString())
                 .with("Timber.w(" + node.receiver!!.asSourceString() + ")")

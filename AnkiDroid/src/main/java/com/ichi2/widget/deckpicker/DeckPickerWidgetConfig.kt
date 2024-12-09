@@ -59,7 +59,10 @@ import timber.log.Timber
  * User can Select up to 5 decks.
  * User Can remove, reorder decks and reconfigure by holding the widget.
  */
-class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackbarBuilderProvider {
+class DeckPickerWidgetConfig :
+    AnkiActivity(),
+    DeckSelectionListener,
+    BaseSnackbarBuilderProvider {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     lateinit var deckAdapter: WidgetConfigScreenAdapter
     private lateinit var deckPickerWidgetPreferences: DeckPickerWidgetPreferences
@@ -278,11 +281,10 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
      * I/O-bound task. Hence, we switch to the IO dispatcher
      * to avoid blocking the main thread and ensure a smooth user experience.
      */
-    private suspend fun getTotalSelectableDecks(): Int {
-        return withContext(Dispatchers.IO) {
+    private suspend fun getTotalSelectableDecks(): Int =
+        withContext(Dispatchers.IO) {
             SelectableDeck.fromCollection(includeFiltered = false).size
         }
-    }
 
     /** Updates the view according to the saved preference for appWidgetId.*/
     suspend fun updateViewWithSavedPreferences() {
@@ -306,11 +308,10 @@ class DeckPickerWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnackb
     }
 
     /** Returns the list of standard deck. */
-    private suspend fun fetchDecks(): List<SelectableDeck> {
-        return withContext(Dispatchers.IO) {
+    private suspend fun fetchDecks(): List<SelectableDeck> =
+        withContext(Dispatchers.IO) {
             SelectableDeck.fromCollection(includeFiltered = true)
         }
-    }
 
     /** Displays the deck selection dialog with the provided list of decks. */
     private fun displayDeckSelectionDialog(decks: List<SelectableDeck>) {

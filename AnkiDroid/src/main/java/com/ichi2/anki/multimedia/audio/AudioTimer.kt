@@ -27,7 +27,10 @@ import kotlin.time.Duration.Companion.milliseconds
  * triggering a callback to a listener at regular intervals.
  * [OnTimerTickListener.onTimerTick] notifies components about the timer's progress.
  **/
-class AudioTimer(listener: OnTimerTickListener, audioWaveListener: OnAudioTickListener) {
+class AudioTimer(
+    listener: OnTimerTickListener,
+    audioWaveListener: OnAudioTickListener,
+) {
     private var audioTimeHandler = Handler(Looper.getMainLooper())
     private var audioTimeRunnable: Runnable
 

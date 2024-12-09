@@ -57,8 +57,8 @@ data class DeckNode(
      */
     val depth = node.level - 1
 
-    override fun toString(): String {
-        return String.format(
+    override fun toString(): String =
+        String.format(
             Locale.US,
             "%s, %d, %d, %d, %d",
             fullDeckName,
@@ -67,11 +67,8 @@ data class DeckNode(
             lrnCount,
             newCount,
         )
-    }
 
-    fun hasCardsReadyToStudy(): Boolean {
-        return revCount > 0 || newCount > 0 || lrnCount > 0
-    }
+    fun hasCardsReadyToStudy(): Boolean = revCount > 0 || newCount > 0 || lrnCount > 0
 
     fun find(deckId: DeckId): DeckNode? {
         if (node.deckId == deckId) {

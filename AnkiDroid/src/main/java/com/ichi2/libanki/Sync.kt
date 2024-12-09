@@ -41,22 +41,18 @@ fun Collection.syncLogin(
 fun Collection.syncCollection(
     auth: SyncAuth,
     media: Boolean,
-): SyncCollectionResponse {
-    return backend.syncCollection(auth = auth, syncMedia = media)
-}
+): SyncCollectionResponse = backend.syncCollection(auth = auth, syncMedia = media)
 
 fun Collection.fullUploadOrDownload(
     auth: SyncAuth,
     upload: Boolean,
     serverUsn: Int?,
-) {
-    return backend.fullUploadOrDownload(
-        fullUploadOrDownloadRequest {
-            this.auth = auth
-            if (serverUsn != null) {
-                this.serverUsn = serverUsn
-            }
-            this.upload = upload
-        },
-    )
-}
+) = backend.fullUploadOrDownload(
+    fullUploadOrDownloadRequest {
+        this.auth = auth
+        if (serverUsn != null) {
+            this.serverUsn = serverUsn
+        }
+        this.upload = upload
+    },
+)

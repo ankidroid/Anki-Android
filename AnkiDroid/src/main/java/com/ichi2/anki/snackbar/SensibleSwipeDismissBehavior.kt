@@ -163,8 +163,8 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
         @VisibleForTesting fun shouldDismiss(
             child: View,
             xvel: Float,
-        ): Dismiss {
-            return if (xvel.absoluteValue > FLING_TO_DISMISS_SPEED_THRESHOLD) {
+        ): Dismiss =
+            if (xvel.absoluteValue > FLING_TO_DISMISS_SPEED_THRESHOLD) {
                 if (xvel > 0f) Dismiss.ToTheRight else Dismiss.ToTheLeft
             } else {
                 val distanceTraveled = child.left - initialChildLeft
@@ -178,7 +178,6 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
                     else -> Dismiss.ToTheLeft
                 }
             }
-        }
 
         /**
          * `CoordinatorLayout` may try to layout its children while the snackbar is settling,
@@ -193,8 +192,7 @@ open class SensibleSwipeDismissBehavior : BaseTransientBottomBar.Behavior() {
          */
         @Suppress("UNUSED_ANONYMOUS_PARAMETER") // just to make parameter list readable
         private val horizontalLayoutChangeUndoingLayoutChangeListener =
-            View.OnLayoutChangeListener {
-                    view, newLeft, newTop, newRight, newBottom, oldLeft, oldTop, oldRight, oldBottom ->
+            View.OnLayoutChangeListener { view, newLeft, newTop, newRight, newBottom, oldLeft, oldTop, oldRight, oldBottom ->
                 if (newLeft != oldLeft && newLeft == initialChildLeft) {
                     view.layout(oldLeft, newTop, oldRight, newBottom)
                 }

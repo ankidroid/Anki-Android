@@ -92,7 +92,8 @@ class CardBrowserViewModel(
     options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider,
     private val manualInit: Boolean = false,
-) : ViewModel(), SharedPreferencesProvider by preferences {
+) : ViewModel(),
+    SharedPreferencesProvider by preferences {
     // Set by the UI to determine the number of cards to preload before returning search results
     // This is a hack, but will be removed soon when we move to the backend for card rendering
     // so isn't worth refactoring further
@@ -189,9 +190,7 @@ class CardBrowserViewModel(
 
     @Suppress("RedundantSuspendModifier") // will be necessary
     @VisibleForTesting
-    internal suspend fun queryAllCardIds(): List<CardId> {
-        return cards.map { it.id }
-    }
+    internal suspend fun queryAllCardIds(): List<CardId> = cards.map { it.id }
 
     var lastSelectedPosition = 0
 
@@ -301,9 +300,10 @@ class CardBrowserViewModel(
             .onEach { column2 -> updateColumnCollection { toUpdate -> toUpdate[1] = column2 } }
             .launchIn(viewModelScope)
 
-        performSearchFlow.onEach {
-            launchSearchForCards()
-        }.launchIn(viewModelScope)
+        performSearchFlow
+            .onEach {
+                launchSearchForCards()
+            }.launchIn(viewModelScope)
 
         reverseDirectionFlow
             .ignoreValuesFromViewModelLaunch()
@@ -396,7 +396,8 @@ class CardBrowserViewModel(
         // PERF: use `undoableOp(this)` & notify CardBrowser of changes
         // this does a double search
         val cardIds = queryAllSelectedCardIds()
-        return undoableOp { removeNotes(cids = cardIds) }.count
+        return undoableOp { removeNotes(cids = cardIds) }
+            .count
             .also {
                 endMultiSelectMode()
                 refreshSearch()
@@ -869,10 +870,15 @@ class CardBrowserViewModel(
      * @param wasBuried `true` if all cards were buried, `false` if unburied
      * @param count the number of affected cards
      */
-    data class BuryResult(val wasBuried: Boolean, val count: Int)
+    data class BuryResult(
+        val wasBuried: Boolean,
+        val count: Int,
+    )
 
     private sealed interface ChangeCardOrder {
-        data class OrderChange(val sortType: SortType) : ChangeCardOrder
+        data class OrderChange(
+            val sortType: SortType,
+        ) : ChangeCardOrder
 
         data object DirectionChange : ChangeCardOrder
     }
@@ -896,7 +902,9 @@ class CardBrowserViewModel(
          * Invalid search: an `and` was found but it is not connecting two search terms.
          * If you want to search for the word itself, wrap it in double quotes: `"and"`.
          */
-        data class Error(val error: String) : SearchState
+        data class Error(
+            val error: String,
+        ) : SearchState
     }
 }
 
@@ -908,7 +916,10 @@ enum class SaveSearchResult {
 /**
  * Temporary file containing the IDs of the cards to be displayed at the previewer
  */
-class PreviewerIdsFile(path: String) : File(path), Parcelable {
+class PreviewerIdsFile(
+    path: String,
+) : File(path),
+    Parcelable {
     /**
      * @param directory parent directory of the file. Generally it should be the cache directory
      * @param cardIds ids of the cards to be displayed
@@ -942,13 +953,9 @@ class PreviewerIdsFile(path: String) : File(path), Parcelable {
         @Suppress("unused")
         val CREATOR =
             object : Parcelable.Creator<PreviewerIdsFile> {
-                override fun createFromParcel(source: Parcel?): PreviewerIdsFile {
-                    return PreviewerIdsFile(source!!.readString()!!)
-                }
+                override fun createFromParcel(source: Parcel?): PreviewerIdsFile = PreviewerIdsFile(source!!.readString()!!)
 
-                override fun newArray(size: Int): Array<PreviewerIdsFile> {
-                    return arrayOf()
-                }
+                override fun newArray(size: Int): Array<PreviewerIdsFile> = arrayOf()
             }
     }
 }

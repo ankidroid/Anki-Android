@@ -68,14 +68,13 @@ enum class SyncStatus {
             }
         }
 
-        private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus {
-            return when (required) {
+        private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus =
+            when (required) {
                 SyncStatusResponse.Required.NO_CHANGES -> NO_CHANGES
                 SyncStatusResponse.Required.NORMAL_SYNC -> HAS_CHANGES
                 SyncStatusResponse.Required.FULL_SYNC -> ONE_WAY
                 SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
             }
-        }
 
         private val isDisabled: Boolean
             get() {

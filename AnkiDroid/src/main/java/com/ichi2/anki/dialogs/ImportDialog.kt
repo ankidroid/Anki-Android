@@ -44,23 +44,23 @@ class ImportDialog : AsyncDialogFragment() {
 
         return when (type) {
             DIALOG_IMPORT_ADD_CONFIRM -> {
-                dialog.setTitle(R.string.import_title)
+                dialog
+                    .setTitle(R.string.import_title)
                     .setMessage(res().getString(R.string.import_dialog_message_add, displayFileName))
                     .positiveButton(R.string.import_message_add) {
                         (activity as ImportDialogListener).importAdd(packagePath)
                         activity?.dismissAllDialogFragments()
-                    }
-                    .negativeButton(R.string.dialog_cancel)
+                    }.negativeButton(R.string.dialog_cancel)
                     .create()
             }
             DIALOG_IMPORT_REPLACE_CONFIRM -> {
-                dialog.setTitle(R.string.import_title)
+                dialog
+                    .setTitle(R.string.import_title)
                     .setMessage(res().getString(R.string.import_message_replace_confirm, displayFileName))
                     .positiveButton(R.string.dialog_positive_replace) {
                         (activity as ImportDialogListener).importReplace(packagePath)
                         activity?.dismissAllDialogFragments()
-                    }
-                    .negativeButton(R.string.dialog_cancel)
+                    }.negativeButton(R.string.dialog_cancel)
                     .create()
             }
             else -> null!!
@@ -118,8 +118,6 @@ class ImportDialog : AsyncDialogFragment() {
             return f
         }
 
-        private fun filenameFromPath(path: String): String {
-            return path.split("/").toTypedArray()[path.split("/").toTypedArray().size - 1]
-        }
+        private fun filenameFromPath(path: String): String = path.split("/").toTypedArray()[path.split("/").toTypedArray().size - 1]
     }
 }

@@ -76,8 +76,8 @@ class CongratsPage :
         }
     }
 
-    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
-        return super.onCreateWebViewClient(savedInstanceState).also { client ->
+    override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient =
+        super.onCreateWebViewClient(savedInstanceState).also { client ->
             client.onPageFinishedCallback =
                 OnPageFinishedCallback { webView ->
                     webView.evaluateJavascript(
@@ -85,7 +85,6 @@ class CongratsPage :
                     ) {}
                 }
         }
-    }
 
     override fun onViewCreated(
         view: View,
@@ -96,12 +95,12 @@ class CongratsPage :
         viewModel.onError
             .flowWithLifecycle(lifecycle)
             .onEach { errorMessage ->
-                AlertDialog.Builder(requireContext())
+                AlertDialog
+                    .Builder(requireContext())
                     .setTitle(R.string.vague_error)
                     .setMessage(errorMessage)
                     .show()
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         viewModel.openStudyOptions
             .onEach { openStudyOptionsAndFinish() }
@@ -112,8 +111,7 @@ class CongratsPage :
             .onEach { destination ->
                 val intent = destination.getIntent(requireContext())
                 startActivity(intent, null)
-            }
-            .launchIn(lifecycleScope)
+            }.launchIn(lifecycleScope)
 
         webView.addJavascriptInterface(BridgeCommand(), "ankidroid")
 
@@ -168,9 +166,7 @@ class CongratsPage :
     }
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return getIntent(context, path = "congrats", clazz = CongratsPage::class)
-        }
+        fun getIntent(context: Context): Intent = getIntent(context, path = "congrats", clazz = CongratsPage::class)
 
         private fun displayNewCongratsScreen(context: Context): Boolean = context.sharedPrefs().getBoolean("new_congrats_screen", false)
 
@@ -232,7 +228,9 @@ class CongratsPage :
     }
 }
 
-class CongratsViewModel : ViewModel(), OnErrorListener {
+class CongratsViewModel :
+    ViewModel(),
+    OnErrorListener {
     override val onError = MutableSharedFlow<String>()
     val openStudyOptions = MutableSharedFlow<Boolean>()
     val deckOptionsDestination = MutableSharedFlow<DeckOptionsDestination>()
@@ -255,12 +253,14 @@ class CongratsViewModel : ViewModel(), OnErrorListener {
     }
 }
 
-class DeckOptionsDestination(private val deckId: DeckId, private val isFiltered: Boolean) {
-    fun getIntent(context: Context): Intent {
-        return if (isFiltered) {
+class DeckOptionsDestination(
+    private val deckId: DeckId,
+    private val isFiltered: Boolean,
+) {
+    fun getIntent(context: Context): Intent =
+        if (isFiltered) {
             Intent(context, FilteredDeckOptions::class.java)
         } else {
             DeckOptions.getIntent(context, deckId)
         }
-    }
 }

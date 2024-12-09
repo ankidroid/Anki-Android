@@ -32,4 +32,6 @@ package com.ichi2.annotations
 @Repeatable
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class DuplicatedCode(val value: String)
+annotation class DuplicatedCode(
+    val value: String,
+)

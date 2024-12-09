@@ -16,7 +16,5 @@
 package com.ichi2.libanki.utils
 
 class SystemTime : Time() {
-    override fun intTimeMS(): Long {
-        return System.currentTimeMillis()
-    }
+    override fun intTimeMS(): Long = System.currentTimeMillis()
 }

@@ -85,9 +85,7 @@ object ReadText {
         did: DeckId,
         ord: Int,
         qa: CardSide,
-    ): String {
-        return MetaDB.getLanguage(flashCardViewer.get()!!, did, ord, qa)
-    }
+    ): String = MetaDB.getLanguage(flashCardViewer.get()!!, did, ord, qa)
 
     /**
      * Ask the user what language they want.
@@ -114,7 +112,8 @@ object ReadText {
         val dialog = AlertDialog.Builder(flashCardViewer.get()!!)
         if (availableLocales().isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available")
-            dialog.message(R.string.no_tts_available_message)
+            dialog
+                .message(R.string.no_tts_available_message)
                 .setIcon(R.drawable.ic_warning)
                 .positiveButton(R.string.dialog_ok)
         } else {
@@ -127,7 +126,8 @@ object ReadText {
                             .map { Pair(it.isO3Language, it.displayName) },
                     )
                 }
-            dialog.title(R.string.select_locale_title)
+            dialog
+                .title(R.string.select_locale_title)
                 .setItems(localeMappings.map { it.second }.toTypedArray()) { _, index ->
                     val locale = localeMappings[index].first
                     Timber.d("ReadText.selectTts() user chose locale '%s'", locale)
@@ -264,10 +264,9 @@ object ReadText {
      * Returns true if the TTS engine supports the language of the locale represented by localeCode
      * (which should be in the format returned by Locale.toString()), false otherwise.
      */
-    private fun isLanguageAvailable(localeCode: String): Boolean {
-        return textToSpeech!!.isLanguageAvailable(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
+    private fun isLanguageAvailable(localeCode: String): Boolean =
+        textToSpeech!!.isLanguageAvailable(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(localeCode)) >=
             TextToSpeech.LANG_AVAILABLE
-    }
 
     fun initializeTts(
         context: Context,
@@ -333,8 +332,8 @@ object ReadText {
             }
     }
 
-    fun errorToDeveloperString(errorCode: Int): String {
-        return when (errorCode) {
+    fun errorToDeveloperString(errorCode: Int): String =
+        when (errorCode) {
             TextToSpeech.ERROR -> "Generic failure"
             TextToSpeech.ERROR_SYNTHESIS -> "TTS engine failed to synthesize input"
             TextToSpeech.ERROR_INVALID_REQUEST -> "Invalid request"
@@ -345,7 +344,6 @@ object ReadText {
             TextToSpeech.ERROR_SERVICE -> "TTS service"
             else -> "Unhandled Error [$errorCode]"
         }
-    }
 
     fun openTtsHelpUrl(helpUrl: Uri) {
         val activity = flashCardViewer.get() as AnkiActivity?

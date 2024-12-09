@@ -28,16 +28,17 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class Config(val backend: Backend) {
-    inline fun <reified T> get(key: String): T? {
-        return try {
+class Config(
+    val backend: Backend,
+) {
+    inline fun <reified T> get(key: String): T? =
+        try {
             Json.decodeFromString<T>(backend.getConfigJson(key).toStringUtf8())
         } catch (ex: BackendNotFoundException) {
             null
         } catch (ex: SerializationException) {
             null
         }
-    }
 
     inline fun <reified T> set(
         key: String,
@@ -56,9 +57,7 @@ class Config(val backend: Backend) {
         backend.removeConfig(key)
     }
 
-    fun getBool(key: ConfigKey.Bool): Boolean {
-        return backend.getConfigBool(key)
-    }
+    fun getBool(key: ConfigKey.Bool): Boolean = backend.getConfigBool(key)
 
     fun setBool(
         key: ConfigKey.Bool,
@@ -71,27 +70,25 @@ class Config(val backend: Backend) {
     inline fun <reified T> get(
         key: String,
         default: T,
-    ): T? {
-        return try {
+    ): T? =
+        try {
             Json.decodeFromString<T>(backend.getConfigJson(key).toStringUtf8())
         } catch (ex: BackendNotFoundException) {
             default
         } catch (ex: SerializationException) {
             null
         }
-    }
 
     @NotInLibAnki
     fun getObject(
         key: String,
         default: JSONObject,
-    ): JSONObject {
-        return try {
+    ): JSONObject =
+        try {
             JSONObject(backend.getConfigJson(key).toStringUtf8())
         } catch (ex: BackendNotFoundException) {
             default
         } catch (ex: JSONException) {
             default
         }
-    }
 }

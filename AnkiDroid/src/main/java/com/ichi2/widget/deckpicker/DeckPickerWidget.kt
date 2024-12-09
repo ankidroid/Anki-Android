@@ -364,9 +364,7 @@ class DeckPickerWidget : AnalyticsWidgetProvider() {
  * @param deckId the list of deck ID to retrieve data for
  * @return a list of DeckPickerWidgetData objects containing deck names and statistics
  */
-suspend fun getDeckNameAndStats(deckId: DeckId): DeckWidgetData? {
-    return getDeckNamesAndStats(listOf(deckId)).getOrNull(0)
-}
+suspend fun getDeckNameAndStats(deckId: DeckId): DeckWidgetData? = getDeckNamesAndStats(listOf(deckId)).getOrNull(0)
 
 suspend fun getDeckNamesAndStats(deckIds: List<DeckId>): List<DeckWidgetData> {
     val result = mutableListOf<DeckWidgetData>()

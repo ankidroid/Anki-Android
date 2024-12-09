@@ -195,13 +195,12 @@ object NoteService {
     fun convertToHtmlNewline(
         fieldData: String,
         replaceNewlines: Boolean,
-    ): String {
-        return if (!replaceNewlines) {
+    ): String =
+        if (!replaceNewlines) {
             fieldData
         } else {
             fieldData.replace(FieldEditText.NEW_LINE, "<br>")
         }
-    }
 
     suspend fun toggleMark(
         note: Note,
@@ -223,9 +222,7 @@ object NoteService {
     fun isMarked(
         col: Collection,
         note: Note,
-    ): Boolean {
-        return note.hasTag(col, tag = "marked")
-    }
+    ): Boolean = note.hasTag(col, tag = "marked")
 
     //  TODO: should make a direct SQL query to do this
 
@@ -282,22 +279,20 @@ fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(col, no
 
 fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(col))
 
-suspend fun isBuryNoteAvailable(card: Card): Boolean {
-    return withCol {
+suspend fun isBuryNoteAvailable(card: Card): Boolean =
+    withCol {
         db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
             card.nid,
             card.id,
         ) == 1
     }
-}
 
-suspend fun isSuspendNoteAvailable(card: Card): Boolean {
-    return withCol {
+suspend fun isSuspendNoteAvailable(card: Card): Boolean =
+    withCol {
         db.queryScalar(
             "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
             card.nid,
             card.id,
         ) == 1
     }
-}

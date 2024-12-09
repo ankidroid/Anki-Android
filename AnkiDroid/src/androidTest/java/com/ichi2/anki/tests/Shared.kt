@@ -51,9 +51,7 @@ object Shared {
      * emptied on every invocation of this method so it is suitable to use at the start of each test.
      * Only add files (and not subdirectories) to this directory.
      */
-    fun getTestDir(context: Context): File {
-        return getTestDir(context, "")
-    }
+    fun getTestDir(context: Context): File = getTestDir(context, "")
 
     /**
      * @param name An additional suffix to ensure the test directory is only used by a particular resource.

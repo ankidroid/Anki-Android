@@ -40,9 +40,12 @@ import kotlinx.coroutines.launch
  *
  * @param lifecycleScope The CoroutineScope used for launching coroutines.
  */
-class FlagAdapter(private val lifecycleScope: CoroutineScope) :
-    ListAdapter<FlagItem, FlagAdapter.FlagViewHolder>(FlagItemDiffCallback()) {
-    inner class FlagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class FlagAdapter(
+    private val lifecycleScope: CoroutineScope,
+) : ListAdapter<FlagItem, FlagAdapter.FlagViewHolder>(FlagItemDiffCallback()) {
+    inner class FlagViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         val flagImageView: ImageView = itemView.findViewById(R.id.ic_flag)
         val flagNameText: TextView = itemView.findViewById(R.id.flag_name)
         val flagNameEdit: TextInputEditText = itemView.findViewById(R.id.flag_name_edit_text)
@@ -111,16 +114,12 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
         override fun areItemsTheSame(
             oldItem: FlagItem,
             newItem: FlagItem,
-        ): Boolean {
-            return oldItem.flag == newItem.flag
-        }
+        ): Boolean = oldItem.flag == newItem.flag
 
         override fun areContentsTheSame(
             oldItem: FlagItem,
             newItem: FlagItem,
-        ): Boolean {
-            return oldItem.title == newItem.title
-        }
+        ): Boolean = oldItem.title == newItem.title
     }
 }
 

@@ -53,7 +53,5 @@ class PeripheralKeymapTest : InstrumentedTest() {
         )
     }
 
-    private fun getNumpadEvent(keycode: Int): KeyEvent {
-        return KeyEvent(0, 0, KeyEvent.ACTION_UP, keycode, 0, KeyEvent.META_NUM_LOCK_ON)
-    }
+    private fun getNumpadEvent(keycode: Int): KeyEvent = KeyEvent(0, 0, KeyEvent.ACTION_UP, keycode, 0, KeyEvent.META_NUM_LOCK_ON)
 }

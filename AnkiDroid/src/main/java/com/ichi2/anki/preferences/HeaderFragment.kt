@@ -35,7 +35,9 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.utils.AdaptionUtil
 
-class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
+class HeaderFragment :
+    PreferenceFragmentCompat(),
+    TitleProvider {
     override val title: CharSequence
         get() = getString(R.string.settings)
 
@@ -172,8 +174,8 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
          * e.g. Sync > Custom sync server settings -> returns the key for the Sync header
          */
         @StringRes
-        fun getHeaderKeyForFragment(fragment: Fragment): Int? {
-            return when (fragment) {
+        fun getHeaderKeyForFragment(fragment: Fragment): Int? =
+            when (fragment) {
                 is GeneralSettingsFragment -> R.string.pref_general_screen_key
                 is ReviewingSettingsFragment -> R.string.pref_reviewing_screen_key
                 is SyncSettingsFragment, is CustomSyncServerSettingsFragment -> R.string.pref_sync_screen_key
@@ -187,6 +189,5 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
                 is AboutFragment -> R.string.about_screen_key
                 else -> null
             }
-        }
     }
 }

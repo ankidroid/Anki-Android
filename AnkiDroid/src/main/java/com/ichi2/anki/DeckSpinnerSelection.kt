@@ -210,13 +210,12 @@ class DeckSpinnerSelection(
     suspend fun selectDeckById(
         deckId: DeckId,
         setAsCurrentDeck: Boolean,
-    ): Boolean {
-        return if (deckId == ALL_DECKS_ID || this.dropDownDecks == null) {
+    ): Boolean =
+        if (deckId == ALL_DECKS_ID || this.dropDownDecks == null) {
             selectAllDecks()
         } else {
             selectDeck(deckId, setAsCurrentDeck)
         }
-    }
 
     /**
      * select in the spinner deck with id

@@ -202,9 +202,7 @@ class AutomaticAnswer(
         delayedShowQuestion(settings.millisecondsToShowAnswerFor + additionalMediaDelay)
     }
 
-    fun isEnabled(): Boolean {
-        return !isDisabled
-    }
+    fun isEnabled(): Boolean = !isDisabled
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     internal fun simulateCardFlip() {
@@ -220,9 +218,7 @@ class AutomaticAnswer(
 
     companion object {
         @CheckResult
-        fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer {
-            return AutomaticAnswer(target, AutomaticAnswerSettings())
-        }
+        fun defaultInstance(target: AutomaticallyAnswered): AutomaticAnswer = AutomaticAnswer(target, AutomaticAnswerSettings())
 
         @CheckResult
         fun createInstance(
@@ -284,18 +280,15 @@ class AutomaticAnswerSettings(
             )
         }
 
-        fun createInstance(col: Collection): AutomaticAnswerSettings {
-            return queryOptions(col, col.decks.selected())
-        }
+        fun createInstance(col: Collection): AutomaticAnswerSettings = queryOptions(col, col.decks.selected())
 
-        private fun getAction(conf: DeckConfig): AutomaticAnswerAction {
-            return try {
+        private fun getAction(conf: DeckConfig): AutomaticAnswerAction =
+            try {
                 val value: Int = conf.optInt(AutomaticAnswerAction.CONFIG_KEY)
                 AutomaticAnswerAction.fromConfigValue(value)
             } catch (e: Exception) {
                 AutomaticAnswerAction.BURY_CARD
             }
-        }
     }
 }
 
@@ -303,7 +296,9 @@ class AutomaticAnswerSettings(
  * Represents a value from [anki.deck_config.DeckConfig.Config.AnswerAction]
  * Executed when answering a card (showing the question).
  */
-enum class AutomaticAnswerAction(private val configValue: Int) {
+enum class AutomaticAnswerAction(
+    private val configValue: Int,
+) {
     /** Default: least invasive action */
     BURY_CARD(0),
     ANSWER_AGAIN(1),
@@ -323,15 +318,14 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
     }
 
     /** Convert to a [ViewerCommand] */
-    private fun toCommand(): ViewerCommand? {
-        return when (this) {
+    private fun toCommand(): ViewerCommand? =
+        when (this) {
             BURY_CARD -> ViewerCommand.BURY_CARD
             ANSWER_AGAIN -> AGAIN.toViewerCommand()
             ANSWER_HARD -> HARD.toViewerCommand()
             ANSWER_GOOD -> GOOD.toViewerCommand()
             SHOW_REMINDER -> null
         }
-    }
 
     companion object {
         /**
@@ -342,8 +336,6 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
         const val CONFIG_KEY = "answerAction"
 
         /** convert from [anki.deck_config.DeckConfig.Config.AnswerAction] to the enum */
-        fun fromConfigValue(i: Int): AutomaticAnswerAction {
-            return entries.firstOrNull { it.configValue == i } ?: BURY_CARD
-        }
+        fun fromConfigValue(i: Int): AutomaticAnswerAction = entries.firstOrNull { it.configValue == i } ?: BURY_CARD
     }
 }

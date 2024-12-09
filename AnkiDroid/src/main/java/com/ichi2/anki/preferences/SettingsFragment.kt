@@ -99,13 +99,15 @@ abstract class SettingsFragment :
 
     override fun onStart() {
         super.onStart()
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
+        PreferenceManager
+            .getDefaultSharedPreferences(requireContext())
             .registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onStop() {
         super.onStop()
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
+        PreferenceManager
+            .getDefaultSharedPreferences(requireContext())
             .unregisterOnSharedPreferenceChangeListener(this)
     }
 
@@ -138,8 +140,8 @@ abstract class SettingsFragment :
          * can have their values reported as well.
          * */
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        fun getPreferenceReportableValue(value: Any?): Int? {
-            return when (value) {
+        fun getPreferenceReportableValue(value: Any?): Int? =
+            when (value) {
                 is Int -> value
                 is String ->
                     try {
@@ -152,6 +154,5 @@ abstract class SettingsFragment :
                 is Long -> value.toInt()
                 else -> null
             }
-        }
     }
 }

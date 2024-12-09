@@ -39,7 +39,9 @@ import android.view.View
  *
  * Source: modified from https://stackoverflow.com/a/19629851
  */
-abstract class DoubleTapListener(context: Context) : View.OnTouchListener {
+abstract class DoubleTapListener(
+    context: Context,
+) : View.OnTouchListener {
     /**
      * When a single-tap occurs. this is not certain to be a double-tap.
      *

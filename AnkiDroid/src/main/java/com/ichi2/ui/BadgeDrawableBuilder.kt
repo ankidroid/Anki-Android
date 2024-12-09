@@ -23,7 +23,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.SyncActionProvider
 import timber.log.Timber
 
-class BadgeDrawableBuilder(private val context: Context) {
+class BadgeDrawableBuilder(
+    private val context: Context,
+) {
     private var char = '\u0000'
     private var color: Int? = null
 

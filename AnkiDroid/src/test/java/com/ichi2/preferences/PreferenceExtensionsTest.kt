@@ -38,9 +38,7 @@ class PreferenceExtensionsTest {
     private fun getOrSetString(
         key: String,
         supplier: Supplier<String>,
-    ): String {
-        return mockPreferences.getOrSetString(key, supplier)
-    }
+    ): String = mockPreferences.getOrSetString(key, supplier)
 
     @Test
     fun existingKeyReturnsMappedValue() {

@@ -70,8 +70,7 @@ class CustomStudyDialogTest : RobolectricTest() {
                 .withArguments(
                     1,
                     contextMenuAttribute = CustomStudyDialog.ContextMenuOption.STUDY_AHEAD,
-                )
-                .arguments
+                ).arguments
         val factory = CustomStudyDialogFactory({ this.col }, mockListener)
         AnkiFragmentScenario.launch(CustomStudyDialog::class.java, args, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.RESUMED)

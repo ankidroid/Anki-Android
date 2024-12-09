@@ -22,7 +22,9 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.DrawableWrapper
 
-class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
+class BadgeDrawable(
+    dr: Drawable?,
+) : DrawableWrapper(dr) {
     private val paint: Paint = Paint()
     private var badge: Drawable? = null
     private var text: String? = null

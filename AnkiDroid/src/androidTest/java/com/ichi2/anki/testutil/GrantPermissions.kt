@@ -23,7 +23,10 @@ import com.ichi2.anki.utils.ensureAllFilesAccess
 import org.junit.rules.TestRule
 
 object GrantStoragePermission {
-    private val targetSdkVersion = InstrumentationRegistry.getInstrumentation().targetContext.applicationInfo.targetSdkVersion
+    private val targetSdkVersion =
+        InstrumentationRegistry
+            .getInstrumentation()
+            .targetContext.applicationInfo.targetSdkVersion
     val storagePermission =
         if (
             targetSdkVersion >= Build.VERSION_CODES.R &&

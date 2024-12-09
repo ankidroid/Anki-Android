@@ -95,17 +95,11 @@ class Note : Cloneable {
     }
 
     @NotInLibAnki
-    fun numberOfCards(col: Collection): Int {
-        return cardIds(col).size
-    }
+    fun numberOfCards(col: Collection): Int = cardIds(col).size
 
-    fun cardIds(col: Collection): List<Long> {
-        return col.cardIdsOfNote(nid = this.id)
-    }
+    fun cardIds(col: Collection): List<Long> = col.cardIdsOfNote(nid = this.id)
 
-    fun cards(col: Collection): List<Card> {
-        return cardIds(col).map { col.getCard(it) }
-    }
+    fun cards(col: Collection): List<Card> = cardIds(col).map { col.getCard(it) }
 
     fun ephemeralCard(
         col: Collection,
@@ -130,13 +124,14 @@ class Note : Cloneable {
         template["ord"] = card.ord
 
         val output =
-            TemplateManager.TemplateRenderContext.fromCardLayout(
-                note = this,
-                card = card,
-                notetype = model,
-                template = template,
-                fillEmpty = fillEmpty,
-            ).render(col)
+            TemplateManager.TemplateRenderContext
+                .fromCardLayout(
+                    note = this,
+                    card = card,
+                    notetype = model,
+                    template = template,
+                    fillEmpty = fillEmpty,
+                ).render(col)
         card.renderOutput = output
         card.note = this
         return card
@@ -144,27 +139,22 @@ class Note : Cloneable {
 
     /** The first card, assuming it exists. */
     @CheckResult
-    fun firstCard(col: Collection): Card {
-        return col.getCard(
+    fun firstCard(col: Collection): Card =
+        col.getCard(
             col.db.queryLongScalar(
                 "SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
                 this.id,
             ),
         )
-    }
 
     /**
      * Dict interface
      * ***********************************************************
      */
-    fun keys(): Array<String> {
-        return fMap!!.keys.toTypedArray()
-    }
+    fun keys(): Array<String> = fMap!!.keys.toTypedArray()
 
     @KotlinCleanup("see if we can make this immutable")
-    fun values(): MutableList<String> {
-        return fields
-    }
+    fun values(): MutableList<String> = fields
 
     fun items(): Array<Array<String>> {
         // TODO: Revisit this method. The field order returned differs from Anki.
@@ -193,9 +183,7 @@ class Note : Cloneable {
         return fieldPair.first
     }
 
-    fun getItem(key: String): String {
-        return fields[fieldIndex(key)]
-    }
+    fun getItem(key: String): String = fields[fieldIndex(key)]
 
     fun setItem(
         key: String,
@@ -204,9 +192,7 @@ class Note : Cloneable {
         fields[fieldIndex(key)] = value
     }
 
-    operator fun contains(key: String): Boolean {
-        return fMap!!.containsKey(key)
-    }
+    operator fun contains(key: String): Boolean = fMap!!.containsKey(key)
 
     /**
      * Tags
@@ -215,13 +201,9 @@ class Note : Cloneable {
     fun hasTag(
         col: Collection,
         tag: String,
-    ): Boolean {
-        return col.tags.inList(tag, tags)
-    }
+    ): Boolean = col.tags.inList(tag, tags)
 
-    fun stringTags(col: Collection): String {
-        return col.tags.join(col.tags.canonify(tags))
-    }
+    fun stringTags(col: Collection): String = col.tags.join(col.tags.canonify(tags))
 
     fun setTagsFromStr(
         col: Collection,
@@ -260,9 +242,7 @@ class Note : Cloneable {
      * Unique/duplicate check
      * ***********************************************************
      */
-    fun fieldsCheck(col: Collection): NoteFieldsCheckResponse.State {
-        return col.backend.noteFieldsCheck(this.toBackendNote()).state
-    }
+    fun fieldsCheck(col: Collection): NoteFieldsCheckResponse.State = col.backend.noteFieldsCheck(this.toBackendNote()).state
 
     fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
@@ -273,13 +253,12 @@ class Note : Cloneable {
         fields[index] = value
     }
 
-    public override fun clone(): Note {
-        return try {
+    public override fun clone(): Note =
+        try {
             super.clone() as Note
         } catch (e: CloneNotSupportedException) {
             throw RuntimeException(e)
         }
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -288,9 +267,7 @@ class Note : Cloneable {
         return this.id == note.id
     }
 
-    override fun hashCode(): Int {
-        return (this.id xor (this.id ushr 32)).toInt()
-    }
+    override fun hashCode(): Int = (this.id xor (this.id ushr 32)).toInt()
 
     object ClozeUtils {
         private val mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::")

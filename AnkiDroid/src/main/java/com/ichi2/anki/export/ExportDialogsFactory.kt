@@ -36,9 +36,7 @@ class ExportDialogsFactory(
         }
     }
 
-    fun newExportReadyDialog(): ExportReadyDialog {
-        return ExportReadyDialog(exportReadyDialogListener)
-    }
+    fun newExportReadyDialog(): ExportReadyDialog = ExportReadyDialog(exportReadyDialogListener)
 }
 
 interface ExportDialogsFactoryProvider {

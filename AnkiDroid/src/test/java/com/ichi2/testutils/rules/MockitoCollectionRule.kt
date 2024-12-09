@@ -41,8 +41,8 @@ class MockitoCollectionRule : TestRule {
     override fun apply(
         base: Statement,
         description: Description,
-    ): Statement {
-        return object : Statement() {
+    ): Statement =
+        object : Statement() {
             override fun evaluate() {
                 try {
                     mockCollection()
@@ -52,7 +52,6 @@ class MockitoCollectionRule : TestRule {
                 }
             }
         }
-    }
 
     private fun removeCollectionMock() {
         Timber.v("removing collection mock")

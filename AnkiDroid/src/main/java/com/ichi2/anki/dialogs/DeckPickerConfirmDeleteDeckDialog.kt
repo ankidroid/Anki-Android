@@ -46,23 +46,21 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
                 )
             }
         super.onCreate(savedInstanceState)
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .setTitle(R.string.delete_deck_title)
             .setMessage(
                 HtmlCompat.fromHtml(
                     message,
                     HtmlCompat.FROM_HTML_MODE_LEGACY,
                 ),
-            )
-            .setIcon(R.drawable.ic_warning)
+            ).setIcon(R.drawable.ic_warning)
             .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
                 activity?.dismissAllDialogFragments()
-            }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+            }.setNegativeButton(R.string.dialog_cancel) { _, _ ->
                 activity?.dismissAllDialogFragments()
-            }
-            .create()
+            }.create()
     }
 
     companion object {

@@ -31,7 +31,9 @@ import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
-class ModelFieldEditorTest(private val forbiddenCharacter: String) : RobolectricTest() {
+class ModelFieldEditorTest(
+    private val forbiddenCharacter: String,
+) : RobolectricTest() {
     /**
      * Tests if field names with illegal characters get removed from beginning of field names when adding field
      */
@@ -98,8 +100,8 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
     private fun buildAddEditFieldDialog(
         fieldNameInput: EditText,
         fieldOperationType: FieldOperationType,
-    ): AlertDialog {
-        return AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
+    ): AlertDialog =
+        AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
             positiveButton(text = "") {
                 try {
                     val modelName = "Basic"
@@ -126,7 +128,6 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                 }
             }
         }
-    }
 
     companion object {
         private val sForbiddenCharacters = arrayOf("#", "^", "/", " ", "\t")
@@ -134,9 +135,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
         @ParameterizedRobolectricTestRunner.Parameters(name = "\"{0}\"")
         @Suppress("unused")
         @JvmStatic // required: Parameters
-        fun forbiddenCharacters(): Collection<*> {
-            return listOf(*sForbiddenCharacters)
-        }
+        fun forbiddenCharacters(): Collection<*> = listOf(*sForbiddenCharacters)
     }
 }
 

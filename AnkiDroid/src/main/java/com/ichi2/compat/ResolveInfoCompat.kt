@@ -44,9 +44,7 @@ class ResolveInfoFlagsCompat private constructor(
     companion object {
         fun of(
             @ResolveInfoFlagsBitsCompat value: Long,
-        ): ResolveInfoFlagsCompat {
-            return ResolveInfoFlagsCompat(value)
-        }
+        ): ResolveInfoFlagsCompat = ResolveInfoFlagsCompat(value)
 
         /** Helper property. Does not exist on Platform API */
         val EMPTY

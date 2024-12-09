@@ -60,10 +60,16 @@ object BackgroundImage {
         data object OK : FileSizeResult
 
         /** Large files can cause OutOfMemoryError */
-        data class FileTooLarge(val currentMB: Long, val maxMB: Long) : FileSizeResult
+        data class FileTooLarge(
+            val currentMB: Long,
+            val maxMB: Long,
+        ) : FileSizeResult
 
         /** Large bitmaps cause uncatchable: RuntimeException("Canvas: trying to draw too large(Xbytes) bitmap.") */
-        data class UncompressedBitmapTooLarge(val width: Long, val height: Long) : FileSizeResult
+        data class UncompressedBitmapTooLarge(
+            val width: Long,
+            val height: Long,
+        ) : FileSizeResult
     }
 
     fun validateBackgroundImageFileSize(
@@ -106,7 +112,10 @@ object BackgroundImage {
         this.enabled = true
     }
 
-    data class Size(val width: Int, val height: Int)
+    data class Size(
+        val width: Int,
+        val height: Int,
+    )
 
     fun getBackgroundImageDimensions(context: Context): Size {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)

@@ -66,9 +66,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
     private val allStrings: HashMap<Pair<String, String>, MutableList<StringDeclaration>> =
         HashMap<Pair<String, String>, MutableList<StringDeclaration>>()
 
-    override fun appliesTo(folderType: ResourceFolderType): Boolean {
-        return folderType == ResourceFolderType.VALUES
-    }
+    override fun appliesTo(folderType: ResourceFolderType): Boolean = folderType == ResourceFolderType.VALUES
 
     override fun getApplicableElements() = listOf(TAG_STRING)
 

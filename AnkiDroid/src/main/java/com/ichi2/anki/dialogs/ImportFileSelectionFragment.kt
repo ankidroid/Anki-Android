@@ -43,7 +43,8 @@ import timber.log.Timber
 class ImportFileSelectionFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val entries = buildImportEntries()
-        return AlertDialog.Builder(requireActivity())
+        return AlertDialog
+            .Builder(requireActivity())
             .title(R.string.menu_import)
             .setItems(
                 entries.map { requireActivity().getString(it.titleRes) }.toTypedArray(),
@@ -60,8 +61,7 @@ class ImportFileSelectionFragment : DialogFragment() {
                     mimeType = entry.mimeType,
                     extraMimes = entry.extraMimes,
                 )
-            }
-            .create()
+            }.create()
     }
 
     private fun buildImportEntries(): List<ImportEntry> {

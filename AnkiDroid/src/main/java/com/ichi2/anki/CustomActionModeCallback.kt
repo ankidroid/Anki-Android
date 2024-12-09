@@ -37,9 +37,7 @@ class CustomActionModeCallback(
     override fun onCreateActionMode(
         mode: ActionMode,
         menu: Menu,
-    ): Boolean {
-        return true
-    }
+    ): Boolean = true
 
     override fun onPrepareActionMode(
         mode: ActionMode,
@@ -74,9 +72,7 @@ class CustomActionModeCallback(
     override fun onActionItemClicked(
         mode: ActionMode,
         item: MenuItem,
-    ): Boolean {
-        return onActionItemSelected(mode, item)
-    }
+    ): Boolean = onActionItemSelected(mode, item)
 
     override fun onDestroyActionMode(mode: ActionMode) {
         // Left empty on purpose

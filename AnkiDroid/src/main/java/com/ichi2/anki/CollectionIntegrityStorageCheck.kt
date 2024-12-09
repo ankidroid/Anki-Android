@@ -44,9 +44,7 @@ class CollectionIntegrityStorageCheck {
         this.errorMessage = errorMessage
     }
 
-    fun shouldWarnOnIntegrityCheck(): Boolean {
-        return errorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
-    }
+    fun shouldWarnOnIntegrityCheck(): Boolean = errorMessage != null || fileSystemDoesNotHaveSpaceForBackup()
 
     private fun fileSystemDoesNotHaveSpaceForBackup(): Boolean {
         // only to be called when mErrorMessage == null
@@ -88,9 +86,7 @@ class CollectionIntegrityStorageCheck {
     }
 
     companion object {
-        private fun fromError(errorMessage: String): CollectionIntegrityStorageCheck {
-            return CollectionIntegrityStorageCheck(errorMessage)
-        }
+        private fun fromError(errorMessage: String): CollectionIntegrityStorageCheck = CollectionIntegrityStorageCheck(errorMessage)
 
         private fun defaultRequiredFreeSpace(context: Context): String {
             val oneHundredFiftyMB =

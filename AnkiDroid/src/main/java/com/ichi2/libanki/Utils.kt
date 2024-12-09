@@ -141,38 +141,41 @@ object Utils {
 
     /** Given a list of integers, return a string '(int1,int2,...)'.  */
     fun ids2str(ids: IntArray?): String =
-        StringBuilder().apply {
-            append("(")
-            if (ids != null) {
-                val s = ids.contentToString()
-                append(s.substring(1, s.length - 1))
-            }
-            append(")")
-        }.toString()
+        StringBuilder()
+            .apply {
+                append("(")
+                if (ids != null) {
+                    val s = ids.contentToString()
+                    append(s.substring(1, s.length - 1))
+                }
+                append(")")
+            }.toString()
 
     /** Given a list of integers, return a string '(int1,int2,...)'.  */
     fun ids2str(ids: LongArray?): String =
-        StringBuilder().apply {
-            append("(")
-            if (ids != null) {
-                val s = ids.contentToString()
-                append(s.substring(1, s.length - 1))
-            }
-            append(")")
-        }.toString()
+        StringBuilder()
+            .apply {
+                append("(")
+                if (ids != null) {
+                    val s = ids.contentToString()
+                    append(s.substring(1, s.length - 1))
+                }
+                append(")")
+            }.toString()
 
     /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator.  */
     fun <T> ids2str(ids: Iterable<T>): String =
-        StringBuilder(512).apply {
-            append("(")
-            for ((index, id) in ids.withIndex()) {
-                if (index != 0) {
-                    append(", ")
+        StringBuilder(512)
+            .apply {
+                append("(")
+                for ((index, id) in ids.withIndex()) {
+                    if (index != 0) {
+                        append(", ")
+                    }
+                    append(id)
                 }
-                append(id)
-            }
-            append(")")
-        }.toString()
+                append(")")
+            }.toString()
 
     // used in ankiweb
     private fun base62(
@@ -193,16 +196,13 @@ object Utils {
     }
 
     // all printable characters minus quotes, backslash and separators
-    private fun base91(num: Int): String {
-        return base62(num, BASE91_EXTRA_CHARS)
-    }
+    private fun base91(num: Int): String = base62(num, BASE91_EXTRA_CHARS)
 
     /** return a base91-encoded 64bit random number  */
-    fun guid64(): String {
-        return base91(
+    fun guid64(): String =
+        base91(
             Random().nextInt((2.0.pow(61.0) - 1).toInt()),
         )
-    }
 
     /**
      * Fields
@@ -285,7 +285,5 @@ object Utils {
      * @param data the string to generate hash from. Html media should be removed
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
-    private fun fieldChecksumWithoutHtmlMedia(data: String?): Long {
-        return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
-    }
+    private fun fieldChecksumWithoutHtmlMedia(data: String?): Long = java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
 }

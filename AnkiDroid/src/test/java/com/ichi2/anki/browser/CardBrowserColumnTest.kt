@@ -43,10 +43,9 @@ class CardBrowserColumnTest : JvmTest() {
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters(name = "{0}")
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<Any>> {
-            return CardBrowserColumn.entries
+        fun initParameters(): Collection<Array<Any>> =
+            CardBrowserColumn.entries
                 .map { arrayOf(it) }
-        }
     }
 
     @ParameterizedRobolectricTestRunner.Parameter
@@ -95,14 +94,18 @@ class CardBrowserColumnTest : JvmTest() {
         val nid = note.id
 
         var oldData =
-            CardBrowser.CardCache(cid, col, 0, cardsOrNotes)
+            CardBrowser
+                .CardCache(cid, col, 0, cardsOrNotes)
                 .getColumnHeaderText(column)
 
         val newData =
             column.let {
                 col.backend.setActiveBrowserColumns(listOf(it.ankiColumnKey))
                 val rowId = if (cardsOrNotes == CardsOrNotes.CARDS) cid else nid
-                col.backend.browserRowForId(rowId).getCells(0).text
+                col.backend
+                    .browserRowForId(rowId)
+                    .getCells(0)
+                    .text
             }
 
         if (column == DUE) {

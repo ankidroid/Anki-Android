@@ -19,7 +19,9 @@ package com.ichi2.utils
 import android.widget.Filter
 
 /** Implementation of [Filter] which is strongly typed */
-abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Filter() {
+abstract class TypedFilter<T>(
+    private val getCurrentItems: (() -> List<T>),
+) : Filter() {
     constructor(items: List<T>) : this({ items })
 
     var lastConstraint: CharSequence? = null

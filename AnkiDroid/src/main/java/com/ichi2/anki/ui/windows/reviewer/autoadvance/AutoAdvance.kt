@@ -33,7 +33,9 @@ import kotlinx.coroutines.delay
  *
  * @see AutoAdvanceSettings
  */
-class AutoAdvance(val viewModel: ReviewerViewModel) {
+class AutoAdvance(
+    val viewModel: ReviewerViewModel,
+) {
     private var questionActionJob: Job? = null
     private var answerActionJob: Job? = null
 

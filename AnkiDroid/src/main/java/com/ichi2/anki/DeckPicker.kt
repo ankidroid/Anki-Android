@@ -614,7 +614,8 @@ open class DeckPicker :
         pullToSyncWrapper.configureView(
             this,
             IMPORT_MIME_TYPES,
-            DropHelper.Options.Builder()
+            DropHelper.Options
+                .Builder()
                 .setHighlightColor(R.color.material_lime_green_A700)
                 .setHighlightCornerRadiusPx(0)
                 .build(),
@@ -1352,15 +1353,17 @@ open class DeckPicker :
                 if (!preferences.getBoolean(
                         "exitViaDoubleTapBack",
                         false,
-                    ) || backButtonPressedToExit
+                    ) ||
+                    backButtonPressedToExit
                 ) {
                     // can't use launchCatchingTask because any errors
                     // would need to be shown in the UI
-                    lifecycleScope.launch {
-                        automaticSync(runInBackground = true)
-                    }.invokeOnCompletion {
-                        finish()
-                    }
+                    lifecycleScope
+                        .launch {
+                            automaticSync(runInBackground = true)
+                        }.invokeOnCompletion {
+                            finish()
+                        }
                 } else {
                     showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
@@ -2316,7 +2319,9 @@ open class DeckPicker :
             startActivity(i)
         } else {
             // otherwise open regular options
-            val intent = com.ichi2.anki.pages.DeckOptions.getIntent(this, did)
+            val intent =
+                com.ichi2.anki.pages.DeckOptions
+                    .getIntent(this, did)
             startActivity(intent)
         }
     }
@@ -2331,11 +2336,11 @@ open class DeckPicker :
     ) {
         // This code should not be reachable with lower versions
         val shortcut =
-            ShortcutInfoCompat.Builder(this, did.toString())
+            ShortcutInfoCompat
+                .Builder(this, did.toString())
                 .setIntent(
                     intentToReviewDeckFromShorcuts(context, did),
-                )
-                .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
+                ).setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
                 .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
                 .setLongLabel(getColUnsafe.decks.name(did))
                 .build()
@@ -2403,8 +2408,8 @@ open class DeckPicker :
      * Use [.confirmDeckDeletion] for a confirmation dialog
      * @param did the deck to delete
      */
-    fun deleteDeck(did: DeckId): Job {
-        return launchCatchingTask {
+    fun deleteDeck(did: DeckId): Job =
+        launchCatchingTask {
             val deckName = withCol { decks.get(did)!!.name }
             val changes =
                 withProgress(resources.getString(R.string.delete_deck)) {
@@ -2419,7 +2424,6 @@ open class DeckPicker :
                 setAction(R.string.undo) { undo() }
             }
         }
-    }
 
     @NeedsTest("14285: regression test to ensure UI is updated after this call")
     fun rebuildFiltered(did: DeckId) {
@@ -2538,9 +2542,7 @@ open class DeckPicker :
     /**
      * Check if at least one deck is being displayed.
      */
-    fun hasAtLeastOneDeckBeingDisplayed(): Boolean {
-        return deckListAdapter.itemCount > 0 && recyclerViewLayoutManager.getChildAt(0) != null
-    }
+    fun hasAtLeastOneDeckBeingDisplayed(): Boolean = deckListAdapter.itemCount > 0 && recyclerViewLayoutManager.getChildAt(0) != null
 
     private enum class DeckSelectionType {
         /** Show study options if fragmented, otherwise, review  */
@@ -2614,7 +2616,8 @@ open class DeckPicker :
         ): ViewPropertyAnimator {
             view!!.alpha = 0f
             view.translationY = translation
-            return view.animate()
+            return view
+                .animate()
                 .alpha(1f)
                 .translationY(0f)
                 .setDuration(duration.toLong())
@@ -2632,7 +2635,8 @@ open class DeckPicker :
         ): ViewPropertyAnimator {
             view!!.alpha = 1f
             view.translationY = 0f
-            return view.animate()
+            return view
+                .animate()
                 .alpha(0f)
                 .translationY(translation)
                 .setDuration(duration.toLong())
@@ -2700,13 +2704,9 @@ open class DeckPicker :
         REGULAR_DECK_NO_MORE_CARDS_TODAY,
     }
 
-    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> {
-        return apkgFileImportResultLauncher
-    }
+    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent> = apkgFileImportResultLauncher
 
-    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent> {
-        return csvImportResultLauncher
-    }
+    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent> = csvImportResultLauncher
 }
 
 /** Android's onCreateOptionsMenu does not play well with coroutines, as
@@ -2730,10 +2730,11 @@ enum class SyncIconState {
     NotLoggedIn,
 }
 
-class CollectionLoadingErrorDialog : DialogHandlerMessage(
-    WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG,
-    "CollectionLoadErrorDialog",
-) {
+class CollectionLoadingErrorDialog :
+    DialogHandlerMessage(
+        WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG,
+        "CollectionLoadErrorDialog",
+    ) {
     override fun handleAsyncMessage(activity: AnkiActivity) {
         // Collection could not be opened
         activity.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
@@ -2742,10 +2743,12 @@ class CollectionLoadingErrorDialog : DialogHandlerMessage(
     override fun toMessage() = emptyMessage(this.what)
 }
 
-class OneWaySyncDialog(val message: String?) : DialogHandlerMessage(
-    which = WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG,
-    analyticName = "OneWaySyncDialog",
-) {
+class OneWaySyncDialog(
+    val message: String?,
+) : DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_SHOW_ONE_WAY_SYNC_DIALOG,
+        analyticName = "OneWaySyncDialog",
+    ) {
     override fun handleAsyncMessage(activity: AnkiActivity) {
         // Confirmation dialog for one-way sync
         val dialog = ConfirmationDialog()

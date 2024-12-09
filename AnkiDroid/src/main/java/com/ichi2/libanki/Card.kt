@@ -149,7 +149,8 @@ open class Card : Cloneable {
     @LibAnkiAlias("_to_backend_card")
     fun toBackendCard(): anki.cards.Card {
         val builder =
-            anki.cards.Card.newBuilder()
+            anki.cards.Card
+                .newBuilder()
                 .setId(id)
                 .setNoteId(nid)
                 .setDeckId(did)
@@ -177,24 +178,16 @@ open class Card : Cloneable {
         col: Collection,
         reload: Boolean = false,
         browser: Boolean = false,
-    ): String {
-        return renderOutput(col, reload, browser).questionAndStyle()
-    }
+    ): String = renderOutput(col, reload, browser).questionAndStyle()
 
     @LibAnkiAlias("answer")
-    fun answer(col: Collection): String {
-        return renderOutput(col).answerAndStyle()
-    }
+    fun answer(col: Collection): String = renderOutput(col).answerAndStyle()
 
     @LibAnkiAlias("question_av_tags")
-    fun questionAvTags(col: Collection): List<AvTag> {
-        return renderOutput(col).questionAvTags
-    }
+    fun questionAvTags(col: Collection): List<AvTag> = renderOutput(col).questionAvTags
 
     @LibAnkiAlias("answer_av_tags")
-    fun answerAvTags(col: Collection): List<AvTag> {
-        return renderOutput(col).answerAvTags
-    }
+    fun answerAvTags(col: Collection): List<AvTag> = renderOutput(col).answerAvTags
 
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
@@ -223,9 +216,7 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("note_type")
-    open fun noteType(col: Collection): NotetypeJson {
-        return note(col).notetype
-    }
+    open fun noteType(col: Collection): NotetypeJson = note(col).notetype
 
     @LibAnkiAlias("template")
     fun template(col: Collection): JSONObject {
@@ -243,11 +234,11 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("current_deck_id")
-    fun currentDeckId(): anki.decks.DeckId {
-        return anki.decks.DeckId.newBuilder()
+    fun currentDeckId(): anki.decks.DeckId =
+        anki.decks.DeckId
+            .newBuilder()
             .setDid(oDid.ifZero { did })
             .build()
-    }
 
     /**
      * Time limit for answering in milliseconds.
@@ -305,18 +296,15 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("autoplay")
-    fun autoplay(col: Collection): Boolean {
-        return col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
-    }
+    fun autoplay(col: Collection): Boolean = col.decks.configDictForDeckId(currentDeckId().did).getBoolean("autoplay")
 
     @NotInLibAnki
-    public override fun clone(): Card {
-        return try {
+    public override fun clone(): Card =
+        try {
             super.clone() as Card
         } catch (e: CloneNotSupportedException) {
             throw RuntimeException(e)
         }
-    }
 
     override fun toString(): String {
         val declaredFields = this.javaClass.declaredFields
@@ -337,13 +325,12 @@ open class Card : Cloneable {
         return members.joinToString(",  ")
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is Card) {
+    override fun equals(other: Any?): Boolean =
+        if (other is Card) {
             this.id == other.id
         } else {
             super.equals(other)
         }
-    }
 
     override fun hashCode(): Int {
         // Map a long to an int. For API>=24 you would just do `Long.hashCode(this.getId())`
@@ -445,22 +432,20 @@ open class Card : Cloneable {
             _card = null
         }
 
-        override fun hashCode(): Int {
-            return java.lang.Long.valueOf(this.id).hashCode()
-        }
+        override fun hashCode(): Int =
+            java.lang.Long
+                .valueOf(this.id)
+                .hashCode()
 
         /** The cloned version represents the same card but data are not loaded.  */
-        public override fun clone(): Cache {
-            return Cache(col, this.id)
-        }
+        public override fun clone(): Cache = Cache(col, this.id)
 
-        override fun equals(other: Any?): Boolean {
-            return if (other !is Cache) {
+        override fun equals(other: Any?): Boolean =
+            if (other !is Cache) {
                 false
             } else {
                 this.id == other.id
             }
-        }
     }
 
     companion object {
@@ -470,8 +455,16 @@ open class Card : Cloneable {
         val SKIP_PRINT: Set<String> =
             HashSet(
                 listOf(
-                    "SKIP_PRINT", "\$assertionsDisabled", "TYPE_LRN",
-                    "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped",
+                    "SKIP_PRINT",
+                    "\$assertionsDisabled",
+                    "TYPE_LRN",
+                    "TYPE_NEW",
+                    "TYPE_REV",
+                    "mNote",
+                    "mQA",
+                    "mCol",
+                    "mTimerStarted",
+                    "mTimerStopped",
                 ),
             )
 

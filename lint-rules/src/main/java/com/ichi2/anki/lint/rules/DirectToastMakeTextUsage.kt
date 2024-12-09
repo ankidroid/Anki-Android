@@ -33,7 +33,9 @@ import org.jetbrains.uast.UCallExpression
  * This custom Lint rules will raise an error if a developer uses the {android.widget.Toast#makeText(...)} method instead
  * of using the top level method {com.ichi2.anki.showThemedToast(...)} provided by the UIUtils file.
  */
-class DirectToastMakeTextUsage : Detector(), SourceCodeScanner {
+class DirectToastMakeTextUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectToastMakeTextUsage"

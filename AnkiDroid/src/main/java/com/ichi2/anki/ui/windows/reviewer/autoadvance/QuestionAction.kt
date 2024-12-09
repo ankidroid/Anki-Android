@@ -17,7 +17,9 @@ package com.ichi2.anki.ui.windows.reviewer.autoadvance
 
 import com.ichi2.libanki.DeckConfig
 
-enum class QuestionAction(val configValue: Int) {
+enum class QuestionAction(
+    val configValue: Int,
+) {
     SHOW_ANSWER(0),
     SHOW_REMINDER(1),
     ;

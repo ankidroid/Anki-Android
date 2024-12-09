@@ -37,8 +37,11 @@ import kotlin.jvm.Throws
  *     from entering invalid data. On each text change, the validator is run;
  *     if it throws, the Ok button gets disabled.
  */
-open class VersatileTextPreference(context: Context, attrs: AttributeSet?) :
-    EditTextPreference(context, attrs), DialogFragmentProvider {
+open class VersatileTextPreference(
+    context: Context,
+    attrs: AttributeSet?,
+) : EditTextPreference(context, attrs),
+    DialogFragmentProvider {
     fun interface Validator {
         @Throws(Exception::class)
         fun validate(value: String)

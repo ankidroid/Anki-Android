@@ -21,7 +21,9 @@ import androidx.core.content.edit
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.NOT_FOUND_DECK_ID
 
-class CardAnalysisWidgetPreferences(context: Context) {
+class CardAnalysisWidgetPreferences(
+    context: Context,
+) {
     /**
      * Prefix for the SharedPreferences key used to store the selected deck for the Card Analysis Widget.
      * The full key is constructed by appending the appWidgetId to this prefix, ensuring that each
@@ -62,6 +64,4 @@ class CardAnalysisWidgetPreferences(context: Context) {
 /**
  * Generates the key for the shared preferences for the given widget ID.
  */
-private fun getCardAnalysisExtraWidgetKey(appWidgetId: Int): String {
-    return "card_analysis_extra_widget_selected_deck_$appWidgetId"
-}
+private fun getCardAnalysisExtraWidgetKey(appWidgetId: Int): String = "card_analysis_extra_widget_selected_deck_$appWidgetId"

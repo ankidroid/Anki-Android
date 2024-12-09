@@ -34,7 +34,9 @@ import java.util.Calendar
  * This custom Lint rules will raise an error if a developer uses the [Calendar.getInstance] method instead
  * of using the [Calendar] provided by the collection's getTime() method.
  */
-class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
+class DirectCalendarInstanceUsage :
+    Detector(),
+    SourceCodeScanner {
     companion object {
         @VisibleForTesting
         const val ID = "DirectCalendarInstanceUsage"
@@ -57,9 +59,7 @@ class DirectCalendarInstanceUsage : Detector(), SourceCodeScanner {
             )
     }
 
-    override fun getApplicableMethodNames(): List<String> {
-        return mutableListOf("getInstance")
-    }
+    override fun getApplicableMethodNames(): List<String> = mutableListOf("getInstance")
 
     override fun visitMethodCall(
         context: JavaContext,

@@ -22,9 +22,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 
-fun SharedPreferences.get(key: String): Any? {
-    return all[key]
-}
+fun SharedPreferences.get(key: String): Any? = all[key]
 
 /**
  * Sets the callback to be invoked when this preference is changed by the user
@@ -62,6 +60,4 @@ inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(
 }
 
 /** shorthand method to get the default [SharedPreferences] instance */
-fun Context.sharedPrefs(): SharedPreferences {
-    return PreferenceManager.getDefaultSharedPreferences(this)
-}
+fun Context.sharedPrefs(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)

@@ -93,7 +93,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
         val res = res()
         val alertDialog = AlertDialog.Builder(requireActivity())
         val isLoggedIn = isLoggedIn()
-        alertDialog.cancelable(true)
+        alertDialog
+            .cancelable(true)
             .title(text = title)
         var sqliteInstalled = false
         try {
@@ -123,25 +124,26 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_DB_ERROR -> {
                 // Database Check failed to execute successfully; give user the option of either choosing from repair
                 // options, submitting an error report, or closing the activity
-                alertDialog.create {
-                    cancelable(false)
-                    title(R.string.answering_error_title)
-                    message(text = message)
-                    setIcon(R.drawable.ic_warning)
-                    positiveButton(R.string.error_handling_options) {
-                        showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                alertDialog
+                    .create {
+                        cancelable(false)
+                        title(R.string.answering_error_title)
+                        message(text = message)
+                        setIcon(R.drawable.ic_warning)
+                        positiveButton(R.string.error_handling_options) {
+                            showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
+                        }
+                        negativeButton(R.string.answering_error_report) {
+                            requireDeckPicker().sendErrorReport()
+                            requireActivity().dismissAllDialogFragments()
+                        }
+                        neutralButton(R.string.close) {
+                            closeCollectionAndFinish()
+                        }
+                    }.apply {
+                        show()
+                        getButton(Dialog.BUTTON_NEGATIVE).isEnabled = requireDeckPicker().hasErrorFiles()
                     }
-                    negativeButton(R.string.answering_error_report) {
-                        requireDeckPicker().sendErrorReport()
-                        requireActivity().dismissAllDialogFragments()
-                    }
-                    neutralButton(R.string.close) {
-                        closeCollectionAndFinish()
-                    }
-                }.apply {
-                    show()
-                    getButton(Dialog.BUTTON_NEGATIVE).isEnabled = requireDeckPicker().hasErrorFiles()
-                }
             }
             DIALOG_ERROR_HANDLING -> {
                 // The user has asked to see repair options; allow them to choose one of the repair options or go back
@@ -231,7 +233,8 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 val path = CollectionHelper.getCollectionPath(requireContext())
                 backups = BackupManager.getBackups(File(path))
                 if (backups.isEmpty()) {
-                    alertDialog.title(R.string.backup_restore)
+                    alertDialog
+                        .title(R.string.backup_restore)
                         .title(text = message)
                         .positiveButton(R.string.dialog_ok) {
                             showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -242,13 +245,13 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     val formatter = LocalizedUnambiguousBackupTimeFormatter()
                     val dates = backups.map { formatter.getTimeOfBackupAsText(it) }
 
-                    alertDialog.title(R.string.backup_restore_select_title)
+                    alertDialog
+                        .title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
                             (activity as? AnkiActivity)?.let {
                                 ImportFileSelectionFragment.openImportFilePicker(it, ImportFileSelectionFragment.ImportFileType.APKG)
                             }
-                        }
-                        .negativeButton(R.string.dialog_cancel)
+                        }.negativeButton(R.string.dialog_cancel)
                         .setSingleChoiceItems(dates.toTypedArray(), -1) { _, index: Int ->
                             if (backups[index].length() > 0) {
                                 // restore the backup if it's valid
@@ -266,14 +269,15 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                             }
                         }
                 }
-                alertDialog.setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
-                        requireActivity().dismissAllDialogFragments()
-                        return@setOnKeyListener true
-                    }
-                    false
-                }.create()
+                alertDialog
+                    .setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            Timber.i("DIALOG_RESTORE_BACKUP caught hardware back button")
+                            requireActivity().dismissAllDialogFragments()
+                            return@setOnKeyListener true
+                        }
+                        false
+                    }.create()
             }
             DIALOG_NEW_COLLECTION -> {
                 // Allow user to create a new empty collection
@@ -413,8 +417,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             listOf(
                 exceptionData?.toHumanReadableString(),
                 DebugInfoService.getDebugInfo(requireContext()),
-            )
-                .filterNotNull()
+            ).filterNotNull()
                 .joinToString(separator = "\n")
 
         requireContext().copyToClipboard(
@@ -671,10 +674,12 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     }
 
     /** Database error dialog */
-    class ShowDatabaseErrorDialog(val dialogType: DatabaseErrorDialogType) : DialogHandlerMessage(
-        which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
-        analyticName = "DatabaseErrorDialog",
-    ) {
+    class ShowDatabaseErrorDialog(
+        val dialogType: DatabaseErrorDialogType,
+    ) : DialogHandlerMessage(
+            which = WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG,
+            analyticName = "DatabaseErrorDialog",
+        ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             activity.showDatabaseErrorDialog(dialogType)
         }

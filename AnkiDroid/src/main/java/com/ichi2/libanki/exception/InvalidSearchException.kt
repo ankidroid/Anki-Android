@@ -16,4 +16,6 @@
 
 package com.ichi2.libanki.exception
 
-class InvalidSearchException(e: Exception) : IllegalArgumentException(e)
+class InvalidSearchException(
+    e: Exception,
+) : IllegalArgumentException(e)

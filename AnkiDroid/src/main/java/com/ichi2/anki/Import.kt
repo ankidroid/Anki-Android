@@ -96,7 +96,10 @@ fun AnkiActivity.showImportDialog(options: ImportOptions) {
     showDialogFragment(ImportFileSelectionFragment.newInstance(options))
 }
 
-class DatabaseRestorationListener(val activity: AnkiActivity, val newAnkiDroidDirectory: String) : ImportColpkgListener {
+class DatabaseRestorationListener(
+    val activity: AnkiActivity,
+    val newAnkiDroidDirectory: String,
+) : ImportColpkgListener {
     override fun onImportColpkg(colpkgPath: String?) {
         Timber.i("Database restoration correct")
         activity.sharedPrefs().edit {

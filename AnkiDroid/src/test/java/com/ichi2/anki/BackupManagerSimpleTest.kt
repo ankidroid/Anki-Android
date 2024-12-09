@@ -132,7 +132,8 @@ class BackupManagerSimpleTest {
         weekly: Int,
         monthly: Int,
     ): BackupLimits =
-        BackupLimits.newBuilder()
+        BackupLimits
+            .newBuilder()
             .setDaily(daily)
             .setWeekly(weekly)
             .setMonthly(monthly)

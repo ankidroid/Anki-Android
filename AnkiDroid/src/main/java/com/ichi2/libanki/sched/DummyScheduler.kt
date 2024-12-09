@@ -23,13 +23,13 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import java.lang.Exception
 
-class DummyScheduler(col: Collection) : Scheduler(col) {
+class DummyScheduler(
+    col: Collection,
+) : Scheduler(col) {
     override val card: Card? = null
 
     override fun answerCard(
         card: Card,
         ease: Ease,
-    ) {
-        throw Exception("v1/v2 scheduler not supported")
-    }
+    ): Unit = throw Exception("v1/v2 scheduler not supported")
 }

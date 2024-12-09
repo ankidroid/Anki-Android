@@ -70,24 +70,21 @@ class CompatHelper private constructor() {
         @Suppress("unused")
         val isChromebook: Boolean
             get() = (
-                "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
+                "chromium".equals(Build.BRAND, ignoreCase = true) ||
+                    "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
                     "novato_cheets".equals(Build.DEVICE, ignoreCase = true)
             )
         val isKindle: Boolean
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
-        fun hasScrollKeys(): Boolean {
-            return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
-        }
+        fun hasScrollKeys(): Boolean = deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
 
-        inline fun <reified T : Serializable?> Bundle.getSerializableCompat(name: String): T? {
-            return compat.getSerializable(this, name, T::class.java)
-        }
+        inline fun <reified T : Serializable?> Bundle.getSerializableCompat(name: String): T? =
+            compat.getSerializable(this, name, T::class.java)
 
         @Suppress("unused")
-        inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? {
-            return compat.getSerializableExtra(this, name, T::class.java)
-        }
+        inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? =
+            compat.getSerializableExtra(this, name, T::class.java)
 
         /**
          * Retrieve overall information about an application package that is
@@ -128,9 +125,7 @@ class CompatHelper private constructor() {
         fun PackageManager.resolveServiceCompat(
             intent: Intent,
             flags: ResolveInfoFlagsCompat,
-        ): ResolveInfo? {
-            return compat.resolveService(this, intent, flags)
-        }
+        ): ResolveInfo? = compat.resolveService(this, intent, flags)
 
         /**
          * Retrieve all activities that can be performed for the given intent.
@@ -147,9 +142,7 @@ class CompatHelper private constructor() {
         fun PackageManager.queryIntentActivitiesCompat(
             intent: Intent,
             flags: ResolveInfoFlagsCompat,
-        ): List<ResolveInfo> {
-            return compat.queryIntentActivities(this, intent, flags)
-        }
+        ): List<ResolveInfo> = compat.queryIntentActivities(this, intent, flags)
 
         /**
          * Determine the best action to perform for a given Intent. This is how
@@ -177,9 +170,7 @@ class CompatHelper private constructor() {
         fun PackageManager.resolveActivityCompat(
             intent: Intent,
             flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY,
-        ): ResolveInfo? {
-            return compat.resolveActivity(this, intent, flags)
-        }
+        ): ResolveInfo? = compat.resolveActivity(this, intent, flags)
 
         /**
          * Register a broadcast receiver.

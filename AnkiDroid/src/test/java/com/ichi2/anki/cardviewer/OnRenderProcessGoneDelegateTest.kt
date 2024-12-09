@@ -66,8 +66,7 @@ class OnRenderProcessGoneDelegateTest {
             mock,
             times(1)
                 .description("displayCardQuestion should not be called again as the screen should close"),
-        )
-            .displayCardQuestion()
+        ).displayCardQuestion()
         assertThat(delegate.displayedDialog, equalTo(true))
         verify(mock, times(1).description("After the dialog, the screen should be closed")).finish()
     }
@@ -87,8 +86,7 @@ class OnRenderProcessGoneDelegateTest {
             mock,
             times(2)
                 .description("displayCardQuestion should be called again as the app was minimised"),
-        )
-            .displayCardQuestion()
+        ).displayCardQuestion()
         assertThat(delegate.displayedDialog, equalTo(false))
     }
 
@@ -170,9 +168,7 @@ class OnRenderProcessGoneDelegateTest {
         return ret
     }
 
-    private fun getInstance(mock: AbstractFlashcardViewer?): OnRenderProcessGoneDelegateImpl {
-        return spy(OnRenderProcessGoneDelegateImpl(mock))
-    }
+    private fun getInstance(mock: AbstractFlashcardViewer?): OnRenderProcessGoneDelegateImpl = spy(OnRenderProcessGoneDelegateImpl(mock))
 
     // this value doesn't matter for now as it only defines a string
     private val crashDetail: RenderProcessGoneDetail
@@ -182,7 +178,9 @@ class OnRenderProcessGoneDelegateTest {
             return mock
         }
 
-    class OnRenderProcessGoneDelegateImpl(target: AbstractFlashcardViewer?) : OnRenderProcessGoneDelegate(target!!) {
+    class OnRenderProcessGoneDelegateImpl(
+        target: AbstractFlashcardViewer?,
+    ) : OnRenderProcessGoneDelegate(target!!) {
         var displayedToast = false
         var displayedDialog = false
 

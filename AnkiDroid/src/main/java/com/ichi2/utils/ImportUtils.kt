@@ -60,9 +60,7 @@ object ImportUtils {
     fun handleFileImport(
         context: Context,
         intent: Intent,
-    ): ImportResult {
-        return FileImporter().handleFileImport(context, intent)
-    }
+    ): ImportResult = FileImporter().handleFileImport(context, intent)
 
     /**
      * Makes a cached copy of the file selected on [intent] and returns its path
@@ -70,16 +68,12 @@ object ImportUtils {
     fun getFileCachedCopy(
         context: Context,
         intent: Intent,
-    ): String? {
-        return FileImporter().getFileCachedCopy(context, intent)
-    }
+    ): String? = FileImporter().getFileCachedCopy(context, intent)
 
     fun getFileCachedCopy(
         context: Context,
         uri: Uri,
-    ): String? {
-        return FileImporter().getFileCachedCopy(context, uri)
-    }
+    ): String? = FileImporter().getFileCachedCopy(context, uri)
 
     fun showImportUnsuccessfulDialog(
         activity: Activity,
@@ -89,27 +83,21 @@ object ImportUtils {
         FileImporter().showImportUnsuccessfulDialog(activity, errorMessage, exitActivity)
     }
 
-    fun isCollectionPackage(filename: String?): Boolean {
-        return filename != null && (filename.lowercase(Locale.ROOT).endsWith(".colpkg") || "collection.apkg" == filename)
-    }
+    fun isCollectionPackage(filename: String?): Boolean =
+        filename != null && (filename.lowercase(Locale.ROOT).endsWith(".colpkg") || "collection.apkg" == filename)
 
     /** @return Whether the file is either a deck, or a collection package */
     @Contract("null -> false")
-    fun isValidPackageName(filename: String?): Boolean {
-        return FileImporter.isDeckPackage(filename) || isCollectionPackage(filename)
-    }
+    fun isValidPackageName(filename: String?): Boolean = FileImporter.isDeckPackage(filename) || isCollectionPackage(filename)
 
     /**
      * Whether importUtils can handle the given intent
      * Caused by #6312 - A launcher was sending ACTION_VIEW instead of ACTION_MAIN
      */
-    fun isInvalidViewIntent(intent: Intent): Boolean {
-        return intent.data == null && intent.clipData == null
-    }
+    fun isInvalidViewIntent(intent: Intent): Boolean = intent.data == null && intent.clipData == null
 
-    fun isFileAValidDeck(fileName: String): Boolean {
-        return FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg")
-    }
+    fun isFileAValidDeck(fileName: String): Boolean =
+        FileImporter.hasExtension(fileName, "apkg") || FileImporter.hasExtension(fileName, "colpkg")
 
     @SuppressWarnings("WeakerAccess")
     open class FileImporter {
@@ -258,9 +246,7 @@ object ImportUtils {
             }
         }
 
-        private fun isAnkiDatabase(filename: String?): Boolean {
-            return filename != null && hasExtension(filename, "anki2")
-        }
+        private fun isAnkiDatabase(filename: String?): Boolean = filename != null && hasExtension(filename, "anki2")
 
         private fun ensureValidLength(fileName: String): String {
             // #6137 - filenames can be too long when URLEncoded
@@ -296,18 +282,19 @@ object ImportUtils {
         ): String? {
             var filename: String? = null
             try {
-                context.contentResolver.query(
-                    data,
-                    arrayOf(OpenableColumns.DISPLAY_NAME),
-                    null,
-                    null,
-                    null,
-                ).use { cursor ->
-                    if (cursor != null && cursor.moveToFirst()) {
-                        filename = cursor.getString(0)
-                        Timber.d("handleFileImport() Importing from content provider: %s", filename)
+                context.contentResolver
+                    .query(
+                        data,
+                        arrayOf(OpenableColumns.DISPLAY_NAME),
+                        null,
+                        null,
+                        null,
+                    ).use { cursor ->
+                        if (cursor != null && cursor.moveToFirst()) {
+                            filename = cursor.getString(0)
+                            Timber.d("handleFileImport() Importing from content provider: %s", filename)
+                        }
                     }
-                }
             } catch (e: Exception) {
                 Timber.w(e, "Error querying content provider")
                 filename = null // Set filename to null in case of an exception
@@ -411,9 +398,8 @@ object ImportUtils {
                 DialogHandler.storeMessage(dialogMessage.toMessage())
             }
 
-            internal fun isDeckPackage(filename: String?): Boolean {
-                return filename != null && filename.lowercase(Locale.ROOT).endsWith(".apkg") && "collection.apkg" != filename
-            }
+            internal fun isDeckPackage(filename: String?): Boolean =
+                filename != null && filename.lowercase(Locale.ROOT).endsWith(".apkg") && "collection.apkg" != filename
 
             fun hasExtension(
                 filename: String,
@@ -431,26 +417,26 @@ object ImportUtils {
         }
     }
 
-    class ImportResult(val humanReadableMessage: String?) {
+    class ImportResult(
+        val humanReadableMessage: String?,
+    ) {
         val isSuccess: Boolean
             get() = humanReadableMessage == null
 
         companion object {
-            fun fromErrorString(message: String?): ImportResult {
-                return ImportResult(message)
-            }
+            fun fromErrorString(message: String?): ImportResult = ImportResult(message)
 
-            fun fromSuccess(): ImportResult {
-                return ImportResult(null)
-            }
+            fun fromSuccess(): ImportResult = ImportResult(null)
         }
     }
 
     /** Show confirmation dialog asking to confirm import with replace when file called "collection.apkg" */
-    class CollectionImportReplace(private val importPath: String) : DialogHandlerMessage(
-        which = WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG,
-        analyticName = "ImportReplaceDialog",
-    ) {
+    class CollectionImportReplace(
+        private val importPath: String,
+    ) : DialogHandlerMessage(
+            which = WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG,
+            analyticName = "ImportReplaceDialog",
+        ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of collection package APKG
             activity.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, importPath)
@@ -468,10 +454,12 @@ object ImportUtils {
     }
 
     /** Show confirmation dialog asking to confirm import with add */
-    class CollectionImportAdd(private val importPath: String) : DialogHandlerMessage(
-        WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG,
-        "ImportAddDialog",
-    ) {
+    class CollectionImportAdd(
+        private val importPath: String,
+    ) : DialogHandlerMessage(
+            WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG,
+            "ImportAddDialog",
+        ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // Handle import of deck package APKG
             activity.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, importPath)

@@ -104,9 +104,10 @@ const val BASIC_MODEL_NAME = "Basic"
  */
 fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
     val m =
-        BackendUtils.fromJsonBytes(
-            getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
-        ).apply { set("name", name) }
+        BackendUtils
+            .fromJsonBytes(
+                getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
+            ).apply { set("name", name) }
     addNotetypeLegacy(BackendUtils.toJsonBytes(m))
     return notetypes.byName(name)!!
 }

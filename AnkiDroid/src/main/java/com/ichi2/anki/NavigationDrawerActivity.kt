@@ -89,7 +89,8 @@ abstract class NavigationDrawerActivity :
             ) as ClosableDrawerLayout
         // Get CoordinatorLayout using resource ID
         val coordinatorLayout =
-            LayoutInflater.from(this)
+            LayoutInflater
+                .from(this)
                 .inflate(layoutResID, closableDrawerLayout, false) as CoordinatorLayout
         if (preferences.getBoolean(FULL_SCREEN_NAVIGATION_DRAWER, false)) {
             // If full screen navigation drawer is needed, then add FullDraggableContainer as a child view of closableDrawerLayout.
@@ -109,13 +110,9 @@ abstract class NavigationDrawerActivity :
         get() = if (fitsSystemWindows()) R.layout.navigation_drawer_layout else R.layout.navigation_drawer_layout_fullscreen
 
     /** Whether android:fitsSystemWindows="true" should be applied to the navigation drawer  */
-    protected open fun fitsSystemWindows(): Boolean {
-        return true
-    }
+    protected open fun fitsSystemWindows(): Boolean = true
 
-    fun navDrawerIsReady(): Boolean {
-        return navigationView != null
-    }
+    fun navDrawerIsReady(): Boolean = navigationView != null
 
     // Navigation drawer initialisation
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
@@ -358,7 +355,9 @@ abstract class NavigationDrawerActivity :
      * Opens the Statistics Screen.
      */
     protected fun openStatistics() {
-        val intent = com.ichi2.anki.pages.Statistics.getIntent(this)
+        val intent =
+            com.ichi2.anki.pages.Statistics
+                .getIntent(this)
         startActivity(intent)
     }
 
@@ -465,7 +464,8 @@ abstract class NavigationDrawerActivity :
             intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
             val reviewCardsShortcut =
-                ShortcutInfoCompat.Builder(context, "reviewCardsShortcutId")
+                ShortcutInfoCompat
+                    .Builder(context, "reviewCardsShortcutId")
                     .setShortLabel(context.getString(R.string.studyoptions_start))
                     .setLongLabel(context.getString(R.string.studyoptions_start))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.review_shortcut))
@@ -478,7 +478,8 @@ abstract class NavigationDrawerActivity :
             intentAddNote.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentAddNote.putExtra(NoteEditor.EXTRA_CALLER, NoteEditorCaller.DECKPICKER.value)
             val noteEditorShortcut =
-                ShortcutInfoCompat.Builder(context, "noteEditorShortcutId")
+                ShortcutInfoCompat
+                    .Builder(context, "noteEditorShortcutId")
                     .setShortLabel(context.getString(R.string.menu_add))
                     .setLongLabel(context.getString(R.string.menu_add))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.add_shortcut))
@@ -490,7 +491,8 @@ abstract class NavigationDrawerActivity :
             intentCardBrowser.action = Intent.ACTION_VIEW
             intentCardBrowser.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             val cardBrowserShortcut =
-                ShortcutInfoCompat.Builder(context, "cardBrowserShortcutId")
+                ShortcutInfoCompat
+                    .Builder(context, "cardBrowserShortcutId")
                     .setShortLabel(context.getString(R.string.card_browser))
                     .setLongLabel(context.getString(R.string.card_browser))
                     .setIcon(IconCompat.createWithResource(context, R.drawable.browse_shortcut))

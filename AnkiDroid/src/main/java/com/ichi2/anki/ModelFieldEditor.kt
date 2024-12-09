@@ -55,7 +55,9 @@ import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
-class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
+class ModelFieldEditor :
+    AnkiActivity(),
+    LocaleSelectionDialogHandler {
     // Position of the current field selected
     private var currentPos = 0
     private lateinit var fieldsListView: ListView
@@ -140,7 +142,8 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     private fun uniqueName(fieldNameInput: EditText): String? {
         var input =
-            fieldNameInput.text.toString()
+            fieldNameInput.text
+                .toString()
                 .replace("[\\n\\r{}:\"]".toRegex(), "")
         // The number of #, ^, /, space, tab, starting the input
         var offset = 0
@@ -417,7 +420,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     @Throws(ConfirmModSchemaException::class)
     private fun renameField() {
         val fieldLabel =
-            fieldNameInput!!.text.toString()
+            fieldNameInput!!
+                .text
+                .toString()
                 .replace("[\\n\\r]".toRegex(), "")
         val field = noteFields.getJSONObject(currentPos)
         getColUnsafe.notetypes.renameFieldLegacy(notetype, field, fieldLabel)

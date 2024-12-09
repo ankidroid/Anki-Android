@@ -70,9 +70,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
         private var displayAnswer = false
         private var focusTextField = false
 
-        override fun answerFieldIsFocused(): Boolean {
-            return focusTextField
-        }
+        override fun answerFieldIsFocused(): Boolean = focusTextField
 
         override fun performReload() {
             // intentionally blank
@@ -82,9 +80,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
             displayAnswer = true
         }
 
-        fun didDisplayAnswer(): Boolean {
-            return displayAnswer
-        }
+        fun didDisplayAnswer(): Boolean = displayAnswer
 
         fun handleKeyPress(keycode: Int) {
             // COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,

@@ -38,7 +38,9 @@ import java.io.IOException
 
 /** A wrapper for a notetype in JSON format with helpers for editing the notetype. */
 @KotlinCleanup("_templateChanges -> use templateChanges")
-class CardTemplateNotetype(val notetype: NotetypeJson) {
+class CardTemplateNotetype(
+    val notetype: NotetypeJson,
+) {
     enum class ChangeType {
         ADD,
         DELETE,
@@ -477,7 +479,10 @@ class CardTemplateNotetype(val notetype: NotetypeJson) {
  * [limit of 1MB](https://developer.android.com/reference/android/os/TransactionTooLargeException.html)
  * for [Bundle] transactions, and notetypes can be bigger than that (#5600).
  */
-class NotetypeFile(path: String) : File(path), Parcelable {
+class NotetypeFile(
+    path: String,
+) : File(path),
+    Parcelable {
     /**
      * @param directory where the file will be saved
      * @param notetype to be stored
@@ -498,8 +503,8 @@ class NotetypeFile(path: String) : File(path), Parcelable {
      */
     constructor(context: Context, notetype: NotetypeJson) : this(context.cacheDir, notetype)
 
-    fun getNotetype(): NotetypeJson {
-        return try {
+    fun getNotetype(): NotetypeJson =
+        try {
             ByteArrayOutputStream().use { target ->
                 compat.copyFile(absolutePath, target)
                 NotetypeJson(target.toString())
@@ -508,7 +513,6 @@ class NotetypeFile(path: String) : File(path), Parcelable {
             Timber.e(e, "Unable to read+parse tempModel from file %s", absolutePath)
             throw e
         }
-    }
 
     override fun describeContents(): Int = 0
 
@@ -524,13 +528,9 @@ class NotetypeFile(path: String) : File(path), Parcelable {
         @Suppress("unused")
         val CREATOR =
             object : Parcelable.Creator<NotetypeFile> {
-                override fun createFromParcel(source: Parcel?): NotetypeFile {
-                    return NotetypeFile(source!!.readString()!!)
-                }
+                override fun createFromParcel(source: Parcel?): NotetypeFile = NotetypeFile(source!!.readString()!!)
 
-                override fun newArray(size: Int): Array<NotetypeFile> {
-                    return arrayOf()
-                }
+                override fun newArray(size: Int): Array<NotetypeFile> = arrayOf()
             }
     }
 }

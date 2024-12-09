@@ -25,7 +25,9 @@ import com.ichi2.utils.lastIndexOfOrNull
 import timber.log.Timber
 
 sealed interface Binding {
-    data class GestureInput(val gesture: Gesture) : Binding {
+    data class GestureInput(
+        val gesture: Gesture,
+    ) : Binding {
         override fun toDisplayString(context: Context): String = gesture.toDisplayString(context)
 
         override fun toString() =
@@ -41,7 +43,10 @@ sealed interface Binding {
      * Example: [Axis.X] with a thresholds of {-1, 1} may be mapped to different actions
      * (signifying moving left/right on a gamepad joystick)
      */
-    data class AxisButtonBinding(val axis: Axis, val threshold: Float) : Binding {
+    data class AxisButtonBinding(
+        val axis: Axis,
+        val threshold: Float,
+    ) : Binding {
         private val plusOrMinus get() = if (threshold == -1f) "-" else "+"
 
         override fun toDisplayString(context: Context) = "$JOYSTICK_STRING_PREFIX $axis [$plusOrMinus]"
@@ -70,7 +75,10 @@ sealed interface Binding {
         val modifierKeys: ModifierKeys
     }
 
-    data class KeyCode(val keycode: Int, override val modifierKeys: ModifierKeys = ModifierKeys.none()) : KeyBinding {
+    data class KeyCode(
+        val keycode: Int,
+        override val modifierKeys: ModifierKeys = ModifierKeys.none(),
+    ) : KeyBinding {
         private fun getKeyCodePrefix(): String =
             when {
                 KeyEvent.isGamepadButton(keycode) -> GAMEPAD_PREFIX
@@ -131,7 +139,11 @@ sealed interface Binding {
 
     val isValid get() = true
 
-    open class ModifierKeys internal constructor(val shift: Boolean, val ctrl: Boolean, val alt: Boolean) {
+    open class ModifierKeys internal constructor(
+        val shift: Boolean,
+        val ctrl: Boolean,
+        val alt: Boolean,
+    ) {
         fun matches(event: KeyEvent): Boolean {
             // return false if Ctrl+1 is pressed and 1 is expected
             return shiftMatches(event) && ctrlMatches(event) && altMatches(event)
@@ -245,7 +257,8 @@ sealed interface Binding {
 
             // passing in metaState: 0 means that Ctrl+1 returns '1' instead of '\0'
             // NOTE: We do not differentiate on upper/lower case via KeyEvent.META_CAPS_LOCK_ON
-            event.getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
+            event
+                .getUnicodeChar(event.metaState and (KeyEvent.META_SHIFT_ON or KeyEvent.META_NUM_LOCK_ON))
                 .ifNotZero { unicodeChar ->
                     try {
                         ret.add(unicode(unicodeChar.toChar(), modifiers) as KeyBinding)

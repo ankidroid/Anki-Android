@@ -35,8 +35,10 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import timber.log.Timber
 import kotlin.coroutines.resume
 
-class AndroidTtsPlayer(private val context: Context, private val voices: List<TtsVoice>) :
-    TtsPlayer() {
+class AndroidTtsPlayer(
+    private val context: Context,
+    private val voices: List<TtsVoice>,
+) : TtsPlayer() {
     private lateinit var scope: CoroutineScope
 
     // this can be null in the case that TTS failed to load
@@ -87,9 +89,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
             }
     }
 
-    override fun getAvailableVoices(): List<TtsVoice> {
-        return this.voices
-    }
+    override fun getAvailableVoices(): List<TtsVoice> = this.voices
 
     override suspend fun play(tag: TTSTag): TtsCompletionStatus {
         val match = voiceForTag(tag)
@@ -184,7 +184,9 @@ sealed class AndroidTtsError : TtsPlayer.TtsError() {
     // Ankidroid specific errors
     data object UnknownError : AndroidTtsError()
 
-    data class MissingVoiceError(val tag: TTSTag) : AndroidTtsError()
+    data class MissingVoiceError(
+        val tag: TTSTag,
+    ) : AndroidTtsError()
 
     data object InvalidVoiceError : AndroidTtsError()
 

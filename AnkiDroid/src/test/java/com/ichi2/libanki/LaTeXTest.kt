@@ -24,14 +24,14 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class LaTeXTest : JvmTest() {
-    class MockMedia(col: Collection) : Media(col) {
+    class MockMedia(
+        col: Collection,
+    ) : Media(col) {
         /**
          * @param fname A field name
          * @return Always true, given that we want to assume the field exists in test
          */
-        override fun have(fname: String): Boolean {
-            return true
-        }
+        override fun have(fname: String): Boolean = true
     }
 
     @Test

@@ -75,7 +75,9 @@ import kotlin.math.max
  */
 @JvmInline
 @NotInLibAnki
-value class SetDueDateDays(val value: String)
+value class SetDueDateDays(
+    val value: String,
+)
 
 data class CurrentQueueState(
     val topCard: Card,
@@ -87,16 +89,17 @@ data class CurrentQueueState(
     val learnAheadSecs: Int,
     val customSchedulingJs: String,
 ) {
-    fun schedulingStatesWithContext(): SchedulingStatesWithContext {
-        return anki.frontend.schedulingStatesWithContext {
+    fun schedulingStatesWithContext(): SchedulingStatesWithContext =
+        anki.frontend.schedulingStatesWithContext {
             states = this@CurrentQueueState.states
             context = this@CurrentQueueState.context
         }
-    }
 }
 
 @WorkerThread
-open class Scheduler(val col: Collection) {
+open class Scheduler(
+    val col: Collection,
+) {
     /** Legacy API */
     open val card: Card?
         get() =
@@ -128,9 +131,7 @@ open class Scheduler(val col: Collection) {
 
     /** The time labels for the four answer buttons. */
     @LibAnkiAlias("describe_next_states")
-    fun describeNextStates(states: SchedulingStates): List<String> {
-        return col.backend.describeNextStates(states)
-    }
+    fun describeNextStates(states: SchedulingStates): List<String> = col.backend.describeNextStates(states)
 
     private val queuedCards: QueuedCards
         get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
@@ -138,11 +139,10 @@ open class Scheduler(val col: Collection) {
     open fun answerCard(
         info: CurrentQueueState,
         ease: Ease,
-    ): OpChanges {
-        return col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
+    ): OpChanges =
+        col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
             reps += 1
         }
-    }
 
     /** Legacy path, used by tests. */
     open fun answerCard(
@@ -159,16 +159,14 @@ open class Scheduler(val col: Collection) {
 
     /** True if new state marks the card as a leech. */
     @LibAnkiAlias("state_is_leech")
-    fun stateIsLeech(state: SchedulingState): Boolean {
-        return col.backend.stateIsLeech(state)
-    }
+    fun stateIsLeech(state: SchedulingState): Boolean = col.backend.stateIsLeech(state)
 
     fun buildAnswer(
         card: Card,
         states: SchedulingStates,
         ease: Ease,
-    ): CardAnswer {
-        return cardAnswer {
+    ): CardAnswer =
+        cardAnswer {
             cardId = card.id
             currentState = states.current
             newState = stateFromEase(states, ease)
@@ -176,49 +174,39 @@ open class Scheduler(val col: Collection) {
             answeredAtMillis = time.intTimeMS()
             millisecondsTaken = card.timeTaken(col)
         }
-    }
 
-    private fun ratingFromEase(ease: Ease): CardAnswer.Rating {
-        return when (ease) {
+    private fun ratingFromEase(ease: Ease): CardAnswer.Rating =
+        when (ease) {
             Ease.AGAIN -> CardAnswer.Rating.AGAIN
             Ease.HARD -> CardAnswer.Rating.HARD
             Ease.GOOD -> CardAnswer.Rating.GOOD
             Ease.EASY -> CardAnswer.Rating.EASY
         }
-    }
 
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.
      */
-    fun totalCount(): Int {
-        return counts().count()
-    }
+    fun totalCount(): Int = counts().count()
 
-    fun counts(): Counts {
-        return queuedCards.let {
+    fun counts(): Counts =
+        queuedCards.let {
             Counts(it.newCount, it.learningCount, it.reviewCount)
         }
-    }
 
     // only used by tests
-    fun newCount(): Int {
-        return counts().new
-    }
+    fun newCount(): Int = counts().new
 
     // only used by a test
-    fun lrnCount(): Int {
-        return counts().lrn
-    }
+    fun lrnCount(): Int = counts().lrn
 
     /** Only used by tests. */
-    fun countIdx(): Counts.Queue {
-        return when (queuedCards.cardsList.first().queue) {
+    fun countIdx(): Counts.Queue =
+        when (queuedCards.cardsList.first().queue) {
             QueuedCards.Queue.NEW -> Counts.Queue.NEW
             QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
             QueuedCards.Queue.REVIEW -> Counts.Queue.REV
             QueuedCards.Queue.UNRECOGNIZED, null -> TODO("unrecognized queue")
         }
-    }
 
     /** @return Number of repetitions today. Note that a repetition is the fact that the scheduler sent a card, and not the fact that the card was answered.
      * So buried, suspended, ... cards are also counted as repetitions.
@@ -245,16 +233,12 @@ open class Scheduler(val col: Collection) {
     /**
      * @param cids Ids of cards to bury
      */
-    fun buryCards(cids: Iterable<CardId>): OpChangesWithCount {
-        return buryCards(cids, manual = true)
-    }
+    fun buryCards(cids: Iterable<CardId>): OpChangesWithCount = buryCards(cids, manual = true)
 
     /**
      * @param cids Ids of cards to unbury
      */
-    fun unburyCards(cids: Iterable<CardId>): OpChanges {
-        return col.backend.restoreBuriedAndSuspendedCards(cids)
-    }
+    fun unburyCards(cids: Iterable<CardId>): OpChanges = col.backend.restoreBuriedAndSuspendedCards(cids)
 
     /**
      * @param ids Id of cards to suspend
@@ -269,13 +253,12 @@ open class Scheduler(val col: Collection) {
         )
     }
 
-    open fun suspendNotes(ids: Iterable<NoteId>): OpChangesWithCount {
-        return col.backend.buryOrSuspendCards(
+    open fun suspendNotes(ids: Iterable<NoteId>): OpChangesWithCount =
+        col.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = ids,
             mode = BuryOrSuspendCardsRequest.Mode.SUSPEND,
         )
-    }
 
     /**
      * @param ids Id of cards to unsuspend
@@ -314,21 +297,18 @@ open class Scheduler(val col: Collection) {
      * Bury all cards for note until next session.
      * @param nids The id of the targeted note.
      */
-    open fun buryNotes(nids: List<NoteId>): OpChangesWithCount {
-        return col.backend.buryOrSuspendCards(
+    open fun buryNotes(nids: List<NoteId>): OpChangesWithCount =
+        col.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = nids,
             mode = BuryOrSuspendCardsRequest.Mode.BURY_USER,
         )
-    }
 
     @RustCleanup("check if callers use the correct UnburyDeckRequest.Mode for their cases")
     fun unburyDeck(
         deckId: DeckId,
         mode: UnburyDeckRequest.Mode = UnburyDeckRequest.Mode.ALL,
-    ): OpChanges {
-        return col.backend.unburyDeck(deckId, mode)
-    }
+    ): OpChanges = col.backend.unburyDeck(deckId, mode)
 
     /**
      * @return Whether there are buried card is selected deck
@@ -341,9 +321,7 @@ open class Scheduler(val col: Collection) {
     /** @return whether there are cards in learning, with review due the same
      * day, in the selected decks.
      */
-    open fun hasCardsTodayAfterStudyAheadLimit(): Boolean {
-        return col.backend.congratsInfo().secsUntilNextLearn < 86_400
-    }
+    open fun hasCardsTodayAfterStudyAheadLimit(): Boolean = col.backend.congratsInfo().secsUntilNextLearn < 86_400
 
     /**
      * @param ids Ids of cards to put at the end of the new queue.
@@ -374,9 +352,7 @@ open class Scheduler(val col: Collection) {
         ids: List<CardId>,
         imin: Int,
         imax: Int,
-    ): OpChanges {
-        return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
-    }
+    ): OpChanges = col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
 
     /**
      * Set cards to be due in [days], turning them into review cards if necessary.
@@ -418,15 +394,14 @@ open class Scheduler(val col: Collection) {
         step: Int = 1,
         shuffle: Boolean = false,
         shift: Boolean = false,
-    ): OpChangesWithCount {
-        return col.backend.sortCards(
+    ): OpChangesWithCount =
+        col.backend.sortCards(
             cardIds = cids,
             startingFrom = start,
             stepSize = step,
             randomize = shuffle,
             shiftExisting = shift,
         )
-    }
 
     /**
      * Randomize the cards of did
@@ -477,9 +452,7 @@ open class Scheduler(val col: Collection) {
         col.backend.emptyFilteredDeck(did)
     }
 
-    fun deckDueTree(): DeckNode {
-        return deckTree(true)
-    }
+    fun deckDueTree(): DeckNode = deckTree(true)
 
     /**
      * Returns a tree of decks with counts. If [topDeckId] is provided, only the according subtree is
@@ -496,60 +469,46 @@ open class Scheduler(val col: Collection) {
         return tree
     }
 
-    fun deckTree(includeCounts: Boolean): DeckNode {
-        return DeckNode(col.backend.deckTree(now = if (includeCounts) time.intTime() else 0), "")
-    }
+    fun deckTree(includeCounts: Boolean): DeckNode = DeckNode(col.backend.deckTree(now = if (includeCounts) time.intTime() else 0), "")
 
-    fun deckLimit(): String {
-        return Utils.ids2str(col.decks.active())
-    }
+    fun deckLimit(): String = Utils.ids2str(col.decks.active())
 
-    fun congratulationsInfo(): CongratsInfoResponse {
-        return col.backend.congratsInfo()
-    }
+    fun congratulationsInfo(): CongratsInfoResponse = col.backend.congratsInfo()
 
-    fun haveManuallyBuried(): Boolean {
-        return congratulationsInfo().haveUserBuried
-    }
+    fun haveManuallyBuried(): Boolean = congratulationsInfo().haveUserBuried
 
-    fun haveBuriedSiblings(): Boolean {
-        return congratulationsInfo().haveSchedBuried
-    }
+    fun haveBuriedSiblings(): Boolean = congratulationsInfo().haveSchedBuried
 
     @CheckResult
-    fun customStudy(request: CustomStudyRequest): OpChanges {
-        return col.backend.customStudy(request)
-    }
+    fun customStudy(request: CustomStudyRequest): OpChanges = col.backend.customStudy(request)
 
-    fun customStudyDefaults(deckId: DeckId): CustomStudyDefaultsResponse {
-        return col.backend.customStudyDefaults(deckId)
-    }
+    fun customStudyDefaults(deckId: DeckId): CustomStudyDefaultsResponse = col.backend.customStudyDefaults(deckId)
 
     /**
      * @return Number of new card in current deck and its descendants. Capped at [REPORT_LIMIT]
      */
     @Suppress("ktlint:standard:max-line-length")
-    fun totalNewForCurrentDeck(): Int {
-        return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+    fun totalNewForCurrentDeck(): Int =
+        col.db.queryScalar(
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " +
+                Consts.QUEUE_TYPE_NEW +
+                " LIMIT ?)",
             REPORT_LIMIT,
         )
-    }
 
     /** @return Number of review cards in current deck.
      */
     @Suppress("ktlint:standard:max-line-length")
-    fun totalRevForCurrentDeck(): Int {
-        return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+    fun totalRevForCurrentDeck(): Int =
+        col.db.queryScalar(
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " +
+                Consts.QUEUE_TYPE_REV +
+                " AND due <= ? LIMIT ?)",
             today,
             REPORT_LIMIT,
         )
-    }
 
-    fun studiedToday(): String {
-        return col.backend.studiedToday()
-    }
+    fun studiedToday(): String = col.backend.studiedToday()
 
     /**
      * @return Number of days since creation of the collection.
@@ -563,26 +522,23 @@ open class Scheduler(val col: Collection) {
     open val dayCutoff: EpochSeconds
         get() = timingToday().nextDayAt
 
-    private fun timingToday(): SchedTimingTodayResponse {
-        return col.backend.schedTimingToday()
-    }
+    private fun timingToday(): SchedTimingTodayResponse = col.backend.schedTimingToday()
 
     /** true if there are any rev cards due.  */
     @Suppress("ktlint:standard:max-line-length")
-    open fun revDue(): Boolean {
-        return col.db
+    open fun revDue(): Boolean =
+        col.db
             .queryScalar(
                 "SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
                     " LIMIT 1",
                 today,
             ) != 0
-    }
 
     /** true if there are any new cards due.  */
     @Suppress("ktlint:standard:max-line-length")
-    open fun newDue(): Boolean {
-        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
-    }
+    open fun newDue(): Boolean =
+        col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") !=
+            0
 
     private val etaCache: DoubleArray = doubleArrayOf(-1.0, -1.0, -1.0, -1.0, -1.0, -1.0)
 
@@ -619,9 +575,20 @@ open class Scheduler(val col: Collection) {
                 .db
                 .query(
                     "select " +
-                        "avg(case when type = " + Consts.CARD_TYPE_NEW + " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " + Consts.CARD_TYPE_NEW + " then time else null end) as newTime, " +
-                        "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING + ") then time else null end) as revTime, " +
-                        "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime " +
+                        "avg(case when type = " + Consts.CARD_TYPE_NEW +
+                        " then case when ease > 1 then 1.0 else 0.0 end else null end) as newRate, avg(case when type = " +
+                        Consts.CARD_TYPE_NEW +
+                        " then time else null end) as newTime, " +
+                        "avg(case when type in (" + Consts.CARD_TYPE_LRN + ", " + Consts.CARD_TYPE_RELEARNING +
+                        ") then case when ease > 1 then 1.0 else 0.0 end else null end) as revRate, avg(case when type in (" +
+                        Consts.CARD_TYPE_LRN +
+                        ", " +
+                        Consts.CARD_TYPE_RELEARNING +
+                        ") then time else null end) as revTime, " +
+                        "avg(case when type = " + Consts.CARD_TYPE_REV +
+                        " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " +
+                        Consts.CARD_TYPE_REV +
+                        " then time else null end) as relrnTime " +
                         "from revlog where id > " +
                         "?",
                     (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000,
@@ -695,9 +662,7 @@ open class Scheduler(val col: Collection) {
      * @param card A random card
      * @return The conf of the deck of the card.
      */
-    fun cardConf(card: Card): DeckConfig {
-        return col.decks.configDictForDeckId(card.did)
-    }
+    fun cardConf(card: Card): DeckConfig = col.decks.configDictForDeckId(card.did)
 
     /*
       Next time reports ********************************************************
@@ -724,13 +689,9 @@ open class Scheduler(val col: Collection) {
         return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
     }
 
-    fun learnAheadSeconds(): Int {
-        return col.config.get("collapseTime") ?: 1200
-    }
+    fun learnAheadSeconds(): Int = col.config.get("collapseTime") ?: 1200
 
-    fun timeboxSecs(): Int {
-        return col.config.get("timeLim") ?: 0
-    }
+    fun timeboxSecs(): Int = col.config.get("timeLim") ?: 0
 }
 
 const val REPORT_LIMIT = 99999
@@ -738,53 +699,43 @@ const val REPORT_LIMIT = 99999
 private fun stateFromEase(
     states: SchedulingStates,
     ease: Ease,
-): SchedulingState {
-    return when (ease) {
+): SchedulingState =
+    when (ease) {
         Ease.AGAIN -> states.again
         Ease.HARD -> states.hard
         Ease.GOOD -> states.good
         Ease.EASY -> states.easy
     }
-}
 
-private fun intervalForState(state: SchedulingState): Long {
-    return when (state.kindCase) {
+private fun intervalForState(state: SchedulingState): Long =
+    when (state.kindCase) {
         SchedulingState.KindCase.NORMAL -> intervalForNormalState(state.normal)
         SchedulingState.KindCase.FILTERED -> intervalForFilteredState(state.filtered)
         SchedulingState.KindCase.KIND_NOT_SET, null -> TODO("invalid scheduling state")
     }
-}
 
-private fun intervalForNormalState(normal: SchedulingState.Normal): Long {
-    return when (normal.kindCase) {
+private fun intervalForNormalState(normal: SchedulingState.Normal): Long =
+    when (normal.kindCase) {
         SchedulingState.Normal.KindCase.NEW -> 0
         SchedulingState.Normal.KindCase.LEARNING -> normal.learning.scheduledSecs.toLong()
         SchedulingState.Normal.KindCase.REVIEW -> normal.review.scheduledDays.toLong() * 86400
-        SchedulingState.Normal.KindCase.RELEARNING -> normal.relearning.learning.scheduledSecs.toLong()
+        SchedulingState.Normal.KindCase.RELEARNING ->
+            normal.relearning.learning.scheduledSecs
+                .toLong()
         SchedulingState.Normal.KindCase.KIND_NOT_SET, null -> TODO("invalid normal state")
     }
-}
 
-private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
-    return when (filtered.kindCase) {
+private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long =
+    when (filtered.kindCase) {
         SchedulingState.Filtered.KindCase.PREVIEW -> filtered.preview.scheduledSecs.toLong()
         SchedulingState.Filtered.KindCase.RESCHEDULING -> intervalForNormalState(filtered.rescheduling.originalState)
         SchedulingState.Filtered.KindCase.KIND_NOT_SET, null -> TODO("invalid filtered state")
     }
-}
 
-fun Collection.computeFsrsParamsRaw(input: ByteArray): ByteArray {
-    return backend.computeFsrsParamsRaw(input = input)
-}
+fun Collection.computeFsrsParamsRaw(input: ByteArray): ByteArray = backend.computeFsrsParamsRaw(input = input)
 
-fun Collection.computeOptimalRetentionRaw(input: ByteArray): ByteArray {
-    return backend.computeOptimalRetentionRaw(input = input)
-}
+fun Collection.computeOptimalRetentionRaw(input: ByteArray): ByteArray = backend.computeOptimalRetentionRaw(input = input)
 
-fun Collection.evaluateParamsRaw(input: ByteArray): ByteArray {
-    return backend.evaluateParamsRaw(input = input)
-}
+fun Collection.evaluateParamsRaw(input: ByteArray): ByteArray = backend.evaluateParamsRaw(input = input)
 
-fun Collection.simulateFsrsReviewRaw(input: ByteArray): ByteArray {
-    return backend.simulateFsrsReviewRaw(input = input)
-}
+fun Collection.simulateFsrsReviewRaw(input: ByteArray): ByteArray = backend.simulateFsrsReviewRaw(input = input)

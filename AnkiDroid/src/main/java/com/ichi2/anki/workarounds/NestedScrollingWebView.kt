@@ -76,7 +76,8 @@ class NestedScrollingWebView
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = android.R.attr.webViewStyle,
-    ) : WebView(context, attrs, defStyleAttr), NestedScrollingChild {
+    ) : WebView(context, attrs, defStyleAttr),
+        NestedScrollingChild {
         private val yAxis: Int = 1
 
         private val deltaX: Int = 0

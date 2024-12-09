@@ -52,8 +52,7 @@ object UsageAnalytics {
     fun interface AnalyticsLoggingExceptionHandler : Thread.UncaughtExceptionHandler
 
     var uncaughtExceptionHandler =
-        AnalyticsLoggingExceptionHandler {
-                thread: Thread?, throwable: Throwable ->
+        AnalyticsLoggingExceptionHandler { thread: Thread?, throwable: Throwable ->
             sendAnalyticsException(throwable, true)
             if (thread == null) {
                 Timber.w("unexpected: thread was null")
@@ -80,7 +79,8 @@ object UsageAnalytics {
                     .setSamplePercentage(getAnalyticsSamplePercentage(context))
                     .setBatchSize(1) // until this handles application termination we will lose hits if batch>1
             sAnalytics =
-                GoogleAnalytics.builder()
+                GoogleAnalytics
+                    .builder()
                     .withTrackingId(getAnalyticsTag(context))
                     .withConfig(gaConfig)
                     .withDefaultRequest(
@@ -92,8 +92,7 @@ object UsageAnalytics {
                             .trackingId(getAnalyticsTag(context))
                             .clientId(Installation.id(context))
                             .anonymizeIp(context.resources.getBoolean(R.bool.ga_anonymizeIp)),
-                    )
-                    .withHttpClient(OkHttpClientImpl(gaConfig))
+                    ).withHttpClient(OkHttpClientImpl(gaConfig))
                     .build()
         }
         installDefaultExceptionHandler()
@@ -282,7 +281,11 @@ object UsageAnalytics {
         if (!sOptIn) {
             return
         }
-        sAnalytics!!.exception().exceptionDescription(description).exceptionFatal(fatal).sendAsync()
+        sAnalytics!!
+            .exception()
+            .exceptionDescription(description)
+            .exceptionFatal(fatal)
+            .sendAsync()
     }
 
     internal fun canGetDefaultUserAgent(): Boolean {

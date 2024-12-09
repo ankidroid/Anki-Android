@@ -63,7 +63,9 @@ open class SchedulerTest : JvmTest() {
     fun handlesSmallSteps() {
         // a delay of 0 crashed the app (step of 0.01).
         addNoteUsingBasicModel("Hello", "World")
-        col.decks.allConfig()[0].getJSONObject("new")
+        col.decks
+            .allConfig()[0]
+            .getJSONObject("new")
             .put("delays", JSONArray(listOf(0.01, 10)))
         val c = col.sched.card
         MatcherAssert.assertThat(c, Matchers.notNullValue())
@@ -176,7 +178,12 @@ open class SchedulerTest : JvmTest() {
     @Throws(Exception::class)
     @KotlinCleanup("This is flaky just before 4AM")
     fun test_learnV2() {
-        if (Instant.now().atZone(ZoneId.systemDefault()).hour.let { it in 2..3 }) {
+        if (Instant
+                .now()
+                .atZone(ZoneId.systemDefault())
+                .hour
+                .let { it in 2..3 }
+        ) {
             // The backend shifts the current time around rollover, and expects the frontend to
             // do so as well. This could potentially be done with TimeManager in the future.
             return
@@ -1073,7 +1080,13 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "three")
         note.notetype.put("did", addDeck("foo::baz"))
         col.addNote(note)
-        Assert.assertEquals(5, col.decks.allNamesAndIds().size.toLong())
+        Assert.assertEquals(
+            5,
+            col.decks
+                .allNamesAndIds()
+                .size
+                .toLong(),
+        )
         val tree = col.sched.deckDueTree().children[0]
         Assert.assertEquals("Default", tree.lastDeckNameComponent)
         // sum of child and parent
@@ -1234,7 +1247,10 @@ open class SchedulerTest : JvmTest() {
                 startTimer()
             }
         col.sched.answerCard(c, Ease.AGAIN)
-        col.sched.cardConf(c).getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
+        col.sched
+            .cardConf(c)
+            .getJSONObject("lapse")
+            .put("delays", JSONArray(doubleArrayOf()))
         col.sched.answerCard(c, Ease.AGAIN)
     }
 

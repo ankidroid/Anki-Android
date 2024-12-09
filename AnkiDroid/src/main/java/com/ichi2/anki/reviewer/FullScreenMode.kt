@@ -20,7 +20,9 @@ import androidx.core.content.edit
 import timber.log.Timber
 
 /** Whether Reviewer content should take the full screen */
-enum class FullScreenMode(private val prefValue: String) {
+enum class FullScreenMode(
+    private val prefValue: String,
+) {
     /** Display both navigation and buttons (default) */
     BUTTONS_AND_MENU("0"),
 

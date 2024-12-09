@@ -74,10 +74,12 @@ class ActionButtonStatus {
         showAsActionType: Int,
     ) {
         customButtons[resourceId] =
-            preferences.getString(
-                preferenceName,
-                showAsActionType.toString(),
-            )!!.toInt()
+            preferences
+                .getString(
+                    preferenceName,
+                    showAsActionType.toString(),
+                )!!
+                .toInt()
     }
 
     fun setCustomButtons(menu: Menu) {
@@ -91,29 +93,17 @@ class ActionButtonStatus {
         }
     }
 
-    fun hideWhiteboardIsDisabled(): Boolean {
-        return customButtons[R.id.action_hide_whiteboard] == MENU_DISABLED
-    }
+    fun hideWhiteboardIsDisabled(): Boolean = customButtons[R.id.action_hide_whiteboard] == MENU_DISABLED
 
-    fun toggleStylusIsDisabled(): Boolean {
-        return customButtons[R.id.action_toggle_stylus] == MENU_DISABLED
-    }
+    fun toggleStylusIsDisabled(): Boolean = customButtons[R.id.action_toggle_stylus] == MENU_DISABLED
 
-    fun clearWhiteboardIsDisabled(): Boolean {
-        return customButtons[R.id.action_clear_whiteboard] == MENU_DISABLED
-    }
+    fun clearWhiteboardIsDisabled(): Boolean = customButtons[R.id.action_clear_whiteboard] == MENU_DISABLED
 
-    fun selectTtsIsDisabled(): Boolean {
-        return customButtons[R.id.action_select_tts] == MENU_DISABLED
-    }
+    fun selectTtsIsDisabled(): Boolean = customButtons[R.id.action_select_tts] == MENU_DISABLED
 
-    fun saveWhiteboardIsDisabled(): Boolean {
-        return customButtons[R.id.action_save_whiteboard] == MENU_DISABLED
-    }
+    fun saveWhiteboardIsDisabled(): Boolean = customButtons[R.id.action_save_whiteboard] == MENU_DISABLED
 
-    fun whiteboardPenColorIsDisabled(): Boolean {
-        return customButtons[R.id.action_change_whiteboard_pen_color] == MENU_DISABLED
-    }
+    fun whiteboardPenColorIsDisabled(): Boolean = customButtons[R.id.action_change_whiteboard_pen_color] == MENU_DISABLED
 
     fun suspendIsDisabled(): Boolean = customButtons[R.id.action_suspend] == MENU_DISABLED
 

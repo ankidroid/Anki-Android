@@ -17,7 +17,9 @@ package com.ichi2.anki.contextmenu
 
 import android.content.Context
 
-class CardBrowserContextMenu(context: Context) : SystemContextMenu(context) {
+class CardBrowserContextMenu(
+    context: Context,
+) : SystemContextMenu(context) {
     override val activityName: String
         get() = "com.ichi2.anki.CardBrowserContextMenuAction"
 

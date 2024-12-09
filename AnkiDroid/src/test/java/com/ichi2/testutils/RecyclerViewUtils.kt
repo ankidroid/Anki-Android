@@ -21,7 +21,5 @@ object RecyclerViewUtils {
     inline fun <reified VH : RecyclerView.ViewHolder?> viewHolderAt(
         recyclerView: RecyclerView,
         position: Int,
-    ): VH {
-        return recyclerView.findViewHolderForAdapterPosition(position) as VH
-    }
+    ): VH = recyclerView.findViewHolderForAdapterPosition(position) as VH
 }

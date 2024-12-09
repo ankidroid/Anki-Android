@@ -47,7 +47,8 @@ class CardBrowserOrderDialog : AnalyticsDialogFragment() {
             }
         }
 
-        return AlertDialog.Builder(requireContext())
+        return AlertDialog
+            .Builder(requireContext())
             .setTitle(R.string.card_browser_change_display_order_title)
             .setSingleChoiceItems(items, viewModel.order.cardBrowserLabelIndex, orderSingleChoiceDialogListener)
             .create()

@@ -80,7 +80,10 @@ import androidx.browser.customtabs.CustomTabsIntent.Builder as CustomTabsIntentB
 
 @UiThread
 @KotlinCleanup("set activityName")
-open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivityProvider {
+open class AnkiActivity :
+    AppCompatActivity,
+    ShortcutGroupProvider,
+    AnkiActivityProvider {
     /**
      * Receiver that informs us when a broadcast listen in [broadcastsActions] is received.
      *
@@ -225,9 +228,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
 
-    fun colIsOpenUnsafe(): Boolean {
-        return CollectionManager.isOpenUnsafe()
-    }
+    fun colIsOpenUnsafe(): Boolean = CollectionManager.isOpenUnsafe()
 
     /**
      * Whether animations should not be displayed
@@ -248,9 +249,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
      *
      * @see .animationDisabled
      */
-    fun animationEnabled(): Boolean {
-        return !animationDisabled()
-    }
+    fun animationEnabled(): Boolean = !animationDisabled()
 
     override fun setContentView(view: View?) {
         if (animationDisabled()) {
@@ -432,7 +431,8 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         val toolbarColor = MaterialColors.getColor(this, R.attr.appBarColor, 0)
         val navBarColor = MaterialColors.getColor(this, R.attr.customTabNavBarColor, 0)
         val colorSchemeParams =
-            CustomTabColorSchemeParams.Builder()
+            CustomTabColorSchemeParams
+                .Builder()
                 .setToolbarColor(toolbarColor)
                 .setNavigationBarColor(navBarColor)
                 .build()
@@ -446,8 +446,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
                         this.resources,
                         R.drawable.ic_back_arrow_custom_tab,
                     ),
-                )
-                .setColorScheme(customTabsColorScheme)
+                ).setColorScheme(customTabsColorScheme)
                 .setDefaultColorSchemeParams(colorSchemeParams)
         val customTabsIntent = builder.build()
         CustomTabsHelper.addKeepAliveExtra(this, customTabsIntent.intent)
@@ -534,7 +533,8 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     ) {
         val prefs = this.sharedPrefs()
         // Show a notification unless all notifications have been totally disabled
-        if (prefs.getString(getString(R.string.pref_notifications_minimum_cards_due_key), "0")!!
+        if (prefs
+                .getString(getString(R.string.pref_notifications_minimum_cards_due_key), "0")!!
                 .toInt() <= PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
@@ -546,11 +546,11 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
                 }
             // Build basic notification
             val builder =
-                NotificationCompat.Builder(
-                    this,
-                    channel.id,
-                )
-                    .setSmallIcon(R.drawable.ic_star_notify)
+                NotificationCompat
+                    .Builder(
+                        this,
+                        channel.id,
+                    ).setSmallIcon(R.drawable.ic_star_notify)
                     .setContentTitle(title)
                     .setContentText(message)
                     .setColor(this.getColor(R.color.material_light_blue_500))
@@ -728,10 +728,9 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     }
 }
 
-fun Fragment.requireAnkiActivity(): AnkiActivity {
-    return requireActivity() as? AnkiActivity?
+fun Fragment.requireAnkiActivity(): AnkiActivity =
+    requireActivity() as? AnkiActivity?
         ?: throw java.lang.IllegalStateException("Fragment $this not attached to an AnkiActivity.")
-}
 
 interface AnkiActivityProvider {
     val ankiActivity: AnkiActivity

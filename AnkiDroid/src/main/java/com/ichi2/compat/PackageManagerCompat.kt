@@ -54,7 +54,9 @@ import android.content.pm.PackageManager as AndroidPackageManager
  * Flags class that wraps around the bitmask flags used in methods that retrieve package or
  * application info.
  */
-open class Flags protected constructor(val value: Long)
+open class Flags protected constructor(
+    val value: Long,
+)
 
 /**
  * Specific flags used for retrieving package info. Example:

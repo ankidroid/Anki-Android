@@ -85,7 +85,9 @@ suspend fun <T> coMeasureTime(
  *
  * -> `D/Stopwatch executed page render in 67ms`
  */
-class Stopwatch(private val executionName: String?) {
+class Stopwatch(
+    private val executionName: String?,
+) {
     private var startTime = TimeManager.time.intTimeMS()
 
     fun logElapsed() {

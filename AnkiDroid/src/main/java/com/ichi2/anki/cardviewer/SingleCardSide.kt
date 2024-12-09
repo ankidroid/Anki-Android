@@ -23,10 +23,9 @@ enum class SingleCardSide {
     BACK,
     ;
 
-    fun toCardSide(): CardSide {
-        return when (this) {
+    fun toCardSide(): CardSide =
+        when (this) {
             FRONT -> CardSide.QUESTION
             BACK -> CardSide.ANSWER
         }
-    }
 }

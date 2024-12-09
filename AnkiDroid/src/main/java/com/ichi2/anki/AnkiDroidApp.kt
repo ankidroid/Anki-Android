@@ -76,7 +76,10 @@ import java.util.Locale
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.Subscriber {
+open class AnkiDroidApp :
+    Application(),
+    Configuration.Provider,
+    ChangeManager.Subscriber {
     /** An exception if the WebView subsystem fails to load  */
     private var webViewError: Throwable? = null
     private val notifications = MutableLiveData<Void?>()
@@ -284,8 +287,8 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
     }
 
     @Suppress("deprecation") // 7109: setAcceptFileSchemeCookies
-    protected fun acceptFileSchemeCookies(): Boolean {
-        return try {
+    protected fun acceptFileSchemeCookies(): Boolean =
+        try {
             CookieManager.setAcceptFileSchemeCookies(true)
             true
         } catch (e: Throwable) {
@@ -297,7 +300,6 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
             Timber.e(e, "setAcceptFileSchemeCookies")
             false
         }
-    }
 
     /**
      * Callback method invoked when operations that affect the app state are executed.
@@ -462,9 +464,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
                     else -> appResources.getString(R.string.link_manual)
                 }
 
-        fun webViewFailedToLoad(): Boolean {
-            return instance.webViewError != null
-        }
+        fun webViewFailedToLoad(): Boolean = instance.webViewError != null
 
         val webViewErrorMessage: String?
             get() {

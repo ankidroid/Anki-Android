@@ -75,8 +75,8 @@ open class FixedTextView : AppCompatTextView {
         }
     }
 
-    override fun onPreDraw(): Boolean {
-        return try {
+    override fun onPreDraw(): Boolean =
+        try {
             super.onPreDraw()
         } catch (ex: Throwable) {
             Timber.w(ex)
@@ -94,7 +94,6 @@ open class FixedTextView : AppCompatTextView {
              */
             true
         }
-    }
 
     override fun onDraw(canvas: Canvas) {
         try {
@@ -123,8 +122,8 @@ open class FixedTextView : AppCompatTextView {
         return super.dispatchTouchEvent(event)
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        return try {
+    override fun onTouchEvent(event: MotionEvent): Boolean =
+        try {
             super.onTouchEvent(event)
         } catch (ex: Throwable) {
             Timber.w(ex)
@@ -142,7 +141,6 @@ open class FixedTextView : AppCompatTextView {
                 at android.widget.TextView.onTouchEvent(TextView.java:9701)
              */
         }
-    }
 
     override fun onFocusChanged(
         focused: Boolean,
@@ -169,8 +167,8 @@ open class FixedTextView : AppCompatTextView {
         }
     }
 
-    override fun performLongClick(): Boolean {
-        return try {
+    override fun performLongClick(): Boolean =
+        try {
             super.performLongClick()
         } catch (ex: Throwable) {
             /*
@@ -190,13 +188,12 @@ open class FixedTextView : AppCompatTextView {
             Timber.w(ex)
             false
         }
-    }
 
     override fun onKeyDown(
         keyCode: Int,
         event: KeyEvent,
-    ): Boolean {
-        return try {
+    ): Boolean =
+        try {
             super.onKeyDown(keyCode, event)
         } catch (ex: Throwable) {
             /*
@@ -225,7 +222,6 @@ open class FixedTextView : AppCompatTextView {
             Timber.w(ex)
             false
         }
-    }
 
     override fun setText(
         text: CharSequence?,

@@ -343,26 +343,21 @@ object LanguageUtil {
             "zh-TW",
         )
 
-    fun getShortDateFormatFromMs(ms: Long): String {
-        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(ms))
-    }
+    fun getShortDateFormatFromMs(ms: Long): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(ms))
 
-    fun getShortDateFormatFromS(s: Long): String {
-        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
-    }
+    fun getShortDateFormatFromS(s: Long): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
 
     fun getShortDateFormatFromS(s: Int): String = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(Date(s * 1000L))
 
-    fun getLocaleCompat(resources: Resources): Locale? {
-        return ConfigurationCompat.getLocales(resources.configuration)[0]
-    }
+    fun getLocaleCompat(resources: Resources): Locale? = ConfigurationCompat.getLocales(resources.configuration)[0]
 
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
     /** If locale is not provided, the current locale will be used. */
     fun setDefaultBackendLanguages(languageTag: String? = null) {
         val langCode =
-            languageTag ?: AnkiDroidApp.instance.sharedPrefs()
+            languageTag ?: AnkiDroidApp.instance
+                .sharedPrefs()
                 .getString("language", SYSTEM_LANGUAGE_TAG)!!
 
         val localeLanguage =
@@ -374,8 +369,8 @@ object LanguageUtil {
         BackendFactory.defaultLanguages = listOf(languageTagToBackendCode(localeLanguage))
     }
 
-    private fun languageTagToBackendCode(languageTag: String): String {
-        return when (languageTag) {
+    private fun languageTagToBackendCode(languageTag: String): String =
+        when (languageTag) {
             "heb" -> "he"
             "ind" -> "id"
             "tgl" -> "tl"
@@ -383,7 +378,6 @@ object LanguageUtil {
             "yue" -> "zh-HK"
             else -> languageTag
         }
-    }
 
     /** @return string defined with [stringRes] on the specified [locale] */
     fun Context.getStringByLocale(
@@ -401,15 +395,11 @@ object LanguageUtil {
         @StringRes stringRes: Int,
         locale: Locale,
         vararg formatArgs: Any,
-    ): String {
-        return requireContext().getStringByLocale(stringRes, locale, *formatArgs)
-    }
+    ): String = requireContext().getStringByLocale(stringRes, locale, *formatArgs)
 
     /**
      * This should always be called after Activity.onCreate()
      * @return locale language tag of the app configured language
      */
-    fun getCurrentLocaleTag(): String {
-        return AppCompatDelegate.getApplicationLocales().toLanguageTags()
-    }
+    fun getCurrentLocaleTag(): String = AppCompatDelegate.getApplicationLocales().toLanguageTags()
 }

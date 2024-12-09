@@ -121,8 +121,7 @@ object CrashReportService {
                     ReportField.SHARED_PREFERENCES,
                     // ReportField.MEDIA_CODEC_LIST,
                     ReportField.THREAD_DETAILS,
-                )
-                .withLogcatArguments(*logcatArgs)
+                ).withLogcatArguments(*logcatArgs)
                 .withPluginConfigurations(
                     DialogConfigurationBuilder()
                         .withReportDialogClass(AnkiDroidCrashReportDialog::class.java)
@@ -293,7 +292,8 @@ object CrashReportService {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
         val reportMode =
-            mApplication.applicationContext.sharedPrefs()
+            mApplication.applicationContext
+                .sharedPrefs()
                 .getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
         if (onlyIfSilent) {
             if (FEEDBACK_REPORT_ALWAYS != reportMode) {
@@ -310,9 +310,7 @@ object CrashReportService {
         }
     }
 
-    fun isProperServiceProcess(): Boolean {
-        return ACRA.isACRASenderServiceProcess()
-    }
+    fun isProperServiceProcess(): Boolean = ACRA.isACRASenderServiceProcess()
 
     fun isAcraEnabled(
         context: Context,
@@ -393,9 +391,10 @@ object CrashReportService {
      * @param activity the Activity used for Context access when interrogating ACRA reports
      * @return the timestamp of the most recent report, or -1 if no reports at all
      */
-    private fun getTimestampOfLastReport(activity: AnkiActivity): Long {
-        return LimiterData.load(activity).reportMetadata
+    private fun getTimestampOfLastReport(activity: AnkiActivity): Long =
+        LimiterData
+            .load(activity)
+            .reportMetadata
             .filter { it.exceptionClass == UserSubmittedException::class.java.name }
             .maxOfOrNull { it.timestamp?.timeInMillis ?: -1L } ?: -1L
-    }
 }

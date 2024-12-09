@@ -258,9 +258,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             displayAnswer = true
         }
 
-        override fun answerFieldIsFocused(): Boolean {
-            return focusTextField
-        }
+        override fun answerFieldIsFocused(): Boolean = focusTextField
 
         override fun displayCardAnswer() {
             cardFlips.add("answer")
@@ -438,9 +436,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return this
         }
 
-        fun hasBeenAnswered(): Boolean {
-            return answered != null
-        }
+        fun hasBeenAnswered(): Boolean = answered != null
 
         override fun performClickWithVisualFeedback(ease: Ease) {
             answerCard(ease)

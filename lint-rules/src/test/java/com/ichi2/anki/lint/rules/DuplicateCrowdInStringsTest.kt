@@ -125,8 +125,7 @@ class DuplicateCrowdInStringsTest {
             .files(
                 TestFiles.xml("res/values/constants.xml", mIgnoredFile),
                 TestFiles.xml("res/values/strings.xml", mNotIgnored),
-            )
-            .issues(DuplicateCrowdInStrings.ISSUE)
+            ).issues(DuplicateCrowdInStrings.ISSUE)
             .run()
             .expectErrorCount(0)
     }

@@ -77,7 +77,9 @@ object PreferenceUpgradeService {
         PreferenceUpgrade.setPreferenceToLatestVersion(preferences)
     }
 
-    abstract class PreferenceUpgrade private constructor(val versionIdentifier: VersionIdentifier) {
+    abstract class PreferenceUpgrade private constructor(
+        val versionIdentifier: VersionIdentifier,
+    ) {
         /*
         To add a new preference upgrade:
          * yield a new class from getAllInstances (do not use `legacyPreviousVersionCode` in the constructor)
@@ -118,9 +120,10 @@ object PreferenceUpgradeService {
             ): List<PreferenceUpgrade> {
                 val currentPrefVersion: VersionIdentifier = getPreferenceVersion(preferences)
 
-                return getAllInstances(legacyPreviousVersionCode).filter {
-                    it.versionIdentifier > currentPrefVersion
-                }.toList()
+                return getAllInstances(legacyPreviousVersionCode)
+                    .filter {
+                        it.versionIdentifier > currentPrefVersion
+                    }.toList()
             }
 
             /** Sets the preference version such that no upgrades need to be applied */
@@ -155,7 +158,9 @@ object PreferenceUpgradeService {
          * upgrades were detected via a version code comparison
          * rather than comparing a preference value
          */
-        private class LegacyPreferenceUpgrade(val previousVersionCode: LegacyVersionIdentifier) : PreferenceUpgrade(1) {
+        private class LegacyPreferenceUpgrade(
+            val previousVersionCode: LegacyVersionIdentifier,
+        ) : PreferenceUpgrade(1) {
             override fun upgrade(preferences: SharedPreferences) {
                 if (!needsLegacyPreferenceUpgrade(previousVersionCode)) {
                     return
@@ -236,10 +241,11 @@ object PreferenceUpgradeService {
                 // parse fields with separator
                 for (s in set) {
                     val fields =
-                        s!!.split(
-                            Consts.FIELD_SEPARATOR.toRegex(),
-                            CustomToolbarButton.KEEP_EMPTY_ENTRIES.coerceAtLeast(0),
-                        ).toTypedArray()
+                        s!!
+                            .split(
+                                Consts.FIELD_SEPARATOR.toRegex(),
+                                CustomToolbarButton.KEEP_EMPTY_ENTRIES.coerceAtLeast(0),
+                            ).toTypedArray()
                     if (fields.size != 3) {
                         continue
                     }

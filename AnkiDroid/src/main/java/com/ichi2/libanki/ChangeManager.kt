@@ -146,12 +146,11 @@ object ChangeManager {
 suspend fun <T> undoableOp(
     handler: Any? = null,
     block: Collection.() -> T,
-): T {
-    return withCol {
+): T =
+    withCol {
         block()
     }.also {
         withContext(Dispatchers.Main) {
             ChangeManager.notifySubscribers(it, handler)
         }
     }
-}

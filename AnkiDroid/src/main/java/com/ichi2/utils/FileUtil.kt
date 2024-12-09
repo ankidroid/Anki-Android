@@ -34,27 +34,22 @@ object FileUtil {
      * @param path the filesystem path you need free space information on
      * @return long indicating the bytes available for that path
      */
-    fun determineBytesAvailable(path: String): Long {
-        return StatFs(path).availableBytes
-    }
+    fun determineBytesAvailable(path: String): Long = StatFs(path).availableBytes
 
     /** Gets the free disk space given a file  */
     fun getFreeDiskSpace(
         file: File,
         defaultValue: Long,
-    ): Long {
-        return try {
+    ): Long =
+        try {
             StatFs(file.parentFile?.path).availableBytes
         } catch (e: IllegalArgumentException) {
             Timber.e(e, "Free space could not be retrieved")
             defaultValue
         }
-    }
 
     /** Returns the current download Directory */
-    fun getDownloadDirectory(): String {
-        return Environment.DIRECTORY_DOWNLOADS
-    }
+    fun getDownloadDirectory(): String = Environment.DIRECTORY_DOWNLOADS
 
     /**
      * Returns a string representing the path to a private cache directory,
@@ -125,10 +120,9 @@ object FileUtil {
      * by dir
      */
     @Throws(IOException::class)
-    fun listFiles(dir: File): Array<File> {
-        return dir.listFiles()
+    fun listFiles(dir: File): Array<File> =
+        dir.listFiles()
             ?: throw IOException("Failed to list the contents of '$dir'")
-    }
 
     /**
      * Returns a sequence containing the provided file, and its parents

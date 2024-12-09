@@ -37,7 +37,5 @@ object FragmentFactoryUtils {
     inline fun <reified F : Fragment> instantiate(
         activity: FragmentActivity,
         cls: Class<F>,
-    ): F {
-        return instantiate(activity, cls.name)
-    }
+    ): F = instantiate(activity, cls.name)
 }

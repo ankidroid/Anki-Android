@@ -87,7 +87,9 @@ import java.util.zip.GZIPInputStream
  */
 typealias AddonsPackageDir = File
 
-class TgzPackageExtract(private val context: Context) {
+class TgzPackageExtract(
+    private val context: Context,
+) {
     private val gzipSignature = byteArrayOf(0x1f, 0x8b.toByte())
     private var requiredMinSpace: Long = 0
     private var availableSpace: Long = 0
@@ -397,7 +399,11 @@ class TgzPackageExtract(private val context: Context) {
         }
     }
 
-    class InsufficientSpaceException(val required: Long, val available: Long, val context: Context) : IOException() {
+    class InsufficientSpaceException(
+        val required: Long,
+        val available: Long,
+        val context: Context,
+    ) : IOException() {
         companion object {
             fun throwIfInsufficientSpace(
                 context: Context,

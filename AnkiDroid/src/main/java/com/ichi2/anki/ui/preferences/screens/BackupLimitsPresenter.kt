@@ -44,16 +44,22 @@ import kotlinx.coroutines.launch
 sealed interface State {
     data object Fetching : State
 
-    class Fetched(val backupLimits: BackupLimits) : State
+    class Fetched(
+        val backupLimits: BackupLimits,
+    ) : State
 
     sealed interface Error : State {
         data object NoCollection : Error
 
-        class Exception(val exception: kotlin.Exception) : Error
+        class Exception(
+            val exception: kotlin.Exception,
+        ) : Error
     }
 }
 
-class BackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
+class BackupLimitsViewModel :
+    ViewModel(),
+    CollectionDirectoryProvider {
     override val collectionDirectory = CollectionManager.getCollectionDirectory()
 
     val flowOfState = MutableStateFlow<State>(State.Fetching)
@@ -80,7 +86,11 @@ class BackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
     suspend fun updateBackupLimits(block: BackupLimits.Builder.() -> Unit) {
         withCol {
             val preferences = backend.getPreferences()
-            val backups = preferences.backups.toBuilder().apply(block).build()
+            val backups =
+                preferences.backups
+                    .toBuilder()
+                    .apply(block)
+                    .build()
             backend.setPreferences(preferences.toBuilder().setBackups(backups).build())
         }
 
@@ -101,7 +111,9 @@ class BackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
  *
  *     backupLimitsPresenter.refresh()
  */
-class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : DefaultLifecycleObserver {
+class BackupLimitsPresenter(
+    private val fragment: PreferenceFragmentCompat,
+) : DefaultLifecycleObserver {
     private val viewModel: BackupLimitsViewModel by fragment.viewModels()
 
     private lateinit var backupsHelpPreference: HtmlHelpPreference

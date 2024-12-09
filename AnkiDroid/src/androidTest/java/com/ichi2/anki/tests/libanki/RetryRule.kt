@@ -29,7 +29,9 @@ import kotlin.Throws
  * @param i how many times to try
  * @throws IllegalArgumentException if maxTries is less than 1
  */
-class RetryRule(i: Int) : TestRule {
+class RetryRule(
+    i: Int,
+) : TestRule {
     /**
      * How many times to try a test
      */
@@ -47,9 +49,7 @@ class RetryRule(i: Int) : TestRule {
     override fun apply(
         base: Statement,
         description: Description,
-    ): Statement {
-        return statement(base, description)
-    }
+    ): Statement = statement(base, description)
 
     private fun statement(
         base: Statement,

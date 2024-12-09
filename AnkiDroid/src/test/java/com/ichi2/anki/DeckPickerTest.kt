@@ -71,9 +71,7 @@ class DeckPickerTest : RobolectricTest() {
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<String> {
-            return listOf("normal", "xlarge")
-        }
+        fun initParameters(): Collection<String> = listOf("normal", "xlarge")
     }
 
     @Before
@@ -192,7 +190,13 @@ class DeckPickerTest : RobolectricTest() {
                 DeckPicker::class.java,
                 Intent(),
             )
-        assertEquals(10, deckPicker.dueTree!!.children[0].newCount.toLong())
+        assertEquals(
+            10,
+            deckPicker.dueTree!!
+                .children[0]
+                .newCount
+                .toLong(),
+        )
     }
 
     @Test
@@ -283,7 +287,10 @@ class DeckPickerTest : RobolectricTest() {
             grantWritePermissions()
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
             // We don't show it if the user is new.
-            targetContext.sharedPrefs().edit().putString("lastVersion", "0.1")
+            targetContext
+                .sharedPrefs()
+                .edit()
+                .putString("lastVersion", "0.1")
                 .apply()
             val d =
                 super.startActivityNormallyOpenCollectionWithIntent(
@@ -764,7 +771,10 @@ class DeckPickerTest : RobolectricTest() {
         useCollection(CollectionType.SCHEMA_V_250)
     }
 
-    enum class CollectionType(val assetFile: String, private val deckName: String) {
+    enum class CollectionType(
+        val assetFile: String,
+        private val deckName: String,
+    ) {
         SCHEMA_V_16("schema16.anki2", "ThisIsSchema16"),
         SCHEMA_V_250(
             "schema250.anki2",
@@ -772,9 +782,7 @@ class DeckPickerTest : RobolectricTest() {
         ),
         ;
 
-        fun isCollection(col: com.ichi2.libanki.Collection): Boolean {
-            return col.decks.byName(deckName) != null
-        }
+        fun isCollection(col: com.ichi2.libanki.Collection): Boolean = col.decks.byName(deckName) != null
     }
 
     private class DeckPickerEx : DeckPicker() {

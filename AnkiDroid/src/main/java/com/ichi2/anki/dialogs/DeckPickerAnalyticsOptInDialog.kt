@@ -47,8 +47,6 @@ class DeckPickerAnalyticsOptInDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        fun newInstance(): DeckPickerAnalyticsOptInDialog {
-            return DeckPickerAnalyticsOptInDialog()
-        }
+        fun newInstance(): DeckPickerAnalyticsOptInDialog = DeckPickerAnalyticsOptInDialog()
     }
 }

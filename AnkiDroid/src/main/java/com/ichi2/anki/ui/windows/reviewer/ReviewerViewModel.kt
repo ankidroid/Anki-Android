@@ -56,8 +56,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
-    CardViewerViewModel(cardMediaPlayer),
+class ReviewerViewModel(
+    cardMediaPlayer: CardMediaPlayer,
+) : CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber {
     private var queueState: Deferred<CurrentQueueState?> =
         asyncIO {
@@ -185,9 +186,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         statesMutated = true
     }
 
-    suspend fun getEditNoteDestination(): NoteEditorLauncher {
-        return NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
-    }
+    suspend fun getEditNoteDestination(): NoteEditorLauncher = NoteEditorLauncher.EditNoteFromPreviewer(currentCard.await().id)
 
     fun refreshCard() {
         launchCatchingIO {
@@ -195,9 +194,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         }
     }
 
-    suspend fun getCardInfoDestination(): CardInfoDestination {
-        return CardInfoDestination(currentCard.await().id)
-    }
+    suspend fun getCardInfoDestination(): CardInfoDestination = CardInfoDestination(currentCard.await().id)
 
     suspend fun getDeckOptionsDestination(): DeckOptionsDestination {
         val deckId = withCol { decks.getCurrentId() }
@@ -316,8 +313,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     override suspend fun handlePostRequest(
         uri: String,
         bytes: ByteArray,
-    ): ByteArray {
-        return if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+    ): ByteArray =
+        if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
             when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
                 "setSchedulingStates" -> setSchedulingStates(bytes)
@@ -326,7 +323,6 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         } else {
             super.handlePostRequest(uri, bytes)
         }
-    }
 
     override suspend fun showQuestion() {
         super.showQuestion()
@@ -351,14 +347,19 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
     private suspend fun getSchedulingStatesWithContext(): ByteArray {
         val state = queueState.await() ?: return ByteArray(0)
-        return state.schedulingStatesWithContext().toBuilder()
+        return state
+            .schedulingStatesWithContext()
+            .toBuilder()
             .mergeStates(
-                state.states.toBuilder().mergeCurrent(
-                    state.states.current.toBuilder()
-                        .setCustomData(state.topCard.toBackendCard().customData).build(),
-                ).build(),
-            )
-            .build()
+                state.states
+                    .toBuilder()
+                    .mergeCurrent(
+                        state.states.current
+                            .toBuilder()
+                            .setCustomData(state.topCard.toBackendCard().customData)
+                            .build(),
+                    ).build(),
+            ).build()
             .toByteArray()
     }
 
@@ -417,9 +418,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
 
     // TODO
-    override suspend fun typeAnsFilter(text: String): String {
-        return text
-    }
+    override suspend fun typeAnsFilter(text: String): String = text
 
     private suspend fun updateUndoAndRedoLabels() {
         undoLabelFlow.emit(withCol { undoLabel() })
@@ -442,19 +441,18 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
 
     companion object {
-        fun factory(soundPlayer: CardMediaPlayer): ViewModelProvider.Factory {
-            return viewModelFactory {
+        fun factory(soundPlayer: CardMediaPlayer): ViewModelProvider.Factory =
+            viewModelFactory {
                 initializer {
                     ReviewerViewModel(soundPlayer)
                 }
             }
-        }
 
         fun buildAnswerButtonText(
             title: String,
             nextTime: String?,
-        ): CharSequence {
-            return if (nextTime != null) {
+        ): CharSequence =
+            if (nextTime != null) {
                 buildSpannedString {
                     inSpans(RelativeSizeSpan(0.8F)) {
                         append(nextTime)
@@ -465,6 +463,5 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             } else {
                 title
             }
-        }
     }
 }

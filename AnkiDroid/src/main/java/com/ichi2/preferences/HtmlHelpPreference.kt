@@ -40,7 +40,10 @@ import com.ichi2.anki.R
  *
  *     <string name="format_string"><![CDATA[<b>Hello, %s</b>]]></string>
  */
-class HtmlHelpPreference(context: Context, attrs: AttributeSet?) : Preference(context, attrs) {
+class HtmlHelpPreference(
+    context: Context,
+    attrs: AttributeSet?,
+) : Preference(context, attrs) {
     init {
         isSelectable = false
         isPersistent = false
@@ -56,7 +59,8 @@ class HtmlHelpPreference(context: Context, attrs: AttributeSet?) : Preference(co
         }
 
     override fun getSummary() =
-        super.getSummary()
+        super
+            .getSummary()
             .toString()
             .format(*substitutions)
             .parseAsHtml()

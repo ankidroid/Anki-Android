@@ -122,11 +122,12 @@ $stackTrace""",
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters(name = "{1}")
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<Any>> {
-            return ActivityList.allActivitiesAndIntents().stream().map {
-                    x: ActivityLaunchParam ->
-                arrayOf(x, x.simpleName)
-            }.collect(Collectors.toList())
-        }
+        fun initParameters(): Collection<Array<Any>> =
+            ActivityList
+                .allActivitiesAndIntents()
+                .stream()
+                .map { x: ActivityLaunchParam ->
+                    arrayOf(x, x.simpleName)
+                }.collect(Collectors.toList())
     }
 }

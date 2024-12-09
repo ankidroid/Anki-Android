@@ -36,7 +36,10 @@ import java.util.Objects
  * Also defines equality over bindings.
  * https://stackoverflow.com/questions/5453226/java-need-a-hash-map-where-one-supplies-a-function-to-do-the-hashing
  */
-class MappableBinding(val binding: Binding, val screen: Screen) {
+class MappableBinding(
+    val binding: Binding,
+    val screen: Screen,
+) {
     val isKey: Boolean get() = binding is KeyBinding
 
     override fun equals(other: Any?): Boolean {
@@ -87,15 +90,13 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         // allow subclasses to work - a subclass which overrides shiftMatches will return true on one of the tests
     }
 
-    fun toDisplayString(context: Context): String {
-        return screen.toDisplayString(context, binding)
-    }
+    fun toDisplayString(context: Context): String = screen.toDisplayString(context, binding)
 
-    fun toPreferenceString(): String? {
-        return screen.toPreferenceString(binding)
-    }
+    fun toPreferenceString(): String? = screen.toPreferenceString(binding)
 
-    abstract class Screen private constructor(val prefix: Char) {
+    abstract class Screen private constructor(
+        val prefix: Char,
+    ) {
         abstract fun toPreferenceString(binding: Binding): String?
 
         abstract fun toDisplayString(
@@ -105,7 +106,9 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
         abstract fun screenEquals(otherScreen: Screen): Boolean
 
-        class Reviewer(val side: CardSide) : Screen('r') {
+        class Reviewer(
+            val side: CardSide,
+        ) : Screen('r') {
             override fun toPreferenceString(binding: Binding): String? {
                 if (!binding.isValid) {
                     return null
@@ -178,7 +181,8 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String =
-            this.mapNotNull { it.toPreferenceString() }
+            this
+                .mapNotNull { it.toPreferenceString() }
                 .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
 
         @Suppress("UNUSED_PARAMETER")
@@ -229,11 +233,11 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         }
 
         @CheckResult
-        fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> {
-            return ViewerCommand.entries.map {
-                Pair(it, fromPreference(prefs, it))
-            }.toMutableList()
-        }
+        fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> =
+            ViewerCommand.entries
+                .map {
+                    Pair(it, fromPreference(prefs, it))
+                }.toMutableList()
     }
 }
 

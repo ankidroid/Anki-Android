@@ -194,9 +194,7 @@ class CardContentProvider : ContentProvider() {
     }
 
     /** Only enforce permissions for queries and inserts on Android M and above, or if its a 'rogue client'  */
-    private fun shouldEnforceQueryOrInsertSecurity(): Boolean {
-        return knownRogueClient()
-    }
+    private fun shouldEnforceQueryOrInsertSecurity(): Boolean = knownRogueClient()
 
     /** Enforce permissions for all updates on Android M and above. Otherwise block depending on URI and client app  */
     private fun shouldEnforceUpdateSecurity(uri: Uri): Boolean {
@@ -348,10 +346,12 @@ class CardContentProvider : ContentProvider() {
 
                 // retrieve the number of cards provided by the selection parameter "limit"
                 val cards =
-                    col.backend.getQueuedCards(
-                        fetchLimit = limit,
-                        intradayLearningOnly = false,
-                    ).cardsList.map { Card(it.card) }
+                    col.backend
+                        .getQueuedCards(
+                            fetchLimit = limit,
+                            intradayLearningOnly = false,
+                        ).cardsList
+                        .map { Card(it.card) }
 
                 val buttonCount = 4
                 var k = 0
@@ -1250,8 +1250,8 @@ class CardContentProvider : ContentProvider() {
     private fun selectDeckWithCheck(
         col: Collection,
         did: DeckId,
-    ): Boolean {
-        return if (col.decks.get(did) != null) {
+    ): Boolean =
+        if (col.decks.get(did) != null) {
             col.decks.select(did)
             true
         } else {
@@ -1262,7 +1262,6 @@ class CardContentProvider : ContentProvider() {
             )
             false
         }
-    }
 
     private fun getCardFromUri(
         uri: Uri,
@@ -1345,13 +1344,12 @@ class CardContentProvider : ContentProvider() {
         return String.format(format, javaClass.simpleName, methodName, path, callingPackage)
     }
 
-    private fun hasReadWritePermission(): Boolean {
-        return if (BuildConfig.DEBUG) { // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
+    private fun hasReadWritePermission(): Boolean =
+        if (BuildConfig.DEBUG) { // Allow self-calling of the provider only in debug builds (e.g. for unit tests)
             context!!.checkCallingOrSelfPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
         } else {
             context!!.checkCallingPermission(FlashCardsContract.READ_WRITE_PERMISSION) == PackageManager.PERMISSION_GRANTED
         }
-    }
 
     /** Returns true if the calling package is known to be "rogue" and should be blocked.
      * Calling package might be rogue if it has not declared #READ_WRITE_PERMISSION in its manifest */

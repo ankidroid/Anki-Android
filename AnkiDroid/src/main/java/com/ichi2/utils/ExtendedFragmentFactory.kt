@@ -49,18 +49,16 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
     override fun instantiate(
         classLoader: ClassLoader,
         className: String,
-    ): Fragment {
-        return baseFactory?.instantiate(classLoader, className)
+    ): Fragment =
+        baseFactory?.instantiate(classLoader, className)
             ?: super.instantiate(classLoader, className)
-    }
 
     /**
      * Attaches the factory to an activity by setting the current activity fragment factory as the base factory
      * and updating the activity with the extended factory
      */
-    inline fun <reified F : ExtendedFragmentFactory?> attachToActivity(activity: AppCompatActivity): F {
-        return attachToFragmentManager<ExtendedFragmentFactory>(activity.supportFragmentManager) as F
-    }
+    inline fun <reified F : ExtendedFragmentFactory?> attachToActivity(activity: AppCompatActivity): F =
+        attachToFragmentManager<ExtendedFragmentFactory>(activity.supportFragmentManager) as F
 
     /**
      * Attaches the factory to a fragment manager by setting the current fragment factory as the base factory
