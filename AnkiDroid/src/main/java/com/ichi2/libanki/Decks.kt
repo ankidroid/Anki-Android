@@ -51,6 +51,7 @@ import org.json.JSONArray
 import java.util.LinkedList
 
 typealias UpdateDeckConfigs = UpdateDeckConfigsRequest
+
 data class DeckNameId(val name: String, val id: DeckId)
 
 const val DEFAULT_DECK_CONF_ID: DeckConfigId = 1L
@@ -58,7 +59,6 @@ const val DEFAULT_DECK_CONF_ID: DeckConfigId = 1L
 // TODO: col was a weakref
 
 class Decks(private val col: Collection) {
-
     /*
      * Registry save/load
      *************************************************************
@@ -69,10 +69,11 @@ class Decks(private val col: Collection) {
      * @throws BackendDeckIsFilteredException
      */
     fun save(g: Deck) {
-        g.id = col.backend.addOrUpdateDeckLegacy(
-            BackendUtils.toByteString(g),
-            preserveUsnAndMtime = false
-        )
+        g.id =
+            col.backend.addOrUpdateDeckLegacy(
+                BackendUtils.toByteString(g),
+                preserveUsnAndMtime = false
+            )
     }
 
     fun save(g: DeckConfig) {
@@ -92,24 +93,30 @@ class Decks(private val col: Collection) {
         return if (id != null) {
             opChangesWithId { this.id = id }
         } else {
-            val deck = col.decks.newDeck().copy {
-                this.name = name
-            }
+            val deck =
+                col.decks.newDeck().copy {
+                    this.name = name
+                }
             addDeck(deck)
         }
     }
 
     @LibAnkiAlias("add_deck_legacy")
     private fun addDeckLegacy(deck: Deck): OpChangesWithId {
-        val changes = col.backend.addDeckLegacy(
-            json = BackendUtils.toJsonBytes(deck)
-        )
+        val changes =
+            col.backend.addDeckLegacy(
+                json = BackendUtils.toJsonBytes(deck)
+            )
         deck.id = changes.id
         return changes
     }
 
     /** Add a deck with NAME. Reuse deck if already exists. Return id as [DeckId] */
-    fun id(name: String, create: Boolean, type: DeckConfigId = 0L): DeckId? {
+    fun id(
+        name: String,
+        create: Boolean,
+        type: DeckConfigId = 0L
+    ): DeckId? {
         val id = idForName(name)
         if (id != null) {
             return id
@@ -124,7 +131,10 @@ class Decks(private val col: Collection) {
     }
 
     @NotInLibAnki
-    fun id(name: String, type: DeckConfigId = 0L): DeckId {
+    fun id(
+        name: String,
+        type: DeckConfigId = 0L
+    ): DeckId {
         return id(name = name, create = true, type = type)!!
     }
 
@@ -215,7 +225,10 @@ class Decks(private val col: Collection) {
     }
 
     @LibAnkiAlias("find_deck_in_tree")
-    fun findDeckInTree(node: DeckTreeNode, deckId: DeckId): DeckTreeNode? {
+    fun findDeckInTree(
+        node: DeckTreeNode,
+        deckId: DeckId
+    ): DeckTreeNode? {
         if (node.deckId == deckId) return node
         for (child in node.childrenList) {
             val foundNode = findDeckInTree(child, deckId)
@@ -234,7 +247,11 @@ class Decks(private val col: Collection) {
     @RustCleanup("implement and make public")
     @LibAnkiAlias("set_collapsed")
     @Suppress("unused", "unused_parameter")
-    private fun setCollapsed(deckId: DeckId, collapsed: Boolean, scope: SetDeckCollapsedRequest.Scope): OpChanges {
+    private fun setCollapsed(
+        deckId: DeckId,
+        collapsed: Boolean,
+        scope: SetDeckCollapsedRequest.Scope
+    ): OpChanges {
         TODO()
     }
 
@@ -256,7 +273,10 @@ class Decks(private val col: Collection) {
     }
 
     @LibAnkiAlias("card_count")
-    fun cardCount(vararg decks: DeckId, includeSubdecks: Boolean): Int {
+    fun cardCount(
+        vararg decks: DeckId,
+        includeSubdecks: Boolean
+    ): Int {
         val dids = decks.toMutableSet()
         if (includeSubdecks) {
             // dids.update([child[1] for did in dids for child in self.children(did)])
@@ -269,7 +289,10 @@ class Decks(private val col: Collection) {
     @RustCleanup("implement and make public")
     @LibAnkiAlias("get")
     @Suppress("unused", "unused_parameter")
-    private fun get(did: DeckId, default: Boolean = true): Deck? {
+    private fun get(
+        did: DeckId,
+        default: Boolean = true
+    ): Deck? {
         return try {
             Deck(BackendUtils.fromJsonBytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
@@ -289,11 +312,15 @@ class Decks(private val col: Collection) {
 
     /** Add or update an existing deck. Used for syncing and merging. */
     @Suppress("unused")
-    fun update(deck: Deck, preserveUsn: Boolean) {
-        deck.id = col.backend.addOrUpdateDeckLegacy(
-            deck = BackendUtils.toJsonBytes(deck),
-            preserveUsnAndMtime = preserveUsn
-        )
+    fun update(
+        deck: Deck,
+        preserveUsn: Boolean
+    ) {
+        deck.id =
+            col.backend.addOrUpdateDeckLegacy(
+                deck = BackendUtils.toJsonBytes(deck),
+                preserveUsnAndMtime = preserveUsn
+            )
     }
 
     @LibAnkiAlias("update_dict")
@@ -304,7 +331,10 @@ class Decks(private val col: Collection) {
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
     @RustCleanup("return OpChanges")
-    fun rename(deck: Deck, newName: String) {
+    fun rename(
+        deck: Deck,
+        newName: String
+    ) {
         deck.name = newName
         this.save(deck)
     }
@@ -320,7 +350,10 @@ class Decks(private val col: Collection) {
      * If [newParent] is `0`, decks will be placed at the top level.
      */
     @Suppress("unused")
-    fun reparent(deckIds: List<DeckId>, newParent: DeckId): OpChangesWithCount {
+    fun reparent(
+        deckIds: List<DeckId>,
+        newParent: DeckId
+    ): OpChangesWithCount {
         return col.backend.reparentDecks(
             deckIds = deckIds,
             newParent = newParent
@@ -361,22 +394,22 @@ class Decks(private val col: Collection) {
         return DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
-    /* Reverts to default if provided id missing */
+    // Reverts to default if provided id missing
     @LibAnkiAlias("get_config")
-    fun getConfig(confId: DeckConfigId): DeckConfig =
-        DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(confId)))
+    fun getConfig(confId: DeckConfigId): DeckConfig = DeckConfig(BackendUtils.fromJsonBytes(col.backend.getDeckConfigLegacy(confId)))
 
     @RustCleanup("implement and make public")
     @LibAnkiAlias("update_config")
     @Suppress("unused", "unused_parameter")
-    private fun updateConfig(config: DeckConfig, preserveUsn: Boolean = false) {
+    private fun updateConfig(
+        config: DeckConfig,
+        preserveUsn: Boolean = false
+    ) {
         TODO()
     }
 
     @LibAnkiAlias("add_config")
-    private fun addConfig(
-        name: String
-    ): DeckConfig {
+    private fun addConfig(name: String): DeckConfig {
         val conf = DeckConfig(newDeckConfigLegacy())
         conf.name = name
         this.save(conf)
@@ -396,7 +429,10 @@ class Decks(private val col: Collection) {
     }
 
     @LibAnkiAlias("set_config_id_for_deck_dict")
-    fun setConfigIdForDeckDict(grp: Deck, id: DeckConfigId) {
+    fun setConfigIdForDeckDict(
+        grp: Deck,
+        id: DeckConfigId
+    ) {
         grp.conf = id
         this.save(grp)
     }
@@ -438,7 +474,10 @@ class Decks(private val col: Collection) {
 
     @RustCleanup("implement and make public")
     @Suppress("unused", "unused_parameter")
-    private fun cids(did: DeckId, children: Boolean): List<CardId> {
+    private fun cids(
+        did: DeckId,
+        children: Boolean
+    ): List<CardId> {
         TODO()
     }
 
@@ -528,7 +567,10 @@ class Decks(private val col: Collection) {
 
     /** All parents of did. */
     @LibAnkiAlias("parents")
-    fun parents(did: DeckId, nameMap: Map<String, Deck>? = null): List<Deck> {
+    fun parents(
+        did: DeckId,
+        nameMap: Map<String, Deck>? = null
+    ): List<Deck> {
         // get parent and grandparent names
         val parentsNames = mutableListOf<String>()
         for (part in immediateParentPath(get(did)!!.name)) {
@@ -541,11 +583,12 @@ class Decks(private val col: Collection) {
         // convert to objects
         val parents = mutableListOf<Deck>()
         for (parentName in parentsNames) {
-            val deck = if (nameMap != null) {
-                nameMap[parentName]
-            } else {
-                get(id(parentName))
-            }!!
+            val deck =
+                if (nameMap != null) {
+                    nameMap[parentName]
+                } else {
+                    get(id(parentName))
+                }!!
             parents.add(deck)
         }
         return parents.toList()
@@ -598,7 +641,10 @@ class Decks(private val col: Collection) {
 
     /** @return the fully qualified name of the subdeck, or null if unavailable */
     @NotInLibAnki
-    fun getSubdeckName(did: DeckId, subdeckName: String?): String? {
+    fun getSubdeckName(
+        did: DeckId,
+        subdeckName: String?
+    ): String? {
         if (subdeckName.isNullOrEmpty()) {
             return null
         }
@@ -611,14 +657,13 @@ class Decks(private val col: Collection) {
     }
 
     @NotInLibAnki
-    fun cardCount(did: DeckId): Int =
-        col.db.queryScalar("SELECT count() FROM cards WHERE did = ? ", did)
+    fun cardCount(did: DeckId): Int = col.db.queryScalar("SELECT count() FROM cards WHERE did = ? ", did)
 
     @NotInLibAnki
     fun isEmpty(did: DeckId): Boolean = cardCount(did) == 0
 
     companion object {
-        /* Parents/children */
+        // Parents/children
 
         fun path(name: String): List<String> {
             return name.split("::")

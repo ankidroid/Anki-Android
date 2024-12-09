@@ -26,13 +26,15 @@ import java.lang.Exception
 abstract class SystemContextMenu(private val context: Context) {
     /** We use an activity alias as the name so we can disable the context menu without disabling the activity  */
     protected abstract val activityName: String
+
     fun setSystemMenuEnabled(enabled: Boolean) {
         try {
-            val enabledState = if (enabled) {
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-            } else {
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-            }
+            val enabledState =
+                if (enabled) {
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                } else {
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                }
             packageManager.setComponentEnabledSetting(componentName, enabledState, PackageManager.DONT_KILL_APP)
         } catch (e: Exception) {
             Timber.w(e, "Failed to set Context Menu state")
@@ -50,12 +52,13 @@ abstract class SystemContextMenu(private val context: Context) {
 
     @get:CheckResult
     private val systemMenuStatus: Boolean?
-        get() = try {
-            packageManager.getComponentEnabledSetting(componentName) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to read context menu status setting")
-            null
-        }
+        get() =
+            try {
+                packageManager.getComponentEnabledSetting(componentName) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to read context menu status setting")
+                null
+            }
     private val packageManager: PackageManager
         get() = context.packageManager
 

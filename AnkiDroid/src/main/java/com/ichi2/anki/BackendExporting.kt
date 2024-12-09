@@ -44,7 +44,10 @@ fun AnkiActivity.exportApkgPackage(
     }
 }
 
-suspend fun AnkiActivity.exportColpkg(colpkgPath: String, withMedia: Boolean) {
+suspend fun AnkiActivity.exportColpkg(
+    colpkgPath: String,
+    withMedia: Boolean
+) {
     val onProgress: ProgressContext.() -> Unit = {
         if (progress.hasExporting()) {
             text = getString(R.string.export_preparation_in_progress)
@@ -55,7 +58,10 @@ suspend fun AnkiActivity.exportColpkg(colpkgPath: String, withMedia: Boolean) {
     }
 }
 
-fun AnkiActivity.exportCollectionPackage(exportPath: String, withMedia: Boolean) {
+fun AnkiActivity.exportCollectionPackage(
+    exportPath: String,
+    withMedia: Boolean
+) {
     launchCatchingTask {
         exportColpkg(exportPath, withMedia)
         val factory =

@@ -66,7 +66,10 @@ object BackgroundImage {
         data class UncompressedBitmapTooLarge(val width: Long, val height: Long) : FileSizeResult
     }
 
-    fun validateBackgroundImageFileSize(target: AppearanceSettingsFragment, selectedImage: Uri): FileSizeResult {
+    fun validateBackgroundImageFileSize(
+        target: AppearanceSettingsFragment,
+        selectedImage: Uri
+    ): FileSizeResult {
         val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT)
         target.requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
             cursor!!.moveToFirst()
@@ -87,7 +90,10 @@ object BackgroundImage {
         }
     }
 
-    fun import(target: AppearanceSettingsFragment, selectedImage: Uri) {
+    fun import(
+        target: AppearanceSettingsFragment,
+        selectedImage: Uri
+    ) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(target.requireContext())
         val imageName = "DeckPickerBackground.png"
         val destFile = File(currentAnkiDroidDirectory, imageName)
@@ -101,6 +107,7 @@ object BackgroundImage {
     }
 
     data class Size(val width: Int, val height: Int)
+
     fun getBackgroundImageDimensions(context: Context): Size {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(context)
         val imageName = "DeckPickerBackground.png"

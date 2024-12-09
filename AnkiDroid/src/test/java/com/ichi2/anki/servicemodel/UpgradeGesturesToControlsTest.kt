@@ -53,7 +53,8 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         instance = UpgradeGesturesToControls()
         prefs.registerOnSharedPreferenceChangeListener { _, key ->
             run {
-                Timber.i("added key $key"); if (key != null) {
+                Timber.i("added key $key")
+                if (key != null) {
                     changedKeys.add(key)
                 }
             }
@@ -72,7 +73,10 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat(changedKeys, Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey))
+        assertThat(
+            changedKeys,
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey)
+        )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference added", prefs.contains(command.preferenceKey), equalTo(true))
@@ -101,7 +105,10 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat(changedKeys, Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey))
+        assertThat(
+            changedKeys,
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey, command.preferenceKey)
+        )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference exists", prefs.contains(command.preferenceKey), equalTo(true))
@@ -139,7 +146,11 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey))
+        assertThat(
+            "Binding gestures should not be changed",
+            changedKeys,
+            Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey)
+        )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
         assertThat("new preference still exists", prefs.contains(command.preferenceKey), equalTo(true))
@@ -151,7 +162,11 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey))
+        assertThat(
+            "Binding gestures should not be changed",
+            changedKeys,
+            Matchers.contains(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey)
+        )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
     }
@@ -163,7 +178,11 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
 
         upgradeAllGestures()
 
-        assertThat("Binding gestures should not be changed", changedKeys, Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey))
+        assertThat(
+            "Binding gestures should not be changed",
+            changedKeys,
+            Matchers.containsInAnyOrder(UPGRADE_VERSION_PREF_KEY, testData.affectedPreferenceKey)
+        )
 
         assertThat("legacy preference removed", prefs.contains(testData.affectedPreferenceKey), equalTo(false))
     }
@@ -179,7 +198,8 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         private const val PREF_KEY_VOLUME_UP = "gestureVolumeUp"
         private const val PREF_KEY_VOLUME_DOWN = "gestureVolumeDown"
 
-        val oldCommandPreferenceStrings: HashMap<ViewerCommand, String> = hashMapOf(*UpgradeGesturesToControls().oldCommandValues.map { Pair(it.value, it.key.toString()) }.toTypedArray())
+        val oldCommandPreferenceStrings: HashMap<ViewerCommand, String> =
+            hashMapOf(*UpgradeGesturesToControls().oldCommandValues.map { Pair(it.value, it.key.toString()) }.toTypedArray())
 
         private val volume_up_binding = MappableBinding(keyCode(KEYCODE_VOLUME_UP), Reviewer(CardSide.BOTH))
         private val volume_down_binding = MappableBinding(keyCode(KEYCODE_VOLUME_DOWN), Reviewer(CardSide.BOTH))
@@ -193,6 +213,7 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
                 arrayOf(TestData(PREF_KEY_VOLUME_DOWN, KEYCODE_VOLUME_DOWN, PREF_KEY_VOLUME_UP, volume_down_binding))
             ).toList()
         }
+
         data class TestData(
             val affectedPreferenceKey: String,
             val keyCode: Int,

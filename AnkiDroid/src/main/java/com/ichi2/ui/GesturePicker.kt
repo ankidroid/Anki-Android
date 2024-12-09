@@ -42,7 +42,6 @@ import timber.log.Timber
 class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(ctx, attributeSet, defStyleAttr),
     WarningDisplay {
-
     private val gestureSpinner: Spinner
     private val gestureDisplay: GestureDisplay
     override val warningTextView: FixedTextView
@@ -108,7 +107,12 @@ class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAt
     }
 
     private inner class InnerSpinner : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
             val wrapper = parent?.getItemAtPosition(position) as? GestureWrapper
             onGesture(wrapper?.gesture)
         }

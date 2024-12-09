@@ -24,7 +24,6 @@ import org.hamcrest.Matchers.not
 import org.junit.Test
 
 class CustomExceptionDataTest {
-
     @Test
     fun `exception type and message is printed`() {
         val exception = IllegalStateException("Java heap space")

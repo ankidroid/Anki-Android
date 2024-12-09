@@ -20,7 +20,8 @@ import com.ichi2.anki.reviewer.CardSide
 
 enum class SingleCardSide {
     FRONT,
-    BACK;
+    BACK
+    ;
 
     fun toCardSide(): CardSide {
         return when (this) {

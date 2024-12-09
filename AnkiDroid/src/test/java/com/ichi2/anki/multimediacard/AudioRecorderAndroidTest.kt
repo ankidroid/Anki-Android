@@ -27,7 +27,6 @@ import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class AudioRecorderAndroidTest : RobolectricTest() {
-
     private lateinit var audioRecorder: AudioRecorder
 
     @Before
@@ -54,6 +53,7 @@ class AudioRecorderAndroidTest : RobolectricTest() {
             var timesRun = 0
                 private set
             private var hasThrown = false
+
             override fun run() {
                 timesRun++
                 if (!hasThrown) {

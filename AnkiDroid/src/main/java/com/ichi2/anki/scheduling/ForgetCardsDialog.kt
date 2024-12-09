@@ -55,7 +55,6 @@ import timber.log.Timber
  */
 @NeedsTest("all")
 class ForgetCardsDialog : DialogFragment() {
-
     /**
      * Resets cards back to their original positions in the new queue
      *
@@ -85,22 +84,23 @@ class ForgetCardsDialog : DialogFragment() {
             restoreOriginalPositionIfPossible = savedInstanceState.getBoolean(ARG_RESTORE_ORIGINAL, true)
             resetRepetitionAndLapseCounts = savedInstanceState.getBoolean(ARG_RESET_REPETITION, false)
         }
-        val contentView = layoutInflater.inflate(R.layout.dialog_forget_cards, null).apply {
-            findViewById<MaterialCheckBox>(R.id.restore_original_position)!!.apply {
-                isChecked = restoreOriginalPositionIfPossible
-                setOnCheckedChangeListener { _, isChecked ->
-                    restoreOriginalPositionIfPossible = isChecked
+        val contentView =
+            layoutInflater.inflate(R.layout.dialog_forget_cards, null).apply {
+                findViewById<MaterialCheckBox>(R.id.restore_original_position)!!.apply {
+                    isChecked = restoreOriginalPositionIfPossible
+                    setOnCheckedChangeListener { _, isChecked ->
+                        restoreOriginalPositionIfPossible = isChecked
+                    }
+                    text = TR.schedulingRestorePosition()
                 }
-                text = TR.schedulingRestorePosition()
-            }
-            findViewById<MaterialCheckBox>(R.id.reset_lapse_counts)!!.apply {
-                isChecked = resetRepetitionAndLapseCounts
-                setOnCheckedChangeListener { _, isChecked ->
-                    resetRepetitionAndLapseCounts = isChecked
+                findViewById<MaterialCheckBox>(R.id.reset_lapse_counts)!!.apply {
+                    isChecked = resetRepetitionAndLapseCounts
+                    setOnCheckedChangeListener { _, isChecked ->
+                        resetRepetitionAndLapseCounts = isChecked
+                    }
+                    text = TR.schedulingResetCounts()
                 }
-                text = TR.schedulingResetCounts()
             }
-        }
         return MaterialAlertDialogBuilder(requireContext()).create {
             // BUG: this is 'Reset Card'/'Forget Card' in Anki Desktop (24.04)
             // title(text = TR.actionsForgetCard().toSentenceCase(R.string.sentence_forget_cards))

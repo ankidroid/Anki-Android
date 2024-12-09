@@ -41,7 +41,7 @@ open class Media(private val col: Collection) {
 
     /*
       Adding media
-      ***********************************************************
+     ***********************************************************
      */
 
     fun addFile(oFile: File?): String {
@@ -80,7 +80,10 @@ open class Media(private val col: Collection) {
      *
      * `foo bar` -> `foo%20bar`
      */
-    fun escapeMediaFilenames(string: String, unescape: Boolean = false): String {
+    fun escapeMediaFilenames(
+        string: String,
+        unescape: Boolean = false
+    ): String {
         return if (unescape) {
             col.backend.decodeIriPaths(string)
         } else {
@@ -90,7 +93,7 @@ open class Media(private val col: Collection) {
 
     /*
       Rebuilding DB
-      ***********************************************************
+     ***********************************************************
      */
 
     // FIXME: this also provides trash count, but UI can not handle it yet

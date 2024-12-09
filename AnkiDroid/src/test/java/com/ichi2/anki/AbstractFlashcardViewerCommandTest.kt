@@ -37,7 +37,6 @@ import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.mock
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.kotlin.anyOrNull
-import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric
 
@@ -215,7 +214,9 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
         return CommandTestCardViewer(cardWith(Flag.NONE))
     }
 
-    private fun cardWith(@Suppress("SameParameterValue") flag: Flag): Card {
+    private fun cardWith(
+        @Suppress("SameParameterValue") flag: Flag
+    ): Card {
         val c = mock(Card::class.java)
         val flags = arrayOf<Flag>(flag)
         whenever(c.userFlag()).then { flags[0] }
@@ -240,7 +241,10 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
             // intentionally blank
         }
 
-        override fun onFlag(card: Card?, flag: Flag) {
+        override fun onFlag(
+            card: Card?,
+            flag: Flag
+        ) {
             lastFlag = flag
             currentCard!!.setUserFlag(flag)
         }

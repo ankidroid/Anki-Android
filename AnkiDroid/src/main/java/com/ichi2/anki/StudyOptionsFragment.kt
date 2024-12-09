@@ -99,16 +99,17 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
     /**
      * Callbacks for UI events
      */
-    private val buttonClickListener = View.OnClickListener { v: View ->
-        if (v.id == R.id.studyoptions_start) {
-            Timber.i("StudyOptionsFragment:: start study button pressed")
-            if (currentContentView != CONTENT_CONGRATS) {
-                openReviewer()
-            } else {
-                showCustomStudyContextMenu()
+    private val buttonClickListener =
+        View.OnClickListener { v: View ->
+            if (v.id == R.id.studyoptions_start) {
+                Timber.i("StudyOptionsFragment:: start study button pressed")
+                if (currentContentView != CONTENT_CONGRATS) {
+                    openReviewer()
+                } else {
+                    showCustomStudyContextMenu()
+                }
             }
         }
-    }
 
     interface StudyOptionsListener {
         fun onRequireDeckListUpdate()
@@ -116,11 +117,12 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = try {
-            context as StudyOptionsListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement StudyOptionsListener")
-        }
+        listener =
+            try {
+                context as StudyOptionsListener
+            } catch (e: ClassCastException) {
+                throw ClassCastException("$context must implement StudyOptionsListener")
+            }
     }
 
     /**
@@ -145,7 +147,11 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         Timber.i("onCreateView()")
         val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
         this.studyOptionsView = studyOptionsView
@@ -156,12 +162,18 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         return studyOptionsView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater
+    ) {
         menuInflater.inflate(R.menu.study_options_fragment, menu)
     }
 
@@ -213,10 +225,11 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         textDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
         textDeckDescription.movementMethod = LinkMovementMethod.getInstance()
-        buryInfoLabel = studyOptionsView.findViewById<TextView>(R.id.studyoptions_bury_counts_label).apply {
-            // TODO see if we could further improve the display and discoverability of buried cards here
-            text = TR.studyingCountsDiffer()
-        }
+        buryInfoLabel =
+            studyOptionsView.findViewById<TextView>(R.id.studyoptions_bury_counts_label).apply {
+                // TODO see if we could further improve the display and discoverability of buried cards here
+                text = TR.studyingCountsDiffer()
+            }
         // Code common to both fragmented and non-fragmented view
         newCountText = studyOptionsView.findViewById(R.id.studyoptions_new_count)
         studyOptionsView.findViewById<TextView>(R.id.studyoptions_new_count_label).text = TR.actionsNew()
@@ -227,9 +240,10 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         reviewCountText = studyOptionsView.findViewById(R.id.studyoptions_review_count)
         studyOptionsView.findViewById<TextView>(R.id.studyoptions_review_count_label).text = TR.studyingToReview()
         reviewBuryText = studyOptionsView.findViewById(R.id.studyoptions_review_bury)
-        buttonStart = studyOptionsView.findViewById<Button?>(R.id.studyoptions_start).apply {
-            setOnClickListener(buttonClickListener)
-        }
+        buttonStart =
+            studyOptionsView.findViewById<Button?>(R.id.studyoptions_start).apply {
+                setOnClickListener(buttonClickListener)
+            }
         totalNewCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_new_count)
         totalCardsCount = studyOptionsView.findViewById(R.id.studyoptions_total_count)
     }
@@ -286,25 +300,27 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
     }
 
     private suspend fun rebuildCram() {
-        val result = requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
-            withCol {
-                Timber.d("doInBackground - RebuildCram")
-                sched.rebuildDyn(decks.selected())
-                fetchStudyOptionsData()
+        val result =
+            requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+                withCol {
+                    Timber.d("doInBackground - RebuildCram")
+                    sched.rebuildDyn(decks.selected())
+                    fetchStudyOptionsData()
+                }
             }
-        }
         rebuildUi(result, true)
     }
 
     @VisibleForTesting
     suspend fun emptyCram() {
-        val result = requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
-            withCol {
-                Timber.d("doInBackgroundEmptyCram")
-                sched.emptyDyn(decks.selected())
-                fetchStudyOptionsData()
+        val result =
+            requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
+                withCol {
+                    Timber.d("doInBackgroundEmptyCram")
+                    sched.emptyDyn(decks.selected())
+                    fetchStudyOptionsData()
+                }
             }
-        }
         rebuildUi(result, true)
     }
 
@@ -343,64 +359,70 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
                 if (retryMenuRefreshJob != null) {
                     return // we already are doing a refresh, so abort to avoid entering an endless loop
                 }
-                retryMenuRefreshJob = viewLifecycleOwner.lifecycleScope.launch {
-                    delay(1000)
-                    retryMenuRefreshJob = null
-                    activity?.invalidateMenu()
+                retryMenuRefreshJob =
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        delay(1000)
+                        retryMenuRefreshJob = null
+                        activity?.invalidateMenu()
+                    }
+            }
+        }
+    }
+
+    private var onRequestReviewActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
+
+            if (!isAdded) {
+                Timber.d("Fragment not added to the activity")
+                CrashReportService.sendExceptionReport("Fragment is not added to activity", "StudyOptionsFragment")
+                return@registerForActivityResult
+            }
+
+            Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
+            configureToolbar()
+            if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+                closeStudyOptions(result.resultCode)
+                return@registerForActivityResult
+            }
+            if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
+                // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
+                if (col!!.sched.totalCount() > 0 && studyOptionsView != null) {
+                    studyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
+                        .showSnackbar(R.string.studyoptions_no_cards_due)
                 }
             }
         }
-    }
+    private var onDeckOptionsActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            Timber.i("StudyOptionsFragment::mOnDeckOptionsActivityResult")
 
-    private var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
+            if (!isAdded) {
+                Timber.d("Fragment not added to the activity")
+                CrashReportService.sendExceptionReport("Fragment is not added to activity", "StudyOptionsFragment")
+                return@registerForActivityResult
+            }
 
-        if (!isAdded) {
-            Timber.d("Fragment not added to the activity")
-            CrashReportService.sendExceptionReport("Fragment is not added to activity", "StudyOptionsFragment")
-            return@registerForActivityResult
-        }
-
-        Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
-        configureToolbar()
-        if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            closeStudyOptions(result.resultCode)
-            return@registerForActivityResult
-        }
-        if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-            // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-            if (col!!.sched.totalCount() > 0 && studyOptionsView != null) {
-                studyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
-                    .showSnackbar(R.string.studyoptions_no_cards_due)
+            Timber.d(
+                "Handling onActivityResult for StudyOptionsFragment (deckOptions/filteredDeckOptions, resultCode = %d)",
+                result.resultCode
+            )
+            configureToolbar()
+            if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+                closeStudyOptions(result.resultCode)
+                return@registerForActivityResult
+            }
+            if (loadWithDeckOptions) {
+                loadWithDeckOptions = false
+                val deck = col!!.decks.current()
+                if (deck.isFiltered && deck.has("empty")) {
+                    deck.remove("empty")
+                }
+                launchCatchingTask { rebuildCram() }
+            } else {
+                refreshInterface()
             }
         }
-    }
-    private var onDeckOptionsActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        Timber.i("StudyOptionsFragment::mOnDeckOptionsActivityResult")
-
-        if (!isAdded) {
-            Timber.d("Fragment not added to the activity")
-            CrashReportService.sendExceptionReport("Fragment is not added to activity", "StudyOptionsFragment")
-            return@registerForActivityResult
-        }
-
-        Timber.d("Handling onActivityResult for StudyOptionsFragment (deckOptions/filteredDeckOptions, resultCode = %d)", result.resultCode)
-        configureToolbar()
-        if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            closeStudyOptions(result.resultCode)
-            return@registerForActivityResult
-        }
-        if (loadWithDeckOptions) {
-            loadWithDeckOptions = false
-            val deck = col!!.decks.current()
-            if (deck.isFiltered && deck.has("empty")) {
-                deck.remove("empty")
-            }
-            launchCatchingTask { rebuildCram() }
-        } else {
-            refreshInterface()
-        }
-    }
 
     private fun dismissProgressDialog() {
         if (studyOptionsView != null && studyOptionsView!!.findViewById<View?>(R.id.progress_bar) != null) {
@@ -428,12 +450,13 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         Timber.d("Refreshing StudyOptionsFragment")
         updateValuesFromDeckJob?.cancel()
         // Load the deck counts for the deck from Collection asynchronously
-        updateValuesFromDeckJob = launchCatchingTask {
-            if (CollectionManager.isOpenUnsafe()) {
-                val result = withCol { fetchStudyOptionsData() }
-                rebuildUi(result, resetDecklist)
+        updateValuesFromDeckJob =
+            launchCatchingTask {
+                if (CollectionManager.isOpenUnsafe()) {
+                    val result = withCol { fetchStudyOptionsData() }
+                    rebuildUi(result, resetDecklist)
+                }
             }
-        }
     }
 
     class DeckStudyData(
@@ -449,7 +472,6 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
          * The number of review card to see today in a deck, including subdecks.
          */
         val revCardsToday: Int,
-
         val buriedNew: Int,
         val buriedLearning: Int,
         val buriedReview: Int,
@@ -497,7 +519,10 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
      *                        to reflect the latest values.
      * @param result the new DeckStudyData using which UI is to be rebuilt
      */
-    private fun rebuildUi(result: DeckStudyData?, refreshDecklist: Boolean) {
+    private fun rebuildUi(
+        result: DeckStudyData?,
+        refreshDecklist: Boolean
+    ) {
         dismissProgressDialog()
         if (result != null) {
             // Don't do anything if the fragment is no longer attached to it's Activity or col has been closed
@@ -512,8 +537,9 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
                 return
             }
 
-            val col = col
-                ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
+            val col =
+                col
+                    ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
 
             // Reinitialize controls in case changed to filtered deck
             initAllContentViews(studyOptionsView!!)
@@ -563,11 +589,12 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
             }
 
             // Set deck description
-            val desc: String = if (isDynamic) {
-                resources.getString(R.string.dyn_deck_desc)
-            } else {
-                col.decks.current().description
-            }
+            val desc: String =
+                if (isDynamic) {
+                    resources.getString(R.string.dyn_deck_desc)
+                } else {
+                    col.decks.current().description
+                }
             if (desc.isNotEmpty()) {
                 textDeckDescription.text = formatDescription(desc)
                 textDeckDescription.visibility = View.VISIBLE
@@ -581,23 +608,26 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
             reviewCountText.text = result.revCardsToday.toString()
             // set bury numbers
             buryInfoLabel.isVisible = result.buriedNew > 0 || result.buriedLearning > 0 || result.buriedReview > 0
-            newBuryText.text = requireContext().resources.getQuantityString(
-                R.plurals.studyoptions_buried_count,
-                result.buriedNew,
-                result.buriedNew
-            )
+            newBuryText.text =
+                requireContext().resources.getQuantityString(
+                    R.plurals.studyoptions_buried_count,
+                    result.buriedNew,
+                    result.buriedNew
+                )
             newBuryText.isVisible = result.buriedNew != 0
-            learningBuryText.text = requireContext().resources.getQuantityString(
-                R.plurals.studyoptions_buried_count,
-                result.buriedLearning,
-                result.buriedLearning
-            )
+            learningBuryText.text =
+                requireContext().resources.getQuantityString(
+                    R.plurals.studyoptions_buried_count,
+                    result.buriedLearning,
+                    result.buriedLearning
+                )
             learningBuryText.isVisible = result.buriedLearning != 0
-            reviewBuryText.text = requireContext().resources.getQuantityString(
-                R.plurals.studyoptions_buried_count,
-                result.buriedReview,
-                result.buriedReview
-            )
+            reviewBuryText.text =
+                requireContext().resources.getQuantityString(
+                    R.plurals.studyoptions_buried_count,
+                    result.buriedReview,
+                    result.buriedReview
+                )
             reviewBuryText.isVisible = result.buriedReview != 0
             totalNewCardsCount.text = result.totalNewCards.toString()
             totalCardsCount.text = result.numberOfCardsInDeck.toString()
@@ -673,7 +703,9 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         }
 
         @VisibleForTesting
-        fun formatDescription(@Language("HTML") desc: String): Spanned {
+        fun formatDescription(
+            @Language("HTML") desc: String
+        ): Spanned {
             // #5715: In deck description, ignore what is in style and script tag
             // Since we don't currently execute the JS/CSS, it's not worth displaying.
             val withStrippedTags = Utils.stripHTMLScriptAndStyleTags(desc)
@@ -683,7 +715,10 @@ class StudyOptionsFragment : Fragment(), ChangeManager.Subscriber, MenuProvider 
         }
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?
+    ) {
         if (activity != null) {
             refreshInterface(true)
         }

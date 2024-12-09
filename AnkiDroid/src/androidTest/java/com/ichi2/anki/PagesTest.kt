@@ -66,16 +66,17 @@ class PagesTest : InstrumentedTest() {
         @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<out Any>> {
             /** See [PageFragment] */
-            val intents = listOf<Pair<PagesTest.(Context) -> Intent, String>>(
-                Pair(PagesTest::getStatistics, "Statistics"),
-                Pair(PagesTest::getCardInfo, "CardInfo"),
-                Pair(PagesTest::getCongratsPage, "CongratsPage"),
-                Pair(PagesTest::getDeckOptions, "DeckOptions"),
-                // the following need a file path
-                Pair(PagesTest::needsPath, "AnkiPackageImporterFragment"),
-                Pair(PagesTest::needsPath, "CsvImporter"),
-                Pair(PagesTest::needsPath, "ImageOcclusion")
-            )
+            val intents =
+                listOf<Pair<PagesTest.(Context) -> Intent, String>>(
+                    Pair(PagesTest::getStatistics, "Statistics"),
+                    Pair(PagesTest::getCardInfo, "CardInfo"),
+                    Pair(PagesTest::getCongratsPage, "CongratsPage"),
+                    Pair(PagesTest::getDeckOptions, "DeckOptions"),
+                    // the following need a file path
+                    Pair(PagesTest::needsPath, "AnkiPackageImporterFragment"),
+                    Pair(PagesTest::needsPath, "CsvImporter"),
+                    Pair(PagesTest::needsPath, "ImageOcclusion")
+                )
 
             return intents.map { arrayOf(it.first, it.second) }
         }
@@ -99,11 +100,14 @@ fun PagesTest.getCongratsPage(context: Context): Intent {
         CardInfoDestination(card.id).toIntent(context)
     }
 }
+
 fun PagesTest.getDeckOptions(context: Context): Intent {
     return DeckOptions.getIntent(context, col.decks.allNamesAndIds().first().id)
 }
 
-fun PagesTest.needsPath(@Suppress("UNUSED_PARAMETER") context: Context): Intent {
+fun PagesTest.needsPath(
+    @Suppress("UNUSED_PARAMETER") context: Context
+): Intent {
     assumeThat("not implemented: path needed", false, equalTo(true))
     TODO()
 }

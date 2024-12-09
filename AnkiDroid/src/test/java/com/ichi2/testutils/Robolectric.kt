@@ -33,10 +33,11 @@ object Robolectric {
     inline fun <reified TestActivity : Activity> registerTestActivity() {
         // https://github.com/robolectric/robolectric/pull/4736
         val context: Context = ApplicationProvider.getApplicationContext()
-        val activityInfo = ActivityInfo().apply {
-            name = TestActivity::class.java.name
-            packageName = context.packageName
-        }
+        val activityInfo =
+            ActivityInfo().apply {
+                name = TestActivity::class.java.name
+                packageName = context.packageName
+            }
         shadowOf(context.packageManager).addOrUpdateActivity(activityInfo)
     }
 }

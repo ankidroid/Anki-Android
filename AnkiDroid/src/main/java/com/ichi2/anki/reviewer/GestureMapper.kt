@@ -30,6 +30,7 @@ class GestureMapper {
         private set
     private var swipeMinDistance = -1
     private var swipeThresholdVelocity = -1
+
     fun init(preferences: SharedPreferences) {
         val sensitivity = preferences.getInt("swipeSensitivity", 100)
         tapGestureMode = fromPreference(preferences)
@@ -83,7 +84,12 @@ class GestureMapper {
         return null
     }
 
-    fun gesture(height: Int, width: Int, posX: Float, posY: Float): Gesture? {
+    fun gesture(
+        height: Int,
+        width: Int,
+        posX: Float,
+        posY: Float
+    ): Gesture? {
         return if (width == 0 || height == 0) {
             null
         } else {
@@ -95,7 +101,9 @@ class GestureMapper {
     }
 
     private enum class TriState {
-        LOW, MID, HIGH
+        LOW,
+        MID,
+        HIGH
     }
 
     companion object {
@@ -107,7 +115,13 @@ class GestureMapper {
 
         @Suppress("ktlint:standard:property-naming")
         private var DEFAULT_SWIPE_THRESHOLD_VELOCITY = 0
-        private fun fromTap(height: Int, width: Int, posX: Float, posY: Float): Gesture {
+
+        private fun fromTap(
+            height: Int,
+            width: Int,
+            posX: Float,
+            posY: Float
+        ): Gesture {
             val gestureIsRight = posY > height * (1 - posX / width)
             return if (posX > posY / height * width) {
                 if (gestureIsRight) {
@@ -124,27 +138,35 @@ class GestureMapper {
             }
         }
 
-        private fun fromTapCorners(height: Int, width: Int, posX: Float, posY: Float): Gesture {
+        private fun fromTapCorners(
+            height: Int,
+            width: Int,
+            posX: Float,
+            posY: Float
+        ): Gesture {
             val heightSegment = height / 3.0
             val widthSegment = width / 3.0
             val wSector = clamp(posX / widthSegment)
             val hSector = clamp(posY / heightSegment)
             return when (wSector) {
-                TriState.LOW -> when (hSector) {
-                    TriState.LOW -> Gesture.TAP_TOP_LEFT
-                    TriState.MID -> Gesture.TAP_LEFT
-                    TriState.HIGH -> Gesture.TAP_BOTTOM_LEFT
-                }
-                TriState.MID -> when (hSector) {
-                    TriState.LOW -> Gesture.TAP_TOP
-                    TriState.MID -> Gesture.TAP_CENTER
-                    TriState.HIGH -> Gesture.TAP_BOTTOM
-                }
-                TriState.HIGH -> when (hSector) {
-                    TriState.LOW -> Gesture.TAP_TOP_RIGHT
-                    TriState.MID -> Gesture.TAP_RIGHT
-                    TriState.HIGH -> Gesture.TAP_BOTTOM_RIGHT
-                }
+                TriState.LOW ->
+                    when (hSector) {
+                        TriState.LOW -> Gesture.TAP_TOP_LEFT
+                        TriState.MID -> Gesture.TAP_LEFT
+                        TriState.HIGH -> Gesture.TAP_BOTTOM_LEFT
+                    }
+                TriState.MID ->
+                    when (hSector) {
+                        TriState.LOW -> Gesture.TAP_TOP
+                        TriState.MID -> Gesture.TAP_CENTER
+                        TriState.HIGH -> Gesture.TAP_BOTTOM
+                    }
+                TriState.HIGH ->
+                    when (hSector) {
+                        TriState.LOW -> Gesture.TAP_TOP_RIGHT
+                        TriState.MID -> Gesture.TAP_RIGHT
+                        TriState.HIGH -> Gesture.TAP_BOTTOM_RIGHT
+                    }
             }
         }
 

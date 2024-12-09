@@ -42,10 +42,11 @@ class FlagRenameDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView = requireActivity().layoutInflater.inflate(R.layout.rename_flag_layout, null)
-        val builder = AlertDialog.Builder(requireContext()).apply {
-            customView(view = dialogView, 4, 4, 4, 4)
-            title(R.string.rename_flag)
-        }
+        val builder =
+            AlertDialog.Builder(requireContext()).apply {
+                customView(view = dialogView, 4, 4, 4, 4)
+                title(R.string.rename_flag)
+            }
         val dialog = builder.create()
 
         recyclerView = dialogView.findViewById(R.id.recyclerview_flags)
@@ -66,13 +67,14 @@ class FlagRenameDialog : DialogFragment() {
         )
     }
 
-    private fun setupRecyclerView() = requireActivity().lifecycleScope.launch {
-        val flagItems = createFlagList()
-        flagAdapter = FlagAdapter(lifecycleScope = lifecycleScope)
-        recyclerView.adapter = flagAdapter
-        flagAdapter.submitList(flagItems)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    }
+    private fun setupRecyclerView() =
+        requireActivity().lifecycleScope.launch {
+            val flagItems = createFlagList()
+            flagAdapter = FlagAdapter(lifecycleScope = lifecycleScope)
+            recyclerView.adapter = flagAdapter
+            flagAdapter.submitList(flagItems)
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
 
     private suspend fun createFlagList(): List<FlagItem> {
         Timber.d("Creating flag list")

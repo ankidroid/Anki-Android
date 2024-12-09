@@ -24,14 +24,16 @@ import java.io.PrintWriter
 import java.io.StringWriter
 
 object ExceptionUtil {
-
     @CheckResult
     fun getExceptionMessage(e: Throwable?): String {
         return getExceptionMessage(e, "\n")
     }
 
     @CheckResult
-    fun getExceptionMessage(e: Throwable?, separator: String?): String {
+    fun getExceptionMessage(
+        e: Throwable?,
+        separator: String?
+    ): String {
         val ret = StringBuilder()
         var cause: Throwable? = e
         while (cause != null) {
@@ -53,7 +55,11 @@ object ExceptionUtil {
     }
 
     /** Executes a function, and logs the exception to ACRA and shows a toast if an issue occurs */
-    fun executeSafe(context: Context, origin: String, runnable: (() -> Unit)) {
+    fun executeSafe(
+        context: Context,
+        origin: String,
+        runnable: (() -> Unit)
+    ) {
         try {
             runnable.invoke()
         } catch (e: Exception) {

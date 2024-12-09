@@ -249,7 +249,11 @@ $!"""
         assertEquals("test, test, test2", contentForCloze(cloze2, 1))
     }
 
-    private fun typeAnsAnswerFilter(answer: String, correctAnswer: String, userAnswer: String): String =
+    private fun typeAnsAnswerFilter(
+        answer: String,
+        correctAnswer: String,
+        userAnswer: String
+    ): String =
         TypeAnswer(
             useInputTag = false,
             autoFocus = false

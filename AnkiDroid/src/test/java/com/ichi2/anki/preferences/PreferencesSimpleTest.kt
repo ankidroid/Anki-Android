@@ -30,7 +30,10 @@ import java.util.stream.Stream
 class PreferencesSimpleTest {
     @ParameterizedTest
     @MethodSource("buildCategorySummary_LTR_Test_args")
-    fun buildCategorySummary_LTR_Test(entries: Array<String>, expectedSummary: String) {
+    fun buildCategorySummary_LTR_Test(
+        entries: Array<String>,
+        expectedSummary: String
+    ) {
         assertThat(HeaderPreference.buildHeaderSummary(*entries), equalTo(expectedSummary))
     }
 

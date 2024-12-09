@@ -39,22 +39,25 @@ class AudioTimer(listener: OnTimerTickListener, audioWaveListener: OnAudioTickLi
     private var audioTimeDelay = 16.milliseconds
     private var audioWaveDuration = 0L
     private var audioWaveDelay = 50L
-    init {
-        audioTimeRunnable = object : Runnable {
-            override fun run() {
-                audioTimeDuration += audioTimeDelay
-                audioTimeHandler.postDelayed(this, audioTimeDelay)
-                listener.onTimerTick(audioTimeDuration)
-            }
-        }
 
-        audioWaveRunnable = object : Runnable {
-            override fun run() {
-                audioWaveDuration += audioWaveDelay
-                audioWaveHandler.postDelayed(this, audioWaveDelay)
-                audioWaveListener.onAudioTick()
+    init {
+        audioTimeRunnable =
+            object : Runnable {
+                override fun run() {
+                    audioTimeDuration += audioTimeDelay
+                    audioTimeHandler.postDelayed(this, audioTimeDelay)
+                    listener.onTimerTick(audioTimeDuration)
+                }
             }
-        }
+
+        audioWaveRunnable =
+            object : Runnable {
+                override fun run() {
+                    audioWaveDuration += audioWaveDelay
+                    audioWaveHandler.postDelayed(this, audioWaveDelay)
+                    audioWaveListener.onAudioTick()
+                }
+            }
     }
 
     fun start() {

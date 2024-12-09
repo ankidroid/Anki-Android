@@ -76,7 +76,6 @@ import timber.log.Timber
 import kotlin.test.assertNotNull
 
 open class RobolectricTest : AndroidTest {
-
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
 
@@ -114,19 +113,21 @@ open class RobolectricTest : AndroidTest {
         throwOnShowError = true
 
         // See the Android logging (from Timber)
-        ShadowLog.stream = System.out
-            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
-            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
-            // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
-            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$")
+        ShadowLog.stream =
+            System.out
+                // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
+                // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
+                // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
+                .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$")
 
         ChangeManager.clearSubscribers()
 
         validateRunWithAnnotationPresent()
 
-        val config = Configuration.Builder()
-            .setExecutor(SynchronousExecutor())
-            .build()
+        val config =
+            Configuration.Builder()
+                .setExecutor(SynchronousExecutor())
+                .build()
 
         WorkManagerTestInitHelper.initializeTestWorkManager(targetContext, config)
 
@@ -207,7 +208,10 @@ open class RobolectricTest : AndroidTest {
     /**
      * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
      */
-    protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+    protected fun clickAlertDialogButton(
+        button: Int,
+        @Suppress("SameParameterValue") checkDismissed: Boolean
+    ) {
         val dialog = getLatestAlertDialog()
 
         dialog.getButton(button).performClick()
@@ -226,7 +230,9 @@ open class RobolectricTest : AndroidTest {
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
      */
-    protected fun getAlertDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
+    protected fun getAlertDialogText(
+        @Suppress("SameParameterValue") checkDismissed: Boolean
+    ): String? {
         val dialog = getLatestAlertDialog()
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
@@ -289,7 +295,11 @@ open class RobolectricTest : AndroidTest {
         }
 
         @JvmStatic // Using protected members which are not @JvmStatic in the superclass companion is unsupported yet
-        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(testClass: RobolectricTest, clazz: Class<T>?, i: Intent?): T {
+        protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+            testClass: RobolectricTest,
+            clazz: Class<T>?,
+            i: Intent?
+        ): T {
             if (AbstractFlashcardViewer::class.java.isAssignableFrom(clazz!!)) {
                 // fixes 'Don't know what to do with dataSource...' inside Sounds.kt
                 // solution from https://github.com/robolectric/robolectric/issues/4673
@@ -297,8 +307,9 @@ open class RobolectricTest : AndroidTest {
                     ShadowMediaPlayer.MediaInfo(1, 0)
                 }
             }
-            val controller = Robolectric.buildActivity(clazz, i)
-                .create().start().resume().visible()
+            val controller =
+                Robolectric.buildActivity(clazz, i)
+                    .create().start().resume().visible()
             advanceRobolectricLooperWithSleep()
             testClass.saveControllerForCleanup(controller)
             return controller.get()
@@ -320,7 +331,11 @@ open class RobolectricTest : AndroidTest {
         return targetContext.getString(res)
     }
 
-    protected fun getQuantityString(res: Int, quantity: Int, vararg formatArgs: Any): String {
+    protected fun getQuantityString(
+        res: Int,
+        quantity: Int,
+        vararg formatArgs: Any
+    ): String {
         return targetContext.resources.getQuantityString(res, quantity, *formatArgs)
     }
 
@@ -328,11 +343,12 @@ open class RobolectricTest : AndroidTest {
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
     override val col: Collection
-        get() = try {
-            CollectionManager.getColUnsafe()
-        } catch (e: UnsatisfiedLinkError) {
-            throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
-        }
+        get() =
+            try {
+                CollectionManager.getColUnsafe()
+            } catch (e: UnsatisfiedLinkError) {
+                throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
+            }
 
     protected val collectionTime: MockTime
         get() = TimeManager.time as MockTime
@@ -355,7 +371,10 @@ open class RobolectricTest : AndroidTest {
         return NotetypeJson(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
-    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
+    internal fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(
+        clazz: Class<T>?,
+        i: Intent?
+    ): T {
         return startActivityNormallyOpenCollectionWithIntent(this, clazz, i)
     }
 
@@ -384,7 +403,10 @@ open class RobolectricTest : AndroidTest {
      * @see org.hamcrest.CoreMatchers
      * @see org.junit.matchers.JUnitMatchers
      */
-    fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {
+    fun <T> assumeThat(
+        actual: T,
+        matcher: Matcher<T>?
+    ) {
         Assume.assumeThat(actual, matcher)
     }
 
@@ -405,7 +427,11 @@ open class RobolectricTest : AndroidTest {
      * @see org.hamcrest.CoreMatchers
      * @see org.junit.matchers.JUnitMatchers
      */
-    fun <T> assumeThat(message: String?, actual: T, matcher: Matcher<T>?) {
+    fun <T> assumeThat(
+        message: String?,
+        actual: T,
+        matcher: Matcher<T>?
+    ) {
         Assume.assumeThat(message, actual, matcher)
     }
 
@@ -416,11 +442,17 @@ open class RobolectricTest : AndroidTest {
      * throwing [AssumptionViolatedException]
      * @param message A message to pass to [AssumptionViolatedException]
      */
-    fun assumeTrue(message: String?, b: Boolean) {
+    fun assumeTrue(
+        message: String?,
+        b: Boolean
+    ) {
         Assume.assumeTrue(message, b)
     }
 
-    fun equalFirstField(expected: Card, obtained: Card) {
+    fun equalFirstField(
+        expected: Card,
+        obtained: Card
+    ) {
         MatcherAssert.assertThat(obtained.note().fields[0], Matchers.equalTo(expected.note().fields[0]))
     }
 
@@ -432,8 +464,7 @@ open class RobolectricTest : AndroidTest {
      * ```
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    fun editPreferences(action: SharedPreferences.Editor.() -> Unit) =
-        getPreferences().edit(action = action)
+    fun editPreferences(action: SharedPreferences.Editor.() -> Unit) = getPreferences().edit(action = action)
 
     protected fun grantRecordAudioPermission() {
         val application = ApplicationProvider.getApplicationContext<Application>()

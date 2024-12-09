@@ -47,13 +47,20 @@ class ButtonItemAdapter(
         items.remove(searchName)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonVH {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ButtonVH {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.card_browser_item_my_searches_dialog, parent, false)
         return ButtonVH(view, this)
     }
 
-    override fun onBindViewHolder(holder: ButtonVH, position: Int) {
+    override fun onBindViewHolder(
+        holder: ButtonVH,
+        position: Int
+    ) {
         holder.title.text = items[position]
         holder.button.tag = items[position]
     }
@@ -62,9 +69,10 @@ class ButtonItemAdapter(
 
     inner class ButtonVH(itemView: View, private val adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val title: TextView = itemView.findViewById(R.id.card_browser_my_search_name_textview)
-        val button: ImageButton = itemView.findViewById<ImageButton?>(R.id.card_browser_my_search_remove_button).apply {
-            setOnClickListener(this@ButtonVH)
-        }
+        val button: ImageButton =
+            itemView.findViewById<ImageButton?>(R.id.card_browser_my_search_remove_button).apply {
+                setOnClickListener(this@ButtonVH)
+            }
 
         override fun onClick(view: View) {
             if (view is ImageButton) {

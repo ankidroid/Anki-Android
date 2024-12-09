@@ -23,9 +23,9 @@ import org.junit.Test
 
 /** Test for [InvalidStringFormatDetectorTest] */
 class InvalidStringFormatDetectorTest {
-
     @Language("XML")
-    private val invalid = """<resources>
+    private val invalid =
+        """<resources>
         |<string name="testString">I am a test% String</string>
         |<string name="testString">test%</string>
         |<string name="testString3">test% string</string>
@@ -33,10 +33,11 @@ class InvalidStringFormatDetectorTest {
             <item quantity="other">आज%  %1${'$'}'d' मध्ये% %2${'$'}'s' कार्डांचा अभ्यास केला</item>
         </plurals>
         |</resources>
-    """.trimMargin()
+        """.trimMargin()
 
     @Language("XML")
-    private val valid = """<resources>
+    private val valid =
+        """<resources>
         |<string name="testString">I am a test String</string>
         |<string name="testString">test</string>
         |<string name="testString3">test string</string>
@@ -52,10 +53,11 @@ class InvalidStringFormatDetectorTest {
         </plurals>
         |<string name="testString7">XXX%</string>
         |</resources>
-    """.trimMargin()
+        """.trimMargin()
 
     @Language("XML")
-    private val invalidCapitalization = """<resources>
+    private val invalidCapitalization =
+        """<resources>
         |<string name="testString">%D</string>
         |<string name="testString2">%1D</string>
         |<string name="testString3">%9D</string>
@@ -78,10 +80,11 @@ class InvalidStringFormatDetectorTest {
             <item quantity="other">%2${'$'}D</item>
         </plurals>
         |</resources>
-    """.trimMargin()
+        """.trimMargin()
 
     @Language("XML")
-    private val validCapitalization = """<resources>
+    private val validCapitalization =
+        """<resources>
         |<string name="testString">%d</string>
         |<string name="testString2">%1d</string>
         |<string name="testString3">%9d</string>
@@ -112,7 +115,7 @@ class InvalidStringFormatDetectorTest {
             <item quantity="other">Hello hello %2${'$'}d hello hello</item>
         </plurals>
         |</resources>
-    """.trimMargin()
+        """.trimMargin()
 
     @Test
     fun error_if_string_format_invalid() {

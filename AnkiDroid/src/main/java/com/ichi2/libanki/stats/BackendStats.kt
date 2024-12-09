@@ -28,9 +28,10 @@ fun Collection.graphsRaw(input: ByteArray): ByteArray {
 }
 
 fun Collection.getGraphPreferencesRaw(): ByteArray {
-    val prefs = backend.getGraphPreferences().toBuilder()
-        .setBrowserLinksSupported(false)
-        .build()
+    val prefs =
+        backend.getGraphPreferences().toBuilder()
+            .setBrowserLinksSupported(false)
+            .build()
     return prefs.toByteArray()
 }
 

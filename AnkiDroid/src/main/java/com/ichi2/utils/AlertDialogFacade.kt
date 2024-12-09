@@ -56,7 +56,10 @@ fun DialogInterfaceListener.toClickListener(): OnClickListener {
  * Allows easier transformations from [MaterialDialog] to [AlertDialog].
  * Inline this file when material dialog is removed
  */
-fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? = null): AlertDialog.Builder {
+fun AlertDialog.Builder.title(
+    @StringRes stringRes: Int? = null,
+    text: String? = null
+): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
@@ -67,7 +70,10 @@ fun AlertDialog.Builder.title(@StringRes stringRes: Int? = null, text: String? =
     }
 }
 
-fun AlertDialog.Builder.message(@StringRes stringRes: Int? = null, text: CharSequence? = null): AlertDialog.Builder {
+fun AlertDialog.Builder.message(
+    @StringRes stringRes: Int? = null,
+    text: CharSequence? = null
+): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
     }
@@ -148,9 +154,10 @@ inline fun AlertDialog.Builder.show(block: AlertDialog.Builder.() -> Unit): Aler
 /**
  * Creates an [AlertDialog] from the [AlertDialog.Builder] instance, then executes [block] with it.
  */
-fun AlertDialog.Builder.createAndApply(block: AlertDialog.() -> Unit): AlertDialog = create().apply {
-    block()
-}
+fun AlertDialog.Builder.createAndApply(block: AlertDialog.() -> Unit): AlertDialog =
+    create().apply {
+        block()
+    }
 
 /**
  * Executes [block] on the [AlertDialog.Builder] instance and returns the initialized [AlertDialog].
@@ -204,10 +211,11 @@ fun AlertDialog.Builder.customView(
 ): AlertDialog.Builder {
     val container = FrameLayout(context)
 
-    val containerParams = FrameLayout.LayoutParams(
-        FrameLayout.LayoutParams.MATCH_PARENT,
-        FrameLayout.LayoutParams.WRAP_CONTENT
-    )
+    val containerParams =
+        FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
 
     container.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
     container.addView(view, containerParams)
@@ -228,7 +236,10 @@ fun AlertDialog.Builder.customListAdapter(adapter: RecyclerView.Adapter<*>) {
  * @param adapter The adapter for the RecyclerView.
  * @param context The context used to access resources and LayoutInflater.
  */
-fun AlertDialog.Builder.customListAdapterWithDecoration(adapter: RecyclerView.Adapter<*>, context: Context) {
+fun AlertDialog.Builder.customListAdapterWithDecoration(
+    adapter: RecyclerView.Adapter<*>,
+    context: Context
+) {
     val recyclerView = LayoutInflater.from(context).inflate(R.layout.dialog_generic_recycler_view, null, false) as RecyclerView
     recyclerView.adapter = adapter
     recyclerView.layoutManager = LinearLayoutManager(context)
@@ -333,7 +344,10 @@ val AlertDialog.positiveButton: Button
  * @param items The items to display in the list.
  * @param onClick A lambda function that is invoked when an item is clicked.
  */
-fun AlertDialog.Builder.listItems(items: List<CharSequence>, onClick: (dialog: DialogInterface, index: Int) -> Unit): AlertDialog.Builder {
+fun AlertDialog.Builder.listItems(
+    items: List<CharSequence>,
+    onClick: (dialog: DialogInterface, index: Int) -> Unit
+): AlertDialog.Builder {
     return this.setItems(items.toTypedArray()) { dialog, which ->
         onClick(dialog, which)
     }
@@ -347,7 +361,11 @@ fun AlertDialog.Builder.listItems(items: List<CharSequence>, onClick: (dialog: D
  * @param items The items to display in the list.
  * @param onClick A lambda function that is invoked when an item is clicked.
  */
-fun AlertDialog.Builder.listItemsAndMessage(message: String?, items: List<CharSequence>, onClick: (dialog: DialogInterface, index: Int) -> Unit): AlertDialog.Builder {
+fun AlertDialog.Builder.listItemsAndMessage(
+    message: String?,
+    items: List<CharSequence>,
+    onClick: (dialog: DialogInterface, index: Int) -> Unit
+): AlertDialog.Builder {
     val dialogView = View.inflate(this.context, R.layout.dialog_listview_message, null)
     dialogView.findViewById<FixedTextView>(R.id.dialog_message).text = message
 

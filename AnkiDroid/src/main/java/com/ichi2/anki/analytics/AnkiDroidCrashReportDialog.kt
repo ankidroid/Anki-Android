@@ -80,7 +80,10 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
         return rootView
     }
 
-    override fun onClick(dialog: DialogInterface, which: Int) {
+    override fun onClick(
+        dialog: DialogInterface,
+        which: Int
+    ) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
             // Next time don't tick the auto-report checkbox by default
             val autoReport = alwaysReportCheckBox!!.isChecked

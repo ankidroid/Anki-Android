@@ -48,18 +48,21 @@ class PreferencesFragment :
     Fragment(R.layout.preferences),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
-
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            if (resources.isWindowCompact() && childFragmentManager.backStackEntryCount > 0) {
-                childFragmentManager.popBackStack()
-            } else {
-                requireActivity().finish()
+    private val onBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (resources.isWindowCompact() && childFragmentManager.backStackEntryCount > 0) {
+                    childFragmentManager.popBackStack()
+                } else {
+                    requireActivity().finish()
+                }
             }
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         view.findViewById<MaterialToolbar>(R.id.toolbar)
             .setNavigationOnClickListener { onBackPressedCallback.handleOnBackPressed() }
 
@@ -75,8 +78,9 @@ class PreferencesFragment :
         }
 
         childFragmentManager.addOnBackStackChangedListener {
-            val fragment = childFragmentManager.findFragmentById(R.id.settings_container)
-                ?: return@addOnBackStackChangedListener
+            val fragment =
+                childFragmentManager.findFragmentById(R.id.settings_container)
+                    ?: return@addOnBackStackChangedListener
 
             setFragmentTitleOnToolbar(fragment)
 
@@ -94,14 +98,16 @@ class PreferencesFragment :
         pref: Preference
     ): Boolean {
         // avoid reopening the same fragment if already active
-        val currentFragment = childFragmentManager.findFragmentById(R.id.settings_container)
-            ?: return true
+        val currentFragment =
+            childFragmentManager.findFragmentById(R.id.settings_container)
+                ?: return true
         if (pref.fragment == currentFragment::class.jvmName) return true
 
-        val fragment = childFragmentManager.fragmentFactory.instantiate(
-            requireActivity().classLoader,
-            pref.fragment ?: return true
-        )
+        val fragment =
+            childFragmentManager.fragmentFactory.instantiate(
+                requireActivity().classLoader,
+                pref.fragment ?: return true
+            )
         fragment.arguments = pref.extras
         childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment::class.jvmName)
@@ -137,11 +143,12 @@ class PreferencesFragment :
      */
     private fun loadInitialSubscreen() {
         val fragmentClassName = arguments?.getString(INITIAL_FRAGMENT_EXTRA)
-        val initialFragment = if (fragmentClassName == null) {
-            if (resources.isWindowCompact()) HeaderFragment() else GeneralSettingsFragment()
-        } else {
-            FragmentFactoryUtils.instantiate<Fragment>(requireActivity(), fragmentClassName)
-        }
+        val initialFragment =
+            if (fragmentClassName == null) {
+                if (resources.isWindowCompact()) HeaderFragment() else GeneralSettingsFragment()
+            } else {
+                FragmentFactoryUtils.instantiate<Fragment>(requireActivity(), fragmentClassName)
+            }
         childFragmentManager.commit {
             // In big screens, show the headers fragment at the lateral navigation container
             if (!resources.isWindowCompact()) {
@@ -167,7 +174,10 @@ class PreferencesActivity : SingleFragmentActivity(), SearchPreferenceResultList
     }
 
     companion object {
-        fun getIntent(context: Context, initialFragment: KClass<out SettingsFragment>? = null): Intent {
+        fun getIntent(
+            context: Context,
+            initialFragment: KClass<out SettingsFragment>? = null
+        ): Intent {
             val arguments = bundleOf(INITIAL_FRAGMENT_EXTRA to initialFragment?.jvmName)
             return Intent(context, PreferencesActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, PreferencesFragment::class.jvmName)
@@ -181,7 +191,7 @@ interface TitleProvider {
     val title: CharSequence
 }
 
-/* Only enable AnkiDroid notifications unrelated to due reminders */
+// Only enable AnkiDroid notifications unrelated to due reminders
 const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
 const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
@@ -190,7 +200,9 @@ const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
  * @return the [SettingsFragment] which uses the given [screen] resource.
  * i.e. [SettingsFragment.preferenceResource] value is the same of [screen]
  */
-fun getFragmentFromXmlRes(@XmlRes screen: Int): SettingsFragment? {
+fun getFragmentFromXmlRes(
+    @XmlRes screen: Int
+): SettingsFragment? {
     return when (screen) {
         R.xml.preferences_general -> GeneralSettingsFragment()
         R.xml.preferences_reviewing -> ReviewingSettingsFragment()

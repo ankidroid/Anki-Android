@@ -60,9 +60,13 @@ open class Flags protected constructor(val value: Long)
  * Specific flags used for retrieving package info. Example:
  * `PackageManager.getPackageInfo(packageName, PackageInfoFlags.of(0)`
  */
-class PackageInfoFlagsCompat private constructor(@PackageInfoFlagsBits value: Long) : Flags(value) {
+class PackageInfoFlagsCompat private constructor(
+    @PackageInfoFlagsBits value: Long
+) : Flags(value) {
     companion object {
-        fun of(@PackageInfoFlagsBits value: Long): PackageInfoFlagsCompat = PackageInfoFlagsCompat(value)
+        fun of(
+            @PackageInfoFlagsBits value: Long
+        ): PackageInfoFlagsCompat = PackageInfoFlagsCompat(value)
 
         /** Helper property. Does not exist on Platform API */
         val EMPTY = PackageInfoFlagsCompat(0)

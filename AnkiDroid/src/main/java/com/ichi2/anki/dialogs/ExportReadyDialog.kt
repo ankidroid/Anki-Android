@@ -32,8 +32,10 @@ import com.ichi2.utils.positiveButton
 class ExportReadyDialog(private val listener: ExportReadyDialogListener) : AsyncDialogFragment() {
     interface ExportReadyDialogListener {
         fun shareFile(path: String) // path of the file to be shared
+
         fun saveExportFile(exportPath: String)
     }
+
     private val exportPath
         get() = requireArguments().getString("exportPath")!!
 
@@ -82,10 +84,11 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
             )
         }
 
-        override fun toMessage(): Message = Message.obtain().apply {
-            what = this@ExportReadyDialogMessage.what
-            data = bundleOf("exportPath" to exportPath)
-        }
+        override fun toMessage(): Message =
+            Message.obtain().apply {
+                what = this@ExportReadyDialogMessage.what
+                data = bundleOf("exportPath" to exportPath)
+            }
 
         companion object {
             fun fromMessage(message: Message): ExportReadyDialogMessage {

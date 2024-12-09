@@ -35,7 +35,6 @@ constructor(
     defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
     defStyleRes: Int = androidx.preference.R.style.Preference
 ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
-
     private var isHighlighted = false
 
     init {

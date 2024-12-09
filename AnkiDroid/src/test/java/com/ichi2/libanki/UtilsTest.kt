@@ -23,7 +23,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class UtilsTest {
-
     @Test
     fun testSplit() {
         assertEquals(listOf("foo", "bar"), Utils.splitFields("foobar"))
@@ -32,14 +31,15 @@ class UtilsTest {
 
     @Test
     fun test_stripHTML_will_remove_tags() {
-        val strings = listOf(
-            "<>",
-            "<1>",
-            "<foo>",
-            "<\n>",
-            "<\\qwq>",
-            "<aa\nsd\nas\n?\n>"
-        )
+        val strings =
+            listOf(
+                "<>",
+                "<1>",
+                "<foo>",
+                "<\n>",
+                "<\\qwq>",
+                "<aa\nsd\nas\n?\n>"
+            )
         for (s in strings) {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",
@@ -51,14 +51,15 @@ class UtilsTest {
 
     @Test
     fun test_stripHTML_will_remove_comments() {
-        val strings = listOf(
-            "<!---->",
-            "<!--dd-->",
-            "<!--asd asd asd-->",
-            "<!--\n-->",
-            "<!--\nsd-->",
-            "<!--lkl\nklk\n-->"
-        )
+        val strings =
+            listOf(
+                "<!---->",
+                "<!--dd-->",
+                "<!--asd asd asd-->",
+                "<!--\n-->",
+                "<!--\nsd-->",
+                "<!--lkl\nklk\n-->"
+            )
         for (s in strings) {
             assertEquals(
                 s.replace("\n", "\\n") + " should be removed.",

@@ -30,13 +30,14 @@ import com.ichi2.preferences.usingStyledAttributes
  *
  * * app:helpLink (string): adds a help button that opens the provided link when tapped
  */
-class ExtendedPreferenceCategory @JvmOverloads constructor(
+class ExtendedPreferenceCategory
+@JvmOverloads
+constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.preference.R.attr.preferenceCategoryStyle,
     defStyleRes: Int = androidx.preference.R.style.Preference_Category
 ) : PreferenceCategory(context, attrs, defStyleAttr, defStyleRes) {
-
     private val helpLink: String?
 
     init {

@@ -114,8 +114,9 @@ object ActivityList {
     ) {
         val simpleName: String = activity.simpleName
 
-        fun build(context: Context): ActivityController<out Activity> = Robolectric
-            .buildActivity(activity, intentBuilder.apply(context))
+        fun build(context: Context): ActivityController<out Activity> =
+            Robolectric
+                .buildActivity(activity, intentBuilder.apply(context))
 
         val className: String = activity.name
 

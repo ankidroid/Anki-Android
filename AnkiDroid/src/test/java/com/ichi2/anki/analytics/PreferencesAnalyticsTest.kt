@@ -33,51 +33,53 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         PreferenceTestUtils.getKeysFromXml(targetContext, R.xml.preferences_dev_options).toSet()
 
     /** All preference keys besides dev options */
-    private val allKeys = PreferenceTestUtils.getAllPreferenceKeys(targetContext)
-        .subtract(devOptionsKeys)
+    private val allKeys =
+        PreferenceTestUtils.getAllPreferenceKeys(targetContext)
+            .subtract(devOptionsKeys)
 
     /** Keys of preferences that shouldn't be reported */
-    private val excludedPrefs = setOf(
-        // Share feature usage: analytics are only reported if this is enabled :)
-        "analytics_opt_in",
-        // Screens: don't have a value
-        "generalScreen",
-        "reviewingScreen",
-        "syncScreen",
-        "notificationsScreen",
-        "controlsScreen",
-        "accessibilityScreen",
-        "customSyncServerScreen",
-        "appBarButtonsScreen",
-        "pref_screen_advanced",
-        "backupsScreen",
-        "backups_help",
-        // Categories: don't have a value
-        "appearance_preference_group",
-        "category_plugins",
-        "category_workarounds",
-        "userActionsControls",
-        // Preferences that only click: don't have a value
-        "tts",
-        "resetLanguages",
-        // Opens App Bar buttons fragment
-        "custom_buttons_link",
-        // Opens Custom sync server fragment
-        "custom_sync_server_link",
-        "thirdpartyapps_link",
-        // will be reworked in the future
-        // Notify when
-        "minimumCardsDueForNotification",
-        // Vibrate
-        "widgetVibrate",
-        // Blink light
-        "widgetBlink",
-        // potential personal data
-        "syncAccount",
-        "syncBaseUrl",
-        "language",
-        "customSyncCertificate"
-    )
+    private val excludedPrefs =
+        setOf(
+            // Share feature usage: analytics are only reported if this is enabled :)
+            "analytics_opt_in",
+            // Screens: don't have a value
+            "generalScreen",
+            "reviewingScreen",
+            "syncScreen",
+            "notificationsScreen",
+            "controlsScreen",
+            "accessibilityScreen",
+            "customSyncServerScreen",
+            "appBarButtonsScreen",
+            "pref_screen_advanced",
+            "backupsScreen",
+            "backups_help",
+            // Categories: don't have a value
+            "appearance_preference_group",
+            "category_plugins",
+            "category_workarounds",
+            "userActionsControls",
+            // Preferences that only click: don't have a value
+            "tts",
+            "resetLanguages",
+            // Opens App Bar buttons fragment
+            "custom_buttons_link",
+            // Opens Custom sync server fragment
+            "custom_sync_server_link",
+            "thirdpartyapps_link",
+            // will be reworked in the future
+            // Notify when
+            "minimumCardsDueForNotification",
+            // Vibrate
+            "widgetVibrate",
+            // Blink light
+            "widgetBlink",
+            // potential personal data
+            "syncAccount",
+            "syncBaseUrl",
+            "language",
+            "customSyncCertificate"
+        )
 
     @Test
     fun `The include and excluded prefs lists don't share elements`() {
@@ -90,9 +92,10 @@ class PreferencesAnalyticsTest : RobolectricTest() {
 
     @Test
     fun `All preferences are either included or excluded in the report list`() {
-        val keysNotInAList = allKeys
-            .subtract(excludedPrefs)
-            .subtract(preferencesWhoseChangesShouldBeReported)
+        val keysNotInAList =
+            allKeys
+                .subtract(excludedPrefs)
+                .subtract(preferencesWhoseChangesShouldBeReported)
 
         assertThat(
             "All preference keys must be included in either the" +

@@ -27,7 +27,6 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class DeckSelectionDialogTest {
-
     @Test
     fun verifyDeckDisplayName() {
         val input = "deck::sub-deck::sub-deck2::sub-deck3"

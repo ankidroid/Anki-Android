@@ -19,7 +19,8 @@ import com.ichi2.libanki.DeckConfig
 
 enum class QuestionAction(val configValue: Int) {
     SHOW_ANSWER(0),
-    SHOW_REMINDER(1);
+    SHOW_REMINDER(1)
+    ;
 
     companion object {
         fun from(config: DeckConfig): QuestionAction {

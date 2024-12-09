@@ -69,6 +69,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
     private class KeyboardInputTestCardViewer : AbstractFlashcardViewer() {
         private var displayAnswer = false
         private var focusTextField = false
+
         override fun answerFieldIsFocused(): Boolean {
             return focusTextField
         }

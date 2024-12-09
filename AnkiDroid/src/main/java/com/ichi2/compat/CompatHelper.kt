@@ -43,16 +43,16 @@ import java.io.Serializable
  * ```
  */
 class CompatHelper private constructor() {
-
     // Note: Needs ": Compat" or the type system assumes `Compat21`
-    private val compatValue: Compat = when {
-        sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
-        sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
-        sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
-        sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
-        sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
-        else -> BaseCompat()
-    }
+    private val compatValue: Compat =
+        when {
+            sdkVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> CompatV34()
+            sdkVersion >= Build.VERSION_CODES.TIRAMISU -> CompatV33()
+            sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
+            sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
+            sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
+            else -> BaseCompat()
+        }
 
     companion object {
         /** Singleton instance of [CompatHelper] */
@@ -97,8 +97,10 @@ class CompatHelper private constructor() {
          * @throws NameNotFoundException if no such package is available to the caller.
          */
         @Throws(NameNotFoundException::class)
-        fun Context.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
-            this.packageManager.getPackageInfoCompat(packageName, flags)
+        fun Context.getPackageInfoCompat(
+            packageName: String,
+            flags: PackageInfoFlagsCompat
+        ): PackageInfo? = this.packageManager.getPackageInfoCompat(packageName, flags)
 
         /**
          * Retrieve overall information about an application package that is
@@ -108,8 +110,10 @@ class CompatHelper private constructor() {
          * @throws NameNotFoundException if no such package is available to the caller.
          */
         @Throws(NameNotFoundException::class)
-        fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
-            compat.getPackageInfo(this, packageName, flags)
+        fun PackageManager.getPackageInfoCompat(
+            packageName: String,
+            flags: PackageInfoFlagsCompat
+        ): PackageInfo? = compat.getPackageInfo(this, packageName, flags)
 
         /**
          * Determine the best service to handle for a given Intent.
@@ -121,7 +125,10 @@ class CompatHelper private constructor() {
          *         that was determined to be the best action. Returns null if no
          *         matching service was found.
          */
-        fun PackageManager.resolveServiceCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
+        fun PackageManager.resolveServiceCompat(
+            intent: Intent,
+            flags: ResolveInfoFlagsCompat
+        ): ResolveInfo? {
             return compat.resolveService(this, intent, flags)
         }
 
@@ -137,7 +144,10 @@ class CompatHelper private constructor() {
          *  is what would be returned by [resolveActivityCompat].
          *  If there are no matching activities, an empty list is returned.
          */
-        fun PackageManager.queryIntentActivitiesCompat(intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
+        fun PackageManager.queryIntentActivitiesCompat(
+            intent: Intent,
+            flags: ResolveInfoFlagsCompat
+        ): List<ResolveInfo> {
             return compat.queryIntentActivities(this, intent, flags)
         }
 
@@ -164,7 +174,10 @@ class CompatHelper private constructor() {
          *  found and there is no default set, returns a [ResolveInfo] object
          *  containing something else, such as the activity resolver.
          */
-        fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY): ResolveInfo? {
+        fun PackageManager.resolveActivityCompat(
+            intent: Intent,
+            flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY
+        ): ResolveInfo? {
             return compat.resolveActivity(this, intent, flags)
         }
 
@@ -190,8 +203,7 @@ class CompatHelper private constructor() {
             receiver: BroadcastReceiver?,
             filter: IntentFilter,
             @ContextCompat.RegisterReceiverFlags flags: Int
-        ) =
-            ContextCompat.registerReceiver(this, receiver, filter, flags)
+        ) = ContextCompat.registerReceiver(this, receiver, filter, flags)
     }
 }
 
@@ -207,5 +219,4 @@ class CompatHelper private constructor() {
  * @receiver the view on which to set the tooltip text
  * @param tooltipText the tooltip text
  */
-fun View.setTooltipTextCompat(tooltipText: CharSequence?) =
-    TooltipCompat.setTooltipText(this, tooltipText)
+fun View.setTooltipTextCompat(tooltipText: CharSequence?) = TooltipCompat.setTooltipText(this, tooltipText)

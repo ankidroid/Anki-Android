@@ -38,10 +38,11 @@ import kotlin.reflect.KClass
  * Base class for displaying Anki HTML pages
  */
 @Suppress("LeakingThis")
-open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment) :
+open class PageFragment(
+    @LayoutRes contentLayoutId: Int = R.layout.page_fragment
+) :
     Fragment(contentLayoutId),
     PostRequestHandler {
-
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
 
@@ -57,17 +58,21 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
     protected open fun onWebViewCreated(webView: WebView) { }
 
     @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        webView = view.findViewById<WebView>(R.id.webview).apply {
-            with(settings) {
-                javaScriptEnabled = true
-                displayZoomControls = false
-                builtInZoomControls = true
-                setSupportZoom(true)
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
+        webView =
+            view.findViewById<WebView>(R.id.webview).apply {
+                with(settings) {
+                    javaScriptEnabled = true
+                    displayZoomControls = false
+                    builtInZoomControls = true
+                    setSupportZoom(true)
+                }
+                webViewClient = onCreateWebViewClient(savedInstanceState)
+                webChromeClient = PageChromeClient()
             }
-            webViewClient = onCreateWebViewClient(savedInstanceState)
-            webChromeClient = PageChromeClient()
-        }
         onWebViewCreated(webView)
         requireActivity().setTransparentStatusBar()
         val arguments = requireArguments()
@@ -89,21 +94,31 @@ open class PageFragment(@LayoutRes contentLayoutId: Int = R.layout.page_fragment
         }
     }
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
-        val methodName = if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
-            uri.substring(AnkiServer.ANKI_PREFIX.length)
-        } else {
-            throw IllegalArgumentException("unhandled request: $uri")
-        }
+    override suspend fun handlePostRequest(
+        uri: String,
+        bytes: ByteArray
+    ): ByteArray {
+        val methodName =
+            if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
+                uri.substring(AnkiServer.ANKI_PREFIX.length)
+            } else {
+                throw IllegalArgumentException("unhandled request: $uri")
+            }
         return activity.handleUiPostRequest(methodName, bytes)
             ?: handleCollectionPostRequest(methodName, bytes)
             ?: throw IllegalArgumentException("unhandled method: $methodName")
     }
+
     companion object {
         const val PATH_ARG_KEY = "path"
         const val TITLE_ARG_KEY = "title"
 
-        fun getIntent(context: Context, path: String, title: String? = null, clazz: KClass<out PageFragment> = PageFragment::class): Intent {
+        fun getIntent(
+            context: Context,
+            path: String,
+            title: String? = null,
+            clazz: KClass<out PageFragment> = PageFragment::class
+        ): Intent {
             val arguments = bundleOf(PATH_ARG_KEY to path, TITLE_ARG_KEY to title)
             return SingleFragmentActivity.getIntent(context, clazz, arguments)
         }

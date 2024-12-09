@@ -37,7 +37,11 @@ import timber.log.Timber
  */
 class MockitoCollectionRule : TestRule {
     val col: Collection = Mockito.mock(Collection::class.java)
-    override fun apply(base: Statement, description: Description): Statement {
+
+    override fun apply(
+        base: Statement,
+        description: Description
+    ): Statement {
         return object : Statement() {
             override fun evaluate() {
                 try {

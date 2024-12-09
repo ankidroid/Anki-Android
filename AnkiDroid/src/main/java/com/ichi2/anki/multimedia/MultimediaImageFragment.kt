@@ -100,9 +100,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             when (result.resultCode) {
                 Activity.RESULT_CANCELED -> {
                     if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData = Intent().apply {
-                            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                        }
+                        val resultData =
+                            Intent().apply {
+                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                            }
                         requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
                         requireActivity().finish()
                     }
@@ -131,9 +132,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 Activity.RESULT_CANCELED -> {
                     // If user didn't draw, return the indexValue as a result and finish the activity
                     if (viewModel.currentMultimediaUri.value == null) {
-                        val resultData = Intent().apply {
-                            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                        }
+                        val resultData =
+                            Intent().apply {
+                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                            }
                         requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
                         requireActivity().finish()
                     }
@@ -157,9 +159,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             hasStartedImageSelection = false
             when {
                 !isPictureTaken && viewModel.currentMultimediaUri.value == null -> {
-                    val resultData = Intent().apply {
-                        putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-                    }
+                    val resultData =
+                        Intent().apply {
+                            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                        }
                     requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
                     requireActivity().finish()
                 }
@@ -183,11 +186,12 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             when (result.resultCode) {
                 Activity.RESULT_OK -> {
                     result.data?.let {
-                        val cropResultData = IntentCompat.getParcelableExtra(
-                            it,
-                            CROP_IMAGE_RESULT,
-                            ImageCropper.CropResultData::class.java
-                        )
+                        val cropResultData =
+                            IntentCompat.getParcelableExtra(
+                                it,
+                                CROP_IMAGE_RESULT,
+                                ImageCropper.CropResultData::class.java
+                            )
                         Timber.d("Cropped image data: $cropResultData")
 
                         if (cropResultData?.error != null) {
@@ -276,7 +280,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu(multimediaMenu)
         imageFileSize = view.findViewById(R.id.image_size_textview)
@@ -344,10 +351,11 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         field.mediaPath = viewModel.currentMultimediaPath.value
         field.hasTemporaryMedia = true
 
-        val resultData = Intent().apply {
-            putExtra(MULTIMEDIA_RESULT, field)
-            putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-        }
+        val resultData =
+            Intent().apply {
+                putExtra(MULTIMEDIA_RESULT, field)
+                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+            }
         requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
         requireActivity().finish()
     }
@@ -367,20 +375,22 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun dispatchCamera() {
-        val photoFile: File? = try {
-            requireContext().createImageFile()
-        } catch (e: Exception) {
-            Timber.w(e, "Error creating the file")
-            return
-        }
+        val photoFile: File? =
+            try {
+                requireContext().createImageFile()
+            } catch (e: Exception) {
+                Timber.w(e, "Error creating the file")
+                return
+            }
 
         photoFile?.let {
             viewModel.updateCurrentMultimediaPath(it.absolutePath)
-            val photoURI: Uri = FileProvider.getUriForFile(
-                requireContext(),
-                requireActivity().applicationContext.packageName + ".apkgfileprovider",
-                it
-            )
+            val photoURI: Uri =
+                FileProvider.getUriForFile(
+                    requireContext(),
+                    requireActivity().applicationContext.packageName + ".apkgfileprovider",
+                    it
+                )
 
             try {
                 cameraLauncher.launch(photoURI)
@@ -392,11 +402,12 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     private fun handleDrawingResult(intent: Intent) {
-        val imageUri = BundleCompat.getParcelable(
-            intent.extras!!,
-            DrawingActivity.EXTRA_RESULT_WHITEBOARD,
-            Uri::class.java
-        )
+        val imageUri =
+            BundleCompat.getParcelable(
+                intent.extras!!,
+                DrawingActivity.EXTRA_RESULT_WHITEBOARD,
+                Uri::class.java
+            )
 
         if (imageUri == null) {
             Timber.w("handleDrawingResult() no image Uri provided")
@@ -578,13 +589,14 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     private fun WebView.loadImage(imageUri: Uri) {
         Timber.i("Loading non-SVG image using WebView")
         val imagePath = imageUri.toString()
-        val htmlData = """
-        <html>
-            <body style="margin:0;padding:0;">
-                <img src="$imagePath" style="width:100%;height:auto;" />
-            </body>
-        </html>
-        """.trimIndent()
+        val htmlData =
+            """
+            <html>
+                <body style="margin:0;padding:0;">
+                    <img src="$imagePath" style="width:100%;height:auto;" />
+                </body>
+            </html>
+            """.trimIndent()
 
         loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
     }
@@ -593,13 +605,14 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     private fun showErrorInWebView() {
         val base64Image = getBitmapDrawable(R.drawable.ic_image_not_supported).toBase64Png()
 
-        val errorHtml = """
-        <html>
-            <body style="text-align:center;">
-                <img src="data:image/png;base64,$base64Image" alt="${TR.notetypeErrorNoImageToShow()}"/>
-            </body>
-        </html>
-        """.trimIndent()
+        val errorHtml =
+            """
+            <html>
+                <body style="text-align:center;">
+                    <img src="data:image/png;base64,$base64Image" alt="${TR.notetypeErrorNoImageToShow()}"/>
+                </body>
+            </html>
+            """.trimIndent()
 
         view?.findViewById<WebView>(R.id.multimedia_webview)?.loadDataWithBaseURL(null, errorHtml, "text/html", "UTF-8", null)
     }
@@ -715,13 +728,14 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             showSomethingWentWrong()
             return null
         }
-        internalFile = try {
-            createCachedFile(uriFileName, ankiCacheDirectory)
-        } catch (e: IOException) {
-            Timber.w(e, "internalizeUri() failed to create new file with name %s", uriFileName)
-            showSomethingWentWrong()
-            return null
-        }
+        internalFile =
+            try {
+                createCachedFile(uriFileName, ankiCacheDirectory)
+            } catch (e: IOException) {
+                Timber.w(e, "internalizeUri() failed to create new file with name %s", uriFileName)
+                showSomethingWentWrong()
+                return null
+            }
         return try {
             val returnFile =
                 FileUtil.internalizeUri(uri, internalFile, requireActivity().contentResolver)
@@ -744,7 +758,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 
     companion object {
-
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
@@ -767,5 +780,6 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     }
 }
 
-private fun Fragment.getBitmapDrawable(@DrawableRes resId: Int) =
-    ContextCompat.getDrawable(requireContext(), resId) as BitmapDrawable
+private fun Fragment.getBitmapDrawable(
+    @DrawableRes resId: Int
+) = ContextCompat.getDrawable(requireContext(), resId) as BitmapDrawable

@@ -68,16 +68,22 @@ fun getWebviewUserAgent(context: Context): String? {
 private fun getChromeLikeWebViewVersionIfOutdated(activity: AnkiActivity): Int? {
     // If we cannot get the package information at all, return null
     val webviewPackageInfo = getAndroidSystemWebViewPackageInfo(activity.packageManager) ?: return null
-    val webviewVersion = webviewPackageInfo.versionName ?: run {
-        Timber.w("Failed to obtain WebView version")
-        return null
-    }
+    val webviewVersion =
+        webviewPackageInfo.versionName ?: run {
+            Timber.w("Failed to obtain WebView version")
+            return null
+        }
     val versionCode = PackageInfoCompat.getLongVersionCode(webviewPackageInfo)
     return checkWebViewVersionComponents(webviewPackageInfo.packageName, webviewVersion, versionCode, getWebviewUserAgent(activity))
 }
 
 @VisibleForTesting
-fun checkWebViewVersionComponents(packageName: String, webviewVersion: String, versionCode: Long, userAgent: String?): Int? {
+fun checkWebViewVersionComponents(
+    packageName: String,
+    webviewVersion: String,
+    versionCode: Long,
+    userAgent: String?
+): Int? {
     // Checking the version code works for most webview packages
     if (versionCode >= OLDEST_WORKING_WEBVIEW_VERSION_CODE) {
         Timber.d(
@@ -107,7 +113,11 @@ fun checkWebViewVersionComponents(packageName: String, webviewVersion: String, v
     return null
 }
 
-private fun showOutdatedWebViewDialog(activity: AnkiActivity, installedVersion: Int, learnMoreUrl: String) {
+private fun showOutdatedWebViewDialog(
+    activity: AnkiActivity,
+    installedVersion: Int,
+    learnMoreUrl: String
+) {
     AlertDialog.Builder(activity).show {
         setMessage(activity.getString(R.string.webview_update_message, installedVersion, OLDEST_WORKING_WEBVIEW_VERSION))
         setPositiveButton(R.string.scoped_storage_learn_more) { _, _ ->

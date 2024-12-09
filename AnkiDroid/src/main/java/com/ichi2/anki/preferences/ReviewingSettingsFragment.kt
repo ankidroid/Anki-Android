@@ -76,9 +76,10 @@ class ReviewingSettingsFragment : SettingsFragment() {
 
     private suspend fun setLearnAheadLimit(limit: Duration) {
         val prefs = withCol { getPreferences() }
-        val newPrefs = prefs.copy {
-            scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
-        }
+        val newPrefs =
+            prefs.copy {
+                scheduling = prefs.scheduling.copy { learnAheadSecs = limit.toInt(DurationUnit.SECONDS) }
+            }
 
         undoableOp { setPreferences(newPrefs) }
         Timber.i("set learn ahead limit: '%d'", limit.toInt(DurationUnit.SECONDS))
@@ -90,9 +91,10 @@ class ReviewingSettingsFragment : SettingsFragment() {
 
     private suspend fun setTimeboxTimeLimit(limit: Duration) {
         val prefs = withCol { getPreferences() }
-        val newPrefs = prefs.copy {
-            reviewing = prefs.reviewing.copy { timeLimitSecs = limit.toInt(DurationUnit.SECONDS) }
-        }
+        val newPrefs =
+            prefs.copy {
+                reviewing = prefs.reviewing.copy { timeLimitSecs = limit.toInt(DurationUnit.SECONDS) }
+            }
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set timeLimitSecs to %d", limit.toInt(DurationUnit.SECONDS))
     }
@@ -101,7 +103,10 @@ class ReviewingSettingsFragment : SettingsFragment() {
 /** Sets the hour that the collection rolls over to the next day  */
 @VisibleForTesting
 @NeedsTest("ensure Start of Next Day is handled by the scheduler")
-suspend fun setDayOffset(context: Context, hours: Int) {
+suspend fun setDayOffset(
+    context: Context,
+    hours: Int
+) {
     val prefs = withCol { getPreferences() }
     val newPrefs = prefs.copy { scheduling = prefs.scheduling.copy { rollover = hours } }
 

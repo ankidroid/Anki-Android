@@ -54,7 +54,10 @@ abstract class SettingsFragment :
         return super.onPreferenceTreeClick(preference)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+    override fun onSharedPreferenceChanged(
+        sharedPreferences: SharedPreferences,
+        key: String?
+    ) {
         if (key !in UsageAnalytics.preferencesWhoseChangesShouldBeReported) {
             return
         }
@@ -69,7 +72,10 @@ abstract class SettingsFragment :
         }
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?
+    ) {
         UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
         addPreferencesFromResource(preferenceResource)
         initSubscreen()
@@ -82,8 +88,9 @@ abstract class SettingsFragment :
     // `getTargetFragment()`, which throws if `setTargetFragment()` isn't used before.
     // While this isn't fixed on upstream, suppress the deprecation warning
     override fun onDisplayPreferenceDialog(preference: Preference) {
-        val dialogFragment = (preference as? DialogFragmentProvider)?.makeDialogFragment()
-            ?: return super.onDisplayPreferenceDialog(preference)
+        val dialogFragment =
+            (preference as? DialogFragmentProvider)?.makeDialogFragment()
+                ?: return super.onDisplayPreferenceDialog(preference)
         Timber.d("displaying custom preference: ${dialogFragment::class.simpleName}")
         dialogFragment.arguments = bundleOf("key" to preference.key)
         dialogFragment.setTargetFragment(this, 0)
@@ -134,7 +141,12 @@ abstract class SettingsFragment :
         fun getPreferenceReportableValue(value: Any?): Int? {
             return when (value) {
                 is Int -> value
-                is String -> try { value.toInt() } catch (e: NumberFormatException) { null }
+                is String ->
+                    try {
+                        value.toInt()
+                    } catch (e: NumberFormatException) {
+                        null
+                    }
                 is Boolean -> if (value) 1 else 0
                 is Float -> value.toInt()
                 is Long -> value.toInt()

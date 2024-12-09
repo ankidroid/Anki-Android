@@ -25,7 +25,6 @@ import java.io.ByteArrayInputStream
 open class AnkiServer(
     private val postHandler: PostRequestHandler
 ) : NanoHTTPD(LOCALHOST, 0) {
-
     fun baseUrl(): String {
         return "http://$LOCALHOST:$listeningPort/"
     }

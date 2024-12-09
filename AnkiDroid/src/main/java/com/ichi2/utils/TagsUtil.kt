@@ -87,7 +87,10 @@ object TagsUtil {
      * Used to sort all tags firstly in DFN order, secondly in dictionary order
      * Both lhs and rhs must be uniformed.
      */
-    fun compareTag(lhs: String, rhs: String): Int {
+    fun compareTag(
+        lhs: String,
+        rhs: String
+    ): Int {
         val lhsIt = lhs.split("::").asSequence().iterator()
         val rhsIt = rhs.split("::").asSequence().iterator()
         while (lhsIt.hasNext() && rhsIt.hasNext()) {

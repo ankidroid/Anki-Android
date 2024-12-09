@@ -47,7 +47,11 @@ data class AddonModel(
      * in SharedPreferences.
      * https://stackoverflow.com/questions/19949182/android-sharedpreferences-string-set-some-items-are-removed-after-app-restart/19949833
      */
-    fun updatePrefs(preferences: SharedPreferences, jsAddonKey: String, remove: Boolean) {
+    fun updatePrefs(
+        preferences: SharedPreferences,
+        jsAddonKey: String,
+        remove: Boolean
+    ) {
         val reviewerEnabledAddonSet = preferences.getStringSet(jsAddonKey, HashSet())
         val newStrSet: MutableSet<String> = reviewerEnabledAddonSet?.toHashSet()!!
 

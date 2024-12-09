@@ -38,9 +38,13 @@ import android.content.pm.ResolveInfo
 import android.os.UserManager
 import androidx.annotation.LongDef
 
-class ResolveInfoFlagsCompat private constructor(@ResolveInfoFlagsBitsCompat value: Long) : Flags(value) {
+class ResolveInfoFlagsCompat private constructor(
+    @ResolveInfoFlagsBitsCompat value: Long
+) : Flags(value) {
     companion object {
-        fun of(@ResolveInfoFlagsBitsCompat value: Long): ResolveInfoFlagsCompat {
+        fun of(
+            @ResolveInfoFlagsBitsCompat value: Long
+        ): ResolveInfoFlagsCompat {
             return ResolveInfoFlagsCompat(value)
         }
 

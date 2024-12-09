@@ -23,7 +23,11 @@ import org.junit.runners.model.Statement
 /** A [org.junit.Rule] which detects if the test method has the [com.ichi2.anki.RunInBackground] annotation  */
 class TaskSchedulerRule : TestRule {
     private var runInForeground: Boolean? = null
-    override fun apply(base: Statement, description: Description): Statement {
+
+    override fun apply(
+        base: Statement,
+        description: Description
+    ): Statement {
         runInForeground = description.getAnnotation(RunInBackground::class.java) == null
         return base
     }

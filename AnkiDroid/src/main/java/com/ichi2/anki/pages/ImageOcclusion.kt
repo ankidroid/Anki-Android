@@ -36,8 +36,10 @@ import org.json.JSONObject
 import timber.log.Timber
 
 class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTransparentStatusBar()
         with(requireActivity()) {
@@ -61,11 +63,12 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
                 // deck id reference as the target deck in this fragment(backend code simply uses
                 // the current selected deck it sees as the target deck for adding)
                 lifecycleScope.launch {
-                    val previousDeckId = withCol {
-                        val current = backend.getCurrentDeck().id
-                        backend.setCurrentDeck(editorWorkingDeckId)
-                        current
-                    }
+                    val previousDeckId =
+                        withCol {
+                            val current = backend.getCurrentDeck().id
+                            backend.setCurrentDeck(editorWorkingDeckId)
+                            current
+                        }
                     webView.evaluateJavascript("anki.imageOcclusion.save()") {
                         // reset to the previous deck that the backend "saw" as selected, this
                         // avoids other screens unexpectedly having their working decks modified(
@@ -83,7 +86,10 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         return object : PageWebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
+            override fun onPageFinished(
+                view: WebView?,
+                url: String?
+            ) {
                 super.onPageFinished(view, url)
 
                 val kind = requireArguments().getString(ARG_KEY_KIND)
@@ -122,18 +128,20 @@ class ImageOcclusion : PageFragment(R.layout.image_occlusion) {
             imagePath: String?,
             editorWorkingDeckId: DeckId
         ): Intent {
-            val suffix = if (kind == "edit") {
-                "/$noteOrNotetypeId"
-            } else {
-                imagePath
-            }
-            val arguments = bundleOf(
-                ARG_KEY_KIND to kind,
-                ARG_KEY_ID to noteOrNotetypeId,
-                ARG_KEY_PATH to imagePath,
-                PATH_ARG_KEY to "image-occlusion$suffix",
-                ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId
-            )
+            val suffix =
+                if (kind == "edit") {
+                    "/$noteOrNotetypeId"
+                } else {
+                    imagePath
+                }
+            val arguments =
+                bundleOf(
+                    ARG_KEY_KIND to kind,
+                    ARG_KEY_ID to noteOrNotetypeId,
+                    ARG_KEY_PATH to imagePath,
+                    PATH_ARG_KEY to "image-occlusion$suffix",
+                    ARG_KEY_EDITOR_DECK_ID to editorWorkingDeckId
+                )
             return SingleFragmentActivity.getIntent(context, ImageOcclusion::class, arguments)
         }
     }

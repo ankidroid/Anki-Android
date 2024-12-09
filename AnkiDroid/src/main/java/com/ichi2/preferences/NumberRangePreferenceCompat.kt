@@ -40,7 +40,6 @@ constructor(
     defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
     defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference
 ) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
-
     var defaultValue: String? = null
 
     var min = 0
@@ -158,7 +157,6 @@ constructor(
     }
 
     open class NumberRangeDialogFragmentCompat : EditTextPreferenceDialogFragmentCompat() {
-
         val numberRangePreference: NumberRangePreferenceCompat get() = preference as NumberRangePreferenceCompat
 
         lateinit var editText: EditText
@@ -197,7 +195,9 @@ constructor(
     var onClickListener: () -> ShouldShowDialog = { ShouldShowDialog.Yes }
 
     override fun onClick() {
-        if (onClickListener() == ShouldShowDialog.Yes) { super.onClick() }
+        if (onClickListener() == ShouldShowDialog.Yes) {
+            super.onClick()
+        }
     }
 
     override fun makeDialogFragment() = NumberRangeDialogFragmentCompat()

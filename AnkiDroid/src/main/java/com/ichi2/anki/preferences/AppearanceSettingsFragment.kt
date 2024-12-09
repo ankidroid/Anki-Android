@@ -53,15 +53,16 @@ class AppearanceSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         // Configure background
         backgroundImage = requirePreference<Preference>("deckPickerBackground")
-        backgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            try {
-                backgroundImageResultLauncher.launch("image/*")
-            } catch (ex: ActivityNotFoundException) {
-                Timber.w("No app found to handle background preference change request")
-                activity?.showSnackbar(R.string.activity_start_failed)
+        backgroundImage!!.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                try {
+                    backgroundImageResultLauncher.launch("image/*")
+                } catch (ex: ActivityNotFoundException) {
+                    Timber.w("No app found to handle background preference change request")
+                    activity?.showSnackbar(R.string.activity_start_failed)
+                }
+                true
             }
-            true
-        }
 
         val appThemePref = requirePreference<ListPreference>(R.string.app_theme_key)
         val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
@@ -163,70 +164,75 @@ class AppearanceSettingsFragment : SettingsFragment() {
         }
     }
 
-    private val backgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
-        if (selectedImage == null) {
-            if (BackgroundImage.shouldBeShown(requireContext())) {
-                showRemoveBackgroundImageDialog()
-            } else {
-                showSnackbar(R.string.no_image_selected)
+    private val backgroundImageResultLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->
+            if (selectedImage == null) {
+                if (BackgroundImage.shouldBeShown(requireContext())) {
+                    showRemoveBackgroundImageDialog()
+                } else {
+                    showSnackbar(R.string.no_image_selected)
+                }
+                return@registerForActivityResult
             }
-            return@registerForActivityResult
-        }
-        // handling file may result in exception
-        try {
-            when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(this, selectedImage)) {
-                is FileSizeResult.FileTooLarge -> {
-                    showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
+            // handling file may result in exception
+            try {
+                when (val sizeResult = BackgroundImage.validateBackgroundImageFileSize(this, selectedImage)) {
+                    is FileSizeResult.FileTooLarge -> {
+                        showThemedToast(requireContext(), getString(R.string.image_max_size_allowed, sizeResult.maxMB), false)
+                    }
+                    is FileSizeResult.UncompressedBitmapTooLarge -> {
+                        showThemedToast(
+                            requireContext(),
+                            getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height),
+                            false
+                        )
+                    }
+                    is FileSizeResult.OK -> {
+                        BackgroundImage.import(this, selectedImage)
+                    }
                 }
-                is FileSizeResult.UncompressedBitmapTooLarge -> {
-                    showThemedToast(requireContext(), getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height), false)
-                }
-                is FileSizeResult.OK -> {
-                    BackgroundImage.import(this, selectedImage)
-                }
+            } catch (e: OutOfMemoryError) {
+                Timber.w(e)
+                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
+            } catch (e: Exception) {
+                Timber.w(e)
+                showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
             }
-        } catch (e: OutOfMemoryError) {
-            Timber.w(e)
-            showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
-        } catch (e: Exception) {
-            Timber.w(e)
-            showSnackbar(getString(R.string.error_selecting_image, e.localizedMessage))
         }
-    }
 
     private suspend fun setShowIntervalsOnButtons(value: Boolean) {
         val prefs = withCol { getPreferences() }
-        val newPrefs = prefs.copy {
-            reviewing = reviewing.copy { showIntervalsOnButtons = value }
-        }
+        val newPrefs =
+            prefs.copy {
+                reviewing = reviewing.copy { showIntervalsOnButtons = value }
+            }
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set showIntervalsOnButtons to %b", value)
     }
 
-    private suspend fun getShowRemainingDueCounts(): Boolean =
-        withCol { getPreferences().reviewing.showRemainingDueCounts }
+    private suspend fun getShowRemainingDueCounts(): Boolean = withCol { getPreferences().reviewing.showRemainingDueCounts }
 
     private suspend fun setShowRemainingDueCounts(value: Boolean) {
         val prefs = withCol { getPreferences() }
-        val newPrefs = prefs.copy {
-            reviewing = reviewing.copy { showRemainingDueCounts = value }
-        }
+        val newPrefs =
+            prefs.copy {
+                reviewing = reviewing.copy { showRemainingDueCounts = value }
+            }
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set showRemainingDueCounts to %b", value)
     }
 
     private suspend fun setHideAudioPlayButtons(value: Boolean) {
         val prefs = withCol { getPreferences() }
-        val newPrefs = prefs.copy {
-            reviewing = reviewing.copy { hideAudioPlayButtons = value }
-        }
+        val newPrefs =
+            prefs.copy {
+                reviewing = reviewing.copy { hideAudioPlayButtons = value }
+            }
         undoableOp { setPreferences(newPrefs) }
         Timber.i("Set hideAudioPlayButtons to %b", value)
     }
 }
 
-suspend fun getShowIntervalOnButtons(): Boolean =
-    withCol { getPreferences().reviewing.showIntervalsOnButtons }
+suspend fun getShowIntervalOnButtons(): Boolean = withCol { getPreferences().reviewing.showIntervalsOnButtons }
 
-suspend fun getHidePlayAudioButtons(): Boolean =
-    withCol { getPreferences().reviewing.hideAudioPlayButtons }
+suspend fun getHidePlayAudioButtons(): Boolean = withCol { getPreferences().reviewing.hideAudioPlayButtons }

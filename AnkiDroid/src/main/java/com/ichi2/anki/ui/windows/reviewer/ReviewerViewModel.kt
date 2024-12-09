@@ -59,14 +59,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     CardViewerViewModel(cardMediaPlayer),
     ChangeManager.Subscriber {
-
-    private var queueState: Deferred<CurrentQueueState?> = asyncIO {
-        // this assumes that the Reviewer won't be launched if there isn't a queueState
-        withCol { sched.currentQueueState() }!!
-    }
-    override var currentCard = asyncIO {
-        queueState.await()!!.topCard
-    }
+    private var queueState: Deferred<CurrentQueueState?> =
+        asyncIO {
+            // this assumes that the Reviewer won't be launched if there isn't a queueState
+            withCol { sched.currentQueueState() }!!
+        }
+    override var currentCard =
+        asyncIO {
+            queueState.await()!!.topCard
+        }
     var isQueueFinishedFlow = MutableSharedFlow<Boolean>()
     val isMarkedFlow = MutableStateFlow(false)
     val flagFlow = MutableStateFlow(Flag.NONE)
@@ -99,9 +100,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     private var statesMutated = true
 
     val answerButtonsNextTimeFlow: MutableStateFlow<AnswerButtonsNextTime?> = MutableStateFlow(null)
-    private val shouldShowNextTimes: Deferred<Boolean> = asyncIO {
-        getShowIntervalOnButtons()
-    }
+    private val shouldShowNextTimes: Deferred<Boolean> =
+        asyncIO {
+            getShowIntervalOnButtons()
+        }
 
     init {
         ChangeManager.subscribe(this)
@@ -122,8 +124,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
 
     /* *********************************************************************************************
-    ************************ Public methods: meant to be used by the View **************************
-    ********************************************************************************************* */
+     ************************ Public methods: meant to be used by the View **************************
+     ********************************************************************************************* */
 
     override fun onPageFinished(isAfterRecreation: Boolean) {
         if (isAfterRecreation) {
@@ -153,8 +155,11 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
 
     fun answerAgain() = answerCard(Ease.AGAIN)
+
     fun answerHard() = answerCard(Ease.HARD)
+
     fun answerGood() = answerCard(Ease.GOOD)
+
     fun answerEasy() = answerCard(Ease.EASY)
 
     fun toggleMark() {
@@ -203,9 +208,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     fun deleteNote() {
         launchCatchingIO {
             val cardId = currentCard.await().id
-            val noteCount = undoableOp {
-                removeNotes(cids = listOf(cardId))
-            }.count
+            val noteCount =
+                undoableOp {
+                    removeNotes(cids = listOf(cardId))
+                }.count
             actionFeedbackFlow.emit(CollectionManager.TR.browsingCardsDeleted(noteCount))
             updateCurrentCard()
         }
@@ -214,9 +220,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     fun buryCard() {
         launchCatchingIO {
             val cardId = currentCard.await().id
-            val noteCount = undoableOp {
-                sched.buryCards(cids = listOf(cardId))
-            }.count
+            val noteCount =
+                undoableOp {
+                    sched.buryCards(cids = listOf(cardId))
+                }.count
             actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
             updateCurrentCard()
         }
@@ -225,9 +232,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     fun buryNote() {
         launchCatchingIO {
             val noteId = currentCard.await().nid
-            val noteCount = undoableOp {
-                sched.buryNotes(nids = listOf(noteId))
-            }.count
+            val noteCount =
+                undoableOp {
+                    sched.buryNotes(nids = listOf(noteId))
+                }.count
             actionFeedbackFlow.emit(CollectionManager.TR.studyingCardsBuried(noteCount))
             updateCurrentCard()
         }
@@ -257,14 +265,16 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
     fun undo() {
         launchCatchingIO {
-            val changes = undoableOp {
-                undo()
-            }
-            val message = if (changes.operation.isEmpty()) {
-                CollectionManager.TR.actionsNothingToUndo()
-            } else {
-                CollectionManager.TR.undoActionUndone(changes.operation)
-            }
+            val changes =
+                undoableOp {
+                    undo()
+                }
+            val message =
+                if (changes.operation.isEmpty()) {
+                    CollectionManager.TR.actionsNothingToUndo()
+                } else {
+                    CollectionManager.TR.undoActionUndone(changes.operation)
+                }
             actionFeedbackFlow.emit(message)
             updateCurrentCard()
         }
@@ -272,20 +282,24 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
     fun redo() {
         launchCatchingIO {
-            val changes = undoableOp {
-                redo()
-            }
-            val message = if (changes.operation.isEmpty()) {
-                CollectionManager.TR.actionsNothingToRedo()
-            } else {
-                CollectionManager.TR.undoRedoAction(changes.operation)
-            }
+            val changes =
+                undoableOp {
+                    redo()
+                }
+            val message =
+                if (changes.operation.isEmpty()) {
+                    CollectionManager.TR.actionsNothingToRedo()
+                } else {
+                    CollectionManager.TR.undoRedoAction(changes.operation)
+                }
             actionFeedbackFlow.emit(message)
             updateCurrentCard()
         }
     }
 
-    fun userAction(@Reviewer.UserAction number: Int) {
+    fun userAction(
+        @Reviewer.UserAction number: Int
+    ) {
         launchCatchingIO {
             eval.emit("javascript: ankidroid.userAction($number);")
         }
@@ -296,10 +310,13 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
 
     /* *********************************************************************************************
-    *************************************** Internal methods ***************************************
-    ********************************************************************************************* */
+     *************************************** Internal methods ***************************************
+     ********************************************************************************************* */
 
-    override suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray {
+    override suspend fun handlePostRequest(
+        uri: String,
+        bytes: ByteArray
+    ): ByteArray {
         return if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
             when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
                 "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
@@ -375,11 +392,12 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
 
     private suspend fun updateCurrentCard() {
-        queueState = asyncIO {
-            withCol {
-                sched.currentQueueState()
+        queueState =
+            asyncIO {
+                withCol {
+                    sched.currentQueueState()
+                }
             }
-        }
         val state = queueState.await()
         if (state == null) {
             isQueueFinishedFlow.emit(true)
@@ -416,7 +434,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         answerButtonsNextTimeFlow.emit(nextTimes)
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?
+    ) {
         launchCatchingIO { updateUndoAndRedoLabels() }
     }
 
@@ -429,7 +450,10 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             }
         }
 
-        fun buildAnswerButtonText(title: String, nextTime: String?): CharSequence {
+        fun buildAnswerButtonText(
+            title: String,
+            nextTime: String?
+        ): CharSequence {
             return if (nextTime != null) {
                 buildSpannedString {
                     inSpans(RelativeSizeSpan(0.8F)) {

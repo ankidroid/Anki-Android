@@ -31,6 +31,7 @@ import com.ichi2.anki.reviewer.MappableBinding.Screen
 class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.CommandProcessor) {
     private val keyMap: KeyMap
     private var hasSetup = false
+
     fun setup() {
         val preferences = AnkiDroidApp.instance.sharedPrefs()
         setup(preferences)
@@ -43,9 +44,13 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         hasSetup = true
     }
 
-    private fun add(command: ViewerCommand, preferences: SharedPreferences) {
-        val bindings = fromPreference(preferences, command)
-            .filter { it.screen is Screen.Reviewer }
+    private fun add(
+        command: ViewerCommand,
+        preferences: SharedPreferences
+    ) {
+        val bindings =
+            fromPreference(preferences, command)
+                .filter { it.screen is Screen.Reviewer }
         for (b in bindings) {
             if (!b.isKey) {
                 continue
@@ -54,7 +59,10 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         }
     }
 
-    fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent
+    ): Boolean {
         return if (!hasSetup || event.repeatCount > 0) {
             false
         } else {
@@ -63,7 +71,10 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+    fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent?
+    ): Boolean {
         return false
     }
 
@@ -75,7 +86,10 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         val bindingMap = HashMap<MappableBinding, ViewerCommand>()
 
         @Suppress("UNUSED_PARAMETER")
-        fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        fun onKeyDown(
+            keyCode: Int,
+            event: KeyEvent?
+        ): Boolean {
             var ret = false
             val bindings = possibleKeyBindings(event!!)
             val side = fromAnswer(reviewerUI.isDisplayingAnswer)
@@ -87,7 +101,10 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
             return ret
         }
 
-        operator fun set(key: MappableBinding, value: ViewerCommand) {
+        operator fun set(
+            key: MappableBinding,
+            value: ViewerCommand
+        ) {
             bindingMap[key] = value
         }
 

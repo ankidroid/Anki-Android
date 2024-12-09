@@ -180,7 +180,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
     @Test
     fun pressingZShouldUndoIfAvailable() {
-        ViewerCommand.UNDO.addBinding(sharedPrefs(), MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)))
+        ViewerCommand.UNDO.addBinding(
+            sharedPrefs(),
+            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH))
+        )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true)
         underTest.handleAndroidKeyPress(KEYCODE_Z)
         assertThat("Undo should be called", underTest.undoCalled)
@@ -188,7 +191,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
     @Test
     fun pressingZShouldNotUndoIfNotAvailable() {
-        ViewerCommand.UNDO.addBinding(sharedPrefs(), MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)))
+        ViewerCommand.UNDO.addBinding(
+            sharedPrefs(),
+            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH))
+        )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false)
         underTest.handleUnicodeKeyPress('z')
         assertThat("Undo is not available so should not be called", !underTest.undoCalled)
@@ -218,7 +224,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         assertThat("After a second keypress the question should be displayed", !underTest.testIsDisplayingAnswer())
     }
 
-    private fun assertGamepadButtonAnswers(keycodeButton: Int, ease: Ease) {
+    private fun assertGamepadButtonAnswers(
+        keycodeButton: Int,
+        ease: Ease
+    ) {
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
         assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer())
         underTest.handleGamepadPress(keycodeButton)
@@ -294,7 +303,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             }
         }
 
-        fun handleKeyPress(keycode: Int, unicodeChar: Char) {
+        fun handleKeyPress(
+            keycode: Int,
+            unicodeChar: Char
+        ) {
             // COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,
             // but may let something slip through the cracks.
             val e = mockKeyEvent
@@ -338,7 +350,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             }
         }
 
-        private fun createKeyEvent(action: Int, keycode: Int): KeyEvent {
+        private fun createKeyEvent(
+            action: Int,
+            keycode: Int
+        ): KeyEvent {
             val keyEvent = Mockito.mock(KeyEvent::class.java)
             whenever(keyEvent.keyCode).thenReturn(keycode)
             whenever(keyEvent.action).thenReturn(action)
@@ -347,6 +362,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             whenever(keyEvent.isAltPressed).thenReturn(false)
             return keyEvent
         }
+
         fun focusTextField(): KeyboardInputTestReviewer {
             focusTextField = true
             return this
@@ -385,6 +401,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
         var suspendNoteCalled: Boolean = false
         var buryNoteCalled: Boolean = false
+
         override fun editCard(fromGesture: Gesture?) {
             editCardCalled = true
         }

@@ -40,7 +40,6 @@ class TypeAnswer(
     val useInputTag: Boolean,
     val autoFocus: Boolean
 ) {
-
     /** The correct answer in the compare to field if answer should be given by learner. `null` if no answer is expected. */
     var correct: String? = null
         private set
@@ -87,7 +86,11 @@ class TypeAnswer(
      * Extract type answer/cloze text and font/size
      * @param card The next card to display
      */
-    fun updateInfo(col: Collection, card: Card, res: Resources) {
+    fun updateInfo(
+        col: Collection,
+        card: Card,
+        res: Resources
+    ) {
         combining = true
         correct = null
         val q = card.question(col)
@@ -125,11 +128,12 @@ class TypeAnswer(
         }
         when (correct) {
             null -> {
-                warning = if (clozeIdx != 0) {
-                    CollectionManager.TR.cardTemplateRenderingEmptyFront()
-                } else {
-                    res.getString(R.string.unknown_type_field_warning, fldTag)
-                }
+                warning =
+                    if (clozeIdx != 0) {
+                        CollectionManager.TR.cardTemplateRenderingEmptyFront()
+                    } else {
+                        res.getString(R.string.unknown_type_field_warning, fldTag)
+                    }
             }
             "" -> {
                 correct = null
@@ -154,7 +158,10 @@ class TypeAnswer(
             return m.replaceFirst(warning!!)
         }
         val sb = java.lang.StringBuilder()
-        fun append(@Language("HTML") html: String) = sb.append(html)
+
+        fun append(
+            @Language("HTML") html: String
+        ) = sb.append(html)
         if (useInputTag) {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
@@ -202,10 +209,17 @@ class TypeAnswer(
      * @param correctAnswer The correct answer, taken from the note.
      * @return The formatted answer text
      */
-    fun filterAnswer(answer: String, userAnswer: String, correctAnswer: String): String {
+    fun filterAnswer(
+        answer: String,
+        userAnswer: String,
+        correctAnswer: String
+    ): String {
         val m: Matcher = PATTERN.matcher(answer)
         val sb = StringBuilder()
-        fun append(@Language("HTML") html: String) = sb.append(html)
+
+        fun append(
+            @Language("HTML") html: String
+        ) = sb.append(html)
 
         val comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer, combining)
         append(Matcher.quoteReplacement(comparisonText))
@@ -232,7 +246,10 @@ class TypeAnswer(
          * a string with a comma-separeted list of strings with the correct index.
          */
         @VisibleForTesting
-        fun contentForCloze(txt: String, idx: Int): String? {
+        fun contentForCloze(
+            txt: String,
+            idx: Int
+        ): String? {
             // In Android, } should be escaped
             val re = Pattern.compile("\\{\\{c$idx::(.+?)\\}\\}")
             val m = re.matcher(txt)

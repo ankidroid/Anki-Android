@@ -42,11 +42,12 @@ class TagsUtilTest {
 
         @Test
         fun test() {
-            val actual = TagsUtil.getUpdatedTags(
-                previous!!,
-                selected!!,
-                indeterminate!!
-            )
+            val actual =
+                TagsUtil.getUpdatedTags(
+                    previous!!,
+                    selected!!,
+                    indeterminate!!
+                )
             assertListEquals(updated, actual)
         }
 

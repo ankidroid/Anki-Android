@@ -24,25 +24,25 @@ import net.ankiweb.rsdroid.exceptions.BackendSyncException.BackendSyncServerMess
 import timber.log.Timber
 
 object ThrowableFilterService {
-
     @FunctionalInterface
     fun interface FilteringExceptionHandler : Thread.UncaughtExceptionHandler
 
     @VisibleForTesting
     var originalUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
 
-    var uncaughtExceptionHandler = FilteringExceptionHandler {
-            thread: Thread?, throwable: Throwable ->
-        if (thread == null) {
-            Timber.w("unexpected: thread was null")
-            return@FilteringExceptionHandler
+    var uncaughtExceptionHandler =
+        FilteringExceptionHandler {
+                thread: Thread?, throwable: Throwable ->
+            if (thread == null) {
+                Timber.w("unexpected: thread was null")
+                return@FilteringExceptionHandler
+            }
+            if (shouldDiscardThrowable(throwable)) {
+                Timber.i("discarding throwable")
+                return@FilteringExceptionHandler
+            }
+            originalUncaughtExceptionHandler?.uncaughtException(thread, throwable)
         }
-        if (shouldDiscardThrowable(throwable)) {
-            Timber.i("discarding throwable")
-            return@FilteringExceptionHandler
-        }
-        originalUncaughtExceptionHandler?.uncaughtException(thread, throwable)
-    }
 
     fun initialize() {
         Timber.i("initialize()")

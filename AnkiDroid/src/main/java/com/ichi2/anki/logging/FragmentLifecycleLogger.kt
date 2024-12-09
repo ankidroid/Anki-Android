@@ -52,19 +52,31 @@ class FragmentLifecycleLogger(
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onViewCreated")
     }
 
-    override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentStarted(
+        fm: FragmentManager,
+        f: Fragment
+    ) {
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onStart")
     }
 
-    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentResumed(
+        fm: FragmentManager,
+        f: Fragment
+    ) {
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onResume")
     }
 
-    override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentPaused(
+        fm: FragmentManager,
+        f: Fragment
+    ) {
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onPause")
     }
 
-    override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentStopped(
+        fm: FragmentManager,
+        f: Fragment
+    ) {
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onStop")
     }
 
@@ -76,15 +88,24 @@ class FragmentLifecycleLogger(
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onSaveInstanceState")
     }
 
-    override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentViewDestroyed(
+        fm: FragmentManager,
+        f: Fragment
+    ) {
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onViewDestroyed")
     }
 
-    override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentDestroyed(
+        fm: FragmentManager,
+        f: Fragment
+    ) {
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDestroy")
     }
 
-    override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
+    override fun onFragmentDetached(
+        fm: FragmentManager,
+        f: Fragment
+    ) {
         Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDetach")
     }
 }

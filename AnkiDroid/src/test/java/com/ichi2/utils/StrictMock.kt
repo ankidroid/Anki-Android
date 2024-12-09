@@ -34,6 +34,7 @@ class StrictMock {
 }
 
 // Likely a better way. Using: https://stackoverflow.com/a/36206766
+
 /** Answer for use in a strict mock */
 class ThrowingAnswer : Answer<Any?> {
     override fun answer(invocation: InvocationOnMock): Any {

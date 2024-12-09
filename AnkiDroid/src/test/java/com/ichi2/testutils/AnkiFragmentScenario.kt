@@ -77,12 +77,13 @@ inline fun <reified F : Fragment> launchFragment(
     fragmentArgs: Bundle? = null,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     factory: FragmentFactory? = null
-): AnkiFragmentScenario<F> = launch(
-    F::class.java,
-    fragmentArgs,
-    initialState,
-    factory
-)
+): AnkiFragmentScenario<F> =
+    launch(
+        F::class.java,
+        fragmentArgs,
+        initialState,
+        factory
+    )
 
 /**
  * Launches a Fragment with given arguments hosted by an empty [FragmentActivity] using
@@ -99,20 +100,21 @@ inline fun <reified F : Fragment> launchFragment(
     fragmentArgs: Bundle? = null,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     crossinline instantiate: () -> F
-): AnkiFragmentScenario<F> = launch(
-    F::class.java,
-    fragmentArgs,
-    initialState,
-    object : FragmentFactory() {
-        override fun instantiate(
-            classLoader: ClassLoader,
-            className: String
-        ) = when (className) {
-            F::class.java.name -> instantiate()
-            else -> super.instantiate(classLoader, className)
+): AnkiFragmentScenario<F> =
+    launch(
+        F::class.java,
+        fragmentArgs,
+        initialState,
+        object : FragmentFactory() {
+            override fun instantiate(
+                classLoader: ClassLoader,
+                className: String
+            ) = when (className) {
+                F::class.java.name -> instantiate()
+                else -> super.instantiate(classLoader, className)
+            }
         }
-    }
-)
+    )
 
 /**
  * Launches a Fragment in the Activity's root view container `android.R.id.content`, with
@@ -129,12 +131,13 @@ inline fun <reified F : Fragment> launchFragmentInContainer(
     fragmentArgs: Bundle? = null,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     factory: FragmentFactory? = null
-): AnkiFragmentScenario<F> = AnkiFragmentScenario.launchInContainer(
-    F::class.java,
-    fragmentArgs,
-    initialState,
-    factory
-)
+): AnkiFragmentScenario<F> =
+    AnkiFragmentScenario.launchInContainer(
+        F::class.java,
+        fragmentArgs,
+        initialState,
+        factory
+    )
 
 /**
  * Launches a Fragment in the Activity's root view container `android.R.id.content`, with
@@ -154,20 +157,21 @@ inline fun <reified F : Fragment> launchFragmentInContainer(
     fragmentArgs: Bundle? = null,
     initialState: Lifecycle.State = Lifecycle.State.RESUMED,
     crossinline instantiate: () -> F
-): AnkiFragmentScenario<F> = AnkiFragmentScenario.launchInContainer(
-    F::class.java,
-    fragmentArgs,
-    initialState,
-    object : FragmentFactory() {
-        override fun instantiate(
-            classLoader: ClassLoader,
-            className: String
-        ) = when (className) {
-            F::class.java.name -> instantiate()
-            else -> super.instantiate(classLoader, className)
+): AnkiFragmentScenario<F> =
+    AnkiFragmentScenario.launchInContainer(
+        F::class.java,
+        fragmentArgs,
+        initialState,
+        object : FragmentFactory() {
+            override fun instantiate(
+                classLoader: ClassLoader,
+                className: String
+            ) = when (className) {
+                F::class.java.name -> instantiate()
+                else -> super.instantiate(classLoader, className)
+            }
         }
-    }
-)
+    )
 
 /**
  * Run [block] using [AnkiFragmentScenario.onFragment], returning the result of the [block].
@@ -175,9 +179,7 @@ inline fun <reified F : Fragment> launchFragmentInContainer(
  * If any exceptions are raised while running [block], they are rethrown.
  */
 @SuppressWarnings("DocumentExceptions")
-inline fun <reified F : Fragment, T : Any> AnkiFragmentScenario<F>.withFragment(
-    crossinline block: F.() -> T
-): T {
+inline fun <reified F : Fragment, T : Any> AnkiFragmentScenario<F>.withFragment(crossinline block: F.() -> T): T {
     lateinit var value: T
     var err: Throwable? = null
     onFragment { fragment ->
@@ -212,7 +214,6 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
     val fragmentClass: Class<F>,
     private val activityScenario: ActivityScenario<EmptyAnkiActivity>
 ) : Closeable by activityScenario {
-
     /**
      * Moves Fragment state to a new state.
      *
@@ -225,8 +226,9 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
     fun moveToState(newState: Lifecycle.State): AnkiFragmentScenario<F> {
         if (newState == Lifecycle.State.DESTROYED) {
             activityScenario.onActivity { activity ->
-                val fragment = activity.supportFragmentManager
-                    .findFragmentByTag(FRAGMENT_TAG)
+                val fragment =
+                    activity.supportFragmentManager
+                        .findFragmentByTag(FRAGMENT_TAG)
                 // Null means the fragment has been destroyed already.
                 if (fragment != null) {
                     activity.supportFragmentManager.commitNow {
@@ -236,11 +238,12 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
             }
         } else {
             activityScenario.onActivity { activity ->
-                val fragment = requireNotNull(
-                    activity.supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
-                ) {
-                    "The fragment has been removed from the FragmentManager already."
-                }
+                val fragment =
+                    requireNotNull(
+                        activity.supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
+                    ) {
+                        "The fragment has been removed from the FragmentManager already."
+                    }
                 activity.supportFragmentManager.commitNow {
                     setMaxLifecycle(fragment, newState)
                 }
@@ -275,11 +278,12 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
      */
     fun onFragment(action: FragmentAction<F>): AnkiFragmentScenario<F> {
         activityScenario.onActivity { activity ->
-            val fragment = requireNotNull(
-                activity.supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
-            ) {
-                "The fragment has been removed from the FragmentManager already."
-            }
+            val fragment =
+                requireNotNull(
+                    activity.supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
+                ) {
+                    "The fragment has been removed from the FragmentManager already."
+                }
             check(fragmentClass.isInstance(fragment))
             action.perform(requireNotNull(fragmentClass.cast(fragment)))
         }
@@ -305,12 +309,13 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
             fragmentClass: Class<F>,
             fragmentArgs: Bundle?,
             factory: FragmentFactory?
-        ): AnkiFragmentScenario<F> = launch(
-            fragmentClass,
-            fragmentArgs,
-            Lifecycle.State.RESUMED,
-            factory
-        )
+        ): AnkiFragmentScenario<F> =
+            launch(
+                fragmentClass,
+                fragmentArgs,
+                Lifecycle.State.RESUMED,
+                factory
+            )
 
         /**
          * Launches a Fragment with given arguments hosted by an empty [FragmentActivity],
@@ -331,13 +336,14 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
             fragmentArgs: Bundle? = null,
             initialState: Lifecycle.State = Lifecycle.State.RESUMED,
             factory: FragmentFactory? = null
-        ): AnkiFragmentScenario<F> = internalLaunch(
-            fragmentClass,
-            fragmentArgs,
-            initialState,
-            factory,
-            0
-        )
+        ): AnkiFragmentScenario<F> =
+            internalLaunch(
+                fragmentClass,
+                fragmentArgs,
+                initialState,
+                factory,
+                0
+            )
 
         /**
          * Launches a Fragment in the Activity's root view container `android.R.id.content`, with
@@ -355,12 +361,13 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
             fragmentClass: Class<F>,
             fragmentArgs: Bundle?,
             factory: FragmentFactory?
-        ): AnkiFragmentScenario<F> = launchInContainer(
-            fragmentClass,
-            fragmentArgs,
-            Lifecycle.State.RESUMED,
-            factory
-        )
+        ): AnkiFragmentScenario<F> =
+            launchInContainer(
+                fragmentClass,
+                fragmentArgs,
+                Lifecycle.State.RESUMED,
+                factory
+            )
 
         /**
          * Launches a Fragment in the Activity's root view container `android.R.id.content`, with
@@ -382,13 +389,14 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
             fragmentArgs: Bundle? = null,
             initialState: Lifecycle.State = Lifecycle.State.RESUMED,
             factory: FragmentFactory? = null
-        ): AnkiFragmentScenario<F> = internalLaunch(
-            fragmentClass,
-            fragmentArgs,
-            initialState,
-            factory,
-            android.R.id.content
-        )
+        ): AnkiFragmentScenario<F> =
+            internalLaunch(
+                fragmentClass,
+                fragmentArgs,
+                initialState,
+                factory,
+                android.R.id.content
+            )
 
         internal fun <F : Fragment> internalLaunch(
             fragmentClass: Class<F>,
@@ -400,28 +408,31 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
             require(initialState != Lifecycle.State.DESTROYED) {
                 "Cannot set initial Lifecycle state to $initialState for FragmentScenario"
             }
-            val componentName = ComponentName(
-                ApplicationProvider.getApplicationContext(),
-                EmptyAnkiActivity::class.java
-            )
+            val componentName =
+                ComponentName(
+                    ApplicationProvider.getApplicationContext(),
+                    EmptyAnkiActivity::class.java
+                )
 
             Robolectric.registerTestActivity<EmptyAnkiActivity>()
 
             val startActivityIntent = Intent.makeMainActivity(componentName)
 
-            val scenario = AnkiFragmentScenario(
-                fragmentClass,
-                ActivityScenario.launch(
-                    startActivityIntent
+            val scenario =
+                AnkiFragmentScenario(
+                    fragmentClass,
+                    ActivityScenario.launch(
+                        startActivityIntent
+                    )
                 )
-            )
             scenario.activityScenario.onActivity { activity ->
                 if (factory != null) {
                     FragmentFactoryHolderViewModel.getInstance(activity).fragmentFactory = factory
                     activity.supportFragmentManager.fragmentFactory = factory
                 }
-                val fragment = activity.supportFragmentManager.fragmentFactory
-                    .instantiate(requireNotNull(fragmentClass.classLoader), fragmentClass.name)
+                val fragment =
+                    activity.supportFragmentManager.fragmentFactory
+                        .instantiate(requireNotNull(fragmentClass.classLoader), fragmentClass.name)
                 fragment.arguments = fragmentArgs
                 activity.supportFragmentManager.commitNow {
                     add(containerViewId, fragment, FRAGMENT_TAG)

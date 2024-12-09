@@ -51,7 +51,10 @@ import kotlinx.coroutines.delay
 import timber.log.Timber
 
 interface PostRequestHandler {
-    suspend fun handlePostRequest(uri: String, bytes: ByteArray): ByteArray
+    suspend fun handlePostRequest(
+        uri: String,
+        bytes: ByteArray
+    ): ByteArray
 }
 
 fun <ByteArray> backendIdentity(bytes: ByteArray): ByteArray = bytes
@@ -59,39 +62,43 @@ fun <ByteArray> backendIdentity(bytes: ByteArray): ByteArray = bytes
 typealias CollectionBackendInterface = Collection.(bytes: ByteArray) -> ByteArray
 
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-val collectionMethods = hashMapOf<String, CollectionBackendInterface>(
-    "i18nResources" to { bytes -> i18nResourcesRaw(bytes) },
-    "getGraphPreferences" to { _ -> getGraphPreferencesRaw() },
-    "setGraphPreferences" to { bytes -> setGraphPreferencesRaw(bytes) },
-    "graphs" to { bytes -> graphsRaw(bytes) },
-    "getNotetypeNames" to { bytes -> getNotetypeNamesRaw(bytes) },
-    "getDeckNames" to { bytes -> getDeckNamesRaw(bytes) },
-    "getCsvMetadata" to { bytes -> getCsvMetadataRaw(bytes) },
-    "importDone" to { bytes -> backendIdentity(bytes) },
-    "getImportAnkiPackagePresets" to { bytes -> getImportAnkiPackagePresetsRaw(bytes) },
-    "completeTag" to { bytes -> completeTagRaw(bytes) },
-    "getFieldNames" to { bytes -> getFieldNamesRaw(bytes) },
-    "cardStats" to { bytes -> cardStatsRaw(bytes) },
-    "getDeckConfigsForUpdate" to { bytes -> getDeckConfigsForUpdateRaw(bytes) },
-    "computeFsrsParams" to { bytes -> computeFsrsParamsRaw(bytes) },
-    "computeOptimalRetention" to { bytes -> computeOptimalRetentionRaw(bytes) },
-    "evaluateParams" to { bytes -> evaluateParamsRaw(bytes) },
-    "simulateFsrsReview" to { bytes -> simulateFsrsReviewRaw(bytes) },
-    "getImageForOcclusion" to { bytes -> getImageForOcclusionRaw(bytes) },
-    "getImageOcclusionNote" to { bytes -> getImageOcclusionNoteRaw(bytes) },
-    "setWantsAbort" to { bytes -> setWantsAbortRaw(bytes) },
-    "latestProgress" to { bytes -> latestProgressRaw(bytes) },
-    "getSchedulingStatesWithContext" to { bytes -> getSchedulingStatesWithContextRaw(bytes) },
-    "setSchedulingStates" to { bytes -> setSchedulingStatesRaw(bytes) },
-    "getChangeNotetypeInfo" to { bytes -> getChangeNotetypeInfoRaw(bytes) },
-    "changeNotetype" to { bytes -> changeNotetypeRaw(bytes) },
-    "importJsonString" to { bytes -> importJsonStringRaw(bytes) },
-    "importJsonFile" to { bytes -> importJsonFileRaw(bytes) },
-    "congratsInfo" to { bytes -> congratsInfoRaw(bytes) },
-    "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) }
-)
+val collectionMethods =
+    hashMapOf<String, CollectionBackendInterface>(
+        "i18nResources" to { bytes -> i18nResourcesRaw(bytes) },
+        "getGraphPreferences" to { _ -> getGraphPreferencesRaw() },
+        "setGraphPreferences" to { bytes -> setGraphPreferencesRaw(bytes) },
+        "graphs" to { bytes -> graphsRaw(bytes) },
+        "getNotetypeNames" to { bytes -> getNotetypeNamesRaw(bytes) },
+        "getDeckNames" to { bytes -> getDeckNamesRaw(bytes) },
+        "getCsvMetadata" to { bytes -> getCsvMetadataRaw(bytes) },
+        "importDone" to { bytes -> backendIdentity(bytes) },
+        "getImportAnkiPackagePresets" to { bytes -> getImportAnkiPackagePresetsRaw(bytes) },
+        "completeTag" to { bytes -> completeTagRaw(bytes) },
+        "getFieldNames" to { bytes -> getFieldNamesRaw(bytes) },
+        "cardStats" to { bytes -> cardStatsRaw(bytes) },
+        "getDeckConfigsForUpdate" to { bytes -> getDeckConfigsForUpdateRaw(bytes) },
+        "computeFsrsParams" to { bytes -> computeFsrsParamsRaw(bytes) },
+        "computeOptimalRetention" to { bytes -> computeOptimalRetentionRaw(bytes) },
+        "evaluateParams" to { bytes -> evaluateParamsRaw(bytes) },
+        "simulateFsrsReview" to { bytes -> simulateFsrsReviewRaw(bytes) },
+        "getImageForOcclusion" to { bytes -> getImageForOcclusionRaw(bytes) },
+        "getImageOcclusionNote" to { bytes -> getImageOcclusionNoteRaw(bytes) },
+        "setWantsAbort" to { bytes -> setWantsAbortRaw(bytes) },
+        "latestProgress" to { bytes -> latestProgressRaw(bytes) },
+        "getSchedulingStatesWithContext" to { bytes -> getSchedulingStatesWithContextRaw(bytes) },
+        "setSchedulingStates" to { bytes -> setSchedulingStatesRaw(bytes) },
+        "getChangeNotetypeInfo" to { bytes -> getChangeNotetypeInfoRaw(bytes) },
+        "changeNotetype" to { bytes -> changeNotetypeRaw(bytes) },
+        "importJsonString" to { bytes -> importJsonStringRaw(bytes) },
+        "importJsonFile" to { bytes -> importJsonFileRaw(bytes) },
+        "congratsInfo" to { bytes -> congratsInfoRaw(bytes) },
+        "getImageOcclusionFields" to { bytes -> getImageOcclusionFieldsRaw(bytes) }
+    )
 
-suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): ByteArray? {
+suspend fun handleCollectionPostRequest(
+    methodName: String,
+    bytes: ByteArray
+): ByteArray? {
     return collectionMethods[methodName]?.let { method -> withCol { method.invoke(this, bytes) } } ?: run {
         Timber.w("Unknown TS method called.")
         Timber.d("handleCollectionPostRequest could not resolve TS method %s", methodName)
@@ -102,22 +109,23 @@ suspend fun handleCollectionPostRequest(methodName: String, bytes: ByteArray): B
 typealias UIBackendInterface = FragmentActivity.(bytes: ByteArray) -> Deferred<ByteArray>
 
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-val uiMethods = hashMapOf<String, UIBackendInterface>(
-    "searchInBrowser" to { bytes -> lifecycleScope.async { searchInBrowser(bytes) } },
-    "updateDeckConfigs" to { bytes -> lifecycleScope.async { updateDeckConfigsRaw(bytes) } },
-    "importCsv" to { bytes -> lifecycleScope.async { importCsvRaw(bytes) } },
-    "importAnkiPackage" to { bytes -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
-    "addImageOcclusionNote" to { bytes ->
-        lifecycleScope.async {
-            withCol { addImageOcclusionNoteRaw(bytes) }
+val uiMethods =
+    hashMapOf<String, UIBackendInterface>(
+        "searchInBrowser" to { bytes -> lifecycleScope.async { searchInBrowser(bytes) } },
+        "updateDeckConfigs" to { bytes -> lifecycleScope.async { updateDeckConfigsRaw(bytes) } },
+        "importCsv" to { bytes -> lifecycleScope.async { importCsvRaw(bytes) } },
+        "importAnkiPackage" to { bytes -> lifecycleScope.async { importAnkiPackageUndoable(bytes) } },
+        "addImageOcclusionNote" to { bytes ->
+            lifecycleScope.async {
+                withCol { addImageOcclusionNoteRaw(bytes) }
+            }
+        },
+        "updateImageOcclusionNote" to { bytes ->
+            lifecycleScope.async {
+                withCol { updateImageOcclusionNoteRaw(bytes) }
+            }
         }
-    },
-    "updateImageOcclusionNote" to { bytes ->
-        lifecycleScope.async {
-            withCol { updateImageOcclusionNoteRaw(bytes) }
-        }
-    }
-)
+    )
 
 suspend fun FragmentActivity?.handleUiPostRequest(
     methodName: String,
@@ -128,11 +136,12 @@ suspend fun FragmentActivity?.handleUiPostRequest(
         return null
     }
 
-    val data = uiMethods[methodName]?.invoke(this, bytes)?.await() ?: run {
-        Timber.w("Unknown TS method called.")
-        Timber.d("handleUiPostRequest could not resolve TS method %s", methodName)
-        return null
-    }
+    val data =
+        uiMethods[methodName]?.invoke(this, bytes)?.await() ?: run {
+            Timber.w("Unknown TS method called.")
+            Timber.d("handleUiPostRequest could not resolve TS method %s", methodName)
+            return null
+        }
     when (methodName) {
         "addImageOcclusionNote" -> {
             undoableOp { OpChanges.parseFrom(data) }

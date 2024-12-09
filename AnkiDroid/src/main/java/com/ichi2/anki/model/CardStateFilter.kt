@@ -28,9 +28,10 @@ enum class CardStateFilter {
     ;
 
     val toSearch: String
-        get() = when (this) {
-            ALL_CARDS -> ""
-            NEW -> "is:new "
-            DUE -> "is:due "
-        }
+        get() =
+            when (this) {
+                ALL_CARDS -> ""
+                NEW -> "is:new "
+                DUE -> "is:due "
+            }
 }

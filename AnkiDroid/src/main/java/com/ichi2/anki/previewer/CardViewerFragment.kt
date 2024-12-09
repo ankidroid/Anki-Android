@@ -48,12 +48,17 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
-abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
+abstract class CardViewerFragment(
+    @LayoutRes layout: Int
+) : Fragment(layout) {
     abstract val viewModel: CardViewerViewModel
     protected abstract val webView: WebView
 
     @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         setupWebView(savedInstanceState)
         setupErrorListeners()
     }
@@ -133,11 +138,17 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 return resourceHandler.shouldInterceptRequest(request)
             }
 
-            override fun onPageFinished(view: WebView?, url: String?) {
+            override fun onPageFinished(
+                view: WebView?,
+                url: String?
+            ) {
                 viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
             }
 
-            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest
+            ): Boolean {
                 return handleUrl(request.url)
             }
 
@@ -168,7 +179,10 @@ abstract class CardViewerFragment(@LayoutRes layout: Int) : Fragment(layout) {
                 return true
             }
 
-            private fun handleIntentUrl(url: Uri, flags: Int) {
+            private fun handleIntentUrl(
+                url: Uri,
+                flags: Int
+            ) {
                 try {
                     val intent = Intent.parseUri(url.toString(), flags)
                     if (packageManager.resolveActivityCompat(intent) != null) {

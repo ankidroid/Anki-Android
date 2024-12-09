@@ -34,7 +34,6 @@ import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
 class Note : Cloneable {
-
     /**
      * Should only be mutated by addNote()
      */
@@ -65,7 +64,10 @@ class Note : Cloneable {
     }
 
     companion object {
-        fun fromNotetypeId(col: Collection, ntid: NoteTypeId): Note {
+        fun fromNotetypeId(
+            col: Collection,
+            ntid: NoteTypeId
+        ): Note {
             val backendNote = col.backend.newNote(ntid)
             return Note(col, backendNote)
         }
@@ -76,7 +78,10 @@ class Note : Cloneable {
         loadFromBackendNote(col, note)
     }
 
-    private fun loadFromBackendNote(col: Collection, note: anki.notes.Note) {
+    private fun loadFromBackendNote(
+        col: Collection,
+        note: anki.notes.Note
+    ) {
         this.id = note.id
         this.guId = note.guid
         this.mid = note.notetypeId
@@ -114,22 +119,24 @@ class Note : Cloneable {
         card.did = DEFAULT_DECK_ID
 
         val model = customNoteType ?: notetype
-        val template = if (customTemplate != null) {
-            customTemplate.deepClone()
-        } else {
-            val index = if (model.type == MODEL_STD) ord else 0
-            model.tmpls.getJSONObject(index)
-        }
+        val template =
+            if (customTemplate != null) {
+                customTemplate.deepClone()
+            } else {
+                val index = if (model.type == MODEL_STD) ord else 0
+                model.tmpls.getJSONObject(index)
+            }
         // may differ in cloze case
         template["ord"] = card.ord
 
-        val output = TemplateManager.TemplateRenderContext.fromCardLayout(
-            note = this,
-            card = card,
-            notetype = model,
-            template = template,
-            fillEmpty = fillEmpty
-        ).render(col)
+        val output =
+            TemplateManager.TemplateRenderContext.fromCardLayout(
+                note = this,
+                card = card,
+                notetype = model,
+                template = template,
+                fillEmpty = fillEmpty
+            ).render(col)
         card.renderOutput = output
         card.note = this
         return card
@@ -162,9 +169,10 @@ class Note : Cloneable {
     fun items(): Array<Array<String>> {
         // TODO: Revisit this method. The field order returned differs from Anki.
         // The items here are only used in the note editor, so it's a low priority.
-        val result = Array(
-            fMap!!.size
-        ) { emptyStringArray(2) }
+        val result =
+            Array(
+                fMap!!.size
+            ) { emptyStringArray(2) }
         for (fname in fMap!!.keys) {
             val i = fMap!![fname]!!.first
             result[i][0] = fname
@@ -174,13 +182,14 @@ class Note : Cloneable {
     }
 
     private fun fieldIndex(key: String): Int {
-        val fieldPair = fMap!![key]
-            ?: throw IllegalArgumentException(
-                String.format(
-                    "No field named '%s' found",
-                    key
+        val fieldPair =
+            fMap!![key]
+                ?: throw IllegalArgumentException(
+                    String.format(
+                        "No field named '%s' found",
+                        key
+                    )
                 )
-            )
         return fieldPair.first
     }
 
@@ -188,7 +197,10 @@ class Note : Cloneable {
         return fields[fieldIndex(key)]
     }
 
-    fun setItem(key: String, value: String) {
+    fun setItem(
+        key: String,
+        value: String
+    ) {
         fields[fieldIndex(key)] = value
     }
 
@@ -200,7 +212,10 @@ class Note : Cloneable {
      * Tags
      * ***********************************************************
      */
-    fun hasTag(col: Collection, tag: String): Boolean {
+    fun hasTag(
+        col: Collection,
+        tag: String
+    ): Boolean {
         return col.tags.inList(tag, tags)
     }
 
@@ -208,14 +223,18 @@ class Note : Cloneable {
         return col.tags.join(col.tags.canonify(tags))
     }
 
-    fun setTagsFromStr(col: Collection, str: String) {
+    fun setTagsFromStr(
+        col: Collection,
+        str: String
+    ) {
         tags = col.tags.split(str)
     }
 
     fun removeTag(tag: String) {
-        val rem: MutableList<String> = ArrayList(
-            tags.size
-        )
+        val rem: MutableList<String> =
+            ArrayList(
+                tags.size
+            )
         for (t in tags) {
             if (t.equals(tag, ignoreCase = true)) {
                 rem.add(t)
@@ -245,10 +264,12 @@ class Note : Cloneable {
         return col.backend.noteFieldsCheck(this.toBackendNote()).state
     }
 
-    fun sFld(col: Collection): String =
-        col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
-    fun setField(index: Int, value: String) {
+    fun setField(
+        index: Int,
+        value: String
+    ) {
         fields[index] = value
     }
 

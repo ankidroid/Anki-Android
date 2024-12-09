@@ -45,7 +45,11 @@ class CardViewerActivity : SingleFragmentActivity() {
     }
 
     companion object {
-        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null): Intent {
+        fun getIntent(
+            context: Context,
+            fragmentClass: KClass<out Fragment>,
+            arguments: Bundle? = null
+        ): Intent {
             return Intent(context, CardViewerActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)

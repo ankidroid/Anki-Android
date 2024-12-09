@@ -67,7 +67,9 @@ enum class AnswerButtons {
      *
      * In Review mode, easy adds additional bonuses to the interval and increases the ease by 15%
      */
-    EASY;
+    EASY
+
+    ;
 
     fun toViewerCommand(): ViewerCommand {
         return when (this) {
@@ -79,7 +81,6 @@ enum class AnswerButtons {
     }
 
     companion object {
-
         fun getBackgroundColors(ctx: AnkiActivity): IntArray {
             val backgroundIds: IntArray =
                 if (ctx.animationEnabled()) {

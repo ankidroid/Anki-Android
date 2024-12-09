@@ -41,9 +41,10 @@ import kotlin.coroutines.resumeWithException
 class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPlayer) {
     private var mediaPlayer: MediaPlayer? = null
 
-    private val music = AudioAttributes.Builder()
-        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-        .build()
+    private val music =
+        AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .build()
 
     /**
      * AudioManager to request/release audio focus
@@ -104,11 +105,12 @@ class SoundTagPlayer(private val soundUriBase: String, val videoPlayer: VideoPla
                 }
             }
             val tagUri = Uri.parse(tag.filename)
-            val soundUri = if (tagUri.scheme != null) {
-                tagUri
-            } else {
-                Uri.parse(soundUriBase + Uri.encode(tag.filename))
-            }
+            val soundUri =
+                if (tagUri.scheme != null) {
+                    tagUri
+                } else {
+                    Uri.parse(soundUriBase + Uri.encode(tag.filename))
+                }
             setAudioAttributes(music)
             setOnErrorListener { mp, what, extra ->
                 Timber.w("Media error %d", what)

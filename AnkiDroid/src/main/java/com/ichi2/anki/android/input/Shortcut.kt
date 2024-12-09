@@ -32,7 +32,6 @@ import net.ankiweb.rsdroid.Translations
  * @param label The string resource for the shortcut label.
  */
 data class Shortcut(val shortcut: String, val label: String) {
-
     /**
      * Converts the shortcut string into a KeyboardShortcutInfo object.
      *
@@ -94,11 +93,15 @@ data class Shortcut(val shortcut: String, val label: String) {
 /**
  * Provides a [Shortcut], from the shortcut keys and the resource id of its description.
  */
-fun AnkiActivityProvider.shortcut(shortcut: String, @StringRes labelRes: Int) =
-    Shortcut(shortcut, ankiActivity.getString(labelRes))
+fun AnkiActivityProvider.shortcut(
+    shortcut: String,
+    @StringRes labelRes: Int
+) = Shortcut(shortcut, ankiActivity.getString(labelRes))
 
 /**
  * Provides a [Shortcut], from the shortcut keys and the function from anki strings.
  */
-fun shortcut(shortcut: String, getTranslation: Translations.() -> String) =
-    Shortcut(shortcut, getTranslation(TR))
+fun shortcut(
+    shortcut: String,
+    getTranslation: Translations.() -> String
+) = Shortcut(shortcut, getTranslation(TR))

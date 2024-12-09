@@ -66,13 +66,14 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
     override fun hashCode(): Int {
         // don't include the modifierKeys or mSide
-        val bindingHash = when (binding) {
-            is KeyCode -> binding.keycode
-            is UnicodeCharacter -> binding.unicodeCharacter
-            is GestureInput -> binding.gesture
-            is AxisButtonBinding -> hash(binding.axis.motionEventValue, binding.threshold.toInt())
-            else -> 0
-        }
+        val bindingHash =
+            when (binding) {
+                is KeyCode -> binding.keycode
+                is UnicodeCharacter -> binding.unicodeCharacter
+                is GestureInput -> binding.gesture
+                is AxisButtonBinding -> hash(binding.axis.motionEventValue, binding.threshold.toInt())
+                else -> 0
+            }
         return Objects.hash(bindingHash, screen.prefix)
     }
 
@@ -96,7 +97,12 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
     abstract class Screen private constructor(val prefix: Char) {
         abstract fun toPreferenceString(binding: Binding): String?
-        abstract fun toDisplayString(context: Context, binding: Binding): String
+
+        abstract fun toDisplayString(
+            context: Context,
+            binding: Binding
+        ): String
+
         abstract fun screenEquals(otherScreen: Screen): Boolean
 
         class Reviewer(val side: CardSide) : Screen('r') {
@@ -119,12 +125,16 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
                 return s.toString()
             }
 
-            override fun toDisplayString(context: Context, binding: Binding): String {
-                val formatString = when (side) {
-                    CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
-                    CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
-                    CardSide.BOTH -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
-                }
+            override fun toDisplayString(
+                context: Context,
+                binding: Binding
+            ): String {
+                val formatString =
+                    when (side) {
+                        CardSide.QUESTION -> context.getString(R.string.display_binding_card_side_question)
+                        CardSide.ANSWER -> context.getString(R.string.display_binding_card_side_answer)
+                        CardSide.BOTH -> context.getString(R.string.display_binding_card_side_both) // intentionally no prefix
+                    }
                 return String.format(formatString, binding.toDisplayString(context))
             }
 
@@ -140,11 +150,12 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
                 fun fromString(s: String): MappableBinding {
                     val binding = s.substring(0, s.length - 1)
                     val b = Binding.fromString(binding)
-                    val side = when (s[s.length - 1]) {
-                        '0' -> CardSide.QUESTION
-                        '1' -> CardSide.ANSWER
-                        else -> CardSide.BOTH
-                    }
+                    val side =
+                        when (s[s.length - 1]) {
+                            '0' -> CardSide.QUESTION
+                            '1' -> CardSide.ANSWER
+                            else -> CardSide.BOTH
+                        }
                     return MappableBinding(b, Reviewer(side))
                 }
             }
@@ -160,15 +171,22 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         const val PREF_SEPARATOR = '|'
 
         @CheckResult
-        fun fromGesture(gesture: Gesture, screen: (CardSide) -> Screen): MappableBinding = MappableBinding(GestureInput(gesture), screen(CardSide.BOTH))
+        fun fromGesture(
+            gesture: Gesture,
+            screen: (CardSide) -> Screen
+        ): MappableBinding = MappableBinding(GestureInput(gesture), screen(CardSide.BOTH))
 
         @CheckResult
-        fun List<MappableBinding>.toPreferenceString(): String = this.mapNotNull { it.toPreferenceString() }
-            .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
+        fun List<MappableBinding>.toPreferenceString(): String =
+            this.mapNotNull { it.toPreferenceString() }
+                .joinToString(prefix = "1/", separator = PREF_SEPARATOR.toString())
 
         @Suppress("UNUSED_PARAMETER")
         @CheckResult
-        fun fromString(s: String, v: Version = Version.ONE): MappableBinding? {
+        fun fromString(
+            s: String,
+            v: Version = Version.ONE
+        ): MappableBinding? {
             if (s.isEmpty()) {
                 return null
             }
@@ -202,7 +220,10 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         }
 
         @CheckResult
-        fun fromPreference(prefs: SharedPreferences, command: ViewerCommand): MutableList<MappableBinding> {
+        fun fromPreference(
+            prefs: SharedPreferences,
+            command: ViewerCommand
+        ): MutableList<MappableBinding> {
             val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
             return fromPreferenceString(value)
         }

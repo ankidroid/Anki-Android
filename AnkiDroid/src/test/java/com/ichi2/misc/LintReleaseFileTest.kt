@@ -27,7 +27,6 @@ import kotlin.test.assertTrue
  * Test to verify that we don't end up with multiple declarations of a lint rule in lint-release.xml.
  */
 class LintReleaseFileTest {
-
     @Test
     fun failsWithMultipleDeclarations() {
         // this runs in the AnkiDroid module folder so we need go up one level

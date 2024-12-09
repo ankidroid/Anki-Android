@@ -59,7 +59,12 @@ public class AddContentApi(context: Context) {
      * @param tags tags to include in the new note
      * @return note id or null if the note could not be added
      */
-    public fun addNote(modelId: Long, deckId: Long, fields: Array<String>, tags: Set<String>?): Long? {
+    public fun addNote(
+        modelId: Long,
+        deckId: Long,
+        fields: Array<String>,
+        tags: Set<String>?
+    ): Long? {
         val noteUri = addNoteInternal(modelId, deckId, fields, tags) ?: return null
         return noteUri.lastPathSegment!!.toLong()
     }
@@ -70,15 +75,19 @@ public class AddContentApi(context: Context) {
         fields: Array<String>,
         tags: Set<String>?
     ): Uri? {
-        val values = ContentValues().apply {
-            put(Note.MID, modelId)
-            put(Note.FLDS, Utils.joinFields(fields))
-            if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
-        }
+        val values =
+            ContentValues().apply {
+                put(Note.MID, modelId)
+                put(Note.FLDS, Utils.joinFields(fields))
+                if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
+            }
         return addNoteForContentValues(deckId, values)
     }
 
-    private fun addNoteForContentValues(deckId: Long, values: ContentValues): Uri? {
+    private fun addNoteForContentValues(
+        deckId: Long,
+        values: ContentValues
+    ): Uri? {
         val newNoteUri = resolver.insert(Note.CONTENT_URI, values) ?: return null
         // Move cards to specified deck
         val cardsUri = Uri.withAppendedPath(newNoteUri, "cards")
@@ -112,13 +121,14 @@ public class AddContentApi(context: Context) {
         require(!(tagsList != null && fieldsList.size != tagsList.size)) { "fieldsList and tagsList different length" }
         val newNoteValuesList: MutableList<ContentValues> = ArrayList(fieldsList.size)
         for (i in fieldsList.indices) {
-            val values = ContentValues().apply {
-                put(Note.MID, modelId)
-                put(Note.FLDS, Utils.joinFields(fieldsList[i]))
-                if (tagsList != null && tagsList[i] != null) {
-                    put(Note.TAGS, Utils.joinTags(tagsList[i]))
+            val values =
+                ContentValues().apply {
+                    put(Note.MID, modelId)
+                    put(Note.FLDS, Utils.joinFields(fieldsList[i]))
+                    if (tagsList != null && tagsList[i] != null) {
+                        put(Note.TAGS, Utils.joinTags(tagsList[i]))
+                    }
                 }
-            }
             newNoteValuesList.add(values)
         }
         // Add the notes to the content provider and put the new note ids into the result array
@@ -163,10 +173,11 @@ public class AddContentApi(context: Context) {
         preferredName: String,
         mimeType: String
     ): String? {
-        val contentValues = ContentValues().apply {
-            put(AnkiMedia.FILE_URI, fileUri.toString())
-            put(AnkiMedia.PREFERRED_NAME, preferredName.replace(" ", "_"))
-        }
+        val contentValues =
+            ContentValues().apply {
+                put(AnkiMedia.FILE_URI, fileUri.toString())
+                put(AnkiMedia.PREFERRED_NAME, preferredName.replace(" ", "_"))
+            }
         return try {
             val returnUri = resolver.insert(AnkiMedia.CONTENT_URI, contentValues)
             // get the filename from Uri, return [sound:%s] % file.getName()
@@ -177,11 +188,15 @@ public class AddContentApi(context: Context) {
         }
     }
 
-    private fun formatMediaName(fname: String, mimeType: String): String? = when (mimeType) {
-        "audio" -> "[sound:${fname.substring(1)}]" // first character in the path is "/"
-        "image" -> "<img src=\"${fname.substring(1)}\" />"
-        else -> null // something went wrong
-    }
+    private fun formatMediaName(
+        fname: String,
+        mimeType: String
+    ): String? =
+        when (mimeType) {
+            "audio" -> "[sound:${fname.substring(1)}]" // first character in the path is "/"
+            "image" -> "<img src=\"${fname.substring(1)}\" />"
+            else -> null // something went wrong
+        }
 
     /**
      * Find all existing notes in the collection which have mid and a duplicate key
@@ -189,7 +204,10 @@ public class AddContentApi(context: Context) {
      * @param key the first field of a note
      * @return a list of duplicate notes
      */
-    public fun findDuplicateNotes(mid: Long, key: String): List<NoteInfo?> {
+    public fun findDuplicateNotes(
+        mid: Long,
+        key: String
+    ): List<NoteInfo?> {
         val notes = compat.findDuplicateNotes(mid, listOf(key))
         return if (notes!!.size() == 0) {
             emptyList<NoteInfo>()
@@ -205,7 +223,10 @@ public class AddContentApi(context: Context) {
      * @param keys list of keys
      * @return a SparseArray with a list of duplicate notes for each key
      */
-    public fun findDuplicateNotes(mid: Long, keys: List<String>): SparseArray<MutableList<NoteInfo?>>? {
+    public fun findDuplicateNotes(
+        mid: Long,
+        keys: List<String>
+    ): SparseArray<MutableList<NoteInfo?>>? {
         return compat.findDuplicateNotes(mid, keys)
     }
 
@@ -223,7 +244,10 @@ public class AddContentApi(context: Context) {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun updateNoteTags(noteId: Long, tags: Set<String>): Boolean {
+    public fun updateNoteTags(
+        noteId: Long,
+        tags: Set<String>
+    ): Boolean {
         return updateNote(noteId, null, tags)
     }
 
@@ -234,7 +258,10 @@ public class AddContentApi(context: Context) {
      * @return true if noteId was found, otherwise false
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun updateNoteFields(noteId: Long, fields: Array<String>): Boolean {
+    public fun updateNoteFields(
+        noteId: Long,
+        fields: Array<String>
+    ): Boolean {
         return updateNote(noteId, fields, null)
     }
 
@@ -255,12 +282,17 @@ public class AddContentApi(context: Context) {
         }
     }
 
-    private fun updateNote(noteId: Long, fields: Array<String>?, tags: Set<String?>?): Boolean {
+    private fun updateNote(
+        noteId: Long,
+        fields: Array<String>?,
+        tags: Set<String?>?
+    ): Boolean {
         val contentUri = Note.CONTENT_URI.buildUpon().appendPath(noteId.toString()).build()
-        val values = ContentValues().apply {
-            if (fields != null) put(Note.FLDS, Utils.joinFields(fields))
-            if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
-        }
+        val values =
+            ContentValues().apply {
+                if (fields != null) put(Note.FLDS, Utils.joinFields(fields))
+                if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
+            }
         val numRowsUpdated = resolver.update(contentUri, values, null, null)
         // provider doesn't check whether fields actually changed, so just returns number of notes with id == noteId
         return numRowsUpdated > 0
@@ -273,7 +305,10 @@ public class AddContentApi(context: Context) {
      * @return list of front &amp; back pairs for each card which contain the card HTML, or null if there was a problem
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
-    public fun previewNewNote(mid: Long, flds: Array<String>): Map<String, Map<String, String>>? {
+    public fun previewNewNote(
+        mid: Long,
+        flds: Array<String>
+    ): Map<String, Map<String, String>>? {
         if (!hasReadWritePermission()) {
             // avoid situation where addNote will pass, but deleteNote will fail
             throw SecurityException("previewNewNote requires full read-write-permission")
@@ -289,10 +324,11 @@ public class AddContentApi(context: Context) {
                 val n = cardsCursor.getString(cardsCursor.getColumnIndex(Card.CARD_NAME))
                 val q = cardsCursor.getString(cardsCursor.getColumnIndex(Card.QUESTION))
                 val a = cardsCursor.getString(cardsCursor.getColumnIndex(Card.ANSWER))
-                cards[n] = hashMapOf(
-                    "q" to q,
-                    "a" to a
-                )
+                cards[n] =
+                    hashMapOf(
+                        "q" to q,
+                        "a" to a
+                    )
             }
         }
         // Delete the note
@@ -364,25 +400,27 @@ public class AddContentApi(context: Context) {
         // Check that size of arrays are consistent
         require(!(qfmt.size != cards.size || afmt.size != cards.size)) { "cards, qfmt, and afmt arrays must all be same length" }
         // Create the model using dummy templates
-        var values = ContentValues().apply {
-            put(Model.NAME, name)
-            put(Model.FIELD_NAMES, Utils.joinFields(fields))
-            put(Model.NUM_CARDS, cards.size)
-            put(Model.CSS, css)
-            put(Model.DECK_ID, did)
-            put(Model.SORT_FIELD_INDEX, sortf)
-        }
+        var values =
+            ContentValues().apply {
+                put(Model.NAME, name)
+                put(Model.FIELD_NAMES, Utils.joinFields(fields))
+                put(Model.NUM_CARDS, cards.size)
+                put(Model.CSS, css)
+                put(Model.DECK_ID, did)
+                put(Model.SORT_FIELD_INDEX, sortf)
+            }
         val modelUri = resolver.insert(Model.CONTENT_URI, values) ?: return null
         // Set the remaining template parameters
         val templatesUri = Uri.withAppendedPath(modelUri, "templates")
         for (i in cards.indices) {
             val uri = Uri.withAppendedPath(templatesUri, i.toString())
-            values = ContentValues().apply {
-                put(CardTemplate.NAME, cards[i])
-                put(CardTemplate.QUESTION_FORMAT, qfmt[i])
-                put(CardTemplate.ANSWER_FORMAT, afmt[i])
-                put(CardTemplate.ANSWER_FORMAT, afmt[i])
-            }
+            values =
+                ContentValues().apply {
+                    put(CardTemplate.NAME, cards[i])
+                    put(CardTemplate.QUESTION_FORMAT, qfmt[i])
+                    put(CardTemplate.ANSWER_FORMAT, afmt[i])
+                    put(CardTemplate.ANSWER_FORMAT, afmt[i])
+                }
             resolver.update(uri, values, null, null)
         }
         return modelUri.lastPathSegment!!.toLong()
@@ -415,9 +453,10 @@ public class AddContentApi(context: Context) {
         var splitFlds: Array<String>? = null
         modelQuery.use { modelCursor ->
             if (modelCursor.moveToNext()) {
-                splitFlds = Utils.splitFields(
-                    modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES))
-                )
+                splitFlds =
+                    Utils.splitFields(
+                        modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES))
+                    )
             }
         }
         return splitFlds
@@ -485,13 +524,14 @@ public class AddContentApi(context: Context) {
      */
     public val selectedDeckName: String?
         get() {
-            val selectedDeckQuery = resolver.query(
-                Deck.CONTENT_SELECTED_URI,
-                null,
-                null,
-                null,
-                null
-            ) ?: return null
+            val selectedDeckQuery =
+                resolver.query(
+                    Deck.CONTENT_SELECTED_URI,
+                    null,
+                    null,
+                    null,
+                    null
+                ) ?: return null
             return selectedDeckQuery.use { selectedDeckCursor ->
                 if (selectedDeckCursor.moveToNext()) {
                     selectedDeckCursor.getString(selectedDeckCursor.getColumnIndex(Deck.DECK_NAME))
@@ -562,9 +602,8 @@ public class AddContentApi(context: Context) {
                     )
                 }
 
-            return if (info?.metaData != null && info.metaData.containsKey(
-                    PROVIDER_SPEC_META_DATA_KEY
-                )
+            return if (info?.metaData != null &&
+                info.metaData.containsKey(PROVIDER_SPEC_META_DATA_KEY)
             ) {
                 info.metaData.getInt(PROVIDER_SPEC_META_DATA_KEY)
             } else {
@@ -599,7 +638,10 @@ public class AddContentApi(context: Context) {
          * @param valuesArr the content values ready for bulk insertion into the content provider
          * @return the number of successful entries
          */
-        fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int
+        fun insertNotes(
+            deckId: Long,
+            valuesArr: Array<ContentValues>
+        ): Int
 
         /**
          * For each key, look for an existing note that has matching first field
@@ -626,8 +668,10 @@ public class AddContentApi(context: Context) {
             )
         }
 
-        override fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int =
-            valuesArr.count { addNoteForContentValues(deckId, it) != null }
+        override fun insertNotes(
+            deckId: Long,
+            valuesArr: Array<ContentValues>
+        ): Int = valuesArr.count { addNoteForContentValues(deckId, it) != null }
 
         override fun findDuplicateNotes(
             modelId: Long,
@@ -641,13 +685,14 @@ public class AddContentApi(context: Context) {
             val queryFormat = "${modelFieldList[0]}:\"%%s\" note:\"$modelName\""
             for (outputPos in keys.indices) {
                 val selection = String.format(queryFormat, keys[outputPos])
-                val query = resolver.query(
-                    Note.CONTENT_URI,
-                    PROJECTION,
-                    selection,
-                    null,
-                    null
-                ) ?: continue
+                val query =
+                    resolver.query(
+                        Note.CONTENT_URI,
+                        PROJECTION,
+                        selection,
+                        null,
+                        null
+                    ) ?: continue
                 query.use { cursor ->
                     while (cursor.moveToNext()) {
                         addNoteToDuplicatesArray(
@@ -688,11 +733,15 @@ public class AddContentApi(context: Context) {
             )
         }
 
-        override fun insertNotes(deckId: Long, valuesArr: Array<ContentValues>): Int {
-            val builder = Note.CONTENT_URI.buildUpon().appendQueryParameter(
-                Note.DECK_ID_QUERY_PARAM,
-                deckId.toString()
-            )
+        override fun insertNotes(
+            deckId: Long,
+            valuesArr: Array<ContentValues>
+        ): Int {
+            val builder =
+                Note.CONTENT_URI.buildUpon().appendQueryParameter(
+                    Note.DECK_ID_QUERY_PARAM,
+                    deckId.toString()
+                )
             return resolver.bulkInsert(builder.build(), valuesArr)
         }
 
@@ -712,21 +761,23 @@ public class AddContentApi(context: Context) {
                 keyToIndexesMap[key]!!.add(i)
             }
             // Query for notes that have specified model and checksum of first field matches
-            val sel = String.format(
-                Locale.US,
-                "%s=%d and %s in (%s)",
-                Note.MID,
-                modelId,
-                Note.CSUM,
-                csums.joinToString(separator = ",")
-            )
-            val notesTableQuery = resolver.query(
-                Note.CONTENT_URI_V2,
-                PROJECTION,
-                sel,
-                null,
-                null
-            ) ?: return null
+            val sel =
+                String.format(
+                    Locale.US,
+                    "%s=%d and %s in (%s)",
+                    Note.MID,
+                    modelId,
+                    Note.CSUM,
+                    csums.joinToString(separator = ",")
+                )
+            val notesTableQuery =
+                resolver.query(
+                    Note.CONTENT_URI_V2,
+                    PROJECTION,
+                    sel,
+                    null,
+                    null
+                ) ?: return null
             // Loop through each note in the cursor, building the result array of duplicates
             val duplicates = SparseArray<MutableList<NoteInfo?>>()
             notesTableQuery.use { notesTableCursor ->
@@ -755,11 +806,12 @@ public class AddContentApi(context: Context) {
         private const val TEST_TAG = "PREVIEW_NOTE"
         private const val PROVIDER_SPEC_META_DATA_KEY = "com.ichi2.anki.provider.spec"
         private const val DEFAULT_PROVIDER_SPEC_VALUE = 1 // for when meta-data key does not exist
-        private val PROJECTION = arrayOf(
-            Note._ID,
-            Note.FLDS,
-            Note.TAGS
-        )
+        private val PROJECTION =
+            arrayOf(
+                Note._ID,
+                Note.FLDS,
+                Note.TAGS
+            )
 
         /**
          * Get the AnkiDroid package name that the API will communicate with.

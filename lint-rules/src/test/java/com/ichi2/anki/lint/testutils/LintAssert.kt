@@ -22,7 +22,9 @@ import com.android.tools.lint.detector.api.Issue
 import org.intellij.lang.annotations.Language
 import org.junit.Assert.assertTrue
 
-fun Issue.assertXmlStringsNoIssues(@Language("XML") xmlFile: String) {
+fun Issue.assertXmlStringsNoIssues(
+    @Language("XML") xmlFile: String
+) {
     TestLintTask.lint()
         .allowMissingSdk()
         .allowCompilationErrors()
@@ -32,7 +34,10 @@ fun Issue.assertXmlStringsNoIssues(@Language("XML") xmlFile: String) {
         .expectClean()
 }
 
-fun Issue.assertXmlStringsHasErrorCount(@Language("XML") xmlFile: String, expectedErrorCount: Int) {
+fun Issue.assertXmlStringsHasErrorCount(
+    @Language("XML") xmlFile: String,
+    expectedErrorCount: Int
+) {
     assert(expectedErrorCount > 0) { "Use assertXmlStringsNoIssues" }
     TestLintTask.lint()
         .allowMissingSdk()

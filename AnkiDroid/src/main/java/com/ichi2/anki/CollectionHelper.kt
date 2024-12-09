@@ -288,13 +288,17 @@ object CollectionHelper {
     // This uses a lambda as we typically depends on the `lateinit` AnkiDroidApp.instance
     // If we remove all Android references, we get a significant unit test speedup
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    internal fun getCurrentAnkiDroidDirectoryOptionalContext(preferences: SharedPreferences, context: () -> Context): String {
+    internal fun getCurrentAnkiDroidDirectoryOptionalContext(
+        preferences: SharedPreferences,
+        context: () -> Context
+    ): String {
         return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
             // create an "androidTest" directory inside the current collection directory which contains the test data
             // "/AnkiDroid/androidTest" would be a new collection path
-            val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                getDefaultAnkiDroidDirectory(context())
-            }
+            val currentCollectionDirectory =
+                preferences.getOrSetString(PREF_COLLECTION_PATH) {
+                    getDefaultAnkiDroidDirectory(context())
+                }
             File(
                 currentCollectionDirectory,
                 "androidTest"

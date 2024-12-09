@@ -42,34 +42,35 @@ internal class VariableNamingDetectorTest {
     }
 
     companion object {
-        private val file = java(
-            """
-            package com.ichi2.anki.exception;
+        private val file =
+            java(
+                """
+                package com.ichi2.anki.exception;
 
-            public class FilteredAncestor extends Exception {
-                private String mFilteredAncestorName;
-                private static String sFilteredAncestorName;
-                public FilteredAncestor(String filteredAncestorName) {
-                    this.mFilteredAncestorName = filteredAncestorName;
-                }
+                public class FilteredAncestor extends Exception {
+                    private String mFilteredAncestorName;
+                    private static String sFilteredAncestorName;
+                    public FilteredAncestor(String filteredAncestorName) {
+                        this.mFilteredAncestorName = filteredAncestorName;
+                    }
 
-                public String getFilteredAncestorName() {
-                    return mFilteredAncestorName;
+                    public String getFilteredAncestorName() {
+                        return mFilteredAncestorName;
+                    }
+                    
+                    public void setFilteredAncestorName(String mFilteredAncestorName, String member) {
+                        this.mFilteredAncestorName = mFilteredAncestorName;
+                    }
+                    
+                    public static String getStaticFilteredAncestorName() {
+                        return sFilteredAncestorName;
+                    }
+                    
+                    public static setFilteredAncestorName(String sFilteredAncestorName, String staticMember) {
+                        this.sFilteredAncestorName = sFilteredAncestorName;
+                    }
                 }
-                
-                public void setFilteredAncestorName(String mFilteredAncestorName, String member) {
-                    this.mFilteredAncestorName = mFilteredAncestorName;
-                }
-                
-                public static String getStaticFilteredAncestorName() {
-                    return sFilteredAncestorName;
-                }
-                
-                public static setFilteredAncestorName(String sFilteredAncestorName, String staticMember) {
-                    this.sFilteredAncestorName = sFilteredAncestorName;
-                }
-            }
-            """.trimIndent()
-        )
+                """.trimIndent()
+            )
     }
 }

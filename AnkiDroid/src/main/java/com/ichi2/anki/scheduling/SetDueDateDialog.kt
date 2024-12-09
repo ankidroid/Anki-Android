@@ -137,14 +137,16 @@ class SetDueDateDialog : DialogFragment() {
             }.attach()
             tabLayout.selectTab(tabLayout.getTabAt(0))
 
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    SetDueDateViewModel.Tab.entries.first { it.position == position }.let { selectedTab ->
-                        viewModel.currentTab = selectedTab
+            viewPager.registerOnPageChangeCallback(
+                object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        SetDueDateViewModel.Tab.entries.first { it.position == position }.let { selectedTab ->
+                            viewModel.currentTab = selectedTab
+                        }
+                        super.onPageSelected(position)
                     }
-                    super.onPageSelected(position)
                 }
-            })
+            )
 
             // setup 'set interval to same value' checkbox
             findViewById<MaterialCheckBox>(R.id.change_interval)!!.apply {
@@ -156,7 +158,10 @@ class SetDueDateDialog : DialogFragment() {
         }
     }
 
-    override fun setupDialog(dialog: Dialog, style: Int) {
+    override fun setupDialog(
+        dialog: Dialog,
+        style: Int
+    ) {
         super.setupDialog(dialog, style)
         // this is required for the keyboard to appear: https://stackoverflow.com/a/10133603/
         dialog.window?.clearFlags(FLAG_NOT_FOCUSABLE or FLAG_ALT_FOCUSABLE_IM)
@@ -181,10 +186,11 @@ class SetDueDateDialog : DialogFragment() {
         const val MAX_WIDTH_DP = 450
 
         @CheckResult
-        fun newInstance(cardIds: List<CardId>) = SetDueDateDialog().apply {
-            arguments = bundleOf(ARG_CARD_IDS to cardIds.toLongArray())
-            Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
-        }
+        fun newInstance(cardIds: List<CardId>) =
+            SetDueDateDialog().apply {
+                arguments = bundleOf(ARG_CARD_IDS to cardIds.toLongArray())
+                Timber.i("Showing 'set due date' dialog for %d cards", cardIds.size)
+            }
     }
 
     class DueDateStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
@@ -200,10 +206,12 @@ class SetDueDateDialog : DialogFragment() {
     }
 
     class SelectSingleDateFragment : Fragment(R.layout.set_due_date_single) {
-
         private val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(
+            view: View,
+            savedInstanceState: Bundle?
+        ) {
             super.onViewCreated(view, savedInstanceState)
             view.findViewById<TextInputLayout>(R.id.set_due_date_single_day_text).apply {
                 editText!!.apply {
@@ -214,13 +222,14 @@ class SetDueDateDialog : DialogFragment() {
                         suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, currentValue ?: 0)
                     }
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
-                    helperText = getString(
-                        R.string.set_due_date_hintText,
-                        // 0 days
-                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0),
-                        // 1 day
-                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1)
-                    )
+                    helperText =
+                        getString(
+                            R.string.set_due_date_hintText,
+                            // 0 days
+                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0),
+                            // 1 day
+                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1)
+                        )
                 }
             }
             view.findViewById<TextView>(R.id.date_single_label).text =
@@ -237,10 +246,12 @@ class SetDueDateDialog : DialogFragment() {
      * Allows a user to select a start and end date
      */
     class SelectDateRangeFragment : Fragment(R.layout.set_due_date_range) {
-
         private val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(
+            view: View,
+            savedInstanceState: Bundle?
+        ) {
             super.onViewCreated(view, savedInstanceState)
             view.findViewById<TextInputLayout>(R.id.date_range_start_layout).apply {
                 editText!!.apply {
@@ -278,22 +289,23 @@ class SetDueDateDialog : DialogFragment() {
 }
 
 // this can outlive the lifetime of the fragment
-private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) = this.launchCatchingTask {
-    // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
-    val cardsUpdated = withProgress {
-        // this is async as it should be run on the viewModel
-        viewModel.updateDueDateAsync().await()
-    }
-    Timber.d("updated %d cards", cardsUpdated)
+private fun AnkiActivity.updateDueDate(viewModel: SetDueDateViewModel) =
+    this.launchCatchingTask {
+        // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
+        val cardsUpdated =
+            withProgress {
+                // this is async as it should be run on the viewModel
+                viewModel.updateDueDateAsync().await()
+            }
+        Timber.d("updated %d cards", cardsUpdated)
 
-    if (cardsUpdated == null) {
-        Timber.w("unable to update due date")
-        showThemedToast(this@updateDueDate, R.string.something_wrong, true)
-        return@launchCatchingTask
+        if (cardsUpdated == null) {
+            Timber.w("unable to update due date")
+            showThemedToast(this@updateDueDate, R.string.something_wrong, true)
+            return@launchCatchingTask
+        }
+        showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
     }
-    showSnackbar(TR.schedulingSetDueDateDone(cardsUpdated), Snackbar.LENGTH_SHORT)
-}
 
 // TODO: See if we can turn this to a `val` when context parameters are back
-fun Int.dpToPx(context: Context): Int =
-    (this * context.resources.displayMetrics.density + 0.5f).toInt()
+fun Int.dpToPx(context: Context): Int = (this * context.resources.displayMetrics.density + 0.5f).toInt()

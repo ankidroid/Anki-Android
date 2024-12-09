@@ -54,11 +54,12 @@ suspend fun checkNoteFieldsResponse(note: Note): NoteFieldsCheckResult {
         NoteFieldsCheckResponse.State.NORMAL, NoteFieldsCheckResponse.State.DUPLICATE
         -> Success
 
-        NoteFieldsCheckResponse.State.EMPTY -> if (note.notetype.isImageOcclusion) {
-            Failure(TR.notetypesNoOcclusionCreated2())
-        } else {
-            Failure(TR.addingTheFirstFieldIsEmpty())
-        }
+        NoteFieldsCheckResponse.State.EMPTY ->
+            if (note.notetype.isImageOcclusion) {
+                Failure(TR.notetypesNoOcclusionCreated2())
+            } else {
+                Failure(TR.addingTheFirstFieldIsEmpty())
+            }
 
         NoteFieldsCheckResponse.State.MISSING_CLOZE ->
             Failure(TR.addingYouHaveAClozeDeletionNote())

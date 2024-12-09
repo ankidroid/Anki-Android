@@ -69,7 +69,10 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      * @param fieldOperationType    Field Operation Type to do (ADD_FIELD or EDIT_FIELD)
      * @return The forbidden field name created
      */
-    private fun setupInvalidFieldName(forbidden: String, fieldOperationType: FieldOperationType): String {
+    private fun setupInvalidFieldName(
+        forbidden: String,
+        fieldOperationType: FieldOperationType
+    ): String {
         val fieldNameInput = EditText(targetContext)
         val fieldName = forbidden + "field"
 
@@ -92,7 +95,10 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      * @return The dialog
      */
     @Throws(RuntimeException::class)
-    private fun buildAddEditFieldDialog(fieldNameInput: EditText, fieldOperationType: FieldOperationType): AlertDialog {
+    private fun buildAddEditFieldDialog(
+        fieldNameInput: EditText,
+        fieldOperationType: FieldOperationType
+    ): AlertDialog {
         return AlertDialog.Builder(ContextThemeWrapper(targetContext, R.style.Theme_Light)).show {
             positiveButton(text = "") {
                 try {
@@ -102,16 +108,18 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
                     val intent = Intent()
                     intent.putExtra("title", modelName)
                     intent.putExtra("noteTypeID", col.notetypes.idForName(modelName)!!)
-                    val modelFieldEditor = startActivityNormallyOpenCollectionWithIntent(
-                        this@ModelFieldEditorTest,
-                        ModelFieldEditor::class.java,
-                        intent
-                    )
+                    val modelFieldEditor =
+                        startActivityNormallyOpenCollectionWithIntent(
+                            this@ModelFieldEditorTest,
+                            ModelFieldEditor::class.java,
+                            intent
+                        )
                     when (fieldOperationType) {
                         FieldOperationType.ADD_FIELD -> modelFieldEditor.addField(fieldNameInput)
-                        FieldOperationType.RENAME_FIELD -> modelFieldEditor.renameField(
-                            fieldNameInput
-                        )
+                        FieldOperationType.RENAME_FIELD ->
+                            modelFieldEditor.renameField(
+                                fieldNameInput
+                            )
                     }
                 } catch (exception: ConfirmModSchemaException) {
                     throw RuntimeException(exception)
@@ -133,5 +141,6 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
 }
 
 internal enum class FieldOperationType {
-    ADD_FIELD, RENAME_FIELD
+    ADD_FIELD,
+    RENAME_FIELD
 }

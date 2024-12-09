@@ -59,14 +59,16 @@ class CongratsPage :
     PageFragment(),
     CustomStudyDialog.CustomStudyListener,
     ChangeManager.Subscriber {
-
     private val viewModel by viewModels<CongratsViewModel>()
 
     init {
         ChangeManager.subscribe(this)
     }
 
-    override fun opExecuted(changes: OpChanges, handler: Any?) {
+    override fun opExecuted(
+        changes: OpChanges,
+        handler: Any?
+    ) {
         // typically due to 'day rollover'
         if (changes.studyQueues) {
             Timber.i("refreshing: study queues updated")
@@ -76,15 +78,19 @@ class CongratsPage :
 
     override fun onCreateWebViewClient(savedInstanceState: Bundle?): PageWebViewClient {
         return super.onCreateWebViewClient(savedInstanceState).also { client ->
-            client.onPageFinishedCallback = OnPageFinishedCallback { webView ->
-                webView.evaluateJavascript(
-                    "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };"
-                ) {}
-            }
+            client.onPageFinishedCallback =
+                OnPageFinishedCallback { webView ->
+                    webView.evaluateJavascript(
+                        "bridgeCommand = function(request){ ankidroid.bridgeCommand(request); };"
+                    ) {}
+                }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.onError
@@ -133,18 +139,20 @@ class CongratsPage :
     }
 
     private fun openStudyOptionsAndFinish() {
-        val intent = Intent(requireContext(), StudyOptionsActivity::class.java).apply {
-            putExtra("withDeckOptions", false)
-        }
+        val intent =
+            Intent(requireContext(), StudyOptionsActivity::class.java).apply {
+                putExtra("withDeckOptions", false)
+            }
         startActivity(intent, null)
         requireActivity().finish()
     }
 
     private fun onStudyMore() {
         val col = CollectionManager.getColUnsafe()
-        val dialogFragment = CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
-            col.decks.selected()
-        )
+        val dialogFragment =
+            CustomStudyDialog(CollectionManager.getColUnsafe(), this).withArguments(
+                col.decks.selected()
+            )
         dialogFragment.show(childFragmentManager, null)
     }
 
@@ -164,8 +172,7 @@ class CongratsPage :
             return getIntent(context, path = "congrats", clazz = CongratsPage::class)
         }
 
-        private fun displayNewCongratsScreen(context: Context): Boolean =
-            context.sharedPrefs().getBoolean("new_congrats_screen", false)
+        private fun displayNewCongratsScreen(context: Context): Boolean = context.sharedPrefs().getBoolean("new_congrats_screen", false)
 
         fun display(activity: FragmentActivity) {
             if (displayNewCongratsScreen(activity)) {
@@ -178,7 +185,10 @@ class CongratsPage :
             }
         }
 
-        fun onReviewsCompleted(activity: FragmentActivity, cardsInDeck: Boolean) {
+        fun onReviewsCompleted(
+            activity: FragmentActivity,
+            cardsInDeck: Boolean
+        ) {
             if (displayNewCongratsScreen(activity)) {
                 activity.startActivity(getIntent(activity))
                 return
@@ -203,13 +213,14 @@ class CongratsPage :
                 return activity.getString(R.string.studyoptions_congrats_finished)
             }
             // https://github.com/ankitects/anki/blob/9b4dd54312de8798a3f2bee07892bb3a488d1f9b/ts/lib/tslib/time.ts#L22
-            val (unit, amount) = if (secsUntilNextLearn < TIME_MINUTE) {
-                "seconds" to secsUntilNextLearn.toDouble()
-            } else if (secsUntilNextLearn < TIME_HOUR) {
-                "minutes" to secsUntilNextLearn / TIME_MINUTE
-            } else {
-                "hours" to secsUntilNextLearn / TIME_HOUR
-            }
+            val (unit, amount) =
+                if (secsUntilNextLearn < TIME_MINUTE) {
+                    "seconds" to secsUntilNextLearn.toDouble()
+                } else if (secsUntilNextLearn < TIME_HOUR) {
+                    "minutes" to secsUntilNextLearn / TIME_MINUTE
+                } else {
+                    "hours" to secsUntilNextLearn / TIME_HOUR
+                }
 
             val nextLearnDue = TR.schedulingNextLearnDue(unit, round(amount).toInt())
             return activity.getString(R.string.studyoptions_congrats_next_due_in, nextLearnDue)

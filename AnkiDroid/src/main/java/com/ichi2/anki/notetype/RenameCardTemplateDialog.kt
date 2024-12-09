@@ -26,9 +26,12 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 
 class RenameCardTemplateDialog {
-
     companion object {
-        fun showInstance(context: Context, prefill: String, block: (result: String) -> Unit) {
+        fun showInstance(
+            context: Context,
+            prefill: String,
+            block: (result: String) -> Unit
+        ) {
             AlertDialog.Builder(context).show {
                 positiveButton(R.string.dialog_ok) { }
                 negativeButton(R.string.dialog_cancel)

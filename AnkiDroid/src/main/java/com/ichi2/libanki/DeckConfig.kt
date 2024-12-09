@@ -26,8 +26,8 @@ class DeckConfig
  *
  * This function will perform deepCopy on the passed object
  *
- */(json: JSONObject) : JSONObject() {
-
+ */
+(json: JSONObject) : JSONObject() {
     var conf: Long
         get() = getLong("conf")
         set(value) {
@@ -66,8 +66,10 @@ class DeckConfig
         /**
          * @return The 'timer' property on [config], or [defaultValue] if it's not set.
          */
-        fun parseTimerOpt(config: JSONObject, defaultValue: Boolean): Boolean =
-            parseTimer(config) ?: defaultValue
+        fun parseTimerOpt(
+            config: JSONObject,
+            defaultValue: Boolean
+        ): Boolean = parseTimer(config) ?: defaultValue
     }
 
     init {

@@ -48,7 +48,6 @@ import timber.log.Timber
 class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, cardMediaPlayer: CardMediaPlayer) :
     CardViewerViewModel(cardMediaPlayer),
     OnErrorListener {
-
     val currentIndex = MutableStateFlow(firstIndex)
     val backSideOnly = MutableStateFlow(false)
     val isMarked = MutableStateFlow(false)
@@ -58,20 +57,22 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
         combine(currentIndex, showingAnswer, backSideOnly) { index, showingAnswer, isBackSideOnly ->
             index != 0 || (showingAnswer && !isBackSideOnly)
         }
-    val isNextButtonEnabled = combine(currentIndex, showingAnswer) { index, showingAnswer ->
-        index != selectedCardIds.lastIndex || !showingAnswer
-    }
+    val isNextButtonEnabled =
+        combine(currentIndex, showingAnswer) { index, showingAnswer ->
+            index != selectedCardIds.lastIndex || !showingAnswer
+        }
 
     private val showAnswerOnReload get() = showingAnswer.value || backSideOnly.value
 
-    override var currentCard: Deferred<Card> = asyncIO {
-        withCol { getCard(selectedCardIds[firstIndex]) }
-    }
+    override var currentCard: Deferred<Card> =
+        asyncIO {
+            withCol { getCard(selectedCardIds[firstIndex]) }
+        }
     override val server = AnkiServer(this).also { it.start() }
 
     /* *********************************************************************************************
-    ************************ Public methods: meant to be used by the View **************************
-    ********************************************************************************************* */
+     ************************ Public methods: meant to be used by the View **************************
+     ********************************************************************************************* */
 
     /** Call this after the webView has finished loading the page */
     @NeedsTest("16302 - a sound-only card on the back/flipped with 'don't keep activities'")
@@ -197,13 +198,14 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     }
 
     /* *********************************************************************************************
-    *************************************** Internal methods ***************************************
-    ********************************************************************************************* */
+     *************************************** Internal methods ***************************************
+     ********************************************************************************************* */
 
     private suspend fun showCard(showAnswer: Boolean) {
-        currentCard = asyncIO {
-            withCol { getCard(selectedCardIds[currentIndex.value]) }
-        }
+        currentCard =
+            asyncIO {
+                withCol { getCard(selectedCardIds[currentIndex.value]) }
+            }
         if (showAnswer) showAnswerInternal() else showQuestion()
         updateFlagIcon()
         updateMarkIcon()
@@ -220,11 +222,12 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     }
 
     private suspend fun loadAndPlaySounds() {
-        val side: CardSide = when {
-            backSideOnly.value -> CardSide.BOTH
-            showingAnswer.value -> CardSide.ANSWER
-            else -> CardSide.QUESTION
-        }
+        val side: CardSide =
+            when {
+                backSideOnly.value -> CardSide.BOTH
+                showingAnswer.value -> CardSide.ANSWER
+                else -> CardSide.QUESTION
+            }
         cardMediaPlayer.loadCardSounds(currentCard.await())
         cardMediaPlayer.autoplayAllSoundsForSide(side)
     }
@@ -239,7 +242,11 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
     }
 
     companion object {
-        fun factory(previewerIdsFile: PreviewerIdsFile, currentIndex: Int, cardMediaPlayer: CardMediaPlayer): ViewModelProvider.Factory {
+        fun factory(
+            previewerIdsFile: PreviewerIdsFile,
+            currentIndex: Int,
+            cardMediaPlayer: CardMediaPlayer
+        ): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
                     PreviewerViewModel(previewerIdsFile, currentIndex, cardMediaPlayer)
@@ -249,15 +256,19 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
 
         /** removes `[[type:]]` blocks in questions */
         @VisibleForTesting
-        fun typeAnsQuestionFilter(text: String) =
-            typeAnsRe.replace(text, "")
+        fun typeAnsQuestionFilter(text: String) = typeAnsRe.replace(text, "")
 
         /** Adapted from the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L720) */
-        suspend fun typeAnsAnswerFilter(card: Card, text: String): String {
-            val typeAnswerField = getTypeAnswerField(card, text)
-                ?: return typeAnsRe.replace(text, "")
-            val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
-                ?: return typeAnsRe.replace(text, "")
+        suspend fun typeAnsAnswerFilter(
+            card: Card,
+            text: String
+        ): String {
+            val typeAnswerField =
+                getTypeAnswerField(card, text)
+                    ?: return typeAnsRe.replace(text, "")
+            val expectedAnswer =
+                getExpectedTypeInAnswer(card, typeAnswerField)
+                    ?: return typeAnsRe.replace(text, "")
             val typeFont = typeAnswerField.getString("font")
             val typeSize = getFontSize(typeAnswerField)
             val answerComparison = withCol { compareAnswer(expectedAnswer, provided = "") }

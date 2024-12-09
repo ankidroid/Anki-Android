@@ -47,7 +47,9 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
     private var currentDescription
         get() = deckDescriptionInput.text.toString()
-        set(value) { deckDescriptionInput.setText(value) }
+        set(value) {
+            deckDescriptionInput.setText(value)
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,28 +90,30 @@ class EditDeckDescriptionDialog : DialogFragment() {
         )
     }
 
-    private fun saveAndExit() = launchCatchingTask {
-        setDescription(currentDescription)
-        Timber.i("closing deck description dialog")
-        dismiss()
-    }
-
-    private fun onBack() = launchCatchingTask {
-        fun closeWithoutSaving() {
-            Timber.i("Closing dialog without saving")
+    private fun saveAndExit() =
+        launchCatchingTask {
+            setDescription(currentDescription)
+            Timber.i("closing deck description dialog")
             dismiss()
         }
 
-        if (getDescription() == currentDescription) {
-            closeWithoutSaving()
-            return@launchCatchingTask
-        }
+    private fun onBack() =
+        launchCatchingTask {
+            fun closeWithoutSaving() {
+                Timber.i("Closing dialog without saving")
+                dismiss()
+            }
 
-        Timber.i("asking if user should discard changes")
-        DiscardChangesDialog.showDialog(requireContext()) {
-            closeWithoutSaving()
+            if (getDescription() == currentDescription) {
+                closeWithoutSaving()
+                return@launchCatchingTask
+            }
+
+            Timber.i("asking if user should discard changes")
+            DiscardChangesDialog.showDialog(requireContext()) {
+                closeWithoutSaving()
+            }
         }
-    }
 
     private suspend fun getDescription() = withCol { decks.get(deckId)!!.description }
 
@@ -123,9 +127,10 @@ class EditDeckDescriptionDialog : DialogFragment() {
 
         fun newInstance(deckId: DeckId): EditDeckDescriptionDialog {
             return EditDeckDescriptionDialog().apply {
-                arguments = bundleOf(
-                    ARG_DECK_ID to deckId
-                )
+                arguments =
+                    bundleOf(
+                        ARG_DECK_ID to deckId
+                    )
             }
         }
     }

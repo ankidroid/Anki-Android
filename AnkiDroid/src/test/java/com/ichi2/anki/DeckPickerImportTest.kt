@@ -47,6 +47,7 @@ class DeckPickerImportTest : RobolectricTest() {
 
     private class DeckPickerImport : DeckPicker() {
         private var dialogFragment: AsyncDialogFragment? = null
+
         fun getAsyncDialogFragmentClass(): Class<*> {
             if (dialogFragment == null) {
                 fail("No async fragment shown")

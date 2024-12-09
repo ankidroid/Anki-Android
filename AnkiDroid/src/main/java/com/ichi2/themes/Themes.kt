@@ -68,25 +68,27 @@ object Themes {
         // AppCompatPreferenceActivity's sharedPreferences is initialized
         // after the time when the theme should be set
         // TODO (#5019): always use the context as the parameter for getSharedPrefs
-        val prefs = if (context is AppCompatPreferenceActivity<*>) {
-            AnkiDroidApp.instance.sharedPrefs()
-        } else {
-            context.sharedPrefs()
-        }
-
-        currentTheme = if (themeFollowsSystem(prefs)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            if (systemIsInNightMode(context)) {
-                Theme.ofId(prefs.getString(NIGHT_THEME_KEY, Theme.BLACK.id)!!)
+        val prefs =
+            if (context is AppCompatPreferenceActivity<*>) {
+                AnkiDroidApp.instance.sharedPrefs()
             } else {
-                Theme.ofId(prefs.getString(DAY_THEME_KEY, Theme.LIGHT.id)!!)
+                context.sharedPrefs()
             }
-        } else {
-            Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!).also {
-                val mode = if (it.isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-                AppCompatDelegate.setDefaultNightMode(mode)
+
+        currentTheme =
+            if (themeFollowsSystem(prefs)) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                if (systemIsInNightMode(context)) {
+                    Theme.ofId(prefs.getString(NIGHT_THEME_KEY, Theme.BLACK.id)!!)
+                } else {
+                    Theme.ofId(prefs.getString(DAY_THEME_KEY, Theme.LIGHT.id)!!)
+                }
+            } else {
+                Theme.ofId(prefs.getString(APP_THEME_KEY, Theme.fallback.id)!!).also {
+                    val mode = if (it.isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                    AppCompatDelegate.setDefaultNightMode(mode)
+                }
             }
-        }
     }
 
     /**
@@ -97,12 +99,18 @@ object Themes {
         context.setTheme(R.style.ThemeOverlay_Xiaomi)
     }
 
-    fun getResFromAttr(context: Context, resAttr: Int): Int {
+    fun getResFromAttr(
+        context: Context,
+        resAttr: Int
+    ): Int {
         val attrs = intArrayOf(resAttr)
         return getResFromAttr(context, attrs)[0]
     }
 
-    fun getResFromAttr(context: Context, attrs: IntArray): IntArray {
+    fun getResFromAttr(
+        context: Context,
+        attrs: IntArray
+    ): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
         for (i in attrs.indices) {
             attrs[i] = ta.getResourceId(i, 0)

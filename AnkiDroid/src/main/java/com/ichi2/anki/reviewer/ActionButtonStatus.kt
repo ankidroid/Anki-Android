@@ -67,11 +67,17 @@ class ActionButtonStatus {
         setupButton(preferences, R.id.user_action_9, "customButtonUserAction9", MENU_DISABLED)
     }
 
-    private fun setupButton(preferences: SharedPreferences, @IdRes resourceId: Int, preferenceName: String, showAsActionType: Int) {
-        customButtons[resourceId] = preferences.getString(
-            preferenceName,
-            showAsActionType.toString()
-        )!!.toInt()
+    private fun setupButton(
+        preferences: SharedPreferences,
+        @IdRes resourceId: Int,
+        preferenceName: String,
+        showAsActionType: Int
+    ) {
+        customButtons[resourceId] =
+            preferences.getString(
+                preferenceName,
+                showAsActionType.toString()
+            )!!.toInt()
     }
 
     fun setCustomButtons(menu: Menu) {

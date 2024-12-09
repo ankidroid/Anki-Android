@@ -55,8 +55,7 @@ object ClipboardUtil {
             ?: false
     }
 
-    private fun ClipboardManager.getFirstItem() =
-        primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)
+    private fun ClipboardManager.getFirstItem() = primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)
 
     fun getUri(clipboard: ClipboardManager?): Uri? {
         return clipboard?.getFirstItem()?.uri
@@ -78,11 +77,12 @@ object ClipboardUtil {
             ?: false
     }
 
-    fun ClipData.items() = sequence {
-        for (j in 0 until itemCount) {
-            yield(getItemAt(j))
+    fun ClipData.items() =
+        sequence {
+            for (j in 0 until itemCount) {
+                yield(getItemAt(j))
+            }
         }
-    }
 
     fun getDescription(clipboard: ClipboardManager?): ClipDescription? {
         return clipboard?.primaryClip?.description
@@ -94,7 +94,10 @@ object ClipboardUtil {
     }
 
     @CheckResult
-    fun getPlainText(clipboard: ClipboardManager?, context: Context): CharSequence? {
+    fun getPlainText(
+        clipboard: ClipboardManager?,
+        context: Context
+    ): CharSequence? {
         return clipboard?.getFirstItem()?.coerceToText(context)
     }
 }

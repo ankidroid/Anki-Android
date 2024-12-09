@@ -26,7 +26,6 @@ import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
 class StorageRustTest : JvmTest() {
-
     @Test
     @Config(qualifiers = "en")
     fun testModelCount() {

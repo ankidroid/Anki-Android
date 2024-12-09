@@ -31,12 +31,19 @@ import java.util.function.Consumer
 // TODO: Pass optional validation condition i.e. Positive button not enabled if condition is true
 open class IntegerDialog : AnalyticsDialogFragment() {
     private var consumer: Consumer<Int>? = null
+
     fun setCallbackRunnable(consumer: Consumer<Int>?) {
         this.consumer = consumer
     }
 
     /** use named arguments with this method for clarity */
-    fun setArgs(title: String, prompt: String?, digits: Int, content: String? = null, defaultValue: String? = null) {
+    fun setArgs(
+        title: String,
+        prompt: String?,
+        digits: Int,
+        content: String? = null,
+        defaultValue: String? = null
+    ) {
         val args = Bundle()
         args.putString("title", title)
         args.putString("prompt", prompt)

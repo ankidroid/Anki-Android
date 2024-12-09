@@ -43,8 +43,7 @@ import java.util.TreeSet
  * - [ArrayList] to enable fast random access, sorting, and maintaining order of items during iteration
  * - [TreeSet] if a comparator is given or a [HashSet] otherwise.
  */
-class UniqueArrayList<E>
-/**
+class UniqueArrayList<E> /**
  * Constructor that wraps (not copies) the List and specifies the set to use.
  *
  *
@@ -149,12 +148,16 @@ private constructor(
          * @param source the source collection that will be used to construct UniqueArrayList
          * @param comparator used to judge uniqueness
          */
-        fun <E> from(source: List<E>, comparator: Comparator<in E>? = null): UniqueArrayList<E> {
-            val set: Set<E> = if (comparator == null) {
-                HashSet()
-            } else {
-                TreeSet(comparator)
-            }
+        fun <E> from(
+            source: List<E>,
+            comparator: Comparator<in E>? = null
+        ): UniqueArrayList<E> {
+            val set: Set<E> =
+                if (comparator == null) {
+                    HashSet()
+                } else {
+                    TreeSet(comparator)
+                }
             val sl = UniqueArrayList(ArrayList(), set)
             sl.addAll(source)
             return sl

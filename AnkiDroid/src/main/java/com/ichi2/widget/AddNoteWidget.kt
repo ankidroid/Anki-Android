@@ -23,7 +23,6 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.noteeditor.NoteEditorLauncher
 
 class AddNoteWidget : AnalyticsWidgetProvider() {
-
     override fun performUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -34,7 +33,6 @@ class AddNoteWidget : AnalyticsWidgetProvider() {
     }
 
     companion object {
-
         /**
          * Updates the widgets displayed in the provided context using the given AppWidgetManager
          * and widget IDs, setting up an intent to open the NoteEditor with the caller as the deck picker.

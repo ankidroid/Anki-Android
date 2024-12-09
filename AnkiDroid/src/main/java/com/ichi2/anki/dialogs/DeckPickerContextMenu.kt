@@ -27,7 +27,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.utils.title
 
 class DeckPickerContextMenu : AnalyticsDialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         require(requireArguments().containsKey(ARG_DECK_ID)) { "Missing argument deck id" }
@@ -79,7 +78,9 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             add(DeckPickerContextMenuOption.DELETE_DECK)
         }
 
-    enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
+    enum class DeckPickerContextMenuOption(
+        @StringRes val optionName: Int
+    ) {
         RENAME_DECK(R.string.rename_deck),
         DECK_OPTIONS(R.string.menu__deck_options),
         CUSTOM_STUDY(R.string.custom_study),
@@ -92,7 +93,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         CREATE_SHORTCUT(R.string.create_shortcut),
         BROWSE_CARDS(R.string.browse_cards),
         EDIT_DESCRIPTION(R.string.edit_deck_description),
-        ADD_CARD(R.string.menu_add);
+        ADD_CARD(R.string.menu_add)
     }
 
     companion object {
@@ -117,13 +118,15 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             name: String,
             isDynamic: Boolean,
             hasBuriedInDeck: Boolean
-        ): DeckPickerContextMenu = DeckPickerContextMenu().apply {
-            arguments = bundleOf(
-                ARG_DECK_ID to id,
-                ARG_DECK_NAME to name,
-                ARG_DECK_IS_DYN to isDynamic,
-                ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck
-            )
-        }
+        ): DeckPickerContextMenu =
+            DeckPickerContextMenu().apply {
+                arguments =
+                    bundleOf(
+                        ARG_DECK_ID to id,
+                        ARG_DECK_NAME to name,
+                        ARG_DECK_IS_DYN to isDynamic,
+                        ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck
+                    )
+            }
     }
 }

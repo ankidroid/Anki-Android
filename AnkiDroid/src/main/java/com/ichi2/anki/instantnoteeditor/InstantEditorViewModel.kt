@@ -137,9 +137,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
      * @param skipClozeCheck Indicates whether to skip the cloze field check.
      * @return A [SaveNoteResult] indicating the outcome of the operation.
      */
-    suspend fun checkAndSaveNote(
-        skipClozeCheck: Boolean = false
-    ): SaveNoteResult {
+    suspend fun checkAndSaveNote(skipClozeCheck: Boolean = false): SaveNoteResult {
         if (skipClozeCheck) {
             return saveNote()
         }
@@ -316,7 +314,10 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
         return combinedWords
     }
 
-    fun updateClozeNumber(word: String, newClozeNumber: Int): String {
+    fun updateClozeNumber(
+        word: String,
+        newClozeNumber: Int
+    ): String {
         return clozePattern.replace(word) { matchResult ->
             val punctutationAtStart = matchResult.groupValues[1]
             val content = matchResult.groupValues[3]
@@ -379,16 +380,17 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
     }
 
     fun toggleClozeMode() {
-        val newMode = when (_currentClozeMode.value) {
-            InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
-                decrementClozeNumber()
-                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
+        val newMode =
+            when (_currentClozeMode.value) {
+                InstantNoteEditorActivity.ClozeMode.INCREMENT -> {
+                    decrementClozeNumber()
+                    InstantNoteEditorActivity.ClozeMode.NO_INCREMENT
+                }
+                InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
+                    incrementClozeNumber()
+                    InstantNoteEditorActivity.ClozeMode.INCREMENT
+                }
             }
-            InstantNoteEditorActivity.ClozeMode.NO_INCREMENT -> {
-                incrementClozeNumber()
-                InstantNoteEditorActivity.ClozeMode.INCREMENT
-            }
-        }
         _currentClozeMode.value = newMode
     }
 }

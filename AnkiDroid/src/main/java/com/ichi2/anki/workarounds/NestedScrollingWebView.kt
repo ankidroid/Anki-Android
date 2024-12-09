@@ -70,7 +70,9 @@ import androidx.core.widget.NestedScrollView
  * 1. [WebView.setNestedScrollingEnabled] must be set to `true`.
  * 2. XML: `<com.ichi2.anki.workarounds.NestedScrollingWebView ... />`
  */
-class NestedScrollingWebView @JvmOverloads constructor(
+class NestedScrollingWebView
+@JvmOverloads
+constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.webViewStyle
@@ -127,7 +129,8 @@ class NestedScrollingWebView @JvmOverloads constructor(
             }
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL,
-            MotionEvent.ACTION_POINTER_DOWN, MotionEvent.ACTION_POINTER_UP -> {
+            MotionEvent.ACTION_POINTER_DOWN, MotionEvent.ACTION_POINTER_UP
+            -> {
                 stopNestedScroll()
             }
         }
@@ -136,16 +139,20 @@ class NestedScrollingWebView @JvmOverloads constructor(
         return super.onTouchEvent(velocityTrackerMotionEvent)
     }
 
-    private fun handleOffset(velocityTrackerMotionEvent: MotionEvent, deltaY: Int) {
+    private fun handleOffset(
+        velocityTrackerMotionEvent: MotionEvent,
+        deltaY: Int
+    ) {
         velocityTrackerMotionEvent.offsetLocation(deltaX.toFloat(), deltaY.toFloat())
     }
 
-    override fun setNestedScrollingEnabled(enabled: Boolean) =
-        childHelper.setNestedScrollingEnabled(enabled)
+    override fun setNestedScrollingEnabled(enabled: Boolean) = childHelper.setNestedScrollingEnabled(enabled)
 
     override fun isNestedScrollingEnabled() = childHelper.isNestedScrollingEnabled
 
-    override fun startNestedScroll(@ScrollAxis axes: Int) = childHelper.startNestedScroll(axes)
+    override fun startNestedScroll(
+        @ScrollAxis axes: Int
+    ) = childHelper.startNestedScroll(axes)
 
     override fun stopNestedScroll() = childHelper.stopNestedScroll()
 
@@ -178,6 +185,8 @@ class NestedScrollingWebView @JvmOverloads constructor(
         consumed: Boolean
     ) = childHelper.dispatchNestedFling(velocityX, velocityY, consumed)
 
-    override fun dispatchNestedPreFling(velocityX: Float, velocityY: Float) =
-        childHelper.dispatchNestedPreFling(velocityX, velocityY)
+    override fun dispatchNestedPreFling(
+        velocityX: Float,
+        velocityY: Float
+    ) = childHelper.dispatchNestedPreFling(velocityX, velocityY)
 }

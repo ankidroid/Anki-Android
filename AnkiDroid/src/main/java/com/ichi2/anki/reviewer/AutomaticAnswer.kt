@@ -69,7 +69,6 @@ class AutomaticAnswer(
     target: AutomaticallyAnswered,
     @VisibleForTesting val settings: AutomaticAnswerSettings
 ) {
-
     /** Whether any tasks should be executed/scheduled.
      *
      * Ensures that auto answer does not occur if the reviewer is minimised
@@ -84,20 +83,22 @@ class AutomaticAnswer(
      */
     private var hasPlayedSounds: Boolean = false
 
-    private val showAnswerTask = Runnable {
-        if (isDisabled) {
-            Timber.d("showAnswer: disabled")
-            return@Runnable
+    private val showAnswerTask =
+        Runnable {
+            if (isDisabled) {
+                Timber.d("showAnswer: disabled")
+                return@Runnable
+            }
+            target.automaticShowAnswer()
         }
-        target.automaticShowAnswer()
-    }
-    private val showQuestionTask = Runnable {
-        if (isDisabled) {
-            Timber.d("showQuestion: disabled")
-            return@Runnable
+    private val showQuestionTask =
+        Runnable {
+            if (isDisabled) {
+                Timber.d("showQuestion: disabled")
+                return@Runnable
+            }
+            target.automaticShowQuestion(settings.answerAction)
         }
-        target.automaticShowQuestion(settings.answerAction)
-    }
 
     /**
      * Handler for the delay in auto showing question and/or answer
@@ -213,6 +214,7 @@ class AutomaticAnswer(
 
     interface AutomaticallyAnswered {
         fun automaticShowAnswer()
+
         fun automaticShowQuestion(action: AutomaticAnswerAction)
     }
 
@@ -223,7 +225,10 @@ class AutomaticAnswer(
         }
 
         @CheckResult
-        fun createInstance(target: AutomaticallyAnswered, col: Collection): AutomaticAnswer {
+        fun createInstance(
+            target: AutomaticallyAnswered,
+            col: Collection
+        ): AutomaticAnswer {
             val settings = AutomaticAnswerSettings.createInstance(col)
             return AutomaticAnswer(target, settings)
         }
@@ -251,13 +256,14 @@ class AutomaticAnswerSettings(
     private val secondsToShowQuestionFor: Double = 60.0,
     private val secondsToShowAnswerFor: Double = 20.0
 ) {
-
     val millisecondsToShowQuestionFor = (secondsToShowQuestionFor * 1000L).toLong()
     val millisecondsToShowAnswerFor = (secondsToShowAnswerFor * 1000L).toLong()
 
     // a wait of zero means auto-advance is disabled
-    val autoAdvanceIfShowingAnswer; get() = secondsToShowAnswerFor > 0
-    val autoAdvanceIfShowingQuestion; get() = secondsToShowQuestionFor > 0
+    val autoAdvanceIfShowingAnswer
+        get() = secondsToShowAnswerFor > 0
+    val autoAdvanceIfShowingQuestion
+        get() = secondsToShowQuestionFor > 0
 
     companion object {
         /**
@@ -303,7 +309,8 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
     ANSWER_AGAIN(1),
     ANSWER_GOOD(2),
     ANSWER_HARD(3),
-    SHOW_REMINDER(4);
+    SHOW_REMINDER(4)
+    ;
 
     fun execute(reviewer: Reviewer) {
         val action = this.toCommand()

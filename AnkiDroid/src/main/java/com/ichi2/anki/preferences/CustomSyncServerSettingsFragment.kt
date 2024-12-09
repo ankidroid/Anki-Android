@@ -41,7 +41,9 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
                 }
         }
 
-        requirePreference<VersatileTextPreference>(R.string.custom_sync_certificate_key).setOnPreferenceChangeListener { _, newValue: Any? ->
+        requirePreference<VersatileTextPreference>(
+            R.string.custom_sync_certificate_key
+        ).setOnPreferenceChangeListener { _, newValue: Any? ->
             val newCert = newValue as String
 
             // Empty string input causes the certificate to be unset in the backend, i.e., no error
@@ -72,14 +74,15 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
             ?.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
-    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
-        if (
-            key == SyncPreferences.CUSTOM_SYNC_URI ||
-            key == SyncPreferences.CUSTOM_SYNC_ENABLED
-        ) {
-            prefs.edit {
-                remove(SyncPreferences.CURRENT_SYNC_URI)
+    private val preferenceChangeListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+            if (
+                key == SyncPreferences.CUSTOM_SYNC_URI ||
+                key == SyncPreferences.CUSTOM_SYNC_ENABLED
+            ) {
+                prefs.edit {
+                    remove(SyncPreferences.CURRENT_SYNC_URI)
+                }
             }
         }
-    }
 }

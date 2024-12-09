@@ -35,21 +35,25 @@ class FileUtilTest {
     private var testDirectorySize: Long = 0
 
     @Throws(Exception::class)
-    private fun createSrcFilesForTest(temporaryRoot: File, testDirName: String): File {
+    private fun createSrcFilesForTest(
+        temporaryRoot: File,
+        testDirName: String
+    ): File {
         val grandParentDir = File(temporaryRoot, testDirName)
         val parentDir = File(grandParentDir, "parent")
         val childDir = File(parentDir, "child")
         val childDir2 = File(parentDir, "child2")
         val grandChildDir = File(childDir, "grandChild")
         val grandChild2Dir = File(childDir2, "grandChild2")
-        val files = listOf(
-            File(grandParentDir, "file1.txt"),
-            File(parentDir, "file2.txt"),
-            File(childDir, "file3.txt"),
-            File(childDir2, "file4.txt"),
-            File(grandChildDir, "file5.txt"),
-            File(grandChildDir, "file6.txt")
-        )
+        val files =
+            listOf(
+                File(grandParentDir, "file1.txt"),
+                File(parentDir, "file2.txt"),
+                File(childDir, "file3.txt"),
+                File(childDir2, "file4.txt"),
+                File(grandChildDir, "file5.txt"),
+                File(grandChildDir, "file6.txt")
+            )
         grandChildDir.mkdirs()
         grandChild2Dir.mkdirs()
         files.forEachIndexed { i, file ->
@@ -150,6 +154,5 @@ class FileUtilTest {
      *
      * Destructuring doesn't work on a `FileNameAndExtension?`
      * */
-    private fun getValidFileNameAndExtension(input: String) =
-        assertNotNull(FileNameAndExtension.fromString(input))
+    private fun getValidFileNameAndExtension(input: String) = assertNotNull(FileNameAndExtension.fromString(input))
 }

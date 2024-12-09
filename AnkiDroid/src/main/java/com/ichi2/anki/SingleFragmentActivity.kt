@@ -65,15 +65,17 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
             return
         }
 
-        val fragmentClassName = requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
-            "'$FRAGMENT_NAME_EXTRA' extra should be provided"
-        }
+        val fragmentClassName =
+            requireNotNull(intent.getStringExtra(FRAGMENT_NAME_EXTRA)) {
+                "'$FRAGMENT_NAME_EXTRA' extra should be provided"
+            }
 
         Timber.d("Creating fragment %s", fragmentClassName)
 
-        val fragment = FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
-            arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
-        }
+        val fragment =
+            FragmentFactoryUtils.instantiate<Fragment>(this, fragmentClassName).apply {
+                arguments = intent.getBundleExtra(FRAGMENT_ARGS_EXTRA)
+            }
         supportFragmentManager.commit {
             replace(R.id.fragment_container, fragment, FRAGMENT_TAG)
         }
@@ -96,7 +98,12 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
         const val FRAGMENT_ARGS_EXTRA = "fragmentArgs"
         const val FRAGMENT_TAG = "SingleFragmentActivityTag"
 
-        fun getIntent(context: Context, fragmentClass: KClass<out Fragment>, arguments: Bundle? = null, intentAction: String? = null): Intent {
+        fun getIntent(
+            context: Context,
+            fragmentClass: KClass<out Fragment>,
+            arguments: Bundle? = null,
+            intentAction: String? = null
+        ): Intent {
             return Intent(context, SingleFragmentActivity::class.java).apply {
                 putExtra(FRAGMENT_NAME_EXTRA, fragmentClass.jvmName)
                 putExtra(FRAGMENT_ARGS_EXTRA, arguments)
@@ -108,9 +115,10 @@ open class SingleFragmentActivity : AnkiActivity(), CustomStudyDialog.CustomStud
     // Begin - implementation of CustomStudyListener methods here for crash fix
     // TODO - refactor https://github.com/ankidroid/Anki-Android/pull/17508#pullrequestreview-2465561993
     private fun openStudyOptionsAndFinish() {
-        val intent = Intent(this, StudyOptionsActivity::class.java).apply {
-            putExtra("withDeckOptions", false)
-        }
+        val intent =
+            Intent(this, StudyOptionsActivity::class.java).apply {
+                putExtra("withDeckOptions", false)
+            }
         startActivity(intent, null)
         this.finish()
     }

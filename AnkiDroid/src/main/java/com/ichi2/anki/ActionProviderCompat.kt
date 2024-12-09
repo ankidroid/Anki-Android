@@ -26,7 +26,6 @@ import androidx.core.view.ActionProvider
  * @see ActionProvider
  */
 abstract class ActionProviderCompat(context: Context) : ActionProvider(context) {
-
     @Deprecated("Override onCreateActionView(MenuItem)")
     override fun onCreateActionView(): View {
         // The previous code returned null from this method but updates to the core-ktx library

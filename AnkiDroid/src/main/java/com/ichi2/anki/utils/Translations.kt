@@ -14,6 +14,8 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("ktlint:standard:filename")
+
 package com.ichi2.anki.utils
 
 import android.content.Context
@@ -34,7 +36,9 @@ fun interface TranslatableString {
     fun Context.toTranslatedString(): String
 
     companion object {
-        fun by(@StringRes stringId: Int) = TranslatableString { getString(stringId) }
+        fun by(
+            @StringRes stringId: Int
+        ) = TranslatableString { getString(stringId) }
     }
 }
 

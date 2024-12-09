@@ -41,10 +41,11 @@ class TagsListTest {
     fun test_constructor_will_remove_dups() {
         val allTags = listOf("a", "b", "a")
         val checkedTags = listOf("b", "b", "b")
-        val list = TagsList(
-            allTags,
-            checkedTags
-        )
+        val list =
+            TagsList(
+                allTags,
+                checkedTags
+            )
 
         assertEquals(
             "All tags list should not contain any duplicates",
@@ -63,11 +64,12 @@ class TagsListTest {
         val allTags = listOf("a", "b", "a", "c", "c", "d")
         val checkedTags = listOf("b", "b", "b")
         val uncheckedTags = listOf("c", "c", "d")
-        val list = TagsList(
-            allTags,
-            checkedTags,
-            uncheckedTags
-        )
+        val list =
+            TagsList(
+                allTags,
+                checkedTags,
+                uncheckedTags
+            )
 
         assertEquals(
             "All tags list should not contain any duplicates",
@@ -90,10 +92,11 @@ class TagsListTest {
     fun test_constructor_will_ignore_casing() {
         val allTags = listOf("aA", "bb", "aa")
         val checkedTags = listOf("bb", "Bb", "bB")
-        val list = TagsList(
-            allTags,
-            checkedTags
-        )
+        val list =
+            TagsList(
+                allTags,
+                checkedTags
+            )
 
         assertEquals(
             "All tags list should not contain any duplicates (case insensitive)",
@@ -112,11 +115,12 @@ class TagsListTest {
         val allTags = listOf("aA", "bb", "aa", "cc", "dd")
         val checkedTags = listOf("bb", "Bb", "bB", "dd", "ff")
         val uncheckedTags = listOf("BB", "cC", "cC", "dD", "CC")
-        val list = TagsList(
-            allTags,
-            checkedTags,
-            uncheckedTags
-        )
+        val list =
+            TagsList(
+                allTags,
+                checkedTags,
+                uncheckedTags
+            )
 
         assertEquals(
             "All tags list should not contain any duplicates (case insensitive)",
@@ -140,10 +144,11 @@ class TagsListTest {
     fun test_constructor_will_add_checked_to_all() {
         val allTags = listOf("aA", "bb", "aa")
         val checkedTags = listOf("bb", "Bb", "bB", "cc")
-        val list = TagsList(
-            allTags,
-            checkedTags
-        )
+        val list =
+            TagsList(
+                allTags,
+                checkedTags
+            )
 
         assertEquals(
             "Extra tags in checked not found in all tags, must be added to all tags list",
@@ -162,11 +167,12 @@ class TagsListTest {
         val allTags = listOf("aA", "bb", "aa")
         val checkedTags = listOf("bb", "Bb", "bB", "Cc", "zz")
         val uncheckedTags = listOf("BB", "cC", "cC", "dD", "CC")
-        val list = TagsList(
-            allTags,
-            checkedTags,
-            uncheckedTags
-        )
+        val list =
+            TagsList(
+                allTags,
+                checkedTags,
+                uncheckedTags
+            )
 
         assertEquals(
             "Extra tags in checked not found in all tags, must be added to all tags list",
@@ -185,10 +191,11 @@ class TagsListTest {
     fun test_constructor_will_complete_hierarchy_for_all_tags() {
         val allTags = listOf("cat1", "cat2::aa", "cat3::aa::bb::cc::dd")
         val checkedTags = listOf("cat1::aa", "cat1::bb", "cat2::bb::aa", "cat2::bb::bb")
-        val list = TagsList(
-            allTags,
-            checkedTags
-        )
+        val list =
+            TagsList(
+                allTags,
+                checkedTags
+            )
         list.sort()
         assertEquals(
             listOf(
@@ -510,66 +517,83 @@ class TagsListTest {
     }
 
     companion object {
-        val SORTED_TAGS = listOf(
-            "colors",
-            "faces",
-            "programming",
-            "cars",
-            "electrical",
-            "flags",
-            "learn",
-            "meat",
-            "names",
-            "playground"
-        )
-        val TAGS = listOf(
-            "programming",
-            "learn",
-            "names",
-            "faces",
-            "cars",
-            "colors",
-            "flags",
-            "meat",
-            "playground",
-            "electrical"
-        )
-        val CHECKED_TAGS = listOf(
-            "programming",
-            "faces",
-            "colors"
-        )
-        val UNCHECKED_TAGS = listOf(
-            "electrical",
-            "meat",
-            "programming",
-            "faces"
-        )
-        val INDETERMINATE_TAGS = listOf(
-            "programming",
-            "faces"
-        )
+        val SORTED_TAGS =
+            listOf(
+                "colors",
+                "faces",
+                "programming",
+                "cars",
+                "electrical",
+                "flags",
+                "learn",
+                "meat",
+                "names",
+                "playground"
+            )
+        val TAGS =
+            listOf(
+                "programming",
+                "learn",
+                "names",
+                "faces",
+                "cars",
+                "colors",
+                "flags",
+                "meat",
+                "playground",
+                "electrical"
+            )
+        val CHECKED_TAGS =
+            listOf(
+                "programming",
+                "faces",
+                "colors"
+            )
+        val UNCHECKED_TAGS =
+            listOf(
+                "electrical",
+                "meat",
+                "programming",
+                "faces"
+            )
+        val INDETERMINATE_TAGS =
+            listOf(
+                "programming",
+                "faces"
+            )
 
-        private fun <E> join(l1: List<E>, l2: List<E>): List<E> {
+        private fun <E> join(
+            l1: List<E>,
+            l2: List<E>
+        ): List<E> {
             val joined: MutableList<E> = ArrayList()
             joined.addAll(l1)
             joined.addAll(l2)
             return joined
         }
 
-        private fun <E> join(l1: List<E>, e: E): List<E> {
+        private fun <E> join(
+            l1: List<E>,
+            e: E
+        ): List<E> {
             val joined: MutableList<E> = ArrayList(l1)
             joined.add(e)
             return joined
         }
 
-        private fun <E> minus(l1: List<E>, e: E): List<E> {
+        private fun <E> minus(
+            l1: List<E>,
+            e: E
+        ): List<E> {
             val res: MutableList<E> = ArrayList(l1)
             res.remove(e)
             return res
         }
 
-        private fun <E> minus(l1: List<E>, el: List<E>): List<E> {
+        private fun <E> minus(
+            l1: List<E>,
+            el: List<E>
+        ): List<E> {
             val res: MutableList<E> = ArrayList(l1)
             for (e in el) {
                 res.remove(e)
@@ -577,11 +601,18 @@ class TagsListTest {
             return res
         }
 
-        private fun <E> assertSameElementsIgnoreOrder(l1: Collection<E>, l2: Collection<E>) {
+        private fun <E> assertSameElementsIgnoreOrder(
+            l1: Collection<E>,
+            l2: Collection<E>
+        ) {
             assertSameElementsIgnoreOrder(null, l1, l2)
         }
 
-        private fun <E> assertSameElementsIgnoreOrder(message: String?, l1: Collection<E>, l2: Collection<E>) {
+        private fun <E> assertSameElementsIgnoreOrder(
+            message: String?,
+            l1: Collection<E>,
+            l2: Collection<E>
+        ) {
             assertEquals(message, l1.size, l2.size)
             assertTrue(message, l1.containsAll(l2))
         }

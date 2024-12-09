@@ -169,9 +169,10 @@ object AnalyticsConstantsTest {
             }
         }
 
-        private fun getProperties() = UsageAnalytics.Actions::class.memberProperties
-            .mapNotNull { it.javaField }
-            .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
+        private fun getProperties() =
+            UsageAnalytics.Actions::class.memberProperties
+                .mapNotNull { it.javaField }
+                .also { list -> assertThat("fields should not be empty", list.size, not(equalTo(0))) }
 
         companion object {
             /**

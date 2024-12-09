@@ -64,25 +64,27 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     /**
      * Launches an activity to pick audio or video file from the device
      */
-    private val pickMediaLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        when {
-            result.resultCode != Activity.RESULT_OK || result.data == null -> {
-                Timber.d("Uri is empty or Result not OK")
-                if (viewModel.currentMultimediaUri.value == null) {
-                    val resultData = Intent().apply {
-                        putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+    private val pickMediaLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when {
+                result.resultCode != Activity.RESULT_OK || result.data == null -> {
+                    Timber.d("Uri is empty or Result not OK")
+                    if (viewModel.currentMultimediaUri.value == null) {
+                        val resultData =
+                            Intent().apply {
+                                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                            }
+                        requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
+                        requireActivity().finish()
                     }
-                    requireActivity().setResult(AppCompatActivity.RESULT_CANCELED, resultData)
-                    requireActivity().finish()
                 }
-            }
-            else -> {
-                executeSafe(requireContext(), "pickMediaLauncher:unhandled") {
-                    handleMediaSelection(result.data!!)
+                else -> {
+                    executeSafe(requireContext(), "pickMediaLauncher:unhandled") {
+                        handleMediaSelection(result.data!!)
+                    }
                 }
             }
         }
-    }
 
     /**
      * Lazily initialized instance of MultimediaMenu.
@@ -129,7 +131,10 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         setupMenu(multimediaMenu)
@@ -169,12 +174,13 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     private fun setupMediaPlayer() {
         Timber.d("Setting up media player")
         playerView = requireView().findViewById(R.id.player_view)
-        mediaPlayer = ExoPlayer.Builder(requireContext()).setAudioAttributes(
-            AudioAttributes.Builder().setContentType(
-                C.AUDIO_CONTENT_TYPE_MUSIC
-            ).build(),
-            true
-        ).build()
+        mediaPlayer =
+            ExoPlayer.Builder(requireContext()).setAudioAttributes(
+                AudioAttributes.Builder().setContentType(
+                    C.AUDIO_CONTENT_TYPE_MUSIC
+                ).build(),
+                true
+            ).build()
         playerView.player = mediaPlayer
         mediaFileSize = requireView().findViewById(R.id.media_size_textview)
         playerView.setControllerAnimationEnabled(true)
@@ -197,10 +203,11 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
 
             field.hasTemporaryMedia = true
 
-            val resultData = Intent().apply {
-                putExtra(MULTIMEDIA_RESULT, field)
-                putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
-            }
+            val resultData =
+                Intent().apply {
+                    putExtra(MULTIMEDIA_RESULT, field)
+                    putExtra(MULTIMEDIA_RESULT_FIELD_INDEX, indexValue)
+                }
             requireActivity().setResult(AppCompatActivity.RESULT_OK, resultData)
             requireActivity().finish()
         }
@@ -281,11 +288,12 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      * @return An array of strings containing the filename and extension of the media clip, or null on error.
      */
     private fun getMediaFileDetails(selectedMediaClip: Uri): Array<String>? {
-        val queryColumns = arrayOf(
-            MediaStore.MediaColumns.DISPLAY_NAME,
-            MediaStore.MediaColumns.SIZE,
-            MediaStore.MediaColumns.MIME_TYPE
-        )
+        val queryColumns =
+            arrayOf(
+                MediaStore.MediaColumns.DISPLAY_NAME,
+                MediaStore.MediaColumns.SIZE,
+                MediaStore.MediaColumns.MIME_TYPE
+            )
         var mediaClipFullNameParts: Array<String>
         requireContext().contentResolver.query(selectedMediaClip, queryColumns, null, null, null)
             .use { cursor ->
@@ -297,26 +305,29 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 val mediaClipFullName = cursor.getString(0)
                 mediaClipFullNameParts = mediaClipFullName.split(".").toTypedArray()
                 if (mediaClipFullNameParts.size < 2) {
-                    mediaClipFullNameParts = try {
-                        Timber.i("Media clip name does not have extension, using second half of mime type")
-                        arrayOf(mediaClipFullName, cursor.getString(2).split("/").toTypedArray()[1])
-                    } catch (e: Exception) {
-                        Timber.w(e)
-                        CrashReportService.sendExceptionReport(
-                            e,
-                            "Media Clip addition failed. Name $mediaClipFullName / cursor mime type column type " + cursor.getType(
-                                2
+                    mediaClipFullNameParts =
+                        try {
+                            Timber.i("Media clip name does not have extension, using second half of mime type")
+                            arrayOf(mediaClipFullName, cursor.getString(2).split("/").toTypedArray()[1])
+                        } catch (e: Exception) {
+                            Timber.w(e)
+                            CrashReportService.sendExceptionReport(
+                                e,
+                                "Media Clip addition failed. Name $mediaClipFullName / cursor mime type column type " +
+                                    cursor.getType(
+                                        2
+                                    )
                             )
-                        )
-                        showSomethingWentWrong()
-                        return null
-                    }
+                            showSomethingWentWrong()
+                            return null
+                        }
                 } else if (mediaClipFullNameParts.size > 2) {
                     val lastPointIndex = mediaClipFullName.lastIndexOf(".")
-                    mediaClipFullNameParts = arrayOf(
-                        mediaClipFullName.substring(0 until lastPointIndex),
-                        mediaClipFullName.substring(lastPointIndex + 1)
-                    )
+                    mediaClipFullNameParts =
+                        arrayOf(
+                            mediaClipFullName.substring(0 until lastPointIndex),
+                            mediaClipFullName.substring(lastPointIndex + 1)
+                        )
                 }
             }
         return mediaClipFullNameParts
@@ -330,10 +341,11 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      */
     private fun createTempMediaFile(mediaClipFullNameParts: Array<String>): File? {
         return try {
-            val clipCopy = createCachedFile(
-                "${mediaClipFullNameParts[0]}.${mediaClipFullNameParts[1]}",
-                ankiCacheDirectory
-            )
+            val clipCopy =
+                createCachedFile(
+                    "${mediaClipFullNameParts[0]}.${mediaClipFullNameParts[1]}",
+                    ankiCacheDirectory
+                )
             Timber.d("media clip picker file path is: %s", clipCopy.absolutePath)
             clipCopy
         } catch (e: Exception) {
@@ -350,7 +362,10 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      * @param selectedMediaClip The Uri representing the selected media clip.
      * @param clipCopy The File object representing the temporary file where the media clip will be copied.
      */
-    private fun copyMediaFileToTemp(selectedMediaClip: Uri, clipCopy: File) {
+    private fun copyMediaFileToTemp(
+        selectedMediaClip: Uri,
+        clipCopy: File
+    ) {
         try {
             requireContext().contentResolver.openInputStream(selectedMediaClip).use { inputStream ->
                 CompatHelper.compat.copyFile(inputStream!!, clipCopy.absolutePath)
@@ -379,7 +394,6 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
     }
 
     companion object {
-
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
@@ -407,7 +421,10 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
      * @param context Context The context to use for accessing string resources.
      * @return String The title string corresponding to the current media option.
      */
-    private fun getTitleForFragment(mediaOption: MediaOption, context: Context): String {
+    private fun getTitleForFragment(
+        mediaOption: MediaOption,
+        context: Context
+    ): String {
         return when (mediaOption) {
             AUDIO_CLIP -> context.getString(R.string.multimedia_editor_popup_audio_clip)
             VIDEO_CLIP -> context.getString(R.string.multimedia_editor_popup_video_clip)

@@ -26,7 +26,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 class ActivityTransitionAnimationTest {
-
     @ParameterizedTest
     @EnumSource(
         value = Direction::class,
@@ -39,7 +38,10 @@ class ActivityTransitionAnimationTest {
 
     @ParameterizedTest
     @MethodSource("getInverseTransition_returns_inverse_direction_args")
-    fun getInverseTransition_returns_inverse_direction(first: Direction, second: Direction) {
+    fun getInverseTransition_returns_inverse_direction(
+        first: Direction,
+        second: Direction
+    ) {
         assertThat(getInverseTransition(first), equalTo(second))
         assertThat(getInverseTransition(second), equalTo(first))
     }

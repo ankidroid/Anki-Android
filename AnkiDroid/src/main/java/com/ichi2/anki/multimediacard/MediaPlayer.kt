@@ -60,7 +60,10 @@ class MediaPlayer :
         setOnCompletionListener(this)
     }
 
-    override fun setDataSource(context: Context, uri: Uri) {
+    override fun setDataSource(
+        context: Context,
+        uri: Uri
+    ) {
         super.setDataSource(context, uri)
         if (state == IDLE) {
             state = INITIALIZED
@@ -79,7 +82,11 @@ class MediaPlayer :
         }
     }
 
-    override fun setDataSource(context: Context, uri: Uri, headers: MutableMap<String, String>?) {
+    override fun setDataSource(
+        context: Context,
+        uri: Uri,
+        headers: MutableMap<String, String>?
+    ) {
         super.setDataSource(context, uri, headers)
         if (state == IDLE) {
             state = INITIALIZED
@@ -107,7 +114,11 @@ class MediaPlayer :
         }
     }
 
-    override fun setDataSource(fd: FileDescriptor?, offset: Long, length: Long) {
+    override fun setDataSource(
+        fd: FileDescriptor?,
+        offset: Long,
+        length: Long
+    ) {
         super.setDataSource(fd, offset, length)
         if (state == IDLE) {
             state = INITIALIZED
@@ -127,7 +138,8 @@ class MediaPlayer :
             IDLE, INITIALIZED, PREPARED, STARTED, PAUSED, STOPPED, PLAYBACK_COMPLETE, ERROR ->
                 state = IDLE
             PREPARING,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -147,7 +159,8 @@ class MediaPlayer :
             STARTED,
             PAUSED,
             PLAYBACK_COMPLETE,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -162,7 +175,8 @@ class MediaPlayer :
             STARTED,
             PAUSED,
             PLAYBACK_COMPLETE,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -175,11 +189,15 @@ class MediaPlayer :
             INITIALIZED,
             PREPARING,
             STOPPED,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
-    override fun seekTo(msec: Long, mode: Int) {
+    override fun seekTo(
+        msec: Long,
+        mode: Int
+    ) {
         super.seekTo(msec, mode)
         when (state) {
             PREPARED, STARTED, PAUSED, PLAYBACK_COMPLETE -> {}
@@ -188,7 +206,8 @@ class MediaPlayer :
             INITIALIZED,
             PREPARING,
             STOPPED,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -200,7 +219,8 @@ class MediaPlayer :
             IDLE,
             INITIALIZED,
             PREPARING,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -213,7 +233,8 @@ class MediaPlayer :
             INITIALIZED,
             PREPARING,
             STOPPED,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -227,7 +248,8 @@ class MediaPlayer :
             PREPARING,
             PREPARED,
             STOPPED,
-            END -> throw IllegalStateException("Invalid MediaPlayerState $state")
+            END
+            -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }
 
@@ -235,7 +257,11 @@ class MediaPlayer :
         setStateOnPrepared()
     }
 
-    override fun onError(p0: MediaPlayer?, p1: Int, p2: Int): Boolean {
+    override fun onError(
+        p0: MediaPlayer?,
+        p1: Int,
+        p2: Int
+    ): Boolean {
         setStateOnError()
         return false
     }
