@@ -81,7 +81,7 @@ junitPlatformLauncher = "1.11.3"
 # https://github.com/JetBrains/kotlin/releases/
 kotlin = '2.1.0'
 kotlinxSerializationJson = "1.7.3"
-ktlint = "12.1.1"
+ktlintGradlePlugin = "12.1.1"
 leakcanaryAndroid = "2.14"
 lint = '31.7.2'
 material = "1.12.0"
@@ -210,7 +210,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 
 
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+ktlint-gradle-plugin = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradlePlugin" }
 
 
 keeper = { id = "com.slack.keeper", version.ref = "slackKeeper" }

@@ -15,7 +15,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.ktlint.gradle.plugin) apply false
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.keeper) apply false
 }
