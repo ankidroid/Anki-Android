@@ -56,6 +56,7 @@ import com.ichi2.libanki.Consts.DynPriority
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.getNullableInt
+import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.customView
 import com.ichi2.utils.listItems
@@ -69,15 +70,38 @@ import timber.log.Timber
 import java.util.Locale
 
 /**
- * Key for the ordinal of the [ContextMenuOption] to display. May be not set.
+ * Implements custom studying either by:
+ * 1. modifying the limits of the current selected deck for when the user has reached the daily deck limits and wishes to study more
+ * 2. creating a filtered "Custom study deck" where a user can study outside the typical schedule
+ *
+ *
+ * ## UI
+ * [CustomStudyDialog] represents either:
+ * * A [main menu][buildContextMenu], offering [methods of custom study][ContextMenuOption]:
+ * * An [input dialog][buildInputDialog] to input additional constraints for a [ContextMenuOption]
+ *   * Example: changing the number of new cards
+ *
+ * #### Not Implemented
+ * Anki Desktop contains the following items which are not yet implemented
+ * * Study by card state or tags
+ *   * New cards only
+ *   * Due cards only
+ *   * All review cards in random order
+ *   * All cards in random order (don't reschedule)
+ *
+ * ## Nomenclature
+ * Filtered decks were previously known as 'dynamic' decks, and before that: 'cram' decks
+ *
+ * ## Links
+ * * [https://docs.ankiweb.net/filtered-decks.html#custom-study](https://docs.ankiweb.net/filtered-decks.html#custom-study)
+ * * [com.ichi2.libanki.sched.Scheduler.customStudyDefaults]
+ *     * [sched.proto: CustomStudyDefaultsResponse](https://github.com/search?q=repo%3Aankitects%2Fanki+CustomStudyDefaultsResponse+language%3A%22Protocol+Buffer%22&type=code&l=Protocol+Buffer)
+ * * [com.ichi2.libanki.sched.Scheduler.customStudy]
+ *     * [sched.proto: CustomStudyRequest](https://github.com/search?q=repo%3Aankitects%2Fanki+CustomStudyRequest+language%3A%22Protocol+Buffer%22&type=code&l=Protocol+Buffer)
+ * * [https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py](https://github.com/ankitects/anki/blob/main/qt/aqt/customstudy.py)
  */
-private const val ID = "id"
-
-/**
- * Key for the id of the deck this dialog deals with
- */
-private const val DID = "did"
-
+@KotlinCleanup("remove 'collection' parameter and use withCol { }")
+@KotlinCleanup("remove 'customStudyListener' parameter and use FragmentResult")
 class CustomStudyDialog(
     private val collection: Collection,
     private val customStudyListener: CustomStudyListener?,
@@ -89,6 +113,17 @@ class CustomStudyDialog(
         fun onExtendStudyLimits()
     }
 
+    /** ID of the [Deck] which this dialog was created for */
+    private val dialogDeckId: DeckId
+        get() = requireArguments().getLong(ARG_DID)
+
+    /**
+     * `null` initially when the main view is shown
+     * otherwise, the [ContextMenuOption] representing the current sub-dialog
+     */
+    private val selectedSubDialog: ContextMenuOption?
+        get() = requireArguments().getNullableInt(ARG_SUB_DIALOG_ID)?.let { ContextMenuOption.entries[it] }
+
     fun withArguments(
         did: DeckId,
         contextMenuAttribute: ContextMenuOption? = null,
@@ -96,9 +131,9 @@ class CustomStudyDialog(
         val args = this.arguments ?: Bundle()
         args.apply {
             if (contextMenuAttribute != null) {
-                putInt(ID, contextMenuAttribute.ordinal)
+                putInt(ARG_SUB_DIALOG_ID, contextMenuAttribute.ordinal)
             }
-            putLong(DID, did)
+            putLong(ARG_DID, did)
         }
         this.arguments = args
         return this
@@ -111,11 +146,11 @@ class CustomStudyDialog(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val option = getOption()
+        val option = selectedSubDialog
         return if (option == null) {
             Timber.i("Showing Custom Study main menu")
             // Select the specified deck
-            collection.decks.select(requireArguments().getLong(DID))
+            collection.decks.select(dialogDeckId)
             buildContextMenu()
         } else {
             Timber.i("Showing Custom Study dialog: $option")
@@ -139,14 +174,12 @@ class CustomStudyDialog(
                          * number, it is necessary to collect a list of tags. This case handles the creation
                          * of that Dialog.
                          */
-                        val currentDeck = requireArguments().getLong(DID)
-
                         val dialogFragment =
                             TagsDialog().withArguments(
                                 context = requireContext(),
                                 type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
                                 checkedTags = ArrayList(),
-                                allTags = ArrayList(collection.tags.byDeck(currentDeck)),
+                                allTags = ArrayList(collection.tags.byDeck(dialogDeckId)),
                             )
                         requireActivity().showDialogFragment(dialogFragment)
                     }
@@ -160,10 +193,7 @@ class CustomStudyDialog(
                         // User asked for a standard custom study option
                         val d =
                             CustomStudyDialog(collection, customStudyListener)
-                                .withArguments(
-                                    requireArguments().getLong(DID),
-                                    listIds[index],
-                                )
+                                .withArguments(dialogDeckId, listIds[index])
                         requireActivity().showDialogFragment(d)
                     }
                 }
@@ -196,8 +226,6 @@ class CustomStudyDialog(
         if (contextMenuOption == STUDY_NEW || contextMenuOption == STUDY_REV) {
             editText.inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
         }
-        // deck id
-        val did = requireArguments().getLong(DID)
         // Set material dialog parameters
         val dialog =
             AlertDialog
@@ -216,7 +244,7 @@ class CustomStudyDialog(
                     when (contextMenuOption) {
                         STUDY_NEW -> {
                             requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
-                            val deck = collection.decks.get(did)!!
+                            val deck = collection.decks.get(dialogDeckId)!!
                             deck.put("extendNew", n)
                             collection.decks.save(deck)
                             collection.sched.extendLimits(n, 0)
@@ -224,7 +252,7 @@ class CustomStudyDialog(
                         }
                         STUDY_REV -> {
                             requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
-                            val deck = collection.decks.get(did)!!
+                            val deck = collection.decks.get(dialogDeckId)!!
                             deck.put("extendRev", n)
                             collection.decks.save(deck)
                             collection.sched.extendLimits(0, n)
@@ -358,15 +386,10 @@ class CustomStudyDialog(
         }
     }
 
-    /**
-     * The ContextMenuOption saved in [ID]. It may be unset for the standard study dialog.
-     */
-    private fun getOption() = requireArguments().getNullableInt(ID)?. let { ContextMenuOption.entries[it] }
-
     private val text1: String
         get() {
             val res = resources
-            return when (getOption()) {
+            return when (selectedSubDialog) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
                 STUDY_FORGOT,
@@ -381,7 +404,7 @@ class CustomStudyDialog(
     private val text2: String
         get() {
             val res = resources
-            return when (getOption()) {
+            return when (selectedSubDialog) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
                 STUDY_FORGOT -> res.getString(R.string.custom_study_forgotten)
@@ -396,7 +419,7 @@ class CustomStudyDialog(
     private val defaultValue: String
         get() {
             val prefs = requireActivity().sharedPrefs()
-            return when (getOption()) {
+            return when (selectedSubDialog) {
                 STUDY_NEW -> prefs.getInt("extendNew", 10).toString()
                 STUDY_REV -> prefs.getInt("extendRev", 50).toString()
                 STUDY_FORGOT -> prefs.getInt("forgottenDays", 1).toString()
@@ -421,10 +444,9 @@ class CustomStudyDialog(
         resched: Boolean,
     ) {
         val dyn: Deck
-        val did = requireArguments().getLong(DID)
 
         val decks = collection.decks
-        val deckToStudyName = decks.name(did)
+        val deckToStudyName = decks.name(dialogDeckId)
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
         val cur = decks.byName(customStudyDeck)
         if (cur != null) {
@@ -509,5 +531,19 @@ class CustomStudyDialog(
         STUDY_RANDOM(R.string.custom_study_random_selection),
         STUDY_PREVIEW(R.string.custom_study_preview_new),
         STUDY_TAGS(R.string.custom_study_limit_tags),
+    }
+
+    companion object {
+        /**
+         * (required) Key for the [DeckId] this dialog deals with.
+         * @see CustomStudyDialog.dialogDeckId
+         */
+        private const val ARG_DID = "did"
+
+        /**
+         * (optional) Key for the ordinal of the [ContextMenuOption] to display.
+         * @see CustomStudyDialog.selectedSubDialog
+         */
+        private const val ARG_SUB_DIALOG_ID = "subDialogId"
     }
 }
