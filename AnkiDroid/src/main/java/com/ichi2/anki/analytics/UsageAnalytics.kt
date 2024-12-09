@@ -453,33 +453,34 @@ object UsageAnalytics {
         val CHANGED_SETTING = "Changed setting"
     }
 
-    // TODO use some kind of constants instead of directly strings
+    // TODO use some kind of constants instead of hardcoded strings
+    @Suppress("ktlint:standard:discouraged-comment-location") // lots of work for little gain
     val preferencesWhoseChangesShouldBeReported = setOf(
-        // General
+        // ******************************** General ************************************************
         "reportErrorMode", // Error reporting mode
         "pastePNG", // Paste clipboard images as PNG
         "useCurrent", // Deck for new cards
         "exitViaDoubleTapBack", // Press back twice to go back/exit
         "anki_card_enable_external_context_menu", // ‘Anki Card’ Menu
         "card_browser_enable_external_context_menu", // ‘Card Browser’ Menu
-        // Reviewing
+        // ******************************** Reviewing **********************************************
         "dayOffset", // Start of next day
         "learnCutoff", // Learn ahead limit
         "timeLimit", // Timebox time limit
         "keepScreenOn", // Disable screen timeout
         "doubleTapTimeInterval", // Double tap time interval (milliseconds)
-        // Sync
+        // ******************************** Sync ***************************************************
         "syncFetchMedia", // Fetch media on sync
         "automaticSyncMode", // Automatic synchronization
         "showSyncStatusBadge", // Display synchronization status
         "allowMetered", // Allow sync on metered connections
         "one_way_sync", // One-way sync
-        // Backup
+        // ******************************** Backup *************************************************
         "minutes_between_automatic_backups",
         "daily_backups_to_keep",
         "weekly_backups_to_keep",
         "monthly_backups_to_keep",
-        // Appearance
+        // ******************************** Appearance *********************************************
         "appTheme", // Theme
         "dayTheme", // Day theme
         "nightTheme", // Night theme
@@ -494,7 +495,7 @@ object UsageAnalytics {
         "showAudioPlayButtons", // Show play buttons on cards with audio (reversed in collection: HIDE_AUDIO_PLAY_BUTTONS)
         "card_browser_show_media_filenames", // Display filenames in card browser
         "showDeckTitle", // Show deck title
-        // Controls
+        // ******************************** Controls *********************************************
         "gestures", // Enable gestures
         "gestureCornerTouch", // 9-point touch
         "gestureFullScreenNavigationDrawer", // Full screen navigation drawer
@@ -548,14 +549,14 @@ object UsageAnalytics {
         "binding_USER_ACTION_7",
         "binding_USER_ACTION_8",
         "binding_USER_ACTION_9",
-        // Accessibility
+        // ******************************** Accessibility ******************************************
         "cardZoom",
         "imageZoom",
         "answerButtonSize",
         "showLargeAnswerButtons",
         "relativeCardBrowserFontSize",
         "showCardAnswerButtonTime",
-        // Advanced
+        // ******************************** Advanced ***********************************************
         "deckPath", // AnkiDroid directory
         "double_scrolling", // Double scrolling
         "softwareRender", // Disable card hardware render
@@ -566,7 +567,7 @@ object UsageAnalytics {
         "autoFocusTypeInAnswer", // Focus ‘type in answer’
         "mediaImportAllowAllFiles", // Allow all files in media imports
         "providerEnabled", // Enable AnkiDroid API
-        // App bar buttons
+        // ******************************** App bar buttons ****************************************
         "reset_custom_buttons",
         "customButtonUndo",
         "customButtonRedo",

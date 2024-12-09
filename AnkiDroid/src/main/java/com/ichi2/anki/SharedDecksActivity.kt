@@ -218,7 +218,9 @@ class SharedDecksActivity : AnkiActivity() {
             // avoid handling the download, as FragmentManager.commit will throw
             if (!supportFragmentManager.isStateSaved) {
                 val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
-                sharedDecksDownloadFragment.arguments = bundleOf(DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype))
+                sharedDecksDownloadFragment.arguments = bundleOf(
+                    DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype)
+                )
                 supportFragmentManager.commit {
                     add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT).addToBackStack(null)
                 }

@@ -110,6 +110,7 @@ class TemplateManager {
      * This may fetch information lazily in the future, so please avoid
      * using the _private fields directly.
      */
+    @Suppress("ktlint:standard:property-naming")
     class TemplateRenderContext(
         card: Card,
         note: Note,

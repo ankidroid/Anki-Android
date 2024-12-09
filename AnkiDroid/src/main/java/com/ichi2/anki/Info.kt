@@ -123,6 +123,7 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                                  *  or else it will break in any one mode.
                                  */
+                        @Suppress("ktlint:standard:max-line-length")
                         webView.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
                                 "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +

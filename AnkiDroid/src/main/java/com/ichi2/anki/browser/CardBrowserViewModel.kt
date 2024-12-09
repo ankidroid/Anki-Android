@@ -114,8 +114,9 @@ class CardBrowserViewModel(
         private set
     private var restrictOnDeck: String = ""
 
+    // flowOfFilterQuery does not currently bind to the value in the UI and is only used for posting
+
     /** text in the search box (potentially unsubmitted) */
-    // this does not currently bind to the value in the UI and is only used for posting
     val flowOfFilterQuery = MutableSharedFlow<String>()
 
     /**

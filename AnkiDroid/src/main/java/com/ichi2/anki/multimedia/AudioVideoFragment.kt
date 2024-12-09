@@ -147,7 +147,8 @@ class AudioVideoFragment : MultimediaFragment(R.layout.fragment_audio_video) {
                 Timber.d("Opening chooser for audio file")
                 openMediaChooser(
                     "audio/*",
-                    arrayOf("audio/*", "application/ogg"), // #9226: allows ogg on Android 8
+                    // #9226: allows ogg on Android 8
+                    arrayOf("audio/*", "application/ogg"),
                     R.string.multimedia_editor_popup_audio_clip
                 )
             }

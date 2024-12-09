@@ -44,8 +44,6 @@ import timber.log.Timber
  *
  * @param layout Resource ID of the layout to be used for this fragment.
  */
-// TODO: Consider refactoring to create AnkiInterface to consolidate common implementations between AnkiFragment and AnkiActivity.
-//  This could help reduce code repetition and improve maintainability.
 open class AnkiFragment(@LayoutRes layout: Int) : Fragment(layout), AnkiActivityProvider {
 
     val getColUnsafe: Collection

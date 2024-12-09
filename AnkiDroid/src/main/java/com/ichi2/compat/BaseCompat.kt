@@ -127,7 +127,11 @@ open class BaseCompat : Compat {
             if (!directory.exists()) {
                 throw FileNotFoundException(directory.path)
             }
-            throw IOException("Directory " + directory.path + "'s file can not be listed. Probable cause are that it's not a directory (which violate the method's assumption) or a permission issue.")
+            throw IOException(
+                "Directory " + directory.path + "'s file can not be listed. " +
+                    "Probable cause are that it's not a directory " +
+                    "(which violates the method's assumption) or a permission issue."
+            )
         }
         val length = paths.size
         return object : FileStream {
@@ -251,10 +255,19 @@ open class BaseCompat : Compat {
         clazz: Class<T>
     ): T? = bundle.getSerializable(key) as? T?
 
+    @Suppress("ktlint:standard:property-naming")
     override val AXIS_GESTURE_X_OFFSET: Int = 48
+
+    @Suppress("ktlint:standard:property-naming")
     override val AXIS_GESTURE_Y_OFFSET: Int = 49
+
+    @Suppress("ktlint:standard:property-naming")
     override val AXIS_GESTURE_SCROLL_X_DISTANCE: Int = 50
+
+    @Suppress("ktlint:standard:property-naming")
     override val AXIS_GESTURE_SCROLL_Y_DISTANCE: Int = 51
+
+    @Suppress("ktlint:standard:property-naming")
     override val AXIS_GESTURE_PINCH_SCALE_FACTOR: Int = 52
 }
 

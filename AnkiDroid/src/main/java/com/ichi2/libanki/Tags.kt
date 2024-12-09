@@ -90,9 +90,9 @@ class Tags(private val col: Collection) {
      * ***********************************************************
      */
     /** {@inheritDoc}  */
-
-    // this is now a no-op - the tags are canonified when the note is saved
     fun canonify(tagList: List<String>): AbstractSet<String> {
+        // this is now a no-op - the tags are canonified when the note is saved
+
         // libAnki difference: tagList was returned directly
         return HashSet(tagList)
     }

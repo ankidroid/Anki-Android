@@ -50,13 +50,14 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceDialogFragmentCompat
 import androidx.preference.R
 
+// This exists as we want a dialog to show either a List or an EditText, and both the framework
+// classes require inheritance
+
 /**
  * A [Preference] may inherit from [ListPreferenceTrait] if it wishes to
  * optionally display a List-based dialog.
  * To do so, return a [ListPreferenceDialogFragment] via [DialogFragmentProvider.makeDialogFragment]
  */
-// This exists as we want a dialog to show either a List or an EditText, and both the framework
-// classes require inheritance
 interface ListPreferenceTrait : DialogFragmentProvider {
     var listEntries: List<Entry>
     val entryKeys get() = listEntries.map { it.key }

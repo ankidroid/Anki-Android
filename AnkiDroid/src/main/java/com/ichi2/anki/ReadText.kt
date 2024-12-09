@@ -263,7 +263,12 @@ object ReadText {
                     }
 
                     override fun onError(utteranceId: String?, errorCode: Int) {
-                        Timber.v("Android TTS failed: %s (%d). Check logcat for error. Indicates a problem with Android TTS engine.", errorToDeveloperString(errorCode), errorCode)
+                        Timber.v(
+                            "Android TTS failed: %s (%d). Check logcat for error. " +
+                                "Indicates a problem with Android TTS engine.",
+                            errorToDeveloperString(errorCode),
+                            errorCode
+                        )
                         val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
                         val ankiActivity = context as AnkiActivity
                         ankiActivity.mayOpenUrl(helpUrl)

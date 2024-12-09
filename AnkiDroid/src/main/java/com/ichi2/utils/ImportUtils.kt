@@ -344,11 +344,14 @@ object ImportUtils {
                 }
                 // If Uri is of scheme which is supported by ContentResolver, read the contents
                 val intentUriScheme = intent.data!!.scheme
-                return if (intentUriScheme == ContentResolver.SCHEME_CONTENT || intentUriScheme == ContentResolver.SCHEME_FILE || intentUriScheme == ContentResolver.SCHEME_ANDROID_RESOURCE) {
-                    Timber.i("Attempting to read data from intent.")
-                    intent.data
-                } else {
-                    null
+                return when (intentUriScheme) {
+                    ContentResolver.SCHEME_CONTENT,
+                    ContentResolver.SCHEME_FILE,
+                    ContentResolver.SCHEME_ANDROID_RESOURCE -> {
+                        Timber.i("Attempting to read data from intent.")
+                        intent.data
+                    }
+                    else -> null
                 }
             }
 

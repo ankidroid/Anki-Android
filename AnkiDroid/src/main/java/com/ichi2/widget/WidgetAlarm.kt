@@ -101,11 +101,10 @@ fun setRecurringAlarm(
     val alarmManager = alarmManager(context)
     val newPendingIntent = getPendingIntent(context, appWidgetId, widgetClass, create = true) ?: return
 
-    val ONE_MINUTE_MILLIS = 1.minutes.inWholeMilliseconds
     alarmManager.setRepeating(
         AlarmManager.ELAPSED_REALTIME,
-        SystemClock.elapsedRealtime() + ONE_MINUTE_MILLIS,
-        ONE_MINUTE_MILLIS,
+        SystemClock.elapsedRealtime() + 1.minutes.inWholeMilliseconds,
+        1.minutes.inWholeMilliseconds,
         newPendingIntent
     )
 }

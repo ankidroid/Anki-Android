@@ -67,18 +67,18 @@ import kotlin.math.min
 /**
  * Dialog for [Scheduler.setDueDate], containing two tabs: [Tab.SINGLE_DAY] and [Tab.DATE_RANGE]
  *
- *
  * @see SetDueDateViewModel
  */
-// We explicitly do not use calendar controls here
-// User feedback:
-// (1) Don't have to think about what today is in order to use it,
-// (2) looking at a calendar makes the future date too concrete
-//  (... easier to consider as a nebulous range than a deadline)
-// (3) If the interval is changed, it will be set to a number of days, not a date.
-// (4) Inconsistent with Anki Desktop
-// TODO: This does not handle configuration changes on some EditTexts [screen rotate/night mode]
 class SetDueDateDialog : DialogFragment() {
+    // We explicitly do not use calendar controls in this class
+    // User feedback:
+    // (1) Don't have to think about what today is in order to use it,
+    // (2) looking at a calendar makes the future date too concrete
+    //  (... easier to consider as a nebulous range than a deadline)
+    // (3) If the interval is changed, it will be set to a number of days, not a date.
+    // (4) Inconsistent with Anki Desktop
+    // TODO: This does not handle configuration changes on some EditTexts [screen rotate/night mode]
+
     val viewModel: SetDueDateViewModel by activityViewModels<SetDueDateViewModel>()
 
     // used to determine if a rotation has taken place
@@ -216,8 +216,10 @@ class SetDueDateDialog : DialogFragment() {
                     suffixText = resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0)
                     helperText = getString(
                         R.string.set_due_date_hintText,
-                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0), // 0 days
-                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1) // 1 day
+                        // 0 days
+                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0),
+                        // 1 day
+                        resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1)
                     )
                 }
             }

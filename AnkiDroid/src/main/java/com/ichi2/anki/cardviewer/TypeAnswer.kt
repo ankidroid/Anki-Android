@@ -147,6 +147,7 @@ class TypeAnswer(
      * @param buf The question text
      * @return The formatted question text
      */
+    @Suppress("ktlint:standard:max-line-length")
     fun filterQuestion(buf: String): String {
         val m = PATTERN.matcher(buf)
         if (warning != null) {
@@ -157,6 +158,7 @@ class TypeAnswer(
         if (useInputTag) {
             // These functions are defined in the JavaScript file assets/scripts/card.js. We get the text back in
             // shouldOverrideUrlLoading() in createWebView() in this file.
+
             append(
                 """<center>
 <input type="text" name="typed" id="typeans" data-focus="$autoFocus" onfocus="taFocus();" oninput='taChange(this);' onKeyPress="return taKey(this, event)" autocomplete="off" """

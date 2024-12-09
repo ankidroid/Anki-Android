@@ -41,7 +41,6 @@ object NetworkUtils {
     /**
      * @return whether is possible to access the internet
      */
-    // activeNetworkInfo deprecation, only used for SDK < 23
     val isOnline: Boolean
         get() {
             val cm = connectivityManager ?: return false

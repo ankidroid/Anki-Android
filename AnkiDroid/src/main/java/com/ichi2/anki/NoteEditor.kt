@@ -381,7 +381,9 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         return@OnReceiveContentListener remaining
     }
 
-    private inner class NoteEditorActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
+    private inner class NoteEditorActivityResultCallback(
+        private val callback: (result: ActivityResult) -> Unit
+    ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             Timber.d("onActivityResult() with result: %s", result.resultCode)
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -628,9 +630,15 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
                 currentEditedCard = col.getCard(id)
                 editorNote = currentEditedCard!!.note(getColUnsafe)
             }
-            NoteEditorCaller.STUDYOPTIONS, NoteEditorCaller.DECKPICKER, NoteEditorCaller.REVIEWER_ADD, NoteEditorCaller.CARDBROWSER_ADD, NoteEditorCaller.NOTEEDITOR ->
+            NoteEditorCaller.STUDYOPTIONS,
+            NoteEditorCaller.DECKPICKER,
+            NoteEditorCaller.REVIEWER_ADD,
+            NoteEditorCaller.CARDBROWSER_ADD,
+            NoteEditorCaller.NOTEEDITOR -> {
                 addNote = true
-            NoteEditorCaller.NOTEEDITOR_INTENT_ADD, NoteEditorCaller.INSTANT_NOTE_EDITOR -> {
+            }
+            NoteEditorCaller.NOTEEDITOR_INTENT_ADD,
+            NoteEditorCaller.INSTANT_NOTE_EDITOR -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
                     requireActivity().finish()
@@ -2404,8 +2412,10 @@ class NoteEditor : AnkiFragment(R.layout.note_editor), DeckSelectionListener, Su
         for (i in 0 until tmpls.length()) {
             var name = tmpls.getJSONObject(i).optString("name")
             // If more than one card, and we have an existing card, underline existing card
-            if (!addNote && tmpls.length() > 1 && model === editorNote!!.notetype && currentEditedCard != null && currentEditedCard!!.template(getColUnsafe)
-                .optString("name") == name
+            if (!addNote && tmpls.length() > 1 &&
+                model === editorNote!!.notetype &&
+                currentEditedCard != null &&
+                currentEditedCard!!.template(getColUnsafe).optString("name") == name
             ) {
                 name = "<u>$name</u>"
             }

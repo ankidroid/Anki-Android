@@ -13,6 +13,7 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 // ಠ_ಠ This is required to override a package-private method to block animations
 @file:Suppress("PackageDirectoryMismatch")
 
@@ -36,11 +37,10 @@ class ClosableDrawerLayout : DrawerLayout {
     public override fun closeDrawers(peekingOnly: Boolean) {
         // TODO: This fails due to #7344 - tapping on the left side partially opens the menu and blocks the UI
         // permanently. I didn't work too hard on resolving this, but it didn't seem like a simple fix.
-        /*
-        if (!mAnimationEnabled) {
-            closeDrawer(GravityCompat.START, false);
-        }
-        */
+
+        // if (!mAnimationEnabled) {
+        //     closeDrawer(GravityCompat.START, false);
+        // }
         super.closeDrawers(peekingOnly)
     }
 }

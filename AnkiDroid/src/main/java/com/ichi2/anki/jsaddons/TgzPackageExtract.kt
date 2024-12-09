@@ -88,13 +88,9 @@ import java.util.zip.GZIPInputStream
 typealias AddonsPackageDir = File
 
 class TgzPackageExtract(private val context: Context) {
-    private val _gzipSignature = byteArrayOf(0x1f, 0x8b.toByte())
+    private val gzipSignature = byteArrayOf(0x1f, 0x8b.toByte())
     private var requiredMinSpace: Long = 0
     private var availableSpace: Long = 0
-
-    private val BUFFER = 512
-    private val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
-    private val TOO_MANY_FILES = 1024 // max number of files
 
     private var count = 0
     private var total: Long = 0
@@ -109,13 +105,13 @@ class TgzPackageExtract(private val context: Context) {
      */
     @Throws(IOException::class)
     fun isGzip(file: File?): Boolean {
-        val signature = ByteArray(_gzipSignature.size)
+        val signature = ByteArray(gzipSignature.size)
         FileInputStream(file).use { stream ->
             if (stream.read(signature) != signature.size) {
                 return false
             }
         }
-        return _gzipSignature.contentEquals(signature)
+        return gzipSignature.contentEquals(signature)
     }
 
     /**
@@ -391,5 +387,11 @@ class TgzPackageExtract(private val context: Context) {
             return
         }
         addonsPackageDir.deleteRecursively()
+    }
+
+    companion object {
+        private const val BUFFER = 512
+        private const val TOO_BIG_SIZE: Long = 0x6400000 // max size of unzipped data, 100MB
+        private const val TOO_MANY_FILES = 1024 // max number of files
     }
 }

@@ -385,7 +385,9 @@ open class DeckPicker :
         }
     )
 
-    private inner class DeckPickerActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
+    private inner class DeckPickerActivityResultCallback(
+        private val callback: (result: ActivityResult) -> Unit
+    ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             if (result.resultCode == RESULT_MEDIA_EJECTED) {
                 onSdCardNotMounted()
@@ -2153,11 +2155,21 @@ open class DeckPicker :
                     fadeOut(deckPickerContent, shortAnimDuration, translation)
                 }
                 if (!placeholderShown) {
-                    fadeIn(noDecksPlaceholder, shortAnimDuration, translation).startDelay = if (decksListShown) shortAnimDuration * 2.toLong() else 0.toLong()
+                    fadeIn(noDecksPlaceholder, shortAnimDuration, translation).startDelay =
+                        if (decksListShown) {
+                            shortAnimDuration * 2.toLong()
+                        } else {
+                            0.toLong()
+                        }
                 }
             } else {
                 if (!decksListShown) {
-                    fadeIn(deckPickerContent, shortAnimDuration, translation).startDelay = if (placeholderShown) shortAnimDuration * 2.toLong() else 0.toLong()
+                    fadeIn(deckPickerContent, shortAnimDuration, translation).startDelay =
+                        if (placeholderShown) {
+                            shortAnimDuration * 2.toLong()
+                        } else {
+                            0.toLong()
+                        }
                 }
                 if (placeholderShown) {
                     fadeOut(noDecksPlaceholder, shortAnimDuration, translation)

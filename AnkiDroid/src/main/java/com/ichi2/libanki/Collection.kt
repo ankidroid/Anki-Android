@@ -335,28 +335,28 @@ class Collection(
 
     /**
      * Construct a search string from the provided search nodes. For example:
-     * */
-    /*
-            import anki.search.searchNode
-            import anki.search.SearchNode
-            import anki.search.SearchNodeKt.group
-
-            val node = searchNode {
-                group = SearchNodeKt.group {
-                    joiner = SearchNode.Group.Joiner.AND
-                    nodes += searchNode { deck = "a **test** deck" }
-                    nodes += searchNode {
-                        negated = searchNode {
-                            tag = "foo"
-                        }
-                    }
-                    nodes += searchNode { flag = SearchNode.Flag.FLAG_GREEN }
-                }
-            }
-            // yields "deck:a \*\*test\*\* deck" -tag:foo flag:3
-            val text = col.buildSearchString(node)
-        }
-    */
+     * ```kotlin
+     *       import anki.search.searchNode
+     *       import anki.search.SearchNode
+     *       import anki.search.SearchNodeKt.group
+     *
+     *       val node = searchNode {
+     *           group = SearchNodeKt.group {
+     *               joiner = SearchNode.Group.Joiner.AND
+     *               nodes += searchNode { deck = "a **test** deck" }
+     *               nodes += searchNode {
+     *                   negated = searchNode {
+     *                       tag = "foo"
+     *                   }
+     *               }
+     *               nodes += searchNode { flag = SearchNode.Flag.FLAG_GREEN }
+     *           }
+     *       }
+     *       // yields "deck:a \*\*test\*\* deck" -tag:foo flag:3
+     *       val text = col.buildSearchString(node)
+     *   }
+     * ```
+     */
     @Suppress("unused")
     fun buildSearchString(node: SearchNode): String {
         return backend.buildSearchString(node)
