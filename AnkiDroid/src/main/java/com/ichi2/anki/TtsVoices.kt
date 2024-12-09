@@ -52,6 +52,7 @@ object TtsVoices {
 
     // A new instance of this list is not required if the app language changes: .displayName returns
     // the new values
+
     /** An immutable list of locales available for TTS */
     private lateinit var availableLocaleData: List<Locale>
 
@@ -246,13 +247,14 @@ class TtsVoicesFieldFilter : TemplateManager.FieldFilter() {
  */
 fun Voice.toTtsVoice(engine: String) = AndroidTtsVoice(this, engine)
 
-/**
- * An instance of [TtsVoice] which allows access to the underlying [Voice] object
- */
 // We include the engine name in the TTS 'name' to future-proof the feature of
 // allowing a user to switch between TTS providers on the same card
 // a name looks like: com.google.android.tts-cmn-cn-x-ccc-local
 // com.google.android.tts + cmn-cn-x-ccc-local
+
+/**
+ * An instance of [TtsVoice] which allows access to the underlying [Voice] object
+ */
 class AndroidTtsVoice(val voice: Voice, val engine: String) : TtsVoice(name = "$engine-${voice.name}", lang = toAnkiTwoLetterCode(voice.locale)) {
     override fun unavailable(): Boolean {
         return voice.features.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)

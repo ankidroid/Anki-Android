@@ -36,13 +36,17 @@ import kotlin.jvm.Throws
  * all the required fields in package.json mapped to AddonModel in this class.
  * The most important fields in package.json are
  * ankiDroidJsApi, addonType and keywords, these fields distinguish other npm packages
+ *
+ * @param name name of npm package, it unique for each package listed on npm
+ * @param addonTitle  for showing in AnkiDroid
+ * @param icon only required for note editor (single character recommended)
  */
 
 @Serializable
 class AddonData(
-    val name: String? = null, // name of npm package, it unique for each package listed on npm
-    val addonTitle: String? = null, // for showing in AnkiDroid
-    val icon: String? = null, // only required for note editor (single character recommended)
+    val name: String? = null,
+    val addonTitle: String? = null,
+    val icon: String? = null,
     val version: String? = null,
     val description: String? = null,
     val main: String? = null,
@@ -105,7 +109,8 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
     }
 
     if (addonData.addonType != REVIEWER_ADDON && addonData.addonType != NOTE_EDITOR_ADDON) {
-        errorStr = "Invalid addon package: ${addonData.addonType} is not valid addon type, package.json must have 'addonType' fields of 'reviewer' or 'note-editor'"
+        errorStr = "Invalid addon package: ${addonData.addonType} is not valid addon type, " +
+            "package.json must have 'addonType' fields of 'reviewer' or 'note-editor'"
         errorList.add(errorStr)
     }
 
@@ -124,7 +129,8 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
 
     // Check supplied api and current api
     if (addonData.ankidroidJsApi != CURRENT_JS_API_VERSION) {
-        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must be equal to current js api version $CURRENT_JS_API_VERSION"
+        errorStr = "Invalid addon package: supplied js api version ${addonData.ankidroidJsApi} must " +
+            "be equal to current js api version $CURRENT_JS_API_VERSION"
         errorList.add(errorStr)
     }
 

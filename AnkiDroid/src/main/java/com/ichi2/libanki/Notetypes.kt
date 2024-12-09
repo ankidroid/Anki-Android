@@ -76,6 +76,7 @@ class Notetypes(val col: Collection) {
     #############################################################
      */
 
+    @Suppress("ktlint:standard:property-naming")
     private var _cache: HashMap<int, NotetypeJson> = HashMap()
 
     init {
@@ -606,6 +607,7 @@ class Notetypes(val col: Collection) {
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
+    @Suppress("ktlint:standard:max-line-length")
     fun getCardIdsForModel(modelId: NoteTypeId, ords: IntArray): List<Long>? {
         val cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
         val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)

@@ -432,7 +432,8 @@ object PreferenceUpgradeService {
                 val sourcePrefValue = preferences.getString(sourcePrefKey, null) ?: return
                 val destinyPrefValue = preferences.getString(destinyPrefKey, null)
 
-                val joinedBindings = MappableBinding.fromPreferenceString(destinyPrefValue) + MappableBinding.fromPreferenceString(sourcePrefValue)
+                val joinedBindings = MappableBinding.fromPreferenceString(destinyPrefValue) +
+                    MappableBinding.fromPreferenceString(sourcePrefValue)
                 preferences.edit {
                     putString(destinyPrefKey, joinedBindings.toPreferenceString())
                     remove(sourcePrefKey)

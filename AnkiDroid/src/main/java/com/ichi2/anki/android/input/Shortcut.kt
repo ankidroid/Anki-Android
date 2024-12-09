@@ -80,8 +80,14 @@ data class Shortcut(val shortcut: String, val label: String) {
 
     companion object {
         @CheckResult
-        fun isPotentialShortcutCombination(event: KeyEvent, keyCode: Int): Boolean =
-            (event.isCtrlPressed || event.isAltPressed || event.isMetaPressed) && ((keyCode in KeyEvent.KEYCODE_A..KeyEvent.KEYCODE_Z) || (keyCode in KeyEvent.KEYCODE_NUMPAD_0..KeyEvent.KEYCODE_NUMPAD_9))
+        fun isPotentialShortcutCombination(
+            event: KeyEvent,
+            keyCode: Int
+        ): Boolean {
+            if (!(event.isCtrlPressed || event.isAltPressed || event.isMetaPressed)) return false
+            return (keyCode in KeyEvent.KEYCODE_A..KeyEvent.KEYCODE_Z) ||
+                (keyCode in KeyEvent.KEYCODE_NUMPAD_0..KeyEvent.KEYCODE_NUMPAD_9)
+        }
     }
 }
 

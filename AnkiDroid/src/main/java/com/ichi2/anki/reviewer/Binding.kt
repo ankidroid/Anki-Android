@@ -90,7 +90,10 @@ sealed interface Binding {
         }
     }
 
-    data class UnicodeCharacter(val unicodeCharacter: Char, override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift()) : KeyBinding {
+    data class UnicodeCharacter(
+        val unicodeCharacter: Char,
+        override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift()
+    ) : KeyBinding {
         override fun toDisplayString(context: Context): String = buildString {
             append(KEY_PREFIX)
             append(' ')

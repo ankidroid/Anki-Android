@@ -42,4 +42,4 @@ fun interface TranslatableString {
 // would be to say `with (translatableString) context.toTranslatableString()`.
 // TODO Once using context receivers, remove this method,
 //   instead writing the SAM as `context(Context) fun toTranslatedString()`.
-fun TranslatableString.toTranslatedString(context: Context) = context.toTranslatedString()
+// fun TranslatableString.toTranslatedString(context: Context) = context.toTranslatedString()

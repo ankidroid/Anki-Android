@@ -44,8 +44,11 @@ class SetDueDateViewModel : ViewModel() {
     /** The cards to change the due date of */
     lateinit var cardIds: List<CardId>
 
-    /** The number of cards which will be affected */
-    // primarily used for plurals
+    /**
+     * The number of cards which will be affected
+     *
+     * Primarily used for plurals
+     */
     val cardCount
         get() = cardIds.size
 

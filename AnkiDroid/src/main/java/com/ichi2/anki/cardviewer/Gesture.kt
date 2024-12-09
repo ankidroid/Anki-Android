@@ -38,7 +38,7 @@ fun interface GestureListener {
 
 enum class Gesture(
     @get:JvmName("getResourceId") val resourceId: Int,
-    private val displayPrefix: String = GESTURE_PREFIX // Default prefix
+    private val displayPrefix: String = GESTURE_PREFIX
 ) {
     SHAKE(R.string.gestures_shake, SHAKE_GESTURE_PREFIX),
     SWIPE_UP(R.string.gestures_swipe_up),

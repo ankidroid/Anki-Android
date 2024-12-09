@@ -31,13 +31,14 @@ import com.ichi2.anki.dialogs.WarningDisplay
 import com.ichi2.utils.UiUtil.setSelectedValue
 import timber.log.Timber
 
+// This class exists as elements resized when adding in the spinner to GestureDisplay.kt
+
 /** [View] which allows selection of a gesture either via taps/swipes, or via a [Spinner]
  * The spinner aids discoverability of [Gesture.DOUBLE_TAP] and [Gesture.LONG_TAP]
  * as they're not explained in [GestureDisplay].
  *
  * Current use is via [com.ichi2.anki.dialogs.GestureSelectionDialogBuilder]
  */
-// This class exists as elements resized when adding in the spinner to GestureDisplay.kt
 class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(ctx, attributeSet, defStyleAttr),
     WarningDisplay {

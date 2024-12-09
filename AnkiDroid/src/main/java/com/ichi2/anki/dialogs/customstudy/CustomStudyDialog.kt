@@ -78,7 +78,10 @@ private const val ID = "id"
  */
 private const val DID = "did"
 
-class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
+class CustomStudyDialog(
+    private val collection: Collection,
+    private val customStudyListener: CustomStudyListener?
+) : AnalyticsDialogFragment(), TagsDialogListener {
 
     interface CustomStudyListener {
         fun onCreateCustomStudySession()

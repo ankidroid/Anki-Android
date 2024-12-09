@@ -169,7 +169,10 @@ class ImportFileSelectionFragment : DialogFragment() {
             extraMimes?.let { intent.putExtra(Intent.EXTRA_MIME_TYPES, it) }
 
             try {
-                if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgImportResultLauncherProvider) {
+                if (
+                    (fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) &&
+                    activity is ApkgImportResultLauncherProvider
+                ) {
                     activity.getApkgFileImportResultLauncher().launch(intent)
                 } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
                     activity.getCsvFileImportResultLauncher().launch(intent)

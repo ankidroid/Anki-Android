@@ -334,6 +334,7 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
         val sharedPreferencesProvider get() = SharedPreferencesProvider { sharedPrefs() }
 
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
+        @Suppress("ktlint:standard:property-naming")
         var INSTRUMENTATION_TESTING = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"
         const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"

@@ -30,7 +30,6 @@ import com.ichi2.anki.reviewer.Binding.UnicodeCharacter
 import com.ichi2.utils.hash
 import timber.log.Timber
 import java.util.Objects
-import kotlin.collections.ArrayList
 
 /**
  * Binding + additional contextual information
@@ -45,13 +44,19 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         if (other == null) return false
 
         val otherBinding = (other as MappableBinding).binding
-        val bindingEquals = when {
-            binding is KeyCode && otherBinding is KeyCode -> binding.keycode == otherBinding.keycode && modifierEquals(otherBinding)
-            binding is UnicodeCharacter && otherBinding is UnicodeCharacter -> binding.unicodeCharacter == otherBinding.unicodeCharacter && modifierEquals(otherBinding)
-            binding is GestureInput && otherBinding is GestureInput -> binding.gesture == otherBinding.gesture
-            binding is AxisButtonBinding && otherBinding is AxisButtonBinding -> binding.axis == otherBinding.axis && binding.threshold == otherBinding.threshold
-            else -> false
-        }
+        val bindingEquals =
+            when {
+                binding is KeyCode && otherBinding is KeyCode -> binding.keycode == otherBinding.keycode && modifierEquals(otherBinding)
+                binding is UnicodeCharacter && otherBinding is UnicodeCharacter -> {
+                    binding.unicodeCharacter == otherBinding.unicodeCharacter &&
+                        modifierEquals(otherBinding)
+                }
+                binding is GestureInput && otherBinding is GestureInput -> binding.gesture == otherBinding.gesture
+                binding is AxisButtonBinding && otherBinding is AxisButtonBinding -> {
+                    binding.axis == otherBinding.axis && binding.threshold == otherBinding.threshold
+                }
+                else -> false
+            }
         if (!bindingEquals) {
             return false
         }

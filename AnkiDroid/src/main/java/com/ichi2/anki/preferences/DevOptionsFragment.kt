@@ -93,7 +93,10 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_set_database_path_debug_key).setOnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).show {
                 setTitle("Warning!")
-                setMessage("This will most likely make it so that you cannot access your collection. It will be very difficult to recover your data.")
+                setMessage(
+                    "This will most likely make it so that you cannot access your collection. " +
+                        "It will be very difficult to recover your data."
+                )
                 setPositiveButton(R.string.dialog_ok) { _, _ ->
                     Timber.w("Setting collection path to /storage/emulated/0/AnkiDroid")
                     AnkiDroidApp.sharedPrefs().edit {
@@ -119,7 +122,11 @@ class DevOptionsFragment : SettingsFragment() {
             val numberOfFiles = numberOfFilePreference.getValue()
             AlertDialog.Builder(requireContext()).show {
                 setTitle("Warning!")
-                setMessage("You'll add $numberOfFiles files with no meaningful content, potentially overriding existing files. Do not do it on a collection you care about.")
+                setMessage(
+                    "You'll add $numberOfFiles files with no meaningful content, " +
+                        "potentially overriding existing files. " +
+                        "Do not do it on a collection you care about."
+                )
                 setPositiveButton("OK") { _, _ ->
                     generateFiles(sizeOfFiles, numberOfFiles)
                 }

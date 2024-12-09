@@ -4,6 +4,11 @@ end_of_line = lf
 [*.bat]
 end_of_line = crlf
 
+[*.kt]
+# We often have block comments representing implementation details after KDocs.
+# This feels like an acceptable commenting strategy
+ktlint_standard_no-consecutive-comments = disabled
+
 # These can be removed once we upgrade to ktlint 1.5.0
 # These are added in preparation for the move to gradle.ktlint 12.1.1
 

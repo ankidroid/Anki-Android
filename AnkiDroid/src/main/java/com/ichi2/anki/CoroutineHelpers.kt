@@ -404,12 +404,24 @@ suspend fun <T> withProgressDialog(
     val dialogJob = launch {
         delay(delayMillis)
         if (!AnkiDroidApp.instance.progressDialogShown) {
-            Timber.i("Displaying progress dialog: ${delayMillis}ms elapsed; cancellable: ${onCancel != null}; manualCancel: ${manualCancelButton != null}")
+            Timber.i(
+                """Displaying progress dialog: ${delayMillis}ms elapsed; 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                """.trimMargin()
+            )
             dialog.show()
             AnkiDroidApp.instance.progressDialogShown = true
             dialogIsOurs = true
         } else {
-            Timber.w("A progress dialog is already displayed, not displaying progress dialog: ${onCancel != null}; manualCancel: ${manualCancelButton != null}")
+            Timber.w(
+                """A progress dialog is already displayed, not displaying progress dialog: 
+                |cancellable: ${onCancel != null}; 
+                |manualCancel: ${manualCancelButton != null}
+                |
+                """.trimMargin()
+            )
         }
     }
     try {

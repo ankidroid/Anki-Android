@@ -278,7 +278,9 @@ class IntentHandler : AbstractIntentHandler() {
          *  @return `true`: if granted, otherwise `false` and shows a missing permission toast
          */
         fun grantedStoragePermissions(context: Context, showToast: Boolean): Boolean {
-            val granted = !ScopedStorageService.isLegacyStorage(context) || hasLegacyStorageAccessPermission(context) || Permissions.isExternalStorageManagerCompat()
+            val granted = !ScopedStorageService.isLegacyStorage(context) ||
+                hasLegacyStorageAccessPermission(context) ||
+                Permissions.isExternalStorageManagerCompat()
 
             if (!granted && showToast) {
                 showThemedToast(context, context.getString(R.string.intent_handler_failed_no_storage_permission), false)
@@ -295,7 +297,8 @@ class IntentHandler : AbstractIntentHandler() {
                 val mimeType = intent.resolveMimeType()
                 when {
                     mimeType?.startsWith("image/") == true -> LaunchType.IMAGE_IMPORT
-                    mimeType == "text/tab-separated-values" || mimeType == "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
+                    mimeType == "text/tab-separated-values" ||
+                        mimeType == "text/comma-separated-values" -> LaunchType.TEXT_IMPORT
                     else -> LaunchType.FILE_IMPORT
                 }
             } else if ("com.ichi2.anki.DO_SYNC" == action) {

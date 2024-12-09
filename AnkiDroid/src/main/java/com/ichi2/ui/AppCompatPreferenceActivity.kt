@@ -1,4 +1,5 @@
 // noinspection MissingCopyrightHeader #8659
+
 /*
  * Copyright (C) 2014 The Android Open Source Project
  *
@@ -286,9 +287,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
      * Call exactly once, during creation
      * to ensure that if the SD card is ejected
      * this activity finish.
-     */
-
-    /**
+     *
      * finish when sd card is ejected
      */
     fun registerExternalStorageListener() {

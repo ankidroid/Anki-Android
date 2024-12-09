@@ -13,6 +13,9 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+@file:Suppress("ktlint:standard:discouraged-comment-location", "ktlint:standard:kdoc-wrapping")
+
 package com.ichi2.utils
 
 import org.apache.commons.collections4.list.SetUniqueList

@@ -28,7 +28,11 @@ abstract class SystemContextMenu(private val context: Context) {
     protected abstract val activityName: String
     fun setSystemMenuEnabled(enabled: Boolean) {
         try {
-            val enabledState = if (enabled) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            val enabledState = if (enabled) {
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            } else {
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            }
             packageManager.setComponentEnabledSetting(componentName, enabledState, PackageManager.DONT_KILL_APP)
         } catch (e: Exception) {
             Timber.w(e, "Failed to set Context Menu state")

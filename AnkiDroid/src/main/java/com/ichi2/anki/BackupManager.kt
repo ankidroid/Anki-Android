@@ -81,7 +81,10 @@ open class BackupManager {
         // Abort backup if one was already made less than the allowed frequency
         val lastBackupDate = getLastBackupDate(colBackups)
         if (lastBackupDate != null && lastBackupDate.time + frequency * 60_000L > time.intTimeMS()) {
-            Timber.d("performBackup: No backup created. Last backup younger than the frequency allowed from preferences(currently set to $frequency minutes)")
+            Timber.d(
+                "performBackup: No backup created. Last backup younger than the frequency " +
+                    "allowed from preferences (currently set to $frequency minutes)"
+            )
             return false
         }
         val backupFilename = getNameForNewBackup(time) ?: return false

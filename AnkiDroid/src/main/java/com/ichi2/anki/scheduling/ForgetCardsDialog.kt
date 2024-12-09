@@ -41,6 +41,8 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.titleWithHelpIcon
 import timber.log.Timber
 
+// TODO: Rename the labels opening this class once Anki Desktop's translations support plurals
+
 /**
  * Dialog for [Scheduler.forgetCards]
  *
@@ -51,7 +53,6 @@ import timber.log.Timber
  * * https://docs.ankiweb.net/studying.html#editing-and-more
  * * https://docs.ankiweb.net/browsing.html#cards
  */
-// TODO: Rename the labels opening this class once Anki Desktop's translations support plurals
 @NeedsTest("all")
 class ForgetCardsDialog : DialogFragment() {
 

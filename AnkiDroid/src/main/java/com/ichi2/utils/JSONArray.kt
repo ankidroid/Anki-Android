@@ -70,10 +70,8 @@ fun JSONArray.jsonObjectIterator(): Iterator<JSONObject> {
             return index < length()
         }
 
-        override fun next(): JSONObject {
-            val `object` = getJSONObject(index)
+        override fun next() = getJSONObject(index).also {
             index++
-            return `object`
         }
     }
 }

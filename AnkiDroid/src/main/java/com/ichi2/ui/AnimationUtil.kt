@@ -24,6 +24,7 @@ import android.view.animation.ScaleAnimation
 object AnimationUtil {
     // please test this on Huawei devices (if possible) and not just on the emulator -
     // having view.setVisibility(View.VISIBLE); on the expand worked fine on the emulator, but looked bad on my phone
+
     /** This is a fast animation - We don't want the user incorrectly selecting the current position
      * for the next collapse operation  */
     private const val DURATION_MILLIS = 200

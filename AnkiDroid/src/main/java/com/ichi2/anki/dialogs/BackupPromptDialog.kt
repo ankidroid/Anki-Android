@@ -196,7 +196,9 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             // Given the assumptions above, this conditional should return true
             return if (collectionWillBeMadeInaccessibleAfterUninstall(context)) {
                 Timber.d("User will lose access to their collection")
-                R.string.dismiss_backup_warning_upgrade // message stating collection will be made inaccessible (existing user, not migrated)
+                // message stating collection will be made inaccessible
+                // (existing user, not migrated)
+                R.string.dismiss_backup_warning_upgrade
             } else {
                 // A user is on a Play Store Build. They are on a version of Android with storage restrictions
                 // Their collection is in a 'legacy' location but they are not going to lose access to their collection when they uninstall

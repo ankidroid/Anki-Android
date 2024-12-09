@@ -484,7 +484,14 @@ class Whiteboard(activity: AnkiActivity, private val handleMultiTouch: Boolean, 
                         // thus giving us an empty region, which would make them undeletable.
                         // For this edge case, we create a Region ourselves.
                         path.computeBounds(bounds, true)
-                        lineRegion = Region(Rect(bounds.left.toInt(), bounds.top.toInt(), bounds.right.toInt() + 1, bounds.bottom.toInt() + 1))
+                        lineRegion = Region(
+                            Rect(
+                                bounds.left.toInt(),
+                                bounds.top.toInt(),
+                                bounds.right.toInt() + 1,
+                                bounds.bottom.toInt() + 1
+                            )
+                        )
                     }
                 } else { // → point
                     val p = action.point
