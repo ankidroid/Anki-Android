@@ -26,7 +26,7 @@ interface WhiteboardMultiTouchMethods {
      */
     fun tapOnCurrentCard(
         x: Int,
-        y: Int
+        y: Int,
     )
 
     /** Scroll the currently shown flashcard vertically

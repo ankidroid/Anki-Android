@@ -43,7 +43,7 @@ class NotificationService : BroadcastReceiver() {
             val minCardsDue =
                 preferences.getString(
                     context.getString(R.string.pref_notifications_minimum_cards_due_key),
-                    PENDING_NOTIFICATIONS_ONLY.toString()
+                    PENDING_NOTIFICATIONS_ONLY.toString(),
                 )!!.toInt()
             val dueCardsCount = WidgetStatus.fetchDue(context)
             if (dueCardsCount >= minCardsDue) {
@@ -53,14 +53,14 @@ class NotificationService : BroadcastReceiver() {
                         .getQuantityString(
                             R.plurals.widget_minimum_cards_due_notification_ticker_text,
                             dueCardsCount,
-                            dueCardsCount
+                            dueCardsCount,
                         )
                 // This generates a log warning "Use of stream types is deprecated..."
                 // The NotificationCompat code uses setSound() no matter what we do and triggers it.
                 val builder =
                     NotificationCompat.Builder(
                         context,
-                        Channel.GENERAL.id
+                        Channel.GENERAL.id,
                     )
                         .setCategory(NotificationCompat.CATEGORY_REMINDER)
                         .setSmallIcon(R.drawable.ic_star_notify)
@@ -84,7 +84,7 @@ class NotificationService : BroadcastReceiver() {
                         0,
                         resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT,
-                        false
+                        false,
                     )
                 builder.setContentIntent(resultPendingIntent)
                 // mId allows you to update the notification later on.
@@ -98,7 +98,7 @@ class NotificationService : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         triggerNotificationFor(context)
     }

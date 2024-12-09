@@ -51,7 +51,7 @@ object ScopedStorageService {
      */
     fun isLegacyStorage(
         context: Context,
-        setCollectionPath: Boolean
+        setCollectionPath: Boolean,
     ): Boolean? {
         if (!setCollectionPath &&
             !context.sharedPrefs()
@@ -70,7 +70,7 @@ object ScopedStorageService {
      */
     fun isLegacyStorage(
         currentDirPath: File,
-        context: Context
+        context: Context,
     ): Boolean {
         val internalScopedDirPath =
             CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context)
@@ -82,7 +82,7 @@ object ScopedStorageService {
             "isLegacyStorage(): current dir: %s\nscoped external dirs: %s\nscoped internal dir: %s",
             currentDirPath,
             externalScopedDirs.joinToString(", "),
-            internalScopedDirPath
+            internalScopedDirPath,
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
@@ -178,7 +178,7 @@ object ScopedStorageService {
 
     fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean {
         return File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(
-            context
+            context,
         )
     }
 }

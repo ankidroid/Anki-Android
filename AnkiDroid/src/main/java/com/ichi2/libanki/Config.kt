@@ -41,7 +41,7 @@ class Config(val backend: Backend) {
 
     inline fun <reified T> set(
         key: String,
-        value: T
+        value: T,
     ) {
         val valueString =
             when (value) {
@@ -62,7 +62,7 @@ class Config(val backend: Backend) {
 
     fun setBool(
         key: ConfigKey.Bool,
-        value: Boolean
+        value: Boolean,
     ) {
         backend.setConfigBool(key, value, false)
     }
@@ -70,7 +70,7 @@ class Config(val backend: Backend) {
     @NotInLibAnki
     inline fun <reified T> get(
         key: String,
-        default: T
+        default: T,
     ): T? {
         return try {
             Json.decodeFromString<T>(backend.getConfigJson(key).toStringUtf8())
@@ -84,7 +84,7 @@ class Config(val backend: Backend) {
     @NotInLibAnki
     fun getObject(
         key: String,
-        default: JSONObject
+        default: JSONObject,
     ): JSONObject {
         return try {
             JSONObject(backend.getConfigJson(key).toStringUtf8())

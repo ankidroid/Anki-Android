@@ -43,7 +43,7 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
 
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
-        rootKey: String?
+        rootKey: String?,
     ) {
         setPreferencesFromResource(R.xml.preference_headers, rootKey)
 
@@ -61,7 +61,7 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
 
         configureSearchBar(
             requireActivity() as AppCompatActivity,
-            requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration
+            requirePreference<SearchPreference>(R.string.search_preference_key).searchConfiguration,
         )
 
         if (!resources.isWindowCompact()) {
@@ -82,7 +82,7 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
     }
 
     private fun highlightPreference(
-        @StringRes keyRes: Int
+        @StringRes keyRes: Int,
     ) {
         val key = getString(keyRes)
         findPreference<HeaderPreference>(highlightedPreferenceKey)?.setHighlighted(false)
@@ -92,7 +92,7 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         // use the same fragment container to search in case there is a navigation container
@@ -104,7 +104,7 @@ class HeaderFragment : PreferenceFragmentCompat(), TitleProvider {
     companion object {
         fun configureSearchBar(
             activity: AppCompatActivity,
-            searchConfiguration: SearchConfiguration
+            searchConfiguration: SearchConfiguration,
         ) {
             val setDuePreferenceTitle = TR.actionsSetDueDate().toSentenceCase(activity, R.string.sentence_set_due_date)
             with(searchConfiguration) {

@@ -111,7 +111,7 @@ class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAt
             parent: AdapterView<*>?,
             view: View?,
             position: Int,
-            id: Long
+            id: Long,
         ) {
             val wrapper = parent?.getItemAtPosition(position) as? GestureWrapper
             onGesture(wrapper?.gesture)

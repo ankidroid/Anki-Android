@@ -53,7 +53,7 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
             left: Int,
             top: Int,
             right: Int,
-            bottom: Int
+            bottom: Int,
         ) {
             super.setBounds(left + extraPadding, top, right - extraPadding, bottom)
         }
@@ -73,7 +73,7 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
  */
 fun Context.tintOverflowMenuIcons(
     menu: Menu,
-    skipIf: ((MenuItem) -> Boolean)? = null
+    skipIf: ((MenuItem) -> Boolean)? = null,
 ) {
     val iconColor = MaterialColors.getColor(this, R.attr.overflowAndPopupMenuIconColor, 0)
 

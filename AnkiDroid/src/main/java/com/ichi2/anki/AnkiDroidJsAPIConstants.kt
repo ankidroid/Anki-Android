@@ -47,6 +47,6 @@ object AnkiDroidJsAPIConstants {
             "blue" to ViewerCommand.TOGGLE_FLAG_BLUE,
             "pink" to ViewerCommand.TOGGLE_FLAG_PINK,
             "turquoise" to ViewerCommand.TOGGLE_FLAG_TURQUOISE,
-            "purple" to ViewerCommand.TOGGLE_FLAG_PURPLE
+            "purple" to ViewerCommand.TOGGLE_FLAG_PURPLE,
         )
 }

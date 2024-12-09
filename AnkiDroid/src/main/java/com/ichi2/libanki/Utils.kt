@@ -83,7 +83,7 @@ object Utils {
      */
     fun stripHTMLMedia(
         s: String,
-        replacement: String = " $1 "
+        replacement: String = " $1 ",
     ): String {
         val imgMatcher = imgPattern.matcher(s)
         return stripHTML(imgMatcher.replaceAll(replacement))
@@ -177,7 +177,7 @@ object Utils {
     // used in ankiweb
     private fun base62(
         numParam: Int,
-        @Suppress("SameParameterValue") extra: String
+        @Suppress("SameParameterValue") extra: String,
     ): String {
         var num = numParam
         val table = ALL_CHARACTERS + extra
@@ -200,7 +200,7 @@ object Utils {
     /** return a base91-encoded 64bit random number  */
     fun guid64(): String {
         return base91(
-            Random().nextInt((2.0.pow(61.0) - 1).toInt())
+            Random().nextInt((2.0.pow(61.0) - 1).toInt()),
         )
     }
 
@@ -274,7 +274,7 @@ object Utils {
      */
     fun sfieldAndCsum(
         fields: List<String>,
-        sortIdx: Int
+        sortIdx: Int,
     ): Pair<String, Long> {
         val firstStripped = stripHTMLMedia(fields[0])
         val sortStripped = if (sortIdx == 0) firstStripped else stripHTMLMedia(fields[sortIdx])

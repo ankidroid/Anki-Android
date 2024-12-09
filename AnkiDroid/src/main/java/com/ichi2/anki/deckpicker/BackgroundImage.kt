@@ -68,7 +68,7 @@ object BackgroundImage {
 
     fun validateBackgroundImageFileSize(
         target: AppearanceSettingsFragment,
-        selectedImage: Uri
+        selectedImage: Uri,
     ): FileSizeResult {
         val filePathColumn = arrayOf(MediaStore.MediaColumns.SIZE, MediaStore.MediaColumns.WIDTH, MediaStore.MediaColumns.HEIGHT)
         target.requireContext().contentResolver.query(selectedImage, filePathColumn, null, null, null).use { cursor ->
@@ -92,7 +92,7 @@ object BackgroundImage {
 
     fun import(
         target: AppearanceSettingsFragment,
-        selectedImage: Uri
+        selectedImage: Uri,
     ) {
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(target.requireContext())
         val imageName = "DeckPickerBackground.png"

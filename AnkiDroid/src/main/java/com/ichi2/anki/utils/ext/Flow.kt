@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 fun <T> Flow<T>.collectLatestIn(
     scope: CoroutineScope,
-    action: suspend (value: T) -> Unit
+    action: suspend (value: T) -> Unit,
 ): Job {
     return scope.launch {
         collectLatest(action)
@@ -33,7 +33,7 @@ fun <T> Flow<T>.collectLatestIn(
 
 fun <T> Flow<T>.collectIn(
     scope: CoroutineScope,
-    collector: FlowCollector<T>
+    collector: FlowCollector<T>,
 ): Job {
     return scope.launch {
         collect(collector)

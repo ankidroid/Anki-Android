@@ -37,12 +37,12 @@ class DownloadFileTest : InstrumentedTest() {
                 url = "https://ankiweb.net/svc/shared/download-deck/293204297?t=token",
                 userAgent = "unused",
                 contentDisposition = "attachment; filename=Goethe_Institute_A1_Wordlist.apkg",
-                mimeType = "application/octet-stream"
+                mimeType = "application/octet-stream",
             )
 
         assertThat(
             downloadFile.toFileName(extension = "apkg"),
-            equalTo("Goethe_Institute_A1_Wordlist.apkg")
+            equalTo("Goethe_Institute_A1_Wordlist.apkg"),
         )
     }
 }

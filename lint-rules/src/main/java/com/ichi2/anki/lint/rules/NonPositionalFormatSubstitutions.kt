@@ -56,7 +56,7 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
                 Constants.ANKI_CROWDIN_CATEGORY,
                 Constants.ANKI_CROWDIN_PRIORITY,
                 Constants.ANKI_CROWDIN_SEVERITY,
-                IMPLEMENTATION_XML
+                IMPLEMENTATION_XML,
             )
     }
 
@@ -66,7 +66,7 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
 
     override fun visitElement(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         val elementsToCheck =
             when (element.tagName) {
@@ -129,7 +129,7 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
 
     private fun reportPositionalArgumentMismatch(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         val location = context.createLocationHandle(element).resolve()
 
@@ -139,7 +139,7 @@ class NonPositionalFormatSubstitutions : ResourceXmlDetector() {
 
     private fun reportInvalidPositionalArguments(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         val location = context.createLocationHandle(element).resolve()
 

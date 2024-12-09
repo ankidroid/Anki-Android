@@ -38,7 +38,7 @@ class ActionButtons {
     }
 
     fun findMenuItem(
-        @IdRes resId: Int
+        @IdRes resId: Int,
     ) = menu?.findItem(resId) as? MenuItemImpl
 
     companion object {

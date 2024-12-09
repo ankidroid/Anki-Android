@@ -128,7 +128,7 @@ private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Lo
                     val totalDataSize = packageStats.dataSize + packageStats.externalDataSize
                     continuation.resume(totalCacheSize + totalDataSize)
                 }
-            }
+            },
         )
 
     return suspendCancellableCoroutine { continuation = it }

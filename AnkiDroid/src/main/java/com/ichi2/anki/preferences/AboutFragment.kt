@@ -53,7 +53,7 @@ class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         // Version date
         val apkBuildDate =
@@ -131,7 +131,7 @@ class AboutFragment : Fragment(R.layout.about_layout), TitleProvider {
                 }
             requireContext().copyToClipboard(
                 debugInfo,
-                failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+                failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
             )
         }
     }

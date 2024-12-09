@@ -67,7 +67,7 @@ import timber.log.Timber
  */
 class AutomaticAnswer(
     target: AutomaticallyAnswered,
-    @VisibleForTesting val settings: AutomaticAnswerSettings
+    @VisibleForTesting val settings: AutomaticAnswerSettings,
 ) {
     /** Whether any tasks should be executed/scheduled.
      *
@@ -227,7 +227,7 @@ class AutomaticAnswer(
         @CheckResult
         fun createInstance(
             target: AutomaticallyAnswered,
-            col: Collection
+            col: Collection,
         ): AutomaticAnswer {
             val settings = AutomaticAnswerSettings.createInstance(col)
             return AutomaticAnswer(target, settings)
@@ -254,7 +254,7 @@ class AutomaticAnswer(
 class AutomaticAnswerSettings(
     val answerAction: AutomaticAnswerAction = AutomaticAnswerAction.BURY_CARD,
     private val secondsToShowQuestionFor: Double = 60.0,
-    private val secondsToShowAnswerFor: Double = 20.0
+    private val secondsToShowAnswerFor: Double = 20.0,
 ) {
     val millisecondsToShowQuestionFor = (secondsToShowQuestionFor * 1000L).toLong()
     val millisecondsToShowAnswerFor = (secondsToShowAnswerFor * 1000L).toLong()
@@ -272,7 +272,7 @@ class AutomaticAnswerSettings(
         @NeedsTest("ensure question setting maps to question parameter")
         fun queryOptions(
             col: Collection,
-            selectedDid: DeckId
+            selectedDid: DeckId,
         ): AutomaticAnswerSettings {
             val conf = col.decks.configDictForDeckId(selectedDid)
             val action = getAction(conf)
@@ -280,7 +280,7 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(
                 answerAction = action,
                 secondsToShowQuestionFor = conf.secondsToShowQuestion,
-                secondsToShowAnswerFor = conf.secondsToShowAnswer
+                secondsToShowAnswerFor = conf.secondsToShowAnswer,
             )
         }
 
@@ -309,7 +309,7 @@ enum class AutomaticAnswerAction(private val configValue: Int) {
     ANSWER_AGAIN(1),
     ANSWER_GOOD(2),
     ANSWER_HARD(3),
-    SHOW_REMINDER(4)
+    SHOW_REMINDER(4),
     ;
 
     fun execute(reviewer: Reviewer) {

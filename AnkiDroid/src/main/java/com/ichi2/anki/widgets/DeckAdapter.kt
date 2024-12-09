@@ -48,7 +48,7 @@ import timber.log.Timber
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(
     private val layoutInflater: LayoutInflater,
-    context: Context
+    context: Context,
 ) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private var deckTree: DeckNode? = null
 
@@ -135,7 +135,7 @@ class DeckAdapter(
      */
     suspend fun buildDeckList(
         node: DeckNode,
-        filter: CharSequence?
+        filter: CharSequence?,
     ) {
         Timber.d("buildDeckList")
         // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
@@ -161,7 +161,7 @@ class DeckAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ViewHolder {
         val v = layoutInflater.inflate(R.layout.deck_item, parent, false)
         return ViewHolder(v)
@@ -169,7 +169,7 @@ class DeckAdapter(
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int
+        position: Int,
     ) {
         // Update views for this node
         val node = filteredDeckList[position]
@@ -238,7 +238,7 @@ class DeckAdapter(
 
     private fun setBackgroundAlpha(
         view: View,
-        alphaPercentage: Double
+        alphaPercentage: Double,
     ) {
         val background = view.background.mutate()
         background.alpha = (255 * alphaPercentage).toInt()
@@ -256,7 +256,7 @@ class DeckAdapter(
     private fun setDeckExpander(
         expander: ImageButton,
         indent: ImageButton,
-        node: DeckNode
+        node: DeckNode,
     ) {
         // Apply the correct expand/collapse drawable
         if (node.children.isNotEmpty()) {
@@ -324,7 +324,7 @@ class DeckAdapter(
 
         override fun publishResults(
             constraint: CharSequence?,
-            results: FilterResults
+            results: FilterResults,
         ) {
             @Suppress("unchecked_cast")
             filteredDeckList = results.values as List<DeckNode>
@@ -349,7 +349,7 @@ class DeckAdapter(
                 android.R.attr.textColor,
                 R.attr.dynDeckColor,
                 R.attr.expandRef,
-                R.attr.collapseRef
+                R.attr.collapseRef,
             )
         val ta = context.obtainStyledAttributes(attrs)
         zeroCountColor = ta.getColor(0, context.getColor(R.color.black))

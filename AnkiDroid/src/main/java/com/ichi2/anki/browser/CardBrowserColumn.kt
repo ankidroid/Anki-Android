@@ -113,7 +113,7 @@ enum class CardBrowserColumn(val ankiColumnKey: String) {
     /**
      * The position of the card, independent of any resets by the user.
      */
-    ORIGINAL_POSITION("originalPosition")
+    ORIGINAL_POSITION("originalPosition"),
     ;
 
     companion object {
@@ -137,7 +137,7 @@ enum class CardBrowserColumn(val ankiColumnKey: String) {
                 CHANGED,
                 CREATED,
                 EDITED,
-                ORIGINAL_POSITION
+                ORIGINAL_POSITION,
             )
 
         fun fromColumnKey(key: String): CardBrowserColumn =

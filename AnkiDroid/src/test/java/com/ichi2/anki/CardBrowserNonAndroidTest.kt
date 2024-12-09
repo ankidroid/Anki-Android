@@ -56,9 +56,9 @@ class CardBrowserNonAndroidTest {
                 answerText = input,
                 questionAvTags = listOf(SoundOrVideoTag("foo.mp3")),
                 answerAvTags = listOf(SoundOrVideoTag("foo.mp3")),
-                css = ""
+                css = "",
             ),
-            true
+            true,
         )
     }
 
@@ -71,9 +71,9 @@ class CardBrowserNonAndroidTest {
                 answerText = input,
                 questionAvTags = listOf(SoundOrVideoTag("foo.mp3")),
                 answerAvTags = listOf(SoundOrVideoTag("foo.mp3")),
-                css = ""
+                css = "",
             ),
-            false
+            false,
         )
     }
 }

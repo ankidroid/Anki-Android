@@ -31,7 +31,7 @@ object FileUtil {
      * */
     fun readSingleLine(
         base: File,
-        vararg path: String
+        vararg path: String,
     ): String {
         var file = base
         for (pathSegment in path) {
@@ -62,7 +62,7 @@ fun Directory.exists(): Boolean = this.directory.exists()
 /** Adds a file to the directory with the provided name and content */
 fun File.withTempFile(
     fileName: String,
-    content: String = "default content"
+    content: String = "default content",
 ): File {
     this.addTempFile(fileName, content)
     return this
@@ -71,7 +71,7 @@ fun File.withTempFile(
 /** Adds a file to the directory with the provided name and content. Return the new file. */
 fun File.addTempFile(
     fileName: String,
-    content: String = "default content"
+    content: String = "default content",
 ): File {
     return File(this, fileName).also {
         IOUtils.writeStringToFile(it, content)
@@ -92,7 +92,7 @@ fun File.addTempDirectory(directoryName: String): Directory {
 /** Adds a file to the directory with the provided name and content */
 fun Directory.withTempFile(
     fileName: String,
-    content: String = "default content"
+    content: String = "default content",
 ): Directory {
     this.directory.withTempFile(fileName, content)
     return this

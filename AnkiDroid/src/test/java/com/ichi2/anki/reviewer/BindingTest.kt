@@ -72,11 +72,11 @@ class BindingTest {
     private fun testModifierKeys(
         name: String,
         event: KFunction1<KeyEvent, Boolean>,
-        getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>
+        getValue: KFunction2<Binding.ModifierKeys, Boolean, Boolean>,
     ) {
         fun testModifierResult(
             event: KFunction1<KeyEvent, Boolean>,
-            returnedFromMock: Boolean
+            returnedFromMock: Boolean,
         ) {
             val mock =
                 mock {
@@ -90,7 +90,7 @@ class BindingTest {
                 assertThat(
                     "Should match when '$name:${!returnedFromMock}': ",
                     getValue(binding.modifierKeys, false),
-                    equalTo(!returnedFromMock)
+                    equalTo(!returnedFromMock),
                 )
             }
         }

@@ -63,7 +63,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
     @MainThread // resetTimerUI
     fun setupForCard(
         col: Collection,
-        newCard: Card
+        newCard: Card,
     ) {
         currentCard = newCard
         showTimer = newCard.shouldShowTimer(col)

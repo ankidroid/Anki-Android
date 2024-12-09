@@ -52,7 +52,7 @@ annotation class Flaky(val os: OS, val message: String = "")
 class IgnoreFlakyTestsInCIRule : TestRule {
     override fun apply(
         base: Statement,
-        description: Description
+        description: Description,
     ): Statement {
         if (!isRunningUnderCI) return base
         val annotation = description.getFlakyAnnotation() ?: return base
@@ -82,7 +82,7 @@ enum class OS {
     WINDOWS,
     MACOS,
     LINUX,
-    ALL
+    ALL,
     ;
 
     fun isRunning(): Boolean = this == ALL || this == currentOS

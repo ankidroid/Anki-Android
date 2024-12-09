@@ -316,7 +316,7 @@ class InstantEditorViewModel : ViewModel(), OnErrorListener {
 
     fun updateClozeNumber(
         word: String,
-        newClozeNumber: Int
+        newClozeNumber: Int,
     ): String {
         return clozePattern.replace(word) { matchResult ->
             val punctutationAtStart = matchResult.groupValues[1]

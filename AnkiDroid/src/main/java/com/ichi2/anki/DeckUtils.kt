@@ -29,7 +29,7 @@ import com.ichi2.libanki.Consts
  */
 private fun Collection.isDeckEmpty(
     deckId: Long,
-    includeSubdecks: Boolean = true
+    includeSubdecks: Boolean = true,
 ): Boolean {
     val deckIds = decks.deckAndChildIds(deckId)
     val totalCardCount = decks.cardCount(*deckIds.toLongArray(), includeSubdecks = includeSubdecks)

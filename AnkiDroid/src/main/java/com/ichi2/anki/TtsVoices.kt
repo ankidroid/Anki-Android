@@ -224,7 +224,7 @@ class TtsVoicesFieldFilter : TemplateManager.FieldFilter() {
         fieldText: String,
         fieldName: String,
         filterName: String,
-        ctx: TemplateManager.TemplateRenderContext
+        ctx: TemplateManager.TemplateRenderContext,
     ): String {
         if (filterName != "tts-voices") {
             return fieldText
@@ -258,7 +258,7 @@ fun Voice.toTtsVoice(engine: String) = AndroidTtsVoice(this, engine)
  */
 class AndroidTtsVoice(
     val voice: Voice,
-    val engine: String
+    val engine: String,
 ) : TtsVoice(name = "$engine-${voice.name}", lang = toAnkiTwoLetterCode(voice.locale)) {
     override fun unavailable(): Boolean {
         return voice.features.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)

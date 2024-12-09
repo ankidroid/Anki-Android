@@ -40,16 +40,16 @@ class PeripheralKeymapTest : InstrumentedTest() {
 
         peripheralKeymap.onKeyDown(
             KeyEvent.KEYCODE_NUMPAD_1,
-            getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1)
+            getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1),
         )
         peripheralKeymap.onKeyUp(
             KeyEvent.KEYCODE_NUMPAD_1,
-            getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1)
+            getNumpadEvent(KeyEvent.KEYCODE_NUMPAD_1),
         )
         assertThat<List<ViewerCommand>>(processed, hasSize(1))
         assertThat(
             processed[0],
-            equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1)
+            equalTo(ViewerCommand.FLIP_OR_ANSWER_EASE1),
         )
     }
 

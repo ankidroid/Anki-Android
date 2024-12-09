@@ -49,13 +49,13 @@ private typealias LegacyVersionIdentifier = Long
 object PreferenceUpgradeService {
     fun upgradePreferences(
         context: Context,
-        previousVersionCode: LegacyVersionIdentifier
+        previousVersionCode: LegacyVersionIdentifier,
     ): Boolean = upgradePreferences(context.sharedPrefs(), previousVersionCode)
 
     /** @return Whether any preferences were upgraded */
     internal fun upgradePreferences(
         preferences: SharedPreferences,
-        previousVersionCode: LegacyVersionIdentifier
+        previousVersionCode: LegacyVersionIdentifier,
     ): Boolean {
         val pendingPreferenceUpgrades = PreferenceUpgrade.getPendingUpgrades(preferences, previousVersionCode)
 
@@ -114,7 +114,7 @@ object PreferenceUpgradeService {
             /** Returns a list of preference upgrade classes which have not been applied */
             fun getPendingUpgrades(
                 preferences: SharedPreferences,
-                legacyPreviousVersionCode: LegacyVersionIdentifier
+                legacyPreviousVersionCode: LegacyVersionIdentifier,
             ): List<PreferenceUpgrade> {
                 val currentPrefVersion: VersionIdentifier = getPreferenceVersion(preferences)
 
@@ -133,7 +133,7 @@ object PreferenceUpgradeService {
 
             internal fun setPreferenceVersion(
                 preferences: SharedPreferences,
-                versionIdentifier: VersionIdentifier
+                versionIdentifier: VersionIdentifier,
             ) {
                 Timber.i("upgrading preference version to '$versionIdentifier'")
                 preferences.edit { putInt(UPGRADE_VERSION_PREF_KEY, versionIdentifier) }
@@ -238,7 +238,7 @@ object PreferenceUpgradeService {
                     val fields =
                         s!!.split(
                             Consts.FIELD_SEPARATOR.toRegex(),
-                            CustomToolbarButton.KEEP_EMPTY_ENTRIES.coerceAtLeast(0)
+                            CustomToolbarButton.KEEP_EMPTY_ENTRIES.coerceAtLeast(0),
                         ).toTypedArray()
                     if (fields.size != 3) {
                         continue
@@ -302,7 +302,7 @@ object PreferenceUpgradeService {
                     Pair(45, ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR),
                     Pair(41, ViewerCommand.SHOW_HINT),
                     Pair(42, ViewerCommand.SHOW_ALL_HINTS),
-                    Pair(43, ViewerCommand.ADD_NOTE)
+                    Pair(43, ViewerCommand.ADD_NOTE),
                 )
 
             override fun upgrade(preferences: SharedPreferences) {
@@ -328,7 +328,7 @@ object PreferenceUpgradeService {
             private fun upgradeVolumeGestureToBinding(
                 preferences: SharedPreferences,
                 oldGesturePreferenceKey: String,
-                volumeKeyCode: Int
+                volumeKeyCode: Int,
             ) {
                 upgradeBinding(preferences, oldGesturePreferenceKey, keyCode(volumeKeyCode))
             }
@@ -336,7 +336,7 @@ object PreferenceUpgradeService {
             private fun upgradeGestureToBinding(
                 preferences: SharedPreferences,
                 oldGesturePreferenceKey: String,
-                gesture: Gesture
+                gesture: Gesture,
             ) {
                 upgradeBinding(preferences, oldGesturePreferenceKey, Binding.gesture(gesture))
             }
@@ -345,7 +345,7 @@ object PreferenceUpgradeService {
             internal fun upgradeBinding(
                 preferences: SharedPreferences,
                 oldGesturePreferenceKey: String,
-                binding: Binding
+                binding: Binding,
             ) {
                 Timber.d("Replacing gesture '%s' with binding", oldGesturePreferenceKey)
 
@@ -368,7 +368,7 @@ object PreferenceUpgradeService {
             private fun replaceBinding(
                 preferences: SharedPreferences,
                 oldGesturePreferenceKey: String,
-                binding: Binding
+                binding: Binding,
             ) {
                 // the preference should be set, but if it's null, then we have nothing to do
                 val pref = preferences.getString(oldGesturePreferenceKey, "0") ?: return
@@ -464,14 +464,14 @@ object PreferenceUpgradeService {
                 moveControlBindings(
                     preferences,
                     "binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED",
-                    ViewerCommand.FLIP_OR_ANSWER_EASE4.preferenceKey
+                    ViewerCommand.FLIP_OR_ANSWER_EASE4.preferenceKey,
                 )
             }
 
             private fun moveControlBindings(
                 preferences: SharedPreferences,
                 sourcePrefKey: String,
-                destinyPrefKey: String
+                destinyPrefKey: String,
             ) {
                 val sourcePrefValue = preferences.getString(sourcePrefKey, null) ?: return
                 val destinyPrefValue = preferences.getString(destinyPrefKey, null)

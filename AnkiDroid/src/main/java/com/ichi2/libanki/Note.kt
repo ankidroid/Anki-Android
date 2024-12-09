@@ -66,7 +66,7 @@ class Note : Cloneable {
     companion object {
         fun fromNotetypeId(
             col: Collection,
-            ntid: NoteTypeId
+            ntid: NoteTypeId,
         ): Note {
             val backendNote = col.backend.newNote(ntid)
             return Note(col, backendNote)
@@ -80,7 +80,7 @@ class Note : Cloneable {
 
     private fun loadFromBackendNote(
         col: Collection,
-        note: anki.notes.Note
+        note: anki.notes.Note,
     ) {
         this.id = note.id
         this.guId = note.guid
@@ -112,7 +112,7 @@ class Note : Cloneable {
         ord: Int = 0,
         customNoteType: NotetypeJson? = null,
         customTemplate: Template? = null,
-        fillEmpty: Boolean = false
+        fillEmpty: Boolean = false,
     ): Card {
         val card = Card(col, id = null)
         card.ord = ord
@@ -135,7 +135,7 @@ class Note : Cloneable {
                 card = card,
                 notetype = model,
                 template = template,
-                fillEmpty = fillEmpty
+                fillEmpty = fillEmpty,
             ).render(col)
         card.renderOutput = output
         card.note = this
@@ -148,8 +148,8 @@ class Note : Cloneable {
         return col.getCard(
             col.db.queryLongScalar(
                 "SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
-                this.id
-            )
+                this.id,
+            ),
         )
     }
 
@@ -171,7 +171,7 @@ class Note : Cloneable {
         // The items here are only used in the note editor, so it's a low priority.
         val result =
             Array(
-                fMap!!.size
+                fMap!!.size,
             ) { emptyStringArray(2) }
         for (fname in fMap!!.keys) {
             val i = fMap!![fname]!!.first
@@ -187,8 +187,8 @@ class Note : Cloneable {
                 ?: throw IllegalArgumentException(
                     String.format(
                         "No field named '%s' found",
-                        key
-                    )
+                        key,
+                    ),
                 )
         return fieldPair.first
     }
@@ -199,7 +199,7 @@ class Note : Cloneable {
 
     fun setItem(
         key: String,
-        value: String
+        value: String,
     ) {
         fields[fieldIndex(key)] = value
     }
@@ -214,7 +214,7 @@ class Note : Cloneable {
      */
     fun hasTag(
         col: Collection,
-        tag: String
+        tag: String,
     ): Boolean {
         return col.tags.inList(tag, tags)
     }
@@ -225,7 +225,7 @@ class Note : Cloneable {
 
     fun setTagsFromStr(
         col: Collection,
-        str: String
+        str: String,
     ) {
         tags = col.tags.split(str)
     }
@@ -233,7 +233,7 @@ class Note : Cloneable {
     fun removeTag(tag: String) {
         val rem: MutableList<String> =
             ArrayList(
-                tags.size
+                tags.size,
             )
         for (t in tags) {
             if (t.equals(tag, ignoreCase = true)) {
@@ -268,7 +268,7 @@ class Note : Cloneable {
 
     fun setField(
         index: Int,
-        value: String
+        value: String,
     ) {
         fields[index] = value
     }

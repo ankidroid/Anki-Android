@@ -70,7 +70,7 @@ suspend inline fun <reified S> Context.withBoundTo(block: (S) -> Unit)
         object : ServiceConnection {
             override fun onServiceConnected(
                 name: ComponentName?,
-                binder: IBinder?
+                binder: IBinder?,
             ) {
                 @Suppress("UNCHECKED_CAST")
                 continuation.resume((binder as SimpleBinder<S>).service)

@@ -74,7 +74,7 @@ class ReviewerTest : RobolectricTest() {
             scenario.onActivity { reviewer: Reviewer ->
                 assertNotNull(
                     "Collection should be non-null",
-                    reviewer.getColUnsafe
+                    reviewer.getColUnsafe,
                 )
             }
         }
@@ -136,11 +136,11 @@ class ReviewerTest : RobolectricTest() {
             BundleCompat.getParcelable(
                 fragmentBundle!!,
                 AnkiActivity.FINISH_ANIMATION_EXTRA,
-                ActivityTransitionAnimation.Direction::class.java
+                ActivityTransitionAnimation.Direction::class.java,
             )
         val expectedAnimation =
             ActivityTransitionAnimation.getInverseTransition(
-                AbstractFlashcardViewer.getAnimationTransitionFromGesture(fromGesture)
+                AbstractFlashcardViewer.getAnimationTransitionFromGesture(fromGesture),
             )
 
         assertEquals("Animation from swipe should be inverse to the finishing one", expectedAnimation, actualAnimation)
@@ -169,7 +169,7 @@ class ReviewerTest : RobolectricTest() {
         assertThat(
             "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
             visibleButtons,
-            empty()
+            empty(),
         )
     }
 
@@ -186,7 +186,7 @@ class ReviewerTest : RobolectricTest() {
         assertThat(
             "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
             visibleButtons,
-            empty()
+            empty(),
         )
     }
 
@@ -235,7 +235,7 @@ class ReviewerTest : RobolectricTest() {
                 arrayOf(
                     addRevNoteUsingBasicModelDueToday("1", "bar").firstCard(),
                     addNoteUsingBasicModel("2", "bar").firstCard(),
-                    addNoteUsingBasicModel("3", "bar").firstCard()
+                    addNoteUsingBasicModel("3", "bar").firstCard(),
                 )
             waitForAsyncTasksToComplete()
 
@@ -264,7 +264,7 @@ class ReviewerTest : RobolectricTest() {
             advanceRobolectricLooperWithSleep()
             equalFirstField(
                 cards[0],
-                reviewer.currentCard!!
+                reviewer.currentCard!!,
             ) // This failed in #6898 because this card was not in the queue
         }
 
@@ -287,7 +287,7 @@ class ReviewerTest : RobolectricTest() {
             assertThat(
                 jsApi.handleJsApiRequest("deckName", jsApiContract(), false)
                     .decodeToString(),
-                equalTo(formatApiResult("B"))
+                equalTo(formatApiResult("B")),
             )
         }
 
@@ -317,7 +317,7 @@ class ReviewerTest : RobolectricTest() {
             assertThat(
                 "Counts after an undo should be the same as before an undo",
                 countsAfterUndo,
-                equalTo(countsBeforeUndo)
+                equalTo(countsBeforeUndo),
             )
         }
 
@@ -385,7 +385,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun assertCurrentOrdIsNot(
         r: Reviewer,
-        @Suppress("SameParameterValue") i: Int
+        @Suppress("SameParameterValue") i: Int,
     ) {
         waitForAsyncTasksToComplete()
         val ord = r.currentCard!!.ord
@@ -402,30 +402,30 @@ class ReviewerTest : RobolectricTest() {
         r: Reviewer,
         newCount: Int,
         stepCount: Int,
-        revCount: Int
+        revCount: Int,
     ) = runTest {
         val jsApi = r.jsApi
         val countList =
             listOf(
                 getDataFromRequest("newCardCount", jsApi),
                 getDataFromRequest("lrnCardCount", jsApi),
-                getDataFromRequest("revCardCount", jsApi)
+                getDataFromRequest("revCardCount", jsApi),
             )
         val expected =
             listOf(
                 formatApiResult(newCount),
                 formatApiResult(stepCount),
-                formatApiResult(revCount)
+                formatApiResult(revCount),
             )
         assertThat(
             countList.toString(),
-            equalTo(expected.toString())
+            equalTo(expected.toString()),
         ) // We use toString as hamcrest does not print the whole array and stops at [0].
     }
 
     private fun answerCardOrdinalAsGood(
         r: Reviewer,
-        i: Int
+        i: Int,
     ) {
         assertCurrentOrdIs(r, i)
 
@@ -436,7 +436,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun assertCurrentOrdIs(
         r: Reviewer,
-        i: Int
+        i: Int,
     ) {
         waitForAsyncTasksToComplete()
         val ord = r.currentCard!!.ord
@@ -466,7 +466,7 @@ class ReviewerTest : RobolectricTest() {
     private fun cloneTemplate(
         notetypes: Notetypes,
         notetype: NotetypeJson?,
-        extra: String
+        extra: String,
     ) {
         val tmpls = notetype!!.getJSONArray("tmpls")
         val defaultTemplate = tmpls.getJSONObject(0)
@@ -496,7 +496,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun runReviewer(
         cards: List<String>,
-        block: suspend Reviewer.() -> Unit
+        block: suspend Reviewer.() -> Unit,
     ) = runTest {
         for (frontSide in cards) {
             addNoteUsingBasicModel(front = frontSide)
@@ -551,7 +551,7 @@ class ReviewerTest : RobolectricTest() {
 
         fun <T : Reviewer?> startReviewer(
             testClass: RobolectricTest,
-            clazz: Class<T>
+            clazz: Class<T>,
         ): T = startActivityNormallyOpenCollectionWithIntent(testClass, clazz, Intent())
     }
 }

@@ -56,7 +56,7 @@ class AddonData(
     val author: Map<String, String>? = null,
     val license: String? = null,
     val homepage: String? = null,
-    val dist: DistInfo? = null
+    val dist: DistInfo? = null,
 )
 
 @Serializable
@@ -158,7 +158,7 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
             author = addonData.author!!,
             license = addonData.license!!,
             homepage = addonData.homepage!!,
-            dist = addonData.dist!!
+            dist = addonData.dist!!,
         )
 
     return Pair(addonModel, immutableList)

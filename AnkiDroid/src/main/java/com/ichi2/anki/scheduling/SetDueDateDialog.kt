@@ -145,7 +145,7 @@ class SetDueDateDialog : DialogFragment() {
                         }
                         super.onPageSelected(position)
                     }
-                }
+                },
             )
 
             // setup 'set interval to same value' checkbox
@@ -160,7 +160,7 @@ class SetDueDateDialog : DialogFragment() {
 
     override fun setupDialog(
         dialog: Dialog,
-        style: Int
+        style: Int,
     ) {
         super.setupDialog(dialog, style)
         // this is required for the keyboard to appear: https://stackoverflow.com/a/10133603/
@@ -173,7 +173,7 @@ class SetDueDateDialog : DialogFragment() {
         Timber.d("updating width to %d", intendedWidth)
         this.dialog?.window?.setLayout(
             intendedWidth,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT,
         )
     }
 
@@ -210,7 +210,7 @@ class SetDueDateDialog : DialogFragment() {
 
         override fun onViewCreated(
             view: View,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ) {
             super.onViewCreated(view, savedInstanceState)
             view.findViewById<TextInputLayout>(R.id.set_due_date_single_day_text).apply {
@@ -228,7 +228,7 @@ class SetDueDateDialog : DialogFragment() {
                             // 0 days
                             resources.getQuantityString(R.plurals.set_due_date_label_suffix, 0),
                             // 1 day
-                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1)
+                            resources.getQuantityString(R.plurals.set_due_date_label_suffix, 1),
                         )
                 }
             }
@@ -250,7 +250,7 @@ class SetDueDateDialog : DialogFragment() {
 
         override fun onViewCreated(
             view: View,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ) {
             super.onViewCreated(view, savedInstanceState)
             view.findViewById<TextInputLayout>(R.id.date_range_start_layout).apply {

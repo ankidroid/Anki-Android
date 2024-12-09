@@ -24,7 +24,7 @@ class PreviewerViewModelTest {
     fun `type answer fields are removed in questions`() {
         assertThat(
             PreviewerViewModel.typeAnsQuestionFilter("creu [[type:leu]]"),
-            equalTo("creu ")
+            equalTo("creu "),
         )
     }
 }

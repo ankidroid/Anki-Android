@@ -116,8 +116,8 @@ object Aapt2Util {
 
                 // Ignore size, width, flags, etc.
                 while (index < str.length && (
-                    c() == '-' || c() == '#' || c() == '+' || c() == ' ' ||
-                        c() == ',' || c() == '(' || (c() in '0'..'9')
+                        c() == '-' || c() == '#' || c() == '+' || c() == ' ' ||
+                            c() == ',' || c() == '(' || (c() in '0'..'9')
                     )
                 ) {
                     index++
@@ -160,7 +160,7 @@ object Aapt2Util {
         return StringFormatData(
             argCount = argCount,
             hasNonPositionalArguments = nonpositional,
-            string = str
+            string = str,
         )
     }
 
@@ -172,7 +172,7 @@ object Aapt2Util {
      */
     private fun consumeDigits(
         s: String,
-        index: Int
+        index: Int,
     ): Int {
         var digits = 0
         @Suppress("UseWithIndex")

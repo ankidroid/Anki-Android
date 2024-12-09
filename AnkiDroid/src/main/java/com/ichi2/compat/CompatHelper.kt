@@ -72,7 +72,7 @@ class CompatHelper private constructor() {
             get() = (
                 "chromium".equals(Build.BRAND, ignoreCase = true) || "chromium".equals(Build.MANUFACTURER, ignoreCase = true) ||
                     "novato_cheets".equals(Build.DEVICE, ignoreCase = true)
-                )
+            )
         val isKindle: Boolean
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
@@ -99,7 +99,7 @@ class CompatHelper private constructor() {
         @Throws(NameNotFoundException::class)
         fun Context.getPackageInfoCompat(
             packageName: String,
-            flags: PackageInfoFlagsCompat
+            flags: PackageInfoFlagsCompat,
         ): PackageInfo? = this.packageManager.getPackageInfoCompat(packageName, flags)
 
         /**
@@ -112,7 +112,7 @@ class CompatHelper private constructor() {
         @Throws(NameNotFoundException::class)
         fun PackageManager.getPackageInfoCompat(
             packageName: String,
-            flags: PackageInfoFlagsCompat
+            flags: PackageInfoFlagsCompat,
         ): PackageInfo? = compat.getPackageInfo(this, packageName, flags)
 
         /**
@@ -127,7 +127,7 @@ class CompatHelper private constructor() {
          */
         fun PackageManager.resolveServiceCompat(
             intent: Intent,
-            flags: ResolveInfoFlagsCompat
+            flags: ResolveInfoFlagsCompat,
         ): ResolveInfo? {
             return compat.resolveService(this, intent, flags)
         }
@@ -146,7 +146,7 @@ class CompatHelper private constructor() {
          */
         fun PackageManager.queryIntentActivitiesCompat(
             intent: Intent,
-            flags: ResolveInfoFlagsCompat
+            flags: ResolveInfoFlagsCompat,
         ): List<ResolveInfo> {
             return compat.queryIntentActivities(this, intent, flags)
         }
@@ -176,7 +176,7 @@ class CompatHelper private constructor() {
          */
         fun PackageManager.resolveActivityCompat(
             intent: Intent,
-            flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY
+            flags: ResolveInfoFlagsCompat = ResolveInfoFlagsCompat.EMPTY,
         ): ResolveInfo? {
             return compat.resolveActivity(this, intent, flags)
         }
@@ -202,7 +202,7 @@ class CompatHelper private constructor() {
         fun Context.registerReceiverCompat(
             receiver: BroadcastReceiver?,
             filter: IntentFilter,
-            @ContextCompat.RegisterReceiverFlags flags: Int
+            @ContextCompat.RegisterReceiverFlags flags: Int,
         ) = ContextCompat.registerReceiver(this, receiver, filter, flags)
     }
 }

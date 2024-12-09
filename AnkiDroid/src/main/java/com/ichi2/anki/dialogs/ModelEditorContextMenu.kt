@@ -35,14 +35,14 @@ open class ModelEditorContextMenu : AnalyticsDialogFragment() {
 
     enum class ModelEditorContextMenuAction(
         val order: Int,
-        @StringRes val actionTextId: Int
+        @StringRes val actionTextId: Int,
     ) {
         Reposition(0, R.string.model_field_editor_reposition_menu),
         Sort(1, R.string.model_field_editor_sort_field),
         Rename(2, R.string.model_field_editor_rename),
         Delete(3, R.string.model_field_editor_delete),
         ToggleSticky(4, R.string.model_field_editor_toggle_sticky),
-        AddLanguageHint(5, R.string.model_field_editor_language_hint)
+        AddLanguageHint(5, R.string.model_field_editor_language_hint),
     }
 
     companion object {

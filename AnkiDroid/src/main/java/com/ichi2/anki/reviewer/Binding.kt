@@ -97,7 +97,7 @@ sealed interface Binding {
 
     data class UnicodeCharacter(
         val unicodeCharacter: Char,
-        override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift()
+        override val modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
     ) : KeyBinding {
         override fun toDisplayString(context: Context): String =
             buildString {
@@ -164,7 +164,7 @@ sealed interface Binding {
             return (
                 this.shiftMatches(true) == keys.shiftMatches(true) ||
                     this.shiftMatches(false) == keys.shiftMatches(false)
-                )
+            )
         }
 
         companion object {
@@ -283,7 +283,7 @@ sealed interface Binding {
 
         fun unicode(
             modifierKeys: ModifierKeys,
-            unicodeChar: Char
+            unicodeChar: Char,
         ): Binding = unicode(unicodeChar, modifierKeys)
 
         /**
@@ -292,7 +292,7 @@ sealed interface Binding {
          */
         fun unicode(
             unicodeChar: Char,
-            modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift()
+            modifierKeys: ModifierKeys = AppDefinedModifierKeys.allowShift(),
         ): Binding {
             if (unicodeChar == FORBIDDEN_UNICODE_CHAR) return unknown()
             return UnicodeCharacter(unicodeChar, modifierKeys)
@@ -300,12 +300,12 @@ sealed interface Binding {
 
         fun keyCode(
             keyCode: Int,
-            modifiers: ModifierKeys = ModifierKeys.none()
+            modifiers: ModifierKeys = ModifierKeys.none(),
         ) = KeyCode(keyCode, modifiers)
 
         fun keyCode(
             modifiers: ModifierKeys,
-            keyCode: Int
+            keyCode: Int,
         ) = KeyCode(keyCode, modifiers)
 
         fun gesture(gesture: Gesture) = GestureInput(gesture)

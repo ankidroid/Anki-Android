@@ -78,7 +78,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "syncAccount",
             "syncBaseUrl",
             "language",
-            "customSyncCertificate"
+            "customSyncCertificate",
         )
 
     @Test
@@ -86,7 +86,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         val intersection = preferencesWhoseChangesShouldBeReported.intersect(excludedPrefs)
         assertThat(
             "The include and exclude prefs list shouldn't share elements: $intersection",
-            intersection.isEmpty()
+            intersection.isEmpty(),
         )
     }
 
@@ -101,7 +101,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "All preference keys must be included in either the" +
                 " `preferencesWhoseChangesShouldBeReported` or the `excludedPrefs` list" +
                 ": $keysNotInAList",
-            keysNotInAList.isEmpty()
+            keysNotInAList.isEmpty(),
         )
     }
 
@@ -112,7 +112,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
             "preferencesWhoseChangesShouldBeReported should not have" +
                 " elements that aren't in the preference keys" +
                 ": $extraKeys",
-            extraKeys.isEmpty()
+            extraKeys.isEmpty(),
         )
     }
 
@@ -122,7 +122,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         assertThat(
             "excludedPrefs should not have elements that aren't in the preference keys" +
                 ": $extraKeys",
-            extraKeys.isEmpty()
+            extraKeys.isEmpty(),
         )
     }
 
@@ -134,7 +134,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         assertThat(
             "dev options keys must not be in the `preferencesWhoseChangesShouldBeReported` list" +
                 ": $devOptionsAtReportList",
-            devOptionsAtReportList.isEmpty()
+            devOptionsAtReportList.isEmpty(),
         )
     }
 
@@ -142,7 +142,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
     fun `getPreferenceReportableValue - String`() {
         assertThat(
             SettingsFragment.getPreferenceReportableValue("3"),
-            Matchers.equalTo(3)
+            Matchers.equalTo(3),
         )
         assertNull(SettingsFragment.getPreferenceReportableValue("foo"))
     }

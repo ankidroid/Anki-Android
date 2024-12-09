@@ -61,7 +61,7 @@ class DialogTitleView : FixedTextView {
 
     override fun onMeasure(
         widthMeasureSpec: Int,
-        heightMeasureSpec: Int
+        heightMeasureSpec: Int,
     ) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -80,7 +80,7 @@ class DialogTitleView : FixedTextView {
                 null,
                 R.styleable.TextAppearance,
                 android.R.attr.textAppearanceMedium,
-                android.R.style.TextAppearance_Medium
+                android.R.style.TextAppearance_Medium,
             )
         val textSize = a.getDimensionPixelSize(R.styleable.TextAppearance_android_textSize, 0)
         if (textSize != 0) {

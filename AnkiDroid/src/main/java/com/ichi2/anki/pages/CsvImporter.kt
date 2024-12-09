@@ -48,14 +48,14 @@ class CsvImporter : PageFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTransparentStatusBar()
     }
 
     inner class CsvImporterWebViewClient(
-        private val backCallback: OnBackPressedCallback
+        private val backCallback: OnBackPressedCallback,
     ) : PageWebViewClient() {
         /**
          * Ideally, to handle the state of the back callback, we would just need to check for
@@ -66,7 +66,7 @@ class CsvImporter : PageFragment() {
 
         override fun onPageFinished(
             view: WebView?,
-            url: String?
+            url: String?,
         ) {
             view!!.evaluateJavascript(hideShowButtonCss) {
                 super.onPageFinished(view, url)
@@ -75,7 +75,7 @@ class CsvImporter : PageFragment() {
 
         override fun onLoadResource(
             view: WebView?,
-            url: String?
+            url: String?,
         ) {
             super.onLoadResource(view, url)
             backCallback.isEnabled =
@@ -98,7 +98,7 @@ class CsvImporter : PageFragment() {
          */
         fun getIntent(
             context: Context,
-            filePath: String
+            filePath: String,
         ): Intent {
             val title = context.getString(R.string.menu_import)
             return getIntent(context, "import-csv$filePath", title, CsvImporter::class)

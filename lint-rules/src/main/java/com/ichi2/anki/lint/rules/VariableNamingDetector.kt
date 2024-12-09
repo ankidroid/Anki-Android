@@ -35,12 +35,12 @@ class VariableNamingDetector : Detector(), Detector.UastScanner {
 
     private fun reportVariable(
         context: JavaContext,
-        node: UVariable
+        node: UVariable,
     ) {
         context.report(
             ISSUE,
             context.getLocation(node as UElement),
-            ISSUE.getBriefDescription(TextFormat.TEXT)
+            ISSUE.getBriefDescription(TextFormat.TEXT),
         )
     }
 
@@ -70,14 +70,14 @@ class VariableNamingDetector : Detector(), Detector.UastScanner {
                 id = "VariableNamingDetector",
                 briefDescription = "Variable name should not use field prefixes.",
                 explanation =
-                """
-                Variable name should not use any field prefix to make clear to who is reading which one is a field
-                and which one is a variable.
-                """.trimIndent(),
+                    """
+                    Variable name should not use any field prefix to make clear to who is reading which one is a field
+                    and which one is a variable.
+                    """.trimIndent(),
                 category = Constants.ANKI_CODE_STYLE_CATEGORY,
                 priority = Constants.ANKI_CODE_STYLE_PRIORITY,
                 severity = Constants.ANKI_CODE_STYLE_SEVERITY,
-                implementation = IMPLEMENTATION
+                implementation = IMPLEMENTATION,
             )
     }
 }

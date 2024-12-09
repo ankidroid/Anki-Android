@@ -73,7 +73,7 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
     final override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
+        appWidgetIds: IntArray,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         if (!IntentHandler.grantedStoragePermissions(context, showToast = false)) {
@@ -102,6 +102,6 @@ abstract class AnalyticsWidgetProvider : AppWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray,
-        usageAnalytics: UsageAnalytics
+        usageAnalytics: UsageAnalytics,
     )
 }

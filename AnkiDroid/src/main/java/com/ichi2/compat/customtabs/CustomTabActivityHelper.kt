@@ -91,7 +91,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     fun mayLaunchUrl(
         uri: Uri?,
         extras: Bundle?,
-        otherLikelyBundles: List<Bundle?>?
+        otherLikelyBundles: List<Bundle?>?,
     ): Boolean {
         if (client == null) return false
         val session = session ?: return false
@@ -133,7 +133,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
          */
         fun openUri(
             activity: Activity,
-            uri: Uri
+            uri: Uri,
         )
     }
 
@@ -157,7 +157,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
             activity: Activity,
             customTabsIntent: CustomTabsIntent,
             uri: Uri,
-            fallback: CustomTabFallback?
+            fallback: CustomTabFallback?,
         ) {
             val packageName = CustomTabsHelper.getPackageNameToUse(activity)
 

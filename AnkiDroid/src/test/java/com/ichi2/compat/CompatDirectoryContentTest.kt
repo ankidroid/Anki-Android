@@ -93,7 +93,7 @@ class CompatDirectoryContentTest : Test21And26() {
             assertThat(
                 "Starting at API 26, this should be a NotDirectoryException",
                 exception,
-                instanceOf(NotDirectoryException::class.java)
+                instanceOf(NotDirectoryException::class.java),
             )
         }
     }

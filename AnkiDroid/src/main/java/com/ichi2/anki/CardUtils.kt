@@ -15,7 +15,7 @@ object CardUtils {
      */
     fun getNotes(
         col: Collection,
-        cards: kotlin.collections.Collection<Card>
+        cards: kotlin.collections.Collection<Card>,
     ): Set<Note> {
         val notes: MutableSet<Note> = hashSetInit(cards.size)
         for (card in cards) {

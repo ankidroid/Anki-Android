@@ -72,8 +72,8 @@ fun tapOnCountLayouts(deckName: String) {
     onView(withId(R.id.decks)).perform(
         RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
             hasDescendant(withText(deckName)),
-            clickChildViewWithId(R.id.counts_layout)
-        )
+            clickChildViewWithId(R.id.counts_layout),
+        ),
     )
 
     // without this sleep, the study options fragment sometimes loses the "load and become active" race vs the assertion below.
@@ -89,8 +89,8 @@ fun clickOnDeckWithName(deckName: String) {
     onView(withId(R.id.decks)).perform(
         RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
             hasDescendant(withText(deckName)),
-            click()
-        )
+            click(),
+        ),
     )
 }
 

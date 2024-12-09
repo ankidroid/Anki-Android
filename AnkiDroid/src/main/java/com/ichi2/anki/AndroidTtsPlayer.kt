@@ -70,19 +70,19 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
 
                         override fun onStop(
                             utteranceId: String?,
-                            interrupted: Boolean
+                            interrupted: Boolean,
                         ) {
                             scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(TtsCompletionStatus.stopped()) }
                         }
 
                         override fun onError(
                             utteranceId: String?,
-                            errorCode: Int
+                            errorCode: Int,
                         ) {
                             val error = AndroidTtsError.fromErrorCode(errorCode)
                             scope.launch(Dispatchers.IO) { ttsCompletedChannel.send(TtsCompletionStatus.failure(error)) }
                         }
-                    }
+                    },
                 )
             }
     }
@@ -111,7 +111,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
 
     private suspend fun play(
         tag: TTSTag,
-        voice: AndroidTtsVoice
+        voice: AndroidTtsVoice,
     ): TtsCompletionStatus =
         suspendCancellableCoroutine { continuation ->
             val tts =
@@ -147,7 +147,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
                 continuation.resume(
                     ttsCompletedChannel.receive().also {
                         Timber.v("tts completed")
-                    }
+                    },
                 )
             }
         }
@@ -163,7 +163,7 @@ class AndroidTtsPlayer(private val context: Context, private val voices: List<Tt
         @CheckResult
         suspend fun createInstance(
             context: Context,
-            scope: CoroutineScope
+            scope: CoroutineScope,
         ): AndroidTtsPlayer {
             val voices = TtsVoices.allTtsVoices().toList()
             return AndroidTtsPlayer(context, voices).apply {

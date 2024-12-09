@@ -81,7 +81,7 @@ data class Shortcut(val shortcut: String, val label: String) {
         @CheckResult
         fun isPotentialShortcutCombination(
             event: KeyEvent,
-            keyCode: Int
+            keyCode: Int,
         ): Boolean {
             if (!(event.isCtrlPressed || event.isAltPressed || event.isMetaPressed)) return false
             return (keyCode in KeyEvent.KEYCODE_A..KeyEvent.KEYCODE_Z) ||
@@ -95,7 +95,7 @@ data class Shortcut(val shortcut: String, val label: String) {
  */
 fun AnkiActivityProvider.shortcut(
     shortcut: String,
-    @StringRes labelRes: Int
+    @StringRes labelRes: Int,
 ) = Shortcut(shortcut, ankiActivity.getString(labelRes))
 
 /**
@@ -103,5 +103,5 @@ fun AnkiActivityProvider.shortcut(
  */
 fun shortcut(
     shortcut: String,
-    getTranslation: Translations.() -> String
+    getTranslation: Translations.() -> String,
 ) = Shortcut(shortcut, getTranslation(TR))

@@ -37,7 +37,7 @@ class FileUtilTest {
     @Throws(Exception::class)
     private fun createSrcFilesForTest(
         temporaryRoot: File,
-        testDirName: String
+        testDirName: String,
     ): File {
         val grandParentDir = File(temporaryRoot, testDirName)
         val parentDir = File(grandParentDir, "parent")
@@ -52,7 +52,7 @@ class FileUtilTest {
                 File(childDir, "file3.txt"),
                 File(childDir2, "file4.txt"),
                 File(grandChildDir, "file5.txt"),
-                File(grandChildDir, "file6.txt")
+                File(grandChildDir, "file6.txt"),
             )
         grandChildDir.mkdirs()
         grandChild2Dir.mkdirs()

@@ -182,7 +182,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldUndoIfAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH))
+            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(true)
         underTest.handleAndroidKeyPress(KEYCODE_Z)
@@ -193,7 +193,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     fun pressingZShouldNotUndoIfNotAvailable() {
         ViewerCommand.UNDO.addBinding(
             sharedPrefs(),
-            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH))
+            MappableBinding(keyCode(KEYCODE_Z, ModifierKeys.none()), MappableBinding.Screen.Reviewer(CardSide.BOTH)),
         )
         val underTest = KeyboardInputTestReviewer.displayingAnswer().withUndoAvailable(false)
         underTest.handleUnicodeKeyPress('z')
@@ -206,7 +206,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         underTest.handleSpacebar()
         assertThat(
             "When text field is focused, space should not display answer",
-            !underTest.didDisplayAnswer()
+            !underTest.didDisplayAnswer(),
         )
     }
 
@@ -226,7 +226,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
     private fun assertGamepadButtonAnswers(
         keycodeButton: Int,
-        ease: Ease
+        ease: Ease,
     ) {
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
         assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer())
@@ -305,7 +305,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
         fun handleKeyPress(
             keycode: Int,
-            unicodeChar: Char
+            unicodeChar: Char,
         ) {
             // COULD_BE_BETTER: Saves 20 seconds on tests to remove AndroidJUnit4,
             // but may let something slip through the cracks.
@@ -352,7 +352,7 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
 
         private fun createKeyEvent(
             action: Int,
-            keycode: Int
+            keycode: Int,
         ): KeyEvent {
             val keyEvent = Mockito.mock(KeyEvent::class.java)
             whenever(keyEvent.keyCode).thenReturn(keycode)

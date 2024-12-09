@@ -27,7 +27,7 @@ import kotlin.time.Duration
 open class CompatV31 : CompatV29() {
     override fun vibrate(
         context: Context,
-        duration: Duration
+        duration: Duration,
     ) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         val effect = VibrationEffect.createOneShot(duration.inWholeMilliseconds, VibrationEffect.DEFAULT_AMPLITUDE)

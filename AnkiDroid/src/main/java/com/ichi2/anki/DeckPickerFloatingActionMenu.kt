@@ -31,7 +31,7 @@ import timber.log.Timber
 class DeckPickerFloatingActionMenu(
     private val context: Context,
     view: View,
-    private val deckPicker: DeckPicker
+    private val deckPicker: DeckPicker,
 ) {
     private val fabMain: FloatingActionButton = view.findViewById(R.id.fab_main)
     private val addSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)
@@ -183,7 +183,7 @@ class DeckPickerFloatingActionMenu(
                             override fun onAnimationCancel(animator: Animator) {}
 
                             override fun onAnimationRepeat(animator: Animator) {}
-                        }
+                        },
                     )
                 addFilteredDeckLayout.animate().translationY(400f).setDuration(100)
                     .setListener(
@@ -202,7 +202,7 @@ class DeckPickerFloatingActionMenu(
                             override fun onAnimationCancel(animator: Animator) {}
 
                             override fun onAnimationRepeat(animator: Animator) {}
-                        }
+                        },
                     )
             } else {
                 // Close without animation
@@ -254,7 +254,7 @@ class DeckPickerFloatingActionMenu(
                             override fun onAnimationCancel(animator: Animator) {}
 
                             override fun onAnimationRepeat(animator: Animator) {}
-                        }
+                        },
                     )
                 addFilteredDeckLayout.animate().translationY(600f).setDuration(100)
                     .setListener(
@@ -273,7 +273,7 @@ class DeckPickerFloatingActionMenu(
                             override fun onAnimationCancel(animator: Animator) {}
 
                             override fun onAnimationRepeat(animator: Animator) {}
-                        }
+                        },
                     )
             } else {
                 // Close without animation
@@ -313,19 +313,19 @@ class DeckPickerFloatingActionMenu(
             Settings.Global.getFloat(
                 context.contentResolver,
                 Settings.Global.ANIMATOR_DURATION_SCALE,
-                1f
+                1f,
             )
         val animTransition: Float =
             Settings.Global.getFloat(
                 context.contentResolver,
                 Settings.Global.TRANSITION_ANIMATION_SCALE,
-                1f
+                1f,
             )
         val animWindow: Float =
             Settings.Global.getFloat(
                 context.contentResolver,
                 Settings.Global.WINDOW_ANIMATION_SCALE,
-                1f
+                1f,
             )
         return animDuration != 0f && animTransition != 0f && animWindow != 0f
     }
@@ -353,7 +353,7 @@ class DeckPickerFloatingActionMenu(
                         addNote()
                     }
                 }
-            }
+            },
         )
         fabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
         val addDeckListener =

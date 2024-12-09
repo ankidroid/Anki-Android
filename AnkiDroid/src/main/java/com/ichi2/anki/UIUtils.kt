@@ -12,7 +12,7 @@ import java.util.Calendar
 fun showThemedToast(
     context: Context,
     text: String,
-    shortLength: Boolean
+    shortLength: Boolean,
 ) {
     Toast.makeText(context, text, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
 }
@@ -20,7 +20,7 @@ fun showThemedToast(
 fun showThemedToast(
     context: Context,
     text: CharSequence,
-    shortLength: Boolean
+    shortLength: Boolean,
 ) {
     showThemedToast(context, text.toString(), shortLength)
 }
@@ -28,14 +28,14 @@ fun showThemedToast(
 fun showThemedToast(
     context: Context,
     @StringRes textResource: Int,
-    shortLength: Boolean
+    shortLength: Boolean,
 ) {
     Toast.makeText(context, textResource, if (shortLength) Toast.LENGTH_SHORT else Toast.LENGTH_LONG).show()
 }
 
 fun getDensityAdjustedValue(
     context: Context,
-    value: Float
+    value: Float,
 ): Float {
     return context.resources.displayMetrics.density * value
 }
@@ -61,7 +61,7 @@ fun getDayStart(time: Time): Long {
  */
 fun convertDpToPixel(
     dp: Float,
-    context: Context
+    context: Context,
 ): Float {
     return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
 }

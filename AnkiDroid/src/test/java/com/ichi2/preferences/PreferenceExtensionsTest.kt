@@ -37,7 +37,7 @@ class PreferenceExtensionsTest {
 
     private fun getOrSetString(
         key: String,
-        supplier: Supplier<String>
+        supplier: Supplier<String>,
     ): String {
         return mockPreferences.getOrSetString(key, supplier)
     }

@@ -36,7 +36,7 @@ object TestUtils {
             InstrumentationRegistry.getInstrumentation().runOnMainSync {
                 val resumedActivities: Collection<*> =
                     ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(
-                        Stage.RESUMED
+                        Stage.RESUMED,
                     )
                 if (resumedActivities.iterator().hasNext()) {
                     val currentActivity = resumedActivities.iterator().next() as Activity
@@ -55,7 +55,7 @@ object TestUtils {
             (
                 activityInstance!!.resources.configuration.screenLayout and
                     Configuration.SCREENLAYOUT_SIZE_MASK
-                ) ==
+            ) ==
                 Configuration.SCREENLAYOUT_SIZE_XLARGE
 
     /**
@@ -73,7 +73,7 @@ object TestUtils {
 
             override fun perform(
                 uiController: UiController,
-                view: View
+                view: View,
             ) {
                 val v = view.findViewById<View>(id)
                 v.performClick()

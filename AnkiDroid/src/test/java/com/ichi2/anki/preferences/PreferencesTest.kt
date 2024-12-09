@@ -51,7 +51,7 @@ class PreferencesTest : RobolectricTest() {
             getJavaMethodAsAccessible(
                 AppCompatActivity::class.java,
                 "attachBaseContext",
-                Context::class.java
+                Context::class.java,
             )
         attachBaseContext.invoke(preferences, targetContext)
     }
@@ -101,7 +101,7 @@ class PreferencesTest : RobolectricTest() {
             assertThat(
                 "${fragment::class.jvmName} should implement TitleProvider",
                 fragment is TitleProvider,
-                equalTo(true)
+                equalTo(true),
             )
         }
     }
@@ -112,14 +112,14 @@ class PreferencesTest : RobolectricTest() {
             PreferenceTestUtils.getAttrsFromXml(
                 targetContext,
                 R.xml.preference_headers,
-                listOf("key", "fragment")
+                listOf("key", "fragment"),
             ).filter { it["fragment"] != null }
 
         assertTrue(headers.all { it["key"] != null })
 
         fun assertThatFragmentLeadsToHeaderKey(
             fragmentClass: String,
-            parentFragmentClass: String? = null
+            parentFragmentClass: String? = null,
         ) {
             val fragment = getInstanceFromClassName<Fragment>(fragmentClass)
             val headerFragmentClass = parentFragmentClass ?: fragmentClass

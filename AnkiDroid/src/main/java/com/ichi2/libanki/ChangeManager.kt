@@ -55,7 +55,7 @@ object ChangeManager {
          */
         fun opExecuted(
             changes: OpChanges,
-            handler: Any?
+            handler: Any?,
         )
     }
 
@@ -70,7 +70,7 @@ object ChangeManager {
 
     private fun notifySubscribers(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         val expired = mutableListOf<WeakReference<Subscriber>>()
         for (subscriber in subscribers) {
@@ -101,7 +101,7 @@ object ChangeManager {
 
     internal fun <T> notifySubscribers(
         changes: T,
-        initiator: Any?
+        initiator: Any?,
     ) {
         val opChanges =
             when (changes) {
@@ -145,7 +145,7 @@ object ChangeManager {
  * to notify change subscribers of the changes. */
 suspend fun <T> undoableOp(
     handler: Any? = null,
-    block: Collection.() -> T
+    block: Collection.() -> T,
 ): T {
     return withCol {
         block()

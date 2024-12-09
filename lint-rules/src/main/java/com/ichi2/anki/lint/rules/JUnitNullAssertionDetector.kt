@@ -44,7 +44,7 @@ class JUnitNullAssertionDetector : Detector(), SourceCodeScanner {
     override fun visitMethodCall(
         context: JavaContext,
         node: UCallExpression,
-        method: PsiMethod
+        method: PsiMethod,
     ) {
         super.visitMethodCall(context, node, method)
         // only for kotlin files
@@ -55,7 +55,7 @@ class JUnitNullAssertionDetector : Detector(), SourceCodeScanner {
         context.report(
             ISSUE,
             context.getCallLocation(node, includeReceiver = true, includeArguments = true),
-            DESCRIPTION
+            DESCRIPTION,
         )
     }
 
@@ -78,7 +78,7 @@ class JUnitNullAssertionDetector : Detector(), SourceCodeScanner {
                 Constants.ANKI_CODE_STYLE_CATEGORY,
                 Constants.ANKI_CODE_STYLE_PRIORITY,
                 Constants.ANKI_CODE_STYLE_SEVERITY,
-                implementation
+                implementation,
             )
     }
 }

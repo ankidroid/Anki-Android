@@ -25,7 +25,7 @@ class MapUtilTest {
             12 to "Anki",
             5 to "AnkiMobile",
             20 to "AnkiDroid",
-            30 to "AnkiDesktop"
+            30 to "AnkiDesktop",
         )
 
     @Test

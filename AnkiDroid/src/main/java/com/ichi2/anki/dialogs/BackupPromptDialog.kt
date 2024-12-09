@@ -101,7 +101,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
                     userCheckedDoNotShowAgain = false
                     onDismiss()
                 },
-                onDisableReminder = { dialogPermanentlyDismissed = true }
+                onDisableReminder = { dialogPermanentlyDismissed = true },
             )
         } else {
             timesDialogDismissed += 1
@@ -122,7 +122,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
 
     private fun build(
         isLoggedIn: Boolean,
-        performBackup: () -> Unit
+        performBackup: () -> Unit,
     ) {
         this.alertDialog =
             AlertDialog.Builder(windowContext).create {
@@ -218,7 +218,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         fun showPermanentlyDismissDialog(
             context: Context,
             onCancel: () -> Unit,
-            onDisableReminder: () -> Unit
+            onDisableReminder: () -> Unit,
         ) {
             val message = getPermanentlyDismissDialogMessageOrImmediatelyDismiss(context)
             if (message == null) {
@@ -288,7 +288,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         return try {
             return windowContext.packageManager.getPackageInfoCompat(
                 windowContext.packageName,
-                PackageInfoFlagsCompat.of(0)
+                PackageInfoFlagsCompat.of(0),
             )?.firstInstallTime
         } catch (exception: Exception) {
             Timber.w("failed to get first install time")

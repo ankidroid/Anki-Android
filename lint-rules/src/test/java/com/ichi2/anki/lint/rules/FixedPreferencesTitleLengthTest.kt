@@ -106,11 +106,11 @@ class FixedPreferencesTitleLengthTest {
             .files(
                 TestFiles.xml("res/xml/preference_general_invalid.xml", preferenceString),
                 TestFiles.xml("res/values/10-preferences.xml", strings10XmlInvalid),
-                TestFiles.xml("res/values/01-core.xml", strings1XmlInvalid)
+                TestFiles.xml("res/values/01-core.xml", strings1XmlInvalid),
             )
             .issues(
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
-                FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH
+                FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
             )
             .run()
             .expectErrorCount(3)
@@ -124,7 +124,7 @@ res/values/10-preferences.xml:3: Error: Preference title 'app_name' is missing m
 res/values/10-preferences.xml:6: Error: Preference title 'button_sync' has maxLength="55". Its max length should be at most 41. [PreferencesTitleMaxLengthAttr]
     <string name="button_sync" maxLength="55">button_sync</string>
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-3 errors, 0 warnings"""
+3 errors, 0 warnings""",
             )
     }
 
@@ -135,11 +135,11 @@ res/values/10-preferences.xml:6: Error: Preference title 'button_sync' has maxLe
             .files(
                 TestFiles.xml("res/xml/preference_general_valid.xml", preferenceString),
                 TestFiles.xml("res/values/10-preferences.xml", strings10XmlValid),
-                TestFiles.xml("res/values/01-core.xml", strings1XmlValid)
+                TestFiles.xml("res/values/01-core.xml", strings1XmlValid),
             )
             .issues(
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
-                FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH
+                FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
             )
             .run()
             .expectClean()
@@ -151,11 +151,11 @@ res/values/10-preferences.xml:6: Error: Preference title 'button_sync' has maxLe
             .allowCompilationErrors()
             .files(
                 TestFiles.xml("res/xml/preference_general_valid.xml", preferenceWithHardcodedTitle),
-                TestFiles.xml("res/values/01-core.xml", strings1XmlValid)
+                TestFiles.xml("res/values/01-core.xml", strings1XmlValid),
             )
             .issues(
                 FixedPreferencesTitleLength.PREFERENCES_ISSUE_MAX_LENGTH,
-                FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH
+                FixedPreferencesTitleLength.PREFERENCES_ISSUE_TITLE_LENGTH,
             )
             .run()
             .expectClean()

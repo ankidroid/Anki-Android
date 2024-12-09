@@ -56,7 +56,7 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): FlagViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.edit_flag_item, parent, false)
@@ -65,7 +65,7 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
 
     override fun onBindViewHolder(
         holder: FlagViewHolder,
-        position: Int
+        position: Int,
     ) {
         val flagItem = getItem(position)
 
@@ -110,14 +110,14 @@ class FlagAdapter(private val lifecycleScope: CoroutineScope) :
     class FlagItemDiffCallback : DiffUtil.ItemCallback<FlagItem>() {
         override fun areItemsTheSame(
             oldItem: FlagItem,
-            newItem: FlagItem
+            newItem: FlagItem,
         ): Boolean {
             return oldItem.flag == newItem.flag
         }
 
         override fun areContentsTheSame(
             oldItem: FlagItem,
-            newItem: FlagItem
+            newItem: FlagItem,
         ): Boolean {
             return oldItem.title == newItem.title
         }
@@ -136,7 +136,7 @@ data class FlagItem(
     val flag: Flag,
     val title: String,
     val icon: Int,
-    var isInEditMode: Boolean = false
+    var isInEditMode: Boolean = false,
 ) {
     /**
      * Renames the flag

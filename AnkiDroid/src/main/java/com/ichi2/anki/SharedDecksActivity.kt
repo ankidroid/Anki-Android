@@ -69,7 +69,7 @@ class SharedDecksActivity : AnkiActivity() {
 
             override fun onPageFinished(
                 view: WebView?,
-                url: String?
+                url: String?,
             ) {
                 // Clear history if mShouldHistoryBeCleared is true and set it to false
                 if (shouldHistoryBeCleared) {
@@ -87,7 +87,7 @@ class SharedDecksActivity : AnkiActivity() {
              */
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
-                request: WebResourceRequest?
+                request: WebResourceRequest?,
             ): Boolean {
                 val host = request?.url?.host
                 if (host != null) {
@@ -124,7 +124,7 @@ class SharedDecksActivity : AnkiActivity() {
             override fun onReceivedHttpError(
                 view: WebView?,
                 request: WebResourceRequest?,
-                errorResponse: WebResourceResponse?
+                errorResponse: WebResourceResponse?,
             ) {
                 super.onReceivedHttpError(view, request, errorResponse)
 
@@ -143,7 +143,7 @@ class SharedDecksActivity : AnkiActivity() {
             override fun onReceivedError(
                 view: WebView?,
                 request: WebResourceRequest?,
-                error: WebResourceError?
+                error: WebResourceError?,
             ) {
                 // Set mShouldHistoryBeCleared to false if error occurs since it might have been true
                 shouldHistoryBeCleared = false
@@ -227,13 +227,13 @@ class SharedDecksActivity : AnkiActivity() {
                 val sharedDecksDownloadFragment = SharedDecksDownloadFragment()
                 sharedDecksDownloadFragment.arguments =
                     bundleOf(
-                        DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype)
+                        DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype),
                     )
                 supportFragmentManager.commit {
                     add(
                         R.id.shared_decks_fragment_container,
                         sharedDecksDownloadFragment,
-                        SHARED_DECKS_DOWNLOAD_FRAGMENT
+                        SHARED_DECKS_DOWNLOAD_FRAGMENT,
                     ).addToBackStack(null)
                 }
             }
@@ -302,7 +302,7 @@ class SharedDecksActivity : AnkiActivity() {
                     // Nothing to do here
                     return false
                 }
-            }
+            },
         )
         return true
     }
@@ -323,14 +323,14 @@ data class DownloadFile(
     val url: String,
     val userAgent: String,
     val contentDisposition: String,
-    val mimeType: String
+    val mimeType: String,
 ) : Serializable {
     /** @return a filename with the provided extension */
     fun toFileName(extension: String): String =
         URLUtil.guessFileName(
             this.url,
             this.contentDisposition,
-            this.mimeType
+            this.mimeType,
         ).let { maybeCorruptFileName ->
             // #17573: https://issuetracker.google.com/issues/382864232
             // guessFileName may return ".bin" as an extension
@@ -339,7 +339,7 @@ data class DownloadFile(
                     // default if maybeCorruptFileName doesn't contain a '.'
                     // Add randomness to avoid file name conflicts between different decks
                     ?: FileNameAndExtension.fromString("download-${Random.nextInt()}$extension")!!
-                )
+            )
                 .replaceExtension(extension = extension) // enforce the provided extension
                 .toString()
         }

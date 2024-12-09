@@ -54,7 +54,7 @@ inline fun <T> Context.usingStyledAttributes(
     attrs: IntArray,
     @AttrRes defStyleAttr: Int = 0,
     @StyleRes defStyleRes: Int = 0,
-    block: TypedArray.() -> T
+    block: TypedArray.() -> T,
 ): T {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
 

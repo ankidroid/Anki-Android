@@ -51,7 +51,7 @@ suspend fun checkNoteFieldsResponse(note: Note): NoteFieldsCheckResult {
     val fieldsCheckState = withCol { note.fieldsCheck(this) }
 
     return when (fieldsCheckState) {
-        NoteFieldsCheckResponse.State.NORMAL, NoteFieldsCheckResponse.State.DUPLICATE
+        NoteFieldsCheckResponse.State.NORMAL, NoteFieldsCheckResponse.State.DUPLICATE,
         -> Success
 
         NoteFieldsCheckResponse.State.EMPTY ->

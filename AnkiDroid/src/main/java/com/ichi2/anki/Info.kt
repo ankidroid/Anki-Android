@@ -69,7 +69,7 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
         findViewById<MaterialButton>(
-            R.id.info_donate
+            R.id.info_donate,
         ).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = "$appName v$pkgVersionName"
         webView = findViewById(R.id.info)
@@ -77,7 +77,7 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
             object : WebChromeClient() {
                 override fun onProgressChanged(
                     view: WebView,
-                    progress: Int
+                    progress: Int,
                 ) {
                     // Hide the progress indicator when the page has finished loaded
                     if (progress == 100) {
@@ -91,7 +91,7 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                 setOnClickListener {
                     tryOpenIntent(
                         this@Info,
-                        AnkiDroidApp.getMarketIntent(this@Info)
+                        AnkiDroidApp.getMarketIntent(this@Info),
                     )
                 }
             } else {
@@ -129,7 +129,7 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                     object : WebViewClient() {
                         override fun onPageFinished(
                             view: WebView,
-                            url: String
+                            url: String,
                         ) {
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                          *  or else it will break in any one mode.
@@ -140,13 +140,13 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                                     "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
                                     "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
                                     "x=document.getElementsByTagName(\"h2\"); for(i=0;i<x.length;i++){x[i].style.color=\"#E37068\";}" +
-                                    "document.body.style.setProperty(\"background\", \"" + background + "\");"
+                                    "document.body.style.setProperty(\"background\", \"" + background + "\");",
                             )
                         }
 
                         override fun shouldOverrideUrlLoading(
                             view: WebView?,
-                            request: WebResourceRequest?
+                            request: WebResourceRequest?,
                         ): Boolean {
                             // Excludes the url that are opened inside the changelog.html
                             // and redirect the user to the browser
@@ -161,7 +161,7 @@ class Info : AnkiActivity(), BaseSnackbarBuilderProvider {
                         override fun doUpdateVisitedHistory(
                             view: WebView?,
                             url: String?,
-                            isReload: Boolean
+                            isReload: Boolean,
                         ) {
                             super.doUpdateVisitedHistory(view, url, isReload)
                             onBackPressedCallback.isEnabled = view != null && view.canGoBack()

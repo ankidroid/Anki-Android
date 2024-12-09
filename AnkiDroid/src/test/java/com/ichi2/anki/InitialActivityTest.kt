@@ -107,7 +107,7 @@ class InitialActivityTest : RobolectricTest() {
         val sharedPrefs = appContext.sharedPrefs()
         val initialSetupResult =
             InitialActivity.performSetupFromFreshInstallOrClearedPreferences(
-                appContext.sharedPrefs()
+                appContext.sharedPrefs(),
             )
         assertThat(initialSetupResult, equalTo(true))
         val secondResult =
@@ -115,7 +115,7 @@ class InitialActivityTest : RobolectricTest() {
         assertThat(
             "should not perform initial setup if setup has already occurred",
             secondResult,
-            equalTo(false)
+            equalTo(false),
         )
     }
 
@@ -125,17 +125,17 @@ class InitialActivityTest : RobolectricTest() {
         val expectedPermissions =
             arrayOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             )
 
         // force a safe startup before Q
         assertThat(
             (selectAnkiDroidFolder(false) as PublicFolder).requiredPermissions.asIterable(),
-            contains(*expectedPermissions)
+            contains(*expectedPermissions),
         )
         assertThat(
             (selectAnkiDroidFolder(true) as PublicFolder).requiredPermissions.asIterable(),
-            contains(*expectedPermissions)
+            contains(*expectedPermissions),
         )
     }
 
@@ -144,11 +144,11 @@ class InitialActivityTest : RobolectricTest() {
     fun startupQ() {
         assertThat(
             selectAnkiDroidFolder(false),
-            instanceOf(PublicFolder::class.java)
+            instanceOf(PublicFolder::class.java),
         )
         assertThat(
             selectAnkiDroidFolder(true),
-            instanceOf(PublicFolder::class.java)
+            instanceOf(PublicFolder::class.java),
         )
     }
 
@@ -160,16 +160,16 @@ class InitialActivityTest : RobolectricTest() {
         val expectedPermissions =
             arrayOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             )
 
         selectAnkiDroidFolder(
             canManageExternalStorage = true,
-            currentFolderIsAccessibleAndLegacy = true
+            currentFolderIsAccessibleAndLegacy = true,
         ).let {
             assertThat(
                 (it as PublicFolder).requiredPermissions.asIterable(),
-                contains(*expectedPermissions)
+                contains(*expectedPermissions),
             )
         }
     }
@@ -181,7 +181,7 @@ class InitialActivityTest : RobolectricTest() {
         val ankiDroidFolder =
             selectAnkiDroidFolder(
                 canManageExternalStorage = true,
-                currentFolderIsAccessibleAndLegacy = false
+                currentFolderIsAccessibleAndLegacy = false,
             ) as PublicFolder
 
         assertTrue(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE in ankiDroidFolder.requiredPermissions)
@@ -192,7 +192,7 @@ class InitialActivityTest : RobolectricTest() {
     fun startupAfterQWithoutManageExternalStorage() {
         assertThat(
             selectAnkiDroidFolder(canManageExternalStorage = false),
-            instanceOf(AppPrivateFolder::class.java)
+            instanceOf(AppPrivateFolder::class.java),
         )
     }
 
@@ -204,11 +204,11 @@ class InitialActivityTest : RobolectricTest() {
      */
     private fun selectAnkiDroidFolder(
         canManageExternalStorage: Boolean,
-        currentFolderIsAccessibleAndLegacy: Boolean = false
+        currentFolderIsAccessibleAndLegacy: Boolean = false,
     ): AnkiDroidFolder {
         return com.ichi2.anki.selectAnkiDroidFolder(
             canManageExternalStorage = canManageExternalStorage,
-            currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy
+            currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,
         )
     }
 

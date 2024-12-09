@@ -40,7 +40,7 @@ class VideoPlayer(private val jsEval: () -> JavascriptEvaluator?) {
 
     fun playVideo(
         continuation: CancellableContinuation<Unit>,
-        tag: SoundOrVideoTag
+        tag: SoundOrVideoTag,
     ) {
         this.continuation = continuation
 
@@ -61,7 +61,7 @@ class VideoPlayer(private val jsEval: () -> JavascriptEvaluator?) {
                            break;
                        }
                     }
-                """
+                """,
         )
     }
 

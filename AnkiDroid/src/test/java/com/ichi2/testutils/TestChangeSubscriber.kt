@@ -42,7 +42,7 @@ suspend fun ensureNoOpsExecuted(block: suspend () -> Unit) {
  */
 suspend fun ensureOpsExecuted(
     count: Int,
-    block: suspend () -> Unit
+    block: suspend () -> Unit,
 ) {
     val subscription = ChangeCounter()
 
@@ -65,7 +65,7 @@ private class ChangeCounter : ChangeManager.Subscriber {
 
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         Timber.d("ChangeManager op detected")
         this.changes++

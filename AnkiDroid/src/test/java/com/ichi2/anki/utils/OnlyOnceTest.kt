@@ -70,7 +70,7 @@ class OnlyOnceTest : RobolectricTest() {
     private fun TestScope.preventMultipleExecutions(
         shouldCatchException: Boolean = false,
         wait: Boolean,
-        function: () -> Unit
+        function: () -> Unit,
     ) {
         preventSimultaneousExecutions(UNIT_TEST) {
             launch {

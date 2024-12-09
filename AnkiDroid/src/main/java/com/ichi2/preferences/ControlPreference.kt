@@ -63,7 +63,7 @@ class ControlPreference : ListPreference {
         context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int,
-        defStyleRes: Int
+        defStyleRes: Int,
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     @Suppress("unused")
@@ -127,7 +127,7 @@ class ControlPreference : ListPreference {
                         val mappableBinding =
                             fromGesture(
                                 gesture,
-                                screenBuilder
+                                screenBuilder,
                             )
                         if (bindingIsUsedOnAnotherCommand(mappableBinding)) {
                             showDialogToReplaceBinding(mappableBinding, context.getString(R.string.binding_replace_gesture), it)
@@ -156,7 +156,7 @@ class ControlPreference : ListPreference {
                         val mappableBinding =
                             MappableBinding(
                                 binding,
-                                screenBuilder(CardSide.BOTH)
+                                screenBuilder(CardSide.BOTH),
                             )
                         warnIfBindingIsUsed(mappableBinding, keyPicker)
                     }
@@ -227,7 +227,7 @@ class ControlPreference : ListPreference {
 
     private fun warnIfBindingIsUsed(
         binding: MappableBinding,
-        warningDisplay: WarningDisplay
+        warningDisplay: WarningDisplay,
     ) {
         getCommandWithBindingExceptThis(binding)?.let {
             val name = context.getString(it.resourceId)
@@ -281,7 +281,7 @@ class ControlPreference : ListPreference {
     private fun showDialogToReplaceBinding(
         binding: MappableBinding,
         title: String,
-        parentDialog: DialogInterface
+        parentDialog: DialogInterface,
     ) {
         val commandName = context.getString(getCommandWithBindingExceptThis(binding)!!.resourceId)
 

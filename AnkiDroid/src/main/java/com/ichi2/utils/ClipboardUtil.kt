@@ -96,7 +96,7 @@ object ClipboardUtil {
     @CheckResult
     fun getPlainText(
         clipboard: ClipboardManager?,
-        context: Context
+        context: Context,
     ): CharSequence? {
         return clipboard?.getFirstItem()?.coerceToText(context)
     }
@@ -114,7 +114,7 @@ object ClipboardUtil {
 fun Context.copyToClipboard(
     text: String,
     @StringRes successMessageId: Int = R.string.about_ankidroid_successfully_copied_debug_info,
-    @StringRes failureMessageId: Int = R.string.failed_to_copy
+    @StringRes failureMessageId: Int = R.string.failed_to_copy,
 ) {
     val copied = copyTextToClipboard(text)
     // in Android S_V2 and above, the system is guaranteed to show a message on a successful copy
@@ -156,8 +156,8 @@ private fun Context.copyTextToClipboard(text: String): Boolean {
         clipboardManager.setPrimaryClip(
             ClipData.newPlainText(
                 "${VersionUtils.appName} v${VersionUtils.pkgVersionName}",
-                text
-            )
+                text,
+            ),
         )
         true
     } catch (e: Exception) {

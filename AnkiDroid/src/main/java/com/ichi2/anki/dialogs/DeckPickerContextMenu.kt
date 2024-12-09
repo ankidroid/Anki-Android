@@ -37,14 +37,14 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         return AlertDialog.Builder(requireActivity())
             .title(text = requireArguments().getString(ARG_DECK_NAME))
             .setItems(
-                options.map { resources.getString(it.optionName) }.toTypedArray()
+                options.map { resources.getString(it.optionName) }.toTypedArray(),
             ) { _, index: Int ->
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_CONTEXT_MENU,
                     bundleOf(
                         CONTEXT_MENU_DECK_ID to requireArguments().getLong(ARG_DECK_ID),
-                        CONTEXT_MENU_DECK_OPTION to options[index]
-                    )
+                        CONTEXT_MENU_DECK_OPTION to options[index],
+                    ),
                 )
             }
             .create()
@@ -79,7 +79,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         }
 
     enum class DeckPickerContextMenuOption(
-        @StringRes val optionName: Int
+        @StringRes val optionName: Int,
     ) {
         RENAME_DECK(R.string.rename_deck),
         DECK_OPTIONS(R.string.menu__deck_options),
@@ -93,7 +93,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
         CREATE_SHORTCUT(R.string.create_shortcut),
         BROWSE_CARDS(R.string.browse_cards),
         EDIT_DESCRIPTION(R.string.edit_deck_description),
-        ADD_CARD(R.string.menu_add)
+        ADD_CARD(R.string.menu_add),
     }
 
     companion object {
@@ -117,7 +117,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
             id: DeckId,
             name: String,
             isDynamic: Boolean,
-            hasBuriedInDeck: Boolean
+            hasBuriedInDeck: Boolean,
         ): DeckPickerContextMenu =
             DeckPickerContextMenu().apply {
                 arguments =
@@ -125,7 +125,7 @@ class DeckPickerContextMenu : AnalyticsDialogFragment() {
                         ARG_DECK_ID to id,
                         ARG_DECK_NAME to name,
                         ARG_DECK_IS_DYN to isDynamic,
-                        ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck
+                        ARG_DECK_HAS_BURIED_IN_DECK to hasBuriedInDeck,
                     )
             }
     }

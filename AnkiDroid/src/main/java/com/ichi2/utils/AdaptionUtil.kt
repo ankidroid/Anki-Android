@@ -104,7 +104,7 @@ object AdaptionUtil {
 
     private fun isSystemApp(
         packageName: String?,
-        pm: PackageManager
+        pm: PackageManager,
     ): Boolean {
         return if (packageName != null) {
             try {

@@ -44,7 +44,7 @@ sealed interface NoteEditorLauncher {
      */
     fun getIntent(
         context: Context,
-        action: String? = null
+        action: String? = null,
     ) = SingleFragmentActivity.getIntent(context, NoteEditor::class, toBundle(), action)
 
     /**
@@ -62,7 +62,7 @@ sealed interface NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.IMG_OCCLUSION.value,
-                NoteEditor.EXTRA_IMG_OCCLUSION to imageUri
+                NoteEditor.EXTRA_IMG_OCCLUSION to imageUri,
             )
     }
 
@@ -83,7 +83,7 @@ sealed interface NoteEditorLauncher {
     data class AddNote(val deckId: DeckId? = null) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
-                NoteEditor.EXTRA_CALLER to NoteEditorCaller.DECKPICKER.value
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.DECKPICKER.value,
             ).also { bundle ->
                 deckId?.let { deckId -> bundle.putLong(NoteEditor.EXTRA_DID, deckId) }
             }
@@ -99,7 +99,7 @@ sealed interface NoteEditorLauncher {
             val bundle =
                 bundleOf(
                     NoteEditor.EXTRA_CALLER to NoteEditorCaller.CARDBROWSER_ADD.value,
-                    NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms
+                    NoteEditor.EXTRA_TEXT_FROM_SEARCH_VIEW to viewModel.searchTerms,
                 )
             if (viewModel.lastDeckId?.let { id -> id > 0 } == true) {
                 bundle.putLong(NoteEditor.EXTRA_DID, viewModel.lastDeckId!!)
@@ -116,12 +116,12 @@ sealed interface NoteEditorLauncher {
         NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
-                NoteEditor.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value
+                NoteEditor.EXTRA_CALLER to NoteEditorCaller.REVIEWER_ADD.value,
             ).also { bundle ->
                 animation?.let { animation ->
                     bundle.putParcelable(
                         AnkiActivity.FINISH_ANIMATION_EXTRA,
-                        animation as Parcelable
+                        animation as Parcelable,
                     )
                 }
             }
@@ -136,7 +136,7 @@ sealed interface NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.INSTANT_NOTE_EDITOR.value,
-                Intent.EXTRA_TEXT to sharedText
+                Intent.EXTRA_TEXT to sharedText,
             )
     }
 
@@ -151,7 +151,7 @@ sealed interface NoteEditorLauncher {
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.EDIT.value,
                 NoteEditor.EXTRA_CARD_ID to cardId,
-                AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable
+                AnkiActivity.FINISH_ANIMATION_EXTRA to animation as Parcelable,
             )
     }
 
@@ -163,7 +163,7 @@ sealed interface NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.PREVIEWER_EDIT.value,
-                NoteEditor.EXTRA_EDIT_FROM_CARD_ID to cardId
+                NoteEditor.EXTRA_EDIT_FROM_CARD_ID to cardId,
             )
     }
 
@@ -176,13 +176,13 @@ sealed interface NoteEditorLauncher {
     data class CopyNote(
         val deckId: DeckId,
         val fieldsText: String,
-        val tags: List<String>? = null
+        val tags: List<String>? = null,
     ) : NoteEditorLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
                 NoteEditor.EXTRA_CALLER to NoteEditorCaller.NOTEEDITOR.value,
                 NoteEditor.EXTRA_DID to deckId,
-                NoteEditor.EXTRA_CONTENTS to fieldsText
+                NoteEditor.EXTRA_CONTENTS to fieldsText,
             ).also { bundle ->
                 tags?.let { tags -> bundle.putStringArray(NoteEditor.EXTRA_TAGS, tags.toTypedArray()) }
             }

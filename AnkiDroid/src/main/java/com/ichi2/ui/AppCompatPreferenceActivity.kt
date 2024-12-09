@@ -100,7 +100,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
             override fun putBoolean(
                 key: String,
-                value: Boolean
+                value: Boolean,
             ): SharedPreferences.Editor {
                 update.put(key, value)
                 return this
@@ -108,7 +108,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
             override fun putFloat(
                 key: String,
-                value: Float
+                value: Float,
             ): SharedPreferences.Editor {
                 update.put(key, value)
                 return this
@@ -116,7 +116,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
             override fun putInt(
                 key: String,
-                value: Int
+                value: Int,
             ): SharedPreferences.Editor {
                 update.put(key, value)
                 return this
@@ -124,7 +124,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
             override fun putLong(
                 key: String,
-                value: Long
+                value: Long,
             ): SharedPreferences.Editor {
                 update.put(key, value)
                 return this
@@ -132,7 +132,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
             override fun putString(
                 key: String,
-                value: String?
+                value: String?,
             ): SharedPreferences.Editor {
                 update.put(key, value)
                 return this
@@ -151,7 +151,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
             // @Override On Android 1.5 this is not Override
             override fun putStringSet(
                 arg0: String,
-                arg1: Set<String>?
+                arg1: Set<String>?,
             ): SharedPreferences.Editor? {
                 // TODO Auto-generated method stub
                 return null
@@ -173,35 +173,35 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
         override fun getBoolean(
             key: String,
-            defValue: Boolean
+            defValue: Boolean,
         ): Boolean {
             return java.lang.Boolean.parseBoolean(this.getString(key, java.lang.Boolean.toString(defValue)))
         }
 
         override fun getFloat(
             key: String,
-            defValue: Float
+            defValue: Float,
         ): Float {
             return this.getString(key, defValue.toString())!!.toFloat()
         }
 
         override fun getInt(
             key: String,
-            defValue: Int
+            defValue: Int,
         ): Int {
             return this.getString(key, defValue.toString())!!.toInt()
         }
 
         override fun getLong(
             key: String,
-            defValue: Long
+            defValue: Long,
         ): Long {
             return this.getString(key, defValue.toString())!!.toLong()
         }
 
         override fun getString(
             key: String,
-            defValue: String?
+            defValue: String?,
         ): String? {
             Timber.d("getString(key=%s, defValue=%s)", key, defValue)
             return if (!values.containsKey(key)) {
@@ -222,7 +222,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         // @Override On Android 1.5 this is not Override
         override fun getStringSet(
             arg0: String,
-            arg1: Set<String>?
+            arg1: Set<String>?,
         ): Set<String>? {
             // TODO Auto-generated method stub
             return null
@@ -258,7 +258,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     }
 
     override fun setContentView(
-        @LayoutRes layoutResID: Int
+        @LayoutRes layoutResID: Int,
     ) {
         delegate.setContentView(layoutResID)
     }
@@ -269,14 +269,14 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
     override fun setContentView(
         view: View,
-        params: ViewGroup.LayoutParams
+        params: ViewGroup.LayoutParams,
     ) {
         delegate.setContentView(view, params)
     }
 
     override fun addContentView(
         view: View,
-        params: ViewGroup.LayoutParams
+        params: ViewGroup.LayoutParams,
     ) {
         delegate.addContentView(view, params)
     }
@@ -288,7 +288,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
     override fun onTitleChanged(
         title: CharSequence,
-        color: Int
+        color: Int,
     ) {
         super.onTitleChanged(title, color)
         delegate.setTitle(title)
@@ -321,7 +321,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
     override fun onSharedPreferenceChanged(
         sharedPreferences: SharedPreferences,
-        key: String?
+        key: String?,
     ) {
         // update values on changed preference
         prefChanged = true
@@ -348,7 +348,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
             object : BroadcastReceiver() {
                 override fun onReceive(
                     context: Context,
-                    intent: Intent
+                    intent: Intent,
                 ) {
                     if (intent.action == SdCardReceiver.MEDIA_EJECT) {
                         finish()
@@ -373,7 +373,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
     override fun onKeyDown(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             Timber.i("DeckOptions - onBackPressed()")
@@ -400,7 +400,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
 
     override fun getSharedPreferences(
         name: String,
-        mode: Int
+        mode: Int,
     ): SharedPreferences {
         Timber.d("getSharedPreferences(name=%s)", name)
         return pref

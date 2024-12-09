@@ -77,7 +77,7 @@ class DeckOptions : PageFragment() {
                         document.getElementsByClassName("modal show")[0]
                         .getElementsByClassName("btn-close")[0].click()
                         """.trimIndent(),
-                        {}
+                        {},
                     )
                 } catch (e: Exception) {
                     CrashReportService.sendExceptionReport(e, "DeckOptions:onCloseBootstrapModalCallback")
@@ -126,7 +126,7 @@ class DeckOptions : PageFragment() {
 
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
-                request: WebResourceRequest?
+                request: WebResourceRequest?,
             ): Boolean {
                 // #16715: ensure that the fragment can't be used for general web browsing
                 val host = request?.url?.host ?: return shouldOverrideUrlLoading(view, request)
@@ -158,7 +158,7 @@ class DeckOptions : PageFragment() {
         // we use the command name as this is a valid identifier
         fun getListenerJs(
             event: String,
-            command: String
+            command: String,
         ): String =
             """
             if (!document.added$command) {
@@ -179,7 +179,7 @@ class DeckOptions : PageFragment() {
     companion object {
         fun getIntent(
             context: Context,
-            deckId: Long
+            deckId: Long,
         ): Intent {
             val title = context.getString(R.string.menu__deck_options)
             return getIntent(context, "deck-options/$deckId", title, DeckOptions::class)
@@ -199,7 +199,7 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
                             val label =
                                 tr.deckConfigOptimizingPreset(
                                     currentCount = value.currentPreset,
-                                    totalCount = value.totalPresets
+                                    totalCount = value.totalPresets,
                                 )
                             val pct = if (value.total > 0) (value.current / value.total * 100) else 0
                             val reviewsLabel = tr.deckConfigPercentOfReviews(pct = pct.toString(), reviews = value.reviews)
@@ -207,7 +207,7 @@ suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
                         } else {
                             getString(R.string.dialog_processing)
                         }
-                }
+                },
             ) {
                 withContext(Dispatchers.IO) {
                     CollectionManager.withCol { updateDeckConfigsRaw(input) }

@@ -80,7 +80,7 @@ private const val DID = "did"
 
 class CustomStudyDialog(
     private val collection: Collection,
-    private val customStudyListener: CustomStudyListener?
+    private val customStudyListener: CustomStudyListener?,
 ) : AnalyticsDialogFragment(), TagsDialogListener {
     interface CustomStudyListener {
         fun onCreateCustomStudySession()
@@ -90,7 +90,7 @@ class CustomStudyDialog(
 
     fun withArguments(
         did: DeckId,
-        contextMenuAttribute: ContextMenuOption? = null
+        contextMenuAttribute: ContextMenuOption? = null,
     ): CustomStudyDialog {
         val args = this.arguments ?: Bundle()
         args.apply {
@@ -144,7 +144,7 @@ class CustomStudyDialog(
                                 context = requireContext(),
                                 type = TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
                                 checkedTags = ArrayList(),
-                                allTags = ArrayList(collection.tags.byDeck(currentDeck))
+                                allTags = ArrayList(collection.tags.byDeck(currentDeck)),
                             )
                         requireActivity().showDialogFragment(dialogFragment)
                     }
@@ -153,14 +153,14 @@ class CustomStudyDialog(
                     STUDY_FORGOT,
                     STUDY_AHEAD,
                     STUDY_RANDOM,
-                    STUDY_PREVIEW
+                    STUDY_PREVIEW,
                     -> {
                         // User asked for a standard custom study option
                         val d =
                             CustomStudyDialog(collection, customStudyListener)
                                 .withArguments(
                                     requireArguments().getLong(DID),
-                                    listIds[index]
+                                    listIds[index],
                                 )
                         requireActivity().showDialogFragment(d)
                     }
@@ -236,12 +236,12 @@ class CustomStudyDialog(
                                     String.format(
                                         Locale.US,
                                         "rated:%d:1",
-                                        n
+                                        n,
                                     ),
                                     Consts.DYN_MAX_SIZE,
-                                    Consts.DYN_RANDOM
+                                    Consts.DYN_RANDOM,
                                 ),
-                                false
+                                false,
                             )
                         }
                         STUDY_AHEAD -> {
@@ -251,12 +251,12 @@ class CustomStudyDialog(
                                     String.format(
                                         Locale.US,
                                         "prop:due<=%d",
-                                        n
+                                        n,
                                     ),
                                     Consts.DYN_MAX_SIZE,
-                                    Consts.DYN_DUE
+                                    Consts.DYN_DUE,
                                 ),
-                                true
+                                true,
                             )
                         }
                         STUDY_RANDOM -> {
@@ -269,9 +269,9 @@ class CustomStudyDialog(
                                     "is:new added:" +
                                         n,
                                     Consts.DYN_MAX_SIZE,
-                                    Consts.DYN_OLDEST
+                                    Consts.DYN_OLDEST,
                                 ),
-                                false
+                                false,
                             )
                         }
                         STUDY_TAGS -> TODO("This branch has not been covered before")
@@ -287,14 +287,14 @@ class CustomStudyDialog(
                     charSequence: CharSequence,
                     i: Int,
                     i1: Int,
-                    i2: Int
+                    i2: Int,
                 ) {}
 
                 override fun onTextChanged(
                     charSequence: CharSequence,
                     i: Int,
                     i1: Int,
-                    i2: Int
+                    i2: Int,
                 ) {}
 
                 override fun afterTextChanged(editable: Editable) {
@@ -306,7 +306,7 @@ class CustomStudyDialog(
                         dialog.positiveButton.isEnabled = false
                     }
                 }
-            }
+            },
         )
 
         // Show soft keyboard
@@ -322,7 +322,7 @@ class CustomStudyDialog(
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        stateFilter: CardStateFilter
+        stateFilter: CardStateFilter,
     ) {
         val sb = StringBuilder(stateFilter.toSearch)
         val arr: MutableList<String?> = ArrayList(selectedTags.size)
@@ -337,9 +337,9 @@ class CustomStudyDialog(
             arrayOf(
                 sb.toString(),
                 Consts.DYN_MAX_SIZE,
-                Consts.DYN_RANDOM
+                Consts.DYN_RANDOM,
             ),
-            true
+            true,
         )
     }
 
@@ -373,7 +373,7 @@ class CustomStudyDialog(
                 STUDY_RANDOM,
                 STUDY_PREVIEW,
                 STUDY_TAGS,
-                null
+                null,
                 -> ""
             }
         }
@@ -388,7 +388,7 @@ class CustomStudyDialog(
                 STUDY_RANDOM -> res.getString(R.string.custom_study_random)
                 STUDY_PREVIEW -> res.getString(R.string.custom_study_preview)
                 STUDY_TAGS,
-                null
+                null,
                 -> ""
             }
         }
@@ -403,7 +403,7 @@ class CustomStudyDialog(
                 STUDY_RANDOM -> prefs.getInt("randomCards", 100).toString()
                 STUDY_PREVIEW -> prefs.getInt("previewDays", 1).toString()
                 STUDY_TAGS,
-                null
+                null,
                 -> ""
             }
         }
@@ -417,7 +417,7 @@ class CustomStudyDialog(
     private fun createCustomStudySession(
         delays: JSONArray,
         terms: Array<Any>,
-        resched: Boolean
+        resched: Boolean,
     ) {
         val dyn: Deck
         val did = requireArguments().getLong(DID)
@@ -505,6 +505,6 @@ class CustomStudyDialog(
         STUDY_AHEAD(R.string.custom_study_review_ahead),
         STUDY_RANDOM(R.string.custom_study_random_selection),
         STUDY_PREVIEW(R.string.custom_study_preview_new),
-        STUDY_TAGS(R.string.custom_study_limit_tags)
+        STUDY_TAGS(R.string.custom_study_limit_tags),
     }
 }

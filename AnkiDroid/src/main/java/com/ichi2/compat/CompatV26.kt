@@ -63,7 +63,7 @@ open class CompatV26 : CompatV24() {
     @Throws(IOException::class)
     override fun copyFile(
         source: String,
-        target: String
+        target: String,
     ) {
         Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
     }
@@ -71,7 +71,7 @@ open class CompatV26 : CompatV24() {
     @Throws(IOException::class)
     override fun copyFile(
         source: String,
-        target: OutputStream
+        target: OutputStream,
     ): Long {
         return Files.copy(Paths.get(source), target)
     }
@@ -79,7 +79,7 @@ open class CompatV26 : CompatV24() {
     @Throws(IOException::class)
     override fun copyFile(
         source: InputStream,
-        target: String
+        target: String,
     ): Long {
         return Files.copy(source, Paths.get(target), StandardCopyOption.REPLACE_EXISTING)
     }
@@ -119,7 +119,7 @@ open class CompatV26 : CompatV24() {
                     ${noSuchFileException.file}
                     ${noSuchFileException.cause}
                     ${noSuchFileException.stackTrace}
-                    """.trimIndent()
+                    """.trimIndent(),
                 )
             }
         val paths: Iterator<Path> = pathsStream.iterator()

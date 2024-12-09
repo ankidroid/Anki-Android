@@ -30,20 +30,20 @@ class CustomActionModeCallback(
     private val isClozeType: Boolean,
     private val clozeMenuTitle: String,
     private val clozeMenuId: Int,
-    private val onActionItemSelected: (mode: ActionMode, item: MenuItem) -> Boolean
+    private val onActionItemSelected: (mode: ActionMode, item: MenuItem) -> Boolean,
 ) : ActionMode.Callback {
     private val setLanguageId = View.generateViewId()
 
     override fun onCreateActionMode(
         mode: ActionMode,
-        menu: Menu
+        menu: Menu,
     ): Boolean {
         return true
     }
 
     override fun onPrepareActionMode(
         mode: ActionMode,
-        menu: Menu
+        menu: Menu,
     ): Boolean {
         // Adding the cloze deletion floating context menu item, but only once.
         if (menu.findItem(clozeMenuId) != null) {
@@ -65,7 +65,7 @@ class CustomActionModeCallback(
                 Menu.NONE,
                 clozeMenuId,
                 0,
-                clozeMenuTitle
+                clozeMenuTitle,
             )
         }
         return initialSize != menu.size()
@@ -73,7 +73,7 @@ class CustomActionModeCallback(
 
     override fun onActionItemClicked(
         mode: ActionMode,
-        item: MenuItem
+        item: MenuItem,
     ): Boolean {
         return onActionItemSelected(mode, item)
     }

@@ -53,10 +53,10 @@ class AutomaticAnswerTest : JvmTest() {
             AutomaticAnswer(
                 target = automaticallyAnsweredMock(),
                 settings =
-                AutomaticAnswerSettings(
-                    secondsToShowQuestionFor = 0.0,
-                    secondsToShowAnswerFor = 0.0
-                )
+                    AutomaticAnswerSettings(
+                        secondsToShowQuestionFor = 0.0,
+                        secondsToShowAnswerFor = 0.0,
+                    ),
             )
 
         answer.scheduleAutomaticDisplayQuestion(10)
@@ -137,10 +137,10 @@ class AutomaticAnswerTest : JvmTest() {
         return AutomaticAnswer(
             target = automaticAnswerHandler,
             settings =
-            AutomaticAnswerSettings(
-                secondsToShowQuestionFor = 10.0,
-                secondsToShowAnswerFor = 10.0
-            )
+                AutomaticAnswerSettings(
+                    secondsToShowQuestionFor = 10.0,
+                    secondsToShowAnswerFor = 10.0,
+                ),
         ).apply {
             automaticAnswerHandle = this
         }

@@ -53,7 +53,7 @@ class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
                 Constants.ANKI_TIME_CATEGORY,
                 Constants.ANKI_TIME_PRIORITY,
                 Constants.ANKI_TIME_SEVERITY,
-                implementation
+                implementation,
             )
     }
 
@@ -73,7 +73,7 @@ class AvoidAlertDialogUsage : Detector(), SourceCodeScanner {
                         node,
                         context.getLocation(node),
                         DESCRIPTION,
-                        createFix()
+                        createFix(),
                     )
                 }
             }

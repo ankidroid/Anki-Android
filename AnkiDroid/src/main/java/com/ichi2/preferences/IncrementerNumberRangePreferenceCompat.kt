@@ -34,7 +34,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
         context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int,
-        defStyleRes: Int
+        defStyleRes: Int,
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     @Suppress("unused")
@@ -60,7 +60,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
                 LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    3.0f
+                    3.0f,
                 )
 
             lastValidEntry =
@@ -94,7 +94,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
                 LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1.0f
+                    1.0f,
                 )
 
             incrementButton.setText(R.string.plus_sign)

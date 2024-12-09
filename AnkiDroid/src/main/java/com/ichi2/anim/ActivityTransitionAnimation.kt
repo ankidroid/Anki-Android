@@ -14,7 +14,7 @@ object ActivityTransitionAnimation {
     @Suppress("DEPRECATION", "deprecated in API34 for predictive back, must plumb through new open/close parameter")
     fun slide(
         activity: Activity,
-        direction: Direction
+        direction: Direction,
     ) {
         when (direction) {
             Direction.START ->
@@ -42,31 +42,31 @@ object ActivityTransitionAnimation {
 
     fun getAnimationOptions(
         activity: Activity,
-        direction: Direction?
+        direction: Direction?,
     ): ActivityOptionsCompat {
         return when (direction) {
             Direction.START ->
                 if (isRightToLeft(
-                        activity
+                        activity,
                     )
                 ) {
                     ActivityOptionsCompat.makeCustomAnimation(
                         activity,
                         R.anim.slide_right_in,
-                        R.anim.slide_right_out
+                        R.anim.slide_right_out,
                     )
                 } else {
                     ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_left_in, R.anim.slide_left_out)
                 }
             Direction.END ->
                 if (isRightToLeft(
-                        activity
+                        activity,
                     )
                 ) {
                     ActivityOptionsCompat.makeCustomAnimation(
                         activity,
                         R.anim.slide_left_in,
-                        R.anim.slide_left_out
+                        R.anim.slide_left_out,
                     )
                 } else {
                     ActivityOptionsCompat.makeCustomAnimation(activity, R.anim.slide_right_in, R.anim.slide_right_out)
@@ -97,7 +97,7 @@ object ActivityTransitionAnimation {
         RIGHT,
         LEFT,
         DEFAULT,
-        NONE
+        NONE,
         ;
 
         /** @see getInverseTransition */

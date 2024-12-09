@@ -95,14 +95,14 @@ class DevOptionsFragment : SettingsFragment() {
                 setTitle("Warning!")
                 setMessage(
                     "This will most likely make it so that you cannot access your collection. " +
-                        "It will be very difficult to recover your data."
+                        "It will be very difficult to recover your data.",
                 )
                 setPositiveButton(R.string.dialog_ok) { _, _ ->
                     Timber.w("Setting collection path to /storage/emulated/0/AnkiDroid")
                     AnkiDroidApp.sharedPrefs().edit {
                         putString(
                             CollectionHelper.PREF_COLLECTION_PATH,
-                            "/storage/emulated/0/AnkiDroid"
+                            "/storage/emulated/0/AnkiDroid",
                         )
                     }
                 }
@@ -127,7 +127,7 @@ class DevOptionsFragment : SettingsFragment() {
                 setMessage(
                     "You'll add $numberOfFiles files with no meaningful content, " +
                         "potentially overriding existing files. " +
-                        "Do not do it on a collection you care about."
+                        "Do not do it on a collection you care about.",
                 )
                 setPositiveButton("OK") { _, _ ->
                     generateFiles(sizeOfFiles, numberOfFiles)
@@ -140,7 +140,7 @@ class DevOptionsFragment : SettingsFragment() {
 
     private fun generateFiles(
         size: Int,
-        numberOfFiles: Int
+        numberOfFiles: Int,
     ) {
         Timber.d("numberOf files: $numberOfFiles, size: $size")
         launchCatchingTask {

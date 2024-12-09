@@ -44,14 +44,14 @@ class CardAnalysisWidgetPreferences(context: Context) {
         val selectedDeckString =
             cardAnalysisWidgetSharedPreferences.getLong(
                 getCardAnalysisExtraWidgetKey(appWidgetId),
-                NOT_FOUND_DECK_ID
+                NOT_FOUND_DECK_ID,
             )
         return selectedDeckString.takeIf { it != NOT_FOUND_DECK_ID }
     }
 
     fun saveSelectedDeck(
         appWidgetId: Int,
-        selectedDeck: DeckId?
+        selectedDeck: DeckId?,
     ) {
         cardAnalysisWidgetSharedPreferences.edit {
             putLong(getCardAnalysisExtraWidgetKey(appWidgetId), selectedDeck ?: NOT_FOUND_DECK_ID)

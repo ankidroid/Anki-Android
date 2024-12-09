@@ -113,7 +113,7 @@ class FieldEditLine : FrameLayout {
     }
 
     private fun getBackgroundImage(
-        @DrawableRes idRes: Int
+        @DrawableRes idRes: Int,
     ): Drawable? {
         return VectorDrawableCompat.create(this.resources, idRes, context.theme)
     }
@@ -137,7 +137,7 @@ class FieldEditLine : FrameLayout {
 
     fun setContent(
         content: String?,
-        replaceNewline: Boolean
+        replaceNewline: Boolean,
     ) {
         editText.setContent(content, replaceNewline)
     }
@@ -230,7 +230,7 @@ class FieldEditLine : FrameLayout {
 
         override fun writeToParcel(
             out: Parcel,
-            flags: Int
+            flags: Int,
         ) {
             super.writeToParcel(out, flags)
             out.writeSparseArray(childrenStates)
@@ -251,7 +251,7 @@ class FieldEditLine : FrameLayout {
                 ParcelCompat.readSerializable(
                     source,
                     ExpansionState::class.java.classLoader,
-                    ExpansionState::class.java
+                    ExpansionState::class.java,
                 )
         }
 
@@ -262,7 +262,7 @@ class FieldEditLine : FrameLayout {
                 object : ClassLoaderCreator<SavedState> {
                     override fun createFromParcel(
                         source: Parcel,
-                        loader: ClassLoader
+                        loader: ClassLoader,
                     ): SavedState {
                         return SavedState(source, loader)
                     }
@@ -280,6 +280,6 @@ class FieldEditLine : FrameLayout {
 
     enum class ExpansionState {
         EXPANDED,
-        COLLAPSED
+        COLLAPSED,
     }
 }

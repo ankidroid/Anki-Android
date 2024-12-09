@@ -62,7 +62,7 @@ import kotlinx.parcelize.Parcelize
 class SetupCollectionFragment : Fragment(R.layout.introduction_layout) {
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -84,7 +84,7 @@ class SetupCollectionFragment : Fragment(R.layout.introduction_layout) {
         DeckPickerWithNewCollection,
 
         /** Syncs an existing profile from AnkiWeb */
-        SyncFromExistingAccount
+        SyncFromExistingAccount,
     }
 
     companion object {

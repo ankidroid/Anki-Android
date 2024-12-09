@@ -91,7 +91,7 @@ class CardBrowserViewModel(
     private val cacheDir: File,
     options: CardBrowserLaunchOptions?,
     preferences: SharedPreferencesProvider,
-    private val manualInit: Boolean = false
+    private val manualInit: Boolean = false,
 ) : ViewModel(), SharedPreferencesProvider by preferences {
     // Set by the UI to determine the number of cards to preload before returning search results
     // This is a hack, but will be removed soon when we move to the backend for card rendering
@@ -459,7 +459,7 @@ class CardBrowserViewModel(
      */
     fun selectRowsBetweenPositions(
         startPos: Int,
-        endPos: Int
+        endPos: Int,
     ) {
         val cards = (min(startPos, endPos)..max(startPos, endPos)).map { cards[it] }
         if (_selectedRows.addAll(cards)) {
@@ -651,7 +651,7 @@ class CardBrowserViewModel(
     @CheckResult
     suspend fun saveSearch(
         searchName: String,
-        searchTerms: String
+        searchTerms: String,
     ): SaveSearchResult {
         Timber.d("saving user search")
         var alreadyExists = false
@@ -705,7 +705,7 @@ class CardBrowserViewModel(
 
     suspend fun filterByTags(
         selectedTags: List<String>,
-        cardState: CardStateFilter
+        cardState: CardStateFilter,
     ) {
         val sb = StringBuilder(cardState.toSearch)
         // join selectedTags as "tag:$tag" with " or " between them
@@ -802,7 +802,7 @@ class CardBrowserViewModel(
         searchJob?.cancel()
         searchJob =
             launchCatchingIO(
-                errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) }
+                errorMessageHandler = { error -> flowOfSearchState.emit(SearchState.Error(error)) },
             ) {
                 flowOfSearchState.emit(SearchState.Searching)
                 Timber.d("performing search: '%s'", query)
@@ -852,14 +852,14 @@ class CardBrowserViewModel(
             lastDeckIdRepository: LastDeckIdRepository,
             cacheDir: File,
             preferencesProvider: SharedPreferencesProvider? = null,
-            options: CardBrowserLaunchOptions?
+            options: CardBrowserLaunchOptions?,
         ) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(
                     lastDeckIdRepository,
                     cacheDir,
                     options,
-                    preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider
+                    preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider,
                 )
             }
         }
@@ -902,7 +902,7 @@ class CardBrowserViewModel(
 
 enum class SaveSearchResult {
     ALREADY_EXISTS,
-    SUCCESS
+    SUCCESS,
 }
 
 /**
@@ -932,7 +932,7 @@ class PreviewerIdsFile(path: String) : File(path), Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeString(path)
     }

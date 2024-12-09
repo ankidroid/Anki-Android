@@ -44,7 +44,7 @@ import java.util.TreeSet
  */
 class TagsArrayAdapter(
     private val tags: TagsList,
-    private val resources: Resources
+    private val resources: Resources,
 ) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(), Filterable {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal lateinit var node: TagTreeNode
@@ -92,7 +92,7 @@ class TagsArrayAdapter(
         var subtreeSize: Int,
         var isExpanded: Boolean,
         var subtreeCheckedCnt: Int,
-        var vh: ViewHolder?
+        var vh: ViewHolder?,
     ) {
         /**
          * Get or set the checkbox state of the currently bound ViewHolder.
@@ -242,7 +242,7 @@ class TagsArrayAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ViewHolder {
         val v =
             LayoutInflater.from(parent.context)
@@ -284,7 +284,7 @@ class TagsArrayAdapter(
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.node = getVisibleTagTreeNode(position)!!
         holder.node.vh = holder
@@ -412,7 +412,7 @@ class TagsArrayAdapter(
      */
     private fun updateExpanderBackgroundImage(
         button: ImageButton,
-        node: TagTreeNode
+        node: TagTreeNode,
     ) {
         // More custom display related to the node can be added here.
         // For example, display some icon if the node is a leaf? (assets required)
@@ -438,7 +438,7 @@ class TagsArrayAdapter(
 
         override fun filterResults(
             constraint: CharSequence,
-            items: List<String>
+            items: List<String>,
         ): List<String> {
             val shownTags = TreeSet<String>()
             val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
@@ -460,7 +460,7 @@ class TagsArrayAdapter(
 
         override fun publishResults(
             constraint: CharSequence?,
-            results: List<String>
+            results: List<String>,
         ) {
             filteredList.clear()
             filteredList.addAll(results)

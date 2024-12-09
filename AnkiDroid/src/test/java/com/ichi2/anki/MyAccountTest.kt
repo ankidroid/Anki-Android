@@ -34,7 +34,7 @@ class MyAccountTest : RobolectricTest() {
         val myAccount =
             super.startActivityNormallyOpenCollectionWithIntent(
                 MyAccount::class.java,
-                Intent()
+                Intent(),
             )
 
         val testPassword = "randomStrongPassword"
@@ -51,7 +51,7 @@ class MyAccountTest : RobolectricTest() {
         val myAccount =
             super.startActivityNormallyOpenCollectionWithIntent(
                 MyAccount::class.java,
-                Intent()
+                Intent(),
             )
 
         val testPassword = "randomStrongPassword"
@@ -66,7 +66,7 @@ class MyAccountTest : RobolectricTest() {
         val myAccount =
             super.startActivityNormallyOpenCollectionWithIntent(
                 MyAccount::class.java,
-                Intent()
+                Intent(),
             )
 
         val testEmail = "random.email@example.com"

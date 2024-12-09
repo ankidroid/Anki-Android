@@ -21,12 +21,12 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.sharedPrefs
 
 enum class HideSystemBars(
-    @StringRes val valueRes: Int
+    @StringRes val valueRes: Int,
 ) {
     NONE(R.string.hide_system_bars_none_value),
     STATUS_BAR(R.string.hide_system_bars_status_bar_value),
     NAVIGATION_BAR(R.string.hide_system_bars_navigation_bar_value),
-    ALL(R.string.hide_system_bars_all_value)
+    ALL(R.string.hide_system_bars_all_value),
     ;
 
     companion object {

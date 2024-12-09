@@ -61,7 +61,7 @@ class CompatHasFilesTest : Test21And26() {
             assertThat(
                 "Starting at API 26, this should be a NotDirectoryException",
                 exception,
-                CoreMatchers.instanceOf(NotDirectoryException::class.java)
+                CoreMatchers.instanceOf(NotDirectoryException::class.java),
             )
         }
     }

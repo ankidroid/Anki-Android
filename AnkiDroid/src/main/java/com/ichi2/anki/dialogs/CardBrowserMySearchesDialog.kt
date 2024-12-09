@@ -32,7 +32,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
 
         fun onSaveSearch(
             searchName: String,
-            searchTerms: String?
+            searchTerms: String?,
         )
     }
 
@@ -59,7 +59,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     buttonCallback = { searchName ->
                         Timber.d("button clicked: %s", searchName)
                         removeSearch(searchName)
-                    }
+                    },
                 ).apply {
                     notifyAdapterDataSetChanged() // so the values are sorted.
                     dialog.title(text = resources.getString(R.string.card_browser_list_my_searches_title))
@@ -77,7 +77,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     hint = getString(R.string.card_browser_list_my_searches_new_name),
                     allowEmpty = false,
                     displayKeyboard = true,
-                    waitForPositiveButton = true
+                    waitForPositiveButton = true,
                 ) { dialog, text ->
                     Timber.d("Saving search with title/terms: %s/%s", text, currentSearchTerms)
                     mySearchesDialogListener?.onSaveSearch(text.toString(), currentSearchTerms)
@@ -114,7 +114,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
             savedFilters: HashMap<String, String>?,
             mySearchesDialogListener: MySearchesDialogListener?,
             currentSearchTerms: String?,
-            type: Int
+            type: Int,
         ): CardBrowserMySearchesDialog {
             this.mySearchesDialogListener = mySearchesDialogListener
             val cardBrowserMySearchesDialog = CardBrowserMySearchesDialog()

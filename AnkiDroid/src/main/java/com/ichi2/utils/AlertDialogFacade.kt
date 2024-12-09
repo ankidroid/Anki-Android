@@ -58,7 +58,7 @@ fun DialogInterfaceListener.toClickListener(): OnClickListener {
  */
 fun AlertDialog.Builder.title(
     @StringRes stringRes: Int? = null,
-    text: String? = null
+    text: String? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -72,7 +72,7 @@ fun AlertDialog.Builder.title(
 
 fun AlertDialog.Builder.message(
     @StringRes stringRes: Int? = null,
-    text: CharSequence? = null
+    text: CharSequence? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -88,7 +88,7 @@ fun AlertDialog.Builder.message(
  * Shows an icon to the left of the dialog title.
  */
 fun AlertDialog.Builder.iconAttr(
-    @DrawableRes res: Int
+    @DrawableRes res: Int,
 ) = apply {
     return this.setIcon(Themes.getResFromAttr(this.context, res))
 }
@@ -96,7 +96,7 @@ fun AlertDialog.Builder.iconAttr(
 fun AlertDialog.Builder.positiveButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -111,7 +111,7 @@ fun AlertDialog.Builder.positiveButton(
 fun AlertDialog.Builder.neutralButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -126,7 +126,7 @@ fun AlertDialog.Builder.neutralButton(
 fun AlertDialog.Builder.negativeButton(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
-    click: DialogInterfaceListener? = null
+    click: DialogInterfaceListener? = null,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -178,7 +178,7 @@ fun AlertDialog.Builder.checkBoxPrompt(
     @StringRes stringRes: Int? = null,
     text: CharSequence? = null,
     isCheckedDefault: Boolean = false,
-    onToggle: (checked: Boolean) -> Unit
+    onToggle: (checked: Boolean) -> Unit,
 ): AlertDialog.Builder {
     if (stringRes == null && text == null) {
         throw IllegalArgumentException("either `stringRes` or `text` must be set")
@@ -207,14 +207,14 @@ fun AlertDialog.Builder.customView(
     paddingTop: Int = 0,
     paddingBottom: Int = 0,
     paddingLeft: Int = 0,
-    paddingRight: Int = 0
+    paddingRight: Int = 0,
 ): AlertDialog.Builder {
     val container = FrameLayout(context)
 
     val containerParams =
         FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
+            FrameLayout.LayoutParams.WRAP_CONTENT,
         )
 
     container.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
@@ -238,7 +238,7 @@ fun AlertDialog.Builder.customListAdapter(adapter: RecyclerView.Adapter<*>) {
  */
 fun AlertDialog.Builder.customListAdapterWithDecoration(
     adapter: RecyclerView.Adapter<*>,
-    context: Context
+    context: Context,
 ) {
     val recyclerView = LayoutInflater.from(context).inflate(R.layout.dialog_generic_recycler_view, null, false) as RecyclerView
     recyclerView.adapter = adapter
@@ -272,7 +272,7 @@ fun AlertDialog.input(
     maxLength: Int? = null,
     displayKeyboard: Boolean = false,
     waitForPositiveButton: Boolean = true,
-    callback: (AlertDialog, CharSequence) -> Unit
+    callback: (AlertDialog, CharSequence) -> Unit,
 ): AlertDialog {
     // Builder.setView() may not be called before show()
     if (!this.isShowing) throw IllegalStateException("input() requires .show()")
@@ -346,7 +346,7 @@ val AlertDialog.positiveButton: Button
  */
 fun AlertDialog.Builder.listItems(
     items: List<CharSequence>,
-    onClick: (dialog: DialogInterface, index: Int) -> Unit
+    onClick: (dialog: DialogInterface, index: Int) -> Unit,
 ): AlertDialog.Builder {
     return this.setItems(items.toTypedArray()) { dialog, which ->
         onClick(dialog, which)
@@ -364,7 +364,7 @@ fun AlertDialog.Builder.listItems(
 fun AlertDialog.Builder.listItemsAndMessage(
     message: String?,
     items: List<CharSequence>,
-    onClick: (dialog: DialogInterface, index: Int) -> Unit
+    onClick: (dialog: DialogInterface, index: Int) -> Unit,
 ): AlertDialog.Builder {
     val dialogView = View.inflate(this.context, R.layout.dialog_listview_message, null)
     dialogView.findViewById<FixedTextView>(R.id.dialog_message).text = message
@@ -397,7 +397,7 @@ fun AlertDialog.Builder.listItemsAndMessage(
 fun AlertDialog.Builder.titleWithHelpIcon(
     @StringRes stringRes: Int? = null,
     text: String? = null,
-    block: View.OnClickListener
+    block: View.OnClickListener,
 ) {
     // setup the view for the dialog
     val customTitleView = LayoutInflater.from(context).inflate(R.layout.alert_dialog_title_with_help, null, false)

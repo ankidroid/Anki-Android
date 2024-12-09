@@ -75,7 +75,7 @@ class PagesTest : InstrumentedTest() {
                     // the following need a file path
                     Pair(PagesTest::needsPath, "AnkiPackageImporterFragment"),
                     Pair(PagesTest::needsPath, "CsvImporter"),
-                    Pair(PagesTest::needsPath, "ImageOcclusion")
+                    Pair(PagesTest::needsPath, "ImageOcclusion"),
                 )
 
             return intents.map { arrayOf(it.first, it.second) }
@@ -106,7 +106,7 @@ fun PagesTest.getDeckOptions(context: Context): Intent {
 }
 
 fun PagesTest.needsPath(
-    @Suppress("UNUSED_PARAMETER") context: Context
+    @Suppress("UNUSED_PARAMETER") context: Context,
 ): Intent {
     assumeThat("not implemented: path needed", false, equalTo(true))
     TODO()

@@ -82,7 +82,7 @@ interface Compat {
 
     fun vibrate(
         context: Context,
-        duration: Duration
+        duration: Duration,
     )
 
     fun getMediaRecorder(context: Context): MediaRecorder
@@ -90,19 +90,19 @@ interface Compat {
     fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo?
 
     fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo?
 
     fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): List<ResolveInfo>
 
     /**
@@ -114,7 +114,7 @@ interface Compat {
     fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
-        className: Class<T>
+        className: Class<T>,
     ): T?
 
     /**
@@ -130,7 +130,7 @@ interface Compat {
     fun <T : Serializable?> getSerializable(
         bundle: Bundle,
         key: String,
-        clazz: Class<T>
+        clazz: Class<T>,
     ): T?
 
     /**
@@ -145,7 +145,7 @@ interface Compat {
     fun getPackageInfo(
         packageManager: PackageManager,
         packageName: String,
-        flags: PackageInfoFlagsCompat
+        flags: PackageInfoFlagsCompat,
     ): PackageInfo?
 
     /**
@@ -154,7 +154,7 @@ interface Compat {
     @Throws(IOException::class)
     fun copyFile(
         source: String,
-        target: String
+        target: String,
     )
 
     /**
@@ -164,7 +164,7 @@ interface Compat {
     @Throws(IOException::class)
     fun copyFile(
         source: String,
-        target: OutputStream
+        target: OutputStream,
     ): Long
 
     /**
@@ -174,7 +174,7 @@ interface Compat {
     @Throws(IOException::class)
     fun copyFile(
         source: InputStream,
-        target: String
+        target: String,
     ): Long
 
     /**
@@ -234,7 +234,7 @@ interface Compat {
         baseFileName: String,
         extension: String,
         format: CompressFormat,
-        quality: Int
+        quality: Int,
     ): Uri
 
     /**

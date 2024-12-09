@@ -43,7 +43,7 @@ object MultimediaUtils {
     @Throws(IOException::class)
     fun createNewCacheImageFile(
         extension: String = "jpg",
-        directory: String?
+        directory: String?,
     ): File {
         val storageDir = File(directory!!)
         return File.createTempFile("img", ".$extension", storageDir)
@@ -73,7 +73,7 @@ object MultimediaUtils {
      */
     fun getImageNameFromUri(
         context: Context,
-        uri: Uri
+        uri: Uri,
     ): String? =
         try {
             Timber.d("getImageNameFromUri() URI: %s", uri)
@@ -87,7 +87,7 @@ object MultimediaUtils {
                         getImageNameFromContentResolver(
                             context,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            selection
+                            selection,
                         )
                 } else if ("com.android.providers.downloads.documents" == uri.authority) {
                     imageName =
@@ -107,7 +107,7 @@ object MultimediaUtils {
                                 val contentUri =
                                     ContentUris.withAppendedId(
                                         Uri.parse("content://downloads/public_downloads"),
-                                        docId.toLong()
+                                        docId.toLong(),
                                     )
                                 getImageNameFromContentResolver(context, contentUri, null)
                             }
@@ -115,7 +115,7 @@ object MultimediaUtils {
                             else -> {
                                 CrashReportService.sendExceptionReport(
                                     message = "Failed to get fileName from providers.downloads.documents",
-                                    origin = "getImageNameFromUri"
+                                    origin = "getImageNameFromUri",
                                 )
                                 null
                             }
@@ -144,7 +144,7 @@ object MultimediaUtils {
     private fun getImageNameFromContentResolver(
         context: Context,
         uri: Uri,
-        selection: String?
+        selection: String?,
     ): String? {
         Timber.d("getImageNameFromContentResolver() %s", uri)
         val filePathColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
@@ -184,7 +184,7 @@ object MultimediaUtils {
         return File.createTempFile(
             "ANKIDROID_$currentDateTime",
             ".jpg",
-            storageDir
+            storageDir,
         )
     }
 
@@ -202,7 +202,7 @@ object MultimediaUtils {
     @Throws(IOException::class)
     fun createCachedFile(
         filename: String,
-        directory: String?
+        directory: String?,
     ) = File(directory, filename).apply {
         deleteOnExit()
     }

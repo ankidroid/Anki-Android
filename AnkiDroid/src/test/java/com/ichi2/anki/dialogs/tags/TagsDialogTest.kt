@@ -89,7 +89,7 @@ class TagsDialogTest : RobolectricTest() {
             val returnedOption = AtomicReference<CardStateFilter>()
             f.parentFragmentManager.setFragmentResultListener(
                 TagsDialogListener.ON_SELECTED_TAGS_KEY,
-                mockLifecycleOwner()
+                mockLifecycleOwner(),
             ) { _: String?, bundle: Bundle ->
                 returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
                 returnedOption.set(bundle.getSerializableCompat<CardStateFilter>(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
@@ -233,12 +233,12 @@ class TagsDialogTest : RobolectricTest() {
                 "fruit::pear::big",
                 "sport::football",
                 "sport::tennis",
-                "book"
+                "book",
             )
         val checkedTags =
             listOf(
                 "fruit::pear::big",
-                "sport::tennis"
+                "sport::tennis",
             )
         val args =
             TagsDialog(ParametersUtils.whatever())
@@ -381,13 +381,13 @@ class TagsDialogTest : RobolectricTest() {
                 "common::speak::tennis",
                 "common::sport::tennis",
                 "common::sport::football",
-                "common::sport::football::small"
+                "common::sport::football::small",
             )
         val checkedTags =
             listOf(
                 "common::speak::tennis",
                 "common::sport::tennis",
-                "common::sport::football::small"
+                "common::sport::football::small",
             )
         val args =
             TagsDialog(ParametersUtils.whatever())
@@ -473,7 +473,7 @@ class TagsDialogTest : RobolectricTest() {
                 "common::speak::tennis",
                 "common::sport::tennis",
                 "common::sport::football",
-                "common::sport::football::small"
+                "common::sport::football::small",
             )
         val checkedTags = emptyList<String>()
         val args =
@@ -610,7 +610,7 @@ class TagsDialogTest : RobolectricTest() {
             Assert.assertEquals(
                 "The space should be replaced by '::' without mistakenly clear everything.",
                 "hello::",
-                editText.text.toString()
+                editText.text.toString(),
             )
 
             editText.setText("hello")
@@ -667,8 +667,8 @@ class TagsDialogTest : RobolectricTest() {
                         BundleCompat.getParcelable(
                             f.requireArguments(),
                             "tagsFile",
-                            TagsFile::class.java
-                        )
+                            TagsFile::class.java,
+                        ),
                     )
 
                 val dataFromArguments = tagsFile.getData()
@@ -683,31 +683,31 @@ class TagsDialogTest : RobolectricTest() {
     private fun TagsDialog.withTestArguments(
         type: TagsDialog.DialogType,
         checkedTags: List<String>,
-        allTags: List<String>
+        allTags: List<String>,
     ) = withArguments(
         context = targetContext,
         type = type,
         checkedTags = checkedTags,
-        allTags = allTags
+        allTags = allTags,
     )
 
     private fun TagsDialog.withTestArguments(
         type: TagsDialog.DialogType,
         checkedTags: List<String>,
         uncheckedTags: List<String>?,
-        allTags: List<String>
+        allTags: List<String>,
     ) = withArguments(
         context = targetContext,
         type = type,
         checkedTags = checkedTags,
         uncheckedTags = uncheckedTags,
-        allTags = allTags
+        allTags = allTags,
     )
 
     private fun runTagsDialogScenario(
         args: Bundle,
         factory: TagsDialogFactory? = null,
-        block: (TagsDialog) -> Unit
+        block: (TagsDialog) -> Unit,
     ) {
         FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_Light, factory).use { scenario ->
             scenario.moveToState(Lifecycle.State.STARTED)

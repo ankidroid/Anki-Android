@@ -83,28 +83,28 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     open fun convertToByteArray(
         apiContract: ApiContract,
-        boolean: Boolean
+        boolean: Boolean,
     ): ByteArray {
         return ApiResult.Boolean(apiContract.isValid, boolean).toString().toByteArray()
     }
 
     open fun convertToByteArray(
         apiContract: ApiContract,
-        int: Int
+        int: Int,
     ): ByteArray {
         return ApiResult.Integer(apiContract.isValid, int).toString().toByteArray()
     }
 
     open fun convertToByteArray(
         apiContract: ApiContract,
-        long: Long
+        long: Long,
     ): ByteArray {
         return ApiResult.Long(apiContract.isValid, long).toString().toByteArray()
     }
 
     open fun convertToByteArray(
         apiContract: ApiContract,
-        string: String
+        string: String,
     ): ByteArray {
         return ApiResult.String(apiContract.isValid, string).toString().toByteArray()
     }
@@ -141,7 +141,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
     private fun showDeveloperContact(
         errorCode: Int,
-        apiDevContact: String
+        apiDevContact: String,
     ) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
         val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, apiDevContact, errorMsg)
@@ -159,7 +159,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      */
     private fun requireApiVersion(
         apiVer: String,
-        apiDevContact: String
+        apiDevContact: String,
     ): Boolean {
         try {
             if (apiDevContact.isEmpty() || apiVer.isEmpty()) {
@@ -210,7 +210,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     open suspend fun handleJsApiRequest(
         methodName: String,
         bytes: ByteArray,
-        returnDefaultValues: Boolean = true
+        returnDefaultValues: Boolean = true,
     ) = withContext(Dispatchers.Main) {
         // the method will call to set the card supplied data and is valid version for each api request
         val apiContract = parseJsApiContract(bytes)!!
@@ -412,7 +412,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         action: () -> Boolean,
         apiContract: ApiContract,
         errorCode: Int,
-        conversion: (ApiContract, Boolean) -> ByteArray
+        conversion: (ApiContract, Boolean) -> ByteArray,
     ): ByteArray {
         val status = action()
         if (!status) {
@@ -429,7 +429,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 } catch (exc: Exception) {
                     activity.webView!!.evaluateJavascript(
                         "console.log('${context.getString(R.string.search_card_js_api_no_results)}')",
-                        null
+                        null,
                     )
                     showDeveloperContact(AnkiDroidJsAPIConstants.ANKI_JS_ERROR_CODE_SEARCH_CARD, apiContract.cardSuppliedDeveloperContact)
                     return@withContext convertToByteArray(apiContract, false)

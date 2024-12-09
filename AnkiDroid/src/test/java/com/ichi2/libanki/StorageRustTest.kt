@@ -38,8 +38,8 @@ class StorageRustTest : JvmTest() {
                 "Cloze",
                 "Basic (type in the answer)",
                 "Basic (optional reversed card)",
-                "Image Occlusion"
-            )
+                "Image Occlusion",
+            ),
         )
     }
 }

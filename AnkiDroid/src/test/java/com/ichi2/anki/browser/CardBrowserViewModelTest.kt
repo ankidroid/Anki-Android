@@ -721,7 +721,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat(
                     "previewing first card in each note",
                     actualCardIds.toLongArray(),
-                    equalTo(firstCardIds.toLongArray())
+                    equalTo(firstCardIds.toLongArray()),
                 )
             }
         }
@@ -756,7 +756,7 @@ class CardBrowserViewModelTest : JvmTest() {
     private fun runViewModelNotesTest(
         notes: Int = 0,
         manualInit: Boolean = true,
-        testBody: suspend CardBrowserViewModel.() -> Unit
+        testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         CardsOrNotes.NOTES.saveToCollection(col)
         for (i in 0 until notes) {
@@ -769,7 +769,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 cacheDir = createTransientDirectory(),
                 options = null,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
-                manualInit = manualInit
+                manualInit = manualInit,
             )
         // makes ignoreValuesFromViewModelLaunch work under test
         if (manualInit) {
@@ -781,7 +781,7 @@ class CardBrowserViewModelTest : JvmTest() {
     private fun runViewModelTest(
         notes: Int = 0,
         manualInit: Boolean = true,
-        testBody: suspend CardBrowserViewModel.() -> Unit
+        testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         for (i in 0 until notes) {
             addNoteUsingBasicModel()
@@ -793,7 +793,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 cacheDir = createTransientDirectory(),
                 options = null,
                 preferences = AnkiDroidApp.sharedPreferencesProvider,
-                manualInit = manualInit
+                manualInit = manualInit,
             )
         // makes ignoreValuesFromViewModelLaunch work under test
         if (manualInit) {
@@ -806,7 +806,7 @@ class CardBrowserViewModelTest : JvmTest() {
         private suspend fun viewModel(
             lastDeckId: DeckId? = null,
             intent: CardBrowserLaunchOptions? = null,
-            mode: CardsOrNotes = CardsOrNotes.CARDS
+            mode: CardsOrNotes = CardsOrNotes.CARDS,
         ): CardBrowserViewModel {
             val lastDeckIdRepository =
                 object : LastDeckIdRepository {
@@ -876,7 +876,7 @@ private fun TestClass.assertAllSuspended(context: String) {
         assertThat(
             "$context: all cards are unsuspended",
             card.queue,
-            equalTo(QUEUE_TYPE_SUSPENDED)
+            equalTo(QUEUE_TYPE_SUSPENDED),
         )
     }
 }
@@ -889,7 +889,7 @@ private fun TestClass.assertAllUnsuspended(context: String) {
         assertThat(
             "$context: all cards unsuspended",
             card.queue,
-            not(equalTo(QUEUE_TYPE_SUSPENDED))
+            not(equalTo(QUEUE_TYPE_SUSPENDED)),
         )
     }
 }

@@ -71,7 +71,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat(
             "Cards list is correct",
             (n.requireView().findViewById<TextView>(R.id.CardEditorCardsButton)).text.toString(),
-            equalTo("Cards: Card 1")
+            equalTo("Cards: Card 1"),
         )
     }
 
@@ -150,7 +150,7 @@ class NoteEditorTest : RobolectricTest() {
             val actualResourceId = noteEditor.snackbarErrorText
             assertThat(
                 actualResourceId,
-                equalTo(CollectionManager.TR.addingYouHaveAClozeDeletionNote())
+                equalTo(CollectionManager.TR.addingYouHaveAClozeDeletionNote()),
             )
         }
 
@@ -249,7 +249,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat(
             "Deck ID in the intent should be the selected deck id",
             copyNoteBundle.getLong(NoteEditor.EXTRA_DID, -404L),
-            equalTo(currentDid)
+            equalTo(currentDid),
         )
         assertThat("Deck ID in the new note should be the ID provided in the intent", newNoteEditor.deckId, equalTo(currentDid))
     }
@@ -552,7 +552,7 @@ class NoteEditorTest : RobolectricTest() {
     private fun getNoteEditorEditingExistingBasicNote(
         front: String,
         back: String,
-        from: FromScreen
+        from: FromScreen,
     ): NoteEditor {
         val n = super.addNoteUsingBasicModel(front, back)
         return getNoteEditorEditingExistingBasicNote(n, from)
@@ -560,7 +560,7 @@ class NoteEditorTest : RobolectricTest() {
 
     private fun getNoteEditorEditingExistingBasicNote(
         n: Note,
-        from: FromScreen
+        from: FromScreen,
     ): NoteEditor {
         val bundle =
             when (from) {
@@ -572,12 +572,12 @@ class NoteEditorTest : RobolectricTest() {
 
     fun openNoteEditorWithArgs(
         arguments: Bundle,
-        action: String? = null
+        action: String? = null,
     ): NoteEditor {
         val activity =
             startActivityNormallyOpenCollectionWithIntent(
                 SingleFragmentActivity::class.java,
-                NoteEditorLauncher.PassArguments(arguments).getIntent(targetContext, action)
+                NoteEditorLauncher.PassArguments(arguments).getIntent(targetContext, action),
             )
         return activity.getEditor()
     }
@@ -604,7 +604,7 @@ class NoteEditorTest : RobolectricTest() {
 
     private enum class FromScreen {
         DECK_LIST,
-        REVIEWER
+        REVIEWER,
     }
 
     /** We don't use constants here to allow for additional note types to be defined  */
@@ -615,7 +615,7 @@ class NoteEditorTest : RobolectricTest() {
         /**Basic, but Back is on the front  */
         BACK_TO_FRONT,
         THREE_FIELD_INVALID_TEMPLATE,
-        IMAGE_OCCLUSION
+        IMAGE_OCCLUSION,
     }
 
     inner class NoteEditorTestBuilder(notetype: NotetypeJson?) {

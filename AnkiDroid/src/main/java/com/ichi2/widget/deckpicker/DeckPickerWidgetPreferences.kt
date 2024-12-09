@@ -56,7 +56,7 @@ class DeckPickerWidgetPreferences(context: Context) {
      */
     fun saveSelectedDecks(
         appWidgetId: Int,
-        selectedDecks: List<String>
+        selectedDecks: List<String>,
     ) {
         deckPickerSharedPreferences.edit {
             putString(getDeckPickerWidgetKey(appWidgetId), selectedDecks.joinToString(","))

@@ -59,9 +59,9 @@ object HttpFetcher {
                             .header("Referer", "com.ichi2.anki")
                             .header("User-Agent", "Mozilla/5.0 ( compatible ) ")
                             .header("Accept", "*/*")
-                            .build()
+                            .build(),
                     )
-                }
+                },
             )
         } else {
             clientBuilder.addNetworkInterceptor(
@@ -70,9 +70,9 @@ object HttpFetcher {
                         chain.request()
                             .newBuilder()
                             .header("User-Agent", "AnkiDroid-$pkgVersionName")
-                            .build()
+                            .build(),
                     )
-                }
+                },
             )
         }
         return clientBuilder
@@ -80,7 +80,7 @@ object HttpFetcher {
 
     fun fetchThroughHttp(
         address: String?,
-        encoding: String? = "utf-8"
+        encoding: String? = "utf-8",
     ): String {
         Timber.d("fetching %s", address)
         return try {
@@ -97,8 +97,8 @@ object HttpFetcher {
                     BufferedReader(
                         InputStreamReader(
                             response.body!!.byteStream(),
-                            Charset.forName(encoding)
-                        )
+                            Charset.forName(encoding),
+                        ),
                     )
 
                 val stringBuilder = StringBuilder()

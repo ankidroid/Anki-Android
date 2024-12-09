@@ -53,7 +53,7 @@ class MediaRegistration(private val context: Context) {
     @Throws(IOException::class)
     fun loadMediaIntoCollection(
         uri: Uri,
-        description: ClipDescription
+        description: ClipDescription,
     ): String? {
         val filename = getFileName(context.contentResolver, uri)
         val fd = openInputStreamWithURI(uri)
@@ -135,7 +135,7 @@ class MediaRegistration(private val context: Context) {
     private fun shouldConvertToJPG(
         fileNameExtension: String,
         fileStream: InputStream,
-        isImage: Boolean
+        isImage: Boolean,
     ): Boolean {
         if (!isImage) {
             return false
@@ -157,7 +157,7 @@ class MediaRegistration(private val context: Context) {
 
     fun onPaste(
         uri: Uri,
-        description: ClipDescription
+        description: ClipDescription,
     ): String? {
         return try {
             // check if cache already holds registered file or not

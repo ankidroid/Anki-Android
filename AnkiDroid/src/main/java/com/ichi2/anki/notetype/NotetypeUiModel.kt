@@ -28,7 +28,7 @@ internal data class ManageNoteTypeUiModel(
     /**
      * The number of note using this note type.
      */
-    val useCount: Int
+    val useCount: Int,
 )
 
 internal fun NotetypeNameIdUseCount.toUiModel(): ManageNoteTypeUiModel = ManageNoteTypeUiModel(id, name, useCount)
@@ -44,7 +44,7 @@ internal data class AddNotetypeUiModel(
      * Whether this is a note type provided by Anki by default.
      * If false, this is one of the note type currently in this collection (potentially a clone of a standard note type)
      */
-    val isStandard: Boolean = false
+    val isStandard: Boolean = false,
 )
 
 /**

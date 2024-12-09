@@ -55,7 +55,7 @@ inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(k
  * The resource IDs with preferences keys can be found on `res/values/preferences.xml`
  */
 inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(
-    @StringRes resId: Int
+    @StringRes resId: Int,
 ): T {
     val key = getString(resId)
     return requirePreference(key)

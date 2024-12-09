@@ -27,7 +27,7 @@ class ClipboardUtilTest {
     fun setUp() {
         clipboardManager =
             ApplicationProvider.getApplicationContext<Context>()
-            .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 
     @Test

@@ -84,10 +84,10 @@ class CardBrowserColumnTest : JvmTest() {
                     listOf(
                         FSRS_DIFFICULTY,
                         FSRS_RETRIEVABILITY,
-                        FSRS_STABILITY
-                    )
-                )
-            )
+                        FSRS_STABILITY,
+                    ),
+                ),
+            ),
         )
 
         val note = addNoteUsingBasicModel()

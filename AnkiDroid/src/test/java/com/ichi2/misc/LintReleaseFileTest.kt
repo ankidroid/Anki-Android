@@ -41,20 +41,20 @@ class LintReleaseFileTest {
                     uri: String?,
                     localName: String?,
                     qName: String?,
-                    attributes: Attributes?
+                    attributes: Attributes?,
                 ) {
                     if (qName != null && qName == "issue") {
                         if (attributes != null) {
                             val currentIssue = attributes.getValue("id")
                             assertFalse(
                                 "Duplicate $currentIssue lint rule in lint-release.xml",
-                                seenIssues.contains(currentIssue)
+                                seenIssues.contains(currentIssue),
                             )
                             seenIssues.add(currentIssue)
                         }
                     }
                 }
-            }
+            },
         )
     }
 }

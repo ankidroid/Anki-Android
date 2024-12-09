@@ -30,7 +30,7 @@ import java.util.function.Supplier
 @CheckResult // A "set" API should be used if the result is not required.
 fun SharedPreferences.getOrSetString(
     key: String,
-    supplier: Supplier<String>
+    supplier: Supplier<String>,
 ): String {
     if (contains(key)) {
         // the default Is never returned. The value might be able be optimised, but the Android API should be better.
@@ -44,7 +44,7 @@ fun SharedPreferences.getOrSetString(
 @CheckResult // A "set" API should be used if the result is not required.
 fun SharedPreferences.getOrSetLong(
     key: String,
-    supplier: Supplier<Long>
+    supplier: Supplier<Long>,
 ): Long {
     if (contains(key)) {
         // the default is never returned

@@ -66,7 +66,7 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
     /** Export ready dialog message*/
     class ExportReadyDialogMessage(private val exportPath: String) : DialogHandlerMessage(
         which = WhichDialogHandler.MSG_EXPORT_READY,
-        analyticName = "ExportReadyDialog"
+        analyticName = "ExportReadyDialog",
     ) {
         override fun handleAsyncMessage(activity: AnkiActivity) {
             // we may be called via any AnkiActivity but export is a DeckPicker thing
@@ -75,12 +75,12 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
                     activity,
                     activity.getString(R.string.something_wrong),
                     ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
-                    true
+                    true,
                 )
                 return
             }
             activity.showDialogFragment(
-                activity.exportingDelegate.dialogsFactory.newExportReadyDialog().withArguments(exportPath)
+                activity.exportingDelegate.dialogsFactory.newExportReadyDialog().withArguments(exportPath),
             )
         }
 

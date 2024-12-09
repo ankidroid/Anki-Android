@@ -103,7 +103,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     }
 
     constructor(
-        @LayoutRes contentLayoutId: Int
+        @LayoutRes contentLayoutId: Int,
     ) : super(contentLayoutId) {
         activityName = javaClass.simpleName
     }
@@ -120,7 +120,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         if (AdaptionUtil.isUserATestClient) {
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
             )
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -147,7 +147,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         super.onResume()
         UsageAnalytics.sendAnalyticsScreenView(this)
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(
-            SIMPLE_NOTIFICATION_ID
+            SIMPLE_NOTIFICATION_ID,
         )
         // Show any pending dialogs which were stored persistently
         dialogHandler.executeMessage()
@@ -188,7 +188,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
      */
     protected open val broadcastsActions =
         mapOf(
-            SdCardReceiver.MEDIA_EJECT to { onSdCardNotMounted() }
+            SdCardReceiver.MEDIA_EJECT to { onSdCardNotMounted() },
         )
 
     /**
@@ -204,7 +204,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
             object : BroadcastReceiver() {
                 override fun onReceive(
                     context: Context,
-                    intent: Intent
+                    intent: Intent,
                 ) {
                     broadcastsActions[intent.action]?.invoke()
                 }
@@ -261,7 +261,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
 
     override fun setContentView(
         view: View?,
-        params: ViewGroup.LayoutParams?
+        params: ViewGroup.LayoutParams?,
     ) {
         if (animationDisabled()) {
             view?.clearAnimation()
@@ -271,7 +271,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
 
     override fun addContentView(
         view: View?,
-        params: ViewGroup.LayoutParams?
+        params: ViewGroup.LayoutParams?,
     ) {
         if (animationDisabled()) {
             view?.clearAnimation()
@@ -291,7 +291,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
 
     fun startActivityWithAnimation(
         intent: Intent,
-        animation: Direction
+        animation: Direction,
     ) {
         enableIntentAnimation(intent)
         super.startActivity(intent)
@@ -301,12 +301,12 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     private fun launchActivityForResult(
         intent: Intent?,
         launcher: ActivityResultLauncher<Intent?>,
-        animation: Direction?
+        animation: Direction?,
     ) {
         try {
             launcher.launch(
                 intent,
-                ActivityTransitionAnimation.getAnimationOptions(this, animation)
+                ActivityTransitionAnimation.getAnimationOptions(this, animation),
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
@@ -331,7 +331,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
 
     protected fun enableViewAnimation(
         view: View,
-        animation: Animation?
+        animation: Animation?,
     ) {
         if (animationDisabled()) {
             disableViewAnimation(view)
@@ -374,7 +374,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
         // Open collection asynchronously if it hasn't already been opened
         showProgressBar()
         CollectionLoader.load(
-            this
+            this,
         ) { col: Collection? ->
             if (col != null) {
                 Timber.d("Asynchronously calling onCollectionLoaded")
@@ -444,8 +444,8 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
                 .setCloseButtonIcon(
                     BitmapFactory.decodeResource(
                         this.resources,
-                        R.drawable.ic_back_arrow_custom_tab
-                    )
+                        R.drawable.ic_back_arrow_custom_tab,
+                    ),
                 )
                 .setColorScheme(customTabsColorScheme)
                 .setDefaultColorSchemeParams(colorSchemeParams)
@@ -459,7 +459,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     }
 
     fun openUrl(
-        @StringRes url: Int
+        @StringRes url: Int,
     ) {
         openUrl(getString(url))
     }
@@ -494,7 +494,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
      */
     fun showAsyncDialogFragment(
         newFragment: AsyncDialogFragment,
-        channel: Channel
+        channel: Channel,
     ) {
         try {
             showDialogFragment(newFragment)
@@ -520,7 +520,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     open fun showSimpleMessageDialog(
         message: String,
         title: String = "",
-        reload: Boolean = false
+        reload: Boolean = false,
     ) {
         val newFragment: AsyncDialogFragment =
             SimpleMessageDialog.newInstance(title, message, reload)
@@ -530,12 +530,12 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     fun showSimpleNotification(
         title: String,
         message: String?,
-        channel: Channel
+        channel: Channel,
     ) {
         val prefs = this.sharedPrefs()
         // Show a notification unless all notifications have been totally disabled
         if (prefs.getString(getString(R.string.pref_notifications_minimum_cards_due_key), "0")!!
-            .toInt() <= PENDING_NOTIFICATIONS_ONLY
+                .toInt() <= PENDING_NOTIFICATIONS_ONLY
         ) {
             // Use the title as the ticker unless the title is simply "AnkiDroid"
             val ticker: String? =
@@ -548,7 +548,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
             val builder =
                 NotificationCompat.Builder(
                     this,
-                    channel.id
+                    channel.id,
                 )
                     .setSmallIcon(R.drawable.ic_star_notify)
                     .setContentTitle(title)
@@ -573,7 +573,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
                     0,
                     resultIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT,
-                    false
+                    false,
                 )
             builder.setContentIntent(resultPendingIntent)
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -585,7 +585,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     // Show dialogs to deal with database loading issues etc
     open fun showDatabaseErrorDialog(
         errorDialogType: DatabaseErrorDialogType,
-        exceptionData: CustomExceptionData? = null
+        exceptionData: CustomExceptionData? = null,
     ) {
         val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType, exceptionData)
         showAsyncDialogFragment(newFragment)
@@ -623,13 +623,13 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     protected fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
         showedActivityFailedScreen(
             savedInstanceState = savedInstanceState,
-            activitySuperOnCreate = { state -> super.onCreate(state) }
+            activitySuperOnCreate = { state -> super.onCreate(state) },
         )
 
     /** @see Window.setNavigationBarColor */
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(
-        @AttrRes attr: Int
+        @AttrRes attr: Int,
     ) {
         window.navigationBarColor = Themes.getColorFromAttr(this, attr)
     }
@@ -644,7 +644,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
     override fun onProvideKeyboardShortcuts(
         data: MutableList<KeyboardShortcutGroup>,
         menu: Menu?,
-        deviceId: Int
+        deviceId: Int,
     ) {
         val shortcutGroups = getShortcuts()
         data.addAll(shortcutGroups)
@@ -671,9 +671,9 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
             ShortcutGroup(
                 listOf(
                     shortcut("Alt+K", R.string.show_keyboard_shortcuts_dialog),
-                    shortcut("Ctrl+Z", R.string.undo)
+                    shortcut("Ctrl+Z", R.string.undo),
                 ),
-                R.string.pref_cat_general
+                R.string.pref_cat_general,
             ).toShortcutGroup(this)
 
         return listOfNotNull(shortcuts?.toShortcutGroup(this), generalShortcutGroup)
@@ -681,7 +681,7 @@ open class AnkiActivity : AppCompatActivity, ShortcutGroupProvider, AnkiActivity
 
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         if (event.isAltPressed && keyCode == KeyEvent.KEYCODE_K) {
             showKeyboardShortcutsDialog()

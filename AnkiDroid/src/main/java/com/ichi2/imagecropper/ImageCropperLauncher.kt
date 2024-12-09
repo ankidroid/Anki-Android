@@ -49,7 +49,7 @@ sealed interface ImageCropperLauncher {
     data class ImageUri(val imageUri: Uri?) : ImageCropperLauncher {
         override fun toBundle(): Bundle =
             bundleOf(
-                ImageCropper.CROP_IMAGE_URI to imageUri
+                ImageCropper.CROP_IMAGE_URI to imageUri,
             )
     }
 }

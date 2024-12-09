@@ -36,13 +36,13 @@ enum class SyncStatus {
     HAS_CHANGES,
     ONE_WAY,
     BADGE_DISABLED,
-    ERROR
+    ERROR,
     ;
 
     companion object {
         suspend fun getSyncStatus(
             context: Context,
-            auth: SyncAuth?
+            auth: SyncAuth?,
         ): SyncStatus {
             if (isDisabled) {
                 return BADGE_DISABLED

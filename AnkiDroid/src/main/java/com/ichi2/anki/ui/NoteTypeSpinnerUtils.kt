@@ -26,7 +26,7 @@ import com.ichi2.utils.NamedJSONComparator
 fun setupNoteTypeSpinner(
     context: Context,
     noteTypeSpinner: Spinner,
-    col: Collection
+    col: Collection,
 ): List<Long> {
     val sortedModels = col.notetypes.all().sortedWith(NamedJSONComparator.INSTANCE)
     val modelNames = sortedModels.map { it.getString("name") }
@@ -35,7 +35,7 @@ fun setupNoteTypeSpinner(
         ArrayAdapter(
             context,
             android.R.layout.simple_spinner_dropdown_item,
-            modelNames
+            modelNames,
         ).apply {
             // The resource passed to the constructor is normally used for both the spinner view
             // and the dropdown list. This keeps the former and overrides the latter.

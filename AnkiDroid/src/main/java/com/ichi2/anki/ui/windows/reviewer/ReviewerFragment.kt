@@ -84,7 +84,7 @@ class ReviewerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -168,7 +168,7 @@ class ReviewerFragment :
 
         fun MaterialButton.setAnswerButtonNextTime(
             @StringRes title: Int,
-            nextTime: String?
+            nextTime: String?,
         ) {
             val titleString = context.getString(title)
             text = ReviewerViewModel.buildAnswerButtonText(titleString, nextTime)
@@ -348,7 +348,7 @@ class ReviewerFragment :
                 left = bars.left,
                 top = bars.top,
                 right = bars.right,
-                bottom = bars.bottom
+                bottom = bars.bottom,
             )
             WindowInsetsCompat.CONSUMED
         }

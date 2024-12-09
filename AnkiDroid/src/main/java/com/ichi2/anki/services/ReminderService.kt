@@ -36,7 +36,7 @@ class ReminderService : BroadcastReceiver() {
     /** Cancelling all deck reminder. We used to use them, now we have deck option reminders.  */
     private fun cancelDeckReminder(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         // 0 Is not a valid deck id.
         val deckId = intent.getLongExtra(EXTRA_DECK_ID, 0)
@@ -50,7 +50,7 @@ class ReminderService : BroadcastReceiver() {
                 deckId.toInt(),
                 Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, deckId),
                 0,
-                false
+                false,
             )
         if (reminderIntent != null) {
             alarmManager.cancel(reminderIntent)
@@ -59,7 +59,7 @@ class ReminderService : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         cancelDeckReminder(context, intent)
 
@@ -101,7 +101,7 @@ class ReminderService : BroadcastReceiver() {
             val notification =
                 NotificationCompat.Builder(
                     context,
-                    Channel.DECK_REMINDERS.id
+                    Channel.DECK_REMINDERS.id,
                 )
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setContentTitle(context.getString(R.string.reminder_title))
@@ -110,8 +110,8 @@ class ReminderService : BroadcastReceiver() {
                             R.plurals.reminder_text,
                             total,
                             deckDue.fullDeckName,
-                            total
-                        )
+                            total,
+                        ),
                     )
                     .setSmallIcon(R.drawable.ic_star_notify)
                     .setColor(context.getColor(R.color.material_light_blue_700))
@@ -121,8 +121,8 @@ class ReminderService : BroadcastReceiver() {
                             deckId.toInt(),
                             getReviewDeckIntent(context, deckId),
                             PendingIntent.FLAG_UPDATE_CURRENT,
-                            false
-                        )
+                            false,
+                        ),
                     )
                     .setAutoCancel(true)
                     .build()
@@ -135,7 +135,7 @@ class ReminderService : BroadcastReceiver() {
     private fun getDeckOptionDue(
         col: Collection,
         dConfId: Long,
-        recur: Boolean
+        recur: Boolean,
     ): List<DeckNode>? {
         // Avoid crashes if the deck option group is deleted while we
         // are working
@@ -178,7 +178,7 @@ class ReminderService : BroadcastReceiver() {
 
         fun getReviewDeckIntent(
             context: Context,
-            deckId: DeckId
+            deckId: DeckId,
         ): Intent {
             return Intent(context, IntentHandler::class.java).putExtra(EXTRA_DECK_ID, deckId)
         }

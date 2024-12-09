@@ -245,7 +245,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
         fun factory(
             previewerIdsFile: PreviewerIdsFile,
             currentIndex: Int,
-            cardMediaPlayer: CardMediaPlayer
+            cardMediaPlayer: CardMediaPlayer,
         ): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
@@ -261,7 +261,7 @@ class PreviewerViewModel(previewerIdsFile: PreviewerIdsFile, firstIndex: Int, ca
         /** Adapted from the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L720) */
         suspend fun typeAnsAnswerFilter(
             card: Card,
-            text: String
+            text: String,
         ): String {
             val typeAnswerField =
                 getTypeAnswerField(card, text)

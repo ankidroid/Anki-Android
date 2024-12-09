@@ -43,7 +43,7 @@ class Tags(private val col: Collection) {
     fun bulkAdd(
         ids: List<Long>,
         tags: String,
-        add: Boolean
+        add: Boolean,
     ) {
         if (add) {
             bulkAdd(ids, tags)
@@ -55,7 +55,7 @@ class Tags(private val col: Collection) {
     /** Add space-separate tags to provided notes. */
     fun bulkAdd(
         noteIds: List<NoteId>,
-        tags: String
+        tags: String,
     ): OpChangesWithCount {
         return col.backend.addNoteTags(noteIds = noteIds, tags = tags)
     }
@@ -63,11 +63,11 @@ class Tags(private val col: Collection) {
     // Remove space-separated tags from provided notes.
     fun bulkRemove(
         noteIds: List<Long>,
-        tags: String
+        tags: String,
     ): OpChangesWithCount {
         return col.backend.removeNoteTags(
             noteIds = noteIds,
-            tags = tags
+            tags = tags,
         )
     }
 
@@ -108,7 +108,7 @@ class Tags(private val col: Collection) {
     /** True if TAG is in TAGS. Ignore case.*/
     fun inList(
         tag: String,
-        tags: Iterable<String>
+        tags: Iterable<String>,
     ): Boolean {
         return tags.map { it.lowercase() }.contains(tag.lowercase())
     }

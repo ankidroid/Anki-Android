@@ -82,7 +82,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
 
     override fun onClick(
         dialog: DialogInterface,
-        which: Int
+        which: Int,
     ) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
             // Next time don't tick the auto-report checkbox by default
@@ -94,7 +94,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
                 preferences.edit {
                     putString(
                         CrashReportService.FEEDBACK_REPORT_KEY,
-                        CrashReportService.FEEDBACK_REPORT_ALWAYS
+                        CrashReportService.FEEDBACK_REPORT_ALWAYS,
                     )
                 }
                 CrashReportService.setAcraReportingMode(CrashReportService.FEEDBACK_REPORT_ALWAYS)

@@ -168,7 +168,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                 dialogView!!.findViewById(R.id.note_deck_spinner),
                 showAllDecks = false,
                 alwaysShowDefault = true,
-                showFilteredDecks = false
+                showFilteredDecks = false,
             ).apply {
                 initializeNoteEditorDeckSpinner(getColUnsafe, android.R.layout.simple_spinner_item)
                 launchCatchingTask {
@@ -242,13 +242,13 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
         // consume the touch event outside the dialog
         dialogView.rootView.userClickOutsideDialog(
-            exclude = instantAlertDialog.findViewById(R.id.instant_add_editor_root)!!
+            exclude = instantAlertDialog.findViewById(R.id.instant_add_editor_root)!!,
         )
     }
 
     private fun createEditFields(
         context: Context,
-        notetypeJson: NotetypeJson?
+        notetypeJson: NotetypeJson?,
     ): List<View> {
         val editLines: MutableList<View> = mutableListOf()
 
@@ -355,7 +355,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                     s: CharSequence?,
                     start: Int,
                     count: Int,
-                    after: Int
+                    after: Int,
                 ) {
                     // No action needed
                 }
@@ -364,7 +364,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                     s: CharSequence?,
                     start: Int,
                     before: Int,
-                    count: Int
+                    count: Int,
                 ) {
                     viewModel.setWarningMessage(null)
                 }
@@ -372,7 +372,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                 override fun afterTextChanged(s: Editable?) {
                     // No action needed
                 }
-            }
+            },
         )
     }
 
@@ -437,13 +437,13 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     private fun updateFields(
         index: Int,
-        field: TextInputEditText?
+        field: TextInputEditText?,
     ) {
         val fieldContent = field!!.text?.toString() ?: ""
         val correctedFieldContent =
             NoteService.convertToHtmlNewline(
                 fieldContent,
-                false
+                false,
             )
 
         val note = viewModel.editorNote
@@ -545,7 +545,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
 
     private fun getActionModeCallback(
         textBox: TextInputEditText,
-        clozeMenuId: Int
+        clozeMenuId: Int,
     ): ActionMode.Callback {
         return CustomActionModeCallback(
             // we always have cloze type notes here
@@ -558,12 +558,12 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                     val selectedText =
                         textBox.text?.substring(
                             textBox.selectionStart,
-                            textBox.selectionEnd
+                            textBox.selectionEnd,
                         ) ?: ""
                     convertSelectedTextToCloze(
                         textBox,
                         selectedText,
-                        viewModel.currentClozeNumber
+                        viewModel.currentClozeNumber,
                     )
 
                     mode.finish()
@@ -571,7 +571,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
                 } else {
                     false
                 }
-            }
+            },
         )
     }
 
@@ -601,7 +601,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
     private fun convertSelectedTextToCloze(
         textBox: EditText,
         word: String,
-        incrementNumber: Int
+        incrementNumber: Int,
     ) {
         val text = textBox.text.toString()
         val selectionStart = textBox.selectionStart
@@ -623,7 +623,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
      */
     enum class ClozeMode {
         INCREMENT,
-        NO_INCREMENT
+        NO_INCREMENT,
     }
 
     /**
@@ -638,7 +638,7 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         /**
          * In this mode, user can edit the text as they want
          */
-        ADVANCED
+        ADVANCED,
     }
 
     /**
@@ -649,6 +649,6 @@ class InstantNoteEditorActivity : AnkiActivity(), DeckSelectionDialog.DeckSelect
         NO_CLOZE_NOTE_TYPES_DIALOG,
 
         /** Indicates that the editor dialog should be shown. **/
-        SHOW_EDITOR_DIALOG
+        SHOW_EDITOR_DIALOG,
     }
 }

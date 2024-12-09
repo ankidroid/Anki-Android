@@ -34,7 +34,7 @@ fun View.setOnHoldListener(listener: OnHoldListener) {
 
             override fun onTouch(
                 v: View?,
-                event: MotionEvent?
+                event: MotionEvent?,
             ): Boolean {
                 when (event?.action) {
                     MotionEvent.ACTION_DOWN -> {

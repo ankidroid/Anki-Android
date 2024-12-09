@@ -32,7 +32,7 @@ import org.junit.function.ThrowingRunnable
  */
 inline fun <reified T : Throwable> assertThrows(
     message: String? = null,
-    runnable: ThrowingRunnable
+    runnable: ThrowingRunnable,
 ) {
     org.junit.Assert.assertThrows(message, T::class.java, runnable)
 }

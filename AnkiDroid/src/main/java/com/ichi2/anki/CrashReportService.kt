@@ -61,7 +61,7 @@ object CrashReportService {
             "ActivityManager:I",
             "SQLiteLog:W",
             AnkiDroidApp.TAG + ":D",
-            "*:S"
+            "*:S",
         )
 
     @JvmStatic
@@ -79,10 +79,10 @@ object CrashReportService {
     private const val EXCEPTION_MESSAGE = "Exception report sent by user manually. See: 'Comment/USER_COMMENT'"
 
     private enum class ToastType(
-        @StringRes private val toastMessageRes: Int
+        @StringRes private val toastMessageRes: Int,
     ) {
         AUTO_TOAST(R.string.feedback_auto_toast_text),
-        MANUAL_TOAST(R.string.feedback_for_manual_toast_text)
+        MANUAL_TOAST(R.string.feedback_for_manual_toast_text),
         ;
 
         fun getToastMessage(context: Context) = context.getString(toastMessageRes)
@@ -120,7 +120,7 @@ object CrashReportService {
                     ReportField.ENVIRONMENT,
                     ReportField.SHARED_PREFERENCES,
                     // ReportField.MEDIA_CODEC_LIST,
-                    ReportField.THREAD_DETAILS
+                    ReportField.THREAD_DETAILS,
                 )
                 .withLogcatArguments(*logcatArgs)
                 .withPluginConfigurations(
@@ -148,7 +148,7 @@ object CrashReportService {
                         .withDeleteReportsOnAppUpdate(true)
                         .withResetLimitsOnAppUpdate(true)
                         .withEnabled(true)
-                        .build()
+                        .build(),
                 )
         ACRA.init(mApplication, builder)
         acraCoreConfigBuilder = builder
@@ -264,14 +264,14 @@ object CrashReportService {
     /** Used when we don't have an exception to throw, but we know something is wrong and want to diagnose it  */
     fun sendExceptionReport(
         message: String?,
-        origin: String?
+        origin: String?,
     ) {
         sendExceptionReport(ManuallyReportedException(message), origin, null)
     }
 
     fun sendExceptionReport(
         e: Throwable,
-        origin: String?
+        origin: String?,
     ) {
         sendExceptionReport(e, origin, null)
     }
@@ -279,7 +279,7 @@ object CrashReportService {
     fun sendExceptionReport(
         e: Throwable,
         origin: String?,
-        additionalInfo: String?
+        additionalInfo: String?,
     ) {
         sendExceptionReport(e, origin, additionalInfo, false)
     }
@@ -288,7 +288,7 @@ object CrashReportService {
         e: Throwable,
         origin: String?,
         additionalInfo: String?,
-        onlyIfSilent: Boolean
+        onlyIfSilent: Boolean,
     ) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
@@ -316,7 +316,7 @@ object CrashReportService {
 
     fun isAcraEnabled(
         context: Context,
-        defaultValue: Boolean
+        defaultValue: Boolean,
     ): Boolean {
         if (!context.sharedPrefs().contains(ACRA.PREF_DISABLE_ACRA)) {
             // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
@@ -341,7 +341,7 @@ object CrashReportService {
 
     fun onPreferenceChanged(
         ctx: Context,
-        newValue: String
+        newValue: String,
     ) {
         setAcraReportingMode(newValue)
         // If the user changed error reporting, make sure future reports have a chance to post
@@ -379,7 +379,7 @@ object CrashReportService {
             deleteACRALimiterData(activity)
             sendExceptionReport(
                 UserSubmittedException(EXCEPTION_MESSAGE),
-                "AnkiDroidApp.HelpDialog"
+                "AnkiDroidApp.HelpDialog",
             )
             true
         } else {

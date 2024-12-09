@@ -39,7 +39,7 @@ class NotetypeTest : InstrumentedTest() {
     fun bigQuery() {
         assumeTrue(
             "This test is flaky on API29, ignoring",
-            Build.VERSION.SDK_INT != Build.VERSION_CODES.Q
+            Build.VERSION.SDK_INT != Build.VERSION_CODES.Q,
         )
         val models = testCol.notetypes
         val model = models.all()[0]

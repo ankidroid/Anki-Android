@@ -49,7 +49,7 @@ import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 
 abstract class CardViewerFragment(
-    @LayoutRes layout: Int
+    @LayoutRes layout: Int,
 ) : Fragment(layout) {
     abstract val viewModel: CardViewerViewModel
     protected abstract val webView: WebView
@@ -57,7 +57,7 @@ abstract class CardViewerFragment(
     @CallSuper
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         setupWebView(savedInstanceState)
         setupErrorListeners()
@@ -97,7 +97,7 @@ abstract class CardViewerFragment(
                 stdHtml(requireContext(), Themes.currentTheme.isNightMode),
                 "text/html",
                 null,
-                null
+                null,
             )
         }
         viewModel.eval
@@ -133,21 +133,21 @@ abstract class CardViewerFragment(
         return object : WebViewClient() {
             override fun shouldInterceptRequest(
                 view: WebView?,
-                request: WebResourceRequest
+                request: WebResourceRequest,
             ): WebResourceResponse? {
                 return resourceHandler.shouldInterceptRequest(request)
             }
 
             override fun onPageFinished(
                 view: WebView?,
-                url: String?
+                url: String?,
             ) {
                 viewModel.onPageFinished(isAfterRecreation = savedInstanceState != null)
             }
 
             override fun shouldOverrideUrlLoading(
                 view: WebView,
-                request: WebResourceRequest
+                request: WebResourceRequest,
             ): Boolean {
                 return handleUrl(request.url)
             }
@@ -181,7 +181,7 @@ abstract class CardViewerFragment(
 
             private fun handleIntentUrl(
                 url: Uri,
-                flags: Int
+                flags: Int,
             ) {
                 try {
                     val intent = Intent.parseUri(url.toString(), flags)
@@ -204,7 +204,7 @@ abstract class CardViewerFragment(
             override fun onReceivedError(
                 view: WebView,
                 request: WebResourceRequest,
-                error: WebResourceError
+                error: WebResourceError,
             ) {
                 viewModel.mediaErrorHandler.processFailure(request) { filename: String ->
                     showMediaErrorSnackbar(filename)
@@ -222,7 +222,7 @@ abstract class CardViewerFragment(
             // to avoid destroying the View if the device is rotated
             override fun onShowCustomView(
                 paramView: View,
-                paramCustomViewCallback: CustomViewCallback?
+                paramCustomViewCallback: CustomViewCallback?,
             ) {
                 customView = paramView
                 val window = requireActivity().window
@@ -230,8 +230,8 @@ abstract class CardViewerFragment(
                     customView,
                     FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
-                    )
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                    ),
                 )
                 // hide system bars
                 with(WindowInsetsControllerCompat(window, window.decorView)) {

@@ -27,7 +27,7 @@ class BasicItemSelectedListener(private val onItemSelected: (position: Int, id: 
         parent: AdapterView<*>?,
         view: View?,
         position: Int,
-        id: Long
+        id: Long,
     ) = onItemSelected(position, id)
 
     override fun onNothingSelected(parent: AdapterView<*>?) {

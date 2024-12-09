@@ -55,7 +55,7 @@ class TextField : FieldBase(), IField {
 
     override fun setFormattedString(
         col: Collection,
-        value: String
+        value: String,
     ) {
         _text = value
     }

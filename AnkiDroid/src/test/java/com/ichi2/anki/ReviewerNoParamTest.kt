@@ -138,7 +138,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         OS.ALL,
         "Hide should be called after answering a card" +
             "    Expected: a value greater than <2>" +
-            "         but: <2> was equal to <2>"
+            "         but: <2> was equal to <2>",
     )
     fun showingCardHidesFullScreen() {
         addNoteUsingBasicModel("Hello", "World")
@@ -312,7 +312,7 @@ class ReviewerNoParamTest : RobolectricTest() {
             prefs,
             MappableBinding.fromGesture(gesture) {
                 Screen.Reviewer(it)
-            }
+            },
         )
     }
 
@@ -330,7 +330,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     @Suppress("SameParameterValue")
     private fun storeLightModeColor(
         value: Int,
-        did: DeckId?
+        did: DeckId?,
     ) {
         MetaDB.storeWhiteboardPenColor(targetContext, did!!, false, value)
     }

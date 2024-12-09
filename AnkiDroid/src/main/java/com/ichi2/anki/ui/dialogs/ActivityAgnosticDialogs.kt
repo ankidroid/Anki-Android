@@ -47,7 +47,7 @@ class ActivityAgnosticDialogs private constructor(private val application: Appli
                 override fun onActivityStopped(activity: Activity) {
                     startedActivityStack.remove(activity)
                 }
-            }
+            },
         )
     }
 
@@ -61,7 +61,7 @@ class ActivityAgnosticDialogs private constructor(private val application: Appli
 interface DefaultActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(
         activity: Activity,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {}
 
     override fun onActivityStarted(activity: Activity) {}
@@ -74,7 +74,7 @@ interface DefaultActivityLifecycleCallbacks : Application.ActivityLifecycleCallb
 
     override fun onActivitySaveInstanceState(
         activity: Activity,
-        outState: Bundle
+        outState: Bundle,
     ) {}
 
     override fun onActivityDestroyed(activity: Activity) {}

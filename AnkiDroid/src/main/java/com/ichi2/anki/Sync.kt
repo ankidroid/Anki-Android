@@ -67,7 +67,7 @@ object SyncPreferences {
 
 enum class ConflictResolution {
     FULL_DOWNLOAD,
-    FULL_UPLOAD
+    FULL_UPLOAD,
 }
 
 data class SyncCompletion(val isSuccess: Boolean)
@@ -144,7 +144,7 @@ fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time
 
 fun DeckPicker.handleNewSync(
     conflict: ConflictResolution?,
-    syncMedia: Boolean
+    syncMedia: Boolean,
 ) {
     val auth = this.syncAuth() ?: return
     val deckPicker = this
@@ -172,7 +172,7 @@ fun DeckPicker.handleNewSync(
 fun MyAccount.handleNewLogin(
     username: String,
     password: String,
-    resultLauncher: ActivityResultLauncher<String>
+    resultLauncher: ActivityResultLauncher<String>,
 ) {
     val endpoint = getEndpoint(this)
     launchCatchingTask {
@@ -182,7 +182,7 @@ fun MyAccount.handleNewLogin(
                     extractProgress = {
                         text = getString(R.string.sign_in)
                     },
-                    onCancel = ::cancelSync
+                    onCancel = ::cancelSync,
                 ) {
                     withCol {
                         syncLogin(username, password, endpoint)
@@ -203,7 +203,7 @@ fun MyAccount.handleNewLogin(
 private fun updateLogin(
     context: Context,
     username: String,
-    hkey: String?
+    hkey: String?,
 ) {
     val preferences = context.sharedPrefs()
     preferences.edit {
@@ -220,7 +220,7 @@ fun cancelSync(backend: Backend) {
 private suspend fun handleNormalSync(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean
+    syncMedia: Boolean,
 ) {
     Timber.i("Sync: Normal collection sync")
     var auth2 = auth
@@ -232,7 +232,7 @@ private suspend fun handleNormalSync(
                 }
             },
             onCancel = ::cancelSync,
-            manualCancelButton = R.string.dialog_cancel
+            manualCancelButton = R.string.dialog_cancel,
         ) {
             withCol {
                 syncCollection(auth2, media = false) // media is synced by SyncMediaWorker
@@ -286,7 +286,7 @@ private suspend fun handleNormalSync(
 
         SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
         SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
-        null
+        null,
         -> {
             TODO("should never happen")
         }
@@ -305,19 +305,19 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    mediaUsn: Int?
+    mediaUsn: Int?,
 ) {
     Timber.i("Sync: Full collection download requested")
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
-        onCancel = ::cancelSync
+        onCancel = ::cancelSync,
     ) {
         withCol {
             try {
                 createBackup(
                     BackupManager.getBackupDirectoryFromCollection(path),
                     force = true,
-                    waitForCompletion = true
+                    waitForCompletion = true,
                 )
                 close(downgrade = false, forFullSync = true)
                 fullUploadOrDownload(auth, upload = false, serverUsn = mediaUsn)
@@ -338,12 +338,12 @@ private suspend fun handleDownload(
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    mediaUsn: Int?
+    mediaUsn: Int?,
 ) {
     Timber.i("Sync: Full collection upload requested")
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
-        onCancel = ::cancelSync
+        onCancel = ::cancelSync,
     ) {
         withCol {
             close(downgrade = false, forFullSync = true)
@@ -434,14 +434,14 @@ suspend fun monitorMediaSync(deckPicker: DeckPicker) {
  */
 fun DeckPicker.showSyncLogMessage(
     @StringRes messageResource: Int,
-    syncMessage: String?
+    syncMessage: String?,
 ) {
     if (activityPaused) {
         val res = AnkiDroidApp.appResources
         showSimpleNotification(
             res.getString(R.string.app_name),
             res.getString(messageResource),
-            Channel.SYNC
+            Channel.SYNC,
         )
     } else {
         if (syncMessage.isNullOrEmpty()) {
@@ -461,7 +461,7 @@ fun Context.setLastSyncTimeToNow() {
 
 fun joinSyncMessages(
     dialogMessage: String?,
-    syncMessage: String?
+    syncMessage: String?,
 ): String? {
     // If both strings have text, separate them by a new line, otherwise return whichever has text
     return if (!dialogMessage.isNullOrEmpty() && !syncMessage.isNullOrEmpty()) {

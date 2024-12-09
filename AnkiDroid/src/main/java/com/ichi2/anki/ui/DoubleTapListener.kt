@@ -97,11 +97,11 @@ abstract class DoubleTapListener(context: Context) : View.OnTouchListener {
                     super.onDown(e)
                     return true
                 }
-            }
+            },
         ) {}
 
     override fun onTouch(
         v: View?,
-        event: MotionEvent
+        event: MotionEvent,
     ): Boolean = detector.onTouchEvent(event)
 }

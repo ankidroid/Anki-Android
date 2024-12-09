@@ -52,7 +52,7 @@ class SwipeDismissBehaviorFix : SensibleSwipeDismissBehavior() {
     override fun onInterceptTouchEvent(
         parent: CoordinatorLayout,
         child: View,
-        event: MotionEvent
+        event: MotionEvent,
     ): Boolean {
         ignoreCallsToOnTouchEvent = true
         return super.onInterceptTouchEvent(parent, child, event).also {
@@ -63,7 +63,7 @@ class SwipeDismissBehaviorFix : SensibleSwipeDismissBehavior() {
     override fun onTouchEvent(
         parent: CoordinatorLayout,
         child: View,
-        event: MotionEvent
+        event: MotionEvent,
     ): Boolean {
         if (ignoreCallsToOnTouchEvent) return false
         return super.onTouchEvent(parent, child, event)

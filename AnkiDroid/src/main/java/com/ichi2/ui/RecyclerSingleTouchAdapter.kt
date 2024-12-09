@@ -34,19 +34,19 @@ class RecyclerSingleTouchAdapter(val context: Context, val listener: OnItemClick
                     // onDown was too fast
                     return true
                 }
-            }
+            },
         )
 
     fun interface OnItemClickListener {
         fun onItemClick(
             view: View,
-            position: Int
+            position: Int,
         )
     }
 
     override fun onInterceptTouchEvent(
         view: RecyclerView,
-        e: MotionEvent
+        e: MotionEvent,
     ): Boolean {
         val childView = view.findChildViewUnder(e.x, e.y)
         if (childView != null && gestureDetector.onTouchEvent(e)) {
@@ -58,7 +58,7 @@ class RecyclerSingleTouchAdapter(val context: Context, val listener: OnItemClick
 
     override fun onTouchEvent(
         view: RecyclerView,
-        motionEvent: MotionEvent
+        motionEvent: MotionEvent,
     ) {
         // intentionally empty
     }

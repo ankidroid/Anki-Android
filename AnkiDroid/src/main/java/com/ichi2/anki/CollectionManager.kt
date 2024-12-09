@@ -93,7 +93,7 @@ object CollectionManager {
      *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
     private suspend fun <T> withQueue(
-        @WorkerThread block: CollectionManager.() -> T
+        @WorkerThread block: CollectionManager.() -> T,
     ): T {
         if (isRobolectric) {
             // #16253 Robolectric Windows: `withContext(queue)` is insufficient for serial execution
@@ -116,7 +116,7 @@ object CollectionManager {
      * does not hold if legacy code calls [getColUnsafe].
      */
     suspend fun <T> withCol(
-        @WorkerThread block: Collection.() -> T
+        @WorkerThread block: Collection.() -> T,
     ): T {
         return withQueue {
             ensureOpenInner()
@@ -132,7 +132,7 @@ object CollectionManager {
      * instead of returning a nullable object.
      */
     suspend fun <T> withOpenColOrNull(
-        @WorkerThread block: Collection.() -> T
+        @WorkerThread block: Collection.() -> T,
     ): T? {
         return withQueue {
             if (collection != null && !collection!!.dbClosed) {
@@ -170,7 +170,7 @@ object CollectionManager {
     fun compareAnswer(
         expected: String,
         given: String,
-        combining: Boolean = true
+        combining: Boolean = true,
     ): String {
         // bypass the lock, as the type answer code is heavily nested in non-suspend functions
         return getBackend().compareAnswer(expected, given, combining)
@@ -336,7 +336,7 @@ object CollectionManager {
                                 "dalvik",
                                 "java.lang",
                                 "CollectionHelper",
-                                "AnkiActivity"
+                                "AnkiActivity",
                             )
                         for (text in toCheck) {
                             if (text in klass) {
@@ -423,7 +423,7 @@ object CollectionManager {
         LOCKED,
 
         /** Raises [BackendException.BackendFatalError] */
-        FATAL_ERROR
+        FATAL_ERROR,
 
         ;
 

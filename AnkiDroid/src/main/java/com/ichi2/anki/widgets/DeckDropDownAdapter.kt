@@ -63,7 +63,7 @@ class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>)
     override fun getView(
         position: Int,
         view: View?,
-        parent: ViewGroup
+        parent: ViewGroup,
     ): View? {
         var convertView = view
         val viewHolder: DeckDropDownViewHolder
@@ -96,7 +96,7 @@ class DeckDropDownAdapter(private val context: Context, decks: List<DeckNameId>)
     override fun getDropDownView(
         position: Int,
         view: View?,
-        parent: ViewGroup
+        parent: ViewGroup,
     ): View? {
         var convertView = view
         val deckNameView: TextView

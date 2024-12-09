@@ -33,7 +33,7 @@ class AudioRecorder {
 
     private fun initMediaRecorder(
         context: Context,
-        audioPath: String
+        audioPath: String,
     ): MediaRecorder {
         val mr = CompatHelper.compat.getMediaRecorder(context)
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -50,7 +50,7 @@ class AudioRecorder {
     @Throws(IOException::class)
     fun startRecording(
         context: Context,
-        audioPath: String
+        audioPath: String,
     ) {
         var highSampling = false
         try {

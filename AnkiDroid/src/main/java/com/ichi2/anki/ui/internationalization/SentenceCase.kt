@@ -31,7 +31,7 @@ import androidx.fragment.app.Fragment
  */
 fun String.toSentenceCase(
     activity: Activity,
-    @StringRes resId: Int
+    @StringRes resId: Int,
 ): String {
     val resString = activity.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase
@@ -41,7 +41,7 @@ fun String.toSentenceCase(
 
 fun String.toSentenceCase(
     fragment: Fragment,
-    @StringRes resId: Int
+    @StringRes resId: Int,
 ): String {
     val resString = fragment.getString(resId)
     // lowercase both for the comparison: sentence case doesn't mean all words are lowercase

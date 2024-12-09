@@ -47,7 +47,7 @@ abstract class AudioField : FieldBase(), IField {
 
     override fun setFormattedString(
         col: Collection,
-        value: String
+        value: String,
     ) {
         val p = Pattern.compile(PATH_REGEX)
         val m = p.matcher(value)

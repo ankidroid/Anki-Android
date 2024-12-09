@@ -22,7 +22,7 @@ enum class AnswerAction(val configValue: Int) {
     ANSWER_AGAIN(1),
     ANSWER_GOOD(2),
     ANSWER_HARD(3),
-    SHOW_REMINDER(4)
+    SHOW_REMINDER(4),
     ;
 
     companion object {

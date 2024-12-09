@@ -59,7 +59,7 @@ import java.io.File
  * @see MultimediaActivity
  */
 abstract class MultimediaFragment(
-    @LayoutRes layout: Int
+    @LayoutRes layout: Int,
 ) : Fragment(layout) {
     abstract val title: String
 
@@ -75,7 +75,7 @@ abstract class MultimediaFragment(
     @NeedsTest("test discard dialog shown in case there are changes")
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,7 +85,7 @@ abstract class MultimediaFragment(
             Timber.d("Getting MultimediaActivityExtra values from arguments")
             val multimediaActivityExtra =
                 arguments?.getSerializableCompat(
-                    MultimediaActivity.MULTIMEDIA_ARGS_EXTRA
+                    MultimediaActivity.MULTIMEDIA_ARGS_EXTRA,
                 ) as? MultimediaActivityExtra
 
             if (multimediaActivityExtra != null) {
@@ -100,7 +100,7 @@ abstract class MultimediaFragment(
 
         val backCallback =
             object : OnBackPressedCallback(
-                enabled = viewModel.currentMultimediaPath.value != null
+                enabled = viewModel.currentMultimediaPath.value != null,
             ) {
                 override fun handleOnBackPressed() {
                     DiscardChangesDialog.showDialog(requireContext()) {
@@ -132,7 +132,7 @@ abstract class MultimediaFragment(
             return FileProvider.getUriForFile(
                 requireActivity(),
                 requireActivity().applicationContext.packageName + ".apkgfileprovider",
-                file
+                file,
             )
         } catch (e: Exception) {
             // #6628 - What would cause this? Is the fallback is effective? Telemetry to diagnose more:
@@ -144,7 +144,7 @@ abstract class MultimediaFragment(
 
     fun setMenuItemIcon(
         menuItem: MenuItem,
-        @DrawableRes icon: Int
+        @DrawableRes icon: Int,
     ) {
         menuItem.icon = ContextCompat.getDrawable(requireContext(), icon)
     }

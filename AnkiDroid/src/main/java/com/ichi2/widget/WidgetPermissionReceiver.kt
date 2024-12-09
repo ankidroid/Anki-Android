@@ -30,7 +30,7 @@ import com.ichi2.anki.IntentHandler
 class WidgetPermissionReceiver : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         if (IntentHandler.grantedStoragePermissions(context, showToast = false)) {
             val appWidgetManager = getAppWidgetManager(context) ?: return

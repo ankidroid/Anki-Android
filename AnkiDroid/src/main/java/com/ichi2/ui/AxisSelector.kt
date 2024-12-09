@@ -49,7 +49,7 @@ class AxisSelector : LinearLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
         context,
         attrs,
-        defStyle
+        defStyle,
     )
 
     private val name: TextView

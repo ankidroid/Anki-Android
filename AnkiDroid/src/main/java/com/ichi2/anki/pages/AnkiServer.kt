@@ -23,7 +23,7 @@ import timber.log.Timber
 import java.io.ByteArrayInputStream
 
 open class AnkiServer(
-    private val postHandler: PostRequestHandler
+    private val postHandler: PostRequestHandler,
 ) : NanoHTTPD(LOCALHOST, 0) {
     fun baseUrl(): String {
         return "http://$LOCALHOST:$listeningPort/"
@@ -62,7 +62,7 @@ open class AnkiServer(
     private fun buildResponse(
         data: ByteArray?,
         mimeType: String = "application/binary",
-        status: Response.IStatus = Response.Status.OK
+        status: Response.IStatus = Response.Status.OK,
     ): Response {
         return if (data == null) {
             newFixedLengthResponse(null)

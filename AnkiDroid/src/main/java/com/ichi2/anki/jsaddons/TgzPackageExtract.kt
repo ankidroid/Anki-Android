@@ -127,7 +127,7 @@ class TgzPackageExtract(private val context: Context) {
     @Throws(Exception::class)
     fun extractTarGzipToAddonFolder(
         tarballFile: File,
-        addonsPackageDir: AddonsPackageDir
+        addonsPackageDir: AddonsPackageDir,
     ) {
         require(isGzip(tarballFile)) { context.getString(R.string.not_valid_js_addon_package, tarballFile.absolutePath) }
 
@@ -175,7 +175,7 @@ class TgzPackageExtract(private val context: Context) {
     @Throws(FileNotFoundException::class, IOException::class)
     fun unGzip(
         inputFile: File,
-        outputDir: File
+        outputDir: File,
     ): File {
         Timber.i("Ungzipping %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
 
@@ -228,7 +228,7 @@ class TgzPackageExtract(private val context: Context) {
     @Throws(Exception::class)
     fun unTar(
         inputFile: File,
-        outputDir: File
+        outputDir: File,
     ) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
 
@@ -258,8 +258,8 @@ class TgzPackageExtract(private val context: Context) {
                 context.getString(
                     R.string.malicious_archive_exceeds_limit,
                     Formatter.formatFileSize(context, TOO_BIG_SIZE),
-                    TOO_MANY_FILES
-                )
+                    TOO_MANY_FILES,
+                ),
             )
         }
     }
@@ -277,7 +277,7 @@ class TgzPackageExtract(private val context: Context) {
         tarInputStream: TarArchiveInputStream,
         entry: TarArchiveEntry,
         outputDir: File,
-        outputFile: File
+        outputFile: File,
     ) {
         Timber.i("Creating output file %s.", outputFile.absolutePath)
         val currentFile = File(outputDir, entry.name)
@@ -327,7 +327,7 @@ class TgzPackageExtract(private val context: Context) {
     private fun unTarDir(
         inputFile: File,
         outputDir: File,
-        outputFile: File
+        outputFile: File,
     ) {
         Timber.i("Untaring %s to dir %s.", inputFile.absolutePath, outputDir.absolutePath)
         try {
@@ -349,7 +349,7 @@ class TgzPackageExtract(private val context: Context) {
     @Throws(ArchiveException::class, IOException::class)
     private fun zipPathSafety(
         outputFile: File,
-        destDirectory: File
+        destDirectory: File,
     ) {
         val destDirCanonicalPath = destDirectory.canonicalPath
         val outputFileCanonicalPath = outputFile.canonicalPath
@@ -402,13 +402,13 @@ class TgzPackageExtract(private val context: Context) {
             fun throwIfInsufficientSpace(
                 context: Context,
                 requiredMinSpace: Long,
-                availableSpace: Long
+                availableSpace: Long,
             ) {
                 if (requiredMinSpace > availableSpace) {
                     Timber.w(
                         "Not enough space, need %s, available %s",
                         Formatter.formatFileSize(context, requiredMinSpace),
-                        Formatter.formatFileSize(context, availableSpace)
+                        Formatter.formatFileSize(context, availableSpace),
                     )
                     throw InsufficientSpaceException(requiredMinSpace, availableSpace, context)
                 }

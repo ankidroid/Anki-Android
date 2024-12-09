@@ -49,7 +49,7 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
     @Suppress("UNCHECKED_CAST")
     override fun publishResults(
         constraint: CharSequence?,
-        results: FilterResults?
+        results: FilterResults?,
     ) {
         // this is only ever called from performFiltering so we can guarantee the value can be cast to List<T>
         if (results?.values != null) {
@@ -65,12 +65,12 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
      */
     abstract fun filterResults(
         constraint: CharSequence,
-        items: List<T>
+        items: List<T>,
     ): List<T>
 
     /** @see android.widget.Filter.publishResults */
     abstract fun publishResults(
         constraint: CharSequence?,
-        results: List<T>
+        results: List<T>,
     )
 }

@@ -38,7 +38,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
 
     /** OnInitListener method to receive the TTS engine status  */
     override fun onInit(
-        @ErrorOrSuccess status: Int
+        @ErrorOrSuccess status: Int,
     ) {
         mTtsOk = status == TextToSpeech.SUCCESS
     }
@@ -52,7 +52,7 @@ class JavaScriptTTS internal constructor() : OnInitListener {
     @ErrorOrSuccess
     fun speak(
         text: String?,
-        @QueueMode queueMode: Int
+        @QueueMode queueMode: Int,
     ): Int {
         return mTts.speak(text, queueMode, mTtsParams, "stringId")
     }

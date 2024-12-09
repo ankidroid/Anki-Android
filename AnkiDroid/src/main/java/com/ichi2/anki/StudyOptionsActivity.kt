@@ -146,7 +146,7 @@ class StudyOptionsActivity :
 
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         refreshUndoState()
     }
@@ -157,7 +157,7 @@ class StudyOptionsActivity :
                 withCol {
                     UndoState(
                         hasAction = undoAvailable(),
-                        label = undoLabel()
+                        label = undoLabel(),
                     )
                 }
             if (undoState != newUndoState) {
@@ -169,6 +169,6 @@ class StudyOptionsActivity :
 
     private data class UndoState(
         val hasAction: Boolean = false,
-        val label: String? = null
+        val label: String? = null,
     )
 }

@@ -108,7 +108,7 @@ class CardMediaPlayer : Closeable {
         this.soundTagPlayer =
             SoundTagPlayer(
                 soundUriBase = getMediaBaseUrl(getMediaDirectory(AnkiDroidApp.instance).path),
-                videoPlayer = VideoPlayer { javascriptEvaluator() }
+                videoPlayer = VideoPlayer { javascriptEvaluator() },
             )
         this.ttsPlayer = scope.async { AndroidTtsPlayer.createInstance(AnkiDroidApp.instance, scope) }
     }
@@ -256,7 +256,7 @@ class CardMediaPlayer : Closeable {
      */
     private suspend fun playAllSoundsInternal(
         cardSide: CardSide,
-        isAutomaticPlayback: Boolean
+        isAutomaticPlayback: Boolean,
     ) {
         if (!isEnabled) return
         val soundList =
@@ -286,7 +286,7 @@ class CardMediaPlayer : Closeable {
      */
     private suspend fun play(
         tag: AvTag,
-        isAutomaticPlayback: Boolean
+        isAutomaticPlayback: Boolean,
     ): Boolean =
         withContext(Dispatchers.IO) {
             suspend fun play() {
@@ -392,7 +392,7 @@ class CardMediaPlayer : Closeable {
         @NeedsTest("ensure the lifecycle is subscribed to in a Reviewer")
         fun newInstance(
             viewer: AbstractFlashcardViewer,
-            soundUriBase: String
+            soundUriBase: String,
         ): CardMediaPlayer {
             val scope = viewer.lifecycleScope
             val soundErrorListener = viewer.createSoundErrorListener()
@@ -404,7 +404,7 @@ class CardMediaPlayer : Closeable {
             return CardMediaPlayer(
                 soundTagPlayer = soundPlayer,
                 ttsPlayer = tts,
-                soundErrorListener = soundErrorListener
+                soundErrorListener = soundErrorListener,
             ).apply {
                 setOnSoundGroupCompletedListener(viewer::onSoundGroupCompleted)
             }
@@ -421,12 +421,12 @@ interface SoundErrorListener {
         mp: MediaPlayer?,
         which: Int,
         extra: Int,
-        uri: Uri
+        uri: Uri,
     ): SoundErrorBehavior
 
     fun onTtsError(
         error: TtsPlayer.TtsError,
-        isAutomaticPlayback: Boolean
+        isAutomaticPlayback: Boolean,
     )
 }
 
@@ -438,7 +438,7 @@ enum class SoundErrorBehavior {
     CONTINUE_AUDIO,
 
     /** Retry the current audio */
-    RETRY_AUDIO
+    RETRY_AUDIO,
 }
 
 fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
@@ -450,7 +450,7 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
             mp: MediaPlayer?,
             which: Int,
             extra: Int,
-            uri: Uri
+            uri: Uri,
         ): SoundErrorBehavior {
             Timber.w("Media Error: (%d, %d)", which, extra)
             return onError(uri)
@@ -458,7 +458,7 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
 
         override fun onTtsError(
             error: TtsPlayer.TtsError,
-            isAutomaticPlayback: Boolean
+            isAutomaticPlayback: Boolean,
         ) {
             AbstractFlashcardViewer.mediaErrorHandler.processTtsFailure(error, isAutomaticPlayback) {
                 when (error) {
@@ -483,7 +483,7 @@ fun AbstractFlashcardViewer.createSoundErrorListener(): SoundErrorListener {
                 if (file.exists()) return RETRY_AUDIO
                 // just doesn't exist - process the error
                 AbstractFlashcardViewer.mediaErrorHandler.processMissingSound(
-                    file
+                    file,
                 ) { filename: String? -> displayCouldNotFindMediaSnackbar(filename) }
                 return CONTINUE_AUDIO
             } catch (e: Exception) {

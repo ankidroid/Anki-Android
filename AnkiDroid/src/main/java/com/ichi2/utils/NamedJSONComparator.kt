@@ -21,7 +21,7 @@ import org.json.JSONObject
 class NamedJSONComparator : Comparator<JSONObject> {
     override fun compare(
         lhs: JSONObject,
-        rhs: JSONObject
+        rhs: JSONObject,
     ): Int {
         val o1 = lhs.getString("name")
         val o2 = rhs.getString("name")

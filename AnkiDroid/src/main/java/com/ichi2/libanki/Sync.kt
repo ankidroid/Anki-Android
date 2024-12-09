@@ -24,7 +24,7 @@ import anki.sync.syncLoginRequest
 fun Collection.syncLogin(
     username: String,
     password: String,
-    endpoint: String?
+    endpoint: String?,
 ): SyncAuth {
     val req =
         syncLoginRequest {
@@ -40,7 +40,7 @@ fun Collection.syncLogin(
 
 fun Collection.syncCollection(
     auth: SyncAuth,
-    media: Boolean
+    media: Boolean,
 ): SyncCollectionResponse {
     return backend.syncCollection(auth = auth, syncMedia = media)
 }
@@ -48,7 +48,7 @@ fun Collection.syncCollection(
 fun Collection.fullUploadOrDownload(
     auth: SyncAuth,
     upload: Boolean,
-    serverUsn: Int?
+    serverUsn: Int?,
 ) {
     return backend.fullUploadOrDownload(
         fullUploadOrDownloadRequest {
@@ -57,6 +57,6 @@ fun Collection.fullUploadOrDownload(
                 this.serverUsn = serverUsn
             }
             this.upload = upload
-        }
+        },
     )
 }

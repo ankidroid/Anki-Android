@@ -229,7 +229,7 @@ open class MyAccount : AnkiActivity() {
                     }
                 }
                 false
-            }
+            },
         )
 
         val textWatcher =
@@ -238,7 +238,7 @@ open class MyAccount : AnkiActivity() {
                     s: CharSequence?,
                     start: Int,
                     count: Int,
-                    after: Int
+                    after: Int,
                 ) {
                     // Not needed here
                 }
@@ -247,7 +247,7 @@ open class MyAccount : AnkiActivity() {
                     s: CharSequence?,
                     start: Int,
                     before: Int,
-                    count: Int
+                    count: Int,
                 ) {
                     val email = username.text.toString().trim()
                     val password = password.text.toString()
@@ -302,9 +302,9 @@ open class MyAccount : AnkiActivity() {
             (
                 this.applicationContext.resources.configuration.screenLayout
                     and Configuration.SCREENLAYOUT_SIZE_MASK
-                )
-                < Configuration.SCREENLAYOUT_SIZE_LARGE
             )
+                < Configuration.SCREENLAYOUT_SIZE_LARGE
+        )
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -339,7 +339,7 @@ open class MyAccount : AnkiActivity() {
          */
         fun checkNotificationPermission(
             context: Context,
-            launcher: ActivityResultLauncher<String>
+            launcher: ActivityResultLauncher<String>,
         ) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 return
@@ -347,7 +347,7 @@ open class MyAccount : AnkiActivity() {
             val permission = Permissions.postNotification
             if (permission != null && ContextCompat.checkSelfPermission(
                     context,
-                    permission
+                    permission,
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 launcher.launch(permission)

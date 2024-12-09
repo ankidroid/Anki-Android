@@ -24,7 +24,7 @@ import java.util.Locale
 data class DeckNode(
     val node: DeckTreeNode,
     val fullDeckName: String,
-    val parent: WeakReference<DeckNode>? = null
+    val parent: WeakReference<DeckNode>? = null,
 ) {
     var collapsed = node.collapsed
     val revCount = node.reviewCount
@@ -65,7 +65,7 @@ data class DeckNode(
             did,
             revCount,
             lrnCount,
-            newCount
+            newCount,
         )
     }
 
@@ -108,7 +108,7 @@ data class DeckNode(
 
     private fun filterAndFlattenInner(
         filter: CharSequence?,
-        list: MutableList<DeckNode>
+        list: MutableList<DeckNode>,
     ) {
         if (node.level > 0 && nameMatchesFilter(filter)) {
             // if this deck matched, all children are included

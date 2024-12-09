@@ -75,7 +75,7 @@ class ProductionCrashReportingTree : Timber.Tree() {
         priority: Int,
         tag: String?,
         message: String,
-        t: Throwable?
+        t: Throwable?,
     ) {
         when (priority) {
             Log.VERBOSE, Log.DEBUG -> {}

@@ -77,7 +77,7 @@ class ViewerCommandTest {
                 "binding_USER_ACTION_7",
                 "binding_USER_ACTION_8",
                 "binding_USER_ACTION_9",
-                "binding_TOGGLE_AUTO_ADVANCE"
+                "binding_TOGGLE_AUTO_ADVANCE",
             )
 
         assertEquals(commandKeys, names)

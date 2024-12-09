@@ -34,7 +34,7 @@ class AcraAnalyticsInteraction : ReportInteraction {
     override fun performInteraction(
         context: Context,
         config: CoreConfiguration,
-        reportFile: File
+        reportFile: File,
     ): Boolean {
         // Send an analytics exception hit with a UUID to match
         Timber.e("ACRA handling crash, sending analytics exception report")

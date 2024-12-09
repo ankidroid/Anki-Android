@@ -55,7 +55,7 @@ abstract class Time {
     /** Return a non-conflicting timestamp for table.  */
     fun timestampID(
         db: DB,
-        table: String
+        table: String,
     ): Long {
         // be careful not to create multiple objects without flushing them, or they
         // may share an ID.

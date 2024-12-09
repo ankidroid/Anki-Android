@@ -26,7 +26,7 @@ fun AnkiActivity.exportApkgPackage(
     withScheduling: Boolean,
     withDeckConfigs: Boolean,
     withMedia: Boolean,
-    limit: ExportLimit
+    limit: ExportLimit,
 ) {
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
@@ -46,7 +46,7 @@ fun AnkiActivity.exportApkgPackage(
 
 suspend fun AnkiActivity.exportColpkg(
     colpkgPath: String,
-    withMedia: Boolean
+    withMedia: Boolean,
 ) {
     val onProgress: ProgressContext.() -> Unit = {
         if (progress.hasExporting()) {
@@ -60,7 +60,7 @@ suspend fun AnkiActivity.exportColpkg(
 
 fun AnkiActivity.exportCollectionPackage(
     exportPath: String,
-    withMedia: Boolean
+    withMedia: Boolean,
 ) {
     launchCatchingTask {
         exportColpkg(exportPath, withMedia)
@@ -78,7 +78,7 @@ fun AnkiActivity.exportSelectedNotes(
     withDeck: Boolean,
     withNotetype: Boolean,
     withGuid: Boolean,
-    limit: ExportLimit
+    limit: ExportLimit,
 ) {
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
@@ -95,7 +95,7 @@ fun AnkiActivity.exportSelectedNotes(
                     withDeck,
                     withNotetype,
                     withGuid,
-                    limit
+                    limit,
                 )
             }
         }
@@ -109,7 +109,7 @@ fun AnkiActivity.exportSelectedNotes(
 fun AnkiActivity.exportSelectedCards(
     exportPath: String,
     withHtml: Boolean,
-    limit: ExportLimit
+    limit: ExportLimit,
 ) {
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {

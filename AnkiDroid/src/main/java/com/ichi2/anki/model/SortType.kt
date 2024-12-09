@@ -46,12 +46,12 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
     INTERVAL("cardIvl", 6),
     EASE("cardEase", 7),
     REVIEWS("cardReps", 8),
-    LAPSES("cardLapses", 9)
+    LAPSES("cardLapses", 9),
     ;
 
     fun save(
         config: Config,
-        preferences: SharedPreferences
+        preferences: SharedPreferences,
     ) {
         Timber.v("update config to %s", this)
         // in the case of 'no sorting', we still need a sort type.
@@ -72,7 +72,7 @@ enum class SortType(val ankiSortType: String?, val cardBrowserLabelIndex: Int) {
         fun fromCol(
             config: Config,
             cardsOrNotes: CardsOrNotes,
-            preferences: SharedPreferences
+            preferences: SharedPreferences,
         ): SortType {
             val configKey = if (cardsOrNotes == CardsOrNotes.CARDS) "sortType" else "noteSortType"
             val colOrder = config.get<String>(configKey)

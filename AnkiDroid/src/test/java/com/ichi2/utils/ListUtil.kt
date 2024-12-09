@@ -53,7 +53,7 @@ class ListUtil {
         fun assertListEquals(
             message: String?,
             expected: List<Any?>?,
-            actuals: List<Any?>?
+            actuals: List<Any?>?,
         ) {
             val expectedArray: Array<Any?>? = expected?.toTypedArray()
             val actualArray: Array<Any?>? = actuals?.toTypedArray()
@@ -73,7 +73,7 @@ class ListUtil {
          */
         fun assertListEquals(
             expected: List<Any?>?,
-            actuals: List<Any?>?
+            actuals: List<Any?>?,
         ) {
             assertListEquals(null, expected, actuals)
         }

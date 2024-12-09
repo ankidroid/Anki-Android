@@ -44,7 +44,7 @@ class FinderTest : JvmTest() {
     @Test
     @Config(qualifiers = "en")
     @Throws(
-        ConfirmModSchemaException::class
+        ConfirmModSchemaException::class,
     )
     fun searchForBuriedReturnsManuallyAndSiblingBuried() {
         val searchQuery = "is:buried"
@@ -63,17 +63,17 @@ class FinderTest : JvmTest() {
         assertThat(
             "A manually buried card should be returned",
             buriedCards,
-            hasItem(manuallyBuriedCard.id)
+            hasItem(manuallyBuriedCard.id),
         )
         assertThat(
             "A sibling buried card should be returned",
             buriedCards,
-            hasItem(siblingBuried.id)
+            hasItem(siblingBuried.id),
         )
         assertThat(
             "sibling and manually buried should be the only cards returned",
             buriedCards,
-            hasSize(2)
+            hasSize(2),
         )
     }
 
@@ -85,7 +85,7 @@ class FinderTest : JvmTest() {
 
     private fun burySiblings(
         sched: Scheduler,
-        toManuallyBury: Card
+        toManuallyBury: Card,
     ): Card {
         sched.answerCard(toManuallyBury, Ease.AGAIN)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
@@ -95,13 +95,13 @@ class FinderTest : JvmTest() {
 
     private fun buryManually(
         sched: Scheduler,
-        id: Long
+        id: Long,
     ): Card {
         sched.buryCards(listOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(
             manuallyBuriedCard.queue,
-            equalTo(Consts.QUEUE_TYPE_MANUALLY_BURIED)
+            equalTo(Consts.QUEUE_TYPE_MANUALLY_BURIED),
         )
         return manuallyBuriedCard
     }
@@ -154,7 +154,7 @@ class FinderTest : JvmTest() {
         assertEquals(1, col.findCards("tag:\\*").size)
         assertEquals(
             1,
-            col.findCards("tag:%").size
+            col.findCards("tag:%").size,
         )
         assertEquals(2, col.findCards("tag:animal_1").size)
         assertEquals(1, col.findCards("tag:animal\\_1").size)
@@ -224,17 +224,17 @@ class FinderTest : JvmTest() {
             latestCardIds.contains(
                 col.findCards(
                     "front:*",
-                    SortOrder.UseCollectionOrdering()
-                ).last()
-            )
+                    SortOrder.UseCollectionOrdering(),
+                ).last(),
+            ),
         )
         assertTrue(
             latestCardIds.contains(
                 col.findCards(
                     "",
-                    SortOrder.UseCollectionOrdering()
-                ).last()
-            )
+                    SortOrder.UseCollectionOrdering(),
+                ).last(),
+            ),
         )
         col.config.set("sortType", "noteFld")
 
@@ -243,9 +243,9 @@ class FinderTest : JvmTest() {
             latestCardIds.contains(
                 col.findCards(
                     "",
-                    SortOrder.UseCollectionOrdering()
-                ).last()
-            )
+                    SortOrder.UseCollectionOrdering(),
+                ).last(),
+            ),
         )
         col.config.set("sortType", "cardMod")
 
@@ -253,9 +253,9 @@ class FinderTest : JvmTest() {
             latestCardIds.contains(
                 col.findCards(
                     "",
-                    SortOrder.UseCollectionOrdering()
-                ).last()
-            )
+                    SortOrder.UseCollectionOrdering(),
+                ).last(),
+            ),
         )
         assertEquals(firstCardId, col.findCards("", SortOrder.UseCollectionOrdering())[0])
         col.config.set("sortBackwards", true)
@@ -306,7 +306,7 @@ class FinderTest : JvmTest() {
         col.db.execute(
             "update cards set did = ? where id = ?",
             addDeck("Default::Child"),
-            id
+            id,
         )
 
         assertEquals(7, col.findCards("deck:default").size)
@@ -316,7 +316,7 @@ class FinderTest : JvmTest() {
         id = col.db.queryLongScalar("select id from cards limit 1")
         col.db.execute(
             "update cards set queue=2, ivl=10, reps=20, due=30, factor=2200 where id = ?",
-            id
+            id,
         )
         assertEquals(1, col.findCards("prop:ivl>5").size)
         assertThat(col.findCards("prop:ivl<5").size, greaterThan(1))
@@ -399,7 +399,7 @@ class FinderTest : JvmTest() {
         assertEquals(2, col.findCards("tag:cat2::some").size)
         assertEquals(
             0,
-            col.findCards("tag:cat2::some::").size
+            col.findCards("tag:cat2::some::").size,
         )
     }
 

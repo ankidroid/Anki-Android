@@ -57,7 +57,7 @@ import timber.log.Timber
  */
 @KotlinCleanup(
     "this class is a mess: showAllDecks, AND the adapter seems overly complicated as " +
-        "only the selected item is visible"
+        "only the selected item is visible",
 )
 class DeckSpinnerSelection(
     private val context: AppCompatActivity,
@@ -65,7 +65,7 @@ class DeckSpinnerSelection(
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
     private val showFilteredDecks: Boolean,
-    private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
+    private val fragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier(),
 ) {
     private var deckDropDownAdapter: DeckDropDownAdapter? = null
 
@@ -76,7 +76,7 @@ class DeckSpinnerSelection(
     @MainThread // spinner.adapter
     fun initializeActionBarDeckSpinner(
         col: Collection,
-        actionBar: ActionBar
+        actionBar: ActionBar,
     ) {
         actionBar.setDisplayShowTitleEnabled(false)
 
@@ -102,12 +102,12 @@ class DeckSpinnerSelection(
                 object : ArrayAdapter<DeckNameId>(
                     context,
                     R.layout.item_stats_deck,
-                    it
+                    it,
                 ) {
                     override fun getView(
                         position: Int,
                         convertView: View?,
-                        parent: ViewGroup
+                        parent: ViewGroup,
                     ): View {
                         val rowView = super.getView(position, convertView, parent)
                         rowView.findViewById<TextView>(R.id.title).text = getItem(position)!!.name
@@ -121,7 +121,7 @@ class DeckSpinnerSelection(
     @MainThread // spinner.adapter
     fun initializeNoteEditorDeckSpinner(
         col: Collection,
-        @LayoutRes layoutResource: Int = R.layout.multiline_spinner_item
+        @LayoutRes layoutResource: Int = R.layout.multiline_spinner_item,
     ) {
         computeDropDownDecks(col, includeFiltered = false).toMutableList().let {
             dropDownDecks = it
@@ -132,7 +132,7 @@ class DeckSpinnerSelection(
                     override fun getDropDownView(
                         position: Int,
                         convertView: View?,
-                        parent: ViewGroup
+                        parent: ViewGroup,
                     ): View {
                         // Cast the drop down items (popup items) as text view
                         val tv = super.getDropDownView(position, convertView, parent) as TextView
@@ -158,7 +158,7 @@ class DeckSpinnerSelection(
     /** @return All decks. */
     private fun computeDropDownDecks(
         col: Collection,
-        includeFiltered: Boolean
+        includeFiltered: Boolean,
     ): List<DeckNameId> = col.decks.allNamesAndIds(includeFiltered = includeFiltered)
 
     private fun setSpinnerListener() {
@@ -209,7 +209,7 @@ class DeckSpinnerSelection(
      */
     suspend fun selectDeckById(
         deckId: DeckId,
-        setAsCurrentDeck: Boolean
+        setAsCurrentDeck: Boolean,
     ): Boolean {
         return if (deckId == ALL_DECKS_ID || this.dropDownDecks == null) {
             selectAllDecks()
@@ -226,7 +226,7 @@ class DeckSpinnerSelection(
      */
     private suspend fun selectDeck(
         deckId: DeckId,
-        setAsCurrentDeck: Boolean
+        setAsCurrentDeck: Boolean,
     ): Boolean {
         val deck = this.dropDownDecks?.withIndex()?.firstOrNull { it.value.id == deckId } ?: return false
         val position = if (showAllDecks) deck.index + 1 else deck.index
@@ -245,7 +245,7 @@ class DeckSpinnerSelection(
         if (!showAllDecks) {
             CrashReportService.sendExceptionReport(
                 "selectAllDecks was called while `showAllDecks is false`",
-                "DeckSpinnerSelection:selectAllDecks"
+                "DeckSpinnerSelection:selectAllDecks",
             )
             return false
         }

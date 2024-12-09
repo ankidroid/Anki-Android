@@ -96,7 +96,7 @@ object AnalyticsConstantsTest {
                     |"""
                     .trimMargin(),
                 analyticsString,
-                getStringFromReflection(analyticsString)
+                getStringFromReflection(analyticsString),
             )
         }
 
@@ -133,7 +133,7 @@ object AnalyticsConstantsTest {
                         |"""
                         .trimMargin(),
                     listOfConstantFields.size,
-                    fieldSize
+                    fieldSize,
                 )
             } else if (fieldSize < listOfConstantFields.size) {
                 Assert.assertEquals(
@@ -145,7 +145,7 @@ object AnalyticsConstantsTest {
                         |"""
                         .trimMargin(),
                     listOfConstantFields.size,
-                    fieldSize
+                    fieldSize,
                 )
             } else {
                 Assert.assertEquals(listOfConstantFields.size, fieldSize)
@@ -163,7 +163,7 @@ object AnalyticsConstantsTest {
                 if (value.getAnnotation(AnalyticsConstant::class.java) == null && !value.isSynthetic) {
                     throw RuntimeException(
                         "All the fields in Actions class must be annotated " +
-                            "with @AnalyticsConstant. It seems " + value.name + " is not annotated."
+                            "with @AnalyticsConstant. It seems " + value.name + " is not annotated.",
                     )
                 }
             }

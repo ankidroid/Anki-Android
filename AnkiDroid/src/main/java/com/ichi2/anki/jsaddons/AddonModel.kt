@@ -32,7 +32,7 @@ data class AddonModel(
     val author: Map<String, String>,
     val license: String,
     val homepage: String,
-    val dist: DistInfo
+    val dist: DistInfo,
 ) {
     /**
      * Update preferences for addons with boolean remove, the preferences will be used to store the information about
@@ -50,7 +50,7 @@ data class AddonModel(
     fun updatePrefs(
         preferences: SharedPreferences,
         jsAddonKey: String,
-        remove: Boolean
+        remove: Boolean,
     ) {
         val reviewerEnabledAddonSet = preferences.getStringSet(jsAddonKey, HashSet())
         val newStrSet: MutableSet<String> = reviewerEnabledAddonSet?.toHashSet()!!

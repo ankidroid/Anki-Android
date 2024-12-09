@@ -31,7 +31,7 @@ interface HelpItemActionsDispatcher {
     fun onOpenUrl(url: String)
 
     fun onOpenUrlResource(
-        @StringRes url: Int
+        @StringRes url: Int,
     )
 
     fun onRate()
@@ -40,7 +40,7 @@ interface HelpItemActionsDispatcher {
 }
 
 class AnkiActivityHelpActionsDispatcher(
-    private val ankiActivity: AnkiActivity
+    private val ankiActivity: AnkiActivity,
 ) : HelpItemActionsDispatcher {
     override fun onOpenUrl(url: String) {
         ankiActivity.openUrl(Uri.parse(url))
@@ -53,7 +53,7 @@ class AnkiActivityHelpActionsDispatcher(
     override fun onRate() {
         IntentUtil.tryOpenIntent(
             ankiActivity,
-            AnkiDroidApp.getMarketIntent(ankiActivity)
+            AnkiDroidApp.getMarketIntent(ankiActivity),
         )
     }
 

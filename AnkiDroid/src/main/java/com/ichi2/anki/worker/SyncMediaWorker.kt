@@ -48,7 +48,7 @@ import timber.log.Timber
 
 class SyncMediaWorker(
     context: Context,
-    parameters: WorkerParameters
+    parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
     private val notificationManager = NotificationManagerCompat.from(context)
     private val cancelIntent = WorkManager.getInstance(context).createCancelPendingIntent(id)
@@ -183,7 +183,7 @@ class SyncMediaWorker(
 
         fun start(
             context: Context,
-            auth: SyncAuth
+            auth: SyncAuth,
         ) {
             Timber.i("Launching background media sync")
             val request = getWorkRequest(auth)

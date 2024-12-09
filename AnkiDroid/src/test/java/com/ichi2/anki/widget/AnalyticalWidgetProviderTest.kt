@@ -58,7 +58,7 @@ class AnalyticalWidgetProviderTest : RobolectricTest() {
             context: android.content.Context,
             appWidgetManager: AppWidgetManager,
             appWidgetIds: IntArray,
-            usageAnalytics: UsageAnalytics
+            usageAnalytics: UsageAnalytics,
         ) {
             // Do nothing
         }

@@ -108,7 +108,7 @@ class IntentHandler : AbstractIntentHandler() {
         // null string is handled by copyToClipboard in try-catch
         this.copyToClipboard(
             text = (intent.getStringExtra(CLIPBOARD_INTENT_EXTRA_DATA)!!),
-            failureMessageId = R.string.about_ankidroid_error_copy_debug_info
+            failureMessageId = R.string.about_ankidroid_error_copy_debug_info,
         )
     }
 
@@ -133,7 +133,7 @@ class IntentHandler : AbstractIntentHandler() {
     private fun performActionIfStorageAccessible(
         reloadIntent: Intent,
         action: String?,
-        block: () -> Unit
+        block: () -> Unit,
     ) {
         if (grantedStoragePermissions(this, showToast = true)) {
             Timber.i("User has storage permissions. Running intent: %s", action)
@@ -160,7 +160,7 @@ class IntentHandler : AbstractIntentHandler() {
 
     private fun handleSyncIntent(
         reloadIntent: Intent,
-        action: String?
+        action: String?,
     ) {
         Timber.i("Handling Sync Intent")
         sendDoSyncMsg()
@@ -173,7 +173,7 @@ class IntentHandler : AbstractIntentHandler() {
     private fun handleFileImport(
         intent: Intent,
         reloadIntent: Intent,
-        action: String?
+        action: String?,
     ) {
         Timber.i("Handling file import")
         if (!hasShownAppIntro()) {
@@ -209,7 +209,7 @@ class IntentHandler : AbstractIntentHandler() {
                     FileProvider.getUriForFile(
                         it,
                         it.applicationContext?.packageName + ".apkgfileprovider",
-                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name)
+                        File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), file.name),
                     )
                 }
             // TODO move the file deletion on a background thread
@@ -279,7 +279,7 @@ class IntentHandler : AbstractIntentHandler() {
 
         SYNC,
         REVIEW,
-        COPY_DEBUG_INFO
+        COPY_DEBUG_INFO,
     }
 
     companion object {
@@ -298,7 +298,7 @@ class IntentHandler : AbstractIntentHandler() {
          */
         fun grantedStoragePermissions(
             context: Context,
-            showToast: Boolean
+            showToast: Boolean,
         ): Boolean {
             val granted =
                 !ScopedStorageService.isLegacyStorage(context) ||
@@ -345,7 +345,7 @@ class IntentHandler : AbstractIntentHandler() {
 
         fun copyStringToClipboardIntent(
             context: Context,
-            textToCopy: String
+            textToCopy: String,
         ) = Intent(context, IntentHandler::class.java).also {
             it.action = CLIPBOARD_INTENT
             // max length for an intent is 500KB.
@@ -360,7 +360,7 @@ class IntentHandler : AbstractIntentHandler() {
                 LaunchType.DEFAULT_START_APP_IF_NEW,
                 LaunchType.FILE_IMPORT,
                 LaunchType.TEXT_IMPORT,
-                LaunchType.IMAGE_IMPORT
+                LaunchType.IMAGE_IMPORT,
                 -> true
                 LaunchType.COPY_DEBUG_INFO -> false
             }
@@ -368,7 +368,7 @@ class IntentHandler : AbstractIntentHandler() {
 
         class DoSync : DialogHandlerMessage(
             which = WhichDialogHandler.MSG_DO_SYNC,
-            analyticName = "DoSyncDialog"
+            analyticName = "DoSyncDialog",
         ) {
             override fun handleAsyncMessage(activity: AnkiActivity) {
                 // we may be called via any AnkiActivity but sync is a DeckPicker thing
@@ -377,7 +377,7 @@ class IntentHandler : AbstractIntentHandler() {
                         activity,
                         activity.getString(R.string.something_wrong),
                         ClassCastException(activity.javaClass.simpleName + " is not " + DeckPicker.javaClass.simpleName),
-                        true
+                        true,
                     )
                     return
                 }
@@ -402,14 +402,14 @@ class IntentHandler : AbstractIntentHandler() {
                             res.getQuantityString(
                                 R.plurals.sync_automatic_sync_needs_more_time,
                                 remaining,
-                                remaining
+                                remaining,
                             )
                         deckPicker.showSimpleNotification(err, message, Channel.SYNC)
                     } else {
                         deckPicker.showSimpleNotification(
                             err,
                             res.getString(R.string.youre_offline),
-                            Channel.SYNC
+                            Channel.SYNC,
                         )
                     }
                 }
@@ -422,7 +422,7 @@ class IntentHandler : AbstractIntentHandler() {
                 const val INTENT_SYNC_MIN_INTERVAL =
                     (
                         2 * 60000 // 2min minimum sync interval
-                        ).toLong()
+                    ).toLong()
             }
         }
 
@@ -434,7 +434,7 @@ class IntentHandler : AbstractIntentHandler() {
          */
         fun intentToReviewDeckFromShorcuts(
             context: Context,
-            deckId: DeckId
+            deckId: DeckId,
         ) = Intent(context, IntentHandler::class.java).apply {
             setAction(Intent.ACTION_VIEW)
             putExtra(ReminderService.EXTRA_DECK_ID, deckId)

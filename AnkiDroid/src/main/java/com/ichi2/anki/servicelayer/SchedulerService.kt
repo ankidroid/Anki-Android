@@ -27,7 +27,7 @@ import com.ichi2.libanki.undoableOp
 
 suspend fun FragmentActivity.rescheduleCards(
     cardIds: List<CardId>,
-    newDays: Int
+    newDays: Int,
 ) {
     withProgress {
         undoableOp {
@@ -41,7 +41,7 @@ suspend fun FragmentActivity.rescheduleCards(
 suspend fun FragmentActivity.resetCards(
     cardIds: List<CardId>,
     restorePosition: Boolean = false,
-    resetCounts: Boolean = false
+    resetCounts: Boolean = false,
 ) {
     withProgress {
         undoableOp {
@@ -53,8 +53,8 @@ suspend fun FragmentActivity.resetCards(
         resources.getQuantityString(
             R.plurals.reset_cards_dialog_acknowledge,
             count,
-            count
+            count,
         ),
-        Snackbar.LENGTH_SHORT
+        Snackbar.LENGTH_SHORT,
     )
 }

@@ -61,7 +61,7 @@ class PreferencesFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         view.findViewById<MaterialToolbar>(R.id.toolbar)
             .setNavigationOnClickListener { onBackPressedCallback.handleOnBackPressed() }
@@ -95,7 +95,7 @@ class PreferencesFragment :
 
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
-        pref: Preference
+        pref: Preference,
     ): Boolean {
         // avoid reopening the same fragment if already active
         val currentFragment =
@@ -106,7 +106,7 @@ class PreferencesFragment :
         val fragment =
             childFragmentManager.fragmentFactory.instantiate(
                 requireActivity().classLoader,
-                pref.fragment ?: return true
+                pref.fragment ?: return true,
             )
         fragment.arguments = pref.extras
         childFragmentManager.commit {
@@ -176,7 +176,7 @@ class PreferencesActivity : SingleFragmentActivity(), SearchPreferenceResultList
     companion object {
         fun getIntent(
             context: Context,
-            initialFragment: KClass<out SettingsFragment>? = null
+            initialFragment: KClass<out SettingsFragment>? = null,
         ): Intent {
             val arguments = bundleOf(INITIAL_FRAGMENT_EXTRA to initialFragment?.jvmName)
             return Intent(context, PreferencesActivity::class.java).apply {
@@ -201,7 +201,7 @@ const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
  * i.e. [SettingsFragment.preferenceResource] value is the same of [screen]
  */
 fun getFragmentFromXmlRes(
-    @XmlRes screen: Int
+    @XmlRes screen: Int,
 ): SettingsFragment? {
     return when (screen) {
         R.xml.preferences_general -> GeneralSettingsFragment()

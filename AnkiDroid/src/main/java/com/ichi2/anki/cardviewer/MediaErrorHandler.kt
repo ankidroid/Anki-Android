@@ -36,7 +36,7 @@ class MediaErrorHandler {
 
     fun processFailure(
         request: WebResourceRequest,
-        onFailure: (String) -> Unit
+        onFailure: (String) -> Unit,
     ) {
         // We do not want this to trigger more than once on the same side of the card as the UI will flicker.
         if (hasExecuted) return
@@ -63,7 +63,7 @@ class MediaErrorHandler {
 
     fun processMissingSound(
         file: File,
-        onFailure: (String) -> Unit
+        onFailure: (String) -> Unit,
     ) {
         // We want this to trigger more than once on the same side - as the user is in control of pressing "play"
         // and we want to provide feedback
@@ -90,7 +90,7 @@ class MediaErrorHandler {
     fun processTtsFailure(
         error: TtsPlayer.TtsError,
         playingAutomatically: Boolean,
-        errorHandler: (TtsPlayer.TtsError) -> Unit
+        errorHandler: (TtsPlayer.TtsError) -> Unit,
     ) {
         // if the user is playing a single sound explicitly, we want to provide feedback
         if (playingAutomatically && automaticTtsFailureCount++ >= 3) {

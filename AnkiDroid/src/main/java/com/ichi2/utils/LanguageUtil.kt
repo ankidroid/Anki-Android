@@ -225,7 +225,7 @@ object LanguageUtil {
             // Chinese (Taiwan)
             "中文 (台灣)" to "zh-TW",
             // Zulu
-            "isiZulu" to "zu"
+            "isiZulu" to "zu",
         )
 
     /** Backend languages; may not include recently added ones.
@@ -340,7 +340,7 @@ object LanguageUtil {
             // 简体中文
             "zh-CN",
             // 繁體中文
-            "zh-TW"
+            "zh-TW",
         )
 
     fun getShortDateFormatFromMs(ms: Long): String {
@@ -389,7 +389,7 @@ object LanguageUtil {
     fun Context.getStringByLocale(
         @StringRes stringRes: Int,
         locale: Locale,
-        vararg formatArgs: Any
+        vararg formatArgs: Any,
     ): String {
         val configuration = Configuration(resources.configuration)
         configuration.setLocale(locale)
@@ -400,7 +400,7 @@ object LanguageUtil {
     fun Fragment.getStringByLocale(
         @StringRes stringRes: Int,
         locale: Locale,
-        vararg formatArgs: Any
+        vararg formatArgs: Any,
     ): String {
         return requireContext().getStringByLocale(stringRes, locale, *formatArgs)
     }

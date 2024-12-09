@@ -83,7 +83,7 @@ var throwOnShowError = false
 fun CoroutineScope.launchCatching(
     context: CoroutineContext = EmptyCoroutineContext,
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit
+    block: suspend CoroutineScope.() -> Unit,
 ): Job {
     return launch(context) {
         try {
@@ -110,17 +110,17 @@ fun <T> T.launchCatchingIO(block: suspend T.() -> Unit): Job where T : ViewModel
     return viewModelScope.launchCatching(
         ioDispatcher,
         { onError.emit(it) },
-        { block() }
+        { block() },
     )
 }
 
 fun <T> T.launchCatchingIO(
     errorMessageHandler: suspend (String) -> Unit,
-    block: suspend CoroutineScope.() -> Unit
+    block: suspend CoroutineScope.() -> Unit,
 ): Job where T : ViewModel {
     return viewModelScope.launchCatching(
         ioDispatcher,
-        errorMessageHandler
+        errorMessageHandler,
     ) { block() }
 }
 
@@ -144,7 +144,7 @@ fun <T> ViewModel.asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
  */
 suspend fun <T> FragmentActivity.runCatching(
     errorMessage: String? = null,
-    block: suspend () -> T?
+    block: suspend () -> T?,
 ): T? {
     // appends the pre-coroutine stack to the error message. Example:
     // at com.ichi2.anki.CoroutineHelpersKt.launchCatchingTask(CoroutineHelpers.kt:188)
@@ -204,7 +204,7 @@ suspend fun <T> FragmentActivity.runCatching(
  */
 fun getCoroutineExceptionHandler(
     activity: Activity,
-    errorMessage: String? = null
+    errorMessage: String? = null,
 ) = CoroutineExceptionHandler { _, throwable ->
     // No need to check for cancellation-exception, it does not gets caught by CoroutineExceptionHandler
     when (throwable) {
@@ -230,7 +230,7 @@ fun getCoroutineExceptionHandler(
  */
 fun FragmentActivity.launchCatchingTask(
     errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: suspend CoroutineScope.() -> Unit,
 ): Job {
     return lifecycle.coroutineScope.launch {
         runCatching(errorMessage) { block() }
@@ -240,7 +240,7 @@ fun FragmentActivity.launchCatchingTask(
 /** See [FragmentActivity.launchCatchingTask] */
 fun Fragment.launchCatchingTask(
     errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> Unit
+    block: suspend CoroutineScope.() -> Unit,
 ): Job {
     return lifecycle.coroutineScope.launch {
         requireActivity().runCatching(errorMessage) { block() }
@@ -249,7 +249,7 @@ fun Fragment.launchCatchingTask(
 
 fun showError(
     context: Context,
-    msg: String
+    msg: String,
 ) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg")
     Timber.i("Error dialog displayed")
@@ -269,7 +269,7 @@ fun showError(
     context: Context,
     msg: String,
     exception: Throwable,
-    crashReport: Boolean = true
+    crashReport: Boolean = true,
 ) {
     if (throwOnShowError) throw IllegalStateException("throwOnShowError: $msg", exception)
     Timber.i("Error dialog displayed")
@@ -282,7 +282,7 @@ fun showError(
                 setOnDismissListener {
                     CrashReportService.sendExceptionReport(
                         exception,
-                        origin = context::class.java.simpleName
+                        origin = context::class.java.simpleName,
                     )
                 }
             }
@@ -293,7 +293,7 @@ fun showError(
         if (crashReport) {
             CrashReportService.sendExceptionReport(
                 exception,
-                origin = context::class.java.simpleName
+                origin = context::class.java.simpleName,
             )
         }
     }
@@ -306,7 +306,7 @@ fun showError(
 suspend fun <T> Backend.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     updateUi: ProgressContext.() -> Unit,
-    block: suspend CoroutineScope.() -> T
+    block: suspend CoroutineScope.() -> T,
 ): T {
     return coroutineScope {
         val monitor =
@@ -332,24 +332,24 @@ suspend fun <T> FragmentActivity.withProgress(
     extractProgress: ProgressContext.() -> Unit,
     onCancel: ((Backend) -> Unit)? = { it.setWantsAbort() },
     @StringRes manualCancelButton: Int? = null,
-    op: suspend () -> T
+    op: suspend () -> T,
 ): T {
     val backend = CollectionManager.getBackend()
     return withProgressDialog(
         context = this@withProgress,
         onCancel =
-        if (onCancel != null) {
-            fun() {
-                onCancel(backend)
-            }
-        } else {
-            null
-        },
-        manualCancelButton = manualCancelButton
+            if (onCancel != null) {
+                fun() {
+                    onCancel(backend)
+                }
+            } else {
+                null
+            },
+        manualCancelButton = manualCancelButton,
     ) { dialog ->
         backend.withProgress(
             extractProgress = extractProgress,
-            updateUi = { updateDialog(dialog) }
+            updateUi = { updateDialog(dialog) },
         ) {
             op()
         }
@@ -365,11 +365,11 @@ suspend fun <T> FragmentActivity.withProgress(
  */
 suspend fun <T> Activity.withProgress(
     message: String = resources.getString(R.string.dialog_processing),
-    op: suspend () -> T
+    op: suspend () -> T,
 ): T =
     withProgressDialog(
         context = this@withProgress,
-        onCancel = null
+        onCancel = null,
     ) { dialog ->
         @Suppress("Deprecation") // ProgressDialog deprecation
         dialog.setMessage(message)
@@ -379,19 +379,19 @@ suspend fun <T> Activity.withProgress(
 /** @see withProgress(String, ...) */
 suspend fun <T> Fragment.withProgress(
     message: String = getString(R.string.dialog_processing),
-    block: suspend () -> T
+    block: suspend () -> T,
 ): T = requireActivity().withProgress(message, block)
 
 /** @see withProgress(String, ...) */
 suspend fun <T> Activity.withProgress(
     @StringRes messageId: Int,
-    block: suspend () -> T
+    block: suspend () -> T,
 ): T = withProgress(resources.getString(messageId), block)
 
 /** @see withProgress(String, ...) */
 suspend fun <T> Fragment.withProgress(
     @StringRes messageId: Int,
-    block: suspend () -> T
+    block: suspend () -> T,
 ): T = requireActivity().withProgress(messageId, block)
 
 @Suppress("Deprecation") // ProgressDialog deprecation
@@ -400,7 +400,7 @@ suspend fun <T> withProgressDialog(
     onCancel: (() -> Unit)?,
     delayMillis: Long = 600,
     @StringRes manualCancelButton: Int? = null,
-    op: suspend (android.app.ProgressDialog) -> T
+    op: suspend (android.app.ProgressDialog) -> T,
 ): T =
     coroutineScope {
         val dialog =
@@ -434,7 +434,7 @@ suspend fun <T> withProgressDialog(
                 |cancellable: ${onCancel != null}; 
                 |manualCancel: ${manualCancelButton != null}
                 |
-                        """.trimMargin()
+                        """.trimMargin(),
                     )
                     dialog.show()
                     AnkiDroidApp.instance.progressDialogShown = true
@@ -445,7 +445,7 @@ suspend fun <T> withProgressDialog(
                 |cancellable: ${onCancel != null}; 
                 |manualCancel: ${manualCancelButton != null}
                 |
-                        """.trimMargin()
+                        """.trimMargin(),
                     )
                 }
             }
@@ -480,7 +480,7 @@ private fun dismissDialogIfShowing(dialog: Dialog) {
 private suspend fun monitorProgress(
     backend: Backend,
     extractProgress: ProgressContext.() -> Unit,
-    updateUi: ProgressContext.() -> Unit
+    updateUi: ProgressContext.() -> Unit,
 ) {
     val state = ProgressContext(Progress.getDefaultInstance())
     while (true) {
@@ -504,7 +504,7 @@ data class ProgressContext(
     var progress: Progress,
     var text: String = "",
     /** If set, shows progress bar with a of b complete. */
-    var amount: Pair<Int, Int>? = null
+    var amount: Pair<Int, Int>? = null,
 )
 
 @Suppress("Deprecation") // ProgressDialog deprecation

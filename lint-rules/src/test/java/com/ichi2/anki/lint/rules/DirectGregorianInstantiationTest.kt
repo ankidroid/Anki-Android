@@ -104,7 +104,7 @@ public class Time {
             .files(
                 JavaTestFile.create(stubZoned),
                 JavaTestFile.create(stubGregorian),
-                JavaTestFile.create(javaFileWithFromCall)
+                JavaTestFile.create(javaFileWithFromCall),
             )
             .issues(DirectGregorianInstantiation.ISSUE)
             .run()
@@ -117,7 +117,7 @@ public class Time {
             .files(
                 JavaTestFile.create(stubZoned),
                 JavaTestFile.create(stubGregorian),
-                JavaTestFile.create(javaFileWithConstructorInvocation)
+                JavaTestFile.create(javaFileWithConstructorInvocation),
             )
             .issues(DirectGregorianInstantiation.ISSUE)
             .run()

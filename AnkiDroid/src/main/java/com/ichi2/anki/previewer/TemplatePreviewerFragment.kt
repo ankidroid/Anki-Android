@@ -48,7 +48,7 @@ class TemplatePreviewerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -86,7 +86,7 @@ class TemplatePreviewerFragment :
          */
         fun newInstance(
             arguments: TemplatePreviewerArguments,
-            backgroundOverrideColor: Int? = null
+            backgroundOverrideColor: Int? = null,
         ): TemplatePreviewerFragment {
             return TemplatePreviewerFragment().apply {
                 val args = bundleOf(ARGS_KEY to arguments)

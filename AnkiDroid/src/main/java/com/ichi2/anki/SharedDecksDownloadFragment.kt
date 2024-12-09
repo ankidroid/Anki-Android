@@ -103,7 +103,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -161,7 +161,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         activity?.registerReceiverCompat(
             onComplete,
             IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
-            ContextCompat.RECEIVER_EXPORTED
+            ContextCompat.RECEIVER_EXPORTED,
         )
 
         val currentFileName = fileToBeDownloaded.toFileName(extension = "apkg")
@@ -180,7 +180,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
 
     private fun generateDeckDownloadRequest(
         fileToBeDownloaded: DownloadFile,
-        currentFileName: String
+        currentFileName: String,
     ): DownloadManager.Request {
         val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(fileToBeDownloaded.url))
         request.setMimeType(fileToBeDownloaded.mimeType)
@@ -196,7 +196,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         request.setDestinationInExternalFilesDir(
             context,
             null,
-            "$SHARED_DECKS_DOWNLOAD_FOLDER/$currentFileName"
+            "$SHARED_DECKS_DOWNLOAD_FOLDER/$currentFileName",
         )
 
         return request
@@ -210,7 +210,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
         object : BroadcastReceiver() {
             override fun onReceive(
                 context: Context,
-                intent: Intent?
+                intent: Intent?,
             ) {
                 Timber.i("Download might be complete now, verify and continue with import")
 
@@ -222,7 +222,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                         // Send ACRA report
                         CrashReportService.sendExceptionReport(
                             "File name is null",
-                            "SharedDecksDownloadFragment::verifyDeckIsImportable"
+                            "SharedDecksDownloadFragment::verifyDeckIsImportable",
                         )
                         return false
                     }
@@ -443,7 +443,7 @@ class SharedDecksDownloadFragment : Fragment(R.layout.fragment_shared_decks_down
                 FileProvider.getUriForFile(
                     it,
                     it.applicationContext?.packageName + ".apkgfileprovider",
-                    File(sharedDecksPath, fileName.toString())
+                    File(sharedDecksPath, fileName.toString()),
                 )
             }
         Timber.d("File URI -> $fileUri")

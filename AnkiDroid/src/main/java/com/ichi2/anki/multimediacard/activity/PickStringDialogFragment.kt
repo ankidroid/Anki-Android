@@ -45,7 +45,7 @@ class PickStringDialogFragment : DialogFragment() {
             ArrayAdapter(
                 requireActivity(),
                 android.R.layout.simple_list_item_1,
-                possibleChoices!!
+                possibleChoices!!,
             )
         builder.setAdapter(adapter, listener)
         return builder.create()

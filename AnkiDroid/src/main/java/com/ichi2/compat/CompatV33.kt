@@ -29,7 +29,7 @@ open class CompatV33 : CompatV31(), Compat {
     override fun resolveActivity(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }
@@ -37,7 +37,7 @@ open class CompatV33 : CompatV31(), Compat {
     override fun <T : Serializable?> getSerializableExtra(
         intent: Intent,
         name: String,
-        className: Class<T>
+        className: Class<T>,
     ): T? {
         return intent.getSerializableExtra(name, className)
     }
@@ -45,7 +45,7 @@ open class CompatV33 : CompatV31(), Compat {
     override fun <T : Serializable?> getSerializable(
         bundle: Bundle,
         key: String,
-        clazz: Class<T>
+        clazz: Class<T>,
     ): T? {
         return bundle.getSerializable(key, clazz)
     }
@@ -53,13 +53,13 @@ open class CompatV33 : CompatV31(), Compat {
     override fun getPackageInfo(
         packageManager: PackageManager,
         packageName: String,
-        flags: PackageInfoFlagsCompat
+        flags: PackageInfoFlagsCompat,
     ): PackageInfo? = packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.value))
 
     override fun resolveService(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): ResolveInfo? {
         return packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }
@@ -67,7 +67,7 @@ open class CompatV33 : CompatV31(), Compat {
     override fun queryIntentActivities(
         packageManager: PackageManager,
         intent: Intent,
-        flags: ResolveInfoFlagsCompat
+        flags: ResolveInfoFlagsCompat,
     ): List<ResolveInfo> {
         return packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }

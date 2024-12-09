@@ -230,7 +230,7 @@ object CollectionHelper {
             Timber.e("Attempting to determine collection path, but no valid external storage?")
             throw IllegalStateException(
                 "getExternalFilesDir unexpectedly returned null. Media state: " +
-                    Environment.getExternalStorageState()
+                    Environment.getExternalStorageState(),
             )
         }
         return externalFilesDir.absolutePath
@@ -290,7 +290,7 @@ object CollectionHelper {
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     internal fun getCurrentAnkiDroidDirectoryOptionalContext(
         preferences: SharedPreferences,
-        context: () -> Context
+        context: () -> Context,
     ): String {
         return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
             // create an "androidTest" directory inside the current collection directory which contains the test data
@@ -301,14 +301,14 @@ object CollectionHelper {
                 }
             File(
                 currentCollectionDirectory,
-                "androidTest"
+                "androidTest",
             ).absolutePath
         } else if (ankiDroidDirectoryOverride != null) {
             ankiDroidDirectoryOverride!!
         } else {
             preferences.getOrSetString(PREF_COLLECTION_PATH) {
                 getDefaultAnkiDroidDirectory(
-                    context()
+                    context(),
                 )
             }
         }

@@ -125,7 +125,7 @@ class ImportUtilsTest : RobolectricTest() {
         override fun copyFileToCache(
             context: Context,
             data: Uri?,
-            tempPath: String
+            tempPath: String,
         ): Pair<Boolean, String?> {
             cacheFileName = tempPath
             return Pair(true, null)
@@ -133,7 +133,7 @@ class ImportUtilsTest : RobolectricTest() {
 
         override fun getFileNameFromContentProvider(
             context: Context,
-            data: Uri
+            data: Uri,
         ): String? {
             return fileName
         }

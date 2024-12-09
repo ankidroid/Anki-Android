@@ -126,7 +126,7 @@ class CrowdinLanguageTagTest {
                 "values-yue" to "yu",
                 "values-zh-rCN" to "zhcn",
                 "values-zh-rTW" to "zhtw",
-                "values-zu" to "zu"
+                "values-zu" to "zu",
             )
 
         val fileIdentifier = CrowdinFileIdentifier(7290)
@@ -153,7 +153,7 @@ class CrowdinLanguageTagTest {
         assertThat(
             "all values should be manually tested, test the links printed above",
             stringsToTest,
-            hasSize(0)
+            hasSize(0),
         )
     }
 }

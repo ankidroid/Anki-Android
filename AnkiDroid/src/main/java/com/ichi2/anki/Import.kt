@@ -75,7 +75,7 @@ fun Activity.onSelectedCsvForImport(data: Intent) {
 
 fun AnkiActivity.showImportDialog(
     id: Int,
-    importPath: String
+    importPath: String,
 ) {
     Timber.d("showImportDialog() delegating to ImportDialog")
     val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, importPath)
@@ -87,8 +87,8 @@ fun AnkiActivity.showImportDialog() {
         ImportOptions(
             importApkg = true,
             importColpkg = true,
-            importTextFile = true
-        )
+            importTextFile = true,
+        ),
     )
 }
 

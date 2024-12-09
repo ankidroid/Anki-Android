@@ -96,7 +96,7 @@ class ImportDialog : AsyncDialogFragment() {
         val dialogTypes =
             arrayOf(
                 DIALOG_IMPORT_ADD_CONFIRM,
-                DIALOG_IMPORT_REPLACE_CONFIRM
+                DIALOG_IMPORT_REPLACE_CONFIRM,
             )
 
         /**
@@ -108,7 +108,7 @@ class ImportDialog : AsyncDialogFragment() {
         @CheckResult
         fun newInstance(
             dialogType: Int,
-            packagePath: String
+            packagePath: String,
         ): ImportDialog {
             val f = ImportDialog()
             val args = Bundle()

@@ -194,8 +194,8 @@ class Notetypes(val col: Collection) {
                 nt =
                     NotetypeJson(
                         BackendUtils.fromJsonBytes(
-                            col.backend.getNotetypeLegacy(id)
-                        )
+                            col.backend.getNotetypeLegacy(id),
+                        ),
                     )
                 updateCache(nt)
             } catch (e: BackendNotFoundException) {
@@ -229,8 +229,8 @@ class Notetypes(val col: Collection) {
     fun newBasicNotetype(): NotetypeJson {
         return NotetypeJson(
             BackendUtils.fromJsonBytes(
-                col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
-            )
+                col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC),
+            ),
         )
     }
 
@@ -262,7 +262,7 @@ class Notetypes(val col: Collection) {
     /** Add or update an existing model. Use .save() instead. */
     fun update(
         notetype: NotetypeJson,
-        preserveUsnAndMtime: Boolean = true
+        preserveUsnAndMtime: Boolean = true,
     ) {
         removeFromCache(notetype.id)
         ensureNameUnique(notetype)
@@ -270,7 +270,7 @@ class Notetypes(val col: Collection) {
             col.backend.addOrUpdateNotetype(
                 json = toJsonBytes(notetype),
                 preserveUsnAndMtime = preserveUsnAndMtime,
-                skipChecks = preserveUsnAndMtime
+                skipChecks = preserveUsnAndMtime,
             )
         setCurrent(notetype)
         mutateAfterWrite(notetype)
@@ -305,12 +305,12 @@ class Notetypes(val col: Collection) {
     @RustCleanup("not in libAnki any more - may not be needed")
     fun tmplUseCount(
         notetype: NotetypeJson,
-        ord: Int
+        ord: Int,
     ): Int {
         return col.db.queryScalar(
             "select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?",
             notetype.id,
-            ord
+            ord,
         )
     }
 
@@ -350,7 +350,7 @@ class Notetypes(val col: Collection) {
     @LibAnkiAlias("add_field")
     fun addField(
         notetype: NotetypeJson,
-        field: Field
+        field: Field,
     ) {
         notetype.flds.append(field)
     }
@@ -359,7 +359,7 @@ class Notetypes(val col: Collection) {
     @LibAnkiAlias("remove_field")
     fun removeField(
         notetype: NotetypeJson,
-        field: Field
+        field: Field,
     ) {
         notetype.flds.remove(field)
     }
@@ -369,7 +369,7 @@ class Notetypes(val col: Collection) {
     fun repositionField(
         notetype: NotetypeJson,
         field: Field,
-        idx: Int
+        idx: Int,
     ) {
         val oldidx = notetype.flds.index(field).get()
         if (oldidx == idx) {
@@ -384,7 +384,7 @@ class Notetypes(val col: Collection) {
     fun renameField(
         notetype: NotetypeJson,
         field: Field,
-        newName: String
+        newName: String,
     ) {
         check(notetype.flds.jsonObjectIterable().contains(field)) { "Field to be renamed was not found in the notetype fields" }
         field["name"] = newName
@@ -394,7 +394,7 @@ class Notetypes(val col: Collection) {
     @LibAnkiAlias("set_sort_index")
     fun setSortIndex(
         nt: NotetypeJson,
-        idx: Int
+        idx: Int,
     ) {
         require(0 <= idx && idx < len(nt.flds)) { "Selected sort field's index is not valid" }
         nt.sortf = idx
@@ -406,7 +406,7 @@ class Notetypes(val col: Collection) {
     @RustCleanup("legacy")
     fun addFieldLegacy(
         notetype: NotetypeJson,
-        field: Field
+        field: Field,
     ) {
         addField(notetype, field)
         if (notetype.id != 0L) {
@@ -417,7 +417,7 @@ class Notetypes(val col: Collection) {
     @RustCleanup("legacy")
     fun remFieldLegacy(
         notetype: NotetypeJson,
-        field: Field
+        field: Field,
     ) {
         removeField(notetype, field)
         save(notetype)
@@ -427,7 +427,7 @@ class Notetypes(val col: Collection) {
     fun moveFieldLegacy(
         notetype: NotetypeJson,
         field: Field,
-        idx: Int
+        idx: Int,
     ) {
         repositionField(notetype, field, idx)
         save(notetype)
@@ -437,7 +437,7 @@ class Notetypes(val col: Collection) {
     fun renameFieldLegacy(
         notetype: NotetypeJson,
         field: Field,
-        newName: String
+        newName: String,
     ) {
         renameField(notetype, field, newName)
         save(notetype)
@@ -451,7 +451,7 @@ class Notetypes(val col: Collection) {
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
     fun addFieldInNewModel(
         notetype: NotetypeJson,
-        field: JSONObject
+        field: JSONObject,
     ) {
         check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
         try {
@@ -465,7 +465,7 @@ class Notetypes(val col: Collection) {
 
     fun addTemplateInNewModel(
         notetype: NotetypeJson,
-        template: JSONObject
+        template: JSONObject,
     ) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
@@ -482,7 +482,7 @@ class Notetypes(val col: Collection) {
 
     fun addFieldModChanged(
         notetype: NotetypeJson,
-        field: JSONObject
+        field: JSONObject,
     ) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
@@ -493,7 +493,7 @@ class Notetypes(val col: Collection) {
 
     fun addTemplateModChanged(
         notetype: NotetypeJson,
-        template: JSONObject
+        template: JSONObject,
     ) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
@@ -522,7 +522,7 @@ class Notetypes(val col: Collection) {
     @LibAnkiAlias("add_template")
     fun add_template(
         notetype: NotetypeJson,
-        template: Template
+        template: Template,
     ) {
         notetype.tmpls.append(template)
     }
@@ -531,7 +531,7 @@ class Notetypes(val col: Collection) {
     @LibAnkiAlias("remove_template")
     fun removeTemplate(
         notetype: NotetypeJson,
-        template: Template
+        template: Template,
     ) {
         check(len(notetype.tmpls) > 1) { "Attempting to remove the last template" }
         notetype.tmpls.remove(template)
@@ -542,7 +542,7 @@ class Notetypes(val col: Collection) {
     fun repositionTemplate(
         notetype: NotetypeJson,
         template: Template,
-        idx: Int
+        idx: Int,
     ) {
         val oldidx = notetype.tmpls.index(template).get()
         if (oldidx == idx) {
@@ -557,7 +557,7 @@ class Notetypes(val col: Collection) {
 
     fun addTemplate(
         notetype: NotetypeJson,
-        template: Template
+        template: Template,
     ) {
         add_template(notetype, template)
         if (notetype.id != 0L) {
@@ -567,7 +567,7 @@ class Notetypes(val col: Collection) {
 
     fun remTemplate(
         notetype: NotetypeJson,
-        template: Template
+        template: Template,
     ) {
         removeTemplate(notetype, template)
         save(notetype)
@@ -576,7 +576,7 @@ class Notetypes(val col: Collection) {
     fun moveTemplate(
         notetype: NotetypeJson,
         template: Template,
-        idx: Int
+        idx: Int,
     ) {
         repositionTemplate(notetype, template, idx)
         save(notetype)
@@ -611,7 +611,7 @@ class Notetypes(val col: Collection) {
         nid: NoteId,
         newModel: NotetypeJson,
         fmap: Map<Int, Int?>,
-        cmap: Map<Int, Int?>
+        cmap: Map<Int, Int?>,
     ): OpChanges {
         val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
         val templateMap =
@@ -629,14 +629,14 @@ class Notetypes(val col: Collection) {
             newNotetypeId = newModel.id,
             currentSchema = col.scm,
             oldNotetypeName = noteType.name,
-            isCloze = isCloze
+            isCloze = isCloze,
         )
     }
 
     /** Convert old->new map to list of old indexes/nulls */
     private fun convertLegacyMap(
         map: Map<Int, Int?>,
-        newSize: Int
+        newSize: Int,
     ): Iterable<Int> {
         val newToOld = map.entries.filter { it.value != null }.associate { (k, v) -> v to k }
         val output = mutableListOf<Int>()
@@ -684,7 +684,7 @@ class Notetypes(val col: Collection) {
     @Suppress("ktlint:standard:max-line-length")
     fun getCardIdsForModel(
         modelId: NoteTypeId,
-        ords: IntArray
+        ords: IntArray,
     ): List<Long>? {
         val cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
         val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
@@ -722,7 +722,7 @@ class Notetypes(val col: Collection) {
                 "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", " +
                     "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"\"," +
                     "\"bsize\": 0 }"
-                )
+            )
 
         /** "Mapping of field name -> (ord, field).  */
         fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, JSONObject>> {

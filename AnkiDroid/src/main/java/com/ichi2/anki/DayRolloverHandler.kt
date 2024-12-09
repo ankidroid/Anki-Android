@@ -67,7 +67,7 @@ object DayRolloverHandler : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context?,
-        intent: Intent?
+        intent: Intent?,
     ) {
         // potential race condition if a timezone/tick change occur simultaneously
         // the outcome would be two calls to notifySubscribers, which is acceptable

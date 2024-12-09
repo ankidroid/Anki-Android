@@ -60,8 +60,8 @@ class ContentResolverUtilTest {
             mock,
             SQLiteException(
                 "no such column: _display_name (code 1 SQLITE_ERROR[1]): , " +
-                    "while compiling: SELECT _display_name FROM ClipboardImageTable WHERE (id=855) ORDER BY _data"
-            )
+                    "while compiling: SELECT _display_name FROM ClipboardImageTable WHERE (id=855) ORDER BY _data",
+            ),
         )
 
         whenever(mock.getType(any())).thenReturn("image/gif")
@@ -75,7 +75,7 @@ class ContentResolverUtilTest {
     }
 
     private fun cursorReturning(
-        @Suppress("SameParameterValue") value: String
+        @Suppress("SameParameterValue") value: String,
     ): Cursor {
         val cursor = mock(Cursor::class.java)
         whenever(cursor.getString(0)).thenReturn(value)
@@ -84,14 +84,14 @@ class ContentResolverUtilTest {
 
     private fun setQueryReturning(
         mock: ContentResolver,
-        cursorToReturn: Cursor?
+        cursorToReturn: Cursor?,
     ) {
         whenever(mock.query(any(), any(), any(), any(), any())).thenReturn(cursorToReturn)
     }
 
     private fun setQueryThrowing(
         mock: ContentResolver,
-        ex: Throwable?
+        ex: Throwable?,
     ) {
         whenever(mock.query(any(), any(), any(), any(), any())).thenThrow(ex)
     }

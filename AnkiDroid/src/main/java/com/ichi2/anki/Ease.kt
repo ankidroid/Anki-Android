@@ -25,7 +25,7 @@ enum class Ease(val value: Int) {
     AGAIN(1),
     HARD(2),
     GOOD(3),
-    EASY(4)
+    EASY(4),
     ;
 
     companion object {

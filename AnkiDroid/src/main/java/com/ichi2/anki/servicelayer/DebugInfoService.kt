@@ -61,7 +61,7 @@ object DebugInfoService {
             FSRS = ${BackendBuildConfig.FSRS_VERSION} (Enabled: $isFSRSEnabled)
             
             Crash Reports Enabled = ${isSendingCrashReports(info)}
-        """.trimIndent()
+            """.trimIndent()
     }
 
     private fun isSendingCrashReports(context: Context): Boolean {

@@ -39,10 +39,10 @@ import kotlin.reflect.KClass
  */
 @Suppress("LeakingThis")
 open class PageFragment(
-    @LayoutRes contentLayoutId: Int = R.layout.page_fragment
+    @LayoutRes contentLayoutId: Int = R.layout.page_fragment,
 ) :
     Fragment(contentLayoutId),
-    PostRequestHandler {
+        PostRequestHandler {
     lateinit var webView: WebView
     private val server = AnkiServer(this).also { it.start() }
 
@@ -60,7 +60,7 @@ open class PageFragment(
     @CallSuper
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         webView =
             view.findViewById<WebView>(R.id.webview).apply {
@@ -96,7 +96,7 @@ open class PageFragment(
 
     override suspend fun handlePostRequest(
         uri: String,
-        bytes: ByteArray
+        bytes: ByteArray,
     ): ByteArray {
         val methodName =
             if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
@@ -117,7 +117,7 @@ open class PageFragment(
             context: Context,
             path: String,
             title: String? = null,
-            clazz: KClass<out PageFragment> = PageFragment::class
+            clazz: KClass<out PageFragment> = PageFragment::class,
         ): Intent {
             val arguments = bundleOf(PATH_ARG_KEY to path, TITLE_ARG_KEY to title)
             return SingleFragmentActivity.getIntent(context, clazz, arguments)

@@ -38,7 +38,7 @@ class AnkiPackageImporterFragment : PageFragment() {
     }
 
     class AnkiPackageImporterWebViewClient(
-        private val backCallback: OnBackPressedCallback
+        private val backCallback: OnBackPressedCallback,
     ) : PageWebViewClient() {
         /**
          * Ideally, to handle the state of the back callback, we would just need to check for
@@ -49,7 +49,7 @@ class AnkiPackageImporterFragment : PageFragment() {
 
         override fun onPageFinished(
             view: WebView?,
-            url: String?
+            url: String?,
         ) {
             view!!.evaluateJavascript(hideShowButtonCss) {
                 super.onPageFinished(view, url)
@@ -58,7 +58,7 @@ class AnkiPackageImporterFragment : PageFragment() {
 
         override fun onLoadResource(
             view: WebView?,
-            url: String?
+            url: String?,
         ) {
             super.onLoadResource(view, url)
             backCallback.isEnabled =
@@ -77,7 +77,7 @@ class AnkiPackageImporterFragment : PageFragment() {
     companion object {
         fun getIntent(
             context: Context,
-            filePath: String
+            filePath: String,
         ): Intent {
             val title = context.getString(R.string.menu_import)
             return getIntent(context, "import-anki-package$filePath", title, AnkiPackageImporterFragment::class)

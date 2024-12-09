@@ -184,7 +184,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
                         showThemedToast(
                             requireContext(),
                             getString(R.string.image_dimensions_too_large, sizeResult.width, sizeResult.height),
-                            false
+                            false,
                         )
                     }
                     is FileSizeResult.OK -> {

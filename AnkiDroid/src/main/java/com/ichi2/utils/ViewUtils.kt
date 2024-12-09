@@ -56,13 +56,13 @@ fun View.configureView(
     activity: Activity,
     mimeTypes: Array<String>,
     options: DropHelper.Options,
-    onReceiveContentListener: OnReceiveContentListener
+    onReceiveContentListener: OnReceiveContentListener,
 ) {
     DropHelper.configureView(
         activity,
         this,
         mimeTypes,
         options,
-        onReceiveContentListener
+        onReceiveContentListener,
     )
 }

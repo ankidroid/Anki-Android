@@ -40,12 +40,12 @@ import net.ankiweb.rsdroid.Backend
 fun Collection.createBackup(
     backupFolder: String,
     force: Boolean,
-    waitForCompletion: Boolean
+    waitForCompletion: Boolean,
 ): Boolean {
     return backend.createBackup(
         backupFolder = backupFolder,
         force = force,
-        waitForCompletion = waitForCompletion
+        waitForCompletion = waitForCompletion,
     )
 }
 
@@ -65,13 +65,13 @@ fun Collection.awaitBackupCompletion() {
 fun importCollectionPackage(
     backend: Backend,
     colPath: String,
-    colpkgPath: String
+    colpkgPath: String,
 ) {
     backend.importCollectionPackage(
         colPath = colPath,
         backupPath = colpkgPath,
         mediaFolder = colPath.replace(".anki2", ".media"),
-        mediaDb = colPath.replace(".anki2", ".media.db")
+        mediaDb = colPath.replace(".anki2", ".media.db"),
     )
 }
 
@@ -83,20 +83,20 @@ fun importCollectionPackage(
 fun Collection.exportCollectionPackage(
     outPath: String,
     includeMedia: Boolean,
-    legacy: Boolean = true
+    legacy: Boolean = true,
 ) {
     close(forFullSync = true)
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,
-        legacy = legacy
+        legacy = legacy,
     )
     reopen()
 }
 
 fun Collection.importAnkiPackage(
     packagePath: String,
-    options: ImportAnkiPackageOptions
+    options: ImportAnkiPackageOptions,
 ): ImportResponse {
     return backend.importAnkiPackage(packagePath, options)
 }
@@ -120,7 +120,7 @@ fun Collection.exportAnkiPackage(
     withDeckConfigs: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
-    legacy: Boolean = true
+    legacy: Boolean = true,
 ) {
     val options =
         exportAnkiPackageOptions {
@@ -139,7 +139,7 @@ fun Collection.exportNotesCsv(
     withDeck: Boolean,
     withNotetype: Boolean,
     withGuid: Boolean,
-    limit: ExportLimit
+    limit: ExportLimit,
 ) {
     backend.exportNoteCsv(outPath, withHtml, withTags, withDeck, withNotetype, withGuid, limit)
 }
@@ -147,7 +147,7 @@ fun Collection.exportNotesCsv(
 fun Collection.exportCardsCsv(
     outPath: String,
     withHtml: Boolean,
-    limit: ExportLimit
+    limit: ExportLimit,
 ) {
     backend.exportCardCsv(outPath, withHtml, limit)
 }

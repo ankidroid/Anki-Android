@@ -29,7 +29,7 @@ object IntentUtil {
     @JvmStatic // (fixable) required due to structure of unit tests
     fun canOpenIntent(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ): Boolean {
         return try {
             val packageManager = context.packageManager
@@ -42,7 +42,7 @@ object IntentUtil {
 
     fun tryOpenIntent(
         activity: AnkiActivity,
-        intent: Intent
+        intent: Intent,
     ) {
         try {
             if (canOpenIntent(activity, intent)) {

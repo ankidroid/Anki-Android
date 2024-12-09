@@ -69,7 +69,7 @@ object ViewGroupUtils {
         for (v in allViews) {
             Timber.d(
                 "ViewGroupUtils::setContentViewLayerTypeSoftware for view %s",
-                v.id
+                v.id,
             )
             v.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         }

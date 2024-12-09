@@ -100,7 +100,7 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
         abstract fun toDisplayString(
             context: Context,
-            binding: Binding
+            binding: Binding,
         ): String
 
         abstract fun screenEquals(otherScreen: Screen): Boolean
@@ -127,7 +127,7 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
             override fun toDisplayString(
                 context: Context,
-                binding: Binding
+                binding: Binding,
             ): String {
                 val formatString =
                     when (side) {
@@ -164,7 +164,7 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
 
     /** the serialisation version */
     enum class Version {
-        ONE
+        ONE,
     }
 
     companion object {
@@ -173,7 +173,7 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         @CheckResult
         fun fromGesture(
             gesture: Gesture,
-            screen: (CardSide) -> Screen
+            screen: (CardSide) -> Screen,
         ): MappableBinding = MappableBinding(GestureInput(gesture), screen(CardSide.BOTH))
 
         @CheckResult
@@ -185,7 +185,7 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         @CheckResult
         fun fromString(
             s: String,
-            v: Version = Version.ONE
+            v: Version = Version.ONE,
         ): MappableBinding? {
             if (s.isEmpty()) {
                 return null
@@ -222,7 +222,7 @@ class MappableBinding(val binding: Binding, val screen: Screen) {
         @CheckResult
         fun fromPreference(
             prefs: SharedPreferences,
-            command: ViewerCommand
+            command: ViewerCommand,
         ): MutableList<MappableBinding> {
             val value = prefs.getString(command.preferenceKey, null) ?: return command.defaultValue.toMutableList()
             return fromPreferenceString(value)

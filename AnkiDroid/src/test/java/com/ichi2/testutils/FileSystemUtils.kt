@@ -46,7 +46,7 @@ object FileSystemUtils {
      */
     fun printDirectoryTree(
         description: String,
-        file: File
+        file: File,
     ) {
         Timber.d("$description: $file\n${printDirectoryTree(file)}")
     }
@@ -65,7 +65,7 @@ object FileSystemUtils {
     private fun printDirectoryTree(
         directory: File,
         indent: Int,
-        sb: StringBuilder
+        sb: StringBuilder,
     ) {
         require(directory.isDirectory) { "directory is not a Directory" }
         sb.append(getIndentString(indent))
@@ -86,7 +86,7 @@ object FileSystemUtils {
     private fun printFile(
         file: File,
         indent: Int,
-        sb: StringBuilder
+        sb: StringBuilder,
     ) {
         sb.append(getIndentString(indent))
         sb.append("+--")
@@ -121,7 +121,7 @@ fun createTransientDirectory(prefix: String? = null): File =
  */
 fun createTransientFile(
     content: String = "",
-    extension: String? = null
+    extension: String? = null,
 ): File =
     File(kotlin.io.path.createTempFile(suffix = if (extension == null) null else ".$extension").pathString).also {
         it.deleteOnExit()

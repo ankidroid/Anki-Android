@@ -87,7 +87,7 @@ class Toolbar : FrameLayout {
         context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int,
-        defStyleRes: Int
+        defStyleRes: Int,
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
     init {
@@ -109,7 +109,7 @@ class Toolbar : FrameLayout {
         fun setupButtonWrappingText(
             @IdRes id: Int,
             prefix: String,
-            suffix: String
+            suffix: String,
         ) = findViewById<View>(id).setOnClickListener { onFormat(TextWrapper(prefix, suffix)) }
 
         setupButtonWrappingText(R.id.note_editor_toolbar_button_bold, "<b>", "</b>")
@@ -132,7 +132,7 @@ class Toolbar : FrameLayout {
      */
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         // hack to see if only CTRL is pressed - might not be perfect.
         // I'll avoid checking "function" here as it may be required to press Ctrl
@@ -163,7 +163,7 @@ class Toolbar : FrameLayout {
     fun insertItem(
         @IdRes id: Int,
         @DrawableRes drawable: Int,
-        block: () -> Unit
+        block: () -> Unit,
     ): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
@@ -175,7 +175,7 @@ class Toolbar : FrameLayout {
     fun insertItem(
         id: Int,
         drawable: Drawable?,
-        formatter: TextFormatter
+        formatter: TextFormatter,
     ): View {
         return insertItem(id, drawable) { onFormat(formatter) }
     }
@@ -183,7 +183,7 @@ class Toolbar : FrameLayout {
     fun insertItem(
         @IdRes id: Int,
         drawable: Drawable?,
-        block: () -> Unit
+        block: () -> Unit,
     ): AppCompatImageButton {
         val context = context
         val button = AppCompatImageButton(context)
@@ -264,7 +264,7 @@ class Toolbar : FrameLayout {
                 val formatter =
                     TextWrapper(
                         prefix = "<span style=\"font-size:${results[index]}\">",
-                        suffix = "</span>"
+                        suffix = "</span>",
                     )
                 onFormat(formatter)
             }
@@ -340,7 +340,7 @@ class Toolbar : FrameLayout {
     }
 
     fun setIconColor(
-        @ColorInt color: Int
+        @ColorInt color: Int,
     ) {
         ViewGroupUtils.getAllChildren(toolbar)
             .forEach { (it as AppCompatImageButton).setColorFilter(color) }
@@ -409,6 +409,6 @@ class Toolbar : FrameLayout {
     data class StringFormat(
         var result: String = "",
         var selectionStart: Int = 0,
-        var selectionEnd: Int = 0
+        var selectionEnd: Int = 0,
     )
 }

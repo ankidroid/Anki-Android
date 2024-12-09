@@ -298,7 +298,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
     }
 
     fun userAction(
-        @Reviewer.UserAction number: Int
+        @Reviewer.UserAction number: Int,
     ) {
         launchCatchingIO {
             eval.emit("javascript: ankidroid.userAction($number);")
@@ -315,7 +315,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
     override suspend fun handlePostRequest(
         uri: String,
-        bytes: ByteArray
+        bytes: ByteArray,
     ): ByteArray {
         return if (uri.startsWith(AnkiServer.ANKI_PREFIX)) {
             when (uri.substring(AnkiServer.ANKI_PREFIX.length)) {
@@ -345,7 +345,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
         }
         statesMutated = false
         statesMutationEval.emit(
-            "anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js });"
+            "anki.mutateNextCardStates('$stateMutationKey', async (states, customData, ctx) => { $js });",
         )
     }
 
@@ -355,8 +355,8 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
             .mergeStates(
                 state.states.toBuilder().mergeCurrent(
                     state.states.current.toBuilder()
-                        .setCustomData(state.topCard.toBackendCard().customData).build()
-                ).build()
+                        .setCustomData(state.topCard.toBackendCard().customData).build(),
+                ).build(),
             )
             .build()
             .toByteArray()
@@ -436,7 +436,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
     override fun opExecuted(
         changes: OpChanges,
-        handler: Any?
+        handler: Any?,
     ) {
         launchCatchingIO { updateUndoAndRedoLabels() }
     }
@@ -452,7 +452,7 @@ class ReviewerViewModel(cardMediaPlayer: CardMediaPlayer) :
 
         fun buildAnswerButtonText(
             title: String,
-            nextTime: String?
+            nextTime: String?,
         ): CharSequence {
             return if (nextTime != null) {
                 buildSpannedString {

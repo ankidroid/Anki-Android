@@ -60,7 +60,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
     private fun runClozeTest(
         ord: Int = 0,
         fields: MutableList<String>? = null,
-        block: suspend TemplatePreviewerViewModel.() -> Unit
+        block: suspend TemplatePreviewerViewModel.() -> Unit,
     ) = runTest {
         val notetype = col.notetypes.byName("Cloze")!!
         val arguments =
@@ -68,7 +68,7 @@ class TemplatePreviewerViewModelTest : JvmTest() {
                 notetypeFile = NotetypeFile(tempDirectory.root, notetype),
                 fields = fields ?: mutableListOf("{{c1::foo}} {{c2::bar}}", "anki"),
                 tags = mutableListOf(),
-                ord = ord
+                ord = ord,
             )
         val viewModel = TemplatePreviewerViewModel(arguments, mock())
         block(viewModel)

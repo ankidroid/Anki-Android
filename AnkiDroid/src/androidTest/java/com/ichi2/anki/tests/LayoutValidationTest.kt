@@ -82,7 +82,7 @@ class LayoutValidationTest : InstrumentedTest() {
         @Throws(
             IllegalAccessException::class,
             InvocationTargetException::class,
-            InstantiationException::class
+            InstantiationException::class,
         )
         @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<out Any>> {
@@ -103,7 +103,7 @@ class LayoutValidationTest : InstrumentedTest() {
             val ignoredLayoutIds =
                 listOf(
                     com.ichi2.anki.R.layout.activity_manage_space,
-                    com.ichi2.anki.R.layout.introduction_activity
+                    com.ichi2.anki.R.layout.introduction_activity,
                 )
 
             return layout::class.java.fields

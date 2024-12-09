@@ -61,7 +61,7 @@ sealed interface Size {
 
     class Error(
         val exception: Exception,
-        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error
+        @StringRes val widgetTextId: Int = R.string.pref__widget_text__error,
     ) : Size
 }
 
@@ -166,7 +166,7 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
                     } catch (e: Exception) {
                         Size.Error(e)
                     }
-                }
+                },
             )
         }
 
@@ -221,7 +221,7 @@ class ManageSpaceFragment : SettingsFragment() {
             viewModel.flowOfDeleteUnusedMediaSize to deleteUnusedMediaPreference,
             viewModel.flowOfDeleteCollectionSize to deleteCollectionPreference,
             viewModel.flowOfDeleteEverythingSize to deleteEverythingPreference,
-            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference
+            viewModel.flowOfDeleteBackupsSize to deleteBackupsPreference,
         ).forEach { (flowOfSize, preference) ->
             lifecycleScope.launch { flowOfSize.collect { size -> preference.setWidgetTextBy(size) } }
         }
@@ -373,7 +373,7 @@ class ManageSpaceFragment : SettingsFragment() {
                         R.plurals.pref__widget_text__n_files_n_bytes,
                         size.files.size,
                         size.files.size,
-                        size.totalSize.toHumanReadableSize()
+                        size.totalSize.toHumanReadableSize(),
                     )
             }
 
@@ -381,7 +381,7 @@ class ManageSpaceFragment : SettingsFragment() {
             !(
                 size is Size.Bytes && size.totalSize == 0L ||
                     size is Size.FilesAndBytes && size.files.isEmpty()
-                )
+            )
     }
 
     private fun Preference.launchOnPreferenceClick(block: suspend CoroutineScope.() -> Unit) {

@@ -190,7 +190,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                             IntentCompat.getParcelableExtra(
                                 it,
                                 CROP_IMAGE_RESULT,
-                                ImageCropper.CropResultData::class.java
+                                ImageCropper.CropResultData::class.java,
                             )
                         Timber.d("Cropped image data: $cropResultData")
 
@@ -226,13 +226,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                         menu.findItem(R.id.action_crop).isVisible = uri != null
                     }
                 }
-            }
+            },
         ) { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_crop -> {
                     viewModel.saveMultimediaForRevert(
                         imagePath = viewModel.currentMultimediaPath.value,
-                        imageUri = viewModel.currentMultimediaUri.value
+                        imageUri = viewModel.currentMultimediaUri.value,
                     )
                     requestCrop()
                     true
@@ -247,7 +247,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                         ImageOptions.CAMERA -> {
                             viewModel.saveMultimediaForRevert(
                                 imagePath = viewModel.currentMultimediaPath.value,
-                                imageUri = viewModel.currentMultimediaUri.value
+                                imageUri = viewModel.currentMultimediaUri.value,
                             )
                             dispatchCamera()
                         }
@@ -282,7 +282,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         setupMenu(multimediaMenu)
@@ -389,7 +389,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
                 FileProvider.getUriForFile(
                     requireContext(),
                     requireActivity().applicationContext.packageName + ".apkgfileprovider",
-                    it
+                    it,
                 )
 
             try {
@@ -406,7 +406,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             BundleCompat.getParcelable(
                 intent.extras!!,
                 DrawingActivity.EXTRA_RESULT_WHITEBOARD,
-                Uri::class.java
+                Uri::class.java,
             )
 
         if (imageUri == null) {
@@ -420,7 +420,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         if (internalizedPick == null) {
             Timber.w(
                 "handleSelectImageIntent() unable to internalize image from Uri %s",
-                imageUri
+                imageUri,
             )
             showSomethingWentWrong()
             return
@@ -651,7 +651,7 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
             showErrorDialog(resources.getString(R.string.activity_result_unexpected))
             CrashReportService.sendExceptionReport(
                 error,
-                "cropImage threw an error"
+                "cropImage threw an error",
             )
         }
     }
@@ -761,13 +761,13 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
         fun getIntent(
             context: Context,
             multimediaExtra: MultimediaActivityExtra,
-            imageOptions: ImageOptions
+            imageOptions: ImageOptions,
         ): Intent {
             return MultimediaActivity.getIntent(
                 context,
                 MultimediaImageFragment::class,
                 multimediaExtra,
-                imageOptions
+                imageOptions,
             )
         }
     }
@@ -776,10 +776,10 @@ class MultimediaImageFragment : MultimediaFragment(R.layout.fragment_multimedia_
     enum class ImageOptions {
         GALLERY,
         CAMERA,
-        DRAWING
+        DRAWING,
     }
 }
 
 private fun Fragment.getBitmapDrawable(
-    @DrawableRes resId: Int
+    @DrawableRes resId: Int,
 ) = ContextCompat.getDrawable(requireContext(), resId) as BitmapDrawable

@@ -82,7 +82,7 @@ class SimpleMessageDialog : AsyncDialogFragment() {
         fun newInstance(
             title: String,
             message: String?,
-            reload: Boolean
+            reload: Boolean,
         ): SimpleMessageDialog {
             val f = SimpleMessageDialog()
             val args = Bundle()

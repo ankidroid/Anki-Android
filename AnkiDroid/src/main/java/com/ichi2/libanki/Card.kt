@@ -176,7 +176,7 @@ open class Card : Cloneable {
     fun question(
         col: Collection,
         reload: Boolean = false,
-        browser: Boolean = false
+        browser: Boolean = false,
     ): String {
         return renderOutput(col, reload, browser).questionAndStyle()
     }
@@ -203,7 +203,7 @@ open class Card : Cloneable {
     open fun renderOutput(
         col: Collection,
         reload: Boolean = false,
-        browser: Boolean = false
+        browser: Boolean = false,
     ): TemplateRenderOutput {
         if (renderOutput == null || reload) {
             renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(col, this, browser).render(col)
@@ -214,7 +214,7 @@ open class Card : Cloneable {
     @LibAnkiAlias("note")
     open fun note(
         col: Collection,
-        reload: Boolean = false
+        reload: Boolean = false,
     ): Note {
         if (note == null || reload) {
             note = col.getNote(nid)
@@ -471,8 +471,8 @@ open class Card : Cloneable {
             HashSet(
                 listOf(
                     "SKIP_PRINT", "\$assertionsDisabled", "TYPE_LRN",
-                    "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped"
-                )
+                    "TYPE_NEW", "TYPE_REV", "mNote", "mQA", "mCol", "mTimerStarted", "mTimerStopped",
+                ),
             )
 
         /**
@@ -480,7 +480,7 @@ open class Card : Cloneable {
          */
         fun setFlagInInt(
             flags: Int,
-            flag: Int
+            flag: Int,
         ): Int {
             require(flag in 0..7) { "flag outside of expected [0, 7] interval" }
             // Setting the 3 firsts bits to 0, keeping the remaining.

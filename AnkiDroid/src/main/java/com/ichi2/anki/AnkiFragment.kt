@@ -45,7 +45,7 @@ import timber.log.Timber
  * @param layout Resource ID of the layout to be used for this fragment.
  */
 open class AnkiFragment(
-    @LayoutRes layout: Int
+    @LayoutRes layout: Int,
 ) : Fragment(layout), AnkiActivityProvider {
     val getColUnsafe: Collection
         get() = CollectionManager.getColUnsafe()
@@ -61,7 +61,7 @@ open class AnkiFragment(
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         requireActivity().window.statusBarColor = Themes.getColorFromAttr(requireContext(), R.attr.appBarColor)
         super.onViewCreated(view, savedInstanceState)
@@ -92,7 +92,7 @@ open class AnkiFragment(
 
     @Suppress("deprecation", "API35 properly handle edge-to-edge")
     fun setNavigationBarColor(
-        @AttrRes attr: Int
+        @AttrRes attr: Int,
     ) {
         requireActivity().window.navigationBarColor =
             Themes.getColorFromAttr(requireContext(), attr)
@@ -103,7 +103,7 @@ open class AnkiFragment(
      *
      */
     fun <T : View> findViewById(
-        @IdRes id: Int
+        @IdRes id: Int,
     ): T {
         return requireView().findViewById(id)
     }
@@ -147,7 +147,7 @@ open class AnkiFragment(
      *
      */
     protected fun setTitle(
-        @StringRes title: Int
+        @StringRes title: Int,
     ) {
         mainToolbar.setTitle(title)
     }
@@ -158,7 +158,7 @@ open class AnkiFragment(
      */
     protected suspend fun <T> Fragment.withProgress(
         message: String = resources.getString(R.string.dialog_processing),
-        block: suspend () -> T
+        block: suspend () -> T,
     ): T = requireActivity().withProgress(message, block)
 
     /**

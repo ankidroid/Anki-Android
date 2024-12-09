@@ -74,7 +74,7 @@ class MultimediaEditableNote : IMultimediaEditableNote {
 
     override fun setField(
         index: Int,
-        field: IField?
+        field: IField?,
     ): Boolean {
         if (index in 0 until numberOfFields) {
             // If the same unchanged field is set.

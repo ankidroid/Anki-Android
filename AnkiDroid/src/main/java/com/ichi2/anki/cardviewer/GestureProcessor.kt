@@ -89,7 +89,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         height: Int,
         width: Int,
         posX: Float,
-        posY: Float
+        posY: Float,
     ): Boolean? {
         val gesture = gestureMapper.gesture(height, width, posX, posY) ?: return false
         return execute(gesture)
@@ -110,7 +110,7 @@ class GestureProcessor(private val processor: ViewerCommand.CommandProcessor?) {
         velocityY: Float,
         isSelecting: Boolean,
         isXScrolling: Boolean,
-        isYScrolling: Boolean
+        isYScrolling: Boolean,
     ): Boolean? {
         val gesture = gestureMapper.gesture(dx, dy, velocityX, velocityY, isSelecting, isXScrolling, isYScrolling)
         return execute(gesture)

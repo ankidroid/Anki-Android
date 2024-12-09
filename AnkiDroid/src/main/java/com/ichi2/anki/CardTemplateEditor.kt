@@ -206,7 +206,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     ord = ord,
                     fields = note.fields,
                     tags = note.tags,
-                    fillEmpty = true
+                    fillEmpty = true,
                 )
             val backgroundColor = Themes.getColorFromAttr(this@CardTemplateEditor, R.attr.alternativeBackgroundColor)
             val fragment = TemplatePreviewerFragment.newInstance(args, backgroundColor)
@@ -335,7 +335,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         val currentFragment = currentFragment ?: return super.onKeyUp(keyCode, event)
         if (!event.isCtrlPressed) {
@@ -456,9 +456,9 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     shortcut("Ctrl+B", R.string.edit_browser_appearance),
                     shortcut("Ctrl+D", Translations::cardTemplatesRemoveCardType),
                     shortcut("Ctrl+O", Translations::cardTemplatesDeckOverride),
-                    shortcut("Ctrl+M", R.string.copy_the_template)
+                    shortcut("Ctrl+M", R.string.copy_the_template),
                 ),
-                R.string.card_template_editor_group
+                R.string.card_template_editor_group,
             )
 
     class CardTemplateFragment : Fragment() {
@@ -476,7 +476,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ): View? {
             // Storing a reference to the templateEditor allows us to use member variables
             templateEditor = activity as CardTemplateEditor
@@ -508,7 +508,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         setCurrentEditorView(
                             currentSelectedId,
                             template.getString("afmt"),
-                            R.string.card_template_editor_back
+                            R.string.card_template_editor_back,
                         )
                     else -> setCurrentEditorView(currentSelectedId, template.getString("qfmt"), R.string.card_template_editor_front)
                 }
@@ -551,7 +551,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         arg0: CharSequence,
                         arg1: Int,
                         arg2: Int,
-                        arg3: Int
+                        arg3: Int,
                     ) {
                         // do nothing
                     }
@@ -560,7 +560,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         arg0: CharSequence,
                         arg1: Int,
                         arg2: Int,
-                        arg3: Int
+                        arg3: Int,
                     ) {
                         // do nothing
                     }
@@ -591,14 +591,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             override fun onCreateActionMode(
                 mode: ActionMode,
-                menu: Menu
+                menu: Menu,
             ): Boolean {
                 return true
             }
 
             override fun onPrepareActionMode(
                 mode: ActionMode,
-                menu: Menu
+                menu: Menu,
             ): Boolean {
                 if (menu.findItem(insertFieldId) != null) {
                     return false
@@ -615,7 +615,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             override fun onActionItemClicked(
                 mode: ActionMode,
-                item: MenuItem
+                item: MenuItem,
             ): Boolean {
                 val itemId = item.itemId
                 return if (itemId == insertFieldId) {
@@ -633,7 +633,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         @NeedsTest(
-            "the kotlin migration made this method crash due to a recursive call when the dialog would return its data"
+            "the kotlin migration made this method crash due to a recursive call when the dialog would return its data",
         )
         fun showInsertFieldDialog() {
             templateEditor.fieldNames?.let { fieldNames ->
@@ -655,7 +655,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             RenameCardTemplateDialog.showInstance(
                 requireContext(),
-                prefill = template.getString("name")
+                prefill = template.getString("name"),
             ) { newName ->
                 template.put("name", newName)
                 Timber.i("updated card template name")
@@ -688,7 +688,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         fun setCurrentEditorView(
             id: Int,
             editorContent: String,
-            editorTitleId: Int
+            editorTitleId: Int,
         ) {
             currentEditorViewId = id
             editorEditText.setText(editorContent)
@@ -699,7 +699,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
         override fun onViewCreated(
             view: View,
-            savedInstanceState: Bundle?
+            savedInstanceState: Bundle?,
         ) {
             templateEditor.slidingTabLayout?.addOnTabSelectedListener(
                 object : TabLayout.OnTabSelectedListener {
@@ -712,7 +712,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
                     override fun onTabReselected(p0: TabLayout.Tab?) {
                     }
-                }
+                },
             )
             parentFragmentManager.setFragmentResultListener(REQUEST_FIELD_INSERT, viewLifecycleOwner) { key, bundle ->
                 if (key == REQUEST_FIELD_INSERT) {
@@ -740,7 +740,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 object : MenuProvider {
                     override fun onCreateMenu(
                         menu: Menu,
-                        menuInflater: MenuInflater
+                        menuInflater: MenuInflater,
                     ) {
                         menuInflater.inflate(R.menu.card_template_editor, menu)
                         setupCommonMenu(menu)
@@ -751,7 +751,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     }
                 },
                 viewLifecycleOwner,
-                Lifecycle.State.RESUMED
+                Lifecycle.State.RESUMED,
             )
         }
 
@@ -943,7 +943,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     CardTemplate(
                         front = template.getString("qfmt"),
                         back = template.getString("afmt"),
-                        style = tempModel.css
+                        style = tempModel.css,
                     )
                 } catch (e: Exception) {
                     Timber.w(e, "Exception loading template in CardTemplateFragment. Probably stale fragment.")
@@ -958,7 +958,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
 
             context?.let { ctx ->
                 ctx.copyToClipboard(
-                    template.toMarkdown(ctx)
+                    template.toMarkdown(ctx),
                 )
             }
         }
@@ -991,7 +991,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                         ord = ord,
                         fields = note.fields,
                         tags = note.tags,
-                        fillEmpty = true
+                        fillEmpty = true,
                     )
                 val intent = TemplatePreviewerPage.getIntent(requireContext(), args)
                 startActivity(intent)
@@ -1055,7 +1055,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private fun deletionWouldOrphanNote(
             col: Collection,
             tempModel: CardTemplateNotetype?,
-            position: Int
+            position: Int,
         ): Boolean {
             // For existing templates, make sure we won't leave orphaned notes if we delete the template
             //
@@ -1121,17 +1121,17 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         private fun confirmDeleteCards(
             tmpl: JSONObject,
             notetype: NotetypeJson,
-            numAffectedCards: Int
+            numAffectedCards: Int,
         ) {
             val d = ConfirmationDialog()
             val msg =
                 String.format(
                     resources.getQuantityString(
                         R.plurals.card_template_editor_confirm_delete,
-                        numAffectedCards
+                        numAffectedCards,
                     ),
                     numAffectedCards,
-                    tmpl.optString("name")
+                    tmpl.optString("name"),
                 )
             d.setArgs(msg)
 
@@ -1148,16 +1148,16 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          */
         private fun confirmAddCards(
             notetype: NotetypeJson,
-            numAffectedCards: Int
+            numAffectedCards: Int,
         ) {
             val d = ConfirmationDialog()
             val msg =
                 String.format(
                     resources.getQuantityString(
                         R.plurals.card_template_editor_confirm_add,
-                        numAffectedCards
+                        numAffectedCards,
                     ),
-                    numAffectedCards
+                    numAffectedCards,
                 )
             d.setArgs(msg)
 
@@ -1207,7 +1207,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          */
         private fun deleteTemplate(
             tmpl: JSONObject,
-            notetype: NotetypeJson
+            notetype: NotetypeJson,
         ) {
             val oldTemplates = notetype.getJSONArray("tmpls")
             val newTemplates = JSONArray()
@@ -1308,7 +1308,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 cardIndex: Int,
                 noteId: NoteId,
                 cursorPosition: Int,
-                viewId: Int
+                viewId: Int,
             ): CardTemplateFragment {
                 val f = CardTemplateFragment()
                 val args = Bundle()

@@ -64,7 +64,7 @@ object ActivityList {
             get(IntentHandler::class.java) { ctx: Context ->
                 getReviewDeckIntent(
                     ctx,
-                    1L
+                    1L,
                 )
             },
             get(IntentHandler2::class.java),
@@ -92,7 +92,7 @@ object ActivityList {
             get(InstantNoteEditorActivity::class.java),
             get(MultimediaActivity::class.java),
             get(DeckPickerWidgetConfig::class.java),
-            get(CardAnalysisWidgetConfig::class.java)
+            get(CardAnalysisWidgetConfig::class.java),
         )
     }
 
@@ -110,7 +110,7 @@ object ActivityList {
 
     class ActivityLaunchParam(
         var activity: Class<out Activity>,
-        private var intentBuilder: Function<Context, Intent>
+        private var intentBuilder: Function<Context, Intent>,
     ) {
         val simpleName: String = activity.simpleName
 
@@ -123,7 +123,7 @@ object ActivityList {
         companion object {
             operator fun get(
                 clazz: Class<out Activity>,
-                i: Function<Context, Intent> = Function { Intent() }
+                i: Function<Context, Intent> = Function { Intent() },
             ): ActivityLaunchParam = ActivityLaunchParam(clazz, i)
         }
     }

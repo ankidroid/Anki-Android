@@ -46,7 +46,7 @@ class TTS {
      */
     private fun getOrdUsingCardType(
         card: Card,
-        col: Collection
+        col: Collection,
     ): Int {
         return if (card.noteType(col).isCloze) {
             0
@@ -65,7 +65,7 @@ class TTS {
         col: Collection,
         ttsTags: List<TTSTag>,
         card: Card,
-        cardSide: CardSide
+        cardSide: CardSide,
     ) {
         ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card, col))
     }
@@ -80,7 +80,7 @@ class TTS {
         col: Collection,
         context: Context,
         card: Card,
-        qa: CardSide
+        qa: CardSide,
     ) {
         val textToRead = if (qa == CardSide.QUESTION) card.question(col, true) else card.pureAnswer(col)
         // get the text from the card
@@ -88,13 +88,13 @@ class TTS {
             getTextForTts(context, textToRead),
             CardUtils.getDeckIdForCard(card),
             getOrdUsingCardType(card, col),
-            qa
+            qa,
         )
     }
 
     private fun getTextForTts(
         context: Context,
-        text: String
+        text: String,
     ): String {
         val clozeReplacement = context.getString(R.string.reviewer_tts_cloze_spoken_replacement)
         val clozeReplaced = text.replace(TemplateFilters.CLOZE_DELETION_REPLACEMENT, clozeReplacement)
@@ -103,7 +103,7 @@ class TTS {
 
     fun initialize(
         ctx: Context,
-        listener: ReadText.ReadTextListener
+        listener: ReadText.ReadTextListener,
     ) {
         if (!enabled) {
             return

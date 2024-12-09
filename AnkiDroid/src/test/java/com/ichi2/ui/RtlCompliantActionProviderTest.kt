@@ -32,10 +32,10 @@ class RtlCompliantActionProviderTest {
             ContextWrapper(
                 ContextThemeWrapper(
                     ContextWrapper(
-                        a
+                        a,
                     ),
-                    0
-                )
+                    0,
+                ),
             )
         val provider = RtlCompliantActionProvider(c)
         assertEquals(provider.activity, a)
@@ -48,10 +48,10 @@ class RtlCompliantActionProviderTest {
             ContextWrapper(
                 ContextThemeWrapper(
                     ContextWrapper(
-                        a
+                        a,
                     ),
-                    0
-                )
+                    0,
+                ),
             )
         assertThrows<ClassCastException> { RtlCompliantActionProvider(c) }
     }

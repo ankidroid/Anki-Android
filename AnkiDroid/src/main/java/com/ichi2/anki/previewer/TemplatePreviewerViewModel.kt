@@ -42,7 +42,7 @@ import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
     arguments: TemplatePreviewerArguments,
-    cardMediaPlayer: CardMediaPlayer
+    cardMediaPlayer: CardMediaPlayer,
 ) : CardViewerViewModel(cardMediaPlayer) {
     private val notetype = arguments.notetype
     private val fillEmpty = arguments.fillEmpty
@@ -84,7 +84,7 @@ class TemplatePreviewerViewModel(
                         col = this,
                         ord = ordFlow.value,
                         customNoteType = notetype,
-                        fillEmpty = fillEmpty
+                        fillEmpty = fillEmpty,
                     )
                 }
             }
@@ -131,7 +131,7 @@ class TemplatePreviewerViewModel(
                                 col = this,
                                 ord = ord,
                                 customNoteType = notetype,
-                                fillEmpty = fillEmpty
+                                fillEmpty = fillEmpty,
                             )
                         }
                     }
@@ -223,7 +223,7 @@ class TemplatePreviewerViewModel(
     companion object {
         fun factory(
             arguments: TemplatePreviewerArguments,
-            cardMediaPlayer: CardMediaPlayer
+            cardMediaPlayer: CardMediaPlayer,
         ): ViewModelProvider.Factory {
             return viewModelFactory {
                 initializer {
@@ -250,7 +250,7 @@ data class TemplatePreviewerArguments(
     val tags: MutableList<String>,
     val id: Long = 0,
     val ord: Int = 0,
-    val fillEmpty: Boolean = false
+    val fillEmpty: Boolean = false,
 ) : Parcelable {
     val notetype: NotetypeJson get() = notetypeFile.getNotetype()
 }

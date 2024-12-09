@@ -210,7 +210,7 @@ open class SchedulerTest : JvmTest() {
         MatcherAssert.assertThat(dueIn, Matchers.greaterThanOrEqualTo(178L))
         MatcherAssert.assertThat(
             dueIn,
-            Matchers.lessThanOrEqualTo((180 * 1.25).toLong())
+            Matchers.lessThanOrEqualTo((180 * 1.25).toLong()),
         )
         Assert.assertEquals(2, (c.left % 1000).toLong())
         // check log is accurate
@@ -226,7 +226,7 @@ open class SchedulerTest : JvmTest() {
         MatcherAssert.assertThat(dueIn, Matchers.greaterThanOrEqualTo(599L))
         MatcherAssert.assertThat(
             dueIn,
-            Matchers.lessThanOrEqualTo((600 * 1.25).toLong())
+            Matchers.lessThanOrEqualTo((600 * 1.25).toLong()),
         )
         Assert.assertEquals(1, (c.left % 1000).toLong())
         // the next pass should graduate the card
@@ -250,7 +250,7 @@ open class SchedulerTest : JvmTest() {
         // revlog should have been updated each time
         Assert.assertEquals(
             5,
-            col.db.queryScalar("select count() from revlog where type = 0").toLong()
+            col.db.queryScalar("select count() from revlog where type = 0").toLong(),
         )
     }
 
@@ -492,25 +492,25 @@ open class SchedulerTest : JvmTest() {
         // Upstream, there is no space in 2d
         Assert.assertEquals(
             "2d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD))
+            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD)),
         )
         Assert.assertEquals(
             "3d",
             AnkiAssert.without_unicode_isolation(
                 col.sched.nextIvlStr(
                     c,
-                    Ease.GOOD
-                )
-            )
+                    Ease.GOOD,
+                ),
+            ),
         )
         Assert.assertEquals(
             "4d",
             AnkiAssert.without_unicode_isolation(
                 col.sched.nextIvlStr(
                     c,
-                    Ease.EASY
-                )
-            )
+                    Ease.EASY,
+                ),
+            ),
         )
 
         // if hard factor is <= 1, then hard may not increase
@@ -519,7 +519,7 @@ open class SchedulerTest : JvmTest() {
         col.decks.save(conf)
         Assert.assertEquals(
             "1d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD))
+            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, Ease.HARD)),
         )
     }
 
@@ -630,10 +630,10 @@ open class SchedulerTest : JvmTest() {
             AnkiAssert.without_unicode_isolation(
                 col.sched.nextIvlStr(
                     c,
-                    Ease.EASY
-                )
+                    Ease.EASY,
+                ),
             ),
-            Matchers.equalTo("10.8mo")
+            Matchers.equalTo("10.8mo"),
         )
     }
 
@@ -695,7 +695,7 @@ open class SchedulerTest : JvmTest() {
         col.sched.answerCard(c, Ease.AGAIN)
         MatcherAssert.assertThat(
             c.due,
-            Matchers.greaterThanOrEqualTo(time.intTime().toInt())
+            Matchers.greaterThanOrEqualTo(time.intTime().toInt()),
         )
         val due = c.due
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
@@ -756,16 +756,16 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(600, col.sched.nextIvl(c, Ease.AGAIN))
         Assert.assertEquals(
             (75 * 1.2).roundToInt() * SECONDS_PER_DAY,
-            col.sched.nextIvl(c, Ease.HARD)
+            col.sched.nextIvl(c, Ease.HARD),
         )
         val toLong = fun(v: Double) = v.roundToLong() * SECONDS_PER_DAY
         MatcherAssert.assertThat(
             col.sched.nextIvl(c, Ease.GOOD),
-            equalTo(toLong(75 * 2.5))
+            equalTo(toLong(75 * 2.5)),
         )
         MatcherAssert.assertThat(
             col.sched.nextIvl(c, Ease.EASY),
-            equalTo(toLong(75 * 2.5 * 1.15))
+            equalTo(toLong(75 * 2.5 * 1.15)),
         )
 
         // answer 'good'
@@ -778,7 +778,7 @@ open class SchedulerTest : JvmTest() {
         // should be logged as a cram rep
         Assert.assertEquals(
             3,
-            col.db.queryLongScalar("select type from revlog order by id desc limit 1")
+            col.db.queryLongScalar("select type from revlog order by id desc limit 1"),
         )
 
         // due in 75 days, so it's been waiting 25 days
@@ -828,7 +828,7 @@ open class SchedulerTest : JvmTest() {
         // should be due at least an hour in the future
         MatcherAssert.assertThat(
             c.due - time.intTime(),
-            Matchers.greaterThan(60 * 60L)
+            Matchers.greaterThan(60 * 60L),
         )
 
         // emptying the deck preserves learning state
@@ -839,7 +839,7 @@ open class SchedulerTest : JvmTest() {
         Assert.assertEquals(1, c.left % 1000)
         MatcherAssert.assertThat(
             c.due - time.intTime(),
-            Matchers.greaterThan(60 * 60L)
+            Matchers.greaterThan(60 * 60L),
         )
     }
 
@@ -912,19 +912,19 @@ open class SchedulerTest : JvmTest() {
         var c = sched.card
         sched.answerCard(
             c!!,
-            Ease.GOOD
+            Ease.GOOD,
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(0, c.ord)
         c = sched.card
         sched.answerCard(
             c!!,
-            Ease.GOOD
+            Ease.GOOD,
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(1, c.ord)
         c = sched.card
         sched.answerCard(
             c!!,
-            Ease.GOOD
+            Ease.GOOD,
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(2, c.ord)
     }
@@ -1295,7 +1295,7 @@ open class SchedulerTest : JvmTest() {
     @Test
     @Ignore("Port anki@a9c93d933cadbf5d9c7e3e2b4f7a25d2c59da5d3")
     @Throws(
-        Exception::class
+        Exception::class,
     )
     fun test_initial_repeat() {
         val note = col.newNote()
@@ -1310,7 +1310,7 @@ open class SchedulerTest : JvmTest() {
         MatcherAssert.assertThat(expected.toInt() - 10, Matchers.lessThan(due))
         MatcherAssert.assertThat(
             due,
-            Matchers.lessThanOrEqualTo((expected * 1.25).toInt())
+            Matchers.lessThanOrEqualTo((expected * 1.25).toInt()),
         )
         val ivl = col.db.queryLongScalar("select ivl from revlog")
         Assert.assertEquals((-5.5 * 60).toLong(), ivl)

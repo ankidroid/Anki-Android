@@ -26,7 +26,7 @@ class CardAppearance(
     private val customFonts: ReviewerCustomFonts,
     private val cardZoom: Int,
     private val imageZoom: Int,
-    private val centerVertically: Boolean
+    private val centerVertically: Boolean,
 ) {
     /** Below could be in a better abstraction.  */
     fun appendCssStyle(style: StringBuilder) {
@@ -81,7 +81,7 @@ class CardAppearance(
 
         fun create(
             customFonts: ReviewerCustomFonts,
-            preferences: SharedPreferences
+            preferences: SharedPreferences,
         ): CardAppearance {
             val cardZoom = preferences.getInt("cardZoom", 100)
             val imageZoom = preferences.getInt("imageZoom", 100)

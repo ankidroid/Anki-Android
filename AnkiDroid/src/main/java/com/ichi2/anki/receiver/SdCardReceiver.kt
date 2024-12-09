@@ -30,7 +30,7 @@ import timber.log.Timber
 class SdCardReceiver : BroadcastReceiver() {
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         if (intent.action == Intent.ACTION_MEDIA_EJECT) {
             Timber.i("media eject detected - closing collection and sending broadcast")

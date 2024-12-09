@@ -82,7 +82,7 @@ open class Media(private val col: Collection) {
      */
     fun escapeMediaFilenames(
         string: String,
-        unescape: Boolean = false
+        unescape: Boolean = false,
     ): String {
         return if (unescape) {
             col.backend.decodeIriPaths(string)
@@ -144,5 +144,5 @@ fun getCollectionMediaPath(collectionPath: String): String {
 data class MediaCheckResult(
     val missingFileNames: List<String>,
     val unusedFileNames: List<String>,
-    val invalidFileNames: List<String>
+    val invalidFileNames: List<String>,
 )

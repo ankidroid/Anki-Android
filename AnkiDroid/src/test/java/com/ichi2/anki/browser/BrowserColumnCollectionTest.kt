@@ -87,7 +87,7 @@ class BrowserColumnCollectionTest : RobolectricTest() {
 
     private fun updateColumns(
         cardsOrNotes: CardsOrNotes,
-        block: (MutableList<CardBrowserColumn?>) -> Unit
+        block: (MutableList<CardBrowserColumn?>) -> Unit,
     ) {
         BrowserColumnCollection.update(prefs, cardsOrNotes) {
             block(it)

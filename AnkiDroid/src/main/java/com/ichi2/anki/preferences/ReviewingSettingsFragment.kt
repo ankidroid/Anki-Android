@@ -105,7 +105,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
 @NeedsTest("ensure Start of Next Day is handled by the scheduler")
 suspend fun setDayOffset(
     context: Context,
-    hours: Int
+    hours: Int,
 ) {
     val prefs = withCol { getPreferences() }
     val newPrefs = prefs.copy { scheduling = prefs.scheduling.copy { rollover = hours } }

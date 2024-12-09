@@ -60,7 +60,7 @@ object ReadText {
     private fun speak(
         text: String?,
         loc: String,
-        queueMode: Int
+        queueMode: Int,
     ) {
         val result = textToSpeech!!.setLanguage(LanguageUtils.localeFromStringIgnoringScriptAndExtensions(loc))
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -68,7 +68,7 @@ object ReadText {
                 flashCardViewer.get()!!,
                 flashCardViewer.get()!!.getString(R.string.no_tts_available_message) +
                     " (" + loc + ")",
-                false
+                false,
             )
             Timber.e("Error loading locale %s", loc)
         } else {
@@ -84,7 +84,7 @@ object ReadText {
     private fun getLanguage(
         did: DeckId,
         ord: Int,
-        qa: CardSide
+        qa: CardSide,
     ): String {
         return MetaDB.getLanguage(flashCardViewer.get()!!, did, ord, qa)
     }
@@ -103,7 +103,7 @@ object ReadText {
         text: String?,
         did: DeckId,
         ord: Int,
-        qa: CardSide?
+        qa: CardSide?,
     ) {
         // TODO: Consolidate with ReadText.readCardSide
         textToSpeak = text
@@ -124,7 +124,7 @@ object ReadText {
                     addAll(
                         availableLocales()
                             .sortedWith(compareBy { it.displayName })
-                            .map { Pair(it.isO3Language, it.displayName) }
+                            .map { Pair(it.isO3Language, it.displayName) },
                     )
                 }
             dialog.title(R.string.select_locale_title)
@@ -145,7 +145,7 @@ object ReadText {
 
     private fun showDialogAfterDelay(
         dialog: AlertDialog.Builder,
-        delayMillis: Int
+        delayMillis: Int,
     ) {
         postDelayedOnNewHandler({
             try {
@@ -168,7 +168,7 @@ object ReadText {
         textsToRead: List<TTSTag>,
         cardSide: CardSide,
         did: DeckId,
-        ord: Int
+        ord: Int,
     ) {
         var isFirstText = true
         var playedSound = false
@@ -182,7 +182,7 @@ object ReadText {
                     did,
                     ord,
                     cardSide,
-                    if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD
+                    if (isFirstText) TextToSpeech.QUEUE_FLUSH else TextToSpeech.QUEUE_ADD,
                 )
             isFirstText = false
         }
@@ -217,7 +217,7 @@ object ReadText {
         did: DeckId,
         ord: Int,
         qa: CardSide,
-        queueMode: Int
+        queueMode: Int,
     ): Boolean {
         textToSpeak = tag.fieldText
         questionAnswer = qa
@@ -253,7 +253,7 @@ object ReadText {
                 flashCardViewer.get()!!,
                 flashCardViewer.get()!!.getString(R.string.no_tts_available_message) +
                     " (" + originalLocaleCode + ")",
-                false
+                false,
             )
         }
         selectTts(textToSpeak, mDid, mOrd, questionAnswer)
@@ -271,7 +271,7 @@ object ReadText {
 
     fun initializeTts(
         context: Context,
-        listener: ReadTextListener
+        listener: ReadTextListener,
     ) {
         // Store weak reference to Activity to prevent memory leak
         flashCardViewer = WeakReference(context)
@@ -297,13 +297,13 @@ object ReadText {
 
                             override fun onError(
                                 utteranceId: String?,
-                                errorCode: Int
+                                errorCode: Int,
                             ) {
                                 Timber.v(
                                     "Android TTS failed: %s (%d). Check logcat for error. " +
                                         "Indicates a problem with Android TTS engine.",
                                     errorToDeveloperString(errorCode),
-                                    errorCode
+                                    errorCode,
                                 )
                                 val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
                                 val ankiActivity = context as AnkiActivity
@@ -324,7 +324,7 @@ object ReadText {
                             override fun onStart(arg0: String) {
                                 // no nothing
                             }
-                        }
+                        },
                     )
                 } else {
                     showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
@@ -392,7 +392,7 @@ fun legacyGetTtsTags(
     col: Collection,
     card: Card,
     cardSide: SingleCardSide,
-    context: Context
+    context: Context,
 ): List<TTSTag> {
     val cardSideContent: String =
         when (cardSide) {

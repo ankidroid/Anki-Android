@@ -86,7 +86,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         voicesAdapter = TtsVoiceAdapter()
         Themes.setTheme(requireContext()) // (re)-enable selectableItemBackground on theme change
@@ -149,7 +149,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
             requireContext().startActivity(
                 Intent("com.android.settings.TTS_SETTINGS").apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
+                },
             )
         } catch (e: ActivityNotFoundException) {
             Timber.w(e)
@@ -219,12 +219,12 @@ class TtsVoicesDialogFragment : DialogFragment() {
     private class TtsVoiceDiffCallback : DiffUtil.ItemCallback<AndroidTtsVoice>() {
         override fun areItemsTheSame(
             oldItem: AndroidTtsVoice,
-            newItem: AndroidTtsVoice
+            newItem: AndroidTtsVoice,
         ): Boolean = oldItem.name == newItem.name
 
         override fun areContentsTheSame(
             oldItem: AndroidTtsVoice,
-            newItem: AndroidTtsVoice
+            newItem: AndroidTtsVoice,
         ): Boolean = oldItem.unavailable() == newItem.unavailable()
     }
 
@@ -241,7 +241,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
                 textViewBottom.text = voice.tryDisplayLocalizedName()
 
                 localOrOffline.setIconResource(
-                    if (voice.isNetworkConnectionRequired) R.drawable.baseline_wifi_24 else R.drawable.baseline_offline_pin_24
+                    if (voice.isNetworkConnectionRequired) R.drawable.baseline_wifi_24 else R.drawable.baseline_offline_pin_24,
                 )
                 if (voice.unavailable()) {
                     actionButton.setOnClickListener { openTtsSettings() }
@@ -258,7 +258,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
-            viewType: Int
+            viewType: Int,
         ): TtsViewHolder {
             val v = LayoutInflater.from(parent.context).inflate(R.layout.dialog_tts_voices_voice, parent, false)
             return TtsViewHolder(v)
@@ -266,7 +266,7 @@ class TtsVoicesDialogFragment : DialogFragment() {
 
         override fun onBindViewHolder(
             holder: TtsViewHolder,
-            position: Int
+            position: Int,
         ) {
             holder.bind(this.currentList[position])
         }

@@ -23,11 +23,11 @@ import java.util.function.Supplier
 
 class CustomStudyDialogFactory(
     val collectionSupplier: Supplier<Collection>,
-    private val customStudyListener: CustomStudyListener?
+    private val customStudyListener: CustomStudyListener?,
 ) : ExtendedFragmentFactory() {
     override fun instantiate(
         classLoader: ClassLoader,
-        className: String
+        className: String,
     ): Fragment {
         val cls = loadFragmentClass(classLoader, className)
         return if (cls == CustomStudyDialog::class.java) {

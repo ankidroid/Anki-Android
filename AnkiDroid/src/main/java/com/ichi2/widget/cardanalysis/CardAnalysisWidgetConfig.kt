@@ -84,7 +84,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
 
         appWidgetId = intent.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID
+            AppWidgetManager.INVALID_APPWIDGET_ID,
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
@@ -101,7 +101,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
                     showThemedToast(
                         this@CardAnalysisWidgetConfig,
                         R.string.app_not_initialized_new,
-                        false
+                        false,
                     )
                     finish()
                     return@launch
@@ -119,12 +119,12 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
     fun showSnackbar(message: CharSequence) {
         showSnackbar(
             message,
-            Snackbar.LENGTH_LONG
+            Snackbar.LENGTH_LONG,
         )
     }
 
     fun showSnackbar(
-        @StringRes messageResId: Int
+        @StringRes messageResId: Int,
     ) {
         showSnackbar(getString(messageResId))
     }
@@ -181,7 +181,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
                 object : RecyclerView.AdapterDataObserver() {
                     override fun onChanged() {
                     }
-                }
+                },
             )
             isAdapterObserverRegistered = true
         }
@@ -205,7 +205,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
                 // Discard changes and finish the activity
                 hasUnsavedChanges = false
                 finish()
-            }
+            },
         )
     }
 
@@ -274,7 +274,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
                 title = getString(R.string.select_deck_title),
                 summaryMessage = null,
                 keepRestoreDefaultButton = false,
-                decks = decks
+                decks = decks,
             )
         dialog.show(supportFragmentManager, "DeckSelectionDialog")
     }
@@ -345,7 +345,7 @@ class CardAnalysisWidgetConfig : AnkiActivity(), DeckSelectionListener, BaseSnac
         object : BroadcastReceiver() {
             override fun onReceive(
                 context: Context?,
-                intent: Intent?
+                intent: Intent?,
             ) {
                 if (intent?.action != AppWidgetManager.ACTION_APPWIDGET_DELETED) {
                     return

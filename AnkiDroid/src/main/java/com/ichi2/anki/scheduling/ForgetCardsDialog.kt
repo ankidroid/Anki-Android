@@ -113,8 +113,8 @@ class ForgetCardsDialog : DialogFragment() {
                     REQUEST_KEY_FORGET,
                     bundleOf(
                         ARG_RESTORE_ORIGINAL to restoreOriginalPositionIfPossible,
-                        ARG_RESET_REPETITION to resetRepetitionAndLapseCounts
-                    )
+                        ARG_RESET_REPETITION to resetRepetitionAndLapseCounts,
+                    ),
                 )
             }
             negativeButton(R.string.dialog_cancel)
@@ -146,7 +146,7 @@ internal fun AnkiActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -
         forgetCards(
             cardsIdsProducer = cardsIdsProducer,
             restoreOriginalPositionIfPossible = bundle.getBoolean(ForgetCardsDialog.ARG_RESTORE_ORIGINAL),
-            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.ARG_RESET_REPETITION)
+            resetRepetitionAndLapseCounts = bundle.getBoolean(ForgetCardsDialog.ARG_RESET_REPETITION),
         )
     }
 }
@@ -154,14 +154,14 @@ internal fun AnkiActivity.registerOnForgetHandler(cardsIdsProducer: suspend () -
 private fun AnkiActivity.forgetCards(
     cardsIdsProducer: suspend () -> List<CardId>,
     restoreOriginalPositionIfPossible: Boolean,
-    resetRepetitionAndLapseCounts: Boolean
+    resetRepetitionAndLapseCounts: Boolean,
 ) = launchCatchingTask {
     val cardsIds = cardsIdsProducer()
     Timber.i(
         "forgetting %d cards, restorePosition = %b, resetCounts = %b",
         cardsIds.size,
         restoreOriginalPositionIfPossible,
-        resetRepetitionAndLapseCounts
+        resetRepetitionAndLapseCounts,
     )
     // NICE_TO_HAVE: Display a snackbar if the activity is recreated while this executes
     withProgress {
@@ -169,7 +169,7 @@ private fun AnkiActivity.forgetCards(
             sched.forgetCards(
                 cardsIds,
                 restorePosition = restoreOriginalPositionIfPossible,
-                resetCounts = resetRepetitionAndLapseCounts
+                resetCounts = resetRepetitionAndLapseCounts,
             )
         }
     }
@@ -178,8 +178,8 @@ private fun AnkiActivity.forgetCards(
         resources.getQuantityString(
             R.plurals.reset_cards_dialog_acknowledge,
             cardsIds.size,
-            cardsIds.size
+            cardsIds.size,
         ),
-        Snackbar.LENGTH_SHORT
+        Snackbar.LENGTH_SHORT,
     )
 }

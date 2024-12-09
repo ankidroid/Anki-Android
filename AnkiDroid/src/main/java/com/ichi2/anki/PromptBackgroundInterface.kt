@@ -44,7 +44,7 @@ interface PromptBackgroundInterface {
     fun prepare(
         options: PromptOptions<*>,
         clipToBounds: Boolean,
-        clipBounds: Rect
+        clipBounds: Rect,
     )
 
     /**
@@ -58,7 +58,7 @@ interface PromptBackgroundInterface {
     fun update(
         options: PromptOptions<*>,
         revealModifier: Float,
-        alphaModifier: Float
+        alphaModifier: Float,
     )
 
     /**
@@ -77,7 +77,7 @@ interface PromptBackgroundInterface {
      */
     fun contains(
         x: Float,
-        y: Float
+        y: Float,
     ): Boolean
 
     /**
@@ -86,7 +86,7 @@ interface PromptBackgroundInterface {
      * @param colour Colour integer representing the colour.
      */
     fun setColour(
-        @ColorInt colour: Int
+        @ColorInt colour: Int,
     )
 }
 
@@ -108,7 +108,7 @@ class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackg
     override fun update(
         options: PromptOptions<out PromptOptions<*>>,
         revealModifier: Float,
-        alphaModifier: Float
+        alphaModifier: Float,
     ) {
         promptBackground.update(options, revealModifier, alphaModifier)
     }
@@ -119,7 +119,7 @@ class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackg
 
     override fun contains(
         x: Float,
-        y: Float
+        y: Float,
     ): Boolean {
         return promptBackground.contains(x, y)
     }
@@ -131,7 +131,7 @@ class PromptBackgroundInterfaceAdapter(private val promptBackground: PromptBackg
     override fun prepare(
         options: PromptOptions<out PromptOptions<*>>,
         clipToBounds: Boolean,
-        clipBounds: Rect
+        clipBounds: Rect,
     ) {
         promptBackground.prepare(options, clipToBounds, clipBounds)
     }

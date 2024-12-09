@@ -215,7 +215,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
     }
 
     private fun cardWith(
-        @Suppress("SameParameterValue") flag: Flag
+        @Suppress("SameParameterValue") flag: Flag,
     ): Card {
         val c = mock(Card::class.java)
         val flags = arrayOf<Flag>(flag)
@@ -243,7 +243,7 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
 
         override fun onFlag(
             card: Card?,
-            flag: Flag
+            flag: Flag,
         ) {
             lastFlag = flag
             currentCard!!.setUserFlag(flag)

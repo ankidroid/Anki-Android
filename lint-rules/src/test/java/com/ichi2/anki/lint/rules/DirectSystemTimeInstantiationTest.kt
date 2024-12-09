@@ -93,7 +93,7 @@ public class CollectionHelper {
             .files(
                 create(stubTime),
                 create(stubSystemTime),
-                create(javaFileToBeTested)
+                create(javaFileToBeTested),
             )
             .issues(DirectSystemTimeInstantiation.ISSUE)
             .run()
@@ -112,7 +112,7 @@ public class CollectionHelper {
             .files(
                 create(stubTime),
                 create(stubSystemTime),
-                create(javaFileWithStorage)
+                create(javaFileWithStorage),
             )
             .issues(DirectSystemTimeInstantiation.ISSUE)
             .run()
@@ -127,7 +127,7 @@ public class CollectionHelper {
             .files(
                 create(stubTime),
                 create(stubSystemTime),
-                create(javaFileWithCollectionHelper)
+                create(javaFileWithCollectionHelper),
             )
             .issues(DirectSystemTimeInstantiation.ISSUE)
             .run()

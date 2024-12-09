@@ -37,7 +37,7 @@ import java.util.TreeSet
 class TagsList(
     allTags: List<String>,
     checkedTags: List<String>,
-    uncheckedTags: List<String>? = null
+    uncheckedTags: List<String>? = null,
 ) : Iterable<String> {
     /**
      * A Set containing the currently selected tags
@@ -142,7 +142,7 @@ class TagsList(
      */
     fun check(
         tag: String,
-        processAncestors: Boolean = true
+        processAncestors: Boolean = true,
     ): Boolean {
         if (!allTags.contains(tag)) {
             return false

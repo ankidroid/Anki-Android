@@ -46,7 +46,7 @@ value class CrowdinFileIdentifier(private val value: Long) {
                 "16-multimedia-editor" to 8229,
                 "17-model-manager" to 8230,
                 "19-standard-models" to 8232,
-                "20-search-preference" to 8236
+                "20-search-preference" to 8236,
             ).mapValues { CrowdinFileIdentifier(it.value.toLong()) }
 
         fun fromFile(file: File): CrowdinFileIdentifier? = fileNameToIdentifier[file.nameWithoutExtension]
@@ -82,7 +82,7 @@ value class CrowdinLanguageTag(private val tag: String) {
                 "ur" to "urpk",
                 // ** Crowdin does not handle 'Spanish (Spain)' as 'eses', it needs 'es' **
                 "eses" to "es",
-                "ptpt" to "pt"
+                "ptpt" to "pt",
             )
 
         fun fromFolderName(folderName: String): CrowdinLanguageTag? {
@@ -122,7 +122,7 @@ data class CrowdinContext(val languageTag: CrowdinLanguageTag, val fileIdentifie
         fun ResourceContext.toCrowdinContext(): CrowdinContext? {
             return CrowdinContext(
                 languageTag = CrowdinLanguageTag.fromFolder(file.parentFile) ?: return null,
-                fileIdentifier = CrowdinFileIdentifier.fromFile(file) ?: return null
+                fileIdentifier = CrowdinFileIdentifier.fromFile(file) ?: return null,
             )
         }
     }

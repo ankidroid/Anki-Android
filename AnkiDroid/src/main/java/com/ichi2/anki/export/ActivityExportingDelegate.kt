@@ -59,7 +59,7 @@ import java.util.function.Supplier
 */
 class ActivityExportingDelegate(
     private val activity: AnkiActivity,
-    private val collectionSupplier: Supplier<Collection>
+    private val collectionSupplier: Supplier<Collection>,
 ) : ExportReadyDialogListener {
     val dialogsFactory: ExportDialogsFactory
     private val saveFileLauncher: ActivityResultLauncher<Intent>
@@ -97,8 +97,8 @@ class ActivityExportingDelegate(
                     activity.getString(
                         R.string.export_email_text,
                         activity.getString(R.string.link_manual),
-                        activity.getString(R.string.link_distributions)
-                    )
+                        activity.getString(R.string.link_distributions),
+                    ),
                 )
                 .intent.apply {
                     clipData = ClipData.newUri(activity.contentResolver, attachment.name, uri)
@@ -107,7 +107,7 @@ class ActivityExportingDelegate(
         val shareFileIntent =
             Intent.createChooser(
                 sendIntent,
-                activity.getString(R.string.export_share_title)
+                activity.getString(R.string.export_share_title),
             )
         if (shareFileIntent.resolveActivity(activity.packageManager) != null) {
             activity.startActivity(shareFileIntent)
@@ -180,7 +180,7 @@ class ActivityExportingDelegate(
 
     private fun exportToProvider(
         intent: Intent,
-        deleteAfterExport: Boolean = true
+        deleteAfterExport: Boolean = true,
     ): Boolean {
         if (intent.data == null) {
             Timber.e("exportToProvider() provided with insufficient intent data %s", intent)
@@ -197,7 +197,7 @@ class ActivityExportingDelegate(
                 } else {
                     Timber.w(
                         "exportToProvider() failed - ContentProvider returned null file descriptor for %s",
-                        uri
+                        uri,
                     )
                     return false
                 }
@@ -218,7 +218,7 @@ class ActivityExportingDelegate(
         fragmentManager.fragmentFactory = dialogsFactory
         saveFileLauncher =
             activity.registerForActivityResult(
-                ActivityResultContracts.StartActivityForResult()
+                ActivityResultContracts.StartActivityForResult(),
             ) { result: ActivityResult ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     saveFileCallback(result)
@@ -239,14 +239,14 @@ class ActivityExportingDelegate(
         activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY,
-                TimeManager.time.intTime()
+                TimeManager.time.intTime(),
             )
         }
         val col = collectionSupplier.get()
         activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY,
-                col.mod
+                col.mod,
             )
         }
     }

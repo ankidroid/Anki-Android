@@ -37,7 +37,7 @@ object ResourceLoader {
     private fun getTempFilePath(
         context: Context,
         name: String,
-        newName: String?
+        newName: String?,
     ): String {
         try {
             val inputStream: InputStream =
@@ -61,7 +61,7 @@ object ResourceLoader {
     @Throws(IOException::class)
     private fun writeToFile(
         source: InputStream,
-        destination: String
+        destination: String,
     ) {
         // sometimes this fails and works on retries (hardware issue?)
         val retries = 5
@@ -94,7 +94,7 @@ object ResourceLoader {
     @Throws(IOException::class)
     private fun writeToFileImpl(
         source: InputStream,
-        destination: String
+        destination: String,
     ) {
         val f = File(destination)
         try {
@@ -119,7 +119,7 @@ object ResourceLoader {
                 "Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s",
                 sizeKb,
                 durationSeconds,
-                speedKbSec
+                speedKbSec,
             )
         } catch (e: IOException) {
             throw IOException(f.name + ": " + e.localizedMessage, e)
@@ -128,7 +128,7 @@ object ResourceLoader {
 
     fun getTempCollection(
         context: Context,
-        name: String
+        name: String,
     ): String {
         return getTempFilePath(context, name, "collection.anki2")
     }
@@ -141,7 +141,7 @@ object ResourceLoader {
      */
     private fun getTestDir(
         context: Context,
-        name: String
+        name: String,
     ): File {
         val suffix =
             if (name.isNotEmpty()) {

@@ -34,7 +34,7 @@ object CollectionLoader {
 
     fun load(
         lifecycleOwner: LifecycleOwner,
-        callback: Callback
+        callback: Callback,
     ) {
         lifecycleOwner.lifecycleScope.launch {
             val col =

@@ -85,7 +85,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                 Constants.ANKI_XML_CATEGORY,
                 Constants.ANKI_XML_PRIORITY,
                 Constants.ANKI_XML_SEVERITY,
-                implementation
+                implementation,
             )
         val MENU_ISSUE_TITLE_LENGTH: Issue =
             Issue.create(
@@ -95,7 +95,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                 Constants.ANKI_XML_CATEGORY,
                 Constants.ANKI_XML_PRIORITY,
                 Constants.ANKI_XML_SEVERITY,
-                implementation
+                implementation,
             )
 
         val PREFERENCES_ISSUE_MAX_LENGTH: Issue =
@@ -106,7 +106,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                 Constants.ANKI_XML_CATEGORY,
                 Constants.ANKI_XML_PRIORITY,
                 Constants.ANKI_XML_SEVERITY,
-                implementation
+                implementation,
             )
         val MENU_ISSUE_MAX_LENGTH: Issue =
             Issue.create(
@@ -116,7 +116,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                 Constants.ANKI_XML_CATEGORY,
                 Constants.ANKI_XML_PRIORITY,
                 Constants.ANKI_XML_SEVERITY,
-                implementation
+                implementation,
             )
         private const val ATTR_TITLE = "android:title"
         private const val ATTR_NAME = "name"
@@ -152,7 +152,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
 
     override fun visitElement(
         context: XmlContext,
-        element: Element
+        element: Element,
     ) {
         if (element.hasAttribute(ATTR_TITLE)) {
             val folderName = context.file.parentFile.name
@@ -192,7 +192,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
             PREFERENCES_ISSUE_MAX_LENGTH,
             PREFERENCES_ISSUE_TITLE_LENGTH,
             "Preference",
-            PREFERENCES_TITLE_MAX_LENGTH
+            PREFERENCES_TITLE_MAX_LENGTH,
         )
         checkFolder(
             context,
@@ -201,7 +201,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
             MENU_ISSUE_MAX_LENGTH,
             MENU_ISSUE_TITLE_LENGTH,
             "Menu",
-            MENU_TITLE_MAX_LENGTH
+            MENU_TITLE_MAX_LENGTH,
         )
     }
 
@@ -212,7 +212,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
         wrongMaxLengthIssue: Issue,
         stringTooLongIssue: Issue,
         folder: String,
-        maxLength: Int
+        maxLength: Int,
     ) {
         for (title in titles) {
             val stringHandle = stringResources[title] ?: throw IllegalArgumentException(title)
@@ -227,7 +227,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                         "$folder title '%s' has maxLength=\"%s\". Its max length should be at most %d.",
                         title,
                         stringElement.getAttribute(ATTR_MAX_LENGTH),
-                        maxLength
+                        maxLength,
                     )
                 context.report(wrongMaxLengthIssue, stringHandle.resolve(), message)
             }
@@ -238,7 +238,7 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                         "$folder title '%s' must be less than %d characters (currently %d).",
                         title,
                         maxLength,
-                        stringElement.textContent.length
+                        stringElement.textContent.length,
                     )
                 context.report(stringTooLongIssue, stringHandle.resolve(), message)
             }

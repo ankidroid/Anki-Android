@@ -45,14 +45,14 @@ class MultimediaBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.bottomsheet_multimedia, container, false)
 
         /** setup a click on the listener to emit [MultimediaViewModel.multimediaAction] */
         fun setupListener(
             @IdRes id: Int,
-            action: MultimediaAction
+            action: MultimediaAction,
         ) = view.findViewById<LinearLayout>(id).setOnClickListener {
             viewModel.setMultimediaAction(action)
             dismiss()
@@ -85,6 +85,6 @@ class MultimediaBottomSheet : BottomSheetDialogFragment() {
         OPEN_DRAWING,
         SELECT_AUDIO_RECORDING,
         SELECT_VIDEO_FILE,
-        OPEN_CAMERA
+        OPEN_CAMERA,
     }
 }

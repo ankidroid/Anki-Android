@@ -53,7 +53,7 @@ data class MultimediaActivityExtra(
     val index: Int,
     val field: IField,
     val note: IMultimediaEditableNote,
-    val imageUri: String? = null
+    val imageUri: String? = null,
 ) : Serializable
 
 /**
@@ -92,7 +92,7 @@ class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
                 arguments =
                     bundleOf(
                         MULTIMEDIA_ARGS_EXTRA to intent.multimediaArgsExtra,
-                        EXTRA_MEDIA_OPTIONS to intent.mediaOptionsExtra
+                        EXTRA_MEDIA_OPTIONS to intent.mediaOptionsExtra,
                     )
             }
 
@@ -131,7 +131,7 @@ class MultimediaActivity : AnkiActivity(), BaseSnackbarBuilderProvider {
             context: Context,
             fragmentClass: KClass<out Fragment>,
             arguments: MultimediaActivityExtra? = null,
-            mediaOptions: Serializable? = null
+            mediaOptions: Serializable? = null,
         ): Intent {
             return Intent(context, MultimediaActivity::class.java).apply {
                 putExtra(MULTIMEDIA_ARGS_EXTRA, arguments)

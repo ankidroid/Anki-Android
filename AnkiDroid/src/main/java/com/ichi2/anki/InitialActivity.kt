@@ -87,7 +87,7 @@ object InitialActivity {
      */
     fun upgradePreferences(
         context: Context,
-        previousVersionCode: Long
+        previousVersionCode: Long,
     ): Boolean {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
     }
@@ -188,10 +188,10 @@ enum class PermissionSet(val permissions: List<String>, val permissionsFragment:
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     TIRAMISU_EXTERNAL_MANAGER(
         permissions = listOf(Permissions.MANAGE_EXTERNAL_STORAGE),
-        permissionsFragment = TiramisuPermissionsFragment::class.java
+        permissionsFragment = TiramisuPermissionsFragment::class.java,
     ),
 
-    APP_PRIVATE(emptyList(), null)
+    APP_PRIVATE(emptyList(), null),
 }
 
 /**
@@ -202,7 +202,7 @@ enum class PermissionSet(val permissions: List<String>, val permissionsFragment:
  */
 internal fun selectAnkiDroidFolder(
     canManageExternalStorage: Boolean,
-    currentFolderIsAccessibleAndLegacy: Boolean
+    currentFolderIsAccessibleAndLegacy: Boolean,
 ): AnkiDroidFolder {
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || currentFolderIsAccessibleAndLegacy) {
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,
@@ -230,6 +230,6 @@ fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
 
     return selectAnkiDroidFolder(
         canManageExternalStorage = Permissions.canManageExternalStorage(context),
-        currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy
+        currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy,
     )
 }

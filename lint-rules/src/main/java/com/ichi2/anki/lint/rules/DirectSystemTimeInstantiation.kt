@@ -50,7 +50,7 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
         private val implementation =
             Implementation(
                 DirectSystemTimeInstantiation::class.java,
-                Scope.JAVA_FILE_SCOPE
+                Scope.JAVA_FILE_SCOPE,
             )
         val ISSUE: Issue =
             Issue.create(
@@ -60,7 +60,7 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
                 Constants.ANKI_TIME_CATEGORY,
                 Constants.ANKI_TIME_PRIORITY,
                 Constants.ANKI_TIME_SEVERITY,
-                implementation
+                implementation,
             )
     }
 
@@ -69,7 +69,7 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
     override fun visitConstructor(
         context: JavaContext,
         node: UCallExpression,
-        constructor: PsiMethod
+        constructor: PsiMethod,
     ) {
         super.visitConstructor(context, node, constructor)
         val foundClasses = context.uastFile!!.classes
@@ -78,7 +78,7 @@ class DirectSystemTimeInstantiation : Detector(), SourceCodeScanner {
                 ISSUE,
                 node,
                 context.getLocation(node),
-                DESCRIPTION
+                DESCRIPTION,
             )
         }
     }

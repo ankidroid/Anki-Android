@@ -53,19 +53,19 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
             assertThat(
                 getDataFromRequest("nextTime1", jsapi).withoutUnicodeIsolation(),
-                equalTo(formatApiResult("<1m"))
+                equalTo(formatApiResult("<1m")),
             )
             assertThat(
                 getDataFromRequest("nextTime2", jsapi).withoutUnicodeIsolation(),
-                equalTo(formatApiResult("<6m"))
+                equalTo(formatApiResult("<6m")),
             )
             assertThat(
                 getDataFromRequest("nextTime3", jsapi).withoutUnicodeIsolation(),
-                equalTo(formatApiResult("<10m"))
+                equalTo(formatApiResult("<10m")),
             )
             assertThat(
                 getDataFromRequest("nextTime4", jsapi).withoutUnicodeIsolation(),
-                equalTo(formatApiResult("4d"))
+                equalTo(formatApiResult("4d")),
             )
         }
 
@@ -89,94 +89,94 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // Card Did
             assertThat(
                 getDataFromRequest("cardDid", jsapi),
-                equalTo(formatApiResult(currentCard.did))
+                equalTo(formatApiResult(currentCard.did)),
             )
             // Card Id
             assertThat(
                 getDataFromRequest("cardId", jsapi),
-                equalTo(formatApiResult(currentCard.id))
+                equalTo(formatApiResult(currentCard.id)),
             )
             // Card Nid
             assertThat(
                 getDataFromRequest("cardNid", jsapi),
-                equalTo(formatApiResult(currentCard.nid))
+                equalTo(formatApiResult(currentCard.nid)),
             )
             // Card ODid
             assertThat(
                 getDataFromRequest("cardODid", jsapi),
-                equalTo(formatApiResult(currentCard.oDid))
+                equalTo(formatApiResult(currentCard.oDid)),
             )
             // Card Type
             assertThat(
                 getDataFromRequest("cardType", jsapi),
-                equalTo(formatApiResult(currentCard.type))
+                equalTo(formatApiResult(currentCard.type)),
             )
             // Card ODue
             assertThat(
                 getDataFromRequest("cardODue", jsapi),
-                equalTo(formatApiResult(currentCard.oDue))
+                equalTo(formatApiResult(currentCard.oDue)),
             )
             // Card Due
             assertThat(
                 getDataFromRequest("cardDue", jsapi),
-                equalTo(formatApiResult(currentCard.due))
+                equalTo(formatApiResult(currentCard.due)),
             )
             // Card Factor
             assertThat(
                 getDataFromRequest("cardFactor", jsapi),
-                equalTo(formatApiResult(currentCard.factor))
+                equalTo(formatApiResult(currentCard.factor)),
             )
             // Card Lapses
             assertThat(
                 getDataFromRequest("cardLapses", jsapi),
-                equalTo(formatApiResult(currentCard.lapses))
+                equalTo(formatApiResult(currentCard.lapses)),
             )
             // Card Ivl
             assertThat(
                 getDataFromRequest("cardInterval", jsapi),
-                equalTo(formatApiResult(currentCard.ivl))
+                equalTo(formatApiResult(currentCard.ivl)),
             )
             // Card mod
             assertThat(
                 getDataFromRequest("cardMod", jsapi),
-                equalTo(formatApiResult(currentCard.mod))
+                equalTo(formatApiResult(currentCard.mod)),
             )
             // Card Queue
             assertThat(
                 getDataFromRequest("cardQueue", jsapi),
-                equalTo(formatApiResult(currentCard.queue))
+                equalTo(formatApiResult(currentCard.queue)),
             )
             // Card Reps
             assertThat(
                 getDataFromRequest("cardReps", jsapi),
-                equalTo(formatApiResult(currentCard.reps))
+                equalTo(formatApiResult(currentCard.reps)),
             )
             // Card left
             assertThat(
                 getDataFromRequest("cardLeft", jsapi),
-                equalTo(formatApiResult(currentCard.left))
+                equalTo(formatApiResult(currentCard.left)),
             )
 
             // Card Flag
             assertThat(
                 getDataFromRequest("cardFlag", jsapi),
-                equalTo(formatApiResult(0))
+                equalTo(formatApiResult(0)),
             )
             reviewer.currentCard!!.setFlag(Flag.RED.ordinal)
             assertThat(
                 getDataFromRequest("cardFlag", jsapi),
-                equalTo(formatApiResult(1))
+                equalTo(formatApiResult(1)),
             )
 
             // Card Mark
             assertThat(
                 getDataFromRequest("cardMark", jsapi),
-                equalTo(formatApiResult(false))
+                equalTo(formatApiResult(false)),
             )
             reviewer.currentCard!!.note().addTag("marked")
             assertThat(
                 getDataFromRequest("cardMark", jsapi),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
         }
 
@@ -197,28 +197,28 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // Displaying question
             assertThat(
                 getDataFromRequest("isDisplayingAnswer", jsapi),
-                equalTo(formatApiResult(reviewer.isDisplayingAnswer))
+                equalTo(formatApiResult(reviewer.isDisplayingAnswer)),
             )
             reviewer.displayCardAnswer()
             assertThat(
                 getDataFromRequest("isDisplayingAnswer", jsapi),
-                equalTo(formatApiResult(reviewer.isDisplayingAnswer))
+                equalTo(formatApiResult(reviewer.isDisplayingAnswer)),
             )
 
             // Full Screen
             assertThat(
                 getDataFromRequest("isInFullscreen", jsapi),
-                equalTo(formatApiResult(reviewer.isFullscreen))
+                equalTo(formatApiResult(reviewer.isFullscreen)),
             )
             // Top bar
             assertThat(
                 getDataFromRequest("isTopbarShown", jsapi),
-                equalTo(formatApiResult(reviewer.prefShowTopbar))
+                equalTo(formatApiResult(reviewer.prefShowTopbar)),
             )
             // Night Mode
             assertThat(
                 getDataFromRequest("isInNightMode", jsapi),
-                equalTo(formatApiResult(reviewer.isInNightMode))
+                equalTo(formatApiResult(reviewer.isInNightMode)),
             )
         }
 
@@ -243,19 +243,19 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // Before marking card
             assertThat(
                 getDataFromRequest("cardMark", jsapi),
-                equalTo(formatApiResult(false))
+                equalTo(formatApiResult(false)),
             )
 
             // Mark card
             assertThat(
                 getDataFromRequest("markCard", jsapi, "true"),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
 
             // After marking card
             assertThat(
                 getDataFromRequest("cardMark", jsapi),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
 
             // ---------------
@@ -264,19 +264,19 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // before toggling flag
             assertThat(
                 getDataFromRequest("cardFlag", jsapi),
-                equalTo(formatApiResult(0))
+                equalTo(formatApiResult(0)),
             )
 
             // call javascript function to toggle flag
             assertThat(
                 getDataFromRequest("toggleFlag", jsapi, "red"),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
 
             // after toggling flag
             assertThat(
                 getDataFromRequest("cardFlag", jsapi),
-                equalTo(formatApiResult(1))
+                equalTo(formatApiResult(1)),
             )
         }
 
@@ -306,7 +306,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // call script to bury current card
             assertThat(
                 getDataFromRequest("buryCard", jsapi),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
 
             // count number of notes
@@ -319,7 +319,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // call script to bury current note
             assertThat(
                 getDataFromRequest("buryNote", jsapi),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
 
             // count number of notes
@@ -331,7 +331,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // call script to suspend current card
             assertThat(
                 getDataFromRequest("suspendCard", jsapi),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
 
             // count number of notes
@@ -343,7 +343,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             // call script to suspend current note
             assertThat(
                 getDataFromRequest("suspendNote", jsapi),
-                equalTo(formatApiResult(true))
+                equalTo(formatApiResult(true)),
             )
 
             // count number of notes
@@ -445,7 +445,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         suspend fun getDataFromRequest(
             methodName: String,
             jsAPI: AnkiDroidJsAPI,
-            apiData: String = ""
+            apiData: String = "",
         ): String {
             return jsAPI.handleJsApiRequest(methodName, jsApiContract(apiData), false)
                 .decodeToString()

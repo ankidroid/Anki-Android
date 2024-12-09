@@ -90,7 +90,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         val attrs =
             intArrayOf(
                 R.attr.expandRef,
-                R.attr.collapseRef
+                R.attr.collapseRef,
             )
         val typedArray = requireContext().obtainStyledAttributes(attrs)
         expandImage = typedArray.getDrawable(0)!!
@@ -142,13 +142,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     override fun onResume() {
         super.onResume()
         dialog?.window?.clearFlags(
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
         )
     }
 
     private fun getPositionOfDeck(
         did: DeckId,
-        decks: List<SelectableDeck>
+        decks: List<SelectableDeck>,
     ) = decks.indexOfFirst { it.deckId == did }
 
     private fun getSummaryMessage(arguments: Bundle): String? {
@@ -163,7 +163,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
     private fun adjustToolbar(
         dialogView: View,
-        adapter: DecksArrayAdapter
+        adapter: DecksArrayAdapter,
     ) {
         val toolbar: Toolbar = dialogView.findViewById(R.id.deck_picker_dialog_toolbar)
         toolbar.title = title
@@ -182,7 +182,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                     adapter.filter.filter(newText)
                     return true
                 }
-            }
+            },
         )
         val addDecks = toolbar.menu.findItem(R.id.deck_picker_dialog_action_add_deck)
         addDecks.setOnMenuItemClickListener {
@@ -203,7 +203,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      */
     private fun showSubDeckDialog(
         parentDeckPath: String,
-        deckID: DeckId
+        deckID: DeckId,
     ) {
         if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
             context?.let { showThemedToast(it, R.string.cannot_create_subdeck_for_all_decks, true) }
@@ -342,7 +342,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
-            viewType: Int
+            viewType: Int,
         ): ViewHolder {
             val v =
                 LayoutInflater.from(parent.context)
@@ -352,7 +352,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         override fun onBindViewHolder(
             holder: ViewHolder,
-            position: Int
+            position: Int,
         ) {
             val deck = currentlyDisplayedDecks[position]
             val isDeckViewable = isViewable(deck)
@@ -373,7 +373,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private fun setDeckExpander(
             expander: ImageButton,
             indent: ImageButton,
-            node: DeckNode
+            node: DeckNode,
         ) {
             if (hasSubDecks(node)) {
                 expander.apply {
@@ -415,7 +415,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         private inner class DecksFilter : TypedFilter<DeckNode>(allDecksList) {
             override fun filterResults(
                 constraint: CharSequence,
-                items: List<DeckNode>
+                items: List<DeckNode>,
             ): List<DeckNode> {
                 val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
                 return items.filter {
@@ -425,7 +425,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
             override fun publishResults(
                 constraint: CharSequence?,
-                results: List<DeckNode>
+                results: List<DeckNode>,
             ) {
                 results.forEach { it.collapsed = false }
                 currentlyDisplayedDecks.apply {
@@ -507,7 +507,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             title: String,
             summaryMessage: String?,
             keepRestoreDefaultButton: Boolean,
-            decks: List<SelectableDeck>
+            decks: List<SelectableDeck>,
         ): DeckSelectionDialog {
             val f = DeckSelectionDialog()
             val args = Bundle()

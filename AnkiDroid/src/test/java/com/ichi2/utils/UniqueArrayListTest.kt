@@ -47,7 +47,7 @@ class UniqueArrayListTest {
             "12",
             "sd",
             "TEst",
-            "55"
+            "55",
         )
 
     private val noDupData =
@@ -57,12 +57,12 @@ class UniqueArrayListTest {
             "12",
             "dsf23A",
             "23",
-            "sd"
+            "sd",
         )
 
     private inline fun <reified E> assertNotSameLists(
         a: MutableList<E>,
-        b: MutableList<E>
+        b: MutableList<E>,
     ) {
         assertThat(b, not(IsIterableContainingInOrder.contains<Any>(*a.toTypedArray())))
     }
@@ -444,9 +444,9 @@ class UniqueArrayListTest {
 
         assertEquals(
             listOf(
-                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
+                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L,
             ),
-            list
+            list,
         )
     }
 
@@ -460,9 +460,9 @@ class UniqueArrayListTest {
 
         assertEquals(
             listOf(
-                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
+                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L,
             ),
-            list
+            list,
         )
     }
 
@@ -483,9 +483,9 @@ class UniqueArrayListTest {
                 10L,
                 11L,
                 12L,
-                13L
+                13L,
             ),
-            list
+            list,
         )
     }
 
@@ -500,9 +500,9 @@ class UniqueArrayListTest {
                 7L,
                 8L,
                 9L,
-                10L
+                10L,
             ),
-            uniqueList.subList(5, 10)
+            uniqueList.subList(5, 10),
         )
     }
 
@@ -535,8 +535,8 @@ class UniqueArrayListTest {
         assertFalse(uniqueList.isEmpty())
         uniqueList.removeAll(
             listOf(
-                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
-            )
+                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L,
+            ),
         )
         assertTrue(uniqueList.isEmpty())
     }
@@ -548,7 +548,7 @@ class UniqueArrayListTest {
 
         val arr =
             listOf(
-                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
+                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L,
             )
 
         assertListEquals(arr, uniqueList)
@@ -561,7 +561,7 @@ class UniqueArrayListTest {
 
         val arr =
             listOf(
-                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L
+                1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L,
             )
 
         assertListEquals(arr, uniqueList)

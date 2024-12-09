@@ -68,7 +68,7 @@ class DeckPickerTest : InstrumentedTest() {
         // Check if currently open Activity is StudyOptionsActivity
         assertThat(
             activityInstance,
-            instanceOf(StudyOptionsActivity::class.java)
+            instanceOf(StudyOptionsActivity::class.java),
         )
     }
 
