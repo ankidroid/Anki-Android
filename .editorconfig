@@ -8,10 +8,3 @@ end_of_line = crlf
 # We often have block comments representing implementation details after KDocs.
 # This feels like an acceptable commenting strategy
 ktlint_standard_no-consecutive-comments = disabled
-
-# These can be removed once we upgrade to ktlint 1.5.0
-# These are added in preparation for the move to gradle.ktlint 12.1.1
-
-# Rule 'standard:parameter-list-wrapping' throws exception in file 'DeckConfig.kt' at position (0:0)
-[*DeckConfig.kt]
-ktlint_standard_parameter-list-wrapping = disabled

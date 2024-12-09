@@ -81,7 +81,7 @@ class Notetypes(
     #############################################################
      */
 
-    @Suppress("ktlint:standard:property-naming")
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _cache: HashMap<int, NotetypeJson> = HashMap()
 
     init {

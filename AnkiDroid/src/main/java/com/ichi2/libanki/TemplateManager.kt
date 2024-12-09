@@ -125,9 +125,16 @@ class TemplateManager {
         template: JSONObject? = null,
         private var fillEmpty: Boolean = false,
     ) {
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _card: Card = card
+
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _note: Note = note
+
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _browser: Boolean = browser
+
+        @Suppress("ktlint:standard:backing-property-naming")
         private var _template: JSONObject? = template
 
         private var noteType: NotetypeJson = notetype ?: note.notetype

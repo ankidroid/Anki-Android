@@ -70,6 +70,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     PreferenceActivity(),
     CoroutineScope by MainScope(),
     SharedPreferences.OnSharedPreferenceChangeListener {
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _delegate: AppCompatDelegate? = null
 
     fun isColInitialized() = ::col.isInitialized

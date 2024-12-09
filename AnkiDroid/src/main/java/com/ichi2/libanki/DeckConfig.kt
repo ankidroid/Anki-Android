@@ -20,14 +20,13 @@ import com.ichi2.utils.deepClonedInto
 import org.json.JSONObject
 import timber.log.Timber
 
-class DeckConfig
 /**
  * Creates a copy from [JSONObject] and use it as a string
  *
  * This function will perform deepCopy on the passed object
  *
  */
-(
+class DeckConfig(
     json: JSONObject,
 ) : JSONObject() {
     var conf: Long

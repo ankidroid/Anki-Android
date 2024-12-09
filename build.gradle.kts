@@ -5,7 +5,6 @@ import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.ByteArrayOutputStream
 import kotlin.math.max
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -29,7 +28,11 @@ val fatalWarnings = !(localProperties["fatal_warnings"] == "false")
 
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
+    // TODO: should be able to use libs.versions.toml here
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        version.set("1.5.0")
+    }
 
     afterEvaluate {
         if (hasProperty("android")) {
