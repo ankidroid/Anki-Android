@@ -27,6 +27,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.XmlRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -112,6 +113,7 @@ class PreferencesFragment :
         fragment.arguments = pref.extras
         childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment::class.jvmName)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(null)
         }
         return true
@@ -123,6 +125,7 @@ class PreferencesFragment :
         parentFragmentManager.popBackStack() // clear the search fragment from the backstack
         childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment.javaClass.name)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(fragment.javaClass.name)
         }
 
