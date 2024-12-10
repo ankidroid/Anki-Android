@@ -42,8 +42,10 @@ import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.localizedErrorMessage
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.packageManager
+import com.ichi2.anki.utils.openUrl
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.themes.Themes
+import com.ichi2.utils.show
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -162,6 +164,17 @@ abstract class CardViewerFragment(
                     "tts-voices" -> TtsVoicesDialogFragment().show(childFragmentManager, null)
                     "android-app" -> handleIntentUrl(url, Intent.URI_ANDROID_APP_SCHEME)
                     "intent" -> handleIntentUrl(url, Intent.URI_INTENT_SCHEME)
+                    "missing-user-action" -> {
+                        val actionNumber = url.toString().substringAfter(":")
+                        val message = getString(R.string.missing_user_action_dialog_message, actionNumber)
+                        AlertDialog.Builder(requireContext()).show {
+                            setMessage(message)
+                            setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                            setNeutralButton(R.string.help) { _, _ ->
+                                openUrl(R.string.link_user_actions_help)
+                            }
+                        }
+                    }
                     else -> {
                         try {
                             openUrl(url)
