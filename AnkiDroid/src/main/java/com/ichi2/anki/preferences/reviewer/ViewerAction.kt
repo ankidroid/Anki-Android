@@ -83,5 +83,7 @@ enum class ViewerAction(
         fun fromId(
             @IdRes id: Int,
         ): ViewerAction = entries.first { it.menuId == id }
+
+        fun getSubMenus(): List<ViewerAction> = ViewerAction.entries.mapNotNull { it.parentMenu }.distinct()
     }
 }

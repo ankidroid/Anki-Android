@@ -12,7 +12,16 @@
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
-        />
+        >
+
+        <com.ichi2.anki.preferences.reviewer.ReviewerMenuView
+            android:id="@+id/reviewer_menu_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            />
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
