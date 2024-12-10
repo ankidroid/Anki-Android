@@ -32,7 +32,6 @@ import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class StudyOptionsActivity :
     AnkiActivity(),
@@ -53,6 +52,7 @@ class StudyOptionsActivity :
         if (savedInstanceState == null) {
             loadStudyOptionsFragment()
         }
+        setResult(RESULT_OK)
     }
 
     private fun loadStudyOptionsFragment() {
@@ -83,7 +83,7 @@ class StudyOptionsActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                closeStudyOptions()
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             R.id.action_undo -> {
@@ -99,20 +99,6 @@ class StudyOptionsActivity :
             }
             else -> return super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun closeStudyOptions(result: Int = RESULT_OK) {
-        // mCompat.invalidateOptionsMenu(this);
-        setResult(result)
-        finish()
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        Timber.i("Back key pressed")
-        closeStudyOptions()
-        @Suppress("DEPRECATION")
-        super.onBackPressed()
     }
 
     override fun onResume() {
