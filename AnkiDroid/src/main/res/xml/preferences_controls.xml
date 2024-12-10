@@ -181,18 +181,22 @@
         <com.ichi2.preferences.ControlPreference
             android:key="@string/page_up_command_key"
             android:title="@string/gesture_page_up"
+            android:icon="@drawable/ic_double_arrow_up"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/page_down_command_key"
             android:title="@string/gesture_page_down"
+            android:icon="@drawable/ic_double_arrow_down"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/abort_command_key"
             android:title="@string/gesture_abort_learning"
+            android:icon="@drawable/close_icon"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/abort_and_sync_command_key"
             android:title="@string/gesture_abort_sync"
+            android:icon="@drawable/ic_sync"
             />
     </PreferenceCategory>
 
@@ -250,14 +254,17 @@
         <com.ichi2.preferences.ControlPreference
             android:key="@string/toggle_auto_advance_command_key"
             android:title="@string/toggle_auto_advance"
+            android:icon="@drawable/ic_fast_forward"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/show_hint_command_key"
             android:title="@string/gesture_show_hint"
+            android:icon="@drawable/ic_lightbulb"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/show_all_hints_command_key"
             android:title="@string/gesture_show_all_hints"
+            android:icon="@drawable/ic_lightbulb_stars"
             />
     </PreferenceCategory>
 
@@ -270,38 +277,47 @@
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_1_key"
             android:title="@string/user_action_1"
+            android:icon="@drawable/user_action_1"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_2_key"
             android:title="@string/user_action_2"
+            android:icon="@drawable/user_action_2"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_3_key"
             android:title="@string/user_action_3"
+            android:icon="@drawable/user_action_3"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_4_key"
             android:title="@string/user_action_4"
+            android:icon="@drawable/user_action_4"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_5_key"
             android:title="@string/user_action_5"
+            android:icon="@drawable/user_action_5"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_6_key"
             android:title="@string/user_action_6"
+            android:icon="@drawable/user_action_6"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_7_key"
             android:title="@string/user_action_7"
+            android:icon="@drawable/user_action_7"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_8_key"
             android:title="@string/user_action_8"
+            android:icon="@drawable/user_action_8"
             />
         <com.ichi2.preferences.ControlPreference
             android:key="@string/user_action_9_key"
             android:title="@string/user_action_9"
+            android:icon="@drawable/user_action_9"
             />
     </com.ichi2.anki.preferences.ExtendedPreferenceCategory>
 </PreferenceScreen>
