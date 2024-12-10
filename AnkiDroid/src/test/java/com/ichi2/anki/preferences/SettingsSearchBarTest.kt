@@ -19,7 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.bytehamster.lib.preferencesearch.PreferenceItem
 import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.testutils.getJavaFieldAsAccessible
+import com.ichi2.testutils.requireAccessibleJavaField
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
@@ -38,10 +38,10 @@ class SettingsSearchBarTest : RobolectricTest() {
         HeaderFragment.configureSearchBar(preferencesActivity, searchConfig)
 
         // Use reflection to access some private fields
-        val filesToIndexField = getJavaFieldAsAccessible(SearchConfiguration::class.java, "filesToIndex")
-        val searchItemResIdField = getJavaFieldAsAccessible(SearchConfiguration.SearchIndexItem::class.java, "resId")
-        val preferencesToIndexField = getJavaFieldAsAccessible(SearchConfiguration::class.java, "preferencesToIndex")
-        val prefItemResIdField = getJavaFieldAsAccessible(PreferenceItem::class.java, "resId")
+        val filesToIndexField = requireAccessibleJavaField<SearchConfiguration>("filesToIndex")
+        val searchItemResIdField = requireAccessibleJavaField<SearchConfiguration.SearchIndexItem>("resId")
+        val preferencesToIndexField = requireAccessibleJavaField<SearchConfiguration>("preferencesToIndex")
+        val prefItemResIdField = requireAccessibleJavaField<PreferenceItem>("resId")
 
         // Get the resIds of the files indexed with `SearchConfiguration.index`
         val filesToIndex = filesToIndexField.get(searchConfig) as ArrayList<SearchConfiguration.SearchIndexItem>
