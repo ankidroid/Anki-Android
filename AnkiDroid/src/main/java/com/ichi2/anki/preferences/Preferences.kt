@@ -39,6 +39,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.ichi2.anki.R
 import com.ichi2.anki.SingleFragmentActivity
+import com.ichi2.anki.utils.ext.sharedPrefs
 import com.ichi2.anki.utils.isWindowCompact
 import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
@@ -113,7 +114,7 @@ class PreferencesFragment :
         fragment.arguments = pref.extras
         childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment::class.jvmName)
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            setOpenTransition(this)
             addToBackStack(null)
         }
         return true
@@ -125,7 +126,7 @@ class PreferencesFragment :
         parentFragmentManager.popBackStack() // clear the search fragment from the backstack
         childFragmentManager.commit {
             replace(R.id.settings_container, fragment, fragment.javaClass.name)
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            setOpenTransition(this)
             addToBackStack(fragment.javaClass.name)
         }
 
@@ -138,6 +139,12 @@ class PreferencesFragment :
 
         view?.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
         view?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = title
+    }
+
+    private fun setOpenTransition(fragmentTransaction: FragmentTransaction) {
+        if (!sharedPrefs().getBoolean("safeDisplay", false)) {
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        }
     }
 
     /**
