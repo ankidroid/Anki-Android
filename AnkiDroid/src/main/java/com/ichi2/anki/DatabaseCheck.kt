@@ -19,7 +19,7 @@ package com.ichi2.anki
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 
-fun DeckPicker.handleDatabaseCheck() {
+fun AnkiActivity.handleDatabaseCheck() {
     launchCatchingTask {
         val problems =
             withProgress(

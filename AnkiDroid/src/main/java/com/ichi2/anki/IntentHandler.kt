@@ -391,7 +391,7 @@ class IntentHandler : AbstractIntentHandler() {
                 val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
                 val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
                 if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
-                    deckPicker.sync()
+                    deckPicker.syncHandler.sync()
                 } else {
                     val err = res.getString(R.string.sync_error)
                     if (limited) {

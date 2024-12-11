@@ -307,7 +307,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.check_db_title)
                     message(text = message)
                     positiveButton(R.string.dialog_ok) {
-                        requireDeckPicker().integrityCheck()
+                        requireDeckPicker().syncHandler.integrityCheck()
                         requireActivity().dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -330,7 +330,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     title(R.string.backup_one_way_sync_from_server)
                     message(text = message)
                     positiveButton(R.string.dialog_positive_overwrite) {
-                        requireDeckPicker().sync(ConflictResolution.FULL_DOWNLOAD)
+                        requireDeckPicker().syncHandler.sync(ConflictResolution.FULL_DOWNLOAD)
                         requireActivity().dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)

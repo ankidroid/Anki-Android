@@ -311,7 +311,7 @@ class SyncErrorDialog : AsyncDialogFragment() {
                 )
                 return
             }
-            activity.showSyncErrorDialog(dialogType, dialogMessage)
+            activity.syncHandler.showSyncErrorDialog(dialogType, dialogMessage)
         }
 
         override fun toMessage(): Message =
