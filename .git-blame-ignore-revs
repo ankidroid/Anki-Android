@@ -13,6 +13,13 @@
 21475896408fc8b95391dbd65b8e4b41a63c50a2
 9cca5a6b594a3e1657ffc3131e6568ecdfeb5e6d
 a06e727f6094541b763e2dc18a300edb3e17fd26
+26df248a0cafad6ee1e5624b9ed86d8f17bf363c
+aff1bb87900f420ac5a717146d52c6df7b0d76b3
+5904c8a2119351c1e7d93dbd73ab88577a27ca30
+# manual lint fixups
+d7f67ad091b76f83ac5dce0939656fd43d729e40
+cd444112f5098baf9899cd6a1349c1c29c56783f
+f86bf55c4063e0804cc1336dc0b8a54a5cef8a5f
 
 # Kotlin Migration
 # Only ignoring the `Java -> Kotlin` change, the file rename should not be visible in-IDE
