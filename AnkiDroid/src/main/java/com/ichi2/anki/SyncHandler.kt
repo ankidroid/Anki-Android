@@ -63,7 +63,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.NetworkUtils
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.checkBoxPrompt
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
@@ -80,6 +79,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.exceptions.BackendInterruptedException
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
 
@@ -90,8 +90,6 @@ class SyncHandler(
     private val activity: AnkiActivity,
     private val delegate: SyncHandlerDelegate,
 ) : SyncErrorDialogListener {
-
-
     /** Job running the sync media */
     private var syncMediaProgressJob: Job? = null
 
@@ -192,11 +190,33 @@ class SyncHandler(
 
     private suspend fun fetchSyncStatus(): SyncIconState {
         val auth = syncAuth()
-        return when (SyncStatus.getSyncStatus(activity, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
-            SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
-            SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
-            SyncStatus.ONE_WAY -> SyncIconState.OneWay
+        val isDisabled = !AnkiDroidApp.sharedPrefs().getBoolean("showSyncStatusBadge", true)
+        return if (isDisabled) {
+            SyncIconState.Normal
+        } else if (auth == null) {
+            SyncIconState.NotLoggedIn
+        } else {
+            try {
+                // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
+                // throws if a .colpkg import or similar occurs just before this call
+                val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
+                if (output.hasNewEndpoint()) {
+                    activity.sharedPrefs().edit {
+                        putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
+                    }
+                }
+                when (output.required) {
+                    SyncStatusResponse.Required.NO_CHANGES -> SyncIconState.Normal
+                    SyncStatusResponse.Required.NORMAL_SYNC -> SyncIconState.PendingChanges
+                    SyncStatusResponse.Required.FULL_SYNC -> SyncIconState.OneWay
+                    SyncStatusResponse.Required.UNRECOGNIZED, null -> TODO("unexpected required response")
+                }
+            } catch (_: BackendNetworkException) {
+                SyncIconState.PendingChanges
+            } catch (e: Exception) {
+                Timber.d(e, "error obtaining sync status: collection likely closed")
+                SyncIconState.Normal
+            }
         }
     }
 
@@ -228,7 +248,6 @@ class SyncHandler(
         }
     }
 
-
     suspend fun automaticSync(runInBackground: Boolean = false) {
         /**
          * @return whether there are collection changes to be sync.
@@ -246,10 +265,10 @@ class SyncHandler(
                 SyncStatusResponse.Required.NO_CHANGES,
                 SyncStatusResponse.Required.UNRECOGNIZED,
                 null,
-                    -> false
+                -> false
                 SyncStatusResponse.Required.FULL_SYNC,
                 SyncStatusResponse.Required.NORMAL_SYNC,
-                    -> true
+                -> true
             }
         }
 
@@ -263,7 +282,7 @@ class SyncHandler(
 
         val isBlockedByMeteredConnection =
             !activity.sharedPrefs().getBoolean(activity.getString(R.string.metered_sync_key), false) &&
-                    isActiveNetworkMetered()
+                isActiveNetworkMetered()
 
         when {
             !isAutoSyncEnabled -> Timber.d("autoSync: not enabled")
@@ -339,7 +358,7 @@ class SyncHandler(
     }
 
     /** In the conflict case, we need to store the USN received from the initial sync, and reuse
-    it after the user has decided. */
+     it after the user has decided. */
     var mediaUsnOnConflict: Int? = null
 
     /**
@@ -511,7 +530,7 @@ class SyncHandler(
             SyncCollectionResponse.ChangesRequired.NORMAL_SYNC,
             SyncCollectionResponse.ChangesRequired.UNRECOGNIZED,
             null,
-                -> {
+            -> {
                 TODO("should never happen")
             }
         }
@@ -638,7 +657,7 @@ class SyncHandler(
         val onlyIfUnmetered = activity.getString(R.string.sync_media_only_unmetered_value)
         val shouldFetchMedia = preferences.getString(activity.getString(R.string.sync_fetch_media_key), always)
         return shouldFetchMedia == always ||
-                (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
+            (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
     }
 
     /**

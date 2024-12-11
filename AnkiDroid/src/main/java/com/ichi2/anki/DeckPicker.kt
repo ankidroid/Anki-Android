@@ -163,7 +163,6 @@ import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.ImportUtils
 import com.ichi2.utils.ImportUtils.ImportResult
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.SyncStatus
 import com.ichi2.utils.VersionUtils
 import com.ichi2.utils.cancelable
 import com.ichi2.utils.checkWebviewVersion
@@ -203,7 +202,7 @@ import java.io.File
  *   * Filtering decks (if more than 10) [toolbarSearchView]
  * * Controlling syncs
  *   * A user may [pull down][pullToSyncWrapper] on the 'tree view' to sync
- *   * A [button][syncHandler.updateSyncIconFromState] which relies on [SyncStatus] to display whether a sync is needed
+ *   * A [button][syncHandler.updateSyncIconFromState] to display whether a sync is needed
  *   * Blocks the UI and displays sync progress when syncing
  * * Displaying 'General' AnkiDroid options: backups, import, 'check media' etc...
  *   * General handler for error/global dialogs (search for 'as DeckPicker')
