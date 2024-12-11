@@ -20,7 +20,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
-import com.ichi2.anki.SyncActionProvider
+import com.ichi2.anki.sync.SyncActionProvider
 import timber.log.Timber
 
 class BadgeDrawableBuilder(

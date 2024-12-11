@@ -37,6 +37,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.sync.isLoggedIn
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.AccessibleSearchView
 import com.ichi2.utils.FileNameAndExtension

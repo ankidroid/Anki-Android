@@ -26,11 +26,13 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.FileProvider
 import androidx.core.content.IntentCompat
+import com.ichi2.anki.Reviewer.Companion.ENABLE_SYNC
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.anki.sync.millisecondsSinceLastSync
 import com.ichi2.anki.ui.windows.reviewer.ReviewerFragment
 import com.ichi2.anki.worker.SyncWorker
 import com.ichi2.annotations.NeedsTest
@@ -153,6 +155,9 @@ class IntentHandler : AbstractIntentHandler() {
             } else {
                 Intent(this, Reviewer::class.java)
             }
+        if (intent.extras?.getBoolean(ENABLE_SYNC) == true) {
+            reviewIntent.putExtra(ENABLE_SYNC, true)
+        }
         CollectionManager.getColUnsafe().decks.select(deckId)
         startActivity(reviewIntent)
         finish()
@@ -391,7 +396,7 @@ class IntentHandler : AbstractIntentHandler() {
                 val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
                 val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
                 if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
-                    deckPicker.sync()
+                    deckPicker.syncHandler.sync()
                 } else {
                     val err = res.getString(R.string.sync_error)
                     if (limited) {
@@ -440,6 +445,7 @@ class IntentHandler : AbstractIntentHandler() {
             setAction(Intent.ACTION_VIEW)
             putExtra(ReminderService.EXTRA_DECK_ID, deckId)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra(ENABLE_SYNC, true)
         }
     }
 }
