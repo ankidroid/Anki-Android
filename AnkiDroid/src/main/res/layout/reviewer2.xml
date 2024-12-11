@@ -26,9 +26,8 @@
                 app:navigationContentDescription="@string/abc_action_bar_up_description"
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?attr/actionBarSize"
                 android:background="?attr/alternativeBackgroundColor"
-                app:menu="@menu/reviewer2"
                 >
 
                 <com.google.android.material.textview.MaterialTextView
@@ -36,8 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/newCountColor"
-                    app:layout_constraintEnd_toStartOf="@id/lrn_count"
-                    android:paddingEnd="5dp"
+                    android:paddingEnd="6dp"
                     tools:text="27"
                     />
 
@@ -46,9 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/learnCountColor"
-                    app:layout_constraintStart_toEndOf="@id/new_count"
-                    app:layout_constraintEnd_toStartOf="@id/rev_count"
-                    android:paddingEnd="5dp"
+                    android:paddingEnd="6dp"
                     tools:text="81"
                     />
 
@@ -57,11 +53,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/reviewCountColor"
-                    app:layout_constraintStart_toEndOf="@id/lrn_count"
                     tools:text="54"
+                    android:paddingEnd="10dp"
                     />
 
-
+                <com.ichi2.anki.preferences.reviewer.ReviewerMenuView
+                    android:id="@+id/reviewer_menu_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    />
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
