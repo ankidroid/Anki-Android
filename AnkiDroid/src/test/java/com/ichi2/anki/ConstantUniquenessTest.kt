@@ -22,6 +22,7 @@ import org.junit.Test
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.jvm.javaField
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
@@ -43,8 +44,7 @@ class ConstantUniquenessTest {
                 if (!prop.isConst || prop.visibility != KVisibility.PUBLIC) {
                     continue
                 }
-                // use .call() since clazz represents an object
-                val value = prop.call()
+                val value = prop.javaField?.get(null)
                 assertFalse(valueSet.contains(value), "Duplicate value ('$value') for constant in ${clazz.qualifiedName}")
                 valueSet.add(value)
             }
