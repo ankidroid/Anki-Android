@@ -74,7 +74,7 @@ class Note : Cloneable {
     }
 
     fun load(col: Collection) {
-        val note = col.backend.getNote(this.id)
+        val note = col.backend.getNote(id)
         loadFromBackendNote(col, note)
     }
 
@@ -82,22 +82,22 @@ class Note : Cloneable {
         col: Collection,
         note: anki.notes.Note,
     ) {
-        this.id = note.id
-        this.guId = note.guid
-        this.mid = note.notetypeId
-        this.notetype = col.notetypes.get(mid)!! // not in libAnki
-        this.mod = note.mtimeSecs
-        this.usn = note.usn
+        id = note.id
+        guId = note.guid
+        mid = note.notetypeId
+        notetype = col.notetypes.get(mid)!! // not in libAnki
+        mod = note.mtimeSecs
+        usn = note.usn
         // the lists in the protobuf are NOT mutable, even though they cast to MutableList
-        this.tags = note.tagsList.toMutableList()
-        this.fields = note.fieldsList.toMutableList()
-        this.fMap = Notetypes.fieldMap(notetype)
+        tags = note.tagsList.toMutableList()
+        fields = note.fieldsList.toMutableList()
+        fMap = Notetypes.fieldMap(notetype)
     }
 
     @NotInLibAnki
     fun numberOfCards(col: Collection): Int = cardIds(col).size
 
-    fun cardIds(col: Collection): List<Long> = col.cardIdsOfNote(nid = this.id)
+    fun cardIds(col: Collection): List<Long> = col.cardIdsOfNote(nid = id)
 
     fun cards(col: Collection): List<Card> = cardIds(col).map { col.getCard(it) }
 
@@ -143,7 +143,7 @@ class Note : Cloneable {
         col.getCard(
             col.db.queryLongScalar(
                 "SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
-                this.id,
+                id,
             ),
         )
 
@@ -242,9 +242,9 @@ class Note : Cloneable {
      * Unique/duplicate check
      * ***********************************************************
      */
-    fun fieldsCheck(col: Collection): NoteFieldsCheckResponse.State = col.backend.noteFieldsCheck(this.toBackendNote()).state
+    fun fieldsCheck(col: Collection): NoteFieldsCheckResponse.State = col.backend.noteFieldsCheck(toBackendNote()).state
 
-    fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(col: Collection): String = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", id)
 
     fun setField(
         index: Int,
@@ -264,10 +264,10 @@ class Note : Cloneable {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
         val note = other as Note
-        return this.id == note.id
+        return id == note.id
     }
 
-    override fun hashCode(): Int = (this.id xor (this.id ushr 32)).toInt()
+    override fun hashCode(): Int = (id xor (id ushr 32)).toInt()
 
     object ClozeUtils {
         private val mClozeRegexPattern = Pattern.compile("\\{\\{c(\\d+)::")
