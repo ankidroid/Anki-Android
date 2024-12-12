@@ -99,7 +99,8 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
+import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.undoableOp
@@ -1617,7 +1618,7 @@ open class Reviewer :
             false
         } else {
             getColUnsafe.db.queryScalar(
-                "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+                "select 1 from cards where nid = ? and id != ? and queue != $QUEUE_TYPE_SUSPENDED limit 1",
                 currentCard!!.nid,
                 currentCard!!.id,
             ) == 1
@@ -1631,7 +1632,7 @@ open class Reviewer :
             false
         } else {
             getColUnsafe.db.queryScalar(
-                "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+                "select 1 from cards where nid = ? and id != ? and queue >=  $QUEUE_TYPE_NEW limit 1",
                 currentCard!!.nid,
                 currentCard!!.id,
             ) == 1

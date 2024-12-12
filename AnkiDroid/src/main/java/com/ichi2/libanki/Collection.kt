@@ -613,8 +613,11 @@ class Collection(
         }
         val badNotes =
             db.queryScalar(
-                "select 1 from notes where id not in (select distinct nid from cards) " +
-                    "or mid not in " + ids2str(notetypes.ids()) + " limit 1",
+                """select 1 from notes where
+                  id not in (select distinct nid from cards)
+                  or
+                  mid not in ${ids2str(notetypes.ids())}
+                limit 1""",
             ) > 0
         // notes without cards or models
         if (badNotes) {
@@ -630,8 +633,11 @@ class Collection(
             val tmpls = m.getJSONArray("tmpls")
             val badOrd =
                 db.queryScalar(
-                    "select 1 from cards where (ord < 0 or ord >= ?) and nid in ( " +
-                        "select id from notes where mid = ?) limit 1",
+                    """select 1 from cards where
+                        (ord < 0 or ord >= ?)
+                        and
+                        nid in (select id from notes where mid = ?)
+                      limit 1""",
                     tmpls.length(),
                     m.getLong("id"),
                 ) > 0
@@ -650,10 +656,7 @@ class Collection(
         cids: List<Long>,
     ) {
         db.execute(
-            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " +
-                ids2str(
-                    cids,
-                ),
+            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in ${ids2str(cids)}",
             7,
             flag.code,
             usn(),
