@@ -7,6 +7,7 @@ runKtlint () {
     # The only change made are:
     # * replacing "exit" for "return", as this is running inside a function
     # * echoing if the apply fails
+    # * renaming `diff` variable to `diff_path`.
     ######## KTLINT-GRADLE HOOK START ########
 
     CHANGED_FILES="$(git --no-pager diff --name-status --no-color --cached | awk '$1 != "D" && $NF ~ /\.kts?$/ { print $NF }')"
@@ -19,10 +20,10 @@ runKtlint () {
     echo "Running ktlint over these files:"
     echo "$CHANGED_FILES"
 
-    diff=.git/unstaged-ktlint-git-hook.diff
-    git diff --color=never > $diff
-    if [ -s $diff ]; then
-      git apply -R $diff
+    diff_path=.git/unstaged-ktlint-git-hook.diff
+    git diff --color=never > $diff_path
+    if [ -s $diff_path ]; then
+      git apply -R $diff_path
     fi
 
     ./gradlew --quiet ktlintFormat -PinternalKtlintGitFilter="$CHANGED_FILES"
@@ -37,15 +38,15 @@ runKtlint () {
     done
 
 
-    if [ -s $diff ]; then
-        git apply --ignore-whitespace $diff
+    if [ -s $diff_path ]; then
+        git apply --ignore-whitespace $diff_path
         apply_exit_code=$?
-        if [ $apply_exit_code -ne 0 ]; then
-           echo "`git apply` failed. You can find a patch of the version of the code before your `git commit` in $diff"
+        if [apply_exit_code -ne 0]; then
+           echo "`git apply` failed. You can find a patch of the version of the code before your `git commit` in $diff_path"
         fi
     fi
-    rm $diff
-    unset diff
+    rm $diff_path
+    unset diff_path
 
     echo "Completed ktlint hook."
     return $gradle_command_exit_code
