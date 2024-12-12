@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import anki.config.Preferences.BackupLimits
+import anki.config.PreferencesKt.backupLimits
 import com.ichi2.anki.BackupManager.Companion.getLatestBackup
 import com.ichi2.testutils.MockTime
 import org.hamcrest.CoreMatchers.equalTo
@@ -132,12 +133,11 @@ class BackupManagerSimpleTest {
         weekly: Int,
         monthly: Int,
     ): BackupLimits =
-        BackupLimits
-            .newBuilder()
-            .setDaily(daily)
-            .setWeekly(weekly)
-            .setMonthly(monthly)
-            .build()
+        backupLimits {
+            this.daily = daily
+            this.weekly = weekly
+            this.monthly = monthly
+        }
 
     @Test
     fun keepsAllBackupsForToday() {

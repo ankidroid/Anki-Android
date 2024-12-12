@@ -21,6 +21,7 @@ import android.text.format.DateFormat
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import anki.config.Preferences.BackupLimits
+import anki.config.PreferencesKt.backupLimits
 import anki.config.copy
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
@@ -181,12 +182,11 @@ open class BackupManager {
             // Delete old backup files if needed
             val prefs = AnkiDroidApp.instance.baseContext.sharedPrefs()
             val backupLimits =
-                BackupLimits
-                    .newBuilder()
-                    .setDaily(prefs.getInt("daily_backups_to_keep", 8))
-                    .setWeekly(prefs.getInt("weekly_backups_to_keep", 8))
-                    .setMonthly(prefs.getInt("monthly_backups_to_keep", 8))
-                    .build()
+                backupLimits {
+                    daily = prefs.getInt("daily_backups_to_keep", 8)
+                    weekly = prefs.getInt("weekly_backups_to_keep", 8)
+                    monthly = prefs.getInt("monthly_backups_to_keep", 8)
+                }
             deleteColBackups(colPath, backupLimits)
             // set timestamp of file in order to avoid creating a new backup unless its changed
             if (!backupFile.setLastModified(colFile.lastModified())) {

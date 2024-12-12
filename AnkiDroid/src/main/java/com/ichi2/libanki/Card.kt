@@ -19,6 +19,8 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
+import anki.decks.deckId
+import anki.notes.noteId
 import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CardQueue
@@ -147,31 +149,28 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("_to_backend_card")
-    fun toBackendCard(): anki.cards.Card {
-        val builder =
-            anki.cards.Card
-                .newBuilder()
-                .setId(id)
-                .setNoteId(nid)
-                .setDeckId(did)
-                .setTemplateIdx(ord)
-                .setCtype(type)
-                .setQueue(queue)
-                .setDue(due)
-                .setInterval(ivl)
-                .setEaseFactor(factor)
-                .setReps(reps)
-                .setLapses(lapses)
-                .setRemainingSteps(left)
-                .setOriginalDue(oDue)
-                .setOriginalDeckId(oDid)
-                .setFlags(flags)
-                .setCustomData(customData)
-        originalPosition?.let { builder.setOriginalPosition(it) }
-        memoryState?.let { builder.setMemoryState(it) }
-        desiredRetention?.let { builder.setDesiredRetention(it) }
-        return builder.build()
-    }
+    fun toBackendCard() =
+        anki.cards.card {
+            id = this@Card.id
+            noteId = nid
+            deckId = did
+            templateIdx = ord
+            ctype = type
+            queue = this@Card.queue
+            due = this@Card.due
+            interval = ivl
+            easeFactor = factor
+            reps = this@Card.reps
+            lapses = this@Card.lapses
+            remainingSteps = left
+            originalDue = oDue
+            originalDeckId = oDid
+            flags = this@Card.flags
+            customData = this@Card.customData
+            this@Card.originalPosition?.let { originalPosition = it }
+            this@Card.memoryState?.let { memoryState = it }
+            this@Card.desiredRetention?.let { desiredRetention = it }
+        }
 
     @LibAnkiAlias("question")
     fun question(
@@ -234,11 +233,7 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("current_deck_id")
-    fun currentDeckId(): anki.decks.DeckId =
-        anki.decks.DeckId
-            .newBuilder()
-            .setDid(oDid.ifZero { did })
-            .build()
+    fun currentDeckId() = deckId { did = oDid.ifZero { did } }
 
     /**
      * Time limit for answering in milliseconds.
