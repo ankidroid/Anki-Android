@@ -36,7 +36,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import anki.decks.DeckTreeNode
+import anki.decks.deckTreeNode
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.OnContextAndLongClickListener.Companion.setOnContextAndLongClickListener
@@ -439,11 +439,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                 val allDecksSet = deckNames.filter { it.deckId != 0L }.mapNotNull { decksRoot.find(it.deckId) }.toSet()
                 if (deckNames.any { it.deckId == ALL_DECKS_ID }) {
                     val newDeckNode =
-                        DeckTreeNode
-                            .newBuilder()
-                            .setDeckId(ALL_DECKS_ID)
-                            .setName("all")
-                            .build()
+                        deckTreeNode {
+                            deckId = ALL_DECKS_ID
+                            name = "all"
+                        }
                     allDecksList.add(DeckNode(newDeckNode, getString(R.string.card_browser_all_decks), null))
                 }
 

@@ -17,7 +17,7 @@
 package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import anki.backend.BackendError
+import anki.backend.backendError
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.servicelayer.ThrowableFilterService
 import com.ichi2.anki.servicelayer.ThrowableFilterService.safeFromPII
@@ -35,13 +35,13 @@ import kotlin.test.assertTrue
 class ThrowableFilterServiceTest : JvmTest() {
     @Test
     fun `Normal exceptions are flagged as PII-safe`() {
-        val exception = BackendDeckIsFilteredException(BackendError.newBuilder().build())
+        val exception = BackendDeckIsFilteredException(backendError {})
         assertTrue(exception.safeFromPII(), "Exception reported as safe from PII")
     }
 
     @Test
     fun `BackendSyncServerMessage exceptions are flagged as PII-unsafe`() {
-        val exception1 = BackendSyncServerMessageException(BackendError.newBuilder().build())
+        val exception1 = BackendSyncServerMessageException(backendError { })
         assertFalse(exception1.safeFromPII(), "Exception reported as not safe from PII")
 
         val exception2 = Exception("", Exception("", exception1))
@@ -54,9 +54,9 @@ class ThrowableFilterServiceTest : JvmTest() {
         assertFalse(ThrowableFilterService.shouldDiscardThrowable(Exception("wanted")))
 
         // exceptions of known unwanted types should not go through
-        val exception1 = BackendNetworkException(BackendError.newBuilder().build())
+        val exception1 = BackendNetworkException(backendError {})
         assertTrue(ThrowableFilterService.shouldDiscardThrowable(exception1))
-        val exception2 = BackendSyncException(BackendError.newBuilder().build())
+        val exception2 = BackendSyncException(backendError {})
         assertTrue(ThrowableFilterService.shouldDiscardThrowable(exception2))
         val exception3 = StorageAccessException("test exception")
         assertTrue(ThrowableFilterService.shouldDiscardThrowable(exception3))
