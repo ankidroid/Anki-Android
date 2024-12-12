@@ -71,16 +71,27 @@ object MetaDB {
 
         // Create tables if not exist
         metaDb.execSQL(
-            "CREATE TABLE IF NOT EXISTS languages (" + " _id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "did INTEGER NOT NULL, ord INTEGER, " + "qa INTEGER, " + "language TEXT)",
+            """CREATE TABLE IF NOT EXISTS languages (
+            _id INTEGER PRIMARY KEY AUTOINCREMENT,
+            did INTEGER NOT NULL,
+            ord INTEGER,
+            qa INTEGER,
+            language TEXT
+            )""",
         )
         metaDb.execSQL(
-            "CREATE TABLE IF NOT EXISTS smallWidgetStatus (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "due INTEGER NOT NULL, eta INTEGER NOT NULL)",
+            """CREATE TABLE IF NOT EXISTS smallWidgetStatus (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            due INTEGER NOT NULL,
+            eta INTEGER NOT NULL
+            )""",
         )
         metaDb.execSQL(
-            "CREATE TABLE IF NOT EXISTS micToolbarState (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "did INTEGER NOT NULL, state INTEGER NOT NULL)",
+            """CREATE TABLE IF NOT EXISTS micToolbarState (
+            _id INTEGER PRIMARY KEY AUTOINCREMENT,
+            did INTEGER NOT NULL,
+            state INTEGER NOT NULL
+            )""",
         )
 
         updateWidgetStatus(metaDb)
@@ -94,8 +105,14 @@ object MetaDB {
         val columnCount = DatabaseUtil.getTableColumnCount(metaDb, "whiteboardState")
         if (columnCount <= 0) {
             metaDb.execSQL(
-                "CREATE TABLE IF NOT EXISTS whiteboardState (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "did INTEGER NOT NULL, state INTEGER, visible INTEGER, lightpencolor INTEGER, darkpencolor INTEGER, stylus INTEGER)",
+                """CREATE TABLE IF NOT EXISTS whiteboardState (
+                _id INTEGER PRIMARY KEY AUTOINCREMENT,
+                did INTEGER NOT NULL, state INTEGER,
+                visible INTEGER,
+                lightpencolor INTEGER,
+                darkpencolor INTEGER,
+                stylus INTEGER
+                )""",
             )
             return
         }
@@ -120,14 +137,20 @@ object MetaDB {
         val columnCount = DatabaseUtil.getTableColumnCount(metaDb, "widgetStatus")
         if (columnCount > 0) {
             if (columnCount < 7) {
-                metaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'")
-                metaDb.execSQL("ALTER TABLE widgetStatus " + "ADD COLUMN time INTEGER NOT NULL DEFAULT '0'")
+                metaDb.execSQL("ALTER TABLE widgetStatus ADD COLUMN eta INTEGER NOT NULL DEFAULT '0'")
+                metaDb.execSQL("ALTER TABLE widgetStatus ADD COLUMN time INTEGER NOT NULL DEFAULT '0'")
             }
         } else {
             metaDb.execSQL(
-                "CREATE TABLE IF NOT EXISTS widgetStatus (" + "deckId INTEGER NOT NULL PRIMARY KEY, " +
-                    "deckName TEXT NOT NULL, " + "newCards INTEGER NOT NULL, " + "lrnCards INTEGER NOT NULL, " +
-                    "dueCards INTEGER NOT NULL, " + "progress INTEGER NOT NULL, " + "eta INTEGER NOT NULL)",
+                """CREATE TABLE IF NOT EXISTS widgetStatus (
+                deckId INTEGER NOT NULL PRIMARY KEY,
+                deckName TEXT NOT NULL,
+                newCards INTEGER NOT NULL,
+                lrnCards INTEGER NOT NULL,
+                dueCards INTEGER NOT NULL,
+                progress INTEGER NOT NULL,
+                eta INTEGER NOT NULL
+                )""",
             )
         }
     }
@@ -225,7 +248,7 @@ object MetaDB {
         try {
             if ("" == getLanguage(context, did, ord, qa)) {
                 mMetaDb!!.execSQL(
-                    "INSERT INTO languages (did, ord, qa, language) " + " VALUES (?, ?, ?, ?);",
+                    "INSERT INTO languages (did, ord, qa, language)  VALUES (?, ?, ?, ?);",
                     arrayOf<Any>(
                         did,
                         ord,
@@ -520,9 +543,7 @@ object MetaDB {
                 ).use { cur ->
                     if (cur.moveToNext()) {
                         metaDb.execSQL(
-                            "UPDATE whiteboardState SET did = ?, " +
-                                columnName + "= ? " +
-                                " WHERE _id=?;",
+                            "UPDATE whiteboardState SET did = ?, $columnName= ?  WHERE _id=?;",
                             arrayOf<Any?>(did, value, cur.getString(0)),
                         )
                     } else {

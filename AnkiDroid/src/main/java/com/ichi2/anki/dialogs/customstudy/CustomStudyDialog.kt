@@ -297,8 +297,7 @@ class CustomStudyDialog(
                             createCustomStudySession(
                                 JSONArray(),
                                 arrayOf(
-                                    "is:new added:" +
-                                        n,
+                                    "is:new added:$n",
                                     Consts.DYN_MAX_SIZE,
                                     Consts.DYN_OLDEST,
                                 ),
@@ -489,7 +488,7 @@ class CustomStudyDialog(
             dyn.put("delays", JSONObject.NULL)
         }
         val ar = dyn.getJSONArray("terms")
-        ar.getJSONArray(0).put(0, "deck:\"" + deckToStudyName + "\" " + terms[0])
+        ar.getJSONArray(0).put(0, """deck:"$deckToStudyName" terms[0]""")
         ar.getJSONArray(0).put(1, terms[1])
         @DynPriority val priority = terms[2] as Int
         ar.getJSONArray(0).put(2, priority)

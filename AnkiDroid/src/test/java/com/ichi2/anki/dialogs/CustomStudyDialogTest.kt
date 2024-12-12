@@ -37,6 +37,7 @@ import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsNull
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import org.junit.After
 import org.junit.Test
@@ -84,24 +85,26 @@ class CustomStudyDialogTest : RobolectricTest() {
             customStudy.remove("id")
             customStudy.remove("mod")
             customStudy.remove("name")
+            @Language("JSON")
             val expected =
-                "{" +
-                    "\"browserCollapsed\":false," +
-                    "\"collapsed\":false," +
-                    "\"delays\":null," +
-                    "\"desc\":\"\"," +
-                    "\"dyn\":1," +
-                    "\"lrnToday\":[0,0]," +
-                    "\"newToday\":[0,0]," +
-                    "\"previewDelay\":0," +
-                    "\"previewAgainSecs\":60,\"previewHardSecs\":600,\"previewGoodSecs\":0," +
-                    "\"resched\":true," +
-                    "\"revToday\":[0,0]," +
-                    "\"separate\":true," +
-                    "\"terms\":[[\"deck:\\\"Default\\\" prop:due<=1\",99999,6]]," +
-                    "\"timeToday\":[0,0]," +
-                    "\"usn\":-1" +
-                    "}"
+                """{
+                    "browserCollapsed":false,
+                    "collapsed":false,
+                    "delays":null,
+                    "desc":"",
+                    "dyn":1,
+                    "lrnToday":[0,0],
+                    "newToday":[0,0],
+                    "previewDelay":0,
+                    "previewAgainSecs":60,"previewHardSecs":600,"previewGoodSecs":0,
+                    "resched":true,
+                    "revToday":[0,0],
+                    "separate":true,
+                    "terms":[["deck:\"Default\" prop:due<=1",99999,6]],
+                    "timeToday":[0,0],
+                    "usn":-1
+                    }
+                """
             MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
         }
     }

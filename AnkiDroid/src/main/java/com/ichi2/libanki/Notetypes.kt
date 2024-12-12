@@ -58,6 +58,7 @@ import com.ichi2.utils.HashUtil
 import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
+import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -676,7 +677,7 @@ class Notetypes(
         ords: IntArray,
     ): List<Long>? {
         val cardIdsToDeleteSql =
-            "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
+            "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in ${Utils.ids2str(ords)}"
         val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
         // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
         Timber.d("getCardIdsForModel found %s cards to delete for model %s and ords %s", cids.size, modelId, Utils.ids2str(ords))
@@ -687,7 +688,7 @@ class Notetypes(
         Timber.d("noteCountPreDeleteSql was '%s'", noteCountPreDeleteSql)
         Timber.d("preDeleteNoteCount is %s", preDeleteNoteCount)
         val noteCountPostDeleteSql =
-            "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in " + Utils.ids2str(ords)
+            "select count(distinct(nid)) from cards where nid in (select id from notes where mid = ?) and ord not in ${Utils.ids2str(ords)}"
         Timber.d("noteCountPostDeleteSql was '%s'", noteCountPostDeleteSql)
         val postDeleteNoteCount: Int = col.db.queryScalar(noteCountPostDeleteSql, modelId)
         Timber.d("postDeleteNoteCount would be %s", postDeleteNoteCount)
@@ -708,12 +709,9 @@ class Notetypes(
                 it.put("name", name)
             }
 
+        @Language("JSON")
         private const val DEFAULT_TEMPLATE =
-            (
-                "{\"name\": \"\", " + "\"ord\": null, " + "\"qfmt\": \"\", " +
-                    "\"afmt\": \"\", " + "\"did\": null, " + "\"bqfmt\": \"\"," + "\"bafmt\": \"\"," + "\"bfont\": \"\"," +
-                    "\"bsize\": 0 }"
-            )
+            """{"name": "", "ord": null, "qfmt": "", "afmt": "", "did": null, "bqfmt": "","bafmt": "","bfont": "", "bsize": 0 }"""
 
         /** "Mapping of field name -> (ord, field).  */
         fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, JSONObject>> {
