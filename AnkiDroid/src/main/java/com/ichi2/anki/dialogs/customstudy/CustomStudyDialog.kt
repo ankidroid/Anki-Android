@@ -19,6 +19,7 @@ package com.ichi2.anki.dialogs.customstudy
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.res.Resources
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -50,6 +51,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.showThemedToast
+import com.ichi2.anki.ui.internationalization.toSentenceCase
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.anki.withProgress
@@ -168,13 +170,12 @@ class CustomStudyDialog(
 
     private fun buildContextMenu(): AlertDialog {
         val listIds = getListIds()
-        val titles = listIds.map { resources.getString(it.stringResource) }
 
         return AlertDialog
             .Builder(requireActivity())
-            .title(R.string.custom_study)
+            .title(text = TR.actionsCustomStudy().toSentenceCase(this, R.string.sentence_custom_study))
             .cancelable(true)
-            .listItems(items = titles) { _, index ->
+            .listItems(items = listIds.map { it.getTitle(resources) }) { _, index ->
                 when (listIds[index]) {
                     STUDY_TAGS -> {
                         /*
@@ -528,15 +529,27 @@ class CustomStudyDialog(
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     enum class ContextMenuOption(
-        val stringResource: Int,
+        val getTitle: Resources.() -> String,
     ) {
-        STUDY_NEW(R.string.custom_study_increase_new_limit),
-        STUDY_REV(R.string.custom_study_increase_review_limit),
-        STUDY_FORGOT(R.string.custom_study_review_forgotten),
-        STUDY_AHEAD(R.string.custom_study_review_ahead),
-        STUDY_RANDOM(R.string.custom_study_random_selection),
-        STUDY_PREVIEW(R.string.custom_study_preview_new),
-        STUDY_TAGS(R.string.custom_study_limit_tags),
+        /** Increase today's new card limit */
+        STUDY_NEW({ TR.customStudyIncreaseTodaysNewCardLimit() }),
+
+        /** Increase today's review card limit */
+        STUDY_REV({ TR.customStudyIncreaseTodaysReviewCardLimit() }),
+
+        /** Review forgotten cards */
+        STUDY_FORGOT({ TR.customStudyReviewForgottenCards() }),
+
+        /** Review ahead */
+        STUDY_AHEAD({ TR.customStudyReviewAhead() }),
+
+        STUDY_RANDOM({ getString(R.string.custom_study_random_selection) }),
+
+        /** Preview new cards */
+        STUDY_PREVIEW({ TR.customStudyPreviewNewCards() }),
+
+        /** Limit to particular tags */
+        STUDY_TAGS({ getString(R.string.custom_study_limit_tags) }),
     }
 
     /**
