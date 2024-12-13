@@ -42,7 +42,7 @@ fun AlertDialog.performPositiveClick() {
     // This exists as callOnClick did not call the listener
     val positiveButton = assertNotNull(getButton(DialogInterface.BUTTON_POSITIVE), message = "positive button")
     assertThat("button is visible", positiveButton.isVisible)
-    assertThat("button is enalbed", positiveButton.isEnabled)
+    assertThat("button is enabled", positiveButton.isEnabled)
     executeFunctionUsingHandler { positiveButton.callOnClick() }
     InstrumentationRegistry.getInstrumentation().waitForIdleSync()
 }
