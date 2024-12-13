@@ -27,7 +27,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.customStudyDefaultsResponse
-import com.ichi2.anki.R
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
@@ -124,7 +124,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
         ) { dialogFragment: CustomStudyDialog ->
             assertNotNull(dialogFragment.dialog as? AlertDialog?, "dialog")
-            onView(withText(R.string.custom_study_increase_new_limit))
+            onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
         }
@@ -140,7 +140,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             factory = dialogFactory(col = mockCollectionWithSchedulerReturning(studyDefaults)),
         ) { dialogFragment: CustomStudyDialog ->
             assertNotNull(dialogFragment.dialog as? AlertDialog?, "dialog")
-            onView(withText(R.string.custom_study_increase_new_limit))
+            onView(withText(TR.customStudyIncreaseTodaysNewCardLimit()))
                 .inRoot(isDialog())
                 .check(doesNotExist())
         }
