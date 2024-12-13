@@ -520,7 +520,8 @@ class CustomStudyDialog(
      *
      * Upstream: [sched.proto: CustomStudyDefaultsResponse](https://github.com/search?q=repo%3Aankitects%2Fanki+CustomStudyDefaultsResponse+language%3A%22Protocol+Buffer%22&type=code&l=Protocol+Buffer)
      */
-    private class CustomStudyDefaults(
+    @VisibleForTesting
+    class CustomStudyDefaults(
         val extendNew: ExtendLimits,
         val extendReview: ExtendLimits,
         @Suppress("unused")
