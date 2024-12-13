@@ -344,11 +344,6 @@ class CardBrowserViewModel(
         // This impacts browserRowForId(), which we do not use yet
         withCol { backend.setActiveBrowserColumns(columns.backendKeys) }
     }
-    fun checkLanguageChange() {
-        if (flowOfLanguageChanged.value != LanguageUtil.getSystemLocale().language) {
-            flowOfLanguageChanged.update { LanguageUtil.getSystemLocale().language }
-        }
-    }
 
     @VisibleForTesting
     fun manualInit() {
