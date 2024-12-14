@@ -39,7 +39,7 @@ import java.io.File
 import java.util.Locale
 
 /**
- * API which can be used to add and query notes,cards,decks, and models to AnkiDroid
+ * API which can be used to add and query notes,cards,decks, and note types to AnkiDroid
  *
  * On Android M (and higher) the #READ_WRITE_PERMISSION is required for all read/write operations.
  * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
@@ -53,33 +53,33 @@ public class AddContentApi(
     private val resolver: ContentResolver = this.context.contentResolver
 
     /**
-     * Create a new note with specified fields, tags, and model and place it in the specified deck.
+     * Create a new note with specified fields, tags, and note type and place it in the specified deck.
      * No duplicate checking is performed - so the note should be checked beforehand using #findNotesByKeys
-     * @param modelId ID for the model used to add the notes
+     * @param noteTypeId ID for the note type used to add the notes
      * @param deckId ID for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
-     * @param fields fields to add to the note. Length should be the same as number of fields in model
+     * @param fields fields to add to the note. Length should be the same as number of fields in note type
      * @param tags tags to include in the new note
      * @return note id or null if the note could not be added
      */
     public fun addNote(
-        modelId: Long,
+        noteTypeId: Long,
         deckId: Long,
         fields: Array<String>,
         tags: Set<String>?,
     ): Long? {
-        val noteUri = addNoteInternal(modelId, deckId, fields, tags) ?: return null
+        val noteUri = addNoteInternal(noteTypeId, deckId, fields, tags) ?: return null
         return noteUri.lastPathSegment!!.toLong()
     }
 
     private fun addNoteInternal(
-        modelId: Long,
+        noteTypeId: Long,
         deckId: Long,
         fields: Array<String>,
         tags: Set<String>?,
     ): Uri? {
         val values =
             ContentValues().apply {
-                put(Note.MID, modelId)
+                put(Note.MID, noteTypeId)
                 put(Note.FLDS, Utils.joinFields(fields))
                 if (tags != null) put(Note.TAGS, Utils.joinTags(tags))
             }
@@ -106,16 +106,16 @@ public class AddContentApi(
     }
 
     /**
-     * Create new notes with specified fields, tags and model and place them in the specified deck.
+     * Create new notes with specified fields, tags and note type and place them in the specified deck.
      * No duplicate checking is performed - so all notes should be checked beforehand using #findNotesByKeys
-     * @param modelId id for the model used to add the notes
+     * @param noteTypeId id for the note type used to add the notes
      * @param deckId id for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
-     * @param fieldsList List of fields arrays (one per note). Array lengths should be same as number of fields in model
+     * @param fieldsList List of fields arrays (one per note). Array lengths should be same as number of fields in note type
      * @param tagsList List of tags (one per note) (may be null)
      * @return The number of notes added (< 0 means there was a problem)
      */
     public fun addNotes(
-        modelId: Long,
+        noteTypeId: Long,
         deckId: Long,
         fieldsList: List<Array<String>>,
         tagsList: List<Set<String>?>?,
@@ -125,7 +125,7 @@ public class AddContentApi(
         for (i in fieldsList.indices) {
             val values =
                 ContentValues().apply {
-                    put(Note.MID, modelId)
+                    put(Note.MID, noteTypeId)
                     put(Note.FLDS, Utils.joinFields(fieldsList[i]))
                     if (tagsList != null && tagsList[i] != null) {
                         put(Note.TAGS, Utils.joinTags(tagsList[i]))
@@ -154,14 +154,14 @@ public class AddContentApi(
      *
      * Example usage:
      * ```
-     *     Long modelId = getModelId(); // implementation can be seen in api sample app
+     *     Long noteTypeId = getNoteTypeId(); // implementation can be seen in api sample app
      *     Long deckId = getDeckId(); // as above
      *     Set<String> tags = getTags(); // as above
      *     Uri fileUri = ... // this will be returned by a File Picker activity where we select an image file
      *     String addedImageFileName = mApi.addMediaFromUri(fileUri, "My_Image_File", "image");
      *
      *     String[] fields = new String[] {"text on front of card", "text on back of card " + addedImageFileName};
-     *     mApi.addNote(modelId, deckId, fields, tags)
+     *     mApi.addNote(noteTypeId, deckId, fields, tags)
      * ```
      *
      * @param fileUri   Uri for the file to be added, required.
@@ -202,7 +202,7 @@ public class AddContentApi(
 
     /**
      * Find all existing notes in the collection which have mid and a duplicate key
-     * @param mid model id
+     * @param mid note type id
      * @param key the first field of a note
      * @return a list of duplicate notes
      */
@@ -221,7 +221,7 @@ public class AddContentApi(
     /**
      * Find all notes in the collection which have mid and a first field that matches key
      * Much faster than calling findDuplicateNotes(long, String) when the list of keys is large
-     * @param mid model id
+     * @param mid note type id
      * @param keys list of keys
      * @return a SparseArray with a list of duplicate notes for each key
      */
@@ -231,9 +231,9 @@ public class AddContentApi(
     ): SparseArray<MutableList<NoteInfo?>>? = compat.findDuplicateNotes(mid, keys)
 
     /**
-     * Get the number of notes that exist for the specified model ID
-     * @param mid id of the model to be used
-     * @return number of notes that exist with that model ID or -1 if there was a problem
+     * Get the number of notes that exist for the specified note type ID
+     * @param mid id of the note type to be used
+     * @return number of notes that exist with that note type ID or -1 if there was a problem
      */
     public fun getNoteCount(mid: Long): Int = compat.queryNotes(mid)?.use { cursor -> cursor.count } ?: 0
 
@@ -337,55 +337,55 @@ public class AddContentApi(
     }
 
     /**
-     * Insert a new basic front/back model with two fields and one card
-     * @param name name of the model
-     * @return the mid of the model which was created, or null if it could not be created
+     * Insert a new basic front/back note type with two fields and one card
+     * @param name name of the note type
+     * @return the mid of the note type which was created, or null if it could not be created
      */
-    public fun addNewBasicModel(name: String): Long? =
-        addNewCustomModel(
+    public fun addNewBasicNoteType(name: String): Long? =
+        addNewCustomNoteType(
             name,
-            BasicModel.FIELDS,
-            BasicModel.CARD_NAMES,
-            BasicModel.QFMT,
-            BasicModel.AFMT,
+            BasicNoteType.FIELDS,
+            BasicNoteType.CARD_NAMES,
+            BasicNoteType.QFMT,
+            BasicNoteType.AFMT,
             null,
             null,
             null,
         )
 
     /**
-     * Insert a new basic front/back model with two fields and TWO cards
+     * Insert a new basic front/back note type with two fields and TWO cards
      * The first card goes from front->back, and the second goes from back->front
-     * @param name name of the model
-     * @return the mid of the model which was created, or null if it could not be created
+     * @param name name of the note type
+     * @return the mid of the note type which was created, or null if it could not be created
      */
-    public fun addNewBasic2Model(name: String): Long? =
-        addNewCustomModel(
+    public fun addNewBasic2NoteType(name: String): Long? =
+        addNewCustomNoteType(
             name,
-            Basic2Model.FIELDS,
-            Basic2Model.CARD_NAMES,
-            Basic2Model.QFMT,
-            Basic2Model.AFMT,
+            Basic2NoteType.FIELDS,
+            Basic2NoteType.CARD_NAMES,
+            Basic2NoteType.QFMT,
+            Basic2NoteType.AFMT,
             null,
             null,
             null,
         )
 
     /**
-     * Insert a new model into AnkiDroid.
+     * Insert a new note type into AnkiDroid.
      * See the [Anki Desktop Manual](https://docs.ankiweb.net/templates/intro.html) for more help
-     * @param name name of model
+     * @param name name of note type
      * @param fields array of field names
      * @param cards array of names for the card templates
      * @param qfmt array of formatting strings for the question side of each template in cards
      * @param afmt array of formatting strings for the answer side of each template in cards
      * @param css css styling information to be shared across all of the templates. Use null for default CSS.
-     * @param did default deck to add cards to when using this model. Use null or #DEFAULT_DECK_ID for default deck.
+     * @param did default deck to add cards to when using this note type. Use null or #DEFAULT_DECK_ID for default deck.
      * @param sortf index of field to be used for sorting. Use null for unspecified (unsupported in provider spec v1)
-     * @return the mid of the model which was created, or null if it could not be created
+     * @return the id of the note type which was created, or null if it could not be created
      */
     @Suppress("MemberVisibilityCanBePrivate") // silence IDE
-    public fun addNewCustomModel(
+    public fun addNewCustomNoteType(
         name: String,
         fields: Array<String>,
         cards: Array<String>,
@@ -397,7 +397,7 @@ public class AddContentApi(
     ): Long? {
         // Check that size of arrays are consistent
         require(!(qfmt.size != cards.size || afmt.size != cards.size)) { "cards, qfmt, and afmt arrays must all be same length" }
-        // Create the model using dummy templates
+        // Create the note type using dummy templates
         var values =
             ContentValues().apply {
                 put(Model.NAME, name)
@@ -407,9 +407,9 @@ public class AddContentApi(
                 put(Model.DECK_ID, did)
                 put(Model.SORT_FIELD_INDEX, sortf)
             }
-        val modelUri = resolver.insert(Model.CONTENT_URI, values) ?: return null
+        val noteTypeUri = resolver.insert(Model.CONTENT_URI, values) ?: return null
         // Set the remaining template parameters
-        val templatesUri = Uri.withAppendedPath(modelUri, "templates")
+        val templatesUri = Uri.withAppendedPath(noteTypeUri, "templates")
         for (i in cards.indices) {
             val uri = Uri.withAppendedPath(templatesUri, i.toString())
             values =
@@ -421,39 +421,39 @@ public class AddContentApi(
                 }
             resolver.update(uri, values, null, null)
         }
-        return modelUri.lastPathSegment!!.toLong()
-    } // Get the current model
+        return noteTypeUri.lastPathSegment!!.toLong()
+    } // Get the current note type
 
     /**
-     * Get the ID for the note type / model which is currently in use
-     * @return id for current model, or < 0 if there was a problem
+     * Get the ID for the note type / note type which is currently in use
+     * @return id for current note type, or < 0 if there was a problem
      */
-    public val currentModelId: Long
+    public val currentNoteTypeId: Long
         get() {
-            // Get the current model
-            val uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_MODEL_ID)
-            val singleModelQuery = resolver.query(uri, null, null, null, null) ?: return -1L
-            return singleModelQuery.use { singleModelCursor ->
-                singleModelCursor.moveToFirst()
-                singleModelCursor.getLong(singleModelCursor.getColumnIndex(Model._ID))
+            // Get the current note type
+            val uri = Uri.withAppendedPath(Model.CONTENT_URI, Model.CURRENT_NOTE_TYPE_ID)
+            val singleNoteTypeQuery = resolver.query(uri, null, null, null, null) ?: return -1L
+            return singleNoteTypeQuery.use { singleNoteTypeCursor ->
+                singleNoteTypeCursor.moveToFirst()
+                singleNoteTypeCursor.getLong(singleNoteTypeCursor.getColumnIndex(Model._ID))
             }
         }
 
     /**
-     * Get the field names belonging to specified model
-     * @param modelId the ID of the model to use
-     * @return the names of all the fields, or null if the model doesn't exist or there was some other problem
+     * Get the field names belonging to specified note type
+     * @param noteTypeId the ID of the note type to use
+     * @return the names of all the fields, or null if the note type doesn't exist or there was some other problem
      */
-    public fun getFieldList(modelId: Long): Array<String>? {
-        // Get the current model
-        val uri = Uri.withAppendedPath(Model.CONTENT_URI, modelId.toString())
-        val modelQuery = resolver.query(uri, null, null, null, null) ?: return null
+    public fun getFieldList(noteTypeId: Long): Array<String>? {
+        // Get the current note type
+        val uri = Uri.withAppendedPath(Model.CONTENT_URI, noteTypeId.toString())
+        val noteTypeQuery = resolver.query(uri, null, null, null, null) ?: return null
         var splitFlds: Array<String>? = null
-        modelQuery.use { modelCursor ->
-            if (modelCursor.moveToNext()) {
+        noteTypeQuery.use { noteTypeCursor ->
+            if (noteTypeCursor.moveToNext()) {
                 splitFlds =
                     Utils.splitFields(
-                        modelCursor.getString(modelCursor.getColumnIndex(Model.FIELD_NAMES)),
+                        noteTypeCursor.getString(noteTypeCursor.getColumnIndex(Model.FIELD_NAMES)),
                     )
             }
         }
@@ -461,44 +461,44 @@ public class AddContentApi(
     }
 
     /**
-     * Get a map of all model ids and names
+     * Get a map of all note type ids and names
      * @return map of (id, name) pairs
      */
-    public val modelList: Map<Long, String>?
-        get() = getModelList(1)
+    public val noteTypeList: Map<Long, String>?
+        get() = getNoteTYpeList(1)
 
     /**
-     * Get a map of all model ids and names with number of fields larger than minNumFields
-     * @param minNumFields minimum number of fields to consider the model for inclusion
+     * Get a map of all note type ids and names with number of fields larger than minNumFields
+     * @param minNumFields minimum number of fields to consider the note type for inclusion
      * @return map of (id, name) pairs or null if there was a problem
      */
-    public fun getModelList(minNumFields: Int): Map<Long, String>? {
-        // Get the current model
-        val allModelsQuery =
+    public fun getNoteTYpeList(minNumFields: Int): Map<Long, String>? {
+        // Get the current note type
+        val allNoteTypesQuery =
             resolver.query(Model.CONTENT_URI, null, null, null, null)
                 ?: return null
-        val models: MutableMap<Long, String> = HashMap()
-        allModelsQuery.use { allModelsCursor ->
-            while (allModelsCursor.moveToNext()) {
-                val modelId = allModelsCursor.getLong(allModelsCursor.getColumnIndex(Model._ID))
-                val name = allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.NAME))
+        val noteTypes: MutableMap<Long, String> = HashMap()
+        allNoteTypesQuery.use { allNoteTypesCursor ->
+            while (allNoteTypesCursor.moveToNext()) {
+                val noteTypeId = allNoteTypesCursor.getLong(allNoteTypesCursor.getColumnIndex(Model._ID))
+                val name = allNoteTypesCursor.getString(allNoteTypesCursor.getColumnIndex(Model.NAME))
                 val flds =
-                    allModelsCursor.getString(allModelsCursor.getColumnIndex(Model.FIELD_NAMES))
+                    allNoteTypesCursor.getString(allNoteTypesCursor.getColumnIndex(Model.FIELD_NAMES))
                 val numFlds: Int = Utils.splitFields(flds).size
                 if (numFlds >= minNumFields) {
-                    models[modelId] = name
+                    noteTypes[noteTypeId] = name
                 }
             }
         }
-        return models
+        return noteTypes
     }
 
     /**
-     * Get the name of the model which has given ID
-     * @param mid id of model
-     * @return the name of the model, or null if no model was found
+     * Get the name of the note type which has given ID
+     * @param mid id of note type
+     * @return the name of the note type, or null if no note type was found
      */
-    public fun getModelName(mid: Long): String? = modelList!![mid]
+    public fun getNoteTypeName(mid: Long): String? = noteTypeList!![mid]
 
     /**
      * Create a new deck with specified name and save the reference to SharedPreferences for later
@@ -537,7 +537,7 @@ public class AddContentApi(
                     null
                 }
             }
-        } // Get the current model
+        } // Get the current note type
 
     /**
      * Get a list of all the deck id / name pairs
@@ -545,7 +545,7 @@ public class AddContentApi(
      */
     public val deckList: Map<Long, String>?
         get() {
-            // Get the current model
+            // Get the current note type
             val allDecksQuery =
                 resolver.query(Deck.CONTENT_ALL_URI, null, null, null, null) ?: return null
             val decks: MutableMap<Long, String> = HashMap()
@@ -624,11 +624,11 @@ public class AddContentApi(
 
     private interface Compat {
         /**
-         * Query all notes for a given model
-         * @param modelId the model ID to limit query to
-         * @return a cursor with all notes matching modelId
+         * Query all notes for a given note type
+         * @param noteTypeId the note type ID to limit query to
+         * @return a cursor with all notes matching noteTypeId
          */
-        fun queryNotes(modelId: Long): Cursor?
+        fun queryNotes(noteTypeId: Long): Cursor?
 
         /**
          * Add new notes to the AnkiDroid content provider in bulk.
@@ -643,20 +643,20 @@ public class AddContentApi(
 
         /**
          * For each key, look for an existing note that has matching first field
-         * @param modelId the model ID to limit the search to
+         * @param noteTypeId the note type ID to limit the search to
          * @param keys  list of keys for each note
          * @return array with a list of NoteInfo objects for each key if duplicates exist
          */
         fun findDuplicateNotes(
-            modelId: Long,
+            noteTypeId: Long,
             keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>?
     }
 
     private open inner class CompatV1 : Compat {
-        override fun queryNotes(modelId: Long): Cursor? {
-            val modelName = getModelName(modelId) ?: return null
-            val queryFormat = "note:\"$modelName\""
+        override fun queryNotes(noteTypeId: Long): Cursor? {
+            val noteTypeName = getNoteTypeName(noteTypeId) ?: return null
+            val queryFormat = "note:\"$noteTypeName\""
             return resolver.query(
                 Note.CONTENT_URI,
                 PROJECTION,
@@ -672,15 +672,15 @@ public class AddContentApi(
         ): Int = valuesArr.count { addNoteForContentValues(deckId, it) != null }
 
         override fun findDuplicateNotes(
-            modelId: Long,
+            noteTypeId: Long,
             keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>? {
             // Content provider spec v1 does not support direct querying of the notes table, so use Anki browser syntax
-            val modelName = getModelName(modelId) ?: return null
-            val modelFieldList = getFieldList(modelId) ?: return null
+            val noteTypeName = getNoteTypeName(noteTypeId) ?: return null
+            val noteTypeFieldList = getFieldList(noteTypeId) ?: return null
             val duplicates = SparseArray<MutableList<NoteInfo?>>()
             // Loop through each item in fieldsArray looking for an existing note, and add it to the duplicates array
-            val queryFormat = "${modelFieldList[0]}:\"%%s\" note:\"$modelName\""
+            val queryFormat = "${noteTypeFieldList[0]}:\"%%s\" note:\"$noteTypeName\""
             for (outputPos in keys.indices) {
                 val selection = String.format(queryFormat, keys[outputPos])
                 val query =
@@ -721,11 +721,11 @@ public class AddContentApi(
     }
 
     private inner class CompatV2 : CompatV1() {
-        override fun queryNotes(modelId: Long): Cursor? =
+        override fun queryNotes(noteTypeId: Long): Cursor? =
             resolver.query(
                 Note.CONTENT_URI_V2,
                 PROJECTION,
-                String.format(Locale.US, "%s=%d", Note.MID, modelId),
+                String.format(Locale.US, "%s=%d", Note.MID, noteTypeId),
                 null,
                 null,
             )
@@ -743,7 +743,7 @@ public class AddContentApi(
         }
 
         override fun findDuplicateNotes(
-            modelId: Long,
+            noteTypeId: Long,
             keys: List<String?>,
         ): SparseArray<MutableList<NoteInfo?>>? {
             // Build set of checksums and a HashMap from the key (first field) back to the original index in fieldsArray
@@ -757,13 +757,13 @@ public class AddContentApi(
                 }
                 keyToIndexesMap[key]!!.add(i)
             }
-            // Query for notes that have specified model and checksum of first field matches
+            // Query for notes that have specified note type and checksum of first field matches
             val sel =
                 String.format(
                     Locale.US,
                     "%s=%d and %s in (%s)",
                     Note.MID,
-                    modelId,
+                    noteTypeId,
                     Note.CSUM,
                     csums.joinToString(separator = ","),
                 )

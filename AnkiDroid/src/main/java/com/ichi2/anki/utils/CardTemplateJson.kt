@@ -23,7 +23,7 @@ import org.json.JSONObject
 
 class CardTemplateJson : JSONObject {
     /**
-     * Creates a new empty model object
+     * Creates a new empty card template object
      */
     constructor() : super()
 
@@ -39,7 +39,7 @@ class CardTemplateJson : JSONObject {
     }
 
     /**
-     * Creates a model object form json string
+     * Creates a card template object form json string
      */
     constructor(
         @Language("json") json: String,

@@ -92,7 +92,7 @@ class FieldState private constructor(
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
             val fMapNew = Notetypes.fieldMap(type.newNotetype!!)
-            return fromFieldMap(editor.requireContext(), items, fMapNew, type.modelChangeFieldMap!!)
+            return fromFieldMap(editor.requireContext(), items, fMapNew, type.noteTypeChangeFieldMap)
         }
         return editor.fieldsFromSelectedNote
     }
@@ -106,18 +106,18 @@ class FieldState private constructor(
         val type: Type,
         val replaceNewlines: Boolean,
     ) {
-        var modelChangeFieldMap: Map<Int, Int>? = null
+        var noteTypeChangeFieldMap: Map<Int, Int>? = null
         var newNotetype: NotetypeJson? = null
 
         companion object {
             fun refreshWithMap(
                 newNotetype: NotetypeJson?,
-                modelChangeFieldMap: Map<Int, Int>?,
+                noteTypeChangeFieldMap: Map<Int, Int>?,
                 replaceNewlines: Boolean,
             ): FieldChangeType {
                 val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
                 typeClass.newNotetype = newNotetype
-                typeClass.modelChangeFieldMap = modelChangeFieldMap
+                typeClass.noteTypeChangeFieldMap = noteTypeChangeFieldMap
                 return typeClass
             }
 
@@ -154,7 +154,7 @@ class FieldState private constructor(
             context: Context,
             oldFields: Array<Array<String>>,
             fMapNew: Map<String, Pair<Int, Field>>,
-            modelChangeFieldMap: Map<Int, Int>,
+            noteTypeChangeFieldMap: Map<Int, Int>?,
         ): Array<Array<String>> {
             // Build array of label/values to provide to field EditText views
             val fields = Array(fMapNew.size) { arrayOfNulls<String>(2) }
@@ -163,9 +163,9 @@ class FieldState private constructor(
                 // Field index of new note type
                 val i = fieldPair.first
                 // Add values from old note type if they exist in map, otherwise make the new field empty
-                if (modelChangeFieldMap.containsValue(i)) {
+                if (noteTypeChangeFieldMap!!.containsValue(i)) {
                     // Get index of field from old note type given the field index of new note type
-                    val j = getKeyByValue(modelChangeFieldMap, i) ?: continue
+                    val j = getKeyByValue(noteTypeChangeFieldMap, i) ?: continue
                     // Set the new field label text
                     if (allowFieldRemapping(oldFields)) {
                         // Show the content of old field if remapping is enabled

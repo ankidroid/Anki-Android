@@ -49,7 +49,7 @@ class FinderTest : JvmTest() {
     fun searchForBuriedReturnsManuallyAndSiblingBuried() {
         val searchQuery = "is:buried"
         enableBurySiblings()
-        super.addNoteUsingModelName("Basic (and reversed card)", "Front", "Back")
+        super.addNoteUsingNoteTypeName("Basic (and reversed card)", "Front", "Back")
         val toAnswer: Card = col.sched.card!!
 
         // act
@@ -273,7 +273,7 @@ class FinderTest : JvmTest() {
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=true).get(0));
          */
 
-        // model
+        // note type
         assertEquals(3, col.findCards("note:basic").size)
         assertEquals(2, col.findCards("-note:basic").size)
         assertEquals(5, col.findCards("-note:foo").size)

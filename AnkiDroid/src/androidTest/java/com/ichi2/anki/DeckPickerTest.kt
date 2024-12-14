@@ -49,7 +49,7 @@ class DeckPickerTest : InstrumentedTest() {
 
     @Before
     fun before() {
-        addNoteUsingBasicModel()
+        addNoteUsingBasicNoteType()
         disableIntroductionSlide()
         discardPreliminaryViews()
     }

@@ -32,8 +32,8 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.IntentHandler2
 import com.ichi2.anki.IntroductionActivity
 import com.ichi2.anki.LoginActivity
-import com.ichi2.anki.ModelFieldEditor
 import com.ichi2.anki.MyAccount
+import com.ichi2.anki.NoteTypeFieldEditor
 import com.ichi2.anki.Reviewer
 import com.ichi2.anki.SharedDecksActivity
 import com.ichi2.anki.SingleFragmentActivity
@@ -70,7 +70,7 @@ object ActivityList {
             get(IntentHandler2::class.java),
             get(StudyOptionsActivity::class.java),
             get(CardBrowser::class.java),
-            get(ModelFieldEditor::class.java),
+            get(NoteTypeFieldEditor::class.java),
             // Likely has unhandled intents
             get(Reviewer::class.java),
             get(MyAccount::class.java),
@@ -103,7 +103,7 @@ object ActivityList {
         }
     }
 
-    private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("modelId", 1L) }
+    private fun intentForCardTemplateEditor(): Intent = Intent().apply { putExtra("noteTypeId", 1L) }
 
     class ActivityLaunchParam(
         var activity: Class<out Activity>,

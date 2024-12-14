@@ -358,7 +358,7 @@ public object FlashCardsContract {
          */
         @JvmField // required for Java API
         public val CONTENT_URI: Uri = Uri.withAppendedPath(AUTHORITY_URI, "models")
-        public const val CURRENT_MODEL_ID: String = "current"
+        public const val CURRENT_NOTE_TYPE_ID: String = "current"
 
         /**
          * This is the ID of the note type. It is the same as the note ID in Anki. This ID can be

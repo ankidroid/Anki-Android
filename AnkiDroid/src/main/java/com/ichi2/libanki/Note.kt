@@ -21,7 +21,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import anki.notes.NoteFieldsCheckResponse
 import com.ichi2.libanki.Consts.DEFAULT_DECK_ID
-import com.ichi2.libanki.Consts.MODEL_STD
+import com.ichi2.libanki.Consts.NOTE_TYPE_STD
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.set
@@ -111,13 +111,13 @@ class Note : Cloneable {
         card.ord = ord
         card.did = DEFAULT_DECK_ID
 
-        val model = customNoteType ?: notetype
+        val note_type = customNoteType ?: notetype
         val template =
             if (customTemplate != null) {
                 customTemplate.deepClone()
             } else {
-                val index = if (model.type == MODEL_STD) ord else 0
-                model.tmpls.getJSONObject(index)
+                val index = if (note_type.type == NOTE_TYPE_STD) ord else 0
+                note_type.tmpls.getJSONObject(index)
             }
         // may differ in cloze case
         template["ord"] = card.ord
@@ -127,7 +127,7 @@ class Note : Cloneable {
                 .fromCardLayout(
                     note = this,
                     card = card,
-                    notetype = model,
+                    notetype = note_type,
                     template = template,
                     fillEmpty = fillEmpty,
                 ).render(col)

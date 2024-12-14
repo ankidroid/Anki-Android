@@ -2,9 +2,9 @@
 package com.ichi2.anki.api
 
 /**
- * Definitions of the basic with reverse model
+ * Definitions of the basic with reverse note type
  */
-internal object Basic2Model {
+internal object Basic2NoteType {
     @JvmField // required for Java API
     val FIELDS = arrayOf("Front", "Back")
 

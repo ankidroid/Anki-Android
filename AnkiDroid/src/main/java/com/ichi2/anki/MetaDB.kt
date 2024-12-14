@@ -196,7 +196,7 @@ object MetaDB {
         return false
     }
 
-    /** Reset the language associations for all the decks and card models.  */
+    /** Reset the language associations for all the decks and note type.  */
     fun resetLanguages(context: Context): Boolean {
         openDBIfClosed(context)
         try {
@@ -230,7 +230,7 @@ object MetaDB {
     }
 
     /**
-     * Associates a language to a deck, model, and card model for a given type.
+     * Associates a language to a deck, note type, and note type for a given type.
      *
      * @param qa the part of the card for which to store the association, [.LANGUAGES_QA_QUESTION],
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED]
@@ -274,7 +274,7 @@ object MetaDB {
     }
 
     /**
-     * Returns the language associated with the given deck, model and card model, for the given type.
+     * Returns the language associated with the given deck, note type and template, for the given type.
      *
      * @param qa the part of the card for which to store the association, [.LANGUAGES_QA_QUESTION],
      * [.LANGUAGES_QA_ANSWER], or [.LANGUAGES_QA_UNDEFINED] return the language associate with

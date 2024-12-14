@@ -91,18 +91,18 @@ class NoteTypeTest {
     }
 }
 
-const val BASIC_MODEL_NAME = "Basic"
+const val BASIC_NOTE_TYPE_NAME = "Basic"
 
 /**
- * Creates a basic model.
+ * Creates a basic note type.
  *
- * Note: changes to this model will propagate to [createBasicTypingModel] as that model is built on
- * top of the model returned by this function.
+ * Note: changes to this note type will propagate to [createBasicTypingNoteType] as that note type is built on
+ * top of the note type returned by this function.
  *
- * @param name name of the new model
- * @return the new model
+ * @param name name of the new note type
+ * @return the new note type
  */
-fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
+fun Collection.createBasicNoteType(name: String = BASIC_NOTE_TYPE_NAME): NotetypeJson {
     val noteType =
         BackendUtils
             .fromJsonBytes(
@@ -113,12 +113,12 @@ fun Collection.createBasicModel(name: String = BASIC_MODEL_NAME): NotetypeJson {
 }
 
 /**
- * Creates a basic typing model.
+ * Creates a basic typing note type.
  *
- * @see createBasicModel
+ * @see createBasicNoteType
  */
-fun Collection.createBasicTypingModel(name: String): NotetypeJson {
-    val noteType = createBasicModel(name)
+fun Collection.createBasicTypingNoteType(name: String): NotetypeJson {
+    val noteType = createBasicNoteType(name)
     val t = noteType.getJSONArray("tmpls").getJSONObject(0)
     t.put("qfmt", "{{Front}}\n\n{{type:Back}}")
     t.put("afmt", "{{Front}}\n\n<hr id=answer>\n\n{{type:Back}}")

@@ -292,16 +292,16 @@ class Collection(
     fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
 
     /**
-     * Return a new note with the model derived from the deck or the configuration
-     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+     * Return a new note with the note type derived from the deck or the configuration
+     * @param forDeck When true it uses the note type specified in the deck (mid), otherwise it uses the note type specified in
      * the configuration (curModel)
      * @return The new note
      */
     fun newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
 
     /**
-     * Return a new note with a specific model
-     * @param notetype The model to use for the new note
+     * Return a new note with a specific note type
+     * @param notetype The note type to use for the new note
      * @return The new note
      */
     fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)

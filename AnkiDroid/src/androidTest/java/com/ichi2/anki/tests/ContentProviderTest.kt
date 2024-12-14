@@ -167,12 +167,12 @@ class ContentProviderTest : InstrumentedTest() {
         )
         // Delete test note type
         col.modSchemaNoCheck()
-        removeAllNoteTypesByName(col, BASIC_NOTE_TYPE_NAME)
-        removeAllNoteTypesByName(col, TEST_NOTE_TYPE_NAME)
+        removeAllNoteTypeByName(col, BASIC_NOTE_TYPE_NAME)
+        removeAllNoteTypeByName(col, TEST_NOTE_TYPE_NAME)
     }
 
     @Throws(Exception::class)
-    private fun removeAllNoteTypesByName(
+    private fun removeAllNoteTypeByName(
         col: com.ichi2.libanki.Collection,
         name: String,
     ) {
@@ -783,7 +783,7 @@ class ContentProviderTest : InstrumentedTest() {
         val uri =
             Uri.withAppendedPath(
                 FlashCardsContract.Model.CONTENT_URI,
-                FlashCardsContract.Model.CURRENT_MODEL_ID,
+                FlashCardsContract.Model.CURRENT_NOTE_TYPE_ID,
             )
         val noteTypeCursor = cr.query(uri, null, null, null, null)
         assertNotNull(noteTypeCursor)
@@ -1304,7 +1304,7 @@ class ContentProviderTest : InstrumentedTest() {
         val invalid3 = "[anki:play:a:text]" // string instead of text
 
         val back = "$invalid1$invalid2$invalid3"
-        val note = addNoteUsingBasicModel("Hello$sound", back)
+        val note = addNoteUsingBasicNoteType("Hello$sound", back)
         val ord = 0
 
         val noteUri =
@@ -1410,12 +1410,12 @@ class ContentProviderTest : InstrumentedTest() {
     ): String {
         val noteType = col.notetypes.new(name)
         for (field in fields) {
-            col.notetypes.addFieldInNewModel(noteType, col.notetypes.newField(field))
+            col.notetypes.addFieldInNewNoteType(noteType, col.notetypes.newField(field))
         }
         val t = Notetypes.newTemplate("Card 1")
         t.put("qfmt", qfmt)
         t.put("afmt", afmt)
-        col.notetypes.addTemplateInNewModel(noteType, t)
+        col.notetypes.addTemplateInNewNoteType(noteType, t)
         col.notetypes.add(noteType)
         return name
     }

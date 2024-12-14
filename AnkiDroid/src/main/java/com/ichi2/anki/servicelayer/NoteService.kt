@@ -49,15 +49,15 @@ import java.io.IOException
 
 object NoteService {
     /**
-     * Creates an empty Note from given Model
+     * Creates an empty Note from given Note type
      *
-     * @param model the model in JSONObject format
+     * @param noteType the note type in JSONObject format
      * @return a new MultimediaEditableNote instance
      */
-    fun createEmptyNote(model: NotetypeJson): MultimediaEditableNote {
+    fun createEmptyNote(noteType: NotetypeJson): MultimediaEditableNote {
         val note = MultimediaEditableNote()
         try {
-            val fieldsArray = model.flds
+            val fieldsArray = noteType.flds
             note.setNumFields(fieldsArray.length())
             for ((i, field) in fieldsArray.withIndex()) {
                 val uiTextField =
@@ -67,9 +67,9 @@ object NoteService {
                     }
                 note.setField(i, uiTextField)
             }
-            note.modelId = model.getLong("id")
+            note.noteTypeId = noteType.getLong("id")
         } catch (e: JSONException) {
-            Timber.w(e, "Error parsing model: %s", model)
+            Timber.w(e, "Error parsing note type: %s", noteType)
             // Return note with default/empty fields
         }
         return note
@@ -78,7 +78,7 @@ object NoteService {
     fun updateMultimediaNoteFromFields(
         col: Collection,
         fields: Array<String>,
-        modelId: NoteTypeId,
+        noteTypeId: NoteTypeId,
         mmNote: MultimediaEditableNote,
     ) {
         for (i in fields.indices) {
@@ -96,14 +96,14 @@ object NoteService {
             field.setFormattedString(col, value)
             mmNote.setField(i, field)
         }
-        mmNote.modelId = modelId
+        mmNote.noteTypeId = noteTypeId
         mmNote.freezeInitialFieldValues()
         // TODO: set current id of the note as well
     }
 
     /**
-     * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Model, it updates
-     * the destination field values with source values. If models are different it throws an Exception
+     * Updates the JsonNote field values from MultimediaEditableNote When both notes are using the same Note type, it updates
+     * the destination field values with source values. If note types are different it throws an Exception
      *
      * @param noteSrc
      * @param editorNoteDst
@@ -113,7 +113,7 @@ object NoteService {
         editorNoteDst: Note,
     ) {
         if (noteSrc is MultimediaEditableNote) {
-            if (noteSrc.modelId != editorNoteDst.mid) {
+            if (noteSrc.noteTypeId != editorNoteDst.mid) {
                 throw RuntimeException("Source and Destination Note ID do not match.")
             }
             val totalFields: Int = noteSrc.numberOfFields

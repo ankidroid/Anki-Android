@@ -2,9 +2,9 @@
 package com.ichi2.anki.api
 
 /**
- * Definitions of the basic model
+ * Definitions of the basic note type
  */
-internal class BasicModel {
+internal class BasicNoteType {
     companion object {
         @JvmField // required for API
         @Suppress("ktlint:standard:property-naming")

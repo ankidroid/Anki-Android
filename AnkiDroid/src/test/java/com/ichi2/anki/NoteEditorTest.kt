@@ -239,7 +239,7 @@ class NoteEditorTest : RobolectricTest() {
     fun copyNoteCopiesDeckId() {
         val currentDid = addDeck("Basic::Test")
         col.config.set(CURRENT_DECK, currentDid)
-        val n = super.addNoteUsingBasicModel("Test", "Note")
+        val n = super.addBasicNote("Test", "Note")
         n.notetype.put("did", currentDid)
         val editor = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
         col.config.set(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
@@ -350,7 +350,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun pasteHtmlAsPlainTextTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST)
-        editor.setCurrentlySelectedModel(col.notetypes.byName("Basic")!!.getLong("id"))
+        editor.setCurrentlySelectedNoteType(col.notetypes.byName("Basic")!!.getLong("id"))
         val field = editor.getFieldForTest(0)
         field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", """<span style="color: red">text</span>"""))
         assertTrue(field.clipboard!!.hasPrimaryClip())
@@ -422,7 +422,7 @@ class NoteEditorTest : RobolectricTest() {
 
         // by default, the first deck is selected, so move the card to the second deck
         val homeDeckId = addDeck("B", setAsSelected = true)
-        val note = addNoteUsingBasicModel().updateCards { did = homeDeckId }
+        val note = addBasicNote().updateCards { did = homeDeckId }
         moveToDynamicDeck(note)
 
         // ensure note is correctly setup
@@ -466,7 +466,7 @@ class NoteEditorTest : RobolectricTest() {
     fun `editing card in filtered deck retains deck`() =
         runTest {
             val homeDeckId = addDeck("A")
-            val note = addNoteUsingBasicModel().updateCards { did = homeDeckId }
+            val note = addBasicNote().updateCards { did = homeDeckId }
             moveToDynamicDeck(note)
 
             // ensure note is correctly setup
@@ -528,11 +528,11 @@ class NoteEditorTest : RobolectricTest() {
             NoteType.BASIC -> col.notetypes.byName("Basic")
             NoteType.CLOZE -> col.notetypes.byName("Cloze")
             NoteType.BACK_TO_FRONT -> {
-                val name = super.addNonClozeModel("Reversed", arrayOf("Front", "Back"), "{{Back}}", "{{Front}}")
+                val name = super.addNonClozeNoteType("Reversed", arrayOf("Front", "Back"), "{{Back}}", "{{Front}}")
                 col.notetypes.byName(name)
             }
             NoteType.THREE_FIELD_INVALID_TEMPLATE -> {
-                val name = super.addNonClozeModel("Invalid", arrayOf("Front", "Back", "Side"), "", "")
+                val name = super.addNonClozeNoteType("Invalid", arrayOf("Front", "Back", "Side"), "", "")
                 col.notetypes.byName(name)
             }
             NoteType.IMAGE_OCCLUSION -> col.notetypes.byName("Image Occlusion")
@@ -553,7 +553,7 @@ class NoteEditorTest : RobolectricTest() {
         back: String,
         from: FromScreen,
     ): NoteEditor {
-        val n = super.addNoteUsingBasicModel(front, back)
+        val n = super.addBasicNote(front, back)
         return getNoteEditorEditingExistingBasicNote(n, from)
     }
 
@@ -661,7 +661,7 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         init {
-            assertNotNull(notetype) { "model was null" }
+            assertNotNull(notetype) { "note type was null" }
             this.notetype = notetype
         }
     }

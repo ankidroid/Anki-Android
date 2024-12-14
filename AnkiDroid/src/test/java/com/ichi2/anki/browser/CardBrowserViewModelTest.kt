@@ -106,7 +106,7 @@ class CardBrowserViewModelTest : JvmTest() {
             selectDefaultDeck()
 
             for (i in 0 until 5) {
-                addNoteUsingBasicAndReversedModel()
+                addBasicAndReverseNote()
             }
             setCardsOrNotes(CardsOrNotes.NOTES)
             waitForSearchResults()
@@ -146,13 +146,13 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun filterByFlagDisplaysProperly() =
         runViewModelTest {
-            val cardWithRedFlag = addNoteUsingBasicModel("Card with red flag", "Reverse")
+            val cardWithRedFlag = addBasicNote("Card with red flag", "Reverse")
             flagCardForNote(cardWithRedFlag, Flag.RED)
 
-            val cardWithGreenFlag = addNoteUsingBasicModel("Card with green flag", "Reverse")
+            val cardWithGreenFlag = addBasicNote("Card with green flag", "Reverse")
             flagCardForNote(cardWithGreenFlag, Flag.GREEN)
 
-            val anotherCardWithRedFlag = addNoteUsingBasicModel("Second card with red flag", "Reverse")
+            val anotherCardWithRedFlag = addBasicNote("Second card with red flag", "Reverse")
             flagCardForNote(anotherCardWithRedFlag, Flag.RED)
 
             setFlagFilterSync(Flag.RED)
@@ -300,7 +300,7 @@ class CardBrowserViewModelTest : JvmTest() {
 
     @Test
     fun `selected card and note ids`() {
-        val notes = List(2) { addNoteUsingBasicAndReversedModel() }
+        val notes = List(2) { addBasicAndReverseNote() }
 
         val nids = notes.map { it.id }.toTypedArray()
         val cids = notes.flatMap { it.cids() }.toTypedArray()
@@ -644,10 +644,10 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `notes - search for marked`() =
         runTest {
-            addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            addBasicAndReverseNote("hello", "world").also { note ->
                 NoteService.toggleMark(note)
             }
-            addNoteUsingBasicAndReversedModel("hello2", "world")
+            addBasicAndReverseNote("hello2", "world")
 
             runViewModelNotesTest {
                 searchForMarkedNotes()
@@ -659,10 +659,10 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `cards - search for marked`() =
         runTest {
-            addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            addBasicAndReverseNote("hello", "world").also { note ->
                 NoteService.toggleMark(note)
             }
-            addNoteUsingBasicAndReversedModel("hello2", "world")
+            addBasicAndReverseNote("hello2", "world")
 
             runViewModelTest {
                 searchForMarkedNotes()
@@ -674,10 +674,10 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `notes - search for suspended`() =
         runTest {
-            addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            addBasicAndReverseNote("hello", "world").also { note ->
                 col.sched.suspendCards(listOf(note.cardIds(col).first()))
             }
-            addNoteUsingBasicAndReversedModel("hello2", "world")
+            addBasicAndReverseNote("hello2", "world")
 
             runViewModelNotesTest {
                 searchForSuspendedCards()
@@ -689,7 +689,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `cards - search for suspended`() =
         runTest {
-            addNoteUsingBasicAndReversedModel("hello", "world").also { note ->
+            addBasicAndReverseNote("hello", "world").also { note ->
                 col.sched.suspendCards(listOf(note.cardIds(col).first()))
             }
 
@@ -762,7 +762,7 @@ class CardBrowserViewModelTest : JvmTest() {
         CardsOrNotes.NOTES.saveToCollection(col)
         for (i in 0 until notes) {
             // ensure 1 note = 2 cards
-            addNoteUsingBasicAndReversedModel()
+            addBasicAndReverseNote()
         }
         val viewModel =
             CardBrowserViewModel(
@@ -785,7 +785,7 @@ class CardBrowserViewModelTest : JvmTest() {
         testBody: suspend CardBrowserViewModel.() -> Unit,
     ) = runTest {
         for (i in 0 until notes) {
-            addNoteUsingBasicModel()
+            addBasicNote()
         }
         notes.ifNotZero { count -> Timber.d("added %d notes", count) }
         val viewModel =

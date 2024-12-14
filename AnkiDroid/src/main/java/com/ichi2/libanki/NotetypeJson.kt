@@ -25,16 +25,16 @@ import org.json.JSONObject
 import java.util.HashSet
 
 /**
- * Represents a note type, a.k.a. Model.
+ * Represents a note type, a.k.a. Note type.
  * The content of an object is described in https://github.com/ankidroid/Anki-Android/wiki/Database-Structure
- * Each time the object is modified, `Models.save(this)` should be called, otherwise the change will not be synchronized
+ * Each time the object is modified, `NoteType.save(this)` should be called, otherwise the change will not be synchronized
  * If a change affect card generation, (i.e. any change on the list of field, or the question side of a card type),
- * `Models.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
+ * `NoteTypes.save(this, true)` should be called. However, you should do the change in batch and change only when all are d
  * one, because recomputing the list of card is an expensive operation.
  */
 class NotetypeJson : JSONObject {
     /**
-     * Creates a new empty model object
+     * Creates a new empty note type object
      */
     constructor() : super()
 
@@ -46,7 +46,7 @@ class NotetypeJson : JSONObject {
     }
 
     /**
-     * Creates a model object from json string
+     * Creates a note type object from json string
      */
     constructor(
         @Language("json") json: String,
@@ -64,16 +64,16 @@ class NotetypeJson : JSONObject {
     fun getField(pos: Int): Field = flds[pos]
 
     /**
-     * @return model did or default deck id (1) if null
+     * @return note type's did or default deck id (1) if null
      */
     val did: Long
         get() = if (isNull("did")) 1L else getLong("did")
     val templatesNames: List<String>
         get() = getJSONArray("tmpls").toStringList("name")
     val isStd: Boolean
-        get() = getInt("type") == Consts.MODEL_STD
+        get() = getInt("type") == Consts.NOTE_TYPE_STD
     val isCloze: Boolean
-        get() = getInt("type") == Consts.MODEL_CLOZE
+        get() = getInt("type") == Consts.NOTE_TYPE_CLOZE
 
     /**
      * @param sfld Fields of a note of this note type
@@ -130,7 +130,7 @@ class NotetypeJson : JSONObject {
         }
 
     // TODO: Not constrained
-    @Consts.ModelType
+    @Consts.NoteTypeType
     var type: Int
         get() = getInt("type")
         set(value) {

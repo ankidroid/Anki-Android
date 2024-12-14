@@ -33,8 +33,8 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleSelectionDialogHandler
-import com.ichi2.anki.dialogs.ModelEditorContextMenu.Companion.newInstance
-import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
+import com.ichi2.anki.dialogs.NoteTypeEditorContextMenu.Action
+import com.ichi2.anki.dialogs.NoteTypeEditorContextMenu.Companion.newInstance
 import com.ichi2.anki.servicelayer.LanguageHintService.setLanguageHintForField
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.ext.dismissAllDialogFragments
@@ -55,7 +55,7 @@ import org.json.JSONException
 import timber.log.Timber
 import java.util.Locale
 
-class ModelFieldEditor :
+class NoteTypeFieldEditor :
     AnkiActivity(),
     LocaleSelectionDialogHandler {
     // Position of the current field selected
@@ -76,7 +76,7 @@ class ModelFieldEditor :
             return
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.model_field_editor)
+        setContentView(R.layout.note_type_field_editor)
         fieldsListView = findViewById(R.id.note_type_editor_fields)
         enableToolbar().apply {
             setTitle(R.string.model_field_editor_title)
@@ -94,7 +94,7 @@ class ModelFieldEditor :
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.model_editor, menu)
+        menuInflater.inflate(R.menu.note_type_editor, menu)
         return true
     }
 
@@ -111,22 +111,22 @@ class ModelFieldEditor :
     // ----------------------------------------------------------------------------
 
     /**
-     * Initialize the data holding properties and the UI from the model. This method expects that it
+     * Initialize the data holding properties and the UI from the note type. This method expects that it
      * isn't followed by other type of work that access the data properties as it has the capability
      * to finish the activity.
      */
     private fun initialize() {
         val noteTypeID = intent.getLongExtra("noteTypeID", 0)
-        val collectionModel = getColUnsafe.notetypes.get(noteTypeID)
-        if (collectionModel == null) {
+        val collectionNoteType = getColUnsafe.notetypes.get(noteTypeID)
+        if (collectionNoteType == null) {
             showThemedToast(this, R.string.field_editor_model_not_available, true)
             finish()
             return
         }
-        notetype = collectionModel
+        notetype = collectionNoteType
         noteFields = notetype.flds
-        fieldsLabels = notetype.fieldsNames
-        fieldsListView.adapter = ArrayAdapter(this, R.layout.model_field_editor_list_item, fieldsLabels)
+        fieldsLabels = noteFields.fieldsNames
+        fieldsListView.adapter = ArrayAdapter(this, R.layout.note_type_field_editor_list_item, fieldsLabels)
         fieldsListView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position: Int, _ ->
                 showDialogFragment(newInstance(fieldsLabels[position]))
@@ -201,7 +201,7 @@ class ModelFieldEditor :
                                 }
                             }
                         c.setConfirm(confirm)
-                        this@ModelFieldEditor.showDialogFragment(c)
+                        this@NoteTypeFieldEditor.showDialogFragment(c)
                     }
                     getColUnsafe.notetypes.update(notetype)
                     initialize()
@@ -331,7 +331,7 @@ class ModelFieldEditor :
                                 }
                             }
                         c.setConfirm(confirm)
-                        this@ModelFieldEditor.showDialogFragment(c)
+                        this@NoteTypeFieldEditor.showDialogFragment(c)
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
@@ -340,7 +340,7 @@ class ModelFieldEditor :
     }
 
     /*
-     * Allows the user to select a number less than the number of fields in the current model to
+     * Allows the user to select a number less than the number of fields in the current note type to
      * reposition the current field to
      * Processing time is scales with number of items
      */
@@ -384,7 +384,7 @@ class ModelFieldEditor :
                                     }
                                 }
                             c.setConfirm(confirm)
-                            this@ModelFieldEditor.showDialogFragment(c)
+                            this@NoteTypeFieldEditor.showDialogFragment(c)
                         }
                     }
                 }
@@ -449,7 +449,7 @@ class ModelFieldEditor :
                     launchCatchingTask { changeSortField(notetype, currentPos) }
                 }
             c.setConfirm(confirm)
-            this@ModelFieldEditor.showDialogFragment(c)
+            this@NoteTypeFieldEditor.showDialogFragment(c)
         }
     }
 
@@ -477,7 +477,7 @@ class ModelFieldEditor :
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
-            R.id.action_add_new_model -> {
+            R.id.action_add_new_note_type -> {
                 addFieldDialog()
                 true
             }
@@ -488,14 +488,14 @@ class ModelFieldEditor :
         finish()
     }
 
-    fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {
+    fun handleAction(contextMenuAction: Action) {
         when (contextMenuAction) {
-            ModelEditorContextMenuAction.Sort -> sortByField()
-            ModelEditorContextMenuAction.Reposition -> repositionFieldDialog()
-            ModelEditorContextMenuAction.Delete -> deleteFieldDialog()
-            ModelEditorContextMenuAction.Rename -> renameFieldDialog()
-            ModelEditorContextMenuAction.ToggleSticky -> toggleStickyField()
-            ModelEditorContextMenuAction.AddLanguageHint -> localeHintDialog()
+            Action.Sort -> sortByField()
+            Action.Reposition -> repositionFieldDialog()
+            Action.Delete -> deleteFieldDialog()
+            Action.Rename -> renameFieldDialog()
+            Action.ToggleSticky -> toggleStickyField()
+            Action.AddLanguageHint -> localeHintDialog()
         }
     }
 

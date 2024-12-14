@@ -94,36 +94,36 @@ suspend fun renderBrowserQA(
     }
 
 /**
- * Handles everything for a model change at once - template add / deletes as well as content updates
+ * Handles everything for a note type change at once - template add / deletes as well as content updates
  * @return Pair<Boolean, String> : (true, null) when success, (false, exceptionMessage) when failure
  */
-fun saveModel(
+fun saveNoteType(
     col: Collection,
     notetype: NotetypeJson,
     templateChanges: ArrayList<Array<Any>>,
 ) {
-    Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.notetypes.get(notetype.getLong("id"))
+    Timber.d("doInBackgroundSaveNoteType")
+    val oldNoteType = col.notetypes.get(notetype.getLong("id"))
 
     // TODO: make undoable
     val newTemplates = notetype.getJSONArray("tmpls")
     for (change in templateChanges) {
-        val oldTemplates = oldModel!!.getJSONArray("tmpls")
+        val oldTemplates = oldNoteType!!.getJSONArray("tmpls")
         when (change[1] as CardTemplateNotetype.ChangeType) {
             CardTemplateNotetype.ChangeType.ADD -> {
-                Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
+                Timber.d("doInBackgroundSaveNoteType() adding template %s", change[0])
+                col.notetypes.addTemplate(oldNoteType, newTemplates.getJSONObject(change[0] as Int))
             }
             CardTemplateNotetype.ChangeType.DELETE -> {
-                Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
+                Timber.d("doInBackgroundSaveNoteType() deleting template currently at ordinal %s", change[0])
+                col.notetypes.remTemplate(oldNoteType, oldTemplates.getJSONObject(change[0] as Int))
             }
         }
     }
 
-    // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
+    // required for Rust: the modified time can't go backwards, and we updated the note type by adding fields
     // This could be done better
-    notetype.put("mod", oldModel!!.getLong("mod"))
+    notetype.put("mod", oldNoteType!!.getLong("mod"))
     col.notetypes.save(notetype)
     col.notetypes.update(notetype)
 }
