@@ -32,6 +32,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
@@ -132,6 +133,12 @@ open class CardTemplateEditor :
      * This occurs when the view is big enough.
      */
     private var fragmented = false
+    val displayDiscardChangesCallback =
+        object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                showDiscardChangesDialog()
+            }
+        }
 
     // ----------------------------------------------------------------------------
     // Listeners
@@ -187,6 +194,7 @@ open class CardTemplateEditor :
 
         // Open TemplatePreviewerFragment if in fragmented mode
         loadTemplatePreviewerFragmentIfFragmented()
+        onBackPressedDispatcher.addCallback(this, displayDiscardChangesCallback)
     }
 
     /**
@@ -230,20 +238,9 @@ open class CardTemplateEditor :
         }
     }
 
-    @Suppress("deprecation") // onBackPressed
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (modelHasChanged()) {
-            showDiscardChangesDialog()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -547,6 +544,7 @@ open class CardTemplateEditor :
                             }
                         refreshFragmentRunnable = updateRunnable
                         refreshFragmentHandler.postDelayed(updateRunnable, REFRESH_PREVIEW_DELAY)
+                        templateEditor.displayDiscardChangesCallback.isEnabled = modelHasChanged()
                     }
 
                     override fun beforeTextChanged(
