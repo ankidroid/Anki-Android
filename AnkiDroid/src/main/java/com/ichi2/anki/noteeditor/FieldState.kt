@@ -19,7 +19,6 @@ package com.ichi2.anki.noteeditor
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.BundleCompat
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
@@ -35,18 +34,20 @@ import kotlin.math.min
  * This primarily exists so we can use saved instance state to repopulate the dynamically created FieldEditLine
  */
 class FieldState private constructor(private val editor: NoteEditor) {
-    private var savedFieldData: List<View.BaseSavedState>? = null
+    private var customViewIds: List<Int>? = null
+
     fun loadFieldEditLines(type: FieldChangeType): List<FieldEditLine> {
-        val fieldEditLines: List<FieldEditLine>
-        if (type.type == Type.INIT && savedFieldData != null) {
-            fieldEditLines = recreateFieldsFromState()
-            savedFieldData = null
-        } else {
-            fieldEditLines = createFields(type)
-        }
-        for (l in fieldEditLines) {
-            l.id = View.generateViewId()
-        }
+        val fieldEditLines: List<FieldEditLine> =
+            if (type.type == Type.INIT && customViewIds != null) {
+                recreateFields(customViewIds!!)
+            } else {
+                createFields(type).also { fields ->
+                    for (field in fields) {
+                        field.id = View.generateViewId()
+                    }
+                }
+            }
+
         if (type.type == Type.CLEAR_KEEP_STICKY) {
             // we use the UI values here as the model will post-processing steps (newline -> br).
             val currentFieldStrings = editor.currentFieldStrings
@@ -66,18 +67,12 @@ class FieldState private constructor(private val editor: NoteEditor) {
         return fieldEditLines
     }
 
-    private fun recreateFieldsFromState(): List<FieldEditLine> {
-        val editLines: MutableList<FieldEditLine> = ArrayList(savedFieldData!!.size)
-        for (state in savedFieldData!!) {
-            val editLineView = FieldEditLine(editor.requireContext())
-            if (editLineView.id == 0) {
-                editLineView.id = View.generateViewId()
-            }
-            editLineView.loadState(state)
-            editLines.add(editLineView)
-        }
-        return editLines
-    }
+    /**
+     * Given a list of [viewIds]: create the fields, assign the IDs and let Android
+     * restore the state via [FieldEditLine.onRestoreInstanceState]
+     */
+    private fun recreateFields(viewIds: List<Int>): List<FieldEditLine> =
+        viewIds.map { id -> FieldEditLine(editor.requireContext()).also { field -> field.id = id } }
 
     private fun createFields(type: FieldChangeType): List<FieldEditLine> {
         val fields = getFields(type)
@@ -102,27 +97,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
     }
 
     fun setInstanceState(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            return
-        }
-        if (!savedInstanceState.containsKey("customViewIds") || !savedInstanceState.containsKey("android:viewHierarchyState")) {
-            return
-        }
-        val customViewIds = savedInstanceState.getIntegerArrayList("customViewIds")
-        val viewHierarchyState = savedInstanceState.getBundle("android:viewHierarchyState")
-        if (customViewIds == null || viewHierarchyState == null) {
-            return
-        }
-        val views = BundleCompat.getSparseParcelableArray(
-            viewHierarchyState,
-            "android:views",
-            View.BaseSavedState::class.java
-        ) ?: return
-        val important: MutableList<View.BaseSavedState> = ArrayList(customViewIds.size)
-        for (i in customViewIds) {
-            important.add(views[i!!] as View.BaseSavedState)
-        }
-        savedFieldData = important
+        customViewIds = savedInstanceState?.getIntegerArrayList("customViewIds")
     }
 
     /** How fields should be changed when the UI is rebuilt  */
