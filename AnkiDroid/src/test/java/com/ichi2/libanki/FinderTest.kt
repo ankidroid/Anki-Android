@@ -49,7 +49,7 @@ class FinderTest : JvmTest() {
     fun searchForBuriedReturnsManuallyAndSiblingBuried() {
         val searchQuery = "is:buried"
         enableBurySiblings()
-        super.addNoteUsingModelName("Basic (and reversed card)", "Front", "Back")
+        super.addNoteUsingNoteTypeName("Basic (and reversed card)", "Front", "Back")
         val toAnswer: Card = col.sched.card!!
 
         // act
@@ -135,14 +135,14 @@ class FinderTest : JvmTest() {
         note.setItem("Back", "sheep")
         col.addNote(note)
         val catCard = note.cards()[0]
-        var m = col.notetypes.current()
-        m = col.notetypes.copy(m)
-        val mm = col.notetypes
+        var noteType = col.notetypes.current()
+        noteType = col.notetypes.copy(noteType)
+        val noteTypes = col.notetypes
         val t = Notetypes.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        noteTypes.addTemplateModChanged(noteType, t)
+        noteTypes.save(noteType)
         note = col.newNote()
         note.setItem("Front", "test")
         note.setItem("Back", "foo bar")
@@ -273,7 +273,7 @@ class FinderTest : JvmTest() {
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=true).get(0));
          */
 
-        // model
+        // note type
         assertEquals(3, col.findCards("note:basic").size)
         assertEquals(2, col.findCards("-note:basic").size)
         assertEquals(5, col.findCards("-note:foo").size)

@@ -20,7 +20,6 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
 import anki.decks.deckId
-import anki.notes.noteId
 import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
 import com.ichi2.libanki.Consts.CardQueue
@@ -38,7 +37,7 @@ import org.json.JSONObject
  * currently belongs to), and the retrieval of presentation elements (filled-in templates).
  *
  * Card presentation has two components: the question (front) side and the answer (back) side. The presentation of the
- * card is derived from the template of the card's Card Type. The Card Type is a component of the Note Type (see Models)
+ * card is derived from the template of the card's Card Type. The Card Type is a component of the Note Type (see [anki.notetypes.Notetype])
  * that this card is derived from.
  *
  * This class is responsible for:
@@ -219,11 +218,11 @@ open class Card : Cloneable {
 
     @LibAnkiAlias("template")
     fun template(col: Collection): JSONObject {
-        val m = noteType(col)
-        return if (m.isStd) {
-            m.getJSONArray("tmpls").getJSONObject(ord)
+        val noteType = this@Card.noteType(col)
+        return if (noteType.isStd) {
+            noteType.getJSONArray("tmpls").getJSONObject(ord)
         } else {
-            noteType(col).getJSONArray("tmpls").getJSONObject(0)
+            this@Card.noteType(col).getJSONArray("tmpls").getJSONObject(0)
         }
     }
 

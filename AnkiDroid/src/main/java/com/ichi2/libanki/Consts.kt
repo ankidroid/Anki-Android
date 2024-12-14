@@ -68,13 +68,13 @@ object Consts {
     @IntDef(DYN_OLDEST, DYN_RANDOM, DYN_SMALLINT, DYN_BIGINT, DYN_LAPSES, DYN_ADDED, DYN_DUE, DYN_REVADDED, DYN_DUEPRIORITY)
     annotation class DynPriority
 
-    // model types
-    const val MODEL_STD = 0
-    const val MODEL_CLOZE = 1
+    // note type types
+    const val NOTE_TYPE_STD = 0
+    const val NOTE_TYPE_CLOZE = 1
 
     @Retention(AnnotationRetention.SOURCE)
-    @IntDef(MODEL_STD, MODEL_CLOZE)
-    annotation class ModelType
+    @IntDef(NOTE_TYPE_STD, NOTE_TYPE_CLOZE)
+    annotation class NoteTypeType
 
     const val STARTING_FACTOR = 2500
 
