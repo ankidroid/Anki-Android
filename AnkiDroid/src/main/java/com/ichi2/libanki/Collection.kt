@@ -292,16 +292,16 @@ class Collection(
     fun noteCount(): Int = db.queryScalar("SELECT count() FROM notes")
 
     /**
-     * Return a new note with the model derived from the deck or the configuration
-     * @param forDeck When true it uses the model specified in the deck (mid), otherwise it uses the model specified in
+     * Return a new note with the note type derived from the deck or the configuration
+     * @param forDeck When true it uses the note type specified in the deck (mid), otherwise it uses the note type specified in
      * the configuration (curModel)
      * @return The new note
      */
     fun newNote(forDeck: Boolean = true): Note = newNote(notetypes.current(forDeck))
 
     /**
-     * Return a new note with a specific model
-     * @param notetype The model to use for the new note
+     * Return a new note with a specific note type
+     * @param notetype The note type to use for the new note
      * @return The new note
      */
     fun newNote(notetype: NotetypeJson): Note = Note.fromNotetypeId(this, notetype.id)
@@ -616,17 +616,17 @@ class Collection(
                 "select 1 from notes where id not in (select distinct nid from cards) " +
                     "or mid not in " + ids2str(notetypes.ids()) + " limit 1",
             ) > 0
-        // notes without cards or models
+        // notes without cards or note types
         if (badNotes) {
             return false
         }
         // invalid ords
         for (m in notetypes.all()) {
             // ignore clozes
-            if (m.getInt("type") != Consts.MODEL_STD) {
+            if (m.getInt("type") != Consts.NOTE_TYPE_STD) {
                 continue
             }
-            // Make a list of valid ords for this model
+            // Make a list of valid ords for this note type
             val tmpls = m.getJSONArray("tmpls")
             val badOrd =
                 db.queryScalar(

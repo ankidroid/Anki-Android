@@ -86,13 +86,13 @@ class PagesTest : InstrumentedTest() {
 fun PagesTest.getStatistics(context: Context): Intent = Statistics.getIntent(context)
 
 fun PagesTest.getCardInfo(context: Context): Intent =
-    addNoteUsingBasicModel().firstCard(col).let { card ->
+    addNoteUsingBasicNoteType().firstCard(col).let { card ->
         this.card = card
         CardInfoDestination(card.id).toIntent(context)
     }
 
 fun PagesTest.getCongratsPage(context: Context): Intent =
-    addNoteUsingBasicModel().firstCard(col).let { card ->
+    addNoteUsingBasicNoteType().firstCard(col).let { card ->
         this.card = card
         CardInfoDestination(card.id).toIntent(context)
     }

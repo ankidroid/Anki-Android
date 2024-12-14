@@ -50,7 +50,7 @@ class CardTest : JvmTest() {
     }
 
     @Test
-    @SuppressLint("CheckResult") // col.models.current()!!.getLong("id")
+    @SuppressLint("CheckResult") // col.noteTypes.current()!!.getLong("id")
     fun test_misc_cards() {
         val note = col.newNote()
         note.setItem("Front", "1")
@@ -68,19 +68,19 @@ class CardTest : JvmTest() {
         note.setItem("Back", "")
         col.addNote(note)
         assertEquals(1, note.numberOfCards())
-        val m = col.notetypes.current()
-        val mm = col.notetypes
+        val noteType = col.notetypes.current()
+        val noteTypes = col.notetypes
         // adding a new template should automatically create cards
         var t = Notetypes.newTemplate("rev")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        noteTypes.addTemplateModChanged(noteType, t)
+        noteTypes.save(noteType)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
-        t = m.getJSONArray("tmpls").getJSONObject(1)
+        t = noteType.getJSONArray("tmpls").getJSONObject(1)
         t.put("qfmt", "{{Back}}")
-        mm.save(m)
+        noteTypes.save(noteType)
         val rep = col.emptyCids()
         col.removeCardsAndOrphanedNotes(rep)
         assertEquals(1, note.numberOfCards())
@@ -100,7 +100,7 @@ class CardTest : JvmTest() {
         col.addNote(note)
         assertEquals(1, col.cardCount())
         assertEquals(1, note.cards()[0].did)
-        // set the model to a new default col
+        // set the note type to a new default col
         val newId = addDeck("new")
         cloze.put("did", newId)
         col.notetypes.save(cloze)
@@ -117,23 +117,23 @@ class CardTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_or() {
-        val models = col.notetypes
-        val model = models.byName("Basic")
-        assertNotNull(model)
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(0), "A")
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(1), "B")
-        val fld2 = models.newField("C")
+        val noteTypes = col.notetypes
+        val noteType = noteTypes.byName("Basic")
+        assertNotNull(noteType)
+        noteTypes.renameFieldLegacy(noteType, noteType.getJSONArray("flds").getJSONObject(0), "A")
+        noteTypes.renameFieldLegacy(noteType, noteType.getJSONArray("flds").getJSONObject(1), "B")
+        val fld2 = noteTypes.newField("C")
         fld2.put("ord", JSONObject.NULL)
-        models.addFieldLegacy(model, fld2)
-        val tmpls = model.getJSONArray("tmpls")
+        noteTypes.addFieldLegacy(noteType, fld2)
+        val tmpls = noteType.getJSONArray("tmpls")
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}")
         // ensure first card is always generated,
         // because at last one card is generated
         val tmpl = Notetypes.newTemplate("AND_OR")
         tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}")
-        models.addTemplate(model, tmpl)
-        models.save(model)
-        models.setCurrent(model)
+        noteTypes.addTemplate(noteType, tmpl)
+        noteTypes.save(noteType)
+        noteTypes.setCurrent(noteType)
         var note = col.newNote()
         note.setItem("A", "foo")
         col.addNote(note)
@@ -166,24 +166,24 @@ class CardTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_not() {
-        val models = col.notetypes
-        val model = models.byName("Basic")
-        assertNotNull(model)
-        val tmpls = model.getJSONArray("tmpls")
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(0), "First")
-        models.renameFieldLegacy(model, model.getJSONArray("flds").getJSONObject(1), "Front")
-        val fld2 = models.newField("AddIfEmpty")
+        val noteTypes = col.notetypes
+        val noteType = noteTypes.byName("Basic")
+        assertNotNull(noteType)
+        val tmpls = noteType.getJSONArray("tmpls")
+        noteTypes.renameFieldLegacy(noteType, noteType.getJSONArray("flds").getJSONObject(0), "First")
+        noteTypes.renameFieldLegacy(noteType, noteType.getJSONArray("flds").getJSONObject(1), "Front")
+        val fld2 = noteTypes.newField("AddIfEmpty")
         fld2.put("name", "AddIfEmpty")
-        models.addFieldLegacy(model, fld2)
+        noteTypes.addFieldLegacy(noteType, fld2)
 
         // ensure first card is always generated,
         // because at last one card is generated
         tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}")
         val tmpl = Notetypes.newTemplate("NOT")
         tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ")
-        models.addTemplate(model, tmpl)
-        models.save(model)
-        models.setCurrent(model)
+        noteTypes.addTemplate(noteType, tmpl)
+        noteTypes.save(noteType)
+        noteTypes.setCurrent(noteType)
         var note = col.newNote()
         note.setItem("First", "foo")
         note.setItem("AddIfEmpty", "foo")

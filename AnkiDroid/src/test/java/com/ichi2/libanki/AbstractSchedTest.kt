@@ -61,7 +61,7 @@ class AbstractSchedTest : JvmTest() {
         col.config.set("collapseTime", 20 * 60)
         val sched = col.sched
 
-        addNoteUsingBasicModel("foo", "bar")
+        addNoteUsingBasicNoteType("foo", "bar")
 
         var card = sched.card
         assertNotNull(card)

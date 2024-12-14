@@ -228,7 +228,7 @@ class CardMediaPlayerTest : JvmTest() {
         replayQuestion: Boolean?,
         autoplay: Boolean?,
     ) {
-        val card = addNoteUsingBasicModel().firstCard()
+        val card = addNoteUsingBasicNoteType().firstCard()
         mockkObject(card)
 
         every { card.renderOutput(any()) } answers {
