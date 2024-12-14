@@ -600,55 +600,6 @@ class Collection(
     }
 
     /**
-     * DB maintenance *********************************************************** ************************************
-     */
-    /*
-     * Basic integrity check. Only used by unit tests.
-     */
-    @KotlinCleanup("have getIds() return a list of mids and define idsToStr over it")
-    fun basicCheck(): Boolean {
-        // cards without notes
-        if (db.queryScalar("select 1 from cards where nid not in (select id from notes) limit 1") > 0) {
-            return false
-        }
-        val badNotes =
-            db.queryScalar(
-                """select 1 from notes where
-                  id not in (select distinct nid from cards)
-                  or
-                  mid not in ${ids2str(notetypes.ids())}
-                limit 1""",
-            ) > 0
-        // notes without cards or models
-        if (badNotes) {
-            return false
-        }
-        // invalid ords
-        for (m in notetypes.all()) {
-            // ignore clozes
-            if (m.getInt("type") != Consts.MODEL_STD) {
-                continue
-            }
-            // Make a list of valid ords for this model
-            val tmpls = m.getJSONArray("tmpls")
-            val badOrd =
-                db.queryScalar(
-                    """select 1 from cards where
-                        (ord < 0 or ord >= ?)
-                        and
-                        nid in (select id from notes where mid = ?)
-                      limit 1""",
-                    tmpls.length(),
-                    m.getLong("id"),
-                ) > 0
-            if (badOrd) {
-                return false
-            }
-        }
-        return true
-    }
-
-    /**
      * Card Flags *****************************************************************************************************
      */
     fun setUserFlag(
