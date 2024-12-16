@@ -21,8 +21,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.Resources
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -30,6 +28,7 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
+import androidx.core.widget.doAfterTextChanged
 import anki.scheduler.CustomStudyDefaultsResponse
 import anki.scheduler.CustomStudyRequestKt
 import anki.scheduler.customStudyRequest
@@ -70,6 +69,7 @@ import com.ichi2.utils.customView
 import com.ichi2.utils.listItems
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
+import com.ichi2.utils.textAsIntOrNull
 import com.ichi2.utils.title
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import org.json.JSONObject
@@ -221,19 +221,24 @@ class CustomStudyDialog(
         // Show input dialog for an individual custom study dialog
         @SuppressLint("InflateParams")
         val v = requireActivity().layoutInflater.inflate(R.layout.styled_custom_study_details_dialog, null)
-        val textView1 = v.findViewById<TextView>(R.id.custom_study_details_text1)
-        val textView2 = v.findViewById<TextView>(R.id.custom_study_details_text2)
-        val editText = v.findViewById<EditText>(R.id.custom_study_details_edittext2)
-        // Set the text
-        textView1.text = text1
-        textView2.text = text2
-        editText.setText(defaultValue)
-        // Give EditText focus and show keyboard
-        editText.setSelectAllOnFocus(true)
-        editText.requestFocus()
-        if (contextMenuOption == STUDY_NEW || contextMenuOption == STUDY_REV) {
-            editText.inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+        v.findViewById<TextView>(R.id.custom_study_details_text1).apply {
+            text = text1
         }
+        v.findViewById<TextView>(R.id.custom_study_details_text2).apply {
+            text = text2
+        }
+        val editText =
+            v.findViewById<EditText>(R.id.custom_study_details_edittext2).apply {
+                setText(defaultValue)
+                // Give EditText focus and show keyboard
+                setSelectAllOnFocus(true)
+                requestFocus()
+                // a user may enter a negative value when extending limits
+                if (contextMenuOption == STUDY_NEW || contextMenuOption == STUDY_REV) {
+                    inputType = EditorInfo.TYPE_CLASS_NUMBER or EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+                }
+            }
+
         // Set material dialog parameters
         val dialog =
             AlertDialog
@@ -241,45 +246,18 @@ class CustomStudyDialog(
                 .customView(view = v, paddingLeft = 64, paddingRight = 64, paddingTop = 32, paddingBottom = 32)
                 .positiveButton(R.string.dialog_ok) {
                     // Get the value selected by user
-                    val n: Int =
-                        try {
-                            editText.text.toString().toInt()
-                        } catch (e: Exception) {
-                            Timber.w(e)
-                            // This should never happen because we disable positive button for non-parsable inputs
-                            return@positiveButton
+                    val n =
+                        editText.textAsIntOrNull() ?: return@positiveButton Unit.also {
+                            Timber.w("Non-numeric user input was provided")
+                            Timber.d("value: %s", editText.text.toString())
                         }
                     requireActivity().launchCatchingTask { customStudy(contextMenuOption, n) }
                 }.negativeButton(R.string.dialog_cancel) {
                     requireActivity().dismissAllDialogFragments()
                 }.create() // Added .create() because we wanted to access alertDialog positive button enable state
-        editText.addTextChangedListener(
-            object : TextWatcher {
-                override fun beforeTextChanged(
-                    charSequence: CharSequence,
-                    i: Int,
-                    i1: Int,
-                    i2: Int,
-                ) {}
-
-                override fun onTextChanged(
-                    charSequence: CharSequence,
-                    i: Int,
-                    i1: Int,
-                    i2: Int,
-                ) {}
-
-                override fun afterTextChanged(editable: Editable) {
-                    try {
-                        editText.text.toString().toInt()
-                        dialog.positiveButton.isEnabled = true
-                    } catch (e: Exception) {
-                        Timber.w(e)
-                        dialog.positiveButton.isEnabled = false
-                    }
-                }
-            },
-        )
+        editText.doAfterTextChanged {
+            dialog.positiveButton.isEnabled = editText.textAsIntOrNull() != null
+        }
 
         // Show soft keyboard
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
@@ -397,6 +375,7 @@ class CustomStudyDialog(
                 -> ""
             }
 
+    /** Line 2 of the number entry dialog */
     private val text2: String
         get() {
             val res = resources
@@ -411,6 +390,8 @@ class CustomStudyDialog(
                 -> ""
             }
         }
+
+    /** Initial value of the number entry dialog */
     private val defaultValue: String
         get() {
             val prefs = requireActivity().sharedPrefs()
