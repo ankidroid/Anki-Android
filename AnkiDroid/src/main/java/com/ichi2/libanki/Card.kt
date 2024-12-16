@@ -140,7 +140,7 @@ open class Card : Cloneable {
         lapses = card.lapses
         left = card.remainingSteps
         oDue = card.originalDue
-        oDid = card.originalDeckId
+        oDid = card.deckId
         flags = card.flags
         originalPosition = if (card.hasOriginalPosition()) card.originalPosition else null
         customData = card.customData
