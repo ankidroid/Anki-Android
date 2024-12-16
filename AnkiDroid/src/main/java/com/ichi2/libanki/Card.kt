@@ -140,7 +140,7 @@ open class Card : Cloneable {
         lapses = card.lapses
         left = card.remainingSteps
         oDue = card.originalDue
-        oDid = card.deckId
+        oDid = card.originalDeckId
         flags = card.flags
         originalPosition = if (card.hasOriginalPosition()) card.originalPosition else null
         customData = card.customData
@@ -233,7 +233,7 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("current_deck_id")
-    fun currentDeckId() = deckId { did = oDid.ifZero { did } }
+    fun currentDeckId() = deckId { did = oDid.ifZero { this@Card.toBackendCard().deckId } }
 
     /**
      * Time limit for answering in milliseconds.
