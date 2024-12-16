@@ -2239,7 +2239,11 @@ class NoteEditor :
         fun calculateDeckId(): DeckId {
             if (deckId != 0L) return deckId
             if (note != null && !addNote && currentEditedCard != null) {
-                return currentEditedCard!!.currentDeckId().did
+                val deckId = currentEditedCard!!.currentDeckId().did
+                if (deckId == 0L && note.notetype.did != 0L) {
+                    return note.notetype.did
+                }
+                return deckId
             }
 
             if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
