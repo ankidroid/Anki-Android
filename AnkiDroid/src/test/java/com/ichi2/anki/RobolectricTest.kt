@@ -45,6 +45,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.MockTime
 import com.ichi2.testutils.TaskSchedulerRule
+import com.ichi2.testutils.TestClass
 import com.ichi2.testutils.common.FailOnUnhandledExceptionRule
 import com.ichi2.testutils.common.IgnoreFlakyTestsInCIRule
 import com.ichi2.testutils.filter
@@ -75,7 +76,9 @@ import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
 import kotlin.test.assertNotNull
 
-open class RobolectricTest : AndroidTest {
+open class RobolectricTest :
+    TestClass,
+    AndroidTest {
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
 
