@@ -233,7 +233,7 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("current_deck_id")
-    fun currentDeckId() = deckId { did = oDid.ifZero { this@Card.toBackendCard().deckId } }
+    fun currentDeckId() = deckId { did = oDid.ifZero { this@Card.did } }
 
     /**
      * Time limit for answering in milliseconds.
