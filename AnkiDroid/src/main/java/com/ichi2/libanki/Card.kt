@@ -20,9 +20,9 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import anki.cards.FsrsMemoryState
 import anki.decks.deckId
-import anki.notes.noteId
 import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Consts.CardQueue
 import com.ichi2.libanki.Consts.CardType
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
@@ -233,7 +233,8 @@ open class Card : Cloneable {
     }
 
     @LibAnkiAlias("current_deck_id")
-    fun currentDeckId() = deckId { did = oDid.ifZero { did } }
+    @NeedsTest("Test functionality which calls this")
+    fun currentDeckId() = deckId { did = oDid.ifZero { this@Card.did } }
 
     /**
      * Time limit for answering in milliseconds.
