@@ -250,20 +250,20 @@
     <string name="set_due_date_match_interval" comment="when setting a card\'s due date, this checkbox also changes the interval of the card">הגדר מרווח לערך דומה</string>
     <plurals name="set_due_date_single_day_label" comment="a date control is provided afterwards">
         <item quantity="one">הצג כרטיס ב</item>
-        <item quantity="two">Show cards in</item>
-        <item quantity="many">Show cards in</item>
+        <item quantity="two">הצג כרטיסים ב</item>
+        <item quantity="many">הצג כרטיסים ב</item>
         <item quantity="other">הצג כרטיסים ב</item>
     </plurals>
     <plurals name="set_due_date_range_label" comment="a date control is provided afterwards">
         <item quantity="one">הצג כרטיס בטווח</item>
-        <item quantity="two">Show cards in range</item>
-        <item quantity="many">Show cards in range</item>
+        <item quantity="two">הצג כרטיסים בטווח</item>
+        <item quantity="many">הצג כרטיסים בטווח</item>
         <item quantity="other">הצג כרטיסים בטווח</item>
     </plurals>
     <plurals name="set_due_date_label_suffix" comment="a suffix on a text field allowing a user to enter a number of days">
-        <item quantity="one">day</item>
-        <item quantity="two">days</item>
-        <item quantity="many">days</item>
+        <item quantity="one">יום</item>
+        <item quantity="two">ימים</item>
+        <item quantity="many">ימים</item>
         <item quantity="other">ימים</item>
     </plurals>
     <string name="range_delimiter" comment="Placed between two input boxes to denote a range">-</string>

@@ -95,8 +95,8 @@
         <item quantity="many">+%d buried</item>
         <item quantity="other">+%d buried</item>
     </plurals>
-    <string name="studyoptions_total_new_label">Total new cards</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_new_label">סה\"כ קלפים חדשים</string>
+    <string name="studyoptions_total_label">סה\"כ קלפים</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">ערוך רשומה</string>
     <string name="discard">ביטול</string>

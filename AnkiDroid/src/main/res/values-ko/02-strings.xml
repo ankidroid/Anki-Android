@@ -94,7 +94,7 @@
         <item quantity="other">+%d 숨겨짐</item>
     </plurals>
     <string name="studyoptions_total_new_label">새 카드 수</string>
-    <string name="studyoptions_total_label">Total cards</string>
+    <string name="studyoptions_total_label">전체 카드</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card" maxLength="28">노트 편집하기</string>
     <string name="discard">삭제</string>
