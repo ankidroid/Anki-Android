@@ -34,10 +34,11 @@ import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.CollectionUtils.average
@@ -234,8 +235,7 @@ object NoteService {
         col: Collection,
         note: Note,
     ): Int? {
-        val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
-
+        val nonNewCards = note.cards(col).filter { it.type != CardType.NEW }
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
@@ -258,8 +258,7 @@ object NoteService {
         col: Collection,
         note: Note,
     ): Int? {
-        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
-
+        val nonNewOrLearningCards = note.cards(col).filter { it.type != CardType.NEW && it.type != CardType.LRN }
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
     }
 
@@ -282,7 +281,7 @@ fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(
 suspend fun isBuryNoteAvailable(card: Card): Boolean =
     withCol {
         db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
+            "select 1 from cards where nid = ? and id != ? and queue >=  " + QueueType.NEW.code + " limit 1",
             card.nid,
             card.id,
         ) == 1
@@ -291,7 +290,7 @@ suspend fun isBuryNoteAvailable(card: Card): Boolean =
 suspend fun isSuspendNoteAvailable(card: Card): Boolean =
     withCol {
         db.queryScalar(
-            "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
+            "select 1 from cards where nid = ? and id != ? and queue != " + QueueType.SUSPENDED.code + " limit 1",
             card.nid,
             card.id,
         ) == 1

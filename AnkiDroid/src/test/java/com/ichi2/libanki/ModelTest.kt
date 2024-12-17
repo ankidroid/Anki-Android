@@ -16,7 +16,6 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.testutils.JvmTest
@@ -510,7 +509,7 @@ class NotetypeTest : JvmTest() {
     }
 
     private fun reqSize(notetype: NotetypeJson?) {
-        if (notetype!!.getInt("type") == MODEL_CLOZE) {
+        if (notetype!!.isCloze) {
             return
         }
         assertEquals(

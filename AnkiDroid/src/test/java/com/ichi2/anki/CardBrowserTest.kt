@@ -51,9 +51,10 @@ import com.ichi2.anki.utils.ext.getCurrentDialogFragment
 import com.ichi2.anki.utils.ext.showDialogFragment
 import com.ichi2.libanki.BrowserConfig
 import com.ichi2.libanki.CardId
-import com.ichi2.libanki.Consts
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.QueueType
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
@@ -559,8 +560,8 @@ class CardBrowserTest : RobolectricTest() {
             TimeManager.reset()
             addNoteUsingBasicModel("Hello", "World").firstCard().update {
                 due = 5
-                queue = Consts.QUEUE_TYPE_REV
-                type = Consts.CARD_TYPE_REV
+                queue = QueueType.REV
+                type = CardType.REV
             }
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, 5)
@@ -1147,78 +1148,78 @@ class CardBrowserTest : RobolectricTest() {
         cal.add(Calendar.DATE, 27)
 
         // Not filtered
-        c.type = Consts.CARD_TYPE_NEW
+        c.type = CardType.NEW
         c.due = 27
-        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        c.queue = QueueType.MANUALLY_BURIED
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("(27)", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        c.queue = QueueType.SIBLING_BURIED
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("(27)", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        c.queue = QueueType.SUSPENDED
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("(27)", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_NEW
+        c.queue = QueueType.NEW
         c.due = 27
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("27", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        c.queue = QueueType.PREVIEW
         Assert.assertEquals("27", nextDue(col, c))
         Assert.assertEquals("27", dueString(col, c))
-        c.type = Consts.CARD_TYPE_LRN
+        c.type = CardType.LRN
         c.due = id
-        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        c.queue = QueueType.MANUALLY_BURIED
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("()", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        c.queue = QueueType.SIBLING_BURIED
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("()", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        c.queue = QueueType.SUSPENDED
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("()", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_LRN
+        c.queue = QueueType.LRN
         Assert.assertEquals(expectedDate, nextDue(col, c))
         Assert.assertEquals(expectedDate, dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        c.queue = QueueType.PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))
-        c.type = Consts.CARD_TYPE_REV
+        c.type = CardType.REV
 
         val cal2 = Calendar.getInstance()
         cal2.add(Calendar.DATE, 20)
         val expectedDate2 = LanguageUtil.getShortDateFormatFromMs(cal2.timeInMillis)
         c.due = 20
-        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        c.queue = QueueType.MANUALLY_BURIED
         Assert.assertEquals(expectedDate2, nextDue(col, c))
         Assert.assertEquals("($expectedDate2)", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        c.queue = QueueType.SIBLING_BURIED
         Assert.assertEquals(expectedDate2, nextDue(col, c))
         Assert.assertEquals("($expectedDate2)", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        c.queue = QueueType.SUSPENDED
         Assert.assertEquals(expectedDate2, nextDue(col, c))
         Assert.assertEquals("($expectedDate2)", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_REV
+        c.queue = QueueType.REV
         Assert.assertEquals(expectedDate2, nextDue(col, c))
         Assert.assertEquals(expectedDate2, dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        c.queue = QueueType.PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))
-        c.type = Consts.CARD_TYPE_RELEARNING
+        c.type = CardType.RELEARNING
         c.due = id
-        c.queue = Consts.QUEUE_TYPE_MANUALLY_BURIED
+        c.queue = QueueType.MANUALLY_BURIED
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("()", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        c.queue = QueueType.SIBLING_BURIED
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("()", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SUSPENDED
+        c.queue = QueueType.SUSPENDED
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("()", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_LRN
+        c.queue = QueueType.LRN
         c.due = id
         Assert.assertEquals(expectedDate, nextDue(col, c))
         Assert.assertEquals(expectedDate, dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_PREVIEW
+        c.queue = QueueType.PREVIEW
         Assert.assertEquals("", nextDue(col, c))
         Assert.assertEquals("", dueString(col, c))
 
@@ -1228,7 +1229,7 @@ class CardBrowserTest : RobolectricTest() {
         c.did = dyn
         Assert.assertEquals("(filtered)", nextDue(col, c))
         Assert.assertEquals("(filtered)", dueString(col, c))
-        c.queue = Consts.QUEUE_TYPE_SIBLING_BURIED
+        c.queue = QueueType.SIBLING_BURIED
         Assert.assertEquals("(filtered)", nextDue(col, c))
         Assert.assertEquals("((filtered))", dueString(col, c))
     }

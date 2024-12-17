@@ -23,8 +23,7 @@ import anki.decks.deckId
 import anki.notes.noteId
 import com.ichi2.anki.Flag
 import com.ichi2.anki.utils.ext.ifZero
-import com.ichi2.libanki.Consts.CardQueue
-import com.ichi2.libanki.Consts.CardType
+import com.ichi2.libanki.CardType
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.LibAnkiAlias
 import com.ichi2.libanki.utils.NotInLibAnki
@@ -76,13 +75,9 @@ open class Card : Cloneable {
     var mod: Long = 0
     private var usn = 0
 
-    @get:CardType
-    @CardType
-    var type = 0
+    var type: CardType = CardType.NEW
 
-    @get:CardQueue
-    @CardQueue
-    var queue = 0
+    var queue = QueueType.NEW
     var due: Int = 0
     var ivl = 0
     var factor = 0
@@ -131,8 +126,8 @@ open class Card : Cloneable {
         ord = card.templateIdx
         mod = card.mtimeSecs
         usn = card.usn
-        type = card.ctype
-        queue = card.queue
+        type = CardType.fromCode(card.ctype)
+        queue = QueueType.fromCode(card.queue)
         due = card.due
         ivl = card.interval
         factor = card.easeFactor
@@ -155,8 +150,8 @@ open class Card : Cloneable {
             noteId = nid
             deckId = did
             templateIdx = ord
-            ctype = type
-            queue = this@Card.queue
+            ctype = type.code
+            queue = this@Card.queue.code
             due = this@Card.due
             interval = ivl
             easeFactor = factor
@@ -444,8 +439,6 @@ open class Card : Cloneable {
     }
 
     companion object {
-        const val TYPE_REV = 2
-
         // A list of class members to skip in the toString() representation
         val SKIP_PRINT: Set<String> =
             HashSet(
