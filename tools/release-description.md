@@ -1,5 +1,3 @@
-# release-notes.md
-
 > [!IMPORTANT]
 > GitHub does not auto-update apps
 
