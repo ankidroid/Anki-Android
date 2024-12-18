@@ -16,7 +16,7 @@ Install `arm64-v8a` below. If it fails to install, use `Parallel.A`.
 The builds with `full`, `play` and `amazon` are useful for testing our builds for different app stores:
 
 - **`full`**: F-Droid & GitHub `Parallel` apks
-- **`play`**: Google Play - missing `MANAGE_EXTERNAL_STORAGE` [app data is deleted on uninstall]
+- **`play`**: Google Play - does not have `MANAGE_EXTERNAL_STORAGE` permission as it is forbidden by Google, so app data is deleted on uninstall
 - **`amazon`**: Amazon - missing `CAMERA`
 
 ---
