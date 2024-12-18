@@ -17,7 +17,7 @@ The builds with `full`, `play` and `amazon` are useful for testing our builds fo
 
 - **`full`**: F-Droid & GitHub `Parallel` apks
 - **`play`**: Google Play - does not have `MANAGE_EXTERNAL_STORAGE` permission as it is forbidden by Google, so app data is deleted on uninstall
-- **`amazon`**: Amazon - missing `CAMERA`
+- **`amazon`**: Amazon - currently same as full, historically removed `CAMERA` permission
 
 ---
 
