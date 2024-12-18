@@ -52,6 +52,7 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.undoableOp
+import com.ichi2.utils.LanguageUtil
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -243,6 +244,7 @@ class CardBrowserViewModel(
     }
 
     val flowOfInitCompleted = MutableStateFlow(false)
+    val flowOfLanguageChanged = MutableStateFlow(LanguageUtil.getSystemLocale().language)
 
     /**
      * Whether the task launched from CardBrowserViewModel.init has completed.
@@ -322,10 +324,7 @@ class CardBrowserViewModel(
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this@withCol) }
             flowOfCardsOrNotes.update { cardsOrNotes }
 
-            val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
-            column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
-            column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
-
+            fetchColumns()
             setupColumns(cardsOrNotes)
 
             withCol {
@@ -340,6 +339,11 @@ class CardBrowserViewModel(
         }
     }
 
+    suspend fun fetchColumns() {
+        val allColumns = withCol { allBrowserColumns() }.associateBy { it.key }
+        column1Candidates = CardBrowserColumn.COLUMN1_KEYS.map { allColumns[it.ankiColumnKey]!! }
+        column2Candidates = CardBrowserColumn.COLUMN2_KEYS.map { allColumns[it.ankiColumnKey]!! }
+    }
     private suspend fun setupColumns(cardsOrNotes: CardsOrNotes) {
         Timber.d("loading columns columns for %s mode", cardsOrNotes)
         val columns = BrowserColumnCollection.load(sharedPrefs(), cardsOrNotes)
