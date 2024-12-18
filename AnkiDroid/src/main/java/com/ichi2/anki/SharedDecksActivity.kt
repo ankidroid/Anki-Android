@@ -282,9 +282,10 @@ class SharedDecksActivity : AnkiActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.home) {
+        if (item.itemId == android.R.id.home) {
             shouldHistoryBeCleared = true
             webView.loadUrl(resources.getString(R.string.shared_decks_url))
+            onBackPressedCallback.isEnabled = false
         }
         return super.onOptionsItemSelected(item)
     }
