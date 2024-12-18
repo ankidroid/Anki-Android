@@ -77,6 +77,8 @@ class ExportDialogFragment : DialogFragment() {
     private lateinit var notesIncludeNotetypeName: CheckBox
     private lateinit var notesIncludeUniqueIdentifier: CheckBox
     private lateinit var cardsIncludeHtml: CheckBox
+    private lateinit var apkgExportLegacyCheckbox: CheckBox
+    private lateinit var collectionExportLegacyCheckbox: CheckBox
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView =
@@ -209,6 +211,10 @@ class ExportDialogFragment : DialogFragment() {
                 findViewById<CheckBox>(R.id.export_extras_collection_media).apply {
                     text = exportingIncludeMedia()
                 }
+            collectionExportLegacyCheckbox =
+                findViewById<CheckBox>(R.id.export_legacy_checkbox_collection).apply {
+                    text = exportingSupportOlderAnkiVersions()
+                }
         }
 
     /**
@@ -227,6 +233,10 @@ class ExportDialogFragment : DialogFragment() {
             apkgIncludeSchedule =
                 findViewById<CheckBox>(R.id.export_apkg_schedule).apply {
                     text = exportingIncludeSchedulingInformation()
+                }
+            apkgExportLegacyCheckbox =
+                findViewById<CheckBox>(R.id.export_legacy_checkbox_apkg).apply {
+                    text = exportingSupportOlderAnkiVersions()
                 }
         }
 
@@ -274,6 +284,11 @@ class ExportDialogFragment : DialogFragment() {
         targetConfig: ExportConfiguration,
     ) {
         // if we export as collection there's no deck/selected items to choose from
+        if (targetConfig.layoutId == R.id.export_extras_collection || targetConfig.layoutId == R.id.export_extras_apkg) {
+            collectionExportLegacyCheckbox.visibility = View.VISIBLE
+        } else {
+            apkgExportLegacyCheckbox.visibility = View.GONE
+        }
         if (targetConfig.layoutId == R.id.export_extras_collection) {
             decksSelectorContainer.visibility = View.GONE
             selectedLabel.visibility = View.GONE
@@ -295,18 +310,20 @@ class ExportDialogFragment : DialogFragment() {
 
     private fun handleCollectionExport() {
         val includeMedia = collectionIncludeMedia.isChecked
+        val legacy = collectionExportLegacyCheckbox.isChecked
         val exportPath =
             File(
                 getExportRootFile(),
                 "${CollectionManager.TR.exportingCollection()}-${getTimestamp(TimeManager.time)}.colpkg",
             ).path
-        (requireActivity() as AnkiActivity).exportCollectionPackage(exportPath, includeMedia)
+        (requireActivity() as AnkiActivity).exportCollectionPackage(exportPath, includeMedia, legacy)
     }
 
     private fun handleAnkiPackageExport() {
         val includeSchedule = apkgIncludeSchedule.isChecked
         val includeDeckConfigs = apkgIncludeDeckConfigs.isChecked
         val includeMedia = apkgIncludeMedia.isChecked
+        val legacy = apkgExportLegacyCheckbox.isChecked
         val limits = buildExportLimit()
         var packagePrefix = getNonCollectionNamePrefix()
         // files can't have `/` in their names
@@ -322,6 +339,7 @@ class ExportDialogFragment : DialogFragment() {
             withDeckConfigs = includeDeckConfigs,
             withMedia = includeMedia,
             limit = limits,
+            legacy = legacy,
         )
     }
 
