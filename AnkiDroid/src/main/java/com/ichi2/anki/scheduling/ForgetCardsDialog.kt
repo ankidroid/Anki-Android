@@ -19,6 +19,7 @@ package com.ichi2.anki.scheduling
 import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
+import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -28,6 +29,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.openUrl
 import com.ichi2.anki.withProgress
@@ -79,10 +81,18 @@ class ForgetCardsDialog : DialogFragment() {
             field = value
         }
 
+    @NeedsTest("Test if the preferences for resetting options are correctly loaded and saved.")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val sharedPrefs = requireContext().sharedPrefs()
         if (savedInstanceState != null) {
             restoreOriginalPositionIfPossible = savedInstanceState.getBoolean(ARG_RESTORE_ORIGINAL, true)
             resetRepetitionAndLapseCounts = savedInstanceState.getBoolean(ARG_RESET_REPETITION, false)
+        } else {
+            // If no saved instance state, load the last saved preferences for restore position and reset counts.
+            with(sharedPrefs) {
+                restoreOriginalPositionIfPossible = getBoolean(ARG_RESTORE_ORIGINAL, true)
+                resetRepetitionAndLapseCounts = getBoolean(ARG_RESET_REPETITION, false)
+            }
         }
         val contentView =
             layoutInflater.inflate(R.layout.dialog_forget_cards, null).apply {
@@ -109,6 +119,10 @@ class ForgetCardsDialog : DialogFragment() {
                 requireActivity().openUrl(Uri.parse(getString(R.string.link_help_forget_cards)))
             }
             positiveButton(R.string.dialog_ok) {
+                sharedPrefs.edit {
+                    putBoolean(ARG_RESTORE_ORIGINAL, restoreOriginalPositionIfPossible)
+                    putBoolean(ARG_RESET_REPETITION, resetRepetitionAndLapseCounts)
+                }
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY_FORGET,
                     bundleOf(
