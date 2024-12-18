@@ -7,7 +7,7 @@
 
 Install `arm64-v8a` below. If it fails to install, use `Parallel.A`.
 
-`Parallel` builds install side-by-side with the main APK, allowing you to use different settings and profiles (via the `AnkiDroid` `directory` advanced setting & a different AnkiWeb login).
+`Parallel` builds install side-by-side with the main APK, allowing you to use different settings and profiles (via the `AnkiDroid directory` advanced setting and a different AnkiWeb login).
 
 ---
 
