@@ -3,7 +3,6 @@ import com.android.build.gradle.internal.tasks.factory.dependsOn
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.dokka)
     id("maven-publish")
 }
 
