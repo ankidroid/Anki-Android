@@ -167,8 +167,10 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
-# Read the content of the markdown file
-RELEASE_NOTES=$(cat release-description.md)
+# Get the directory of the current script
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+# Read the content of the markdown file using the absolute path
+RELEASE_NOTES=$(cat "$SCRIPT_DIR/release-description.md")
 echo "Creating new Github release"
 github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "$RELEASE_NOTES" $PRE_RELEASE
 
@@ -185,7 +187,7 @@ for ABI in $ABIS; do
     PREFIX="variant-abi-"
   fi
   echo "Adding full APK for $ABI to Github release"
-  github-release upload --tag v"$VERSION" --name "${PREFIX}"AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+  github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
 done
 for FLAVOR in $FLAVORS; do
   if [ "$FLAVOR" = "full" ]; then
@@ -194,14 +196,14 @@ for FLAVOR in $FLAVORS; do
     PREFIX="dev-"
   fi
   echo "Adding full APK for $FLAVOR to Github release"
-  github-release upload --tag v"$VERSION" --name "${PREFIX}"AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+  github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk --file AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
 # Set to z- for un-minified full universal APK and proguard to ensure it is at the end of the list
 PREFIX="z-"
 echo "Adding un-minified full universal APK to GitHub release"
-github-release upload --tag v"$VERSION" --name "${PREFIX}"AnkiDroid-"$VERSION"-full-universal-nominify.apk --file AnkiDroid-"$VERSION"-full-universal-nominify.apk
+github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION"-full-universal-nominify.apk --file AnkiDroid-"$VERSION"-full-universal-nominify.apk
 echo "Adding proguard mappings file to Github release"
-github-release upload --tag v"$VERSION" --name "${PREFIX}"proguard-mappings.tar.gz --file proguard-mappings.tar.gz
+github-release upload --tag v"$VERSION" --name "$PREFIX"proguard-mappings.tar.gz --file proguard-mappings.tar.gz
 
 # Not publishing to amazon pending: https://github.com/ankidroid/Anki-Android/issues/14161
 #if [ "$PUBLIC" = "public" ]; then
@@ -227,5 +229,5 @@ fi
 for BUILD in $BUILDNAMES; do
   PREFIX=""
   echo "Adding parallel build $BUILD to Github release"
-  github-release upload --tag v"$VERSION" --name "${PREFIX}"AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
+  github-release upload --tag v"$VERSION" --name "$PREFIX"AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
 done
