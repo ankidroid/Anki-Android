@@ -74,7 +74,6 @@ commonsIo = "2.18.0"
 coroutines = '1.9.0'
 desugar-jdk-libs-nio = "2.1.3"
 drawer = "1.0.3"
-dokka = "1.9.20"
 espresso = '3.6.1'
 mikehardyGoogleAnalyticsJava7 = "2.0.13"
 hamcrest = "3.0"
@@ -217,7 +216,6 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 ktlint-gradle-plugin = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradlePlugin" }
 
 
