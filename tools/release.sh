@@ -167,60 +167,40 @@ else
   PRE_RELEASE="--pre-release"
 fi
 
+# Read the content of the markdown file
+RELEASE_NOTES=$(cat release-notes.md)
 echo "Creating new Github release"
-github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "
-> [!IMPORTANT]
-> GitHub does not auto-update apps
-
----
-
-## For regular users
-
-Install \`arm64-v8a\` below. If it fails to install, use \`Parallel.A\`.
-
-\`Parallel\` builds install side-by-side with the main APK, allowing you to use different settings and profiles (via the \`AnkiDroid\` \`directory\` advanced setting & a different AnkiWeb login).
-
----
-
-## For testers
-
-The builds with \`full\`, \`play\` and \`amazon\` are useful for testing our builds for different app stores:
-
-- **\`full\`**: F-Droid & GitHub \`Parallel\` apks
-- **\`play\`**: Google Play - missing \`MANAGE_EXTERNAL_STORAGE\` [app data is deleted on uninstall]
-- **\`amazon\`**: Amazon - missing \`CAMERA\`
-
----
-
-## ABI variants
-
-We perform ABI splits to reduce APK size. In rare cases, a phone may not be using the \`arm64-v8a\` ABI. You can find your phone's ABI using [kamgurgul/cpu-info](https://github.com/kamgurgul/cpu-info). If disk space isn't an issue, use the \`full\` apk." $PRE_RELEASE
+github-release release --tag v"$VERSION" --name "AnkiDroid $VERSION" --description "$RELEASE_NOTES" $PRE_RELEASE
 
 echo "Sleeping 30s to make sure the release exists, see issue 11746"
 sleep 30
 
+# PREFIX is used to differentiate the ABIs
+PREFIX=""
 for ABI in $ABIS; do
   if [ "$ABI" = "arm64-v8a" ]; then
-    echo "Adding full APK for $ABI to Github release"
-    github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+    PREFIX=""
   else
-    echo "Adding full APK for $ABI to Github release"
-    github-release upload --tag v"$VERSION" --name variant-abi-AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+    PREFIX="variant-abi-"
   fi
+  echo "Adding full APK for $ABI to Github release"
+  github-release upload --tag v"$VERSION" --name ${PREFIX}AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
 done
 for FLAVOR in $FLAVORS; do
   if [ "$FLAVOR" = "full" ]; then
-    echo "Adding universal APK for $FLAVOR to Github release"
-    github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk --file AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
+    PREFIX=""
   else
-    echo "Adding full APK for $FLAVOR to Github release"
-    github-release upload --tag v"$VERSION" --name dev-AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
+    PREFIX="dev-"
   fi
+  echo "Adding full APK for $FLAVOR to Github release"
+  github-release upload --tag v"$VERSION" --name ${PREFIX}AnkiDroid-"$VERSION"-"$ABI".apk --file AnkiDroid-"$VERSION"-"$ABI".apk
 done
+# Set to z- for un-minified full universal APK and proguard to ensure it is at the end of the list
+PREFIX="z-"
 echo "Adding un-minified full universal APK to GitHub release"
-github-release upload --tag v"$VERSION" --name z-AnkiDroid-"$VERSION"-full-universal-nominify.apk --file AnkiDroid-"$VERSION"-full-universal-nominify.apk
+github-release upload --tag v"$VERSION" --name ${PREFIX}AnkiDroid-"$VERSION"-full-universal-nominify.apk --file AnkiDroid-"$VERSION"-full-universal-nominify.apk
 echo "Adding proguard mappings file to Github release"
-github-release upload --tag v"$VERSION" --name z-proguard-mappings.tar.gz --file proguard-mappings.tar.gz
+github-release upload --tag v"$VERSION" --name ${PREFIX}proguard-mappings.tar.gz --file proguard-mappings.tar.gz
 
 # Not publishing to amazon pending: https://github.com/ankidroid/Anki-Android/issues/14161
 #if [ "$PUBLIC" = "public" ]; then
@@ -244,6 +224,7 @@ else
   BUILDNAMES='A B' # For alpha releases just post a couple parallel builds
 fi
 for BUILD in $BUILDNAMES; do
+  PREFIX=""
   echo "Adding parallel build $BUILD to Github release"
-  github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
+  github-release upload --tag v"$VERSION" --name ${PREFIX}AnkiDroid-"$VERSION".parallel."$BUILD".apk --file AnkiDroid-"$VERSION".parallel."$BUILD".apk
 done
