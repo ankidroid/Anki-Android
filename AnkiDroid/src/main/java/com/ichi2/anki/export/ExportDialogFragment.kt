@@ -48,6 +48,7 @@ import com.ichi2.anki.exportSelectedCards
 import com.ichi2.anki.exportSelectedNotes
 import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.utils.getTimestamp
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.DeckNameId
@@ -77,6 +78,8 @@ class ExportDialogFragment : DialogFragment() {
     private lateinit var notesIncludeNotetypeName: CheckBox
     private lateinit var notesIncludeUniqueIdentifier: CheckBox
     private lateinit var cardsIncludeHtml: CheckBox
+    private lateinit var apkgExportLegacyCheckbox: CheckBox
+    private lateinit var collectionExportLegacyCheckbox: CheckBox
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogView =
@@ -203,17 +206,27 @@ class ExportDialogFragment : DialogFragment() {
     /**
      * Initializes the views representing the extra options available when exporting a collection.
      */
+    @NeedsTest("Checkbox is only available on two selections ")
+    @NeedsTest("Checkbox defaults to false")
+    @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun View.initializeCollectionExportUi() =
         with(CollectionManager.TR) {
             collectionIncludeMedia =
                 findViewById<CheckBox>(R.id.export_extras_collection_media).apply {
                     text = exportingIncludeMedia()
                 }
+            collectionExportLegacyCheckbox =
+                findViewById<CheckBox>(R.id.export_legacy_checkbox_collection).apply {
+                    text = exportingSupportOlderAnkiVersions()
+                }
         }
 
     /**
      * Initializes the views representing the extra options available when exporting an Anki package.
      */
+    @NeedsTest("Checkbox is only available on two selections ")
+    @NeedsTest("Checkbox defaults to false")
+    @NeedsTest("Checkbox value is provided to the correct export functions (true/false)")
     private fun View.initializeApkgExportUi() =
         with(CollectionManager.TR) {
             apkgIncludeMedia =
@@ -227,6 +240,10 @@ class ExportDialogFragment : DialogFragment() {
             apkgIncludeSchedule =
                 findViewById<CheckBox>(R.id.export_apkg_schedule).apply {
                     text = exportingIncludeSchedulingInformation()
+                }
+            apkgExportLegacyCheckbox =
+                findViewById<CheckBox>(R.id.export_legacy_checkbox_apkg).apply {
+                    text = exportingSupportOlderAnkiVersions()
                 }
         }
 
@@ -295,18 +312,20 @@ class ExportDialogFragment : DialogFragment() {
 
     private fun handleCollectionExport() {
         val includeMedia = collectionIncludeMedia.isChecked
+        val legacy = collectionExportLegacyCheckbox.isChecked
         val exportPath =
             File(
                 getExportRootFile(),
                 "${CollectionManager.TR.exportingCollection()}-${getTimestamp(TimeManager.time)}.colpkg",
             ).path
-        (requireActivity() as AnkiActivity).exportCollectionPackage(exportPath, includeMedia)
+        (requireActivity() as AnkiActivity).exportCollectionPackage(exportPath, includeMedia, legacy)
     }
 
     private fun handleAnkiPackageExport() {
         val includeSchedule = apkgIncludeSchedule.isChecked
         val includeDeckConfigs = apkgIncludeDeckConfigs.isChecked
         val includeMedia = apkgIncludeMedia.isChecked
+        val legacy = apkgExportLegacyCheckbox.isChecked
         val limits = buildExportLimit()
         var packagePrefix = getNonCollectionNamePrefix()
         // files can't have `/` in their names
@@ -322,6 +341,7 @@ class ExportDialogFragment : DialogFragment() {
             withDeckConfigs = includeDeckConfigs,
             withMedia = includeMedia,
             limit = limits,
+            legacy = legacy,
         )
     }
 
