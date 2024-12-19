@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/decks_selected_barrier">
+        app:layout_constraintTop_toBottomOf="@id/decks_selected_barrier"
+        android:orientation="vertical">
 
         <CheckBox
             android:id="@+id/export_extras_collection_media"
@@ -32,6 +33,13 @@
             android:layout_height="wrap_content"
             android:checked="true"
             tools:text="Include media" />
+
+        <CheckBox
+            android:id="@+id/export_legacy_checkbox_collection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            tools:text="Support older Anki versions (slower/ larger files)" />
     </LinearLayout>
 
 
@@ -63,6 +71,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true" />
+
+            <CheckBox
+                android:id="@+id/export_legacy_checkbox_apkg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                tools:text="Support older Anki versions (slower/ larger files)" />
         </LinearLayout>
 
 
