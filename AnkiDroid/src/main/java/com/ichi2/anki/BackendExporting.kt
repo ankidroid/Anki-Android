@@ -27,6 +27,7 @@ fun AnkiActivity.exportApkgPackage(
     withDeckConfigs: Boolean,
     withMedia: Boolean,
     limit: ExportLimit,
+    legacy: Boolean,
 ) {
     launchCatchingTask {
         val onProgress: ProgressContext.() -> Unit = {
@@ -35,7 +36,7 @@ fun AnkiActivity.exportApkgPackage(
             }
         }
         withProgress(extractProgress = onProgress) {
-            withCol { exportAnkiPackage(exportPath, withScheduling, withDeckConfigs, withMedia, limit) }
+            withCol { exportAnkiPackage(exportPath, withScheduling, withDeckConfigs, withMedia, limit, legacy) }
         }
         val factory =
             (this@exportApkgPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
@@ -47,6 +48,7 @@ fun AnkiActivity.exportApkgPackage(
 suspend fun AnkiActivity.exportColpkg(
     colpkgPath: String,
     withMedia: Boolean,
+    legacy: Boolean,
 ) {
     val onProgress: ProgressContext.() -> Unit = {
         if (progress.hasExporting()) {
@@ -54,16 +56,17 @@ suspend fun AnkiActivity.exportColpkg(
         }
     }
     withProgress(extractProgress = onProgress) {
-        withCol { exportCollectionPackage(colpkgPath, withMedia, true) }
+        withCol { exportCollectionPackage(colpkgPath, withMedia, legacy) }
     }
 }
 
 fun AnkiActivity.exportCollectionPackage(
     exportPath: String,
     withMedia: Boolean,
+    legacy: Boolean,
 ) {
     launchCatchingTask {
-        exportColpkg(exportPath, withMedia)
+        exportColpkg(exportPath, withMedia, legacy)
         val factory =
             (this@exportCollectionPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
         val dialog = factory.newExportReadyDialog().withArguments(exportPath)
