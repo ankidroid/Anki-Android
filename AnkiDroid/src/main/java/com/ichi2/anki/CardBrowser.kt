@@ -42,6 +42,7 @@ import android.widget.CheckBox
 import android.widget.ListView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
@@ -283,6 +284,26 @@ open class CardBrowser :
     private var oldCardTopOffset = 0
     private var shouldRestoreScroll = false
     private var postAutoScroll = false
+    private val onBackCallbackMethod =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                when {
+                    isDrawerOpen -> {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
+                    }
+                    viewModel.isInMultiSelectMode -> viewModel.endMultiSelectMode()
+                    else -> {
+                        Timber.i("Back key pressed")
+                        val data = Intent()
+                        // Add reload flag to result intent so that schedule reset when returning to note editor
+                        data.putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
+                        closeCardBrowser(RESULT_OK, data)
+                    }
+                }
+            }
+        }
 
     init {
         ChangeManager.subscribe(this)
@@ -442,6 +463,7 @@ open class CardBrowser :
         }
 
         setupFlows()
+        onBackPressedDispatcher.addCallback(onBackCallbackMethod)
         registerOnForgetHandler { viewModel.queryAllSelectedCardIds() }
     }
 
@@ -924,22 +946,6 @@ open class CardBrowser :
     override fun onDestroy() {
         invalidate()
         super.onDestroy()
-    }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        when {
-            isDrawerOpen -> super.onBackPressed()
-            viewModel.isInMultiSelectMode -> viewModel.endMultiSelectMode()
-            else -> {
-                Timber.i("Back key pressed")
-                val data = Intent()
-                // Add reload flag to result intent so that schedule reset when returning to note editor
-                data.putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, reloadRequired)
-                closeCardBrowser(RESULT_OK, data)
-            }
-        }
     }
 
     override fun onPause() {
