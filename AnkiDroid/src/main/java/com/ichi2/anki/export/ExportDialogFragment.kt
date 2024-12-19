@@ -29,6 +29,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import anki.cards.cardIds
@@ -165,7 +166,7 @@ class ExportDialogFragment : DialogFragment() {
             if (selectedDeck != null) {
                 deckSelector.setSelection(findDeckPosition(selectedDeck))
             }
-            loadingIndicator.visibility = View.GONE
+            loadingIndicator.isVisible = false
             deckSelector.isEnabled = true
         }
     }
@@ -292,15 +293,15 @@ class ExportDialogFragment : DialogFragment() {
     ) {
         // if we export as collection there's no deck/selected items to choose from
         if (targetConfig.layoutId == R.id.export_extras_collection) {
-            decksSelectorContainer.visibility = View.GONE
-            selectedLabel.visibility = View.GONE
+            decksSelectorContainer.isVisible = false
+            selectedLabel.isVisible = false
         } else {
             if (arguments?.getSerializableCompat<ExportType>(ARG_TYPE) != null) {
-                decksSelectorContainer.visibility = View.GONE
-                selectedLabel.visibility = View.VISIBLE
+                decksSelectorContainer.isVisible = false
+                selectedLabel.isVisible = true
             } else {
-                decksSelectorContainer.visibility = View.VISIBLE
-                selectedLabel.visibility = View.GONE
+                decksSelectorContainer.isVisible = true
+                selectedLabel.isVisible = false
             }
         }
         exportTypeSelector.setSelection(targetConfig.index)
