@@ -83,7 +83,7 @@ runPrettier () {
 
 runKtlint
 ktlint_exit_code=$?
-if [ $ktlint_exit_code -ne 0 ]; theno
+if [ $ktlint_exit_code -ne 0 ]; then
     echo "ktlint failed"
     exit ktlint_exit_code
 fi
