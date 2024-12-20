@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">El sistema WebView ha fallat al renderitzar la carta \'%1$s.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Bandera</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Canviar el límit de cartes noves d\'avui</string>
-    <string name="custom_study_increase_review_limit">Modificar el límit de revisions de carta d\'avui</string>
-    <string name="custom_study_review_forgotten">Revisa les fitxes oblidades</string>
-    <string name="custom_study_review_ahead">Revisa més endavant</string>
-    <string name="custom_study_random_selection">Estudia una selecció aleatòria de les fitxes</string>
-    <string name="custom_study_preview_new">Vista prèvia de les fitxes noves</string>
     <string name="custom_study_limit_tags">Limita a determinades etiquetes</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d enterrada</item>

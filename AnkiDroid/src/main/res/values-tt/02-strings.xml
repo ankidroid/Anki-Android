@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Система WebViewы \'%1$s\' кәртен ача алмады.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Байраклар</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Бугенге кәрт лимитын үзгәртү</string>
-    <string name="custom_study_increase_review_limit">Бугенге кабатланган кәрт лимитын үзгәртү</string>
-    <string name="custom_study_review_forgotten">Онытылган кәртләрне кабатлау</string>
-    <string name="custom_study_review_ahead">Алдагын кабатлау</string>
-    <string name="custom_study_random_selection">Очраклы кәрт сайланышын өйрәнү</string>
-    <string name="custom_study_preview_new">Яңаларны карау</string>
     <string name="custom_study_limit_tags">Кайбер тамгаларны гына</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d buried</item>

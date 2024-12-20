@@ -83,12 +83,6 @@
 %2$s</string>
     <string name="filter_by_flags" maxLength="41">플래그</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>
-    <string name="custom_study_increase_review_limit">오늘의 복습 카드 학습량 늘리기</string>
-    <string name="custom_study_review_forgotten">잊어버린 카드 복습하기</string>
-    <string name="custom_study_review_ahead">미리 복습하기</string>
-    <string name="custom_study_random_selection">무작위 카드 학습하기</string>
-    <string name="custom_study_preview_new">새로운 카드 미리보기</string>
     <string name="custom_study_limit_tags">특정 태그로만 제한하기</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="other">+%d 숨겨짐</item>

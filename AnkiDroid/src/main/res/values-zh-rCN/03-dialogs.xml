@@ -72,15 +72,11 @@
     <string name="repair_deck_dialog">确实要尝试修复数据库吗？\n\n在开始前，副本将保存在子目录“%s”里。</string>
     <string name="intent_aedict_empty">类别“默认”为空</string>
     <string name="intent_aedict_category">向AnkiDroid中添加卡牌，需要删除所有NotePad类别，或者添加“默认(default)”类别。</string>
-    <string name="custom_study_new_total_new">牌组中的新卡片数量：%d</string>
-    <string name="custom_study_rev_total_rev">牌组中到期的卡牌数量：%d</string>
     <string name="custom_study_new_extend">增加/减少（“-3”）今天的新卡片限制</string>
     <string name="custom_study_rev_extend">增加/减少（“-3”）今天的复习卡片限制</string>
     <string name="custom_study_forgotten">复习过去 x 天中忘记的卡片：</string>
     <string name="custom_study_ahead">提前 x 天复习：</string>
-    <string name="custom_study_random">从牌组中随机选择 x 张卡片：</string>
     <string name="custom_study_preview">预览过去 x 天中新增的卡片：</string>
-    <string name="custom_study_rebuild_deck_corrupt">无法重建自定义学习牌组</string>
     <string name="storage_full_title">存储空间已满</string>
     <string name="storage_almost_full_title">存储空间几乎满了</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">没有空间</string>

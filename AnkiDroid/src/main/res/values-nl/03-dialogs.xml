@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Weet u zeker dat wilt proberen de database te repareren?\n\nVoordat dit wordt geprobeerd, wordt een kopie gemaakt in de submap \'%s\'.</string>
     <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
-    <string name="custom_study_new_total_new">Nieuwe kaarten in set: %d</string>
-    <string name="custom_study_rev_total_rev">Overhoringen te doen in set: %d</string>
     <string name="custom_study_new_extend">De nieuwe kaartlimiet van vandaag verhogen/verlagen (\"-3\") met</string>
     <string name="custom_study_rev_extend">De nieuwe overhoringslimiet van vandaag verhogen/verlagen (\"-3\") met</string>
     <string name="custom_study_forgotten">Herhaal kaarten vergeten in de laatste x dagen:</string>
     <string name="custom_study_ahead">Herhaal x dagen vooruit:</string>
-    <string name="custom_study_random">Kies willekeurig x kaarten uit de set:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
-    <string name="custom_study_rebuild_deck_corrupt">De aangepaste studieset kon niet opnieuw worden opgebouwd</string>
     <string name="storage_full_title">Opslag vol</string>
     <string name="storage_almost_full_title">Opslag is bijna vol</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Geen ruimte</string>

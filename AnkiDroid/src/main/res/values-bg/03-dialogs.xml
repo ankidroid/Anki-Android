@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Наистина ли искате да опитате да поправите базата данни? \n\nПреди да започнете, копие ще бъде създадено в папка \"%s\".</string>
     <string name="intent_aedict_empty">Категория \"по подразбиране\" е празна</string>
     <string name="intent_aedict_category">За да добавите карти за AnkiDroid, премахнете всички категории на Notepad или добавите такава с име \'default\'</string>
-    <string name="custom_study_new_total_new">Нови карти в тестето: %d</string>
-    <string name="custom_study_rev_total_rev">Карти за повторение: %d</string>
     <string name="custom_study_new_extend">Увеличаване/намаляване (\"-3\") днешен лимитът на нови карти</string>
     <string name="custom_study_rev_extend">Увеличаване/намаляване (\"-3\") днешен лимитът на повтарящи се карти</string>
     <string name="custom_study_forgotten">Повтаряне на забравени карти през последните x дни:</string>
     <string name="custom_study_ahead">Преглед за следващите x дни:</string>
-    <string name="custom_study_random">Избор на x случайни карти от тестето:</string>
     <string name="custom_study_preview">Преглед на нови карти, добавени през последните x дни:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не се получи да реконструира тестето за персонализирано обучение</string>
     <string name="storage_full_title">Пълно хранилище</string>
     <string name="storage_almost_full_title">Почти пълно хранилище</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Няма място</string>

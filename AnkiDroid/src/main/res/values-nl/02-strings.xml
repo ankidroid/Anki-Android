@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Systeem WebView kon de kaart \'%1$s\' niet renderen.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">Vlaggen </string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Nieuwe kaartenlimiet voor vandaag wijzigen</string>
-    <string name="custom_study_increase_review_limit">Limiet te overhoren kaarten voor vandaag wijzigen</string>
-    <string name="custom_study_review_forgotten">Vergeten kaarten overhoren</string>
-    <string name="custom_study_review_ahead">Vooruit overhoren</string>
-    <string name="custom_study_random_selection">Een willekeurige selectie van kaarten studeren</string>
-    <string name="custom_study_preview_new">Geef voorbeeld van nieuwe kaarten</string>
     <string name="custom_study_limit_tags">Beperken tot bepaalde tags</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>

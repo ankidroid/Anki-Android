@@ -78,15 +78,11 @@
     <string name="repair_deck_dialog">Да ли заиста желите да обновите базу података?\n\nДо почетка обнављања, копија базе података ће бити смештена у фасциклу \'%s\'.</string>
     <string name="intent_aedict_empty">Категорија \'подразумевано\' је празна</string>
     <string name="intent_aedict_category">При додавању карата AnkiDroid уклања све категорије бележница или додаје једну са именом \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Понови заборављено за последњих х дана:</string>
     <string name="custom_study_ahead">Прегледај унапред за х дана:</string>
-    <string name="custom_study_random">Изабери х случајних карата из шпила:</string>
     <string name="custom_study_preview">Нове картице, додате за последњих х дана:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>

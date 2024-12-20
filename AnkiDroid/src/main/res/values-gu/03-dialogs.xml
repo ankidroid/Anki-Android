@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">શું તમે ખરેખર ડેટાબેઝને રિપેર કરવાનો પ્રયાસ કરવા માંગો છો?\n\nપ્રયાસ શરૂ કરતા પહેલા, સબફોલ્ડર “%s” માં એક નકલ બનાવવામાં આવશે.</string>
     <string name="intent_aedict_empty">કેટેગરી \"ડિફોલ્ટ\" ખાલી છે</string>
     <string name="intent_aedict_category">AnkiDroid માં કાર્ડ ઉમેરવા માટે નોટપેડની બધી કેટેગરી દૂર કરો અથવા \"ડિફોલ્ટ\" નામની એક ઉમેરો</string>
-    <string name="custom_study_new_total_new">ડેકમાં નવા કાર્ડ્સ: %d</string>
-    <string name="custom_study_rev_total_rev">ડેકમાં રિવ્યૂ બાકી છે: %d</string>
     <string name="custom_study_new_extend">આજની નવી કાર્ડ મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_rev_extend">આજની સમીક્ષા મર્યાદામાં વધારો/ઘટાડો (“-3”).</string>
     <string name="custom_study_forgotten">છેલ્લા x દિવસમાં ભૂલી ગયેલા કાર્ડની સમીક્ષા કરો:</string>
     <string name="custom_study_ahead">x દિવસ આગળ સમીક્ષા કરો:</string>
-    <string name="custom_study_random">ડેકમાંથી રેન્ડમલી x કાર્ડ્સ પસંદ કરો:</string>
     <string name="custom_study_preview">છેલ્લા x દિવસમાં ઉમેરાયેલા નવા કાર્ડ્સનું પૂર્વાવલોકન કરો:</string>
-    <string name="custom_study_rebuild_deck_corrupt">વૈવિધ્યપૂર્ણ અભ્યાસ ડેક ફરીથી બનાવી શકાયું નથી</string>
     <string name="storage_full_title">સ્ટોરેજ ભરાઈ ગયું</string>
     <string name="storage_almost_full_title">સ્ટોરેજ લગભગ ભરાઈ ગયું છે</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">જગ્યા નથી</string>

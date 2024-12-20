@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">सिस्टम \'वेबव्यू\' \'%1$s\' कार्ड प्रस्तुत करण्यात अयशस्वी. \ N%2$s</string>
     <string name="filter_by_flags" maxLength="41">ध्वज</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">आजची नवीन कार्ड मर्यादा सुधारित करा</string>
-    <string name="custom_study_increase_review_limit">आजची पुनरावलोकन कार्ड मर्यादा सुधारित करा</string>
-    <string name="custom_study_review_forgotten">Visaralēlī kārḍē pahā</string>
-    <string name="custom_study_review_ahead">Puḍhē punarāvalōkana karā</string>
-    <string name="custom_study_random_selection">Kārḍān̄cī ēka yādr̥cchika nivaḍa abhyāsa</string>
-    <string name="custom_study_preview_new">Navīna kārḍsacē pūrvāvalōkana karā</string>
     <string name="custom_study_limit_tags">Viśiṣṭa ṭĕgasāṭhī maryādā</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>

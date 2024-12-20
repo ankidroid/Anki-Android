@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">आपण खरोखर डेटाबेस दुरुस्त करण्याचा प्रयत्न करू इच्छिता? \N\n प्रयत्न सुरू करण्यापूर्वी, एक प्रत सबफोल्डर \"%s\" मध्ये तयार केली जाईल.</string>
     <string name="intent_aedict_empty">वर्ग “डीफॉल्ट” रिक्त आहे</string>
     <string name="intent_aedict_category">AnkiDroid वर कार्डे जोडण्यासाठी सर्व नोटपॅड श्रेण्या काढा किंवा “डीफॉल्ट” नावाची एक जोडा</string>
-    <string name="custom_study_new_total_new">डेकमधील नवीन कार्डे:%d</string>
-    <string name="custom_study_rev_total_rev">डेकवर देय पुनरावलोकने:%d</string>
     <string name="custom_study_new_extend">आजची नवीन कार्ड मर्यादा वाढवा / कमी करा (“-3”)</string>
     <string name="custom_study_rev_extend">आजची पुनरावलोकन मर्यादा वाढवा / कमी करा (“-3”)</string>
     <string name="custom_study_forgotten">गेल्या x दिवसात विसरलेल्या कार्डांचे पुनरावलोकन करा:</string>
     <string name="custom_study_ahead">एक्स दिवसांपूर्वी पुनरावलोकन करा:</string>
-    <string name="custom_study_random">डेकमधून सहजतेने x कार्ड निवडा:</string>
     <string name="custom_study_preview">शेवटच्या x दिवसात जोडलेल्या नवीन कार्डांचे पूर्वावलोकन करा:</string>
-    <string name="custom_study_rebuild_deck_corrupt">सानुकूल अभ्यास डेक पुन्हा तयार करू शकलो नाही</string>
     <string name="storage_full_title">स्टोरेज भरले आहे</string>
     <string name="storage_almost_full_title">स्टोरेज जवळजवळ भरले आहे</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">जागा नाही</string>

@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Do you really want to try to repair the database?\n\nBefore starting the attempt, a copy will be created in subfolder “%s”.</string>
     <string name="intent_aedict_empty">ਸ਼੍ਰੇਣੀ \"ਡਿਫਾਲਟ\" ਖਾਲੀ ਹੈ</string>
     <string name="intent_aedict_category">To add cards to AnkiDroid remove all Notepad categories or add one named “default”</string>
-    <string name="custom_study_new_total_new">ਡੈੱਕ ਵਿੱਚ ਨਵੇਂ ਕਾਰਡ: %d</string>
-    <string name="custom_study_rev_total_rev">ਡੈੱਕ ਵਿੱਚ ਲੰਬਿਤ ਸਮੀਖਿਆਵਾਂ: %d</string>
     <string name="custom_study_new_extend">ਅੱਜ ਦੀ ਨਵੀਂ ਕਾਰਡ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
     <string name="custom_study_rev_extend">ਅੱਜ ਦੀ ਸਮੀਖਿਆ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
     <string name="custom_study_forgotten">ਅੱਜ ਦੀ ਸਮੀਖਿਆ ਸੀਮਾ ਵਧਾਓ/ਘਟਾਓ (“-3”)</string>
     <string name="custom_study_ahead">x ਦਿਨ ਅੱਗੇ ਦੀ ਸਮੀਖਿਆ ਕਰੋ:</string>
-    <string name="custom_study_random">ਡੇਕ ਤੋਂ ਬੇਤਰਤੀਬੇ ਐਕਸ ਕਾਰਡ ਚੁਣੋ:</string>
     <string name="custom_study_preview">ਪਿਛਲੇ x ਦਿਨਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕੀਤੇ ਗਏ ਨਵੇਂ ਕਾਰਡਾਂ ਦੀ ਸੰਖੇਪ ਜਾਣਕਾਰੀ:</string>
-    <string name="custom_study_rebuild_deck_corrupt">ਕਸਟਮ ਸਟੱਡੀ ਡੈੱਕ ਨੂੰ ਦੁਬਾਰਾ ਨਹੀਂ ਬਣਾਇਆ ਜਾ ਸਕਿਆ</string>
     <string name="storage_full_title">ਸਟੋਰੇਜ ਭਰੀ ਹੋਈ ਹੈ</string>
     <string name="storage_almost_full_title">ਸਟੋਰੇਜ ਲਗਭਗ ਭਰੀ ਹੋਈ ਹੈ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ਕੋਈ ਥਾਂ ਨਹੀਂ</string>

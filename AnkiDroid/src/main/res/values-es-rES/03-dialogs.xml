@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">¿Realmente deseas intentar reparar la base de datos?\n\nAntes de iniciar el intento, se creará una copia en la subcarpeta \'%s\'.</string>
     <string name="intent_aedict_empty">La categoría \'por defecto\' está vacía</string>
     <string name="intent_aedict_category">Para añadir tarjetas AnkiDroid borra todas las categorías del Bloc de notas o agrega una llamada \'por defecto\'</string>
-    <string name="custom_study_new_total_new">Tarjetas nuevas en el mazo: %d</string>
-    <string name="custom_study_rev_total_rev">Repasos pendientes en el mazo: %d</string>
     <string name="custom_study_new_extend">Aumentar/disminuir (“-3”) el límite actual de tarjetas en</string>
     <string name="custom_study_rev_extend">Aumentar/disminuir (“-3”) el límite actual de revisión por</string>
     <string name="custom_study_forgotten">Revisar tarjetas olvidadas en los últimos x días:</string>
     <string name="custom_study_ahead">Revisar con x días de adelanto:</string>
-    <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
     <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
-    <string name="custom_study_rebuild_deck_corrupt">No se pudo reconstruir el mazo de estudio personalizado</string>
     <string name="storage_full_title">Almacenamiento lleno</string>
     <string name="storage_almost_full_title">Almacenamiento casi lleno</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sin spacio</string>

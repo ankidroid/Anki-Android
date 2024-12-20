@@ -72,15 +72,11 @@
     <string name="repair_deck_dialog">データベースの修復を試みて本当によろしいですか？\n\n試行の開始前に、サブフォルダ \"%s\" にコピーを作成します。</string>
     <string name="intent_aedict_empty">カテゴリー \"default\" が空です</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか、\"default\" という名前のカテゴリを追加してください</string>
-    <string name="custom_study_new_total_new">デッキ内の新規カード: %d枚</string>
-    <string name="custom_study_rev_total_rev">デッキ内の、期日に達している復習カード: %d枚</string>
     <string name="custom_study_new_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_forgotten">直近 x 日間で「やり直し」を選んだカードを再学習</string>
     <string name="custom_study_ahead"> x 日先までの復習カードを予習</string>
-    <string name="custom_study_random">デッキからランダムに x 枚のカードを選んで学習</string>
     <string name="custom_study_preview">直近 x 日間で追加した習得未開始の新規カードを予習</string>
-    <string name="custom_study_rebuild_deck_corrupt">カスタムデッキを再構築できませんでした</string>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">空き容量不足</string>

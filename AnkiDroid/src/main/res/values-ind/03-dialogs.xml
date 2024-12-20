@@ -72,15 +72,11 @@
     <string name="repair_deck_dialog">Apakah Anda benar-benar ingin memperbaiki basis data?\n\nSebelum memulai, salinan akan dibuat ke dalam subfolder \'%s\'.</string>
     <string name="intent_aedict_empty">Kategori \'awalan\' kosong</string>
     <string name="intent_aedict_category">Untuk menambah kartu ke AnkiDroid hapus semua kategori catatan atau tambahkan satu bernama \"bawaan\"</string>
-    <string name="custom_study_new_total_new">Kartu baru di dek: %d</string>
-    <string name="custom_study_rev_total_rev">Ulasan jatuh tempo di dek: %d</string>
     <string name="custom_study_new_extend">Tambahkan/kurangi (“-3”) batas kartu baru hari ini sampai</string>
     <string name="custom_study_rev_extend">Tambahkan/kurangi (“-3”) batas kartu ulasan hari ini sampai</string>
     <string name="custom_study_forgotten">Ulas kartu yang terlupakan dalam x hari terakhir:</string>
     <string name="custom_study_ahead">Ulas duluan sampai x hari:</string>
-    <string name="custom_study_random">Pilih x kartu secara acak dari dek:</string>
     <string name="custom_study_preview">Pratinjau kartu yang baru ditambahkan dalam x hari terakhir:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Tidak dapat membangun dek belajar khusus</string>
     <string name="storage_full_title">Penyimpanan sudah penuh</string>
     <string name="storage_almost_full_title">Penyimpanan hampir penuh</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Tidak ada ruang</string>
