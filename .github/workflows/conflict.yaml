@@ -1,4 +1,4 @@
-name: Conflict Scan
+name: 🛠️ Conflict Scan
 
 on:
   push:
