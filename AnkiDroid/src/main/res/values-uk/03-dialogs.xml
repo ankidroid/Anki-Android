@@ -54,7 +54,7 @@
         <item quantity="many">Видалити всі картки в %1$s? Вона містить %2$d карток</item>
         <item quantity="other">Видалити всі картки в %1$s? Вона містить %2$d карток</item>
     </plurals>
-    <string name="delete_cram_deck_message">Видалити фільтровану колоду %s і повернути всі карти до оригінальних колод?</string>
+    <string name="delete_cram_deck_message">Видалити фільтровану колоду %s і повернути всі картки до оригінальних колод?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="tts_no_tts">Не говорити</string>
     <string name="unused_strings">\n\nНевикористані файли:\n</string>
