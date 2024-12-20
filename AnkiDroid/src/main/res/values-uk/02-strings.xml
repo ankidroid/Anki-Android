@@ -371,5 +371,5 @@
     <string name="edit_browser_appearance" comment="Description of the shortcut that edits the browser appearance of card template">Редагувати вигляд браузера</string>
     <string name="show_shortcuts_message">Натисніть Alt+K, щоб показати комбінації клавіш</string>
     <string name="missing_user_action_dialog_message" comment="%s is the user action number">Дію користувача %s не встановлено в цьому типі запису. Будь ласка, налаштуйте її</string>
-    <string name="directory_inaccessible_info">Дізнайтесь більше про те, як відновити доступ до %s або перейдіть в налаштування щоб оновити теку колекції.</string>
+    <string name="directory_inaccessible_info">Дізнайтесь більше про те, як відновити доступ тут – %s, або перейдіть в налаштування, щоб оновити теку колекцій.</string>
 </resources>
