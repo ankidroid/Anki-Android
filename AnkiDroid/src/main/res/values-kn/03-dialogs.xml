@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">ಡೇಟಾಬೇಸ್ ಅನ್ನು ಸರಿಪಡಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?\n\nಪ್ರಯತ್ನವನ್ನು ಪ್ರಾರಂಭಿಸುವ ಮೊದಲು, \"%s\" ಉಪಫೋಲ್ಡರ್‌ನಲ್ಲಿ ನಕಲನ್ನು ರಚಿಸಲಾಗುತ್ತದೆ.</string>
     <string name="intent_aedict_empty">\"ಡೀಫಾಲ್ಟ್\" ವರ್ಗ ಖಾಲಿಯಾಗಿದೆ</string>
     <string name="intent_aedict_category">ಎಲ್ಲಾ ನೋಟ್‌ಪ್ಯಾಡ್ ವಿಭಾಗಗಳನ್ನು ತೆಗೆದುಹಾಕಿ ಅಥವಾ AnkiDroid ಗೆ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲು \"ಡೀಫಾಲ್ಟ್\" ಹೆಸರಿನ ಒಂದನ್ನು ಸೇರಿಸಿ</string>
-    <string name="custom_study_new_total_new">ಡೆಕ್‌ನಲ್ಲಿ ಹೊಸ ಕಾರ್ಡ್‌ಗಳು: %d</string>
-    <string name="custom_study_rev_total_rev">ಡೆಕ್‌ನಲ್ಲಿ ಬಾಕಿ ಉಳಿದಿರುವ ವಿಮರ್ಶೆಗಳು: %d</string>
     <string name="custom_study_new_extend">ಇಂದಿನ ಹೊಸ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಹೆಚ್ಚಿಸಿ/ಕಡಿಮೆ ಮಾಡಿ (\"-3\").</string>
     <string name="custom_study_rev_extend">ಇಂದಿನ ಚೆಕ್ ಮಿತಿಯನ್ನು ಹೆಚ್ಚಿಸಿ/ಕಡಿಮೆ ಮಾಡಿ (\"-3\").</string>
     <string name="custom_study_forgotten">ಕಳೆದ x ದಿನಗಳಲ್ಲಿ ಮರೆತಿರುವ ರಿವ್ಯೂ ಕಾರ್ಡ್‌ಗಳು:</string>
     <string name="custom_study_ahead">x ದಿನಗಳ ಮೊದಲು ಪರಿಶೀಲಿಸಿ:</string>
-    <string name="custom_study_random">ಡೆಕ್‌ನಿಂದ ಯಾದೃಚ್ಛಿಕವಾಗಿ x ಕಾರ್ಡ್‌ಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ:</string>
     <string name="custom_study_preview">ಕಳೆದ x ದಿನಗಳಲ್ಲಿ ಸೇರಿಸಲಾದ ಹೊಸ ಕಾರ್ಡ್‌ಗಳ ಪೂರ್ವವೀಕ್ಷಣೆ:</string>
-    <string name="custom_study_rebuild_deck_corrupt">ಕಸ್ಟಮ್ ಸ್ಟಡಿ ಡೆಕ್ ಅನ್ನು ಮರುನಿರ್ಮಾಣ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ</string>
     <string name="storage_full_title">ಸಂಗ್ರಹಣೆ ತುಂಬಿದೆ</string>
     <string name="storage_almost_full_title">ಸಂಗ್ರಹಣೆಯು ಬಹುತೇಕ ಪೂರ್ಣವಾಗಿದೆ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ಜಾಗ ಇಲ್ಲ</string>

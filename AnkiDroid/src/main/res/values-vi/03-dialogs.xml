@@ -72,15 +72,11 @@
     <string name="repair_deck_dialog">Bạn có thực sự muốn sửa chữa cơ sở dữ liệu? \n\nTrước khi bắt đầu, một bản sao sẽ được tạo trong thư mục con \"%s\".</string>
     <string name="intent_aedict_empty">Danh mục \"mặc định\" rỗng</string>
     <string name="intent_aedict_category">Để thêm thẻ vào AnkiDroid, hãy xoá toàn bộ danh mục Notepad hoặc thêm danh mục tên \"mặc định\"</string>
-    <string name="custom_study_new_total_new">Các thẻ mới trong bộ thẻ: %d</string>
-    <string name="custom_study_rev_total_rev">Hạn ôn tập trong bộ thẻ: %d</string>
     <string name="custom_study_new_extend">Tăng / giảm (“-3”) hạn mức thẻ mới của ngày hôm nay lên</string>
     <string name="custom_study_rev_extend">Tăng / giảm (“-3”) giới hạn ôn tập của ngày hôm nay lên</string>
     <string name="custom_study_forgotten">Ôn lại các thẻ đã quên trong x ngày trước:</string>
     <string name="custom_study_ahead">Ôn tập trước x ngày:</string>
-    <string name="custom_study_random">Chọn ngẫu nhiên x thẻ từ bộ:</string>
     <string name="custom_study_preview">Xem trước thẻ mới được thêm vào x ngày trước:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Không thể tạo lại bộ thẻ học tùy chỉnh</string>
     <string name="storage_full_title">Bộ nhớ đầy</string>
     <string name="storage_almost_full_title">Bộ nhớ gần đầy</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Không có không gian</string>

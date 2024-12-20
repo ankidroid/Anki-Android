@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Systémovému WebView se nepodařilo vykreslit kartu „%1$s“.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Příznaky</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Upravit dnešní limit nových karet</string>
-    <string name="custom_study_increase_review_limit">Upravit dnešní limit opakování</string>
-    <string name="custom_study_review_forgotten">Opakovat zapomenuté karty</string>
-    <string name="custom_study_review_ahead">Opakovat dopředu</string>
-    <string name="custom_study_random_selection">Studovat náhodný výběr karet</string>
-    <string name="custom_study_preview_new">Náhled nových karet</string>
     <string name="custom_study_limit_tags">Omezit podle štítků</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d přeskočená</item>

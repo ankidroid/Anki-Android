@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">سسٹم WebView کارڈ \'%1$s\' رینڈر کرنے میں ناکام رہا۔\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">جھنڈے</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">آج کی نئی کارڈ کی حد میں ترمیم کریں۔</string>
-    <string name="custom_study_increase_review_limit">آج کی نظرثانی کارڈ کی حد میں ترمیم کریں۔</string>
-    <string name="custom_study_review_forgotten">بھولے ہوئے کارڈ دہرائیں</string>
-    <string name="custom_study_review_ahead">آگے کا جائزہ لیں</string>
-    <string name="custom_study_random_selection">کارڈز کے بے ترتیب انتخاب کا مطالعہ کریں۔</string>
-    <string name="custom_study_preview_new">نئے کارڈز کا مشاہدہ کریں</string>
     <string name="custom_study_limit_tags">مخصوص ٹیگز تک محدود</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d دفن کر دیا گیا۔</item>

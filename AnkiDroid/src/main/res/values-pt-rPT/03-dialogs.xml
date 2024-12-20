@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Realmente deseja tentar reparar a base de dados?\n\nAntes de iniciar a tentativa, será criada uma cópia na subpasta \'%s\'.</string>
     <string name="intent_aedict_empty">A categoria \'predefinida\' está vazia</string>
     <string name="intent_aedict_category">Para adicionar fichas na AnkiDroid remova todas as categorias de notas ou adicione uma com o nome \'predefinida\'</string>
-    <string name="custom_study_new_total_new">Fichas novas no baralho: %d</string>
-    <string name="custom_study_rev_total_rev">Revisões por fazer no baralho: %d</string>
     <string name="custom_study_new_extend">Aumentar/diminuir (\"-3\") o limite de novas fichas, de hoje, em</string>
     <string name="custom_study_rev_extend">Aumentar/diminuir (\"-3\") o limite de fichas a rever, de hoje, em</string>
     <string name="custom_study_forgotten">Rever fichas esquecidas nos últimos x dias:</string>
     <string name="custom_study_ahead">Rever em avanço por x dias:</string>
-    <string name="custom_study_random">Selecionar aleatoriamente x fichas do baralho:</string>
     <string name="custom_study_preview">Pré-visualizar novas fichas adicionadas nos últimos x dias:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Não foi possível criar o seu baralho de estudo personalizado</string>
     <string name="storage_full_title">Armazenamento cheio</string>
     <string name="storage_almost_full_title">Armazenamento quase cheio</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sem espaço</string>

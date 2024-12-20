@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">ସିଷ୍ଟମ୍ WebView \'%1$s\' ପତ୍ର କୁ ପ୍ରସ୍ତୁତ କଲାନାହିଁ।\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">ପତାକା</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
-    <string name="custom_study_increase_review_limit">ଆଜିର ସମୀକ୍ଷା ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
-    <string name="custom_study_review_forgotten">ଭୁଲିଯାଇଥିବା ପତ୍ରର ସମୀକ୍ଷା</string>
-    <string name="custom_study_review_ahead">ଆଗୁଆ ସମୀକ୍ଷା</string>
-    <string name="custom_study_random_selection">ପତ୍ରଗୁଡ଼ିକର ଏକ ଅନିୟମିତ ଚୟନ ଅଧ୍ୟୟନ କରନ୍ତୁ</string>
-    <string name="custom_study_preview_new">ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ</string>
     <string name="custom_study_limit_tags">ନିର୍ଦ୍ଧିଷ୍ଟ ଟ୍ୟାଗରେ ସୀମିତ ରଖ</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%dଟିଏ ସ୍ଥଗିତ କରାଗଲା</item>

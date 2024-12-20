@@ -81,15 +81,11 @@
     <string name="repair_deck_dialog">Naozaj chcete skúsiť opraviť databázu?\n\nPred začatím pokusu o opravenie bude vytvorená kópia v podpriečinku \"%s\".</string>
     <string name="intent_aedict_empty">Kategória \"predvolený\" je prázdna</string>
     <string name="intent_aedict_category">Ak chcete pridať kartičky do AnkiDroid, odstráňte všetky kategórie poznámkového bloku alebo pridajte jednu s názvom \"predvolený\"</string>
-    <string name="custom_study_new_total_new">Nové kartičky v balíčku: %d</string>
-    <string name="custom_study_rev_total_rev">Na zopakovanie v balíčku: %d</string>
     <string name="custom_study_new_extend">Zvýšiť/znížiť („-3”) dnešný limit nových kartičiek o</string>
     <string name="custom_study_rev_extend">Zvýšiť/znížiť („-3”) dnešný limit kartičiek na zopakovanie o</string>
     <string name="custom_study_forgotten">Zopakovať si kartičky zabudnuté za posledných x dní:</string>
     <string name="custom_study_ahead">Opakovať dopredu o x dní:</string>
-    <string name="custom_study_random">Náhodne vybrať x kartičiek z balíčka:</string>
     <string name="custom_study_preview">Ukážka nových kartičiek pridaných za posledných x dní:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Nepodarilo sa obnoviť balíček vlastného štúdia</string>
     <string name="storage_full_title">Úložisko je plné</string>
     <string name="storage_almost_full_title">Úložisko je takmer plné</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nedostatok miesta</string>

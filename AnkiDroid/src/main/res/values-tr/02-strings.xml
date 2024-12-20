@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Bayraklar</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
-    <string name="custom_study_increase_review_limit">Bugünün çalışma kartı sınırını düzenle</string>
-    <string name="custom_study_review_forgotten">Unutulan kartları gözden geçir</string>
-    <string name="custom_study_review_ahead">Önceden çalış</string>
-    <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
-    <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d gömülü</item>

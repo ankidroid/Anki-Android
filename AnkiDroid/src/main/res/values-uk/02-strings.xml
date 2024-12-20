@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">Системою WebView не вдалося відобразити картку \'%1$s\'.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Прапорці</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>
-    <string name="custom_study_increase_review_limit">Змінити сьогоднішній ліміт на повторення карток</string>
-    <string name="custom_study_review_forgotten">Повторити забуті картки</string>
-    <string name="custom_study_review_ahead">Повторити наперед</string>
-    <string name="custom_study_random_selection">Вивчати випадковий набір карток</string>
-    <string name="custom_study_preview_new">Переглянути нові картки</string>
     <string name="custom_study_limit_tags">Обмежити конкретними тегами</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d відкладено</item>

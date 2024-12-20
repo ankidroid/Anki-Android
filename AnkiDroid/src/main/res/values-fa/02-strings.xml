@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">سیستم در تنظیم ظاهر کارت %1$s با خطا مواجه شد.\n%2$s</string>
     <string name="filter_by_flags" maxLength="41">پرچم ها</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">تعیین محدودیت برای کارت جدید امروز</string>
-    <string name="custom_study_increase_review_limit">تعیین محدودیت برای مرور کارت امروز</string>
-    <string name="custom_study_review_forgotten">مرور کارت های فراموش شده</string>
-    <string name="custom_study_review_ahead">مرور آنهایي که در شرف مطالعه اند</string>
-    <string name="custom_study_random_selection">مطالعه کارت ها به صورت تصادفی</string>
-    <string name="custom_study_preview_new">پیش نمایش کارت های جدید</string>
     <string name="custom_study_limit_tags">محدود کردن به برچسب هايی خاص</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d دفن شده</item>

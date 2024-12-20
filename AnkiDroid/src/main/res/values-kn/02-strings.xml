@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">\'%1$s\' ಕಾರ್ಡ್ ಅನ್ನು ನಿರೂಪಿಸಲು ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆ ವಿಫಲವಾಗಿದೆ.\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">ಧ್ವಜಗಳು</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">ಇಂದಿನ ಹೊಸ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="custom_study_increase_review_limit">ಇಂದಿನ ವಿಮರ್ಶೆ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>
-    <string name="custom_study_review_forgotten">ಮರೆತುಹೋದ ಕಾರ್ಡ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ</string>
-    <string name="custom_study_review_ahead">ಮುಂದೆ ಪರಿಶೀಲಿಸಿ</string>
-    <string name="custom_study_random_selection">ಕಾರ್ಡ್‌ಗಳ ಯಾದೃಚ್ selection ಿಕ ಆಯ್ಕೆಯನ್ನು ಅಧ್ಯಯನ ಮಾಡಿ</string>
-    <string name="custom_study_preview_new">ಹೊಸ ಕಾರ್ಡ್‌ಗಳನ್ನು ಪೂರ್ವವೀಕ್ಷಣೆ ಮಾಡಿ</string>
     <string name="custom_study_limit_tags">ನಿರ್ದಿಷ್ಟ ಟ್ಯಾಗ್‌ಗಳಿಗೆ ಮಿತಿಗೊಳಿಸಿ</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>

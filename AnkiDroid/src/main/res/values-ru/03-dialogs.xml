@@ -81,15 +81,11 @@
     <string name="repair_deck_dialog">Вы действительно хотите починить базу данных?\n\nПеред восстановлением копия базы данных будет помещена в папку «%s».</string>
     <string name="intent_aedict_empty">Категория «default» пуста</string>
     <string name="intent_aedict_category">Чтобы добавить карточки в AnkiDroid, удалите все категории «Notepad» или создайте категорию «default»</string>
-    <string name="custom_study_new_total_new">Новых карточек в колоде: %d</string>
-    <string name="custom_study_rev_total_rev">Карточек для повторения: %d</string>
     <string name="custom_study_new_extend">Увеличить или уменьшить («-3») лимит новых на сегодня</string>
     <string name="custom_study_rev_extend">Увеличить или уменьшить («-3») лимит повторяемых на сегодня</string>
     <string name="custom_study_forgotten">Забытые за сколько дней повторить:</string>
     <string name="custom_study_ahead">На сколько дней опередить повторение:</string>
-    <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду допзанятия</string>
     <string name="storage_full_title">Хранилище заполнено</string>
     <string name="storage_almost_full_title">Хранилище почти заполнено</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Нет места</string>

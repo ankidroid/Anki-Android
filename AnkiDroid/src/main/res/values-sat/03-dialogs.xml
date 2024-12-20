@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">ᱟᱢ ᱫᱚ ᱱᱚᱶᱟ database ᱥᱟᱡᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ ? \n\nᱮᱛᱷᱚᱵ ᱢᱟᱲᱟᱝ ᱨᱮ, ᱢᱤᱫᱴᱟᱝ ᱠᱚᱯᱤ \&quot;%s\&quot; ᱥᱚᱵᱼᱯᱷᱚᱞᱰᱟᱨ ᱨᱮ ᱛᱮᱭᱨᱚᱜᱽᱟ ᱱᱟᱦ ᱾</string>
     <string name="intent_aedict_empty">ᱴᱩᱢᱟᱹᱞ \&quot;default\&quot; ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="intent_aedict_category">AnkiDroid ᱛᱮ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ Notepad ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱜᱟᱨ ᱠᱟᱜ ᱢᱮ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ “default” ᱧᱩᱛᱩᱢ ᱠᱟᱜ ᱢᱮ</string>
-    <string name="custom_study_new_total_new">ᱰᱮᱠ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰᱺ%d</string>
-    <string name="custom_study_rev_total_rev">ᱰᱮᱠ ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭᱺ%d</string>
     <string name="custom_study_new_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱤᱢᱟᱹ</string>
     <string name="custom_study_rev_extend">ᱵᱚᱰᱷᱟᱣ/ᱠᱚᱢᱢᱮ (“-3”) ᱛᱮᱦᱚᱸᱧᱟᱜᱽ ᱨᱤᱵᱷᱤᱣ ᱞᱤᱢᱤᱴ</string>
     <string name="custom_study_forgotten">ᱨᱤᱵᱷᱭᱩ ᱠᱟᱰ x ᱫᱤᱱ ᱨᱮ ᱦᱤᱲᱤᱧᱟᱜ ᱠᱚᱺ</string>
     <string name="custom_study_ahead">᱑᱐ ᱫᱤᱱ ᱢᱟᱲᱟᱝ ᱥᱮᱱ ᱨᱤᱵᱷᱤᱣᱺ</string>
-    <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
     <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
-    <string name="custom_study_rebuild_deck_corrupt">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱫᱟᱭ ᱛᱮᱭᱟᱨ ᱞᱮᱱᱟ</string>
     <string name="storage_full_title">ᱥᱴᱳᱨᱮᱡ ᱯᱩᱨᱤ</string>
     <string name="storage_almost_full_title">ᱥᱴᱳᱨᱮᱡ ᱜᱮ ᱯᱩᱨᱤ</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>

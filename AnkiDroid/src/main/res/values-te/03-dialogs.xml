@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">మీరు నిజంగా డాటాబేస్ రిపేరు చేయాలనుకుంటున్నారా? \n\n ప్రయత్నం ప్రారంభించటానికి ముందు, \"కాపీ\" ఫోల్డర్ \"%s\" లో సృష్టించబడుతుంది.</string>
     <string name="intent_aedict_empty">\"default\" వర్గం ఖాళీగా ఉంది</string>
     <string name="intent_aedict_category">AnkiDroid కు కార్డులు జోడించడానికి అన్ని నోట్ప్యాడ్లో కేతగిరీలు తొలగించండి లేదా \"default\" కు ఒక పేరును జోడించండి</string>
-    <string name="custom_study_new_total_new">డెక్‌లో కొత్త కార్డ్‌లు: %d</string>
-    <string name="custom_study_rev_total_rev">డెక్‌పై రివ్యూలు రావాల్సి ఉంది: %d</string>
     <string name="custom_study_new_extend">నేటి కొత్త కార్డ్ పరిమితిని పెంచండి/తగ్గించండి (\"-3\").</string>
     <string name="custom_study_rev_extend">నేటి సమీక్ష పరిమితిని పెంచడం/తగ్గించడం (\"-3\").</string>
     <string name="custom_study_forgotten">గత x రోజుల్లో రిజిస్టర్డ్ కార్డులను మర్చిపోయారు:</string>
     <string name="custom_study_ahead">X రోజుల ముందుగా సమీక్షించండి:</string>
-    <string name="custom_study_random">డెక్ నుండి యాదృచ్ఛికంగా x కార్డులను ఎంచుకోండి:</string>
     <string name="custom_study_preview">గత x రోజులలో జోడించిన కొత్త కార్డులను ప్రివ్యూ చేయండి:</string>
-    <string name="custom_study_rebuild_deck_corrupt">అనుకూల స్టడీ డెక్‌ని పునర్నిర్మించడం సాధ్యపడలేదు</string>
     <string name="storage_full_title">నిల్వ నిండింది</string>
     <string name="storage_almost_full_title">నిల్వ దాదాపు నిండింది</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ఖాళీ లేదు</string>

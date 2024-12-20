@@ -83,12 +83,6 @@
    %2$s</string>
     <string name="filter_by_flags" maxLength="41">Banderas</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modìfica su lìmite de cartas noas de oe</string>
-    <string name="custom_study_increase_review_limit">Modìfica su lìmite de revisiones de oe</string>
-    <string name="custom_study_review_forgotten">Revisiona sas cartas ismentigadas</string>
-    <string name="custom_study_review_ahead">Revisiona in antìtzipu</string>
-    <string name="custom_study_random_selection">Istùdia una seletzione casuale de cartas</string>
-    <string name="custom_study_preview_new">Antiprima de sas cartas noas</string>
     <string name="custom_study_limit_tags">Lìmita a etichetas particulares</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d interrada</item>

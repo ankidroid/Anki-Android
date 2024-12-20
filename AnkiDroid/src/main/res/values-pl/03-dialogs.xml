@@ -81,15 +81,11 @@
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
-    <string name="custom_study_new_total_new">Nowe karty w talii: %d</string>
-    <string name="custom_study_rev_total_rev">Oczekujące na przejrzenie karty w talii: %d</string>
     <string name="custom_study_new_extend">Zwiększ/zmniejsz (“-3”) dzisiejszy limit nowych kart</string>
     <string name="custom_study_rev_extend">Zwiększ/zmniejsz (“-3”) dzisiejszy limit przeglądanych kart</string>
     <string name="custom_study_forgotten">Przejrzyj zapomniane karty z ostatnich x dni:</string>
     <string name="custom_study_ahead">Przejrzyj z wyprzedzeniem x dni:</string>
-    <string name="custom_study_random">Wybierz losowo x kart z talii:</string>
     <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Nie udało się przebudować talii nauki niestandardowej</string>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>

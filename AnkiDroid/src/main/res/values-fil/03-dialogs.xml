@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Gusto mo ba talagang subukan ang pag-aayos ng database? \n\n Bago mo simulan ang pagtatangka, isang kopya ang lilikhain sa mga subfolder \"%s\".</string>
     <string name="intent_aedict_empty">Ang kategoryang \"default\" ay walng laman</string>
     <string name="intent_aedict_category">Upang magdagdag ng mga kard sa AnkiDroid alisin lahat ng mga kategorya ng Notepad o magdagdag ng isa na pinangalanang \"default\"</string>
-    <string name="custom_study_new_total_new">Mga bagong kard sa deck:%d</string>
-    <string name="custom_study_rev_total_rev">Mga review na nakatakda sa deck:%d</string>
     <string name="custom_study_new_extend">Dagdagan/bawasan (\"-3\") ang hangganan ng bagong card ngayong araw ng</string>
     <string name="custom_study_rev_extend">Dagdagan/bawasan (\"-3\") ang hangganan ng pagrepaso ngayong araw ng</string>
     <string name="custom_study_forgotten">Ang mga review kard na nakalimutan sa huling x araw:</string>
     <string name="custom_study_ahead">Suriin nang maaga ng x araw:</string>
-    <string name="custom_study_random">Pumili ng x kard sa pamamagitan ng random mula sa deck:</string>
     <string name="custom_study_preview">I-preview ang mga bagong kjard na naidagdag sa mga huling x araw:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Hindi maisaayos muli ang custom na deck pang-aral</string>
     <string name="storage_full_title">Puno na ang storage</string>
     <string name="storage_almost_full_title">Malapit nang mapuno ang storage</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Walang espasyo</string>

@@ -75,15 +75,11 @@
     <string name="repair_deck_dialog">Vil du virkelig prøve å reparere databasen?\n\nEn kopi vil bli opprettet i undermappen \'%s\' før forsøket starter.</string>
     <string name="intent_aedict_empty">Kategorien \'standard\' er tom</string>
     <string name="intent_aedict_category">For å legge kort til AnkiDroid, fjern alle notisblokk-kategorier eller legg til en som heter \'default\'</string>
-    <string name="custom_study_new_total_new">Nye kort i stokken: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
     <string name="custom_study_forgotten">Review cards forgotten in last x days:</string>
     <string name="custom_study_ahead">Review ahead by x days:</string>
-    <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="storage_full_title">Lagring fullt</string>
     <string name="storage_almost_full_title">Lagring nesten full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>

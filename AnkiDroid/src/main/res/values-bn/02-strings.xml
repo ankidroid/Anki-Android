@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">সিস্টেম ওয়েব-ভিউ \'%1$s\'.\n %2$s কার্ড রেন্ডার করতে ব্যর্থ হয়েছে</string>
     <string name="filter_by_flags" maxLength="41">নিশান</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">আজকের নতুন কার্ড সীমা বদল</string>
-    <string name="custom_study_increase_review_limit">আজকের রিভিউ কার্ড সীমা পরিবর্তন</string>
-    <string name="custom_study_review_forgotten">ভুলে যাওয়া কার্ড পরিদর্শন</string>
-    <string name="custom_study_review_ahead">আগাম পরিদর্শন</string>
-    <string name="custom_study_random_selection">এলোমেলোভাবে নির্বাচিত কার্ড অধ্যয়ন</string>
-    <string name="custom_study_preview_new">নতুন কার্ড অধ্যয়ন</string>
     <string name="custom_study_limit_tags">নির্দিষ্ট ট্যাগে সীমিতকরণ</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+%d buried</item>

@@ -82,12 +82,6 @@
     <string name="webview_crash_loop_dialog_content">La WebView sistema non è riuscita a rendere la carta «%1$s».\n %2$s</string>
     <string name="filter_by_flags" maxLength="41">Contrassegni</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modifica il limite odierno di nuove carte</string>
-    <string name="custom_study_increase_review_limit">Modifica il limite odierno di revisioni</string>
-    <string name="custom_study_review_forgotten">Ripeti carte dimenticate</string>
-    <string name="custom_study_review_ahead">Ripeti in anticipo</string>
-    <string name="custom_study_random_selection">Studia una selezione casuale di carte</string>
-    <string name="custom_study_preview_new">Anteprima carte nuove</string>
     <string name="custom_study_limit_tags">Limita ad etichette particolari</string>
     <plurals name="studyoptions_buried_count">
         <item quantity="one">+sepolto</item>
