@@ -56,6 +56,11 @@ object LanguageHintService {
         Timber.i("Set field locale to %s", selectedLocale)
     }
 
+    fun getImeHintLocales(field: JSONObject?): LocaleList? {
+        if (field == null) return null
+        return getLanguageHintForField(field)?.let { LocaleList(it) }
+    }
+
     fun EditText.applyLanguageHint(languageHint: LanguageHint?) {
         this.imeHintLocales = if (languageHint != null) LocaleList(languageHint) else null
     }
