@@ -75,7 +75,7 @@
             android:layout_marginBottom="4dp"
             app:layout_constraintTop_toBottomOf="@id/appbar"
             app:layout_constraintBottom_toTopOf="@id/buttons_area"
-            style="@style/CardView.PreviewerStyle">
+            style="@style/CardView.ViewerStyle">
 
             <WebView
                 android:id="@+id/webview"
