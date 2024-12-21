@@ -26,12 +26,14 @@ if (project.rootProject.file("local.properties").exists()) {
 }
 val fatalWarnings = !(localProperties["fatal_warnings"] == "false")
 
+// can't be obtained inside 'subprojects'
+val ktlintVersion = libs.versions.ktlint.get()
+
 // Here we extract per-module "best practices" settings to a single top-level evaluation
 subprojects {
-    // TODO: should be able to use libs.versions.toml here
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-        version.set("1.5.0")
+        version.set(ktlintVersion)
     }
 
     afterEvaluate {
