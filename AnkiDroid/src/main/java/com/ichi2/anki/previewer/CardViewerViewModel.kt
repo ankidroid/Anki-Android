@@ -132,7 +132,15 @@ abstract class CardViewerViewModel(
         eval.emit("_showQuestion(${Json.encodeToString(question)}, ${Json.encodeToString(answer)}, '${bodyClass()}');")
     }
 
-    protected open suspend fun showAnswerInternal() {
+    /**
+     * Parses the card answer and sends a [eval] request to load it into the `qa` HTML div
+     *
+     * * [Anki reference](https://github.com/ankitects/anki/blob/c985acb9fe36d3651eb83cf4cfe44d046ec7458f/qt/aqt/reviewer.py#L460)
+     * * [Typescript reference](https://github.com/ankitects/anki/blob/c985acb9fe36d3651eb83cf4cfe44d046ec7458f/ts/reviewer/index.ts#L193)
+     *
+     * @see [stdHtml]
+     */
+    protected open suspend fun showAnswer() {
         Timber.v("showAnswer()")
         showingAnswer.emit(true)
 

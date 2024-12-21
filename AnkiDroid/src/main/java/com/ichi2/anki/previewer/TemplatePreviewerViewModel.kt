@@ -115,7 +115,7 @@ class TemplatePreviewerViewModel(
         if (isAfterRecreation) {
             launchCatchingIO {
                 // TODO: We should persist showingAnswer to SavedStateHandle
-                if (showingAnswer.value) showAnswerInternal() else showQuestion()
+                if (showingAnswer.value) showAnswer() else showQuestion()
             }
             return
         }
@@ -145,7 +145,7 @@ class TemplatePreviewerViewModel(
                 showQuestion()
                 loadAndPlaySounds(CardSide.QUESTION)
             } else {
-                showAnswerInternal()
+                showAnswer()
                 loadAndPlaySounds(CardSide.ANSWER)
             }
         }

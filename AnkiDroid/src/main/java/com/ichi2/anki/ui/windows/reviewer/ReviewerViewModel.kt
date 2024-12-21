@@ -132,7 +132,7 @@ class ReviewerViewModel(
         if (isAfterRecreation) {
             launchCatchingIO {
                 // TODO handle "Don't keep activities"
-                if (showingAnswer.value) showAnswerInternal() else showQuestion()
+                if (showingAnswer.value) showAnswer() else showQuestion()
             }
         } else {
             launchCatchingIO {
@@ -141,13 +141,19 @@ class ReviewerViewModel(
         }
     }
 
-    fun showAnswer() {
+    /**
+     * Sends an [eval] request to load the card answer, and updates components
+     * with behavior specific to the `Answer` card side.
+     *
+     * @see showAnswer
+     */
+    fun onShowAnswer() {
         launchCatchingIO {
             while (!statesMutated) {
                 delay(50)
             }
             updateNextTimes()
-            showAnswerInternal()
+            showAnswer()
             loadAndPlaySounds(CardSide.ANSWER)
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()

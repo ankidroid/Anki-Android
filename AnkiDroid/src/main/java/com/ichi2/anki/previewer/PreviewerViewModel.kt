@@ -107,7 +107,7 @@ class PreviewerViewModel(
                 showQuestion()
                 cardMediaPlayer.autoplayAllSoundsForSide(CardSide.QUESTION)
             } else if (backSideOnly.value && !showingAnswer.value) {
-                showAnswerInternal()
+                showAnswer()
                 cardMediaPlayer.autoplayAllSoundsForSide(CardSide.ANSWER)
             }
         }
@@ -147,7 +147,7 @@ class PreviewerViewModel(
     fun onNextButtonClick() {
         launchCatchingIO {
             if (!showingAnswer.value && !backSideOnly.value) {
-                showAnswerInternal()
+                showAnswer()
                 cardMediaPlayer.autoplayAllSoundsForSide(CardSide.ANSWER)
             } else {
                 currentIndex.update { it + 1 }
@@ -207,7 +207,7 @@ class PreviewerViewModel(
             asyncIO {
                 withCol { getCard(selectedCardIds[currentIndex.value]) }
             }
-        if (showAnswer) showAnswerInternal() else showQuestion()
+        if (showAnswer) showAnswer() else showQuestion()
         updateFlagIcon()
         updateMarkIcon()
     }

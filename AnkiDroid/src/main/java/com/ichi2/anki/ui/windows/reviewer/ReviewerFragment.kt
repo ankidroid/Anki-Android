@@ -239,7 +239,7 @@ class ReviewerFragment :
         val showAnswerButton =
             view.findViewById<MaterialButton>(R.id.show_answer).apply {
                 setOnClickListener {
-                    viewModel.showAnswer()
+                    viewModel.onShowAnswer()
                 }
             }
         val answerButtonsLayout = view.findViewById<ConstraintLayout>(R.id.answer_buttons)
