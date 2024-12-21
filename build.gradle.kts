@@ -1,6 +1,7 @@
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.extension.impl.AndroidComponentsExtensionImpl
+import com.android.ide.common.util.parseIntOrDefault
 import com.slack.keeper.optInToKeeper
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.internal.jvm.Jvm
@@ -110,10 +111,12 @@ if (jvmVersion != "17" && jvmVersion != "21") {
     println("\n\n\n")
     println("ERROR: AnkiDroid builds with JVM version 17 or 21.")
     println("  Incompatible major version detected: '$jvmVersion'")
-    println("\n\n\n")
-    println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
-    println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
-    println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
+    if (jvmVersion.parseIntOrDefault(defaultValue = 0) > 21) {
+        println("\n\n\n")
+        println("  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions.")
+        println("  Edit the main build.gradle file, find this message in the file, and add support for the new version.")
+        println("  Please make sure the `jacocoTestReport` target works on an emulator with our minSdk (currently $minSdk).")
+    }
     println("\n\n\n")
     println("**************************************************************************************************************")
     println("\n\n\n")
