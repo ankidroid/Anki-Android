@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
+import android.os.Build
 import android.os.IBinder
 import android.util.TypedValue
 import android.view.View
@@ -148,7 +149,12 @@ class AnkiDroidWidgetSmall : AnalyticsWidgetProvider() {
                         updateViews.setViewVisibility(R.id.widget_eta, View.INVISIBLE)
                     } else {
                         updateViews.setViewVisibility(R.id.widget_eta, View.VISIBLE)
-                        updateViews.setTextViewText(R.id.widget_eta, eta.toString())
+                        if (Build.VERSION.SDK_INT >= 31) {
+                            // TODO: add a clock icon
+                            updateViews.setTextViewText(R.id.widget_eta, "⌛ $eta")
+                        } else {
+                            updateViews.setTextViewText(R.id.widget_eta, "$eta")
+                        }
                         updateViews.setContentDescription(R.id.widget_eta, context.resources.getQuantityString(R.plurals.widget_eta, eta, eta))
                     }
                 }
