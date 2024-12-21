@@ -16,11 +16,14 @@
 package com.ichi2.testutils
 
 import android.app.Application
+import com.google.android.material.color.DynamicColors
 import com.ichi2.anki.AnkiDroidApp
 
 class EmptyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        DynamicColors.applyToActivitiesIfAvailable(this)
 
         // reset the static state of the app
         AnkiDroidApp.simulateRestoreFromBackup()
