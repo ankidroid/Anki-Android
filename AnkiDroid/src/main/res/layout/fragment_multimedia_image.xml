@@ -32,7 +32,7 @@
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/image_size_textview"
-            style="@style/CardView.PreviewerStyle" >
+            style="@style/CardView.ViewerStyle" >
 
             <WebView
                 android:id="@+id/multimedia_webview"
