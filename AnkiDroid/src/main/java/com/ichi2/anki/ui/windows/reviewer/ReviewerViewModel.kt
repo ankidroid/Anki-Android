@@ -424,7 +424,10 @@ class ReviewerViewModel(
     }
 
     // TODO
-    override suspend fun typeAnsFilter(text: String): String = text
+    override suspend fun typeAnsFilter(
+        text: String,
+        typedAnswer: String?,
+    ): String = text
 
     private suspend fun updateUndoAndRedoLabels() {
         undoLabelFlow.emit(withCol { undoLabel() })
