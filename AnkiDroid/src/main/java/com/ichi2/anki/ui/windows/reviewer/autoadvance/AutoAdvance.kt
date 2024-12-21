@@ -76,7 +76,7 @@ class AutoAdvance(
             viewModel.launchCatchingIO {
                 delay(durationToShowQuestionFor())
                 when (questionAction()) {
-                    QuestionAction.SHOW_ANSWER -> viewModel.showAnswer()
+                    QuestionAction.SHOW_ANSWER -> viewModel.onShowAnswer()
                     QuestionAction.SHOW_REMINDER -> showReminder(TR.studyingQuestionTimeElapsed())
                 }
             }
