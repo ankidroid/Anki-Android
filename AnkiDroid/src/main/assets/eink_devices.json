@@ -1,0 +1,142 @@
+[
+  {
+    "manufacturer": "Onyx Boox",
+    "models": [
+      "Boox Note Air",
+      "Boox Note 5",
+      "Boox Nova Air",
+      "Boox Nova 3",
+      "Boox Poke 3",
+      "Boox Tab Ultra",
+      "Boox Leaf 2",
+      "Boox Lumi 2",
+      "Boox Max Lumi 2",
+      "Boox Note X2",
+      "Boox Mira Pro",
+      "Boox Nova Air 2",
+      "Boox Tab Ultra C Pro",
+      "Boox Note Air 4 C",
+      "Boox Palma 2",
+      "Boox Tab X",
+      "Boox Tab Mini C"
+    ]
+  },
+  {
+    "manufacturer": "Boyue",
+    "models": [
+      "Likebook Mars",
+      "Likebook Ares Note",
+      "Likebook P10",
+      "Likebook P78",
+      "Meebook P10 Pro",
+      "Meebook Ares",
+      "Likebook Mimas"
+    ]
+  },
+  {
+    "manufacturer": "Bigme",
+    "models": [
+      "Bigme S6 Color",
+      "Bigme B1 Pro Plus",
+      "Bigme Galy",
+      "Bigme InkNote Color",
+      "Bigme InkNote",
+      "Bigme Smart Note"
+    ]
+  },
+  {
+    "manufacturer": "Dasung",
+    "models": [
+      "Not-eReader",
+      "Paperlike HD-FT",
+      "Link Pro",
+      "Paperlike 253",
+      "Not-eReader 3"
+    ]
+  },
+  {
+    "manufacturer": "iReader",
+    "models": [
+      "iReader C6",
+      "iReader C6L",
+      "iReader C6P",
+      "iReader C6T",
+      "iReader C6W",
+      "iReader C6X",
+      "iReader Ocean"
+    ]
+  },
+  {
+    "manufacturer": "Hisense",
+    "models": [
+      "Hisense A7",
+      "Hisense Touch",
+      "Hisense A5 Pro CC",
+      "Hisense Q5",
+      "Hisense A9",
+      "Hisense Touch Lite"
+    ]
+  },
+  {
+    "manufacturer": "Xiaomi",
+    "models": [
+      "Xiaomi InkPalm 5",
+      "Xiaomi InkPalm Plus",
+      "Xiaomi Paper Book Pro II"
+    ]
+  },
+  {
+    "manufacturer": "Ratta",
+    "models": [
+      "Ratta Supernote A5X",
+      "Ratta Supernote A6X"
+    ]
+  },
+  {
+    "manufacturer": "Readmoo",
+    "models": [
+      "Readmoo MooInk Plus 2",
+      "Readmoo MooInk Pro 2"
+    ]
+  },
+  {
+    "manufacturer": "Topjoy",
+    "models": [
+      "Topjoy Butterfly Color",
+      "Topjoy Butterfly Pro",
+      "Topjoy Butterfly Mini"
+    ]
+  },
+  {
+    "manufacturer": "Guoyue",
+    "models": [
+      "Guoyue Moaan InkPalm"
+    ]
+  },
+  {
+    "manufacturer": "Reinkstone",
+    "models": [
+      "Reinkstone R1"
+    ]
+  },
+  {
+    "manufacturer": "KingJim",
+    "models": [
+      "KingJim K5"
+    ]
+  },
+  {
+    "manufacturer": "Huawei",
+    "models": [
+      "Huawei MatePad Paper"
+    ]
+  },
+  {
+    "manufacturer": "BOOX",
+    "models": [
+      "BOOX Note Air4 C",
+      "BOOX Palma 2",
+      "BOOX Note Max"
+    ]
+  }
+]

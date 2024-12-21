@@ -67,6 +67,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
@@ -122,6 +123,8 @@ open class AnkiDroidApp :
         }
         instance = this
 
+        // Initialize safe display mode for E-ink devices
+        initializeSafeDisplayMode()
         // Get preferences
         val preferences = this.sharedPrefs()
 
@@ -265,6 +268,98 @@ open class AnkiDroidApp :
         TtsVoices.launchBuildLocalesJob()
         // enable {{tts-voices:}} field filter
         TtsVoicesFieldFilter.ensureApplied()
+    }
+
+    /**
+     * Initialize Timber with the specified tag and log type.
+     *
+     * @param tag The tag to use for logging.
+     */
+    private fun initializeTimber(tag: String) {
+        if (Timber.forest().isNotEmpty()) {
+            Timber.tag(tag).d("Timber is already initialized with ${Timber.forest().size} trees")
+            return
+        }
+
+        val logType = LogType.value
+        when (logType) {
+            LogType.DEBUG -> Timber.plant(DebugTree())
+            LogType.ROBOLECTRIC -> Timber.plant(RobolectricDebugTree())
+            LogType.PRODUCTION -> Timber.plant(ProductionCrashReportingTree())
+        }
+        Timber.tag(tag)
+        Timber.d("Timber initialized with config: $logType")
+    }
+
+    /**
+     * Initializes the safe display mode for e-ink devices.
+     *
+     * This method checks if the `safe_display` key is already set in the shared preferences.
+     * If the key is not set and the device has an e-ink display, it sets the `safe_display` key to `true`.
+     */
+    private fun initializeSafeDisplayMode() {
+        initializeTimber("SafeDisplayMode")
+        val preferences = this.sharedPrefs()
+        val isSafeDisplaySet = preferences.contains("safeDisplay")
+        Timber.tag("SafeDisplayMode").d("isSafeDisplaySet: $isSafeDisplaySet")
+        if (!isSafeDisplaySet && hasEInkDisplay()) {
+            Timber
+                .tag("SafeDisplayMode")
+                .d("E-Ink display detected and safeDisplay is not set. Setting it now.")
+            preferences.edit().putBoolean("safeDisplay", true).apply()
+        } else {
+            Timber
+                .tag("SafeDisplayMode")
+                .d("No changes made. Either safeDisplay is already set or no E-Ink display detected.")
+        }
+    }
+
+    /**
+     * Checks if the device has an E-Ink display by matching its manufacturer and model.
+     * Returns true if a match is found, false otherwise.
+     */
+    fun hasEInkDisplay(): Boolean {
+        initializeTimber("SafeDisplayMode")
+        return try {
+            // Load JSON from assets
+            val jsonFileName = "eink_devices.json"
+            val jsonText = assets.open(jsonFileName).bufferedReader().use { it.readText() }
+
+            // Parse JSON into a JSONArray
+            val jsonArray = JSONArray(jsonText)
+
+            // Get device manufacturer and model, normalize to lowercase with spaces trimmed
+            val deviceManufacturer = Build.MANUFACTURER.lowercase().trim()
+            val deviceModel = Build.MODEL.lowercase().trim()
+
+            Timber.tag("SafeDisplayMode").d("Checking device: manufacturer=$deviceManufacturer, model=$deviceModel")
+
+            // Check against JSON data
+            for (i in 0 until jsonArray.length()) {
+                val deviceInfo = jsonArray.getJSONObject(i)
+                val manufacturer = deviceInfo.getString("manufacturer").lowercase().trim()
+                val models = deviceInfo.getJSONArray("models")
+
+                // If manufacturer matches, check models
+                if (deviceManufacturer.contains(manufacturer) || manufacturer.contains(deviceManufacturer)) {
+                    for (j in 0 until models.length()) {
+                        val model = models.getString(j).lowercase().trim()
+                        if (deviceModel.contains(model) || model.contains(deviceModel)) {
+                            Timber.tag("SafeDisplayMode").d("E-Ink display detected: Manufacturer=$manufacturer, Model=$model")
+                            return true
+                        }
+                    }
+                }
+            }
+
+            // Log if no match found
+            Timber.tag("SafeDisplayMode").d("No E-Ink display detected")
+            false
+        } catch (e: Exception) {
+            // Log error and return false
+            Timber.tag("SafeDisplayMode").e("Error detecting E-Ink display: ${e.message}")
+            false
+        }
     }
 
     /**
