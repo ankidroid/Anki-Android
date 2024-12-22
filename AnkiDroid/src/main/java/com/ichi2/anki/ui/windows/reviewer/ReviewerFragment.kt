@@ -23,6 +23,8 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,6 +32,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -40,6 +43,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_NO_MORE_CARDS
 import com.ichi2.anki.CollectionManager
@@ -92,6 +97,7 @@ import com.ichi2.anki.utils.ext.collectLatestIn
 import com.ichi2.anki.utils.ext.menu
 import com.ichi2.anki.utils.ext.removeSubMenu
 import com.ichi2.anki.utils.ext.sharedPrefs
+import com.ichi2.anki.utils.ext.window
 import com.ichi2.libanki.sched.Counts
 import kotlinx.coroutines.launch
 
@@ -107,7 +113,13 @@ class ReviewerFragment :
         get() = requireView().findViewById(R.id.webview)
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        anchorView = this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
+        val typeAnswerContainer = this@ReviewerFragment.view?.findViewById<View>(R.id.type_answer_container)
+        anchorView =
+            if (typeAnswerContainer?.isVisible == true) {
+                typeAnswerContainer
+            } else {
+                this@ReviewerFragment.view?.findViewById(R.id.buttons_area)
+            }
     }
 
     override fun onStop() {
@@ -128,6 +140,7 @@ class ReviewerFragment :
         }
 
         setupImmersiveMode(view)
+        setupTypeAnswer(view)
         setupAnswerButtons(view)
         setupCounts(view)
         setupMenu(view)
@@ -195,6 +208,47 @@ class ReviewerFragment :
         return true
     }
 
+    private fun setupTypeAnswer(view: View) {
+        // TODO keep text after configuration changes
+        val typeAnswerContainer = view.findViewById<MaterialCardView>(R.id.type_answer_container)
+        val typeAnswerEditText =
+            view.findViewById<TextInputEditText>(R.id.type_answer_edit_text).apply {
+                setOnEditorActionListener { editTextView, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        viewModel.onShowAnswer(editTextView.text.toString())
+                        return@setOnEditorActionListener true
+                    }
+                    false
+                }
+                setOnFocusChangeListener { editTextView, hasFocus ->
+                    val insetsController = WindowInsetsControllerCompat(window, editTextView)
+                    if (hasFocus) {
+                        insetsController.show(WindowInsetsCompat.Type.ime())
+                    } else {
+                        insetsController.hide(WindowInsetsCompat.Type.ime())
+                    }
+                }
+            }
+        val autoFocusTypeAnswer = sharedPrefs().getBoolean(getString(R.string.type_in_answer_focus_key), true)
+        viewModel.typeAnswerFlow.collectIn(lifecycleScope) { typeInAnswer ->
+            typeAnswerEditText.text = null
+            if (typeInAnswer == null) {
+                typeAnswerContainer.isVisible = false
+                return@collectIn
+            }
+            typeAnswerContainer.isVisible = true
+            typeAnswerEditText.apply {
+                if (imeHintLocales != typeInAnswer.imeHintLocales) {
+                    imeHintLocales = typeInAnswer.imeHintLocales
+                    context?.getSystemService<InputMethodManager>()?.restartInput(this)
+                }
+                if (autoFocusTypeAnswer) {
+                    requestFocus()
+                }
+            }
+        }
+    }
+
     private fun setupAnswerButtons(view: View) {
         val hideAnswerButtons = sharedPrefs().getBoolean(getString(R.string.hide_answer_buttons_key), false)
         if (hideAnswerButtons) {
@@ -238,8 +292,10 @@ class ReviewerFragment :
 
         val showAnswerButton =
             view.findViewById<MaterialButton>(R.id.show_answer).apply {
+                val editText = view.findViewById<TextInputEditText>(R.id.type_answer_edit_text)
                 setOnClickListener {
-                    viewModel.onShowAnswer()
+                    val typedAnswer = editText?.text?.toString()
+                    viewModel.onShowAnswer(typedAnswer = typedAnswer)
                 }
             }
         val answerButtonsLayout = view.findViewById<ConstraintLayout>(R.id.answer_buttons)
@@ -387,11 +443,12 @@ class ReviewerFragment :
 
         val ignoreDisplayCutout = sharedPrefs().getBoolean(getString(R.string.ignore_display_cutout_key), false)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val defaultTypes = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
             val typeMask =
                 if (ignoreDisplayCutout) {
-                    WindowInsetsCompat.Type.systemBars()
+                    defaultTypes
                 } else {
-                    WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+                    defaultTypes or WindowInsetsCompat.Type.displayCutout()
                 }
             val bars = insets.getInsets(typeMask)
             v.updatePadding(
