@@ -52,5 +52,6 @@ class TiramisuPermissionsFragment : PermissionsFragment(R.layout.permissions_tir
         view.findViewById<PermissionItem>(R.id.all_files_permission).setOnSwitchClickListener {
             accessAllFilesLauncher.showManageAllFilesScreen()
         }
+        (activity as? PermissionsActivity)?.setSkipButtonVisible(true)
     }
 }
