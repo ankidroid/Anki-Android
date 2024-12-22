@@ -27,11 +27,11 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.SubMenuBuilder
 import androidx.appcompat.widget.ActionMenuView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.getSystemService
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -298,7 +298,7 @@ class ReviewerFragment :
                     viewModel.onShowAnswer(typedAnswer = typedAnswer)
                 }
             }
-        val answerButtonsLayout = view.findViewById<ConstraintLayout>(R.id.answer_buttons)
+        val answerButtonsLayout = view.findViewById<LinearLayout>(R.id.answer_buttons)
 
         // TODO add some kind of feedback/animation after tapping show answer or the answer buttons
         viewModel.showingAnswer.collectLatestIn(lifecycleScope) { shouldShowAnswer ->
