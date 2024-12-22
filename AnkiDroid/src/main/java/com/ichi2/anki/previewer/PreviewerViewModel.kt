@@ -240,7 +240,7 @@ class PreviewerViewModel(
         if (showingAnswer.value) {
             typeAnsAnswerFilter(currentCard.await(), text)
         } else {
-            typeAnsQuestionFilter(text)
+            removeTypeAnswerTags(text)
         }
 
     companion object {
@@ -255,9 +255,9 @@ class PreviewerViewModel(
                 }
             }
 
-        /** removes `[[type:]]` blocks in questions */
+        /** removes `[[type:]]` tags */
         @VisibleForTesting
-        fun typeAnsQuestionFilter(text: String) = typeAnsRe.replace(text, "")
+        fun removeTypeAnswerTags(text: String) = typeAnsRe.replace(text, "")
 
         /** Adapted from the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L720) */
         suspend fun typeAnsAnswerFilter(
