@@ -41,8 +41,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
-import org.intellij.lang.annotations.Language
-import org.jetbrains.annotations.VisibleForTesting
 import timber.log.Timber
 
 class PreviewerViewModel(
@@ -254,30 +252,5 @@ class PreviewerViewModel(
                     PreviewerViewModel(previewerIdsFile, currentIndex, cardMediaPlayer)
                 }
             }
-
-        /** removes `[[type:]]` tags */
-        @VisibleForTesting
-        fun removeTypeAnswerTags(text: String) = typeAnsRe.replace(text, "")
-
-        /** Adapted from the [desktop code](https://github.com/ankitects/anki/blob/1ff55475b93ac43748d513794bcaabd5d7df6d9d/qt/aqt/reviewer.py#L720) */
-        suspend fun typeAnsAnswerFilter(
-            card: Card,
-            text: String,
-        ): String {
-            val typeAnswerField =
-                getTypeAnswerField(card, text)
-                    ?: return typeAnsRe.replace(text, "")
-            val expectedAnswer =
-                getExpectedTypeInAnswer(card, typeAnswerField)
-                    ?: return typeAnsRe.replace(text, "")
-            val typeFont = typeAnswerField.getString("font")
-            val typeSize = getFontSize(typeAnswerField)
-            val answerComparison = withCol { compareAnswer(expectedAnswer, provided = "") }
-
-            @Language("HTML")
-            val output =
-                """<div style="font-family: '$typeFont'; font-size: ${typeSize}px">$answerComparison</div>"""
-            return typeAnsRe.replace(text, output)
-        }
     }
 }
