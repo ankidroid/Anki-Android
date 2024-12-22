@@ -28,7 +28,6 @@ import com.ichi2.anki.cardviewer.CardMediaPlayer
 import com.ichi2.anki.launchCatchingIO
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.anki.reviewer.CardSide
-import com.ichi2.anki.utils.ext.ifNullOrEmpty
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
@@ -37,7 +36,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.parcelize.Parcelize
-import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
 
 class TemplatePreviewerViewModel(
@@ -186,37 +184,18 @@ class TemplatePreviewerViewModel(
     }
 
     // https://github.com/ankitects/anki/blob/df70564079f53e587dc44f015c503fdf6a70924f/qt/aqt/clayout.py#L579
-    override suspend fun typeAnsFilter(text: String): String {
-        val typeAnswerField = getTypeAnswerField(currentCard.await(), text)
-        val expectedAnswer =
-            typeAnswerField
-                ?.let {
-                    getExpectedTypeInAnswer(currentCard.await(), typeAnswerField)
-                }.ifNullOrEmpty { "sample" }
-
-        val repl =
-            if (showingAnswer.value) {
-                withCol { compareAnswer(expectedAnswer, "example") }
-            } else {
-                "<center><input id='typeans' type=text value='example' readonly='readonly'></center>"
+    override suspend fun typeAnsFilter(text: String): String =
+        if (showingAnswer.value) {
+            val typeAnswer = TypeAnswer.getInstance(currentCard.await(), text)
+            if (typeAnswer?.expectedAnswer?.isEmpty() == true) {
+                typeAnswer.expectedAnswer = "sample"
             }
-        // Anki doesn't set the font size of the type answer field in the template previewer,
-        // but it does in the reviewer. To get a more accurate preview of what people are going
-        // to study, the font size is being set here.
-        val out =
-            if (typeAnswerField != null) {
-                val fontSize = getFontSize(typeAnswerField)
-
-                @Language("HTML")
-                val replWithFontSize = """<div style="font-size: ${fontSize}px">$repl</div>"""
-                typeAnsRe.replaceFirst(text, replWithFontSize)
-            } else {
-                typeAnsRe.replaceFirst(text, repl)
-            }
-
-        val warning = "<center><b>${CollectionManager.TR.cardTemplatesTypeBoxesWarning()}</b></center>"
-        return typeAnsRe.replace(out, warning)
-    }
+            typeAnswer?.answerFilter(typedAnswer = "example") ?: text
+        } else {
+            val repl = "<center><input id='typeans' type=text value='example' readonly='readonly'></center>"
+            val warning = "<center><b>${CollectionManager.TR.cardTemplatesTypeBoxesWarning()}</b></center>"
+            StringBuilder(text).replaceFirst(typeAnsRe, repl).replace(typeAnsRe, warning)
+        }
 
     companion object {
         fun factory(

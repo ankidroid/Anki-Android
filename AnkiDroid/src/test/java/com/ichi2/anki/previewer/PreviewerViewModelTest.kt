@@ -23,7 +23,7 @@ class PreviewerViewModelTest {
     @Test
     fun `type answer fields are removed in questions`() {
         assertThat(
-            removeTypeAnswerTags("creu [[type:leu]]"),
+            TypeAnswer.removeTags("creu [[type:leu]]"),
             equalTo("creu "),
         )
     }
