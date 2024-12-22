@@ -37,6 +37,7 @@ import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.pages.DeckOptionsDestination
 import com.ichi2.anki.preferences.getShowIntervalOnButtons
 import com.ichi2.anki.previewer.CardViewerViewModel
+import com.ichi2.anki.previewer.TypeAnswer
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.servicelayer.MARKED_TAG
 import com.ichi2.anki.servicelayer.NoteService
@@ -78,6 +79,7 @@ class ReviewerViewModel(
     val undoLabelFlow = MutableStateFlow<String?>(null)
     val redoLabelFlow = MutableStateFlow<String?>(null)
     val countsFlow = MutableStateFlow(Counts() to Counts.Queue.NEW)
+    val typeAnswerFlow = MutableStateFlow<TypeAnswer?>(null)
 
     override val server = AnkiServer(this).also { it.start() }
     private val stateMutationKey = TimeManager.time.intTimeMS().toString()
@@ -147,13 +149,13 @@ class ReviewerViewModel(
      *
      * @see showAnswer
      */
-    fun onShowAnswer() {
+    fun onShowAnswer(typedAnswer: String? = null) {
         launchCatchingIO {
             while (!statesMutated) {
                 delay(50)
             }
             updateNextTimes()
-            showAnswer()
+            showAnswer(typedAnswer)
             loadAndPlaySounds(CardSide.ANSWER)
             if (!autoAdvance.shouldWaitForAudio()) {
                 autoAdvance.onShowAnswer()
@@ -423,11 +425,19 @@ class ReviewerViewModel(
         countsFlow.emit(state.counts to state.countsIndex)
     }
 
-    // TODO
     override suspend fun typeAnsFilter(
         text: String,
         typedAnswer: String?,
-    ): String = text
+    ): String {
+        val typeAnswer = TypeAnswer.getInstance(currentCard.await(), text)
+        return if (showingAnswer.value) {
+            typeAnswerFlow.emit(null)
+            typeAnswer?.answerFilter(typedAnswer ?: "") ?: text
+        } else {
+            typeAnswerFlow.emit(typeAnswer)
+            TypeAnswer.removeTags(text)
+        }
+    }
 
     private suspend fun updateUndoAndRedoLabels() {
         undoLabelFlow.emit(withCol { undoLabel() })
