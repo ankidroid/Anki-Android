@@ -29,7 +29,7 @@ class RtlCompliantActionProvider(
     context: Context,
 ) : ActionProviderCompat(context) {
     @VisibleForTesting
-    val activity: Activity
+    val activity: Activity = unwrapContext(context)
 
     /**
      * The action to perform when clicking the associated menu item. By default this delegates to
@@ -73,9 +73,5 @@ class RtlCompliantActionProvider(
                 throw ClassCastException("Passed context should be either an instanceof Activity or a ContextWrapper wrapping an Activity")
             }
         }
-    }
-
-    init {
-        activity = unwrapContext(context)
     }
 }
