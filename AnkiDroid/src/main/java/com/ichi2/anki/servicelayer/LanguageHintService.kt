@@ -18,10 +18,10 @@ package com.ichi2.anki.servicelayer
 
 import android.os.LocaleList
 import android.widget.EditText
-import androidx.annotation.CheckResult
+import com.ichi2.anki.utils.ext.getStringOrNull
+import com.ichi2.libanki.Field
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
-import org.json.JSONObject
 import timber.log.Timber
 import java.util.Locale
 
@@ -35,14 +35,6 @@ import java.util.Locale
 typealias LanguageHint = Locale
 
 object LanguageHintService {
-    @CheckResult
-    fun getLanguageHintForField(field: JSONObject): LanguageHint? {
-        if (!field.has("ad-hint-locale")) {
-            return null
-        }
-        return Locale.forLanguageTag(field.getString("ad-hint-locale"))
-    }
-
     fun setLanguageHintForField(
         notetypes: Notetypes,
         notetype: NotetypeJson,
@@ -50,18 +42,19 @@ object LanguageHintService {
         selectedLocale: Locale,
     ) {
         val field = notetype.getField(fieldPos)
-        field.put("ad-hint-locale", selectedLocale.toLanguageTag())
+        field.languageHint = selectedLocale
         notetypes.save(notetype)
 
         Timber.i("Set field locale to %s", selectedLocale)
     }
 
-    fun getImeHintLocales(field: JSONObject?): LocaleList? {
-        if (field == null) return null
-        return getLanguageHintForField(field)?.let { LocaleList(it) }
-    }
-
     fun EditText.applyLanguageHint(languageHint: LanguageHint?) {
         this.imeHintLocales = if (languageHint != null) LocaleList(languageHint) else null
     }
+
+    var Field.languageHint: LanguageHint?
+        get() = jsonObject.getStringOrNull("ad-hint-locale") ?.let { Locale.forLanguageTag(it) }
+        set(value) {
+            jsonObject.put("ad-hint-locale", value?.toLanguageTag())
+        }
 }

@@ -28,7 +28,6 @@ import com.ichi2.libanki.utils.set
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import com.ichi2.utils.emptyStringArray
-import org.json.JSONObject
 import java.util.AbstractSet
 import java.util.regex.Pattern
 
@@ -48,7 +47,7 @@ class Note : Cloneable {
         private set
     lateinit var tags: MutableList<String>
     lateinit var fields: MutableList<String>
-    private var fMap: Map<String, Pair<Int, JSONObject>>? = null
+    private var fMap: Map<String, Pair<Int, Field>>? = null
     var usn = 0
         private set
     var mod: Int = 0
