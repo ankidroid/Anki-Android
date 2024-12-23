@@ -25,7 +25,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsString
 import org.hamcrest.Matchers.endsWith
 import org.hamcrest.Matchers.not
-import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -107,12 +106,9 @@ class NotetypeTest : JvmTest() {
         val m2 = col.notetypes.copy(m)
         assertEquals("Basic copy", m2.getString("name"))
         assertNotEquals(m2.getLong("id"), m.getLong("id"))
-        assertEquals(2, m2.getJSONArray("flds").length())
-        assertEquals(2, m.getJSONArray("flds").length())
-        assertEquals(
-            m.getJSONArray("flds").length(),
-            m2.getJSONArray("flds").length(),
-        )
+        assertEquals(2, m2.flds.length())
+        assertEquals(2, m.flds.length())
+        assertEquals(m.flds.length(), m2.flds.length())
         assertEquals(1, m.getJSONArray("tmpls").length())
         assertEquals(1, m2.getJSONArray("tmpls").length())
         assertEquals(col.notetypes.scmhash(m), col.notetypes.scmhash(m2))
@@ -127,14 +123,14 @@ class NotetypeTest : JvmTest() {
         col.addNote(note)
         val m = col.notetypes.current()
         // make sure renaming a field updates the templates
-        col.notetypes.renameFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), "NewFront")
+        col.notetypes.renameFieldLegacy(m, m.flds[0], "NewFront")
         assertThat(
             m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
             containsString("{{NewFront}}"),
         )
         val h = col.notetypes.scmhash(m)
         // add a field
-        var field: JSONObject? = col.notetypes.newField("foo")
+        var field: Field? = col.notetypes.newField("foo")
         col.notetypes.addFieldLegacy(m, field!!)
         assertEquals(
             listOf("1", "2", ""),
@@ -147,11 +143,11 @@ class NotetypeTest : JvmTest() {
         )
         assertNotEquals(h, col.notetypes.scmhash(m))
         // rename it
-        field = m.getJSONArray("flds").getJSONObject(2)
+        field = m.flds[2]
         col.notetypes.renameFieldLegacy(m, field, "bar")
         assertEquals("", col.getNote(col.notetypes.nids(m)[0]).getItem("bar"))
         // delete back
-        col.notetypes.remFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1))
+        col.notetypes.remFieldLegacy(m, m.flds[1])
         assertEquals(
             listOf("1", ""),
             col
@@ -162,7 +158,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveFieldLegacy(m, m.flds[0], 1)
         assertEquals(
             listOf("", "1"),
             col
@@ -173,7 +169,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 1 -> 0
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(1), 0)
+        col.notetypes.moveFieldLegacy(m, m.flds[1], 0)
         assertEquals(
             listOf("1", ""),
             col
@@ -199,7 +195,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 2 -> 1
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(2), 1)
+        col.notetypes.moveFieldLegacy(m, m.flds[2], 1)
         assertEquals(
             listOf("1", "2", ""),
             col
@@ -210,7 +206,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 2
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 2)
+        col.notetypes.moveFieldLegacy(m, m.flds[0], 2)
         assertEquals(
             listOf("2", "", "1"),
             col
@@ -221,7 +217,7 @@ class NotetypeTest : JvmTest() {
                 ).fields,
         )
         // move 0 -> 1
-        col.notetypes.moveFieldLegacy(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveFieldLegacy(m, m.flds[0], 1)
         assertEquals(
             listOf("", "2", "1"),
             col

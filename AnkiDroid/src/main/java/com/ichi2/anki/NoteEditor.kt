@@ -124,7 +124,7 @@ import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.previewer.TemplatePreviewerArguments
 import com.ichi2.anki.previewer.TemplatePreviewerPage
-import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -145,6 +145,8 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
+import com.ichi2.libanki.Field
+import com.ichi2.libanki.Fields
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.NoteTypeId
@@ -1675,8 +1677,8 @@ class NoteEditor :
         return note
     }
 
-    val currentFields: JSONArray
-        get() = editorNote!!.notetype.getJSONArray("flds")
+    val currentFields: Fields
+        get() = editorNote!!.notetype.flds
 
     @get:CheckResult
     val currentFieldStrings: Array<String?>
@@ -1704,9 +1706,9 @@ class NoteEditor :
         if (currentNotetypeIsImageOcclusion()) {
             val occlusionTag = "0"
             val imageTag = "1"
-            val fields = currentlySelectedNotetype!!.getJSONArray("flds")
-            for (i in 0 until fields.length()) {
-                val tag = fields.getJSONObject(i).getString("tag")
+            val fields = currentlySelectedNotetype!!.flds
+            for ((i, field) in fields.withIndex()) {
+                val tag = field.imageOcclusionTag
                 if (tag == occlusionTag || tag == imageTag) {
                     indicesToHide.add(i)
                 }
@@ -2011,7 +2013,7 @@ class NoteEditor :
         toggleStickyButton: ImageButton,
         index: Int,
     ) {
-        if (currentFields.getJSONObject(index).getBoolean("sticky")) {
+        if (currentFields[index].sticky) {
             toggleStickyText.getOrPut(index) { "" }
         }
         if (toggleStickyText[index] == null) {
@@ -2162,13 +2164,10 @@ class NoteEditor :
     }
 
     @KotlinCleanup("make name non-null in FieldEditLine")
-    private fun getHintLocaleForField(name: String?): Locale? {
-        val field = getFieldByName(name) ?: return null
-        return LanguageHintService.getLanguageHintForField(field)
-    }
+    private fun getHintLocaleForField(name: String?): Locale? = getFieldByName(name)?.languageHint
 
-    private fun getFieldByName(name: String?): JSONObject? {
-        val pair: Pair<Int, JSONObject>? =
+    private fun getFieldByName(name: String?): Field? {
+        val pair: Pair<Int, Field>? =
             try {
                 Notetypes.fieldMap(currentlySelectedNotetype!!)[name]
             } catch (e: Exception) {

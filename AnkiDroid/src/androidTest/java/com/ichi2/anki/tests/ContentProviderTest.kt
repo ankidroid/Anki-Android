@@ -337,7 +337,7 @@ class ContentProviderTest : InstrumentedTest() {
         var col = col
         var model: NotetypeJson? = createBasicModel()
         val modelId = model!!.getLong("id")
-        val initialFieldsArr = model.getJSONArray("flds")
+        val initialFieldsArr = model.flds
         val initialFieldCount = initialFieldsArr.length()
         val noteTypeUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId)
         val insertFieldValues = ContentValues()
@@ -351,7 +351,7 @@ class ContentProviderTest : InstrumentedTest() {
         val fieldId = ContentUris.parseId(fieldUri!!)
         assertEquals("Check field id", initialFieldCount.toLong(), fieldId)
         assertNotNull("Check model", model)
-        val fldsArr = model!!.getJSONArray("flds")
+        val fldsArr = model!!.flds
         assertEquals(
             "Check fields length",
             (initialFieldCount + 1),
@@ -360,7 +360,7 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals(
             "Check last field name",
             TEST_FIELD_NAME,
-            fldsArr.getJSONObject(fldsArr.length() - 1).optString("name", ""),
+            fldsArr.last().name,
         )
         col.notetypes.rem(model)
     }
@@ -570,7 +570,7 @@ class ContentProviderTest : InstrumentedTest() {
         val mid = modelUri.lastPathSegment!!.toLong()
         var col = reopenCol()
         try {
-            var model: JSONObject? = col.notetypes.get(mid)
+            var model: NotetypeJson? = col.notetypes.get(mid)
             assertNotNull("Check model", model)
             assertEquals("Check model name", TEST_MODEL_NAME, model!!.getString("name"))
             assertEquals(
@@ -581,14 +581,14 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals(
                 "Check field length",
                 TEST_MODEL_FIELDS.size,
-                model.getJSONArray("flds").length(),
+                model.flds.length(),
             )
-            val fields = model.getJSONArray("flds")
+            val fields = model.flds
             for (i in 0 until fields.length()) {
                 assertEquals(
                     "Check name of fields",
                     TEST_MODEL_FIELDS[i],
-                    fields.getJSONObject(i).getString("name"),
+                    fields[i].name,
                 )
             }
             // Test updating the model CSS (to test updating MODELS_ID Uri)

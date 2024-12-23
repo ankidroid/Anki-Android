@@ -14,7 +14,8 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ichi2.anki.utils.ext
+package com.ichi2.libanki
+
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.testutils.AndroidTest
 import com.ichi2.testutils.EmptyApplication
@@ -22,24 +23,23 @@ import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
-import kotlin.apply
-import kotlin.test.assertNotNull
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-@RunWith(AndroidJUnit4::class) // This is necessary, android and JVM differ on JSONObject.NULL
+@RunWith(AndroidJUnit4::class) // required due to differing JSON implementation
 @Config(application = EmptyApplication::class)
-class JSONObjectTest : AndroidTest {
+class FieldTest : AndroidTest {
     @Test
-    fun `test getStringOrNull`() {
-        fun test(value: Any) = JSONObject().apply { put("test", value) }.getStringOrNull("test")
+    fun `'tag' - null handling`() {
+        val jsonObject = JSONObject()
+        var field = Field(jsonObject)
 
-        assertNull(JSONObject().getStringOrNull("test"), message = "{}")
-        assertNull(test(JSONObject.NULL), message = "{ test: null }")
-        // WARN: this differs between pure JVM and Robolectric/Android
-        // On Robolectric/Android, this is {}.
-        // On JVM following using the standard implementation it's null.
-        assertNotNull(test(JSONObject()), message = "test: { }")
-        assertNotNull(test("null"), message = """{ test: "null" }""")
-        assertNotNull(test("1"), message = """{ test: "1" }""")
+        assertNull(field.imageOcclusionTag, message = "{ }")
+
+        jsonObject.put("tag", JSONObject.NULL)
+        assertNull(field.imageOcclusionTag, message = "{ tag: null }")
+
+        jsonObject.put("tag", "1")
+        assertEquals("1", field.imageOcclusionTag, message = """{ tag: 1 }""")
     }
 }
