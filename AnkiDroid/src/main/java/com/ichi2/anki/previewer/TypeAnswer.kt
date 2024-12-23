@@ -18,12 +18,12 @@ package com.ichi2.anki.previewer
 import android.os.LocaleList
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.LanguageHintService
+import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
-import com.ichi2.utils.jsonObjectIterable
+import com.ichi2.libanki.Field
 import org.intellij.lang.annotations.Language
 import org.jetbrains.annotations.VisibleForTesting
-import org.json.JSONObject
 
 /**
  * Handles `type in the answer card` properties
@@ -38,18 +38,18 @@ class TypeAnswer private constructor(
     /** whether combining characters should be compared. Defined by the presence of the
      *   `nc:` specifier in the type answer tag */
     private val combining: Boolean,
-    private val field: JSONObject,
+    private val field: Field,
     var expectedAnswer: String,
 ) {
     /** a field property specific to AnkiDroid that allows to automatically select
      *   a language for the keyboard. @see [LanguageHintService] */
     val imeHintLocales: LocaleList? by lazy {
-        LanguageHintService.getImeHintLocales(this.field)
+        field.languageHint?.let { LocaleList(it) }
     }
 
     suspend fun answerFilter(typedAnswer: String = ""): String {
-        val typeFont = field.getString("font")
-        val typeSize = field.getString("size")
+        val typeFont = field.font
+        val typeSize = field.fontSize
         val answerComparison = withCol { compareAnswer(expectedAnswer, provided = typedAnswer, combining = combining) }
 
         @Language("HTML")
@@ -85,10 +85,7 @@ class TypeAnswer private constructor(
                     fld
                 }
             val fields = withCol { card.noteType(this).flds }
-            val typeAnswerField =
-                fields.jsonObjectIterable().firstOrNull {
-                    it.getString("name") == typeAnsFieldName
-                } ?: return null
+            val typeAnswerField = fields.firstOrNull { it.name == typeAnsFieldName } ?: return null
             val expectedAnswer = getExpectedTypeInAnswer(card, typeAnswerField)
 
             return TypeAnswer(
@@ -101,9 +98,9 @@ class TypeAnswer private constructor(
 
         private suspend fun getExpectedTypeInAnswer(
             card: Card,
-            field: JSONObject,
+            field: Field,
         ): String {
-            val fieldName = field.getString("name")
+            val fieldName = field.name
             val expected = withCol { card.note(this@withCol).getItem(fieldName) }
             return if (fieldName.startsWith("cloze:")) {
                 val clozeIdx = card.ord + 1

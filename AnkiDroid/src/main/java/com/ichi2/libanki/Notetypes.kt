@@ -58,7 +58,6 @@ import com.ichi2.libanki.utils.insert
 import com.ichi2.libanki.utils.len
 import com.ichi2.libanki.utils.remove
 import com.ichi2.libanki.utils.set
-import com.ichi2.utils.HashUtil
 import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -75,7 +74,6 @@ class NoteTypeNameID(
 private typealias int = Long
 
 // # types
-private typealias Field = JSONObject // Dict<str, Any>
 typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
 class Notetypes(
@@ -222,7 +220,7 @@ class Notetypes(
     fun new(name: String): NotetypeJson {
         // caller should call save() after modifying
         val nt = newBasicNotetype()
-        nt.flds = JSONArray()
+        nt.flds = Fields(JSONArray())
         nt.tmpls = JSONArray()
         nt.name = name
         return nt
@@ -332,13 +330,12 @@ class Notetypes(
     ##################################################
      */
 
-    @RustCleanup("Check JSONObject.NULL")
     @LibAnkiAlias("new_field")
     fun newField(name: String): Field {
         val nt = newBasicNotetype()
-        val field = nt.flds.getJSONObject(0)
-        field.put("name", name)
-        field.put("ord", JSONObject.NULL)
+        val field = nt.flds[0]
+        field.name = name
+        field.setOrd(null)
         return field
     }
 
@@ -382,8 +379,8 @@ class Notetypes(
         field: Field,
         newName: String,
     ) {
-        check(notetype.flds.jsonObjectIterable().contains(field)) { "Field to be renamed was not found in the notetype fields" }
-        field["name"] = newName
+        check(notetype.flds.contains(field)) { "Field to be renamed was not found in the notetype fields" }
+        field.name = newName
     }
 
     /** Modifies schema. */
@@ -447,7 +444,7 @@ class Notetypes(
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
     fun addFieldInNewModel(
         notetype: NotetypeJson,
-        field: JSONObject,
+        field: Field,
     ) {
         check(isModelNew(notetype)) { "Model was assumed to be new, but is not" }
         try {
@@ -478,7 +475,7 @@ class Notetypes(
 
     fun addFieldModChanged(
         notetype: NotetypeJson,
-        field: JSONObject,
+        field: Field,
     ) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
@@ -650,8 +647,8 @@ class Notetypes(
     /** Return a hash of the schema, to see if models are compatible. */
     fun scmhash(notetype: NotetypeJson): String {
         var s = ""
-        for (f in notetype.flds.jsonObjectIterable()) {
-            s += f["name"]
+        for (f in notetype.flds) {
+            s += f.name
         }
         for (t in notetype.tmpls.jsonObjectIterable()) {
             s += t["name"]
@@ -718,15 +715,8 @@ class Notetypes(
             """{"name": "", "ord": null, "qfmt": "", "afmt": "", "did": null, "bqfmt": "","bafmt": "","bfont": "", "bsize": 0 }"""
 
         /** "Mapping of field name -> (ord, field).  */
-        fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, JSONObject>> {
-            val flds = notetype.getJSONArray("flds")
-            // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-            val result: MutableMap<String, Pair<Int, JSONObject>> = HashUtil.hashMapInit(flds.length())
-            for (f in flds.jsonObjectIterable()) {
-                result[f.getString("name")] = Pair(f.getInt("ord"), f)
-            }
-            return result
-        }
+        fun fieldMap(notetype: NotetypeJson): Map<String, Pair<Int, Field>> =
+            notetype.flds.associateBy({ f -> f.name }, { f -> Pair(f.ord, f) })
 
         // not in anki
         fun isModelNew(notetype: NotetypeJson): Boolean = notetype.getLong("id") == 0L
