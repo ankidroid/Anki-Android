@@ -19,8 +19,16 @@ package com.ichi2.anki.utils.ext
 
 import org.json.JSONObject
 
+/**
+ * @return `null` if:
+ * * The key does not exist
+ * * The value is [null][JSONObject.NULL]
+ * * ⚠️ JVM only. The value is not a string (`{ }` etc...)
+ * Otherwise, returns the string value mapped by [key]
+ */
 fun JSONObject.getStringOrNull(key: String): String? {
     if (!has(key)) return null
+    if (isNull(key)) return null
     return try {
         getString(key)
     } catch (_: Exception) {
