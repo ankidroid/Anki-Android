@@ -125,6 +125,7 @@
     <attr name="alternativeBackgroundColor" format="color"/>
     <!-- Browser colors -->
     <attr name="suspendedColor" format="color"/>
+    <attr name="buriedColor" format="color"/>
     <attr name="selectedColor" format="color"/>
     <attr name="markedColor" format="color"/>
     <!-- Note editor colors -->

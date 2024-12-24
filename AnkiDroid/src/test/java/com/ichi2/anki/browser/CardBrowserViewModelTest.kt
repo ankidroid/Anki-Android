@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.browser
 
+import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
@@ -43,6 +44,7 @@ import com.ichi2.anki.model.SortType.SORT_FIELD
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.setFlagFilterSync
 import com.ichi2.anki.utils.ext.ifNotZero
+import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts.QUEUE_TYPE_MANUALLY_BURIED
 import com.ichi2.libanki.Consts.QUEUE_TYPE_NEW
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
@@ -122,7 +124,7 @@ class CardBrowserViewModelTest : JvmTest() {
                 assertThat("Deck should be changed", col.getCard(cardId).did, equalTo(newDeck))
             }
 
-            val hasSomeDecksUnchanged = cards.any { row -> row.card.did != newDeck }
+            val hasSomeDecksUnchanged = cards.any { row -> col.getCard(row.toCardId(cardsOrNotes)).did != newDeck }
             assertThat("some decks are unchanged", hasSomeDecksUnchanged)
         }
 
@@ -489,7 +491,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `suspend - cards - some suspended`() =
         runViewModelTest(notes = 2) {
-            suspend(cards.first())
+            suspend(cards.first().toCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -532,7 +534,7 @@ class CardBrowserViewModelTest : JvmTest() {
     @Test
     fun `suspend - notes - some notes suspended`() =
         runViewModelNotesTest(notes = 2) {
-            val nid = cards.first().card.nid
+            val nid = cards.first().cardOrNoteId
             suspend(col.getNote(nid))
             ensureOpsExecuted(1) {
                 selectAll()
@@ -545,7 +547,7 @@ class CardBrowserViewModelTest : JvmTest() {
     fun `suspend - notes - some cards suspended`() =
         runViewModelNotesTest(notes = 2) {
             // this suspends o single cid from a nid
-            suspend(cards.first())
+            suspend(cards.first().toCardId(cardsOrNotes))
             ensureOpsExecuted(1) {
                 selectAll()
                 toggleSuspendCards()
@@ -578,7 +580,7 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Cards))
             assertThat(ids, hasSize(1))
 
-            assertThat(ids.single(), equalTo(cards[0].id))
+            assertThat(ids.single(), equalTo(cards[0].cardOrNoteId))
         }
 
     @Test
@@ -591,8 +593,26 @@ class CardBrowserViewModelTest : JvmTest() {
             assertThat(exportType, equalTo(ExportDialogFragment.ExportType.Notes))
             assertThat(ids, hasSize(1))
 
-            assertThat(ids.single(), equalTo(cards[0].card.nid))
+            assertThat(ids.single(), equalTo(cards[0].cardOrNoteId))
         }
+
+    @Test
+    fun `selection is maintained after toggle mark 14950`() =
+        runViewModelTest(notes = 5) {
+            selectRowsWithPositions(0, 1, 2)
+
+            assertThat("3 rows are selected", selectedRows.size, equalTo(3))
+            assertThat("selection is not marked", queryAllSelectedNotes().all { !it.isMarked() })
+
+            toggleMark()
+
+            assertThat("3 rows are still selected", selectedRows.size, equalTo(3))
+            assertThat("selection is now marked", queryAllSelectedNotes().all { it.isMarked() })
+        }
+
+    private suspend fun CardBrowserViewModel.queryAllSelectedNotes() = queryAllSelectedNoteIds().map { col.getNote(it) }
+
+    private suspend fun Note.isMarked(): Boolean = NoteService.isMarked(this)
 
     @Test
     fun `changing note types changes columns`() =
@@ -754,6 +774,32 @@ class CardBrowserViewModelTest : JvmTest() {
             }
         }
 
+    @Test
+    fun `sound tags regression test`() {
+        addNoteUsingBasicModel("[sound:david.mp3]")
+
+        showMediaFilenamesPreference = false
+
+        BrowserColumnCollection.update(AnkiDroidApp.sharedPreferencesProvider.sharedPrefs(), CardsOrNotes.CARDS) {
+            it[0] = QUESTION
+            return@update true
+        }
+
+        runViewModelTest {
+            waitForSearchResults()
+            val (row, _) = this.transformBrowserRow(this.cards.single())
+            val question = row.getCells(0)
+            assertThat(question.text, equalTo(EXPECTED_SOUND))
+        }
+    }
+
+    private var showMediaFilenamesPreference: Boolean
+        get() = AnkiDroidApp.sharedPreferencesProvider.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
+        set(value) =
+            AnkiDroidApp.sharedPreferencesProvider.sharedPrefs().edit {
+                putBoolean("card_browser_show_media_filenames", value)
+            }
+
     private fun runViewModelNotesTest(
         notes: Int = 0,
         manualInit: Boolean = true,
@@ -804,6 +850,9 @@ class CardBrowserViewModelTest : JvmTest() {
     }
 
     companion object {
+        const val EXPECTED_SOUND = "\uD83D\uDD09david.mp3\uD83D\uDD09"
+        const val EXPECTED_TTS = "\uD83D\uDCACTest\uD83D\uDCAC"
+
         private suspend fun viewModel(
             lastDeckId: DeckId? = null,
             intent: CardBrowserLaunchOptions? = null,
@@ -902,8 +951,8 @@ private fun TestClass.suspendAll() {
     }
 }
 
-private fun TestClass.suspend(vararg cards: CardBrowser.CardCache) {
-    col.sched.suspendCards(cards.map { it.id })
+private fun TestClass.suspend(vararg cardIds: CardId) {
+    col.sched.suspendCards(ids = cardIds.toList())
 }
 
 private fun TestClass.suspend(note: Note) {
