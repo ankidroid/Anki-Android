@@ -41,6 +41,7 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
+import com.ichi2.libanki.Field
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.NoteTypeId
@@ -945,12 +946,10 @@ class CardContentProvider : ContentProvider() {
                     val name: String =
                         values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
                             ?: throw IllegalArgumentException("field name missing for model: $mid")
-                    val field: JSONObject = notetypes.newField(name)
+                    val field: Field = notetypes.newField(name)
                     try {
                         notetypes.addFieldLegacy(existingModel, field)
-
-                        val flds: JSONArray = existingModel.getJSONArray("flds")
-                        return ContentUris.withAppendedId(uri, (flds.length() - 1).toLong())
+                        return ContentUris.withAppendedId(uri, (existingModel.flds.length() - 1).toLong())
                     } catch (e: ConfirmModSchemaException) {
                         throw IllegalArgumentException("Unable to insert field: $name", e)
                     } catch (e: JSONException) {
@@ -1065,11 +1064,12 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model._ID -> rb.add(modelId)
                     FlashCardsContract.Model.NAME -> rb.add(jsonObject!!.getString("name"))
                     FlashCardsContract.Model.FIELD_NAMES -> {
-                        val flds = jsonObject!!.getJSONArray("flds")
+                        @KotlinCleanup("maybe jsonObject.fieldsNames. Difference: optString vs get")
+                        val flds = jsonObject!!.flds
                         val allFlds = arrayOfNulls<String>(flds.length())
                         var idx = 0
                         while (idx < flds.length()) {
-                            allFlds[idx] = flds.getJSONObject(idx).optString("name", "")
+                            allFlds[idx] = flds[idx].jsonObject.optString("name", "")
                             idx++
                         }
                         @KotlinCleanup("remove requireNoNulls")
